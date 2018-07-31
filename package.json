@@ -1,0 +1,59 @@
+{
+  "name": "node-nlp",
+  "version": "1.0.0",
+  "description": "Library for NLU (Natural Language Understanding) done in Node.js",
+  "main": "lib/index.js",
+  "scripts": {
+    "commit": "git-cz",
+    "lint": "eslint .",
+    "lintfix": "eslint --fix lib/**",
+    "test": "eslint lib/** && jest --coverage"
+  },
+  "author": {
+    "email": "jesus.seijas@axa-groupsolutions.com",
+    "name": "Jesus Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa-groupsolutions.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "jest": "^23.4.2"
+  },
+  "dependencies": {
+    "escodegen": "^1.10.0",
+    "esprima": "^4.0.0",
+    "franc": "^4.0.0",
+    "natural": "^0.6.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "collectCoverageFrom": [
+      "lib/**.js",
+      "!lib/nlp/stemmers/**"
+    ],
+    "coverageDirectory": "coverage"
+  }
+}
