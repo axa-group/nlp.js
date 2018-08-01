@@ -7,7 +7,7 @@
     "commit": "git-cz",
     "lint": "eslint .",
     "lintfix": "eslint --fix lib/**",
-    "test": "eslint lib/** && jest --coverage"
+    "test": "npm audit && eslint lib/** && jest --coverage"
   },
   "author": {
     "email": "jesus.seijas@axa-groupsolutions.com",
