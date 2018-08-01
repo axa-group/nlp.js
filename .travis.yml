@@ -3,3 +3,9 @@ node_js:
   - "8"
   - "9"
   - "10"
+before_install:
+  - npm install -g npm@latest
+include:
+  - stage: NPM audit
+    script: npm audit
+    node_js: "10"
