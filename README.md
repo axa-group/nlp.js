@@ -1,6 +1,8 @@
 NLP.js
 =======
 
+[![Build Status](https://travis-ci.com/axa-group/nlp.js.svg?branch=master)](https://travis-ci.com/axa-group/nlp.js)
+
 "NLP.js" is a general natural language utilities for nodejs. Currently supporting:
 - Guess the language of a phrase
 - Fast levenshtein distance of two strings
