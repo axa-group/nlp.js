@@ -330,7 +330,10 @@ module.exports = function trainnlp(manager, say) {
   manager.addDocument('en', 'can you give me some advice', 'user.needsadvice');
   manager.addDocument('en', 'what should I do', 'user.needsadvice');
   say('Training, please wait..');
+  const hrstart = process.hrtime();
   manager.train();
+  const hrend = process.hrtime(hrstart);
+  console.info('Trained (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
   say('Trained!');
 
   manager.addAnswer('en', 'agent.acquaintance', 'I\'m a virtual agent');

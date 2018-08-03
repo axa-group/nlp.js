@@ -63,10 +63,10 @@ describe('Logistic Regression Classifier', () => {
       expect(classifier.theta).toBeUndefined();
       classifier.train();
       expect(classifier.theta).toBeDefined();
-      const expected = [[2.435654002632326, 1.272611182442263, 2.435654002632326,
-        -2.7589918339683037, -1.6638497817221314, -1.6638497817221314],
-      [-2.4356540026323272, -1.2726111824422628, -2.4356540026323272,
-        2.758991833968306, 1.6638497817221316, 1.6638497817221316]];
+      const expected = [[2.443849977840033, 1.2755682924177316, 2.443849977840033,
+        -2.768423007562095, -1.6689759372483393, -1.6689759372483393],
+      [-2.4438499778400344, -1.275568292417731, -2.4438499778400344,
+        2.768423007562096, 1.6689759372483401, 1.6689759372483401]];
       expect(classifier.theta).toHaveLength(expected.length);
       for (let i = 0, l = expected.length; i < l; i += 1) {
         expect(classifier.theta[i].elements).toEqual(expected[i]);
