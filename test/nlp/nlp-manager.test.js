@@ -37,6 +37,13 @@ describe('NLP Manager', () => {
       expect(manager.languages).toEqual([]);
       expect(manager.classifiers).toEqual({});
       expect(manager.intentEntities).toEqual({});
+      expect(manager.settings.fullSearchWhenGuessed).toBeTruthy();
+      expect(manager.settings.useNlg).toBeTruthy();
+    });
+    test('You can set options when creating', () => {
+      const manager = new NlpManager({ fullSearchWhenGuessed: false, useNlg: false });
+      expect(manager.settings.fullSearchWhenGuessed).toBeFalsy();
+      expect(manager.settings.useNlg).toBeFalsy();
     });
   });
 
@@ -80,6 +87,12 @@ describe('NLP Manager', () => {
       language = manager.guessLanguage('¿Qué es?');
       expect(language).toEqual('es');
     });
+    test('Should return undefined if cannot be guessed', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en', 'es']);
+      const language = manager.guessLanguage('');
+      expect(language).toBeUndefined();
+    });
   });
 
   describe('Add document', () => {
@@ -89,6 +102,11 @@ describe('NLP Manager', () => {
       manager.addDocument(undefined, 'Dónde están las llaves', 'keys');
       expect(manager.classifiers.es.docs).toHaveLength(1);
       expect(manager.classifiers.en.docs).toHaveLength(0);
+    });
+    test('If locale is not defined and cannot be guessed, throw an error', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en', 'es']);
+      expect(() => manager.addDocument(undefined, '', 'keys')).toThrow('Locale must be defined');
     });
     test('Should check that there is a classifier for the locale', () => {
       const manager = new NlpManager();
@@ -116,6 +134,20 @@ describe('NLP Manager', () => {
     });
   });
 
+  describe('Remove named entity text', () => {
+    const manager = new NlpManager();
+    manager.addLanguage(['en', 'es']);
+    manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
+    manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
+    manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+    manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
+    manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+    manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+    manager.removeNamedEntityText('hero', 'iron man', 'en', 'iron-man');
+    const ironman = manager.nerManager.getNamedEntityOption('hero', 'iron man');
+    expect(ironman.texts.en).toHaveLength(1);
+  });
+
   describe('Remove document', () => {
     test('If locale is not defined must be guessed', () => {
       const manager = new NlpManager();
@@ -123,6 +155,11 @@ describe('NLP Manager', () => {
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument(undefined, 'Dónde están las llaves', 'keys');
       expect(manager.classifiers.es.docs).toHaveLength(0);
+    });
+    test('If locale is not defined and cannot be guessed, throw an error', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en', 'es']);
+      expect(() => manager.removeDocument(undefined, '', 'keys')).toThrow('Locale must be defined');
     });
     test('Should check that there is a classifier for the locale', () => {
       const manager = new NlpManager();
@@ -170,6 +207,76 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
       manager.train();
+      let result = manager.classify('où sont mes clés');
+      expect(result).toHaveLength(2);
+      expect(result[0].label).toEqual('keys');
+      expect(result[0].value).toBeGreaterThan(0.8);
+      result = manager.classify('私の鍵はどこにありますか');
+      expect(result).toHaveLength(2);
+      expect(result[0].label).toEqual('keys');
+      expect(result[0].value).toBeGreaterThan(0.8);
+    });
+    test('Should return undefined if there is not classifier for this language', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['fr', 'ja']);
+      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.addDocument('fr', 'bonne nuit', 'greet');
+      manager.addDocument('fr', 'Bonsoir', 'greet');
+      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.addDocument('ja', 'おはようございます', 'greet');
+      manager.addDocument('ja', 'こんにちは', 'greet');
+      manager.addDocument('ja', 'おやすみ', 'greet');
+      manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
+      manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
+      manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+      manager.train();
+      const result = manager.classify('en', 'where are my keys?');
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('Train', () => {
+    test('You can train only a language', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['fr', 'ja']);
+      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.addDocument('fr', 'bonne nuit', 'greet');
+      manager.addDocument('fr', 'Bonsoir', 'greet');
+      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.addDocument('ja', 'おはようございます', 'greet');
+      manager.addDocument('ja', 'こんにちは', 'greet');
+      manager.addDocument('ja', 'おやすみ', 'greet');
+      manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
+      manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
+      manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+      manager.train('fr');
+      let result = manager.classify('où sont mes clés');
+      expect(result).toHaveLength(2);
+      expect(result[0].label).toEqual('keys');
+      expect(result[0].value).toBeGreaterThan(0.8);
+      result = manager.classify('私の鍵はどこにありますか');
+      expect(result).toEqual([]);
+    });
+    test('You can train a set of languages', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['fr', 'ja']);
+      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.addDocument('fr', 'bonne nuit', 'greet');
+      manager.addDocument('fr', 'Bonsoir', 'greet');
+      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.addDocument('ja', 'おはようございます', 'greet');
+      manager.addDocument('ja', 'こんにちは', 'greet');
+      manager.addDocument('ja', 'おやすみ', 'greet');
+      manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
+      manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
+      manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+      manager.train(['fr', 'ja', 'es']);
       let result = manager.classify('où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
@@ -361,6 +468,17 @@ describe('NLP Manager', () => {
     });
   });
 
+  describe('Remove answer', () => {
+    test('It should remove an answer from the NLG', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addAnswer('en', 'greetings.bye', 'Till next time');
+      manager.addAnswer('en', 'greetings.bye', 'See you soon!');
+      manager.removeAnswer('en', 'greetings.bye', 'See you soon!');
+      const answers = manager.nlgManager.findAllAnswers('en', 'greetings.bye', {});
+      expect(answers).toHaveLength(1);
+    });
+  });
+
   describe('Save and load', () => {
     test('Should allow to save, load and all should be working', () => {
       let manager = new NlpManager();
@@ -371,6 +489,7 @@ describe('NLP Manager', () => {
       manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
       manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
       manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+      manager.addRegexEntity('mail', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
@@ -384,6 +503,21 @@ describe('NLP Manager', () => {
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
+    });
+  });
+
+  describe('Get Sentiment', () => {
+    test('It should return the sentiment of an utterance', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en']);
+      const sentiment = manager.getSentiment('en', 'I love kitties');
+      expect(sentiment.vote).toEqual('positive');
+    });
+    test('If the locale is not given, then guess it', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en']);
+      const sentiment = manager.getSentiment('I love kitties');
+      expect(sentiment.vote).toEqual('positive');
     });
   });
 });

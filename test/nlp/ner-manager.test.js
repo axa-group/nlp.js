@@ -171,6 +171,15 @@ describe('NER Manager', () => {
       result = entity.getOption('option1_2');
       expect(result).toBeUndefined();
     });
+
+    test('Should do nothing if the entity does not exists', () => {
+      const manager = new NerManager();
+      const entity = manager.addNamedEntity('entity1');
+      manager.addNamedEntityOption('entity1', 'option1_1');
+      manager.addNamedEntityOption('entity1', 'option1_2');
+      manager.removeNamedEntityOption('entity2', 'option1_2');
+      expect(entity.options).toHaveLength(2);
+    });
   });
 
   describe('Get named entity option', () => {
@@ -205,7 +214,7 @@ describe('NER Manager', () => {
     });
   });
 
-  describe('Add named entity texst', () => {
+  describe('Add named entity text', () => {
     test('Should add text for a given language', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', 'en', 'Something');
@@ -240,7 +249,7 @@ describe('NER Manager', () => {
     });
   });
 
-  describe('Remove named entity texst', () => {
+  describe('Remove named entity text', () => {
     test('Should remove text for a given language', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', ['en', 'es'], ['Something', 'Anything']);
@@ -280,6 +289,18 @@ describe('NER Manager', () => {
       expect(option.texts.en[0]).toEqual('Anything');
       expect(option.texts.es).toBeDefined();
       expect(option.texts.es[0]).toEqual('Anything');
+    });
+    test('Should do nothing if the entity does not exists', () => {
+      const manager = new NerManager();
+      manager.addNamedEntityText('entity1', 'option1', ['en', 'es'], ['Something', 'Anything']);
+      manager.removeNamedEntityText('entity2', 'option1', ['en', 'es'], 'Something');
+      const option = manager.getNamedEntityOption('entity1', 'option1');
+      expect(option).toBeDefined();
+      expect(option.texts).toBeDefined();
+      expect(option.texts.en).toBeDefined();
+      expect(option.texts.en).toHaveLength(2);
+      expect(option.texts.es).toBeDefined();
+      expect(option.texts.es).toHaveLength(2);
     });
   });
 
@@ -365,6 +386,18 @@ describe('NER Manager', () => {
       expect(entities[1].sourceText).toEqual('spaghetti');
       expect(entities[1].entity).toEqual('food');
       expect(entities[1].utteranceText).toEqual('spaghetti');
+    });
+    test('Should return an empty array if the utterance is empty', () => {
+      const manager = new NerManager();
+      manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
+      manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+      const entities = manager.findEntities('', 'en');
+      expect(entities).toBeDefined();
+      expect(entities).toEqual([]);
     });
   });
   describe('Find entities by Regex', () => {
