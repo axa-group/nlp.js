@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "main": "lib/index.js",
   "scripts": {
@@ -67,6 +67,6 @@
       "lib/**.js",
       "!lib/nlp/stemmers/**"
     ],
-    "coverageDirectory": "coverage",
+    "coverageDirectory": "coverage"
   }
 }
