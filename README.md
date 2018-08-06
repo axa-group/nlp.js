@@ -318,6 +318,45 @@ of the bests substrings. This is done using a threshold for the accuracy, by def
   //  sourceText: 'spaghetti', entity: 'food', utteranceText: 'speghetti' } ]
 ```
 
+It also support Regular Expression entities
+
+```javascript
+  const { NerManager } = require('node-nlp');
+
+  const manager = new NerManager({ threshold: 0.8 });
+  manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
+  manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
+  manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+  manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
+  manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+  manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+  manager.addNamedEntity('email', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+  const entities = manager.findEntities('I saw spiderman eating speghetti in the city and his mail is spiderman@gmial.com', 'en');
+  console.log(entities);
+  // [ { start: 6,
+  //     end: 15,
+  //     levenshtein: 0,
+  //     accuracy: 1,
+  //     option: 'spiderman',
+  //     sourceText: 'Spiderman',
+  //     entity: 'hero',
+  //     utteranceText: 'spiderman' },
+  //   { start: 23,
+  //     end: 32,
+  //     levenshtein: 1,
+  //     accuracy: 0.8888888888888888,
+  //     option: 'pasta',
+  //     sourceText: 'spaghetti',
+  //     entity: 'food',
+  //     utteranceText: 'speghetti' },
+  //   { start: 61,
+  //     end: 80,
+  //     accuracy: 1,
+  //     sourceText: 'spiderman@gmial.com',
+  //     utteranceText: 'spiderman@gmial.com',
+  //     entity: 'email' } ]  
+```
+
 ## Sentiment Analysis
 
 The Sentiment Analysis module is able to calculate the sentiment based on the AFINN. 
@@ -482,9 +521,5 @@ You can read the Code of Conduct at [Code of Conduct](https://github.com/axa-gro
 ## Who is behind it?
 
 This project is developed by AXA Shared Services Spain S.A.
+
 If you need to contact us, you can do it at the email jesus.seijas@axa-groupsolutions.com
-
-
-
-
-
