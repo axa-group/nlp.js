@@ -149,6 +149,18 @@ describe('Vector', () => {
       const result = input.subtract(other);
       expect(result.elements).toEqual([-2, 1, 6, 15]);
     });
+
+    test('It can substract an scalar from a vector', () => {
+      const input = new Vector([2, 4, 8, 16]);
+      const result = input.subtract(2);
+      expect(result.elements).toEqual([0, 2, 6, 14]);
+    });
+
+    test('Should raise an exception if the dimensions don\'t match', () => {
+      const input = new Vector([2, 4, 8, 16]);
+      const other = new Vector([4, 3, 2]);
+      expect(() => { input.subtract(other); }).toThrowError('Cannot operate two vectors with different dimensions.');
+    });
   });
 
   describe('Sum', () => {

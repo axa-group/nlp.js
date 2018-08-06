@@ -72,6 +72,12 @@ describe('Logistic Regression Classifier', () => {
         expect(classifier.theta[i].elements).toEqual(expected[i]);
       }
     });
+
+    test('Should not get into an infinite loop', () => {
+      const classifier = new LogisticRegressionClassifier({});
+      classifier.addObservation([0, 0, 0, 0, 0, 0, 1, 1, 1], 'one');
+      classifier.addObservation([0, 0, 0, 0, 0, 0, 1, 1, 1], 'two');
+    });
   });
 
   describe('Get classifications', () => {

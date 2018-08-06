@@ -46,7 +46,8 @@ describe('NER Manager', () => {
       const manager = new NerManager();
       const entity = manager.addNamedEntity('entity1');
       expect(entity).toBeDefined();
-      expect(entity).toEqual({ name: 'entity1', options: [] });
+      expect(entity.name).toEqual('entity1');
+      expect(entity.options).toEqual([]);
     });
     test('Should return the same entity if already exists', () => {
       const manager = new NerManager();
@@ -58,8 +59,10 @@ describe('NER Manager', () => {
       const manager = new NerManager();
       const entity1 = manager.addNamedEntity('entity1');
       const entity2 = manager.addNamedEntity('entity2');
-      expect(entity1).toEqual({ name: 'entity1', options: [] });
-      expect(entity2).toEqual({ name: 'entity2', options: [] });
+      expect(entity1.name).toEqual('entity1');
+      expect(entity1.options).toEqual([]);
+      expect(entity2.name).toEqual('entity2');
+      expect(entity2.options).toEqual([]);
     });
   });
 
@@ -80,7 +83,8 @@ describe('NER Manager', () => {
       const manager = new NerManager();
       manager.addNamedEntity('entity1');
       const result = manager.getNamedEntity('entity2', true);
-      expect(result).toEqual({ name: 'entity2', options: [] });
+      expect(result.name).toEqual('entity2');
+      expect(result.options).toEqual([]);
     });
   });
 
@@ -125,10 +129,10 @@ describe('NER Manager', () => {
     entity.options.push(option1);
     entity.options.push(option2);
     entity.options.push(option3);
-    expect(manager.getOptionFromEntity(entity, 'option1')).toBe(option1);
-    expect(manager.getOptionFromEntity(entity, 'option2')).toBe(option2);
-    expect(manager.getOptionFromEntity(entity, 'option3')).toBe(option3);
-    expect(manager.getOptionFromEntity(entity, 'option4')).toBeUndefined();
+    expect(entity.getOption('option1')).toBe(option1);
+    expect(entity.getOption('option2')).toBe(option2);
+    expect(entity.getOption('option3')).toBe(option3);
+    expect(entity.getOption('option4')).toBeUndefined();
   });
 
   describe('Add named entity option', () => {
@@ -161,10 +165,10 @@ describe('NER Manager', () => {
       const entity = manager.addNamedEntity('entity1');
       manager.addNamedEntityOption('entity1', 'option1_1');
       manager.addNamedEntityOption('entity1', 'option1_2');
-      let result = manager.getOptionFromEntity(entity, 'option1_2');
+      let result = entity.getOption('option1_2');
       expect(result).toBeDefined();
       result = manager.removeNamedEntityOption('entity1', 'option1_2');
-      result = manager.getOptionFromEntity(entity, 'option1_2');
+      result = entity.getOption('option1_2');
       expect(result).toBeUndefined();
     });
   });
@@ -361,6 +365,21 @@ describe('NER Manager', () => {
       expect(entities[1].sourceText).toEqual('spaghetti');
       expect(entities[1].entity).toEqual('food');
       expect(entities[1].utteranceText).toEqual('spaghetti');
+    });
+  });
+  describe('Find entities by Regex', () => {
+    test('Should find an entity by regex inside an utterance', () => {
+      const manager = new NerManager();
+      manager.addNamedEntity('mail', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      const entities = manager.findEntities('My email is jseijas@gmail.com and yours is not', 'en');
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(1);
+      expect(entities[0].start).toEqual(12);
+      expect(entities[0].end).toEqual(29);
+      expect(entities[0].accuracy).toEqual(1);
+      expect(entities[0].sourceText).toEqual('jseijas@gmail.com');
+      expect(entities[0].entity).toEqual('mail');
+      expect(entities[0].utteranceText).toEqual('jseijas@gmail.com');
     });
   });
 });
