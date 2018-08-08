@@ -83,6 +83,13 @@ describe('Evaluator', () => {
       const result = evaluator.walkUnary(node);
       expect(result).toBe(evaluator.failResult);
     });
+    test('It should walk unary from evaluator', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a++';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(13);
+    });
   });
 
   describe('Walk this', () => {
@@ -201,5 +208,238 @@ describe('Evaluator', () => {
       expect(answer).toEqual(3);
       expect(context).toEqual({ a: 7, b: 3 });
     });
+  });
+
+  describe('Walk Binary', () => {
+    test('Should eval ==', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '1 == 1';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '1 == 2';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval ===', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '1 === 1';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '1 === 2';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval !=', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '1 != 2';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '1 != 1';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval !==', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '1 !== 2';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '1 !== 1';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval +', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '1 + 2';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(3);
+    });
+    test('Should eval -', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '1 - 4';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(-3);
+    });
+    test('Should eval *', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '2 * 7';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(14);
+    });
+    test('Should eval /', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '7 / 2';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(3.5);
+    });
+    test('Should eval %', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '8 % 3';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(2);
+    });
+    test('Should eval <', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '1 < 2';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '2 < 1';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval <=', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '1 <= 1';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '2 <= 1';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval >', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '2 > 1';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '1 > 2';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval >=', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = '2 >= 2';
+      const answerTrue = evaluator.evaluate(questionTrue, context);
+      expect(answerTrue).toEqual(true);
+      const questionFalse = '1 >= 2';
+      const answerFalse = evaluator.evaluate(questionFalse, context);
+      expect(answerFalse).toEqual(false);
+    });
+    test('Should eval | (binary or)', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '9 | 3';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(11);
+    });
+    test('Should eval & (binary and)', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '12 & 5';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(4);
+    });
+    test('Should eval ^ (binary xor)', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '12 ^ 5';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(9);
+    });
+    test('Should eval || (logical or)', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'false || true';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(true);
+    });
+    test('Should eval && (logical and)', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'true && false';
+      const answer = evaluator.evaluate(question, context);
+      expect(answer).toEqual(false);
+    });
+    test('If is an unknown operator throw an error', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'true ^^ false';
+      expect(() => evaluator.evaluate(question, context)).toThrow('Line 1: Unexpected token ^');
+    });
+  });
+
+  describe('Walk Assignment', () => {
+    test('Should eval =', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a = 7';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(7);
+    });
+    test('Should eval +=', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a += 7';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(8);
+    });
+    test('Should eval -=', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a -= 7';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(-6);
+    });
+    test('Should eval *=', () => {
+      const context = { a: 3, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a *= 7';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(21);
+    });
+    test('Should eval /=', () => {
+      const context = { a: 3, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a /= 2';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(1.5);
+    });
+    test('Should eval %=', () => {
+      const context = { a: 3, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a %= 2';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(1);
+    });
+    test('Should eval |=', () => {
+      const context = { a: 3, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a |= 9';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(11);
+    });
+    test('Should eval &=', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a &= 5';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(4);
+    });
+    test('Should eval ^=', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a ^= 5';
+      evaluator.evaluate(question, context);
+      expect(context.a).toEqual(9);
+    });
+  });
+
+  describe('Walk conditional', () => {
+    const context = { a: 12, b: 2 };
+    const evaluator = new Evaluator();
+    const question = 'b < 2 ? a-- : a++;';
+    evaluator.evaluate(question, context);
+    expect(context.a).toEqual(13);
   });
 });

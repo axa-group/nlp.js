@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "main": "lib/index.js",
   "scripts": {
@@ -40,7 +40,8 @@
     "escodegen": "^1.10.0",
     "esprima": "^4.0.0",
     "franc": "^4.0.0",
-    "natural": "^0.6.1"
+    "natural": "^0.6.1",
+    "xlsx": "^0.13.3"
   },
   "keywords": [
     "natural language processing",
@@ -54,7 +55,7 @@
     "classifier",
     "logistic regression",
     "Natural"
-  ],  
+  ],
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
