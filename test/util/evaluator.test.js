@@ -54,27 +54,31 @@ describe('Evaluator', () => {
 
   describe('Walk unary', () => {
     test('It should return the result of an unary + operation', () => {
+      const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const node = { argument: 17, operator: '+' };
-      const result = evaluator.walkUnary(node);
+      const query = '+17';
+      const result = evaluator.evaluate(query, context);
       expect(result).toEqual(17);
     });
     test('It should return the result of an unary - operation', () => {
+      const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const node = { argument: 17, operator: '-' };
-      const result = evaluator.walkUnary(node);
+      const query = '-17';
+      const result = evaluator.evaluate(query, context);
       expect(result).toEqual(-17);
     });
     test('It should return the result of an unary ~ operation', () => {
+      const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const node = { argument: 17, operator: '~' };
-      const result = evaluator.walkUnary(node);
+      const query = '~17';
+      const result = evaluator.evaluate(query, context);
       expect(result).toEqual(-18);
     });
     test('It should return the result of an unary ! operation', () => {
+      const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const node = { argument: false, operator: '!' };
-      const result = evaluator.walkUnary(node);
+      const query = '!false';
+      const result = evaluator.evaluate(query, context);
       expect(result).toEqual(true);
     });
     test('If the operator is unknown, return fail result', () => {
@@ -83,12 +87,12 @@ describe('Evaluator', () => {
       const result = evaluator.walkUnary(node);
       expect(result).toBe(evaluator.failResult);
     });
-    test('It should walk unary from evaluator', () => {
+    test('It should return the result if variables are used', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const question = 'a++';
-      evaluator.evaluate(question, context);
-      expect(context.a).toEqual(13);
+      const question = '-a';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual(-12);
     });
   });
 
@@ -106,6 +110,13 @@ describe('Evaluator', () => {
       const node = {};
       const result = evaluator.walkThis(node, context);
       expect(result).toBe(evaluator.failResult);
+    });
+    test('Evaluate this from evaluator', () => {
+      const context = { this: { a: 17 } };
+      const evaluator = new Evaluator(context);
+      const query = 'this.a++';
+      const result = evaluator.evaluate(query, context);
+      expect(result).toBe(18);
     });
   });
 
@@ -367,6 +378,20 @@ describe('Evaluator', () => {
       const question = 'true ^^ false';
       expect(() => evaluator.evaluate(question, context)).toThrow('Line 1: Unexpected token ^');
     });
+    test('Should return undefined if left term is undefined', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'c + a';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toBeUndefined();
+    });
+    test('Should return undefined if right term is undefined', () => {
+      const context = { a: 1, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'a + c';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toBeUndefined();
+    });
   });
 
   describe('Walk Assignment', () => {
@@ -436,10 +461,126 @@ describe('Evaluator', () => {
   });
 
   describe('Walk conditional', () => {
-    const context = { a: 12, b: 2 };
-    const evaluator = new Evaluator();
-    const question = 'b < 2 ? a-- : a++;';
-    evaluator.evaluate(question, context);
-    expect(context.a).toEqual(13);
+    test('It should evaluate a ternary operator', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = 'b === 2 ? a-- : a++;';
+      evaluator.evaluate(questionTrue, context);
+      expect(context.a).toEqual(11);
+      context.a = 12;
+      const questionFalse = 'b < 2 ? a-- : a++;';
+      evaluator.evaluate(questionFalse, context);
+      expect(context.a).toEqual(13);
+    });
+    test('Should return undefined if some term is not defined', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const questionTrue = 'c === 2 ? a-- : a++;';
+      const result = evaluator.evaluate(questionTrue, context);
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('Walk Template Literal', () => {
+    test('Should evaluate a template literal', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      // eslint-disable-next-line
+      const question = '`${a}-${b}`';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual('12-2');
+    });
+  });
+
+  describe('Walk Tagged Template Literal', () => {
+    test('Should evaluate a tagged template literal', () => {
+      const context = { a: 12, b: 2, tag: (literals, a, b) => `${literals.join('-')}-${a}-${b}` };
+      const evaluator = new Evaluator();
+      // eslint-disable-next-line
+      const question = 'tag`Hello ${a}hi${b}`';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual('Hello -hi--12-2');
+    });
+  });
+
+  describe('Walk array', () => {
+    test('Should evaluate every element of the array', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '[a, b, a+b, a-b]';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual([12, 2, 14, 10]);
+    });
+    test('Should return undefined if a term cannot be resolved', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = '[a, b, a+b, a-b, c]';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('Walk object', () => {
+    test('Should walk an object', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'd = { a: a, b: b, c: a + b}';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual({ a: 12, b: 2, c: 14 });
+    });
+    test('If some member is incorrect return undefined', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'd = { a: a, b: b, c: c}';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('If statement', () => {
+    test('Should be able to resolve if-then-else expressions then path', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'if (a > 10) { c = 7; b++ } else { c = 3; b-- }';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual(3);
+      expect(context.c).toEqual(7);
+      expect(context.b).toEqual(3);
+    });
+    test('Should be able to resolve if-then-else expressions else path', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'if (a < 10) { c = 7; b++ } else { c = 3; b-- }';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual(1);
+      expect(context.c).toEqual(3);
+      expect(context.b).toEqual(1);
+    });
+    test('Should be able to resolve if-then expressions then path', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'if (a > 10) { c = 7; b++ }; d = 1;';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual(1);
+      expect(context.c).toEqual(7);
+      expect(context.b).toEqual(3);
+    });
+    test('Should be able to resolve if-then expressions else path', () => {
+      const context = { a: 12, b: 2 };
+      const evaluator = new Evaluator();
+      const question = 'if (a < 10) { c = 7; b++ }; d = 1;';
+      const result = evaluator.evaluate(question, context);
+      expect(result).toEqual(1);
+      expect(context.c).toBeUndefined();
+      expect(context.b).toEqual(2);
+    });
+  });
+
+  describe('Evaluator', () => {
+    test('If no term is provided, return undefined', () => {
+      const evaluator = new Evaluator();
+      const result = evaluator.evaluate('', {});
+      expect(result).toBeUndefined();
+    });
   });
 });
