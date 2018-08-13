@@ -611,21 +611,21 @@ describe('Evaluator', () => {
     test('It should be able to walk a member', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const question = 'c = [a, b]; d = c[0] + c[1];'
+      const question = 'c = [a, b]; d = c[0] + c[1];';
       const result = evaluator.evaluate(question, context);
       expect(result).toEqual(14);
     });
     test('It should return undefined when then member expression does not exists', () => {
-      const context = { a: 12, b: (x) => x++ };
+      const context = { a: 12, b: x => x + 1 };
       const evaluator = new Evaluator();
-      const question = 'c = [a, b]; d = e[0] + e[1];'
+      const question = 'c = [a, b]; d = e[0] + e[1];';
       const result = evaluator.evaluate(question, context);
       expect(result).toBeUndefined();
     });
     test('It should return undefined when then member cannot be resolved', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const question = 'c = [a, b, d]; e = c[0] + c[1] + c[2];'
+      const question = 'c = [a, b, d]; e = c[0] + c[1] + c[2];';
       const result = evaluator.evaluate(question, context);
       expect(result).toBeUndefined();
     });
@@ -633,9 +633,9 @@ describe('Evaluator', () => {
 
   describe('Walk set member', () => {
     test('It should set a member', () => {
-      const context = { a: 12, b: 2, c: [1,2] };
+      const context = { a: 12, b: 2, c: [1, 2] };
       const evaluator = new Evaluator();
-      const question = 'c[0] = 3'
+      const question = 'c[0] = 3';
       const result = evaluator.evaluate(question, context);
       expect(result).toEqual(3);
       expect(context.c).toEqual([3, 2]);
@@ -643,7 +643,7 @@ describe('Evaluator', () => {
     test('It should not set a member of a non existing variable', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
-      const question = 'c[0] = 3'
+      const question = 'c[0] = 3';
       evaluator.evaluate(question, context);
       expect(context.c).toBeUndefined();
     });
