@@ -5,6 +5,8 @@ node_js:
   - "10"
 before_install:
   - npm install -g npm@latest
+install:
+  - npm ci --verbose
 include:
   - stage: NPM audit
     script: npm audit
