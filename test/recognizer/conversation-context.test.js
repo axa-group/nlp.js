@@ -100,4 +100,10 @@ describe('Conversation Context', () => {
       expect(() => context.getConversationContext()).toThrow('This method must be implemented by child');
     });
   });
+  describe('Set conversation context', () => {
+    test('It should throw an error', () => {
+      const context = new ConversationContext();
+      expect(() => context.setConversationContext()).toThrow('This method must be implemented by child');
+    });
+  });
 });
