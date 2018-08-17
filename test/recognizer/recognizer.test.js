@@ -170,4 +170,108 @@ describe('Recognizer', () => {
       });
     });
   });
+  describe('Get dialog id', () => {
+    test('Given a session with dialog stack, get the first developer dialog', () => {
+      const session = { dialogStack: () => ['not this', 'neither this', '*:/dialog'] };
+      const recognizer = new Recognizer();
+      const dialogId = recognizer.getDialogId(session);
+      expect(dialogId).toEqual('/dialog');
+    });
+    test('If no developer dialog found, return empty string', () => {
+      const session = { dialogStack: () => ['not this', 'neither this'] };
+      const recognizer = new Recognizer();
+      const dialogId = recognizer.getDialogId(session);
+      expect(dialogId).toEqual('');
+    });
+    test('If dialogStack method does not exists, return empty string', () => {
+      const session = {};
+      const recognizer = new Recognizer();
+      const dialogId = recognizer.getDialogId(session);
+      expect(dialogId).toEqual('');
+    });
+  });
+  describe('Default routing', () => {
+    test('If a route is given, it should select the route at the bot', () => {
+      let routeToActiveDialogCalls = 0;
+      let selectRouteCalls = 0;
+      const route = {
+        libraryName: 'library',
+      };
+      const library = {
+        selectRoute: () => { selectRouteCalls += 1; },
+      };
+      const bot = {
+        name: 'bot',
+        library: () => library,
+        libraries: {
+          BotBuilder: {
+            constructor: {
+              bestRouteResult: () => route,
+            },
+          },
+        },
+      };
+      const session = {
+        dialogStack: () => [],
+        routeToActiveDialog: () => { routeToActiveDialogCalls += 1; },
+      };
+      const recognizer = new Recognizer();
+      recognizer.defaultRouting(bot, session, []);
+      expect(selectRouteCalls).toEqual(1);
+      expect(routeToActiveDialogCalls).toEqual(0);
+    });
+    test('If no route is given, it should route to active dialog', () => {
+      let routeToActiveDialogCalls = 0;
+      let selectRouteCalls = 0;
+      const route = undefined;
+      const library = {
+        selectRoute: () => { selectRouteCalls += 1; },
+      };
+      const bot = {
+        name: 'bot',
+        library: () => library,
+        libraries: {
+          BotBuilder: {
+            constructor: {
+              bestRouteResult: () => route,
+            },
+          },
+        },
+      };
+      const session = {
+        dialogStack: () => [],
+        routeToActiveDialog: () => { routeToActiveDialogCalls += 1; },
+      };
+      const recognizer = new Recognizer();
+      recognizer.defaultRouting(bot, session, []);
+      expect(selectRouteCalls).toEqual(0);
+      expect(routeToActiveDialogCalls).toEqual(1);
+    });
+  });
+  describe('Process Answer', () => {
+    test('If the answer starts with / then it is a dialog', () => {
+      let beginDialogCalls = 0;
+      let sendCalls = 0;
+      const session = {
+        beginDialog: () => { beginDialogCalls += 1; },
+        send: () => { sendCalls += 1; },
+      };
+      const recognizer = new Recognizer();
+      recognizer.processAnswer(session, '/dialog');
+      expect(beginDialogCalls).toEqual(1);
+      expect(sendCalls).toEqual(0);
+    });
+    test('If the answer does not starts with / then it is a message', () => {
+      let beginDialogCalls = 0;
+      let sendCalls = 0;
+      const session = {
+        beginDialog: () => { beginDialogCalls += 1; },
+        send: () => { sendCalls += 1; },
+      };
+      const recognizer = new Recognizer();
+      recognizer.processAnswer(session, 'text');
+      expect(beginDialogCalls).toEqual(0);
+      expect(sendCalls).toEqual(1);
+    });
+  });
 });

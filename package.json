@@ -40,6 +40,7 @@
     "escodegen": "^1.10.0",
     "esprima": "^4.0.0",
     "franc": "^4.0.0",
+    "handlebars": "^4.0.11",
     "natural": "^0.6.1",
     "xlsx": "^0.13.3"
   },
