@@ -151,6 +151,7 @@ describe('Similar Search', () => {
       expect(result).toEqual({
         start: 6,
         end: 24,
+        len: 18,
         levenshtein: 0,
         accuracy: 1,
       });
@@ -164,6 +165,7 @@ describe('Similar Search', () => {
       expect(result).toEqual({
         start: 6,
         end: 30,
+        len: 24,
         levenshtein: 2,
         accuracy: 0.9166666666666666,
       });
@@ -177,65 +179,483 @@ describe('Similar Search', () => {
       expect(result).toEqual({
         start: 0,
         end: 16,
+        len: 16,
         levenshtein: 8,
         accuracy: 0.6666666666666666,
       });
     });
   });
-
-  describe('Get best entity', () => {
-    test('', () => {
+  describe('Reduce edges', () => {
+    test('It should do nothing if edges are empty', () => {
+      const similar = new SimilarSearch();
+      const edges = [];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([]);
+    });
+    test('If two edges collide, only the best accuracy remains', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 0.9,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('Edges can overlap in the left', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 0,
+          end: 9,
+          len: 9,
+          accuracy: 0.9,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('Edges can overlap in the right', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 2,
+          end: 11,
+          len: 9,
+          accuracy: 0.9,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('One edge can contain other', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 0.9,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('If both have same accuracy, return largest one', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('If both have same accuracy, return largest one even if goes first', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('If there are more than 2 edges overlaped, decide 1', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 9,
+          end: 18,
+          len: 9,
+          accuracy: 1,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('Should respect non overlaped edges', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 12,
+          end: 20,
+          len: 8,
+          accuracy: 1,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+        {
+          start: 12,
+          end: 20,
+          len: 8,
+          accuracy: 1,
+        },
+      ]);
+    });
+    test('When there are different groups of overlaped edges, return one per group', () => {
+      const similar = new SimilarSearch();
+      const edges = [
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+        {
+          start: 12,
+          end: 20,
+          len: 8,
+          accuracy: 1,
+        },
+        {
+          start: 1,
+          end: 10,
+          len: 9,
+          accuracy: 1,
+        },
+        {
+          start: 12,
+          end: 21,
+          len: 9,
+          accuracy: 1,
+        },
+      ];
+      const result = similar.reduceEdges(edges);
+      expect(result).toEqual([
+        {
+          start: 0,
+          end: 11,
+          len: 11,
+          accuracy: 1,
+        },
+        {
+          start: 12,
+          end: 21,
+          len: 9,
+          accuracy: 1,
+        },
+      ]);
+    });
+  });
+  describe('Get best substring list', () => {
+    test('If not threshold is defined, then search for exact occurences', () => {
+      const similar = new SimilarSearch();
+      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text2 = 'interdum ultricies';
+      const result = similar.getBestSubstringList(text1, text2);
+      expect(result).toHaveLength(1);
+      expect(result[0]).toEqual({
+        start: 6,
+        end: 24,
+        len: 18,
+        levenshtein: 0,
+        accuracy: 1,
+      });
+    });
+    test('If there are more than 1 occurence search exact, should return all', () => {
+      const similar = new SimilarSearch();
+      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text2 = 'interdum';
+      const result = similar.getBestSubstringList(text1, text2);
+      expect(result).toHaveLength(2);
+      expect(result[0]).toEqual({
+        start: 6,
+        end: 14,
+        len: 8,
+        levenshtein: 0,
+        accuracy: 1,
+      });
+      expect(result[1]).toEqual({
+        start: 73,
+        end: 81,
+        len: 8,
+        levenshtein: 0,
+        accuracy: 1,
+      });
+    });
+    test('Should get more than 1 occurence when searching with threshold', () => {
+      const similar = new SimilarSearch();
+      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text2 = 'internum';
+      const result = similar.getBestSubstringList(text1, text2, undefined, 0.8);
+      expect(result).toHaveLength(2);
+      expect(result[0]).toEqual({
+        start: 6,
+        end: 14,
+        len: 8,
+        levenshtein: 1,
+        accuracy: 0.875,
+      });
+      expect(result[1]).toEqual({
+        start: 73,
+        end: 81,
+        len: 8,
+        levenshtein: 1,
+        accuracy: 0.875,
+      });
+    });
+    test('Should return 0 to length element in array when the substring is longer than the string and accuracy is at least threshold', () => {
+      const similar = new SimilarSearch();
+      const text1 = 'dumaultriciesbne';
+      const text2 = 'interdumaultriciesbneque';
+      const result = similar.getBestSubstringList(text1, text2, undefined, 0.6);
+      expect(result).toBeDefined();
+      expect(result).toEqual([{
+        start: 0,
+        end: 16,
+        len: 16,
+        levenshtein: 8,
+        accuracy: 0.6666666666666666,
+      }]);
+    });
+    test('Should return empty array when the substring is longer than the string and accuracy is lower than threshold', () => {
+      const similar = new SimilarSearch();
+      const text1 = 'dumaultriciesbne';
+      const text2 = 'interdumaultriciesbneque';
+      const result = similar.getBestSubstringList(text1, text2, undefined, 0.7);
+      expect(result).toBeDefined();
+      expect(result).toEqual([]);
+    });
+  });
+  describe('Get edges from entity', () => {
+    test('It should get the edges from an utterance', () => {
+      const similar = new SimilarSearch({ normalize: true });
+      const text1 = 'I saw spederman eating spaghetti in the city';
+      const entity = {
+        en: {
+          spiderman: ['Spiderman', 'Spider-man'],
+          'iron man': ['iron man', 'iron-man'],
+          thor: ['Thor'],
+        },
+      };
+      const bestEntity = similar.getEdgesFromEntity(text1, entity, 'en', 'entity', 0.8);
+      expect(bestEntity).toBeDefined();
+      expect(bestEntity).toHaveLength(1);
+      expect(bestEntity[0].start).toEqual(6);
+      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].levenshtein).toEqual(1);
+      expect(bestEntity[0].accuracy).toEqual(0.8888888888888888);
+      expect(bestEntity[0].option).toEqual('spiderman');
+      expect(bestEntity[0].sourceText).toEqual('Spiderman');
+      expect(bestEntity[0].utteranceText).toEqual('spederman');
+    });
+    test('It no threshold is provided, then is 1', () => {
+      const similar = new SimilarSearch({ normalize: true });
+      const text1 = 'I saw spiderman eating iron-men in the city';
+      const entity = {
+        en: {
+          spiderman: ['Spiderman', 'Spider-man'],
+          'iron man': ['iron man', 'iron-man'],
+          thor: ['Thor'],
+        },
+      };
+      const bestEntity = similar.getEdgesFromEntity(text1, entity, 'en');
+      expect(bestEntity).toBeDefined();
+      expect(bestEntity).toHaveLength(1);
+      expect(bestEntity[0].start).toEqual(6);
+      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].levenshtein).toEqual(0);
+      expect(bestEntity[0].accuracy).toEqual(1);
+      expect(bestEntity[0].option).toEqual('spiderman');
+      expect(bestEntity[0].sourceText).toEqual('Spiderman');
+      expect(bestEntity[0].utteranceText).toEqual('spiderman');
+    });
+    test('It can return several occurances of options', () => {
+      const similar = new SimilarSearch({ normalize: true });
+      const text1 = 'I saw spiderman eating iron-men in the city spederman';
+      const entity = {
+        en: {
+          spiderman: ['Spiderman', 'Spider-man'],
+          'iron man': ['iron man', 'iron-man'],
+          thor: ['Thor'],
+        },
+      };
+      const bestEntity = similar.getEdgesFromEntity(text1, entity, 'en', 'entity', 0.8);
+      expect(bestEntity).toBeDefined();
+      expect(bestEntity).toHaveLength(3);
+      expect(bestEntity[0].start).toEqual(6);
+      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].levenshtein).toEqual(0);
+      expect(bestEntity[0].accuracy).toEqual(1);
+      expect(bestEntity[0].option).toEqual('spiderman');
+      expect(bestEntity[0].sourceText).toEqual('Spiderman');
+      expect(bestEntity[0].utteranceText).toEqual('spiderman');
+      expect(bestEntity[1].start).toEqual(44);
+      expect(bestEntity[1].end).toEqual(53);
+      expect(bestEntity[1].levenshtein).toEqual(1);
+      expect(bestEntity[1].accuracy).toEqual(0.8888888888888888);
+      expect(bestEntity[1].option).toEqual('spiderman');
+      expect(bestEntity[1].sourceText).toEqual('Spiderman');
+      expect(bestEntity[1].utteranceText).toEqual('spederman');
+      expect(bestEntity[2].start).toEqual(23);
+      expect(bestEntity[2].end).toEqual(31);
+      expect(bestEntity[2].levenshtein).toEqual(1);
+      expect(bestEntity[2].accuracy).toEqual(0.875);
+      expect(bestEntity[2].option).toEqual('iron man');
+      expect(bestEntity[2].sourceText).toEqual('iron-man');
+      expect(bestEntity[2].utteranceText).toEqual('iron-men');
+    });
+    test('If locale does not exists return empty array', () => {
+      const similar = new SimilarSearch({ normalize: true });
+      const text1 = 'I saw spiderman eating iron-men in the city spederman';
+      const entity = {
+        en: {
+          spiderman: ['Spiderman', 'Spider-man'],
+          'iron man': ['iron man', 'iron-man'],
+          thor: ['Thor'],
+        },
+      };
+      const bestEntity = similar.getEdgesFromEntity(text1, entity, 'es', 0.8);
+      expect(bestEntity).toEqual([]);
+    });
+  });
+  describe('Get edges from entities', () => {
+    test('It should get the edges from an utterance', () => {
       const similar = new SimilarSearch({ normalize: true });
       const text1 = 'I saw spederman eating spaghetti in the city';
       const entities = {
         hero: {
-          name: 'hero',
-          options: [
-            {
-              name: 'spiderman',
-              texts: {
-                en: ['Spiderman', 'Spider-man'],
-              },
-            },
-            {
-              name: 'iron man',
-              texts: {
-                en: ['iron man', 'iron-man'],
-              },
-            },
-            {
-              name: 'thor',
-              texts: {
-                en: ['Thor'],
-              },
-            },
-          ],
+          en: {
+            spiderman: ['Spiderman', 'Spider-man'],
+            'iron man': ['iron man', 'iron-man'],
+            thor: ['Thor'],
+          },
         },
         food: {
-          name: 'food',
-          options: [
-            {
-              name: 'burguer',
-              texts: {
-                en: ['Burguer', 'Hamburguer'],
-              },
-            },
-            {
-              name: 'pizza',
-              texts: {
-                en: ['pizza'],
-              },
-            },
-            {
-              name: 'pasta',
-              texts: {
-                en: ['Pasta', 'spaghetti'],
-              },
-            },
-          ],
+          en: {
+            burguer: ['Burguer', 'Hamburguer'],
+            pizza: ['pizza'],
+            pasta: ['Pasta', 'spaguetti', 'spaghetti'],
+          },
         },
       };
-      const bestEntity = similar.getBestEntity(text1, entities, 'en');
+      const bestEntity = similar.getEdgesFromEntities(text1, entities, 'en', undefined, 0.8);
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(2);
       expect(bestEntity[0].start).toEqual(6);
@@ -254,6 +674,68 @@ describe('Similar Search', () => {
       expect(bestEntity[1].sourceText).toEqual('spaghetti');
       expect(bestEntity[1].entity).toEqual('food');
       expect(bestEntity[1].utteranceText).toEqual('spaghetti');
+    });
+    test('It no threshold is provided then is 1', () => {
+      const similar = new SimilarSearch({ normalize: true });
+      const text1 = 'I saw spederman eating spaghetti in the city';
+      const entities = {
+        hero: {
+          en: {
+            spiderman: ['Spiderman', 'Spider-man'],
+            'iron man': ['iron man', 'iron-man'],
+            thor: ['Thor'],
+          },
+        },
+        food: {
+          en: {
+            burguer: ['Burguer', 'Hamburguer'],
+            pizza: ['pizza'],
+            pasta: ['Pasta', 'spaguetti', 'spaghetti'],
+          },
+        },
+      };
+      const bestEntity = similar.getEdgesFromEntities(text1, entities, 'en');
+      expect(bestEntity).toBeDefined();
+      expect(bestEntity).toHaveLength(1);
+      expect(bestEntity[0].start).toEqual(23);
+      expect(bestEntity[0].end).toEqual(32);
+      expect(bestEntity[0].levenshtein).toEqual(0);
+      expect(bestEntity[0].accuracy).toEqual(1);
+      expect(bestEntity[0].option).toEqual('pasta');
+      expect(bestEntity[0].sourceText).toEqual('spaghetti');
+      expect(bestEntity[0].entity).toEqual('food');
+      expect(bestEntity[0].utteranceText).toEqual('spaghetti');
+    });
+    test('If whitelist of entities is provided, check only those entities', () => {
+      const similar = new SimilarSearch({ normalize: true });
+      const text1 = 'I saw spederman eating spaghetti in the city';
+      const entities = {
+        hero: {
+          en: {
+            spiderman: ['Spiderman', 'Spider-man'],
+            'iron man': ['iron man', 'iron-man'],
+            thor: ['Thor'],
+          },
+        },
+        food: {
+          en: {
+            burguer: ['Burguer', 'Hamburguer'],
+            pizza: ['pizza'],
+            pasta: ['Pasta', 'spaguetti', 'spaghetti'],
+          },
+        },
+      };
+      const bestEntity = similar.getEdgesFromEntities(text1, entities, 'en', ['hero'], 0.8);
+      expect(bestEntity).toBeDefined();
+      expect(bestEntity).toHaveLength(1);
+      expect(bestEntity[0].start).toEqual(6);
+      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].levenshtein).toEqual(1);
+      expect(bestEntity[0].accuracy).toEqual(0.8888888888888888);
+      expect(bestEntity[0].option).toEqual('spiderman');
+      expect(bestEntity[0].sourceText).toEqual('Spiderman');
+      expect(bestEntity[0].entity).toEqual('hero');
+      expect(bestEntity[0].utteranceText).toEqual('spederman');
     });
   });
 });

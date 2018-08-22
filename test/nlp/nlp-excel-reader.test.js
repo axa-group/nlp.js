@@ -48,13 +48,8 @@ describe('NLP Excel Reader', () => {
       const { hero, food } = manager.nerManager.namedEntities;
       expect(hero.type).toEqual('enum');
       expect(food.type).toEqual('enum');
-      expect(hero.options[0].name).toEqual('spiderman');
-      expect(hero.options[1].name).toEqual('ironman');
-      expect(hero.options[2].name).toEqual('hulk');
-      expect(hero.options[3].name).toEqual('thor');
-      expect(food.options[0].name).toEqual('burguer');
-      expect(food.options[1].name).toEqual('pizza');
-      expect(food.options[2].name).toEqual('pasta');
+      expect(hero.locales.en).toBeDefined();
+      expect(hero.locales.es).toBeDefined();
     });
     test('It should create the classifiers for the languages', () => {
       const manager = new NlpManager();
