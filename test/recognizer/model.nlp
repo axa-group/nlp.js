@@ -10,7 +10,7 @@
     "en"
   ],
   "intentEntities": {},
-  "ner": {
+  "nerManager": {
     "namedEntities": {},
     "threshold": 0.5
   },
