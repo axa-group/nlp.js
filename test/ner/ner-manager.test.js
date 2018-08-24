@@ -31,7 +31,7 @@ describe('NER Manager', () => {
     });
     test('Should initialize properties', () => {
       const manager = new NerManager();
-      expect(manager.threshold).toEqual(0.5);
+      expect(manager.threshold).toEqual(0.8);
       expect(manager.namedEntities).toBeDefined();
       expect(manager.similar).toBeInstanceOf(SimilarSearch);
     });
@@ -47,7 +47,7 @@ describe('NER Manager', () => {
       const entity = manager.addNamedEntity('entity1');
       expect(entity).toBeDefined();
       expect(entity.name).toEqual('entity1');
-      expect(entity.options).toEqual([]);
+      expect(entity.locales).toEqual({});
     });
     test('Should return the same entity if already exists', () => {
       const manager = new NerManager();
@@ -60,9 +60,9 @@ describe('NER Manager', () => {
       const entity1 = manager.addNamedEntity('entity1');
       const entity2 = manager.addNamedEntity('entity2');
       expect(entity1.name).toEqual('entity1');
-      expect(entity1.options).toEqual([]);
+      expect(entity1.locales).toEqual({});
       expect(entity2.name).toEqual('entity2');
-      expect(entity2.options).toEqual([]);
+      expect(entity2.locales).toEqual({});
     });
   });
 
@@ -84,7 +84,7 @@ describe('NER Manager', () => {
       manager.addNamedEntity('entity1');
       const result = manager.getNamedEntity('entity2', true);
       expect(result.name).toEqual('entity2');
-      expect(result.options).toEqual([]);
+      expect(result.locales).toEqual({});
     });
   });
 
@@ -105,147 +105,25 @@ describe('NER Manager', () => {
     });
   });
 
-  describe('Get Options Position From Entity', () => {
-    const manager = new NerManager();
-    const entity = manager.addNamedEntity('entity1');
-    const option1 = { name: 'option1' };
-    const option2 = { name: 'option2' };
-    const option3 = { name: 'option3' };
-    entity.options.push(option1);
-    entity.options.push(option2);
-    entity.options.push(option3);
-    expect(manager.getOptionsPositionFromEntity(entity, 'option1')).toEqual(0);
-    expect(manager.getOptionsPositionFromEntity(entity, 'option2')).toEqual(1);
-    expect(manager.getOptionsPositionFromEntity(entity, 'option3')).toEqual(2);
-    expect(manager.getOptionsPositionFromEntity(entity, 'option4')).toEqual(-1);
-  });
-
-  describe('Get Option From Entity', () => {
-    const manager = new NerManager();
-    const entity = manager.addNamedEntity('entity1');
-    const option1 = { name: 'option1' };
-    const option2 = { name: 'option2' };
-    const option3 = { name: 'option3' };
-    entity.options.push(option1);
-    entity.options.push(option2);
-    entity.options.push(option3);
-    expect(entity.getOption('option1')).toBe(option1);
-    expect(entity.getOption('option2')).toBe(option2);
-    expect(entity.getOption('option3')).toBe(option3);
-    expect(entity.getOption('option4')).toBeUndefined();
-  });
-
-  describe('Add named entity option', () => {
-    test('Should add a new option to an existing entity', () => {
-      const manager = new NerManager();
-      const entity = manager.addNamedEntity('entity1');
-      expect(entity.options).toHaveLength(0);
-      manager.addNamedEntityOption('entity1', 'option1_1');
-      expect(entity.options).toHaveLength(1);
-    });
-    test('Should add a the entity if not exist', () => {
-      const manager = new NerManager();
-      manager.addNamedEntityOption('entity1', 'option1_1');
-      const entity = manager.getNamedEntity('entity1');
-      expect(entity).toBeDefined();
-      expect(entity.options).toHaveLength(1);
-    });
-    test('Should return the added option', () => {
-      const manager = new NerManager();
-      const option = manager.addNamedEntityOption('entity1', 'option1_1');
-      expect(option).toBeDefined();
-      expect(option.name).toEqual('option1_1');
-      expect(option.texts).toEqual({});
-    });
-  });
-
-  describe('Remove named entity option', () => {
-    test('Should remove an option from an entity', () => {
-      const manager = new NerManager();
-      const entity = manager.addNamedEntity('entity1');
-      manager.addNamedEntityOption('entity1', 'option1_1');
-      manager.addNamedEntityOption('entity1', 'option1_2');
-      let result = entity.getOption('option1_2');
-      expect(result).toBeDefined();
-      result = manager.removeNamedEntityOption('entity1', 'option1_2');
-      result = entity.getOption('option1_2');
-      expect(result).toBeUndefined();
-    });
-
-    test('Should do nothing if the entity does not exists', () => {
-      const manager = new NerManager();
-      const entity = manager.addNamedEntity('entity1');
-      manager.addNamedEntityOption('entity1', 'option1_1');
-      manager.addNamedEntityOption('entity1', 'option1_2');
-      manager.removeNamedEntityOption('entity2', 'option1_2');
-      expect(entity.options).toHaveLength(2);
-    });
-  });
-
-  describe('Get named entity option', () => {
-    test('Should return the option from the entity', () => {
-      const manager = new NerManager();
-      const option = manager.addNamedEntityOption('entity1', 'option1_1');
-      const result = manager.getNamedEntityOption('entity1', 'option1_1');
-      expect(result).toBe(option);
-    });
-    test('Should result undefined if option not exists', () => {
-      const manager = new NerManager();
-      manager.addNamedEntityOption('entity1', 'option1_1');
-      const result = manager.getNamedEntityOption('entity1', 'option1_2');
-      expect(result).toBeUndefined();
-    });
-    test('Should result undefined if entity not exists', () => {
-      const manager = new NerManager();
-      manager.addNamedEntityOption('entity1', 'option1_1');
-      const result = manager.getNamedEntityOption('entity2', 'option1_2');
-      expect(result).toBeUndefined();
-    });
-    test('Should create option if not exists and forced', () => {
-      const manager = new NerManager();
-      manager.addNamedEntityOption('entity1', 'option1_1');
-      const result = manager.getNamedEntityOption('entity1', 'option1_2', true);
-      expect(result).toBeDefined();
-    });
-    test('Should create entity if not exists and forced', () => {
-      const manager = new NerManager();
-      const result = manager.getNamedEntityOption('entity1', 'option1_2', true);
-      expect(result).toBeDefined();
-    });
-  });
-
   describe('Add named entity text', () => {
     test('Should add text for a given language', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', 'en', 'Something');
-      const option = manager.getNamedEntityOption('entity1', 'option1');
-      expect(option).toBeDefined();
-      expect(option.texts).toBeDefined();
-      expect(option.texts.en).toBeDefined();
-      expect(option.texts.en[0]).toEqual('Something');
+      const entity = manager.getNamedEntity('entity1', false);
+      expect(entity.locales.en).toEqual({ option1: ['Something'] });
     });
     test('Should add several text for a given language', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', 'en', ['Something', 'Anything']);
-      const option = manager.getNamedEntityOption('entity1', 'option1');
-      expect(option).toBeDefined();
-      expect(option.texts).toBeDefined();
-      expect(option.texts.en).toBeDefined();
-      expect(option.texts.en[0]).toEqual('Something');
-      expect(option.texts.en[1]).toEqual('Anything');
+      const entity = manager.getNamedEntity('entity1', false);
+      expect(entity.locales.en).toEqual({ option1: ['Something', 'Anything'] });
     });
     test('Should add several text for several languages', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', ['en', 'es'], ['Something', 'Anything']);
-      const option = manager.getNamedEntityOption('entity1', 'option1');
-      expect(option).toBeDefined();
-      expect(option.texts).toBeDefined();
-      expect(option.texts.en).toBeDefined();
-      expect(option.texts.en[0]).toEqual('Something');
-      expect(option.texts.en[1]).toEqual('Anything');
-      expect(option.texts.es).toBeDefined();
-      expect(option.texts.es[0]).toEqual('Something');
-      expect(option.texts.es[1]).toEqual('Anything');
+      const entity = manager.getNamedEntity('entity1', false);
+      expect(entity.locales.en).toEqual({ option1: ['Something', 'Anything'] });
+      expect(entity.locales.es).toEqual({ option1: ['Something', 'Anything'] });
     });
   });
 
@@ -254,53 +132,33 @@ describe('NER Manager', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', ['en', 'es'], ['Something', 'Anything']);
       manager.removeNamedEntityText('entity1', 'option1', 'es', 'Something');
-      const option = manager.getNamedEntityOption('entity1', 'option1');
-      expect(option).toBeDefined();
-      expect(option.texts).toBeDefined();
-      expect(option.texts.en).toBeDefined();
-      expect(option.texts.en).toHaveLength(2);
-      expect(option.texts.en[0]).toEqual('Something');
-      expect(option.texts.en[1]).toEqual('Anything');
-      expect(option.texts.es).toBeDefined();
-      expect(option.texts.es).toHaveLength(1);
-      expect(option.texts.es[0]).toEqual('Anything');
+      const entity = manager.getNamedEntity('entity1', false);
+      expect(entity.locales.en).toEqual({ option1: ['Something', 'Anything'] });
+      expect(entity.locales.es).toEqual({ option1: ['Anything'] });
     });
     test('Should remove texts for a given language', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', ['en', 'es'], ['Something', 'Anything']);
       manager.removeNamedEntityText('entity1', 'option1', 'es', ['Something', 'Anything']);
-      const option = manager.getNamedEntityOption('entity1', 'option1');
-      expect(option).toBeDefined();
-      expect(option.texts).toBeDefined();
-      expect(option.texts.en).toBeDefined();
-      expect(option.texts.en[0]).toEqual('Something');
-      expect(option.texts.en[1]).toEqual('Anything');
-      expect(option.texts.es).toBeDefined();
-      expect(option.texts.es).toHaveLength(0);
+      const entity = manager.getNamedEntity('entity1', false);
+      expect(entity.locales.en).toEqual({ option1: ['Something', 'Anything'] });
+      expect(entity.locales.es).toEqual({ option1: [] });
     });
     test('Should remove text for several languages', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', ['en', 'es'], ['Something', 'Anything']);
       manager.removeNamedEntityText('entity1', 'option1', ['en', 'es'], 'Something');
-      const option = manager.getNamedEntityOption('entity1', 'option1');
-      expect(option).toBeDefined();
-      expect(option.texts).toBeDefined();
-      expect(option.texts.en).toBeDefined();
-      expect(option.texts.en[0]).toEqual('Anything');
-      expect(option.texts.es).toBeDefined();
-      expect(option.texts.es[0]).toEqual('Anything');
+      const entity = manager.getNamedEntity('entity1', false);
+      expect(entity.locales.en).toEqual({ option1: ['Anything'] });
+      expect(entity.locales.es).toEqual({ option1: ['Anything'] });
     });
     test('Should do nothing if the entity does not exists', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', ['en', 'es'], ['Something', 'Anything']);
       manager.removeNamedEntityText('entity2', 'option1', ['en', 'es'], 'Something');
-      const option = manager.getNamedEntityOption('entity1', 'option1');
-      expect(option).toBeDefined();
-      expect(option.texts).toBeDefined();
-      expect(option.texts.en).toBeDefined();
-      expect(option.texts.en).toHaveLength(2);
-      expect(option.texts.es).toBeDefined();
-      expect(option.texts.es).toHaveLength(2);
+      const entity = manager.getNamedEntity('entity1', false);
+      expect(entity.locales.en).toEqual({ option1: ['Something', 'Anything'] });
+      expect(entity.locales.es).toEqual({ option1: ['Something', 'Anything'] });
     });
   });
 
@@ -333,7 +191,7 @@ describe('NER Manager', () => {
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);
       expect(entities[0].start).toEqual(6);
-      expect(entities[0].end).toEqual(15);
+      expect(entities[0].end).toEqual(14);
       expect(entities[0].levenshtein).toEqual(0);
       expect(entities[0].accuracy).toEqual(1);
       expect(entities[0].option).toEqual('spiderman');
@@ -350,7 +208,7 @@ describe('NER Manager', () => {
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);
       expect(entities[0].start).toEqual(6);
-      expect(entities[0].end).toEqual(15);
+      expect(entities[0].end).toEqual(14);
       expect(entities[0].levenshtein).toEqual(1);
       expect(entities[0].accuracy).toEqual(0.8888888888888888);
       expect(entities[0].option).toEqual('spiderman');
@@ -403,7 +261,8 @@ describe('NER Manager', () => {
   describe('Find entities by Regex', () => {
     test('Should find an entity by regex inside an utterance', () => {
       const manager = new NerManager();
-      manager.addNamedEntity('mail', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      const entity = manager.addNamedEntity('mail', 'regex');
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
       const entities = manager.findEntities('My email is jseijas@gmail.com and yours is not', 'en');
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);

@@ -144,8 +144,8 @@ describe('NLP Manager', () => {
     manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
     manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
     manager.removeNamedEntityText('hero', 'iron man', 'en', 'iron-man');
-    const ironman = manager.nerManager.getNamedEntityOption('hero', 'iron man');
-    expect(ironman.texts.en).toHaveLength(1);
+    const ironman = manager.nerManager.getNamedEntity('hero', false);
+    expect(ironman.locales.en['iron man']).toEqual(['iron man']);
   });
 
   describe('Remove document', () => {
@@ -357,7 +357,7 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.95);
     });
     test('Should search for entities', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
@@ -377,7 +377,7 @@ describe('NLP Manager', () => {
       expect(result.entities[1].sourceText).toEqual('spaghetti');
     });
     test('Should search for entities if the language is specified', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
@@ -529,7 +529,7 @@ describe('NLP Manager', () => {
 
   describe('Save and load', () => {
     test('Should allow to save, load and all should be working', () => {
-      let manager = new NlpManager();
+      let manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
@@ -537,7 +537,7 @@ describe('NLP Manager', () => {
       manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
       manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
       manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
-      manager.addRegexEntity('mail', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      manager.addRegexEntity('mail', 'en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
@@ -583,14 +583,18 @@ describe('NLP Manager', () => {
       const { hero, food } = manager.nerManager.namedEntities;
       expect(hero.type).toEqual('enum');
       expect(food.type).toEqual('enum');
-      expect(hero.options[0].name).toEqual('spiderman');
-      expect(hero.options[1].name).toEqual('ironman');
-      expect(hero.options[2].name).toEqual('hulk');
-      expect(hero.options[3].name).toEqual('thor');
-      expect(food.options[0].name).toEqual('burguer');
-      expect(food.options[1].name).toEqual('pizza');
-      expect(food.options[2].name).toEqual('pasta');
+      expect(food.locales.en).toEqual({
+        burguer: ['burguer', 'hamburguer'],
+        pasta: ['pasta', 'spaghetti'],
+        pizza: ['pizza'],
+      });
+      expect(food.locales.es).toEqual({
+        burguer: ['hamburguesa'],
+        pasta: ['pasta', 'spaghetti'],
+        pizza: ['pizza'],
+      });
     });
+
     test('It should create the classifiers for the languages', () => {
       const manager = new NlpManager();
       manager.loadExcel('./test/nlp/rules.xls');
