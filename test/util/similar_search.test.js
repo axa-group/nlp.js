@@ -112,7 +112,7 @@ describe('Similar Search', () => {
       const result = similar.getWordPositions(text1);
       expect(result).toBeDefined();
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({ start: 0, end: 5, len: 5 });
+      expect(result[0]).toEqual({ start: 0, end: 4, len: 5 });
     });
     test('Should get position of only one word even if surrounded by non alphanumeric chars', () => {
       const similar = new SimilarSearch();
@@ -120,24 +120,24 @@ describe('Similar Search', () => {
       const result = similar.getWordPositions(text1);
       expect(result).toBeDefined();
       expect(result).toHaveLength(1);
-      expect(result[0]).toEqual({ start: 5, end: 10, len: 5 });
+      expect(result[0]).toEqual({ start: 5, end: 9, len: 5 });
     });
     test('Should get position of several words', () => {
       const similar = new SimilarSearch();
       const text1 = ';:Morbi..- interdum,   ultricies  ';
       const result = similar.getWordPositions(text1);
       expect(result).toHaveLength(3);
-      expect(result[0]).toEqual({ start: 2, end: 7, len: 5 });
-      expect(result[1]).toEqual({ start: 11, end: 19, len: 8 });
-      expect(result[2]).toEqual({ start: 23, end: 32, len: 9 });
+      expect(result[0]).toEqual({ start: 2, end: 6, len: 5 });
+      expect(result[1]).toEqual({ start: 11, end: 18, len: 8 });
+      expect(result[2]).toEqual({ start: 23, end: 31, len: 9 });
     });
     test('Should get position of words on long texts', () => {
       const similar = new SimilarSearch();
       const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const result = similar.getWordPositions(text1);
       expect(result).toHaveLength(26);
-      expect(result[0]).toEqual({ start: 0, end: 5, len: 5 });
-      expect(result[25]).toEqual({ start: 188, end: 194, len: 6 });
+      expect(result[0]).toEqual({ start: 0, end: 4, len: 5 });
+      expect(result[25]).toEqual({ start: 188, end: 193, len: 6 });
     });
   });
 
@@ -150,7 +150,7 @@ describe('Similar Search', () => {
       expect(result).toBeDefined();
       expect(result).toEqual({
         start: 6,
-        end: 24,
+        end: 23,
         len: 18,
         levenshtein: 0,
         accuracy: 1,
@@ -164,7 +164,7 @@ describe('Similar Search', () => {
       expect(result).toBeDefined();
       expect(result).toEqual({
         start: 6,
-        end: 30,
+        end: 29,
         len: 24,
         levenshtein: 2,
         accuracy: 0.9166666666666666,
@@ -178,7 +178,7 @@ describe('Similar Search', () => {
       expect(result).toBeDefined();
       expect(result).toEqual({
         start: 0,
-        end: 16,
+        end: 15,
         len: 16,
         levenshtein: 8,
         accuracy: 0.6666666666666666,
@@ -472,7 +472,7 @@ describe('Similar Search', () => {
       expect(result).toHaveLength(1);
       expect(result[0]).toEqual({
         start: 6,
-        end: 24,
+        end: 23,
         len: 18,
         levenshtein: 0,
         accuracy: 1,
@@ -486,14 +486,14 @@ describe('Similar Search', () => {
       expect(result).toHaveLength(2);
       expect(result[0]).toEqual({
         start: 6,
-        end: 14,
+        end: 13,
         len: 8,
         levenshtein: 0,
         accuracy: 1,
       });
       expect(result[1]).toEqual({
         start: 73,
-        end: 81,
+        end: 80,
         len: 8,
         levenshtein: 0,
         accuracy: 1,
@@ -507,14 +507,14 @@ describe('Similar Search', () => {
       expect(result).toHaveLength(2);
       expect(result[0]).toEqual({
         start: 6,
-        end: 14,
+        end: 13,
         len: 8,
         levenshtein: 1,
         accuracy: 0.875,
       });
       expect(result[1]).toEqual({
         start: 73,
-        end: 81,
+        end: 80,
         len: 8,
         levenshtein: 1,
         accuracy: 0.875,
@@ -528,7 +528,7 @@ describe('Similar Search', () => {
       expect(result).toBeDefined();
       expect(result).toEqual([{
         start: 0,
-        end: 16,
+        end: 15,
         len: 16,
         levenshtein: 8,
         accuracy: 0.6666666666666666,
@@ -558,7 +558,7 @@ describe('Similar Search', () => {
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(1);
       expect(bestEntity[0].start).toEqual(6);
-      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].end).toEqual(14);
       expect(bestEntity[0].levenshtein).toEqual(1);
       expect(bestEntity[0].accuracy).toEqual(0.8888888888888888);
       expect(bestEntity[0].option).toEqual('spiderman');
@@ -579,7 +579,7 @@ describe('Similar Search', () => {
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(1);
       expect(bestEntity[0].start).toEqual(6);
-      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].end).toEqual(14);
       expect(bestEntity[0].levenshtein).toEqual(0);
       expect(bestEntity[0].accuracy).toEqual(1);
       expect(bestEntity[0].option).toEqual('spiderman');
@@ -600,21 +600,21 @@ describe('Similar Search', () => {
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(3);
       expect(bestEntity[0].start).toEqual(6);
-      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].end).toEqual(14);
       expect(bestEntity[0].levenshtein).toEqual(0);
       expect(bestEntity[0].accuracy).toEqual(1);
       expect(bestEntity[0].option).toEqual('spiderman');
       expect(bestEntity[0].sourceText).toEqual('Spiderman');
       expect(bestEntity[0].utteranceText).toEqual('spiderman');
       expect(bestEntity[1].start).toEqual(44);
-      expect(bestEntity[1].end).toEqual(53);
+      expect(bestEntity[1].end).toEqual(52);
       expect(bestEntity[1].levenshtein).toEqual(1);
       expect(bestEntity[1].accuracy).toEqual(0.8888888888888888);
       expect(bestEntity[1].option).toEqual('spiderman');
       expect(bestEntity[1].sourceText).toEqual('Spiderman');
       expect(bestEntity[1].utteranceText).toEqual('spederman');
       expect(bestEntity[2].start).toEqual(23);
-      expect(bestEntity[2].end).toEqual(31);
+      expect(bestEntity[2].end).toEqual(30);
       expect(bestEntity[2].levenshtein).toEqual(1);
       expect(bestEntity[2].accuracy).toEqual(0.875);
       expect(bestEntity[2].option).toEqual('iron man');
@@ -659,7 +659,7 @@ describe('Similar Search', () => {
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(2);
       expect(bestEntity[0].start).toEqual(6);
-      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].end).toEqual(14);
       expect(bestEntity[0].levenshtein).toEqual(1);
       expect(bestEntity[0].accuracy).toEqual(0.8888888888888888);
       expect(bestEntity[0].option).toEqual('spiderman');
@@ -667,7 +667,7 @@ describe('Similar Search', () => {
       expect(bestEntity[0].entity).toEqual('hero');
       expect(bestEntity[0].utteranceText).toEqual('spederman');
       expect(bestEntity[1].start).toEqual(23);
-      expect(bestEntity[1].end).toEqual(32);
+      expect(bestEntity[1].end).toEqual(31);
       expect(bestEntity[1].levenshtein).toEqual(0);
       expect(bestEntity[1].accuracy).toEqual(1);
       expect(bestEntity[1].option).toEqual('pasta');
@@ -698,7 +698,7 @@ describe('Similar Search', () => {
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(1);
       expect(bestEntity[0].start).toEqual(23);
-      expect(bestEntity[0].end).toEqual(32);
+      expect(bestEntity[0].end).toEqual(31);
       expect(bestEntity[0].levenshtein).toEqual(0);
       expect(bestEntity[0].accuracy).toEqual(1);
       expect(bestEntity[0].option).toEqual('pasta');
@@ -729,7 +729,7 @@ describe('Similar Search', () => {
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(1);
       expect(bestEntity[0].start).toEqual(6);
-      expect(bestEntity[0].end).toEqual(15);
+      expect(bestEntity[0].end).toEqual(14);
       expect(bestEntity[0].levenshtein).toEqual(1);
       expect(bestEntity[0].accuracy).toEqual(0.8888888888888888);
       expect(bestEntity[0].option).toEqual('spiderman');

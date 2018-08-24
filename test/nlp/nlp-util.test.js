@@ -50,7 +50,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('pt')).toBe(Natural.PorterStemmerPt); // portugese
       expect(NlpUtil.getStemmer('sv')).toBe(Natural.PorterStemmerSv); // swedish
       expect(NlpUtil.getStemmer('nl')).toBe(Natural.PorterStemmerNl); // Dutch
-      expect(NlpUtil.getStemmer('id')).toBe(Natural.PorterStemmerId); // Indonesian
+      expect(NlpUtil.getStemmer('id')).toBe(Natural.StemmerId); // Indonesian
       expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(Natural.StemmerJa); // Japanese
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
@@ -94,7 +94,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('pt').constructor.name).toEqual('PortugueseStemmer'); // portugese
       expect(NlpUtil.getStemmer('sv').constructor.name).toEqual('SwedishStemmer'); // swedish
       expect(NlpUtil.getStemmer('nl').constructor.name).toEqual('DutchStemmer'); // Dutch
-      expect(NlpUtil.getStemmer('id')).toBe(Natural.PorterStemmerId); // Indonesian
+      expect(NlpUtil.getStemmer('id')).toBe(Natural.StemmerId); // Indonesian
       expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(Natural.StemmerJa); // Japanese
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
@@ -150,6 +150,34 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('aa')).toBeInstanceOf(Natural.TreebankWordTokenizer);
       expect(NlpUtil.getTokenizer('')).toBeInstanceOf(Natural.TreebankWordTokenizer);
       expect(NlpUtil.getTokenizer()).toBeInstanceOf(Natural.TreebankWordTokenizer);
+    });
+  });
+
+  describe('Get culture', () => {
+    test('Should return correct culture for the locale', () => {
+      expect(NlpUtil.getCulture('en')).toEqual('en-us'); // english
+      expect(NlpUtil.getCulture('fa')).toEqual('fa-ir'); // farsi
+      expect(NlpUtil.getCulture('fr')).toEqual('fr-fr'); // french
+      expect(NlpUtil.getCulture('ru')).toEqual('ru-ru'); // russian
+      expect(NlpUtil.getCulture('es')).toEqual('es-es'); // spanish
+      expect(NlpUtil.getCulture('it')).toEqual('it-it'); // italian
+      expect(NlpUtil.getCulture('nl')).toEqual('nl-nl'); // dutch
+      expect(NlpUtil.getCulture('no')).toEqual('no-no'); // norwegian
+      expect(NlpUtil.getCulture('pt')).toEqual('pt-br'); // portuguese
+      expect(NlpUtil.getCulture('pl')).toEqual('pl-pl'); // polish
+      expect(NlpUtil.getCulture('sv')).toEqual('sv-se'); // swedish
+      expect(NlpUtil.getCulture('id')).toEqual('id-id'); // indonesian
+      expect(NlpUtil.getCulture('ja')).toEqual('ja-jp'); // japanese
+      expect(NlpUtil.getCulture('da')).toEqual('da-dk'); // danish
+      expect(NlpUtil.getCulture('fi')).toEqual('fi-fi'); // finnish
+      expect(NlpUtil.getCulture('de')).toEqual('de-de'); // german
+      expect(NlpUtil.getCulture('hu')).toEqual('hu-hu'); // hungarian
+      expect(NlpUtil.getCulture('ro')).toEqual('ro-ro'); // romanian
+      expect(NlpUtil.getCulture('tr')).toEqual('tr-tr'); // turkish
+      expect(NlpUtil.getCulture('zh')).toEqual('zh-cn'); // Chinese
+    });
+    test('If the locale is not recognized return default english', () => {
+      expect(NlpUtil.getCulture('aa')).toEqual('en-us'); // english
     });
   });
 });

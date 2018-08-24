@@ -357,7 +357,7 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.95);
     });
     test('Should search for entities', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
@@ -377,7 +377,7 @@ describe('NLP Manager', () => {
       expect(result.entities[1].sourceText).toEqual('spaghetti');
     });
     test('Should search for entities if the language is specified', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
@@ -529,7 +529,7 @@ describe('NLP Manager', () => {
 
   describe('Save and load', () => {
     test('Should allow to save, load and all should be working', () => {
-      let manager = new NlpManager();
+      let manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);

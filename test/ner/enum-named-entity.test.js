@@ -162,7 +162,7 @@ describe('Enum Named Entity', () => {
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(1);
       expect(edges[0].start).toEqual(6);
-      expect(edges[0].end).toEqual(15);
+      expect(edges[0].end).toEqual(14);
       expect(edges[0].levenshtein).toEqual(1);
       expect(edges[0].accuracy).toEqual(0.8888888888888888);
       expect(edges[0].option).toEqual('spiderman');
@@ -180,7 +180,7 @@ describe('Enum Named Entity', () => {
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(1);
       expect(edges[0].start).toEqual(6);
-      expect(edges[0].end).toEqual(15);
+      expect(edges[0].end).toEqual(14);
       expect(edges[0].levenshtein).toEqual(1);
       expect(edges[0].accuracy).toEqual(0.8888888888888888);
       expect(edges[0].option).toEqual('spiderman');

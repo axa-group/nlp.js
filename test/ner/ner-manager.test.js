@@ -191,7 +191,7 @@ describe('NER Manager', () => {
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);
       expect(entities[0].start).toEqual(6);
-      expect(entities[0].end).toEqual(15);
+      expect(entities[0].end).toEqual(14);
       expect(entities[0].levenshtein).toEqual(0);
       expect(entities[0].accuracy).toEqual(1);
       expect(entities[0].option).toEqual('spiderman');
@@ -208,7 +208,7 @@ describe('NER Manager', () => {
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);
       expect(entities[0].start).toEqual(6);
-      expect(entities[0].end).toEqual(15);
+      expect(entities[0].end).toEqual(14);
       expect(entities[0].levenshtein).toEqual(1);
       expect(entities[0].accuracy).toEqual(0.8888888888888888);
       expect(entities[0].option).toEqual('spiderman');
