@@ -111,7 +111,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Farsi (fa)      | X       |          |        |       |          |         |
 | Finnish (fi)    |         | X        |        |       |          |         |
 | French (fr)     | X       | X        |        |       |          | X       |
-| German (de)     |         | X        |        |       |          |         |
+| German (de)     |         | X        |        |       | X        |         |
 | Hungarian (hu)  |         | X        |        |       |          |         |
 | Indonesian (id) | X       |          |        |       |          |         |
 | Italian (it)    | X       | X        |        |       |          | X       |
