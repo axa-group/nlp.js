@@ -370,6 +370,7 @@ Languages accepted:
 * nl: Dutch
 * fr: French
 * it: Italian
+* de: German
 
 | Language      | AFINN       | Senticon  | Pattern   | Negations |
 | ------------- |:-----------:|:---------:|:---------:|:---------:|
@@ -377,7 +378,8 @@ Languages accepted:
 | English       | X           |  X        | X         | X         |
 | French        |             |           | X         |           |
 | Italian       |             |           | X         |           |
-| Spanish       | X           |  X        |           | X         |     
+| Spanish       | X           |  X        |           | X         |
+| German        |             |  X        |           | X         |
 
 By default Senticon is used if possible, otherwise AFINN, and last one Pattern:
 
