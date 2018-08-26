@@ -82,5 +82,29 @@ describe('Sentiment Manager', () => {
       expect(result.language).toEqual('en');
       expect(result.vote).toEqual('negative');
     });
+    test('Get positive sentiment deutsch', () => {
+      const sentiment = new SentimentManager();
+      const utterance = 'Ich liebe Kätzchen';
+      const result = sentiment.process('de', utterance);
+      expect(result).toBeDefined();
+      expect(result.score).toBeGreaterThan(0);
+      expect(result.numWords).toEqual(3);
+      expect(result.numHits).toEqual(1);
+      expect(result.type).toEqual('senticon');
+      expect(result.language).toEqual('de');
+      expect(result.vote).toEqual('positive');
+    });
+    test('Get negative sentiment deutsch', () => {
+      const sentiment = new SentimentManager();
+      const utterance = 'Ich hasse Katzen, ich werde wirklich krank.';
+      const result = sentiment.process('de', utterance);
+      expect(result).toBeDefined();
+      expect(result.score).toBeLessThan(0);
+      expect(result.numWords).toEqual(7);
+      expect(result.numHits).toEqual(2);
+      expect(result.type).toEqual('senticon');
+      expect(result.language).toEqual('de');
+      expect(result.vote).toEqual('negative');
+    });
   });
 });

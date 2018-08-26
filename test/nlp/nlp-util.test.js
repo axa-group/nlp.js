@@ -22,6 +22,7 @@
  */
 
 const Natural = require('natural');
+const PunctTokenizer = require('../../lib/nlp/tokenizers/punct-tokenizer');
 const { NlpUtil } = require('../../lib');
 
 describe('NLP Util', () => {
@@ -139,17 +140,17 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('sv')).toBeInstanceOf(Natural.AggressiveTokenizerSv); // swedish
       expect(NlpUtil.getTokenizer('id')).toBeDefined(); // indonesian
       expect(NlpUtil.getTokenizer('ja')).toBeInstanceOf(Natural.TokenizerJa); // japanese
-      expect(NlpUtil.getTokenizer('da')).toBeInstanceOf(Natural.TreebankWordTokenizer); // danish
-      expect(NlpUtil.getTokenizer('fi')).toBeInstanceOf(Natural.TreebankWordTokenizer); // finnish
-      expect(NlpUtil.getTokenizer('de')).toBeInstanceOf(Natural.TreebankWordTokenizer); // german
-      expect(NlpUtil.getTokenizer('hu')).toBeInstanceOf(Natural.TreebankWordTokenizer); // hungarian
-      expect(NlpUtil.getTokenizer('ro')).toBeInstanceOf(Natural.TreebankWordTokenizer); // romanian
-      expect(NlpUtil.getTokenizer('tr')).toBeInstanceOf(Natural.TreebankWordTokenizer); // turkish
+      expect(NlpUtil.getTokenizer('da')).toBeInstanceOf(PunctTokenizer); // danish
+      expect(NlpUtil.getTokenizer('fi')).toBeInstanceOf(PunctTokenizer); // finnish
+      expect(NlpUtil.getTokenizer('de')).toBeInstanceOf(PunctTokenizer); // german
+      expect(NlpUtil.getTokenizer('hu')).toBeInstanceOf(PunctTokenizer); // hungarian
+      expect(NlpUtil.getTokenizer('ro')).toBeInstanceOf(PunctTokenizer); // romanian
+      expect(NlpUtil.getTokenizer('tr')).toBeInstanceOf(PunctTokenizer); // turkish
     });
-    test('Shoul return an Treebank word Tokenizer for unknown locales', () => {
-      expect(NlpUtil.getTokenizer('aa')).toBeInstanceOf(Natural.TreebankWordTokenizer);
-      expect(NlpUtil.getTokenizer('')).toBeInstanceOf(Natural.TreebankWordTokenizer);
-      expect(NlpUtil.getTokenizer()).toBeInstanceOf(Natural.TreebankWordTokenizer);
+    test('Shoul return an Punctuation word Tokenizer for unknown locales', () => {
+      expect(NlpUtil.getTokenizer('aa')).toBeInstanceOf(PunctTokenizer);
+      expect(NlpUtil.getTokenizer('')).toBeInstanceOf(PunctTokenizer);
+      expect(NlpUtil.getTokenizer()).toBeInstanceOf(PunctTokenizer);
     });
   });
 

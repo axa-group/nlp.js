@@ -46,11 +46,11 @@ describe('Sentiment Analyzer', () => {
       expect(analyzer.negations).toEqual([]);
     });
     test('It should be able to load languages', () => {
-      ['en', 'es', 'it', 'fr', 'nl'].forEach((language) => {
+      ['en', 'es', 'it', 'fr', 'nl', 'de'].forEach((language) => {
         const analyzer = new SentimentAnalyzer({ language });
         expect(analyzer.settings.language).toEqual(language);
         expect(analyzer.settings.tokenizer).toBeDefined();
-        if (language === 'en' || language === 'es') {
+        if (language === 'en' || language === 'es' || language === 'de') {
           expect(analyzer.settings.type).toEqual('senticon');
         } else {
           expect(analyzer.settings.type).toEqual('pattern');
