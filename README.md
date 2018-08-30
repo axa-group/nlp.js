@@ -281,7 +281,7 @@ Currently 19 languages are supported:
 * Chinese (zh)
 * Danish (da)
 * Dutch (nl)
-* Enlish (en)
+* English (en)
 * Farsi (fa)
 * Finnish (fi)
 * French (fr)
