@@ -1,0 +1,10 @@
+[
+  {
+    "utteranceEn": "three trillionth",
+    "utteranceEs": "tresbillonesimo",
+    "utteranceFr": "trois trillionth",
+    "utterancePt": "três trilionésimo",
+    "avoid": ["fr", "pt"],
+    "result": { "strValue": "3000000000000", "value": 3000000000000, "subtype": "integer" }
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "es": {
+    "Año": "Year",
+    "Mes": "Month",
+    "Día": "Day",
+    "Semana": "Week"
+  },
+  "fr": {
+    "Ans": "Year",
+    "Mois": "Month",
+    "Semaines": "Week",
+    "Jour": "Day"
+  },
+  "pt": {
+    "Ano": "Year",
+    "Mês": "Month",
+    "Dia": "Day",
+    "Semana": "Week"
+  }
+}
+
