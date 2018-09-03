@@ -1,0 +1,20 @@
+[
+  {
+    "utterance": "100%",
+    "result": { "strValue": "100%", "value": 100, "subtype": "integer" }
+  },
+  {
+    "utteranceEn": "100 percent",
+    "utteranceEs": "100 por ciento",
+    "utteranceFr": "100 pourcent",
+    "utterancePt": "100 por cento",
+    "result": { "strValue": "100%", "value": 100, "subtype": "integer" }
+  },
+  {
+    "utteranceEn": "thirty five percentage",
+    "utteranceEs": "treinta y cinco por ciento",
+    "utteranceFr": "trente cinq pourcent",
+    "utterancePt": "trinta e cinco por cento",
+    "result": { "strValue": "35%", "value": 35, "subtype": "integer" }
+  }
+]

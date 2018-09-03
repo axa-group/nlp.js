@@ -2,6 +2,8 @@ const { NlpManager } = require('../../../lib');
 const numberAgeTests = require('./number-age.json');
 const numberTests = require('./number.json');
 const numberOrdinalTests = require('./number-ordinal.json');
+const numberPercentTests = require('./number-percent.json');
+const numberCurrency = require('./number-currency.json');
 
 expect.extend({
   toContainResolution(received, argument) {
@@ -25,7 +27,9 @@ expect.extend({
 });
 
 function addTests(base, locale) {
-  const utteranceName = `utterance${locale.charAt(0).toUpperCase()}${locale.slice(1)}`;
+  const upperLocale = `${locale.charAt(0).toUpperCase()}${locale.slice(1)}`;
+  const utteranceName = `utterance${upperLocale}`;
+  const resultName = `result${upperLocale}`;
   const manager = new NlpManager({ languages: [locale] });
   for (let i = 0; i < base.length; i += 1) {
     const testCase = base[i];
@@ -34,7 +38,7 @@ function addTests(base, locale) {
       if (utterance) {
         test(utterance, () => {
           const result = manager.process(utterance).entities;
-          expect(result).toContainResolution(testCase.result);
+          expect(result).toContainResolution(Object.assign(testCase.result, testCase[resultName]));
         });
       }
     }
@@ -56,8 +60,14 @@ describe('NerManager Number builtins', () => {
     describe(`Ordinal ${language.name}`, () => {
       addTests(numberOrdinalTests, language.locale);
     });
+    describe(`Percentage ${language.name}`, () => {
+      addTests(numberPercentTests, language.locale);
+    });
     describe(`Age ${language.name}`, () => {
       addTests(numberAgeTests, language.locale);
+    });
+    describe(`Currency ${language.name}`, () => {
+      addTests(numberCurrency, language.locale);
     });
   });
 });
