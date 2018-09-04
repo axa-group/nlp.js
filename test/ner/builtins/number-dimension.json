@@ -1,0 +1,45 @@
+[
+  {
+    "utteranceEn": "we are insulted, said langa from the greek catholic headquarters , some 325 kilometer northwest of bucharest.",
+    "utteranceEs": "Fuimos insultados, dijo Langa desde el cuartel general católico griego, a unos 325 kilómetros al noroeste de Bucarest.",
+    "utteranceFr": "Nous sommes insultés, a dit langa du siège social catholique grec, nord-ouest environ de 325 kilomètres de Bucarest.",
+    "utterancePt": "Fuimos insultados, dijo Langa desde el cuartel general católico griego, a unos 325 quilometro ao noroeste de Bucarest.",
+    "result": { "strValue": "325", "value": 325, "unit": "Kilometer" },
+    "resultEn": { "localeUnit": "Kilometer" },
+    "resultEs": { "localeUnit": "Kilómetro" },
+    "resultFr": { "localeUnit": "Kilomètres" },
+    "resultPt": { "localeUnit": "Quilômetro" }
+  },
+  {
+    "utterance": "120 km/h",
+    "result": { "strValue": "120", "value": 120, "unit": "Kilometer per hour" },
+    "resultEn": { "localeUnit": "Kilometer per hour" },
+    "resultEs": { "localeUnit": "Kilómetro por hora" },
+    "resultFr": { "localeUnit": "Kilomètre par heure" },
+    "resultPt": { "localeUnit": "Quilômetro por hora" }
+  },
+  {
+    "utterance": "120 m3",
+    "result": { "strValue": "120", "value": 120, "unit": "Cubic meter" },
+    "resultEn": { "localeUnit": "Cubic meter" },
+    "resultEs": { "localeUnit": "Metro cúbico" },
+    "resultFr": { "localeUnit": "Mètre cube" },
+    "resultPt": { "localeUnit": "Metro cúbico" }
+  },
+  {
+    "utterance": "120 kg",
+    "result": { "strValue": "120", "value": 120, "unit": "Kilogram" },
+    "resultEn": { "localeUnit": "Kilogram" },
+    "resultEs": { "localeUnit": "Kilogramo" },
+    "resultFr": { "localeUnit": "Kilogramme" },
+    "resultPt": { "localeUnit": "Quilograma" }
+  },
+  {
+    "utterance": "120 °f",
+    "result": { "strValue": "120", "value": 120, "unit": "F" },
+    "resultEn": { "localeUnit": "F" },
+    "resultEs": { "localeUnit": "Grado Fahrenheit" },
+    "resultFr": { "localeUnit": "F" },
+    "resultPt": { "localeUnit": "Grau Fahrenheit" }
+  }
+]
