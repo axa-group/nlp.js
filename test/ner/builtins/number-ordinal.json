@@ -1,0 +1,24 @@
+[
+  {
+    "utteranceEn": "three trillionth",
+    "utteranceEs": "tresbillonesimo",
+    "utteranceFr": "trois trillionth",
+    "utterancePt": "três trilionésimo",
+    "avoid": ["fr", "pt"],
+    "result": { "strValue": "3000000000000", "value": 3000000000000, "subtype": "integer" }
+  },
+  {
+    "utteranceEn": "one hundred twenty fifth",
+    "utteranceEs": "centesimo vigesimo quinto",
+    "utteranceFr": "cent vingt cinquieme",
+    "utterancePt": "centesimo vigesimo quinto",
+    "result": { "strValue": "125", "value": 125, "subtype": "integer" }
+  },
+  {
+    "utteranceEn": "2nd",
+    "utteranceEs": "2da",
+    "utteranceFr": "2eme",
+    "utterancePt": "2a",
+    "result": { "strValue": "2", "value": 2, "subtype": "integer" }
+  }
+]

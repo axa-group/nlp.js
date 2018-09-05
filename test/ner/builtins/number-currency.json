@@ -1,0 +1,25 @@
+[
+  {
+    "utteranceEn": "420 million finnish markka",
+    "utteranceEs": "420 millones de marcos finlandeses",
+    "utteranceFr": "420 millions de mark finlandais",
+    "utterancePt": "420 milhoes de marcos finlandeses",
+    "result": { "strValue": "420000000", "value": 420000000, "unit": "Finnish markka" },
+    "resultEn": { "localeUnit": "Finnish markka" },
+    "resultEs": { "localeUnit": "Marco finlandés" },
+    "resultFr": { "localeUnit": "Mark Finlandais" },
+    "resultPt": { "localeUnit": "Marco finlandês" }
+  },
+  {
+    "utterance": "333€",
+    "result": { "strValue": "333", "value": 333, "unit": "Euro", "localeUnit": "Euro" }
+  },
+  {
+    "utterance": "$333",
+    "result": { "strValue": "333", "value": 333, "unit": "Dollar" },
+    "resultEn": { "localeUnit": "Dollar" },
+    "resultEs": { "localeUnit": "Dólar" },
+    "resultFr": { "localeUnit": "Dollar" },
+    "resultPt": { "localeUnit": "Dólar" }
+  }
+]
