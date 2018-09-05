@@ -387,19 +387,19 @@ The entity extraction is done even if the utterance is not matched to an intent.
 | Hashtag         | X       | X        | X       | X          | X     |
 | Phone Number    | X       | X        | X       | X          | X     |
 | URL             | X       | X        | X       | X          | X     |
-| Number          | X       | X        | X       | X          | *1    |
+| Number          | X       | X        | X       | X          | see 1 |
 | Ordinal         | X       | X        | X       | X          |       |
-| Percentage      | X       | X        | X       | X          | *2    |
-| Dimension       | X       | X        | X       | X          | *3    |
+| Percentage      | X       | X        | X       | X          | see 2 |
+| Dimension       | X       | X        | X       | X          | see 3 |
 | Age             | X       | X        | X       | X          |       |
 | Currency        | X       | X        | X       | X          |       |
-| Date            | X       | X        | X       | X          | *4    |
+| Date            | X       | X        | X       | X          | see 4 |
 | Duration        | X       |          |         |            |       |
 
-*1: Only for non text numbers
-*2: Only for % symbol non text numbers
-*3: Only for dimension acronyms (km, s, km/h...) non text numbers
-*4: Only dd/MM/yyyy formats or similars, non text
+- 1: Only for non text numbers
+- 2: Only for % symbol non text numbers
+- 3: Only for dimension acronyms (km, s, km/h...) non text numbers
+- 4: Only dd/MM/yyyy formats or similars, non text
 
 ### Email Extraction
 
