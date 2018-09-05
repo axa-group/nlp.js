@@ -380,6 +380,27 @@ It also support Regular Expression entities
 The NER Manager includes by default a builtin entity extraction with different bundles available for different languages.
 The entity extraction is done even if the utterance is not matched to an intent.
 
+| Builtin         | English | French   | Spanish | Portuguese | Other |
+|:--------------- |:-------:|:--------:|:-------:|:----------:|:-----:|
+| Email           | X       | X        | X       | X          | X     |
+| Ip              | X       | X        | X       | X          | X     |
+| Hashtag         | X       | X        | X       | X          | X     |
+| Phone Number    | X       | X        | X       | X          | X     |
+| URL             | X       | X        | X       | X          | X     |
+| Number          | X       | X        | X       | X          | *1    |
+| Ordinal         | X       | X        | X       | X          |       |
+| Percentage      | X       | X        | X       | X          | *2    |
+| Dimension       | X       | X        | X       | X          | *3    |
+| Age             | X       | X        | X       | X          |       |
+| Currency        | X       | X        | X       | X          |       |
+| Date            | X       | X        | X       | X          | *4    |
+| Duration        | X       |          |         |            |       |
+
+*1: Only for non text numbers
+*2: Only for % symbol non text numbers
+*3: Only for dimension acronyms (km, s, km/h...) non text numbers
+*4: Only dd/MM/yyyy formats or similars, non text
+
 ### Email Extraction
 
 It can identify and extract valid emails accounts, this works for any language.
