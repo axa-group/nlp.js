@@ -32,19 +32,19 @@
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.10.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.17.0",
-    "jest": "^23.4.2"
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.22.0",
+    "jest": "^23.5.0"
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "^1.0.1",
     "escodegen": "^1.10.0",
     "esprima": "^4.0.0",
     "franc": "^4.0.0",
-    "handlebars": "^4.0.11",
+    "handlebars": "^4.0.12",
     "natural": "^0.6.1",
-    "novel-segment": "^2.0.35",
-    "xlsx": "^0.13.3"
+    "novel-segment": "^2.0.42",
+    "xlsx": "^0.13.5"
   },
   "keywords": [
     "natural language processing",
