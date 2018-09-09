@@ -1,3 +1,7 @@
 /coverage
 /node_modules
 
+.vscode
+.idea
+
+model.nlp

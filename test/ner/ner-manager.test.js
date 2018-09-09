@@ -182,12 +182,12 @@ describe('NER Manager', () => {
   });
 
   describe('Find entities', () => {
-    test('Should find an entity inside an utterance', () => {
+    test('Should find an entity inside an utterance', async () => {
       const manager = new NerManager();
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
       manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      const entities = manager.findEntities('I saw spiderman in the city', 'en');
+      const entities = await manager.findEntities('I saw spiderman in the city', 'en');
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);
       expect(entities[0].start).toEqual(6);
@@ -199,12 +199,12 @@ describe('NER Manager', () => {
       expect(entities[0].entity).toEqual('hero');
       expect(entities[0].utteranceText).toEqual('spiderman');
     });
-    test('Should find an entity if levenshtein greater than threshold', () => {
+    test('Should find an entity if levenshtein greater than threshold', async () => {
       const manager = new NerManager({ threshold: 0.8 });
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
       manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      const entities = manager.findEntities('I saw spederman in the city', 'en');
+      const entities = await manager.findEntities('I saw spederman in the city', 'en');
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);
       expect(entities[0].start).toEqual(6);
@@ -216,16 +216,16 @@ describe('NER Manager', () => {
       expect(entities[0].entity).toEqual('hero');
       expect(entities[0].utteranceText).toEqual('spederman');
     });
-    test('Should not find an entity if levenshtein less than threshold', () => {
+    test('Should not find an entity if levenshtein less than threshold', async () => {
       const manager = new NerManager({ threshold: 0.8 });
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
       manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      const entities = manager.findEntities('I saw spererman in the city', 'en');
+      const entities = await manager.findEntities('I saw spererman in the city', 'en');
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(0);
     });
-    test('Should find several entities inside an utterance', () => {
+    test('Should find several entities inside an utterance', async () => {
       const manager = new NerManager();
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
@@ -233,7 +233,7 @@ describe('NER Manager', () => {
       manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
       manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
       manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
-      const entities = manager.findEntities('I saw spiderman eating spaghetti in the city', 'en');
+      const entities = await manager.findEntities('I saw spiderman eating spaghetti in the city', 'en');
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(2);
       expect(entities[0].option).toEqual('spiderman');
@@ -245,7 +245,7 @@ describe('NER Manager', () => {
       expect(entities[1].entity).toEqual('food');
       expect(entities[1].utteranceText).toEqual('spaghetti');
     });
-    test('Should return an empty array if the utterance is empty', () => {
+    test('Should return an empty array if the utterance is empty', async () => {
       const manager = new NerManager();
       manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
       manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
@@ -253,17 +253,17 @@ describe('NER Manager', () => {
       manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
       manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
       manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
-      const entities = manager.findEntities('', 'en');
+      const entities = await manager.findEntities('', 'en');
       expect(entities).toBeDefined();
       expect(entities).toEqual([]);
     });
   });
   describe('Find entities by Regex', () => {
-    test('Should find an entity by regex inside an utterance', () => {
+    test('Should find an entity by regex inside an utterance', async () => {
       const manager = new NerManager();
       const entity = manager.addNamedEntity('mail', 'regex');
       entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
-      const entities = manager.findEntities('My email is jseijas@gmail.com and yours is not', 'en');
+      const entities = await manager.findEntities('My email is jseijas@gmail.com and yours is not', 'en');
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(1);
       expect(entities[0].start).toEqual(12);

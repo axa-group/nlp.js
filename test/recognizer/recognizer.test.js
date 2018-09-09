@@ -45,42 +45,42 @@ describe('Recognizer', () => {
     });
   });
   describe('Process', () => {
-    test('It should process an utterance', () => {
+    test('It should process an utterance', async () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const process = recognizer.process({}, 'en', 'What is your age?');
+      const process = await recognizer.process({}, 'en', 'What is your age?');
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
     });
-    test('It should autodetect the language if not provided', () => {
+    test('It should autodetect the language if not provided', async () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const process = recognizer.process({}, undefined, 'What is your age?');
+      const process = await recognizer.process({}, undefined, 'What is your age?');
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
     });
-    test('It should create a new temporal context if not provided', () => {
+    test('It should create a new temporal context if not provided', async () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const process = recognizer.process(undefined, undefined, 'What is your age?');
+      const process = await recognizer.process(undefined, undefined, 'What is your age?');
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
     });
-    test('If the intent is None then the answer should not be calculated', () => {
+    test('If the intent is None then the answer should not be calculated', async () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const process = recognizer.process(undefined, undefined, 'yupi caramelo?');
+      const process = await recognizer.process(undefined, undefined, 'yupi caramelo?');
       expect(process.intent).toEqual('None');
       expect(process.answer).toBeUndefined();
     });
-    test('If there are extracted entities, the context will be filled with those and $modified=true', () => {
+    test('If there are extracted entities, the context will be filled with those and $modified=true', async () => {
       const recognizer = new Recognizer();
       recognizer.loadExcel('./test/nlp/rules.xls');
       const context = {};
-      recognizer.process(context, undefined, 'Who is spiderman?');
+      await recognizer.process(context, undefined, 'Who is spiderman?');
       expect(context).toEqual({ hero: 'spiderman', $modified: true });
     });
   });
