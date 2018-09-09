@@ -41,10 +41,9 @@ manager.addDocument(
 );
 manager.addDocument('en', 'I want to eat %food%', 'wanteat');
 manager.train();
-const result = manager.process(
+manager.process(
   'I saw spiderman eating spaghetti today in the city!',
-);
-console.log(result);
+).then(result => console.log(result));
 // { locale: 'en',
 //   localeIso2: 'en',
 //   language: 'English',
@@ -88,7 +87,9 @@ Also, you can save and load the NLP Manager to be reused without having to train
       manager.save(filename);
       manager = new NlpManager();
       manager.load(filename);
-      const result = manager.process('I saw spiderman eating spaghetti today in the city!');
+      manager
+        .process('I saw spiderman eating spaghetti today in the city!')
+        .then(result => {});
 ```
 
 If no filename is provided by default it is './model.nlp'.

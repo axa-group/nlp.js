@@ -88,8 +88,8 @@ function addTests(base, locale) {
     if (!testCase.avoid || !testCase.avoid.includes(locale)) {
       const utterance = testCase[utteranceName] || testCase.utterance;
       if (utterance) {
-        test(utterance, () => {
-          const result = manager.process(utterance).entities;
+        test(utterance, async () => {
+          const { entities:result } = await manager.process(utterance);
           expect(result).toContainResolution(Object.assign(testCase.result, testCase[resultName]));
         });
       }

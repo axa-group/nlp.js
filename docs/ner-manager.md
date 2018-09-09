@@ -29,10 +29,12 @@ manager.addNamedEntityText(
 );
 manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
 manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
-const entities = manager.findEntities(
+manager.findEntities(
   'I saw spederman eating speghetti in the city',
   'en',
-);
+).then(entities => {
+  // ...
+})
 // value is [ { start: 6, end: 15, levenshtein: 1, accuracy: 0.8888888888888888, option: 'spiderman',
 //  sourceText: 'Spiderman', entity: 'hero', utteranceText: 'spederman' },
 //  { start: 23, end: 32, levenshtein: 1, accuracy: 0.8888888888888888, option: 'pasta',
@@ -67,11 +69,10 @@ manager.addNamedEntityText(
 manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
 manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
 manager.addNamedEntity('email', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
-const entities = manager.findEntities(
+manager.findEntities(
   'I saw spiderman eating speghetti in the city and his mail is spiderman@gmial.com',
   'en',
-);
-console.log(entities);
+).then(entities => console.log(entities));
 // [ { start: 6,
 //     end: 15,
 //     levenshtein: 0,
