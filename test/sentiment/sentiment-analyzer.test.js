@@ -74,10 +74,10 @@ describe('Sentiment Analyzer', () => {
   });
 
   describe('Get Sentiment', () => {
-    test('Get positive sentiment', () => {
+    test('Get positive sentiment', async () => {
       const analyzer = new SentimentAnalyzer();
       const utterance = 'I love cats, are so cute!';
-      const result = analyzer.getSentiment(utterance);
+      const result = await analyzer.getSentiment(utterance);
       expect(result).toBeDefined();
       expect(result.score).toEqual(1.032);
       expect(result.numWords).toEqual(6);
@@ -86,10 +86,10 @@ describe('Sentiment Analyzer', () => {
       expect(result.type).toEqual('senticon');
       expect(result.language).toEqual('en');
     });
-    test('Get negative sentiment', () => {
+    test('Get negative sentiment', async () => {
       const analyzer = new SentimentAnalyzer();
       const utterance = 'I hate cats, are awful!';
-      const result = analyzer.getSentiment(utterance);
+      const result = await analyzer.getSentiment(utterance);
       expect(result).toBeDefined();
       expect(result.score).toEqual(-1);
       expect(result.numWords).toEqual(5);

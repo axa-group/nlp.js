@@ -577,16 +577,16 @@ describe('NLP Manager', () => {
   });
 
   describe('Get Sentiment', () => {
-    test('It should return the sentiment of an utterance', () => {
+    test('It should return the sentiment of an utterance', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en']);
-      const sentiment = manager.getSentiment('en', 'I love kitties');
+      const sentiment = await manager.getSentiment('en', 'I love kitties');
       expect(sentiment.vote).toEqual('positive');
     });
-    test('If the locale is not given, then guess it', () => {
+    test('If the locale is not given, then guess it', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en']);
-      const sentiment = manager.getSentiment('I love kitties');
+      const sentiment = await manager.getSentiment('I love kitties');
       expect(sentiment.vote).toEqual('positive');
     });
   });

@@ -56,10 +56,10 @@ describe('Sentiment Manager', () => {
   });
 
   describe('Process', () => {
-    test('Get positive sentiment', () => {
+    test('Get positive sentiment', async () => {
       const sentiment = new SentimentManager();
       const utterance = 'I love cats, are so cute!';
-      const result = sentiment.process('en', utterance);
+      const result = await sentiment.process('en', utterance);
       expect(result).toBeDefined();
       expect(result.score).toEqual(1.032);
       expect(result.numWords).toEqual(6);
@@ -69,10 +69,10 @@ describe('Sentiment Manager', () => {
       expect(result.language).toEqual('en');
       expect(result.vote).toEqual('positive');
     });
-    test('Get negative sentiment', () => {
+    test('Get negative sentiment', async  () => {
       const sentiment = new SentimentManager();
       const utterance = 'I hate cats, are awful!';
-      const result = sentiment.process('en', utterance);
+      const result = await sentiment.process('en', utterance);
       expect(result).toBeDefined();
       expect(result.score).toEqual(-1);
       expect(result.numWords).toEqual(5);
@@ -82,10 +82,10 @@ describe('Sentiment Manager', () => {
       expect(result.language).toEqual('en');
       expect(result.vote).toEqual('negative');
     });
-    test('Get positive sentiment deutsch', () => {
+    test('Get positive sentiment deutsch', async () => {
       const sentiment = new SentimentManager();
       const utterance = 'Ich liebe Kätzchen';
-      const result = sentiment.process('de', utterance);
+      const result = await sentiment.process('de', utterance);
       expect(result).toBeDefined();
       expect(result.score).toBeGreaterThan(0);
       expect(result.numWords).toEqual(3);
@@ -94,10 +94,10 @@ describe('Sentiment Manager', () => {
       expect(result.language).toEqual('de');
       expect(result.vote).toEqual('positive');
     });
-    test('Get negative sentiment deutsch', () => {
+    test('Get negative sentiment deutsch', async () => {
       const sentiment = new SentimentManager();
       const utterance = 'Ich hasse Katzen, ich werde wirklich krank.';
-      const result = sentiment.process('de', utterance);
+      const result = await sentiment.process('de', utterance);
       expect(result).toBeDefined();
       expect(result.score).toBeLessThan(0);
       expect(result.numWords).toEqual(7);
