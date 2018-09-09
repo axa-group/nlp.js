@@ -28,7 +28,7 @@ manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 manager.train();
 manager.save();
 
-console.log(manager.process('en', 'I have to go'));
+manager.process('en', 'I have to go').then(console.log);
 ```
 
 This will show this result in console:

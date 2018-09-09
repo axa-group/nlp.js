@@ -35,8 +35,9 @@ You can use a SentimentAnalyzer if you want to manage only one language:
 const { SentimentAnalyzer } = require('node-nlp');
 
 const sentiment = new SentimentAnalyzer({ language: 'en' });
-let result = sentiment.getSentiment('I like cats');
-console.log(result);
+sentiment
+    .getSentiment('I like cats')
+    .then(result => console.log(result));
 // { score: 0.313,
 //   numWords: 3,
 //   numHits: 1,
@@ -44,8 +45,9 @@ console.log(result);
 //   type: 'senticon',
 //   language: 'en' }
 
-result = sentiment.getSentiment('cats are stupid');
-console.log(result);
+sentiment
+    .getSentiment('cats are stupid')
+    .then(result => console.log(result));
 // { score: -0.458,
 //   numWords: 3,
 //   numHits: 1,
@@ -60,8 +62,9 @@ Or you can use the SentimentManager if you want to manage several languages:
 const { SentimentManager } = require('node-nlp');
 
 const sentiment = new SentimentManager();
-let result = sentiment.process('en', 'I like cats');
-console.log(result);
+sentiment
+    .process('en', 'I like cats')
+    .then(result => console.log(result));
 // { score: 0.313,
 //   numWords: 3,
 //   numHits: 1,
@@ -69,8 +72,9 @@ console.log(result);
 //   type: 'senticon',
 //   language: 'en' }
 
-result = sentiment.process('es', 'Los gatitos son amor');
-console.log(result);
+sentiment
+    .process('es', 'Los gatitos son amor')
+    .then(result => console.log(result));
 // { score: 0.278,
 //   comparative: 0.0695,
 //   vote: 'positive',
