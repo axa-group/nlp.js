@@ -2,6 +2,8 @@ NLP.js
 =======
 
 [![Build Status](https://travis-ci.com/axa-group/nlp.js.svg?branch=master)](https://travis-ci.com/axa-group/nlp.js)
+[![NPM version](https://img.shields.io/npm/v/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp)
+[![NPM downloads](https://img.shields.io/npm/dm/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp)
 
 "NLP.js" is a general natural language utilities for nodejs. Currently supporting:
 - Guess the language of a phrase
