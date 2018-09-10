@@ -93,3 +93,19 @@ Also, you can save and load the NLP Manager to be reused without having to train
 ```
 
 If no filename is provided by default it is './model.nlp'.
+
+
+## Transformers
+
+You could pass transformer function to NLPManager constructor, which might be used to modify process output format.
+
+```javascript
+const manager = new NlpManager({
+ transformer: (originalProcessOutput) => {
+   // put some modifications logic (it might be async)
+   // and return modified value
+   return Promise.resolve({ modified: 'VALUE' });
+ }
+});
+
+```
