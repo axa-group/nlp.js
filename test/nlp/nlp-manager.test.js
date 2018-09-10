@@ -45,6 +45,12 @@ describe('NLP Manager', () => {
       expect(manager.settings.fullSearchWhenGuessed).toBeFalsy();
       expect(manager.settings.useNlg).toBeFalsy();
     });
+
+    test('You can pass transformer function with options', () => {
+      const transformer = x => x;
+      const manager = new NlpManager({ processTransformer: transformer });
+      expect(manager.processTransformer).toEqual(transformer);
+    });
   });
 
   describe('Add language', () => {
@@ -535,6 +541,66 @@ describe('NLP Manager', () => {
       expect(result.classification).toHaveLength(2);
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.95);
+    });
+
+    test('Should call transformer function if it is passed', async () => {
+      const transformer = jest.fn(_ => _);
+      const manager = new NlpManager({
+        processTransformer: transformer,
+      });
+      manager.addLanguage(['fr', 'ja']);
+      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.addDocument('fr', 'bonne nuit', 'greet');
+      manager.addDocument('fr', 'Bonsoir', 'greet');
+      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.train();
+
+      expect(transformer).not.toBeCalled();
+
+      await manager.process('où sont mes clés');
+
+      expect(transformer).toBeCalled();
+      expect(transformer.mock.calls[0][0]).toMatchObject({
+        locale: 'fr',
+        localeIso2: 'fr',
+        utterance: 'où sont mes clés',
+      });
+    });
+
+    test('Should return transformer function result if it is passed', async () => {
+      const transformedValue = {
+        transformed: 'VALUE',
+      };
+      const transformer = jest.fn().mockReturnValue(transformedValue);
+      const manager = new NlpManager({
+        processTransformer: transformer,
+      });
+      manager.addLanguage(['fr', 'ja']);
+      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.train();
+
+      const result = await manager.process('où sont mes clés');
+
+      expect(result).toEqual(transformedValue);
+    });
+
+    test('Should return async transformer function result if it is passed', async () => {
+      const transformedValue = {
+        transformed: 'VALUE',
+      };
+      const transformer = jest.fn().mockReturnValue(Promise.resolve(transformedValue));
+      const manager = new NlpManager({
+        processTransformer: transformer,
+      });
+      manager.addLanguage(['fr', 'ja']);
+      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.train();
+
+      const result = await manager.process('où sont mes clés');
+
+      expect(result).toEqual(transformedValue);
     });
   });
 
