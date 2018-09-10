@@ -41,6 +41,8 @@ manager.findEntities(
 //  sourceText: 'spaghetti', entity: 'food', utteranceText: 'speghetti' } ]
 ```
 
+## Regular Expression Entities
+
 It also support Regular Expression entities
 
 ```javascript
@@ -68,7 +70,8 @@ manager.addNamedEntityText(
 );
 manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
 manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
-manager.addNamedEntity('email', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
+const entity = manager.addNamedEntity('email', 'regex');
+entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
 manager.findEntities(
   'I saw spiderman eating speghetti in the city and his mail is spiderman@gmial.com',
   'en',
@@ -95,4 +98,53 @@ manager.findEntities(
 //     sourceText: 'spiderman@gmial.com',
 //     utteranceText: 'spiderman@gmial.com',
 //     entity: 'email' } ]
+```
+
+## Trim Entities
+
+It supports entities that works trimming text conditions, like text between two words.
+It supports 7 different conditions:
+- Between
+- After
+- After First
+- After Last
+- Before
+- Before First
+- Before Last
+
+```javascript
+const { NerManager } = require('node-nlp');
+
+const manager = new NerManager({ threshold: 0.8 });
+const fromEntity = manager.addNamedEntity('fromEntity', 'trim');
+fromEntity.addBetweenCondition('en', 'from', 'to');
+fromEntity.addAfterLastCondition('en', 'to');
+const toEntity = manager.addNamedEntity('toEntity', 'trim');
+fromEntity.addBetweenCondition('en', 'to', 'from');
+fromEntity.addAfterLastCondition('en', 'from');
+manager.findEntities(
+  'I want to travel from Barcelona to Madrid',
+  'en',
+).then(entities => console.log(entities));
+// [ { type: 'between',
+//     start: 22,
+//     end: 31,
+//     accuracy: 1,
+//     sourceText: 'Barcelona',
+//     utteranceText: 'Barcelona',
+//     entity: 'fromEntity' },
+//   { type: 'afterLast',
+//     start: 35,
+//     end: 41,
+//     accuracy: 0.99,
+//     sourceText: 'Madrid',
+//     utteranceText: 'Madrid',
+//     entity: 'fromEntity' },
+//   { type: 'between',
+//     start: 10,
+//     end: 16,
+//     accuracy: 1,
+//     sourceText: 'travel',
+//     utteranceText: 'travel',
+//     entity: 'fromEntity' } ]
 ```
