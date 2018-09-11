@@ -629,12 +629,14 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      manager.assignDomain('sawhero', 'domain');
       manager.train();
       manager.save();
       manager = new NlpManager();
       manager.load();
       const result = await manager.process('I saw spiderman eating spaghetti today in the city!');
       expect(result.intent).toEqual('sawhero');
+      expect(result.domain).toEqual('domain');
       expect(result.score).toBeGreaterThan(0.85);
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
@@ -713,6 +715,52 @@ describe('NLP Manager', () => {
       expect(manager.nlgManager.responses.es.whois).toBeDefined();
       expect(manager.nlgManager.responses.es.whereis).toBeDefined();
       expect(manager.nlgManager.responses.es.realname).toBeDefined();
+    });
+  });
+  describe('Domain', () => {
+    test('When adding a new intent, by default is assigned to the default domain', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addDocument('en', 'Good Morning', 'greet');
+      manager.addDocument('en', 'Where are my keys', 'keys');
+      const expected = 'default';
+      let actual = manager.getIntentDomain('greet');
+      expect(actual).toEqual(expected);
+      actual = manager.getIntentDomain('keys');
+      expect(actual).toEqual(expected);
+    });
+    test('The domain of a non existing intent should be undefined', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addDocument('en', 'Good Morning', 'greet');
+      manager.addDocument('en', 'Where are my keys', 'keys');
+      const actual = manager.getIntentDomain('nope');
+      expect(actual).toBeUndefined();
+    });
+    test('It should return the domain of the intent when processing', async () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['fr', 'ja']);
+      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.addDocument('fr', 'bonne nuit', 'greet');
+      manager.addDocument('fr', 'Bonsoir', 'greet');
+      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
+      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.assignDomain('greet', 'domain');
+      manager.assignDomain('keys', 'domain');
+      manager.train();
+      const result = await manager.process('où sont mes clés');
+      expect(result.domain).toEqual('domain');
+    });
+    test('It can provide a list of domains with the intents', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addDocument('en', 'Good Morning', 'greet');
+      manager.addDocument('en', 'Where are my keys', 'keys');
+      manager.addDocument('en', 'This is another thing', 'another');
+      manager.assignDomain('greet', 'domain1');
+      manager.assignDomain('keys', 'domain2');
+      manager.assignDomain('another', 'domain2');
+      const actual = manager.getDomains();
+      const expected = { domain1: ['greet'], domain2: ['keys', 'another'] };
+      expect(actual).toEqual(expected);
     });
   });
 });
