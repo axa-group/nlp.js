@@ -4,6 +4,10 @@ The Named Entity Recognition manager is able to store an structure of entities a
 Then, given an utterance and the language, is able to search the options of the entity inside the utterance, and return a list
 of the bests substrings. This is done using a threshold for the accuracy, by default the accuracy is 0.5 but you can provide it in the options when creating the instance.
 
+## Enum Named Entities
+
+It support Enum Named Entities: Named entities where you define options, and the possible text for each option.
+
 ```javascript
 const { NerManager } = require('node-nlp');
 
@@ -41,7 +45,7 @@ manager.findEntities(
 //  sourceText: 'spaghetti', entity: 'food', utteranceText: 'speghetti' } ]
 ```
 
-## Regular Expression Entities
+## Regular Expression Named Entities
 
 It also support Regular Expression entities
 
@@ -100,7 +104,7 @@ manager.findEntities(
 //     entity: 'email' } ]
 ```
 
-## Trim Entities
+## Trim Named Entities
 
 It supports entities that works trimming text conditions, like text between two words.
 It supports 7 different conditions:

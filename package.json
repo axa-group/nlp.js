@@ -59,7 +59,9 @@
     "logistic regression",
     "Natural",
     "entity extraction",
-    "named entity recognition"
+    "named entity recognition",
+    "chatbot",
+    "bot"
   ],
   "config": {
     "commitizen": {
