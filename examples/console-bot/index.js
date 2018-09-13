@@ -40,12 +40,12 @@ const rl = readline.createInterface({
   output: process.stdout,
   terminal: false,
 });
-rl.on('line', (line) => {
+rl.on('line', async (line) => {
   if (line.toLowerCase() === 'quit') {
     rl.close();
     process.exit();
   } else {
-    const result = nlpManager.process(line);
+    const result = await nlpManager.process(line);
     const answer = result.score > threshold && result.answer ? result.answer : 'Sorry, I don\'t understand';
     let sentiment = '';
     if (result.sentiment.score !== 0) {
