@@ -615,6 +615,38 @@ describe('NLP Manager', () => {
     });
   });
 
+  describe('Import and export', async () => {
+    test('Should import and export model as JSON string', async () => {
+      let manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
+      manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+      manager.addRegexEntity('mail', 'en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      manager.assignDomain('sawhero', 'domain');
+
+      manager.train();
+      // save current model as JSON string
+      const model = manager.export();
+      manager = new NlpManager();
+      // load model from JSON String
+      manager.import(model);
+      const result = await manager.process('I saw spiderman eating spaghetti today in the city!');
+      expect(result.intent).toEqual('sawhero');
+      expect(result.domain).toEqual('domain');
+      expect(result.score).toBeGreaterThan(0.85);
+      expect(result.entities).toHaveLength(2);
+      expect(result.entities[0].sourceText).toEqual('Spiderman');
+      expect(result.entities[1].sourceText).toEqual('spaghetti');
+    });
+  });
+
   describe('Save and load', async () => {
     test('Should allow to save, load and all should be working', async () => {
       let manager = new NlpManager({ ner: { builtins: [] } });
