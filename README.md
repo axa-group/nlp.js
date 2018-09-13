@@ -49,6 +49,7 @@ NLP.js
 - [Sentiment Analysis](docs/sentiment-analysis.md)
 - [NLP Manager](docs/nlp-manager.md)
 - [Loading from Excel](docs/loading-from-excel.md)
+- [Microsoft Bot Framework](docs/microsoft-bot-framework.md)
 - [Contributing](#contributing)
 - [Code of Conduct](#code-of-conduct)
 - [Who is behind it](#who-is-behind-it)
