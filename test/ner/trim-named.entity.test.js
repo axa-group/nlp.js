@@ -197,7 +197,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'between',
         start: 18,
-        end: 24,
+        end: 23,
+        len: 6,
         accuracy: 1,
         entity: 'entity',
         sourceText: 'Madrid',
@@ -250,7 +251,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'before',
         start: 0,
-        end: 9,
+        end: 8,
+        len: 9,
         accuracy: 0.99,
         sourceText: 'I must go',
         utteranceText: 'I must go',
@@ -264,7 +266,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'before',
         start: 0,
-        end: 9,
+        end: 8,
+        len: 9,
         accuracy: 0.99,
         sourceText: 'I must go',
         utteranceText: 'I must go',
@@ -273,7 +276,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[1]).toEqual({
         type: 'before',
         start: 15,
-        end: 24,
+        end: 23,
+        len: 9,
         accuracy: 0.99,
         sourceText: 'Barcelona',
         utteranceText: 'Barcelona',
@@ -289,7 +293,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'beforeFirst',
         start: 0,
-        end: 9,
+        end: 8,
+        len: 9,
         accuracy: 0.99,
         sourceText: 'I must go',
         utteranceText: 'I must go',
@@ -305,7 +310,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'beforeLast',
         start: 0,
-        end: 24,
+        end: 23,
+        len: 24,
         accuracy: 0.99,
         sourceText: 'I must go from Barcelona',
         utteranceText: 'I must go from Barcelona',
@@ -321,7 +327,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'after',
         start: 30,
-        end: 36,
+        end: 35,
+        len: 6,
         accuracy: 0.99,
         sourceText: 'Madrid',
         utteranceText: 'Madrid',
@@ -335,7 +342,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'after',
         start: 15,
-        end: 24,
+        end: 23,
+        len: 9,
         accuracy: 0.99,
         sourceText: 'Barcelona',
         utteranceText: 'Barcelona',
@@ -344,7 +352,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[1]).toEqual({
         type: 'after',
         start: 30,
-        end: 36,
+        end: 35,
+        len: 6,
         accuracy: 0.99,
         sourceText: 'Madrid',
         utteranceText: 'Madrid',
@@ -360,7 +369,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'afterFirst',
         start: 15,
-        end: 36,
+        end: 35,
+        len: 21,
         accuracy: 0.99,
         sourceText: 'Barcelona from Madrid',
         utteranceText: 'Barcelona from Madrid',
@@ -376,7 +386,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'afterLast',
         start: 30,
-        end: 36,
+        end: 35,
+        len: 6,
         accuracy: 0.99,
         sourceText: 'Madrid',
         utteranceText: 'Madrid',
@@ -395,7 +406,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[0]).toEqual({
         type: 'between',
         start: 15,
-        end: 24,
+        end: 23,
+        len: 9,
         accuracy: 1,
         sourceText: 'Barcelona',
         utteranceText: 'Barcelona',
@@ -404,7 +416,8 @@ describe('Trim Named Entity', () => {
       expect(matchs[1]).toEqual({
         type: 'afterLast',
         start: 15,
-        end: 34,
+        end: 33,
+        len: 19,
         accuracy: 0.99,
         sourceText: 'Barcelona to Madrid',
         utteranceText: 'Barcelona to Madrid',

@@ -288,7 +288,8 @@ describe('NER Manager', () => {
       expect(entities).toHaveLength(3);
       expect(entities[0]).toEqual({
         accuracy: 1,
-        end: 31,
+        end: 30,
+        len: 9,
         entity: 'fromLocation',
         sourceText: 'Barcelona',
         start: 22,
@@ -297,7 +298,8 @@ describe('NER Manager', () => {
       });
       expect(entities[1]).toEqual({
         accuracy: 1,
-        end: 16,
+        end: 15,
+        len: 6,
         entity: 'toLocation',
         sourceText: 'travel',
         start: 10,
@@ -306,7 +308,8 @@ describe('NER Manager', () => {
       });
       expect(entities[2]).toEqual({
         accuracy: 0.99,
-        end: 41,
+        end: 40,
+        len: 6,
         entity: 'toLocation',
         sourceText: 'Madrid',
         start: 35,
@@ -327,7 +330,8 @@ describe('NER Manager', () => {
       expect(entities).toHaveLength(2);
       expect(entities[0]).toEqual({
         accuracy: 1,
-        end: 31,
+        end: 30,
+        len: 9,
         entity: 'fromLocation',
         sourceText: 'Barcelona',
         start: 22,
@@ -336,7 +340,42 @@ describe('NER Manager', () => {
       });
       expect(entities[1]).toEqual({
         accuracy: 0.99,
-        end: 41,
+        end: 40,
+        len: 6,
+        entity: 'toLocation',
+        sourceText: 'Madrid',
+        start: 35,
+        type: 'afterLast',
+        utteranceText: 'Madrid',
+      });
+    });
+    test('Trim entities can be splitted to fit with other entities', async () => {
+      const manager = new NerManager();
+      const fromEntity = manager.addNamedEntity('fromLocation', 'trim');
+      fromEntity.addBetweenCondition('en', 'from', 'to');
+      fromEntity.addAfterLastCondition('en', 'from');
+      const toEntity = manager.addNamedEntity('toLocation', 'trim');
+      toEntity.addBetweenCondition('en', 'to', 'from', { skip: ['travel'] });
+      toEntity.addAfterLastCondition('en', 'to');
+      const entities = await manager.findEntities('I want to travel from Barcelona to Madrid tomorrow', 'en');
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(3);
+      expect(entities[0].utteranceText).toEqual('tomorrow');
+      expect(entities[0].entity).toEqual('date');
+      expect(entities[1]).toEqual({
+        accuracy: 1,
+        end: 30,
+        len: 9,
+        entity: 'fromLocation',
+        sourceText: 'Barcelona',
+        start: 22,
+        type: 'between',
+        utteranceText: 'Barcelona',
+      });
+      expect(entities[2]).toEqual({
+        accuracy: 0.99,
+        end: 40,
+        len: 6,
         entity: 'toLocation',
         sourceText: 'Madrid',
         start: 35,
