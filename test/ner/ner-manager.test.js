@@ -288,7 +288,8 @@ describe('NER Manager', () => {
       expect(entities).toHaveLength(3);
       expect(entities[0]).toEqual({
         accuracy: 1,
-        end: 31,
+        end: 30,
+        len: 9,
         entity: 'fromLocation',
         sourceText: 'Barcelona',
         start: 22,
@@ -297,7 +298,8 @@ describe('NER Manager', () => {
       });
       expect(entities[1]).toEqual({
         accuracy: 1,
-        end: 16,
+        end: 15,
+        len: 6,
         entity: 'toLocation',
         sourceText: 'travel',
         start: 10,
@@ -306,7 +308,8 @@ describe('NER Manager', () => {
       });
       expect(entities[2]).toEqual({
         accuracy: 0.99,
-        end: 41,
+        end: 40,
+        len: 6,
         entity: 'toLocation',
         sourceText: 'Madrid',
         start: 35,
@@ -327,7 +330,8 @@ describe('NER Manager', () => {
       expect(entities).toHaveLength(2);
       expect(entities[0]).toEqual({
         accuracy: 1,
-        end: 31,
+        end: 30,
+        len: 9,
         entity: 'fromLocation',
         sourceText: 'Barcelona',
         start: 22,
@@ -336,7 +340,8 @@ describe('NER Manager', () => {
       });
       expect(entities[1]).toEqual({
         accuracy: 0.99,
-        end: 41,
+        end: 40,
+        len: 6,
         entity: 'toLocation',
         sourceText: 'Madrid',
         start: 35,
@@ -359,7 +364,8 @@ describe('NER Manager', () => {
       expect(entities[0].entity).toEqual('date');
       expect(entities[1]).toEqual({
         accuracy: 1,
-        end: 31,
+        end: 30,
+        len: 9,
         entity: 'fromLocation',
         sourceText: 'Barcelona',
         start: 22,
@@ -368,7 +374,8 @@ describe('NER Manager', () => {
       });
       expect(entities[2]).toEqual({
         accuracy: 0.99,
-        end: 41,
+        end: 40,
+        len: 6,
         entity: 'toLocation',
         sourceText: 'Madrid',
         start: 35,
