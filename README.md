@@ -74,7 +74,7 @@ If you're looking to use NLP.js in your node application, you can install via NP
 
 ## Example of use
 
-You can see a great example of use at the folder \examples\console-bot. This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
+You can see a great example of use at the folder [`/examples/console-bot`](https://github.com/axa-group/nlp.js/tree/master/examples/console-bot). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
 
 You can start to build your NLP from scratch with few lines:
 
