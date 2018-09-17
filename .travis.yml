@@ -1,16 +1,7 @@
-sudo: false
 language: node_js
 node_js:
   - "8"
   - "9"
   - "10"
-cache:
-  directories:
-  - node_modules
-before_install:
-- npm update
-install:
-- npm install
-script:
-- npm test
-- npm run coveralls
+after_script:
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
