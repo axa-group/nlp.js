@@ -658,9 +658,13 @@ describe('NLP Manager', () => {
       manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
       manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
       manager.addRegexEntity('mail', 'en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      const trimEntity = manager.addTrimEntity('from');
+      trimEntity.addBetweenCondition('en', 'from', 'to');
+      trimEntity.addAfterLastCondition('en', 'from');
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      manager.addDocument('en', 'I want to travel from %from% to %to%', 'travel');
       manager.assignDomain('sawhero', 'domain');
       manager.train();
       manager.save();
@@ -673,6 +677,9 @@ describe('NLP Manager', () => {
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
+      const resultTrim = await manager.process('I want to travel from Barcelona to Madrid');
+      expect(resultTrim.entities).toHaveLength(1);
+      expect(resultTrim.entities[0].sourceText).toEqual('Barcelona');
     });
   });
 
