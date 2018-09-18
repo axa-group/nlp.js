@@ -245,13 +245,178 @@ describe('Slot Manager', () => {
       expect(manager.intents).toEqual({});
     });
   });
+  describe('Get mandatory slots', () => {
+    test('It should return an object with mandatory slots', () => {
+      const manager = new SlotManager();
+      manager.addSlot('intent', 'entity1', true);
+      manager.addSlot('intent', 'entity2', true);
+      manager.addSlot('intent', 'entity3', false);
+      manager.addSlot('intent', 'entity4', true);
+      const slots = manager.getMandatorySlots('intent');
+      expect(slots).toEqual({
+        entity1: {
+          intent: 'intent',
+          entity: 'entity1',
+          mandatory: true,
+          locales: {},
+        },
+        entity2: {
+          intent: 'intent',
+          entity: 'entity2',
+          mandatory: true,
+          locales: {},
+        },
+        entity4: {
+          intent: 'intent',
+          entity: 'entity4',
+          mandatory: true,
+          locales: {},
+        },
+      });
+    });
+  });
+  describe('Process', () => {
+    test('If result has intent and context has not slot fill, should exit process', () => {
+      const manager = new SlotManager();
+      const result = {
+        intent: 'blau',
+      };
+      const context = {};
+      const actual = manager.process(result, context);
+      expect(actual).toBeFalsy();
+      expect(result).toEqual({ intent: 'blau' });
+    });
+    test('If result has no intent, and context has not slot fill, should exit process', () => {
+      const manager = new SlotManager();
+      const result = {
+        intent: undefined,
+        score: 1,
+      };
+      const context = {};
+      const actual = manager.process(result, context);
+      expect(actual).toBeFalsy();
+      expect(result).toEqual({ intent: undefined, score: 1 });
+    });
+    test('If result has no intent, and context has slot fill, should fill result from slot fill', () => {
+      const manager = new SlotManager();
+      const result = {
+        intent: undefined,
+        utterance: 'hello',
+        score: 1,
+        entities: [],
+      };
+      const context = {
+        slotFill: {
+          intent: 'intent',
+          answer: 'answer',
+          srcAnswer: 'srcAnswer',
+          entities: [],
+        },
+      };
+      const actual = manager.process(result, context);
+      expect(actual).toBeFalsy();
+      expect(result).toEqual({
+        intent: 'intent',
+        utterance: 'hello',
+        answer: 'answer',
+        srcAnswer: 'answer',
+        score: 1,
+        entities: [],
+      });
+    });
+    test('If slot fill is waiting for an entity, fill the entity', () => {
+      const manager = new SlotManager();
+      manager.addSlot('intent', 'entity1', true);
+      const result = {
+        intent: undefined,
+        utterance: 'hello',
+        score: 1,
+        entities: [],
+      };
+      const context = {
+        slotFill: {
+          currentSlot: 'entity1',
+          intent: 'intent',
+          answer: 'answer',
+          srcAnswer: 'srcAnswer',
+          entities: [],
+        },
+      };
+      const actual = manager.process(result, context);
+      expect(actual).toBeTruthy();
+      expect(result).toEqual({
+        intent: 'intent',
+        utterance: 'hello',
+        answer: 'answer',
+        srcAnswer: 'answer',
+        score: 1,
+        entities: [{
+          entity: 'entity1',
+          utteranceText: 'hello',
+          sourceText: 'hello',
+          accuracy: 0.95,
+          start: 0,
+          end: 4,
+          len: 5,
+        }],
+      });
+    });
+    test('If there are slots left, pick the next one', () => {
+      const manager = new SlotManager();
+      manager.addSlot('intent', 'entity1', true, { en: 'Enter entity1' });
+      manager.addSlot('intent', 'entity2', true, { en: 'Enter entity2' });
+      manager.addSlot('intent', 'entity3', true, { en: 'Enter entity3' });
+      const result = {
+        intent: undefined,
+        utterance: 'hello',
+        score: 1,
+        entities: [],
+      };
+      const context = {
+        slotFill: {
+          currentSlot: 'entity1',
+          intent: 'intent',
+          answer: 'answer',
+          srcAnswer: 'srcAnswer',
+          entities: [],
+          localeIso2: 'en',
+        },
+      };
+      const actual = manager.process(result, context);
+      expect(actual).toBeTruthy();
+      expect(result).toEqual({
+        intent: 'intent',
+        localeIso2: 'en',
+        utterance: 'hello',
+        answer: 'answer',
+        srcAnswer: 'Enter entity2',
+        score: 1,
+        entities: [{
+          entity: 'entity1',
+          utteranceText: 'hello',
+          sourceText: 'hello',
+          accuracy: 0.95,
+          start: 0,
+          end: 4,
+          len: 5,
+        }],
+        slotFill: {
+          answer: 'answer',
+          currentSlot: 'entity2',
+          entities: [{
+            accuracy: 0.95,
+            end: 4,
+            entity: 'entity1',
+            len: 5,
+            sourceText: 'hello',
+            start: 0,
+            utteranceText: 'hello'
+          }],
+          intent: 'intent',
+          localeIso2: 'en',
+          srcAnswer: 'answer',
+        }
+      });
+    });
+  });
 });
-
-
-// load(src) {
-//   this.intents = src ? src.intents || {} : {};
-// }
-
-// save() {
-//   return this.intents;
-// }

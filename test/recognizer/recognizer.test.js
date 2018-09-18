@@ -23,6 +23,42 @@
 
 const { Recognizer } = require('../../lib');
 
+function fill(recognizer) {
+  recognizer.nlpManager.addLanguage('en');
+  const fromEntity = recognizer.nlpManager.addTrimEntity('fromCity');
+  fromEntity.addBetweenCondition('en', 'from', 'to', { skip: ['travel'] });
+  fromEntity.addAfterLastCondition('en', 'from', { skip: ['travel'] });
+  const toEntity = recognizer.nlpManager.addTrimEntity('toCity');
+  toEntity.addBetweenCondition('en', 'to', 'from', { skip: ['travel'] });
+  toEntity.addAfterLastCondition('en', 'to', { skip: ['travel'] });
+  recognizer.nlpManager.slotManager.addSlot('travel', 'toCity', true, { en: 'Where do you want to go?' });
+  recognizer.nlpManager.slotManager.addSlot('travel', 'fromCity', true, { en: 'From where you are traveling?' });
+  recognizer.nlpManager.slotManager.addSlot('travel', 'date', true, { en: 'When do you want to travel?' });
+  recognizer.nlpManager.addDocument('en', 'I want to travel from %fromCity% to %toCity% %date%', 'travel');
+  recognizer.nlpManager.addAnswer('en', 'travel', 'You want to travel {{ date }} from {{ fromCity }} to {{ toCity }}');
+  recognizer.nlpManager.train();
+}
+
+function mockBot() {
+  return {
+    libraries: {
+      BotBuilder: {
+        constructor: {
+          bestRouteResult(result, dialogStack, name) {
+            return name;
+          },
+        },
+      },
+    },
+    recognizer(value) {
+      this.recognizerValue = value;
+    },
+    _onDisambiguateRoute() {
+      this.defaultDisambiguate = true;
+    },
+  };
+}
+
 describe('Recognizer', () => {
   describe('Constructor', () => {
     test('It should create an instance', () => {
@@ -75,13 +111,6 @@ describe('Recognizer', () => {
       const process = await recognizer.process(undefined, undefined, 'yupi caramelo?');
       expect(process.intent).toEqual('None');
       expect(process.answer).toBeUndefined();
-    });
-    test('If there are extracted entities, the context will be filled with those and $modified=true', async () => {
-      const recognizer = new Recognizer();
-      recognizer.loadExcel('./test/nlp/rules.xls');
-      const context = {};
-      await recognizer.process(context, undefined, 'Who is spiderman?');
-      expect(context).toEqual({ hero: 'spiderman', $modified: true });
     });
   });
   describe('Recognize Utterance', () => {
@@ -170,6 +199,160 @@ describe('Recognizer', () => {
       });
     });
   });
+  describe('Slot filling', () => {
+    test('If all slots are filled return the correct answer', (done) => {
+      const recognizer = new Recognizer();
+      fill(recognizer);
+      const session = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'I want to travel from Barcelona to London tomorrow',
+        },
+      };
+      recognizer.recognize(session, (err, result) => {
+        expect(result.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+        done();
+      });
+    });
+    test('It can chain several slots', (done) => {
+      const recognizer = new Recognizer();
+      fill(recognizer);
+      const session = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'I want to travel to London',
+        },
+      };
+      const session2 = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'Barcelona',
+        },
+      };
+      const session3 = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'tomorrow',
+        },
+      };
+      recognizer.recognize(session, (err, result) => {
+        expect(result.answer).toEqual('From where you are traveling?');
+        recognizer.recognize(session2, (err2, result2) => {
+          expect(result2.answer).toEqual('When do you want to travel?');
+          recognizer.recognize(session3, (err3, result3) => {
+            expect(result3.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  describe('Recognize Twice', () => {
+    test('It should not change result if context has last recognized', (done) => {
+      const recognizer = new Recognizer();
+      fill(recognizer);
+      const session = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'I want to travel to London',
+        },
+      };
+      const session2 = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'Barcelona',
+        },
+      };
+      const session3 = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'tomorrow',
+        },
+      };
+      recognizer.recognize(session, (err, result) => {
+        expect(result.answer).toEqual('From where you are traveling?');
+        recognizer.recognizeTwice(session, () => {
+          recognizer.recognize(session2, (err2, result2) => {
+            expect(result2.answer).toEqual('When do you want to travel?');
+            recognizer.recognize(session3, (err3, result3) => {
+              expect(result3.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+              done();
+            });
+          });
+        });
+      });
+    });
+    test('It should recognize again if the context has not last recognized', (done) => {
+      const recognizer = new Recognizer();
+      fill(recognizer);
+      const session = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'I want to travel to London',
+        },
+      };
+      const session2 = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c4',
+            },
+          },
+          text: 'I want to travel to London tomorrow',
+        },
+      };
+      recognizer.recognize(session, (err, result) => {
+        expect(result.answer).toEqual('From where you are traveling?');
+        recognizer.recognizeTwice(session2, (err2, result2) => {
+          expect(result2).not.toEqual(result);
+          done();
+        });
+      });
+    });
+  });
+
   describe('Get dialog id', () => {
     test('Given a session with dialog stack, get the first developer dialog', () => {
       const session = { dialogStack: () => ['not this', 'neither this', '*:/dialog'] };
@@ -272,6 +455,50 @@ describe('Recognizer', () => {
       recognizer.processAnswer(session, 'text');
       expect(beginDialogCalls).toEqual(0);
       expect(sendCalls).toEqual(1);
+    });
+  });
+
+  describe('Set Bot', () => {
+    test('If not activate routing default disambiguate route is still there', () => {
+      const bot = mockBot();
+      const recognizer = new Recognizer();
+      recognizer.setBot(bot);
+      bot._onDisambiguateRoute();
+      expect(bot.defaultDisambiguate).toBeTruthy();
+    });
+    test('If activate routing disambiguate route is changed', () => {
+      const bot = mockBot();
+      const session = {
+        dialogStack() {
+          return ['/'];
+        },
+        routeToActiveDialog() {
+          return 'active';
+        },
+      };
+      const recognizer = new Recognizer();
+      recognizer.setBot(bot, true);
+      bot._onDisambiguateRoute(session);
+      expect(bot.defaultDisambiguate).toBeFalsy();
+    });
+    test('If session contains message', () => {
+      const bot = mockBot();
+      const session = {
+        dialogStack() {
+          return ['/'];
+        },
+        routeToActiveDialog() {
+          return 'active';
+        },
+        message: {
+          text: 'I want to travel from Barcelona to London tomorrow',
+        },
+      };
+      const recognizer = new Recognizer();
+      fill(recognizer);
+      recognizer.setBot(bot, true);
+      bot._onDisambiguateRoute(session);
+      expect(bot.defaultDisambiguate).toBeFalsy();
     });
   });
 });
