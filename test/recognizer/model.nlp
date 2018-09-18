@@ -9,7 +9,7 @@
   "languages": [
     "en"
   ],
-  "intentEntities": {},
+  "slotManager": {},
   "nerManager": {
     "namedEntities": {},
     "threshold": 0.5
