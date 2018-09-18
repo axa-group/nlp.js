@@ -8,7 +8,7 @@ If you want that the chatbot is automatically using the NLG, instead of calling 
 
 Another feature that comes with the improved behaviour, is that when the answer starts with _/_ then is not a phrase to return to the user, and is a _session.beginDialog()_, so the dialog of the given name is raised and pushed into the dialog stack.
 
-![Example](https://github.com/axa-group/nlp.js/blob/master/screenshots/slotfilling.png)
+![Example](https://github.com/axa-group/nlp.js/blob/master/screenshots/slotfilling.gif)
 
 
 ## Example of use
