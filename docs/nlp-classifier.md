@@ -35,8 +35,10 @@ const classification = classifier.classify('où sont mes clés');
 // value is { label: 'keys', value: 0.994927593677957 }
 ```
 
-Currently 19 languages are supported:
+Currently 21 languages are supported:
 
+- Arabic (ar)
+- Catala (ca)
 - Chinese (zh)
 - Danish (da)
 - Dutch (nl)
