@@ -8,6 +8,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 
 | Language        | Natural | Snowball | Custom |
 | :-------------- | :-----: | :------: | :----: |
+| Arabic (ar)     |         |    X     |        |
 | Catalan (ca)    |         |    X     |        |
 | Chinese (zh)    |         |          |   X    |
 | Danish (da)     |         |    X     |        |
@@ -33,6 +34,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 
 | Language        | AFINN | Senticon | Pattern |
 | :-------------- | :---: | :------: | :-----: |
+| Arabic (ar)     |       |          |         |
 | Catalan (ca)    |       |          |         |
 | Chinese (zh)    |       |          |         |
 | Danish (da)     |       |          |         |
