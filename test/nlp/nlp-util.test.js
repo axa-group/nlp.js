@@ -54,6 +54,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('id')).toBe(Natural.StemmerId); // Indonesian
       expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(Natural.StemmerJa); // Japanese
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual('ArabicStemmer'); // Arabic
+      expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
       expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
@@ -100,6 +101,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('id')).toBe(Natural.StemmerId); // Indonesian
       expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(Natural.StemmerJa); // Japanese
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual('ArabicStemmer'); // Arabic
+      expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
       expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
@@ -145,6 +147,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('id')).toBeDefined(); // indonesian
       expect(NlpUtil.getTokenizer('ja')).toBeInstanceOf(Natural.TokenizerJa); // japanese
       expect(NlpUtil.getTokenizer('ar')).toBeInstanceOf(PunctTokenizer); // arabic
+      expect(NlpUtil.getTokenizer('eu')).toBeInstanceOf(PunctTokenizer); // basque
       expect(NlpUtil.getTokenizer('ca')).toBeInstanceOf(PunctTokenizer); // catalan
       expect(NlpUtil.getTokenizer('da')).toBeInstanceOf(PunctTokenizer); // danish
       expect(NlpUtil.getTokenizer('fi')).toBeInstanceOf(PunctTokenizer); // finnish
@@ -176,6 +179,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getCulture('id')).toEqual('id-id'); // indonesian
       expect(NlpUtil.getCulture('ja')).toEqual('ja-jp'); // japanese
       expect(NlpUtil.getCulture('ar')).toEqual('ar-ae'); // arabic
+      expect(NlpUtil.getCulture('eu')).toEqual('eu-es'); // basque
       expect(NlpUtil.getCulture('ca')).toEqual('ca-es'); // catalan
       expect(NlpUtil.getCulture('da')).toEqual('da-dk'); // danish
       expect(NlpUtil.getCulture('fi')).toEqual('fi-fi'); // finnish
