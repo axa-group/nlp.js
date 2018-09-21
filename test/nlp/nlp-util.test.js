@@ -60,6 +60,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
       expect(NlpUtil.getStemmer('de').constructor.name).toEqual('GermanStemmer'); // German
       expect(NlpUtil.getStemmer('hu').constructor.name).toEqual('HungarianStemmer'); // Hungarian
+      expect(NlpUtil.getStemmer('ga').constructor.name).toEqual('IrishStemmer'); // Irish
       expect(NlpUtil.getStemmer('ro').constructor.name).toEqual('RomanianStemmer'); // Romanian
       expect(NlpUtil.getStemmer('tr').constructor.name).toEqual('TurkishStemmer'); // Turkish
     });
@@ -107,6 +108,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
       expect(NlpUtil.getStemmer('de').constructor.name).toEqual('GermanStemmer'); // German
       expect(NlpUtil.getStemmer('hu').constructor.name).toEqual('HungarianStemmer'); // Hungarian
+      expect(NlpUtil.getStemmer('ga').constructor.name).toEqual('IrishStemmer'); // Irish
       expect(NlpUtil.getStemmer('ro').constructor.name).toEqual('RomanianStemmer'); // Romanian
       expect(NlpUtil.getStemmer('tr').constructor.name).toEqual('TurkishStemmer'); // Turkish
       NlpUtil.useAlternative.en = false;
@@ -153,6 +155,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('fi')).toBeInstanceOf(PunctTokenizer); // finnish
       expect(NlpUtil.getTokenizer('de')).toBeInstanceOf(PunctTokenizer); // german
       expect(NlpUtil.getTokenizer('hu')).toBeInstanceOf(PunctTokenizer); // hungarian
+      expect(NlpUtil.getTokenizer('ga')).toBeInstanceOf(PunctTokenizer); // irish
       expect(NlpUtil.getTokenizer('ro')).toBeInstanceOf(PunctTokenizer); // romanian
       expect(NlpUtil.getTokenizer('tr')).toBeInstanceOf(PunctTokenizer); // turkish
     });
@@ -185,6 +188,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getCulture('fi')).toEqual('fi-fi'); // finnish
       expect(NlpUtil.getCulture('de')).toEqual('de-de'); // german
       expect(NlpUtil.getCulture('hu')).toEqual('hu-hu'); // hungarian
+      expect(NlpUtil.getCulture('ga')).toEqual('ga-ie'); // irish
       expect(NlpUtil.getCulture('ro')).toEqual('ro-ro'); // romanian
       expect(NlpUtil.getCulture('tr')).toEqual('tr-tr'); // turkish
       expect(NlpUtil.getCulture('zh')).toEqual('zh-cn'); // Chinese
