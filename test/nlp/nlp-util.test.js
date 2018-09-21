@@ -56,6 +56,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual('ArabicStemmer'); // Arabic
       expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
       expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
+      expect(NlpUtil.getStemmer('cs').constructor.name).toEqual('CzechStemmer'); // Czech
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
       expect(NlpUtil.getStemmer('de').constructor.name).toEqual('GermanStemmer'); // German
@@ -103,6 +104,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual('ArabicStemmer'); // Arabic
       expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
       expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
+      expect(NlpUtil.getStemmer('cs').constructor.name).toEqual('CzechStemmer'); // Czech
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
       expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
       expect(NlpUtil.getStemmer('de').constructor.name).toEqual('GermanStemmer'); // German
@@ -149,6 +151,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('ar')).toBeInstanceOf(PunctTokenizer); // arabic
       expect(NlpUtil.getTokenizer('eu')).toBeInstanceOf(PunctTokenizer); // basque
       expect(NlpUtil.getTokenizer('ca')).toBeInstanceOf(PunctTokenizer); // catalan
+      expect(NlpUtil.getTokenizer('cs')).toBeInstanceOf(PunctTokenizer); // czech
       expect(NlpUtil.getTokenizer('da')).toBeInstanceOf(PunctTokenizer); // danish
       expect(NlpUtil.getTokenizer('fi')).toBeInstanceOf(PunctTokenizer); // finnish
       expect(NlpUtil.getTokenizer('de')).toBeInstanceOf(PunctTokenizer); // german
@@ -181,6 +184,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getCulture('ar')).toEqual('ar-ae'); // arabic
       expect(NlpUtil.getCulture('eu')).toEqual('eu-es'); // basque
       expect(NlpUtil.getCulture('ca')).toEqual('ca-es'); // catalan
+      expect(NlpUtil.getCulture('cs')).toEqual('cs-cz'); // czech
       expect(NlpUtil.getCulture('da')).toEqual('da-dk'); // danish
       expect(NlpUtil.getCulture('fi')).toEqual('fi-fi'); // finnish
       expect(NlpUtil.getCulture('de')).toEqual('de-de'); // german
