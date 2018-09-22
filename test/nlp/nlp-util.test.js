@@ -64,6 +64,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('ga').constructor.name).toEqual('IrishStemmer'); // Irish
       expect(NlpUtil.getStemmer('ro').constructor.name).toEqual('RomanianStemmer'); // Romanian
       expect(NlpUtil.getStemmer('sl').constructor.name).toEqual('SloveneStemmer'); // Slovene
+      expect(NlpUtil.getStemmer('ta').constructor.name).toEqual('TamilStemmer'); // Tamil
       expect(NlpUtil.getStemmer('tr').constructor.name).toEqual('TurkishStemmer'); // Turkish
     });
     test('Shoul return a PorterStemmer for unknown locales', () => {
@@ -114,6 +115,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('ga').constructor.name).toEqual('IrishStemmer'); // Irish
       expect(NlpUtil.getStemmer('ro').constructor.name).toEqual('RomanianStemmer'); // Romanian
       expect(NlpUtil.getStemmer('sl').constructor.name).toEqual('SloveneStemmer'); // Slovene
+      expect(NlpUtil.getStemmer('ta').constructor.name).toEqual('TamilStemmer'); // Tamil
       expect(NlpUtil.getStemmer('tr').constructor.name).toEqual('TurkishStemmer'); // Turkish
       NlpUtil.useAlternative.en = false;
       NlpUtil.useAlternative.fa = false;
@@ -163,6 +165,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('ga')).toBeInstanceOf(PunctTokenizer); // irish
       expect(NlpUtil.getTokenizer('ro')).toBeInstanceOf(PunctTokenizer); // romanian
       expect(NlpUtil.getTokenizer('sl')).toBeInstanceOf(PunctTokenizer); // slovene
+      expect(NlpUtil.getTokenizer('ta')).toBeInstanceOf(PunctTokenizer); // tamil
       expect(NlpUtil.getTokenizer('tr')).toBeInstanceOf(PunctTokenizer); // turkish
     });
     test('Shoul return an Punctuation word Tokenizer for unknown locales', () => {
@@ -198,6 +201,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getCulture('ga')).toEqual('ga-ie'); // irish
       expect(NlpUtil.getCulture('ro')).toEqual('ro-ro'); // romanian
       expect(NlpUtil.getCulture('sl')).toEqual('sl-sl'); // slovene
+      expect(NlpUtil.getCulture('ta')).toEqual('ta-in'); // tamil
       expect(NlpUtil.getCulture('tr')).toEqual('tr-tr'); // turkish
       expect(NlpUtil.getCulture('zh')).toEqual('zh-cn'); // Chinese
     });
