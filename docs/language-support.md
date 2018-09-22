@@ -33,6 +33,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Slovene (sl)    |         |    X     |        |
 | Spanish (es)    |    X    |    X     |        |
 | Swedish (sv)    |    X    |    X     |        |
+| Tamil (ta)      |         |    X     |        |
 | Turkish (tr)    |         |    X     |        |
 
 ## Sentiment Analysis
@@ -65,6 +66,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Spanish (es)    |   X   |    X     |         |
 | Swedish (sv)    |       |          |         |
 | Turkish (tr)    |       |          |         |
+| Tamil (ta)      |       |          |         |
 
 ## Builtin Entity Extraction
 
