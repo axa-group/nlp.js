@@ -6,6 +6,7 @@ NLP.js
 =======
 
 [![Build Status](https://travis-ci.com/axa-group/nlp.js.svg?branch=master)](https://travis-ci.com/axa-group/nlp.js)
+[![Coverage Status](https://coveralls.io/repos/github/axa-group/nlp.js/badge.svg?branch=master)](https://coveralls.io/github/axa-group/nlp.js?branch=master)
 [![NPM version](https://img.shields.io/npm/v/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp)
 [![NPM downloads](https://img.shields.io/npm/dm/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp)
 
@@ -19,6 +20,7 @@ NLP.js
 - Natural Language Processing Classifier, to classify utterance into intents.
 - Natural Language Generation Manager, so from intents and conditions it can generate an answer.
 - NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
+- 27 languages supported: Arabic (ar), Armenian (hy), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), German (de), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Norwegian (no), Portuguese (pt), Romanian (ro), Russian (ru), Slovene (sl), Spanish (es), Swedish (sv), Tamil (ta), Turkish (tr)
 
 <div align="center">
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
@@ -56,8 +58,12 @@ NLP.js
   - [Duration Extraction](docs/builtin-entity-extraction.md#duration-extraction)
 - [Sentiment Analysis](docs/sentiment-analysis.md)
 - [NLP Manager](docs/nlp-manager.md)
+- [Slot Filling](docs/slot-filling.md)
 - [Loading from Excel](docs/loading-from-excel.md)
 - [Microsoft Bot Framework](docs/microsoft-bot-framework.md)
+  - [Introduction](docs/microsoft-bot-framework.md#introduction)
+  - [Example of use](docs/microsoft-bot-framework.md#example-of-use)
+  - [Recognizer and Slot filling](docs/microsoft-bot-framework.md#recognizer-and-slot-filling)
 - [Contributing](#contributing)
 - [Code of Conduct](#code-of-conduct)
 - [Who is behind it](#who-is-behind-it)

@@ -8,7 +8,12 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 
 | Language        | Natural | Snowball | Custom |
 | :-------------- | :-----: | :------: | :----: |
+| Arabic (ar)     |         |    X     |        |
+| Armenian (hy)   |         |    X     |        |
+| Basque (eu)     |         |    X     |        |
+| Catalan (ca)    |         |    X     |        |
 | Chinese (zh)    |         |          |   X    |
+| Czech (cx)      |         |    X     |        |
 | Danish (da)     |         |    X     |        |
 | Dutch (nl)      |    X    |    X     |        |
 | English (en)    |    X    |    X     |        |
@@ -18,21 +23,29 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | German (de)     |         |    X     |        |
 | Hungarian (hu)  |         |    X     |        |
 | Indonesian (id) |    X    |          |        |
+| Irish (ga)      |         |    X     |        |
 | Italian (it)    |    X    |    X     |        |
 | Japanese (ja)   |    X    |          |        |
 | Norwegian (no)  |    X    |    X     |        |
 | Portuguese (pt) |    X    |    X     |        |
 | Romanian (ro)   |         |    X     |        |
 | Russian (ru)    |    X    |    X     |        |
+| Slovene (sl)    |         |    X     |        |
 | Spanish (es)    |    X    |    X     |        |
 | Swedish (sv)    |    X    |    X     |        |
+| Tamil (ta)      |         |    X     |        |
 | Turkish (tr)    |         |    X     |        |
 
 ## Sentiment Analysis
 
 | Language        | AFINN | Senticon | Pattern |
 | :-------------- | :---: | :------: | :-----: |
+| Arabic (ar)     |       |          |         |
+| Armenian (hy)   |       |          |         |
+| Basque (eu)     |       |          |         |
+| Catalan (ca)    |       |          |         |
 | Chinese (zh)    |       |          |         |
+| Czech (cs)      |       |          |         |
 | Danish (da)     |       |          |         |
 | Dutch (nl)      |       |          |    X    |
 | English (en)    |   X   |    X     |    X    |
@@ -42,15 +55,18 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | German (de)     |       |    X     |         |
 | Hungarian (hu)  |       |          |         |
 | Indonesian (id) |       |          |         |
+| Irish (ga)      |       |          |         |
 | Italian (it)    |       |          |    X    |
 | Japanese (ja)   |       |          |         |
 | Norwegian (no)  |       |          |         |
 | Portuguese (pt) |       |          |         |
 | Romanian (ro)   |       |          |         |
 | Russian (ru)    |       |          |         |
+| Slovene (sl)    |       |          |         |
 | Spanish (es)    |   X   |    X     |         |
 | Swedish (sv)    |       |          |         |
 | Turkish (tr)    |       |          |         |
+| Tamil (ta)      |       |          |         |
 
 ## Builtin Entity Extraction
 

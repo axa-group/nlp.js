@@ -34,9 +34,9 @@ describe('NLP Manager', () => {
       expect(manager.nerManager).toBeDefined();
       expect(manager.guesser).toBeDefined();
       expect(manager.sentiment).toBeDefined();
+      expect(manager.slotManager).toBeDefined();
       expect(manager.languages).toEqual([]);
       expect(manager.classifiers).toEqual({});
-      expect(manager.intentEntities).toEqual({});
       expect(manager.settings.fullSearchWhenGuessed).toBeTruthy();
       expect(manager.settings.useNlg).toBeTruthy();
     });
@@ -135,8 +135,8 @@ describe('NLP Manager', () => {
       manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
       manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
       manager.addDocument('en', 'I saw %hero%', 'sawhero');
-      expect(manager.intentEntities.sawhero).toBeDefined();
-      expect(manager.intentEntities.sawhero).toContain('hero');
+      expect(manager.slotManager.intents.sawhero).toBeDefined();
+      expect(manager.slotManager.intents.sawhero.hero).toBeDefined();
     });
   });
 
