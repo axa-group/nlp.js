@@ -89,7 +89,7 @@ function addTests(base, locale) {
       const utterance = testCase[utteranceName] || testCase.utterance;
       if (utterance) {
         test(utterance, async () => {
-          const { entities:result } = await manager.process(utterance);
+          const { entities: result } = await manager.process(utterance);
           expect(result).toContainResolution(Object.assign(testCase.result, testCase[resultName]));
         });
       }

@@ -55,5 +55,12 @@
     "utteranceFr": "un sur trois",
     "utterancePt": "um sobre tres",
     "result": { "strValue": "0.333333333333333", "value": 0.333333333333333, "subtype": "float" }
+  },
+  {
+    "utteranceEn": "ninety eight",
+    "utteranceEs": "noventa y ocho",
+    "utteranceFr": "quatre vingt dix huit",
+    "utterancePt": "noventa e oito",
+    "result": { "strValue": "98", "value": 98, "subtype": "integer" }
   }
 ]
