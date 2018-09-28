@@ -40,7 +40,7 @@ manager.addDocument(
   'sawhero',
 );
 manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-manager.train();
+await manager.train();
 manager.process(
   'I saw spiderman eating spaghetti today in the city!',
 ).then(result => console.log(result));
@@ -83,7 +83,7 @@ manager.process(
 Also, you can save and load the NLP Manager to be reused without having to train it, because the thetas of the ML are also stored.
 
 ```
-      manager.train();
+      await manager.train();
       manager.save(filename);
       manager = new NlpManager();
       manager.load(filename);

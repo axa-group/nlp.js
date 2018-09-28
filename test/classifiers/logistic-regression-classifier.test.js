@@ -58,10 +58,10 @@ function getClassifier3() {
 
 describe('Logistic Regression Classifier', () => {
   describe('Train', () => {
-    test('Should create the theta', () => {
+    test('Should create the theta', async () => {
       const classifier = getClassifier2();
       expect(classifier.theta).toBeUndefined();
-      classifier.train();
+      await classifier.train();
       expect(classifier.theta).toBeDefined();
       const expected = [[2.443849977840033, 1.2755682924177316, 2.443849977840033,
         -2.768423007562095, -1.6689759372483393, -1.6689759372483393],
@@ -81,9 +81,9 @@ describe('Logistic Regression Classifier', () => {
   });
 
   describe('Get classifications', () => {
-    test('Should get correct clasifications for basic examples', () => {
+    test('Should get correct clasifications for basic examples', async () => {
       const classifier = getClassifier2();
-      classifier.train();
+      await classifier.train();
       const classifications1 = classifier.getClassifications([0, 1, 1, 0, 0, 0]);
       expect(classifications1).toHaveLength(2);
       expect(classifications1[0].label).toEqual('one');
@@ -97,9 +97,9 @@ describe('Logistic Regression Classifier', () => {
       expect(classifications2[1].label).toEqual('one');
       expect(classifications2[1].value).toBeLessThan(0.05);
     });
-    test('Should get correct clasifications for more complex examples', () => {
+    test('Should get correct clasifications for more complex examples', async () => {
       const classifier = getClassifier3();
-      classifier.train();
+      await classifier.train();
       const classifications1 = classifier.getClassifications([1, 1, 0, 0, 0, 0, 1, 0, 0]);
       expect(classifications1).toHaveLength(3);
       expect(classifications1[0].label).toEqual('one');
@@ -113,10 +113,10 @@ describe('Logistic Regression Classifier', () => {
       expect(classifications3[0].label).toEqual('three');
       expect(classifications3[0].value).toBeGreaterThan(0.60);
     });
-    test('Should allow retraining', () => {
+    test('Should allow retraining', async () => {
       const classifier = new LogisticRegressionClassifier();
       addObservations3a(classifier);
-      classifier.train();
+      await classifier.train();
       let classifications1 = classifier.getClassifications([1, 1, 0, 0, 0, 0, 1, 0, 0]);
       expect(classifications1).toHaveLength(2);
       expect(classifications1[0].label).toEqual('one');
@@ -126,7 +126,7 @@ describe('Logistic Regression Classifier', () => {
       expect(classifications2[0].label).toEqual('two');
       expect(classifications2[0].value).toBeGreaterThan(0.85);
       addObservations3b(classifier);
-      classifier.train();
+      await classifier.train();
       classifications1 = classifier.getClassifications([1, 1, 0, 0, 0, 0, 1, 0, 0]);
       expect(classifications1).toHaveLength(3);
       expect(classifications1[0].label).toEqual('one');
@@ -143,9 +143,9 @@ describe('Logistic Regression Classifier', () => {
   });
 
   describe('Get Best Classification', () => {
-    test('Should get the best classification', () => {
+    test('Should get the best classification', async () => {
       const classifier = getClassifier3();
-      classifier.train();
+      await classifier.train();
       const classification1 = classifier.getBestClassification([1, 1, 0, 0, 0, 0, 1, 0, 0]);
       expect(classification1.label).toEqual('one');
       expect(classification1.value).toBeGreaterThan(0.85);
@@ -156,9 +156,9 @@ describe('Logistic Regression Classifier', () => {
       expect(classification3.label).toEqual('three');
       expect(classification3.value).toBeGreaterThan(0.60);
     });
-    test('If cannot get classifications, then return undefined', () => {
+    test('If cannot get classifications, then return undefined', async () => {
       const classifier = new LogisticRegressionClassifier({});
-      classifier.train();
+      await classifier.train();
       const classification = classifier.getBestClassification([1, 1, 0, 0, 0, 0, 1, 0, 0]);
       expect(classification).toBeUndefined();
     });

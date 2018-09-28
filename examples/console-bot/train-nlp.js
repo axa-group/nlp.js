@@ -23,7 +23,7 @@
 
 const fs = require('fs');
 
-module.exports = function trainnlp(manager, say) {
+module.exports = async function trainnlp(manager, say) {
   if (fs.existsSync('./model.nlp')) {
     manager.load('./model.nlp');
     return;
@@ -354,7 +354,7 @@ module.exports = function trainnlp(manager, say) {
   manager.addDocument('en', 'what should I do', 'user.needsadvice');
   say('Training, please wait..');
   const hrstart = process.hrtime();
-  manager.train();
+  await manager.train();
   const hrend = process.hrtime(hrstart);
   console.info('Trained (hr): %ds %dms', hrend[0], hrend[1] / 1000000);
   say('Trained!');
