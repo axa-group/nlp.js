@@ -125,33 +125,35 @@ describe('Recognizer', () => {
     });
     test('It should use context if conversation id is provided', (done) => {
       const recognizer = new Recognizer();
-      recognizer.loadExcel('./test/nlp/rules.xls');
-      const session1 = {
-        locale: 'en',
-        message: {
-          address: {
-            conversation: {
-              id: 'a1b2c3',
+      recognizer.loadExcel('./test/nlp/rules.xls').then(() => {
+        const session1 = {
+          locale: 'en',
+          message: {
+            address: {
+              conversation: {
+                id: 'a1b2c3',
+              },
             },
+            text: 'Who is spiderman?',
           },
-          text: 'Who is spiderman?',
-        },
-      };
-      const session2 = {
-        locale: 'en',
-        message: {
-          address: {
-            conversation: {
-              id: 'a1b2c3',
+        };
+        const session2 = {
+          locale: 'en',
+          message: {
+            address: {
+              conversation: {
+                id: 'a1b2c3',
+              },
             },
+            text: 'Where he lives?',
           },
-          text: 'Where he lives?',
-        },
-      };
-      recognizer.recognize(session1, () => {
-        recognizer.recognize(session2, (err, result) => {
-          expect(result.answer).toEqual('Hanging on a web');
-          done();
+        };
+        recognizer.recognize(session1, () => {
+          recognizer.recognize(session2, (err, result) => {
+            console.log(err, result);
+            expect(result.answer).toEqual('Hanging on a web');
+            done();
+          });
         });
       });
     });
