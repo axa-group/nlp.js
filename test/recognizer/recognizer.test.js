@@ -150,7 +150,6 @@ describe('Recognizer', () => {
         };
         recognizer.recognize(session1, () => {
           recognizer.recognize(session2, (err, result) => {
-            console.log(err, result);
             expect(result.answer).toEqual('Hanging on a web');
             done();
           });
