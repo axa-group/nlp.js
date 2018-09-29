@@ -13,7 +13,7 @@ classifier.add('Bonsoir', 'greet');
 classifier.add("J'ai perdu mes clés", 'keys');
 classifier.add('Je ne trouve pas mes clés', 'keys');
 classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
-classifier.train();
+await classifier.train();
 const classifications = classifier.getClassifications('où sont mes clés');
 // value is [ { label: 'keys', value: 0.994927593677957 }, { label: 'greet', value: 0.005072406322043053 } ]
 ```
@@ -30,7 +30,7 @@ classifier.add('Bonsoir', 'greet');
 classifier.add("J'ai perdu mes clés", 'keys');
 classifier.add('Je ne trouve pas mes clés', 'keys');
 classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
-classifier.train();
+await classifier.train();
 const classification = classifier.classify('où sont mes clés');
 // value is { label: 'keys', value: 0.994927593677957 }
 ```
