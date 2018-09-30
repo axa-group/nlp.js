@@ -8,7 +8,8 @@
     "resultEn": { "localeUnit": "Kilometer" },
     "resultEs": { "localeUnit": "Kilómetro" },
     "resultFr": { "localeUnit": "Kilomètres" },
-    "resultPt": { "localeUnit": "Quilômetro" }
+    "resultPt": { "localeUnit": "Quilômetro" },
+    "resultZh": { "localeUnit": "千米" }
   },
   {
     "utterance": "120 km/h",
@@ -16,7 +17,8 @@
     "resultEn": { "localeUnit": "Kilometer per hour" },
     "resultEs": { "localeUnit": "Kilómetro por hora" },
     "resultFr": { "localeUnit": "Kilomètre par heure" },
-    "resultPt": { "localeUnit": "Quilômetro por hora" }
+    "resultPt": { "localeUnit": "Quilômetro por hora" },
+    "resultZh": { "localeUnit": "公里每小时" }
   },
   {
     "utterance": "120 m3",
@@ -24,15 +26,18 @@
     "resultEn": { "localeUnit": "Cubic meter" },
     "resultEs": { "localeUnit": "Metro cúbico" },
     "resultFr": { "localeUnit": "Mètre cube" },
-    "resultPt": { "localeUnit": "Metro cúbico" }
+    "resultPt": { "localeUnit": "Metro cúbico" },    
+    "resultZh": { "localeUnit": "立方米" }
   },
   {
     "utterance": "120 kg",
+    "utteranceZh": "120公斤",
     "result": { "strValue": "120", "value": 120, "unit": "Kilogram" },
     "resultEn": { "localeUnit": "Kilogram" },
     "resultEs": { "localeUnit": "Kilogramo" },
     "resultFr": { "localeUnit": "Kilogramme" },
-    "resultPt": { "localeUnit": "Quilograma" }
+    "resultPt": { "localeUnit": "Quilograma" },
+    "resultZh": { "localeUnit": "千克" }
   },
   {
     "utterance": "120 °f",
@@ -40,6 +45,7 @@
     "resultEn": { "localeUnit": "F" },
     "resultEs": { "localeUnit": "Grado Fahrenheit" },
     "resultFr": { "localeUnit": "F" },
-    "resultPt": { "localeUnit": "Grau Fahrenheit" }
+    "resultPt": { "localeUnit": "Grau Fahrenheit" },
+    "resultZh": { "localeUnit": "F" }
   }
 ]
