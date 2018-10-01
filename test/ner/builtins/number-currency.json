@@ -15,7 +15,8 @@
   {
     "utterance": "333€",
     "result": { "strValue": "333", "value": 333, "unit": "Euro", "localeUnit": "Euro" },
-    "resultZh": { "localeUnit": "欧元" }
+    "resultZh": { "localeUnit": "欧元" },
+    "resultJa": { "localeUnit": "ユーロ" }
   },
   {
     "utterance": "$333",
@@ -24,6 +25,7 @@
     "resultEs": { "localeUnit": "Dólar" },
     "resultFr": { "localeUnit": "Dollar" },
     "resultPt": { "localeUnit": "Dólar" },
-    "resultZh": { "localeUnit": "美元" }
+    "resultZh": { "localeUnit": "美元" },
+    "resultJa": { "localeUnit": "ドル" }
   }
 ]

@@ -8,7 +8,8 @@
     "utteranceEs": "Volveré el 15",
     "utteranceFr": "Je reviendrai en 15",
     "utterancePt": "Voltarei no 15",
-    "avoid": ["pt"],
+    "utteranceJa": "私は15日に戻ります",
+    "avoid": ["pt", "ja"],
     "result": { "type": "interval", "timex": "XXXX-XX-15", "futureDate": "*", "pastDate": "*", "strFutureValue": "*", "strPastValue": "*" }
   },
   {
@@ -16,7 +17,8 @@
     "utteranceEs": "Volveré el 12 de enero, 2016",
     "utteranceFr": "Je reviendrai Lundi 12 Janvier, 2016",
     "utterancePt": "voltarei em 12 de janeiro, 2016",
-    "avoid": ["pt"],
+    "utteranceJa": "私は2016年1月12日に戻ります",
+    "avoid": ["pt", "ja"],
     "result": { "type": "date", "timex": "2016-01-12", "strValue": "2016-01-12", "date": "2016-01-12T00:00:00.000Z" }
   },
   {
@@ -24,7 +26,7 @@
     "utteranceEs": "Volveré en Enero",
     "utteranceFr": "Je reviendrai Janvier",
     "utterancePt": "voltarei em janeiro",
-    "avoid": ["pt"],
+    "avoid": ["pt", "ja"],
     "result": { "type": "interval", "timex": "XXXX-01", "futureEndDate": "*", "futureStartDate": "*", "pastEndDate": "*", "pastStartDate": "*", "strFutureEndValue": "*", "strFutureStartValue": "*", "strPastEndValue": "*", "strPastStartValue": "*" }
   }
 ]

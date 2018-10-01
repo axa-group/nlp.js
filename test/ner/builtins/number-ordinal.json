@@ -5,6 +5,7 @@
     "utteranceFr": "trois trillionth",
     "utterancePt": "três trilionésimo",
     "utteranceZh": "三万亿",
+    "utteranceJa": "三兆目",
     "avoid": ["fr", "pt"],
     "result": { "strValue": "3000000000000", "value": 3000000000000, "subtype": "integer" }
   },
@@ -14,6 +15,7 @@
     "utteranceFr": "cent vingt cinquieme",
     "utterancePt": "centesimo vigesimo quinto",
     "utteranceZh": "一百二十五",
+    "utteranceJa": "一百二十五目",
     "result": { "strValue": "125", "value": 125, "subtype": "integer" }
   },
   {
@@ -22,6 +24,7 @@
     "utteranceFr": "2eme",
     "utterancePt": "2a",
     "utteranceZh": "第2",
+    "utteranceJa": "第2",
     "result": { "strValue": "2", "value": 2, "subtype": "integer" }
   }
 ]
