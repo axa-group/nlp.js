@@ -324,19 +324,19 @@ describe('NLP Manager', () => {
   describe('Process', () => {
     test('Should classify an utterance', async () => {
       const manager = new NlpManager();
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.addLanguage(['en', 'ja']);
+      manager.addDocument('en', 'Hello', 'greet');
+      manager.addDocument('en', 'Good evening', 'greet');
+      manager.addDocument('en', 'Good morning', 'greet');
+      manager.addDocument('en', 'I\'ve lost my keys', 'keys');
+      manager.addDocument('en', 'I don\'t find my keys', 'keys');
+      manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
       manager.train();
-      const result = await manager.process('où sont mes clés');
+      const result = await manager.process('Where are my keys');
       expect(result).toBeDefined();
-      expect(result.locale).toEqual('fr');
-      expect(result.localeIso2).toEqual('fr');
-      expect(result.utterance).toEqual('où sont mes clés');
+      expect(result.locale).toEqual('en');
+      expect(result.localeIso2).toEqual('en');
+      expect(result.utterance).toEqual('Where are my keys');
       expect(result.classification).toBeDefined();
       expect(result.classification).toHaveLength(2);
       expect(result.intent).toEqual('keys');
@@ -344,19 +344,19 @@ describe('NLP Manager', () => {
     });
     test('Language can be specified', async () => {
       const manager = new NlpManager();
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.addLanguage(['en', 'ja']);
+      manager.addDocument('en', 'Hello', 'greet');
+      manager.addDocument('en', 'Good evening', 'greet');
+      manager.addDocument('en', 'Good morning', 'greet');
+      manager.addDocument('en', 'I\'ve lost my keys', 'keys');
+      manager.addDocument('en', 'I don\'t find my keys', 'keys');
+      manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
       manager.train();
-      const result = await manager.process('fr', 'où sont mes clés');
+      const result = await manager.process('en', 'where are my keys');
       expect(result).toBeDefined();
-      expect(result.locale).toEqual('fr');
-      expect(result.localeIso2).toEqual('fr');
-      expect(result.utterance).toEqual('où sont mes clés');
+      expect(result.locale).toEqual('en');
+      expect(result.localeIso2).toEqual('en');
+      expect(result.utterance).toEqual('where are my keys');
       expect(result.classification).toBeDefined();
       expect(result.classification).toHaveLength(2);
       expect(result.intent).toEqual('keys');
@@ -548,24 +548,24 @@ describe('NLP Manager', () => {
       const manager = new NlpManager({
         processTransformer: transformer,
       });
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.addLanguage(['en', 'ja']);
+      manager.addDocument('en', 'Hello', 'greet');
+      manager.addDocument('en', 'Good evening', 'greet');
+      manager.addDocument('en', 'Good morning', 'greet');
+      manager.addDocument('en', 'I\'ve lost my keys', 'keys');
+      manager.addDocument('en', 'I don\'t find my keys', 'keys');
+      manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
       manager.train();
 
       expect(transformer).not.toBeCalled();
 
-      await manager.process('où sont mes clés');
+      await manager.process('where are my keys');
 
       expect(transformer).toBeCalled();
       expect(transformer.mock.calls[0][0]).toMatchObject({
-        locale: 'fr',
-        localeIso2: 'fr',
-        utterance: 'où sont mes clés',
+        locale: 'en',
+        localeIso2: 'en',
+        utterance: 'where are my keys',
       });
     });
 
@@ -577,11 +577,11 @@ describe('NLP Manager', () => {
       const manager = new NlpManager({
         processTransformer: transformer,
       });
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.addLanguage(['en', 'ja']);
+      manager.addDocument('en', 'Hello', 'greet');
       manager.train();
 
-      const result = await manager.process('où sont mes clés');
+      const result = await manager.process('where are my keys');
 
       expect(result).toEqual(transformedValue);
     });
@@ -594,11 +594,11 @@ describe('NLP Manager', () => {
       const manager = new NlpManager({
         processTransformer: transformer,
       });
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
+      manager.addLanguage(['en', 'ja']);
+      manager.addDocument('en', 'Hello', 'greet');
       manager.train();
 
-      const result = await manager.process('où sont mes clés');
+      const result = await manager.process('where are my keys');
 
       expect(result).toEqual(transformedValue);
     });
@@ -776,17 +776,17 @@ describe('NLP Manager', () => {
     });
     test('It should return the domain of the intent when processing', async () => {
       const manager = new NlpManager();
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
+      manager.addLanguage(['en', 'ja']);
+      manager.addDocument('en', 'Hello', 'greet');
+      manager.addDocument('en', 'Good evening', 'greet');
+      manager.addDocument('en', 'Good morning', 'greet');
+      manager.addDocument('en', 'I\'ve lost my keys', 'keys');
+      manager.addDocument('en', 'I don\'t find my keys', 'keys');
+      manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
       manager.assignDomain('greet', 'domain');
       manager.assignDomain('keys', 'domain');
       manager.train();
-      const result = await manager.process('où sont mes clés');
+      const result = await manager.process('where are my keys');
       expect(result.domain).toEqual('domain');
     });
     test('It can provide a list of domains with the intents', () => {
