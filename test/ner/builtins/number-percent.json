@@ -8,7 +8,8 @@
     "utteranceEs": "100 por ciento",
     "utteranceFr": "100 pourcent",
     "utterancePt": "100 por cento",
-    "utterance": "１０ 成",
+    "utteranceZh": "１０ 成",
+    "utteranceJa": "十 割",
     "result": { "strValue": "100%", "value": 100, "subtype": "integer" }
   },
   {
@@ -17,6 +18,7 @@
     "utteranceFr": "trente cinq pourcent",
     "utterancePt": "trinta e cinco por cento",
     "utteranceZh": "三成半",
+    "utteranceJa": "三十五パーセント",
     "result": { "strValue": "35%", "value": 35, "subtype": "integer" }
   }
 ]

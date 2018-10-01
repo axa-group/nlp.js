@@ -65,9 +65,6 @@ expect.extend({
 });
 
 function addTests(base, locale) {
-  const upperLocale = `${locale.charAt(0).toUpperCase()}${locale.slice(1)}`;
-  const utteranceName = `utterance${upperLocale}`;
-  const resultName = `result${upperLocale}`;
   const manager = new NlpManager({ languages: [locale] });
   for (let i = 0; i < base.length; i += 1) {
     const testCase = base[i];
@@ -86,11 +83,15 @@ function addTests(base, locale) {
       }
     }
     if (!testCase.avoid || !testCase.avoid.includes(locale)) {
+      const upperLocale = `${locale.charAt(0).toUpperCase()}${locale.slice(1)}`;
+      const utteranceName = `utterance${upperLocale}`;
       const utterance = testCase[utteranceName] || testCase.utterance;
+      const resultName = `result${upperLocale}`;
       if (utterance) {
         test(utterance, async () => {
+          const expected = Object.assign(testCase.result, testCase[resultName]);
           const { entities: result } = await manager.process(utterance);
-          expect(result).toContainResolution(Object.assign(testCase.result, testCase[resultName]));
+          expect(result).toContainResolution(expected);
         });
       }
     }
@@ -103,6 +104,7 @@ const languages = [
   { locale: 'fr', name: 'French' },
   { locale: 'pt', name: 'Portuguese' },
   { locale: 'zh', name: 'Chinese' },
+  { locale: 'ja', name: 'Japanese' },
 ];
 
 describe('NER Manager builtins', () => {
