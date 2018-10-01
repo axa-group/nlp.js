@@ -321,6 +321,60 @@ describe('NLP Manager', () => {
     });
   });
 
+  describe('Extract Entities', () => {
+    test('Should search for entities', async () => {
+      const manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
+      manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      const result = await manager.extractEntities('I saw spiderman eating spaghetti today in the city!');
+      expect(result).toHaveLength(2);
+      expect(result[0].sourceText).toEqual('Spiderman');
+      expect(result[1].sourceText).toEqual('spaghetti');
+    });
+    test('Should search for entities if the language is specified', async () => {
+      const manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
+      manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      const result = await manager.extractEntities('en', 'I saw spiderman eating spaghetti today in the city!');
+      expect(result).toHaveLength(2);
+      expect(result[0].sourceText).toEqual('Spiderman');
+      expect(result[1].sourceText).toEqual('spaghetti');
+    });
+    test('If the locale is not one of the nlp manager, then guess language', async () => {
+      const manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spiderman', 'Spider-man']);
+      manager.addNamedEntityText('hero', 'iron man', ['en'], ['iron man', 'iron-man']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'burguer', ['en'], ['Burguer', 'Hamburguer']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      const result = await manager.extractEntities('es', 'I saw spiderman eating spaghetti today in the city!');
+      expect(result).toHaveLength(2);
+      expect(result[0].sourceText).toEqual('Spiderman');
+      expect(result[1].sourceText).toEqual('spaghetti');
+    });
+  });
+
   describe('Process', () => {
     test('Should classify an utterance', async () => {
       const manager = new NlpManager();
