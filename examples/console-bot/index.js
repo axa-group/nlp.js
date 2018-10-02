@@ -46,6 +46,7 @@ rl.on('line', async (line) => {
     process.exit();
   } else {
     const result = await nlpManager.process(line);
+    console.log(result);
     const answer = result.score > threshold && result.answer ? result.answer : 'Sorry, I don\'t understand';
     let sentiment = '';
     if (result.sentiment.score !== 0) {

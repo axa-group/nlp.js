@@ -32,6 +32,7 @@ NLP.js
 
 - [Installation](#installation)
 - [Example of use](#example-of-use)
+- [Benchmarking](docs/benchmarking.md)
 - [Language Support](docs/language-support.md)
   - [Classification](docs/language-support.md#classification)
   - [Sentiment Analysis](docs/language-support.md#sentiment-analysis)
