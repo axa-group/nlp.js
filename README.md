@@ -59,6 +59,7 @@ NLP.js
   - [Duration Extraction](docs/builtin-entity-extraction.md#duration-extraction)
 - [Sentiment Analysis](docs/sentiment-analysis.md)
 - [NLP Manager](docs/nlp-manager.md)
+  - [Context](docs/nlp-manager.md#context)
 - [Slot Filling](docs/slot-filling.md)
 - [Loading from Excel](docs/loading-from-excel.md)
 - [Microsoft Bot Framework](docs/microsoft-bot-framework.md)

@@ -95,6 +95,38 @@ Also, you can save and load the NLP Manager to be reused without having to train
 If no filename is provided by default it is './model.nlp'.
 
 
+## Context
+
+You can also provide a context to ```NlpManger.process``` so the NLG changes its behaviour based on the context.
+
+```
+const { NlpManager, ConversationContext } = require('node-nlp');
+
+const manager = new NlpManager({ languages: ['en'] });
+const context = new ConversationContext();
+
+manager.addDocument('en', 'Hello my name is %name%', 'greeting.hello');
+manager.addDocument('en', 'I have to go', 'greeting.bye');
+manager.addAnswer('en', 'greeting.hello', 'Hey there!');
+manager.addAnswer('en', 'greeting.bye', 'Till next time, {{name}}!');
+manager.train();
+
+
+manager
+  .process('en', 'Hello my name is John', context)
+  .then(result => {
+    return manager.process('en', 'I have to go', context)
+  })
+  .then(result => console.log(result.answer));
+```
+
+This will show this result in console:
+
+```
+See you soon, John!
+```
+
+
 ## Transformers
 
 You could pass transformer function to NLPManager constructor, which might be used to modify process output format.
