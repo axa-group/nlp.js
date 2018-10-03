@@ -36,6 +36,7 @@ const {
   AggressiveTokenizerPt,
   AggressiveTokenizerPl,
   AggressiveTokenizerSv,
+  TokenizerJa,
 } = require('../../lib/nlp/tokenizers');
 
 describe('NLP Util', () => {
@@ -168,7 +169,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('pl')).toBeInstanceOf(AggressiveTokenizerPl); // polish
       expect(NlpUtil.getTokenizer('sv')).toBeInstanceOf(AggressiveTokenizerSv); // swedish
       expect(NlpUtil.getTokenizer('id')).toBeDefined(); // indonesian
-      expect(NlpUtil.getTokenizer('ja')).toBeInstanceOf(Natural.TokenizerJa); // japanese
+      expect(NlpUtil.getTokenizer('ja')).toBeInstanceOf(TokenizerJa); // japanese
       expect(NlpUtil.getTokenizer('ar')).toBeInstanceOf(PunctTokenizer); // arabic
       expect(NlpUtil.getTokenizer('hy')).toBeInstanceOf(PunctTokenizer); // armenian
       expect(NlpUtil.getTokenizer('eu')).toBeInstanceOf(PunctTokenizer); // basque
