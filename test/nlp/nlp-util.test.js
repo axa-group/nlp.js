@@ -24,6 +24,12 @@
 const Natural = require('natural');
 const PunctTokenizer = require('../../lib/nlp/tokenizers/punct-tokenizer');
 const { NlpUtil } = require('../../lib');
+const {
+  AggressiveTokenizer,
+  AggressiveTokenizerFa,
+  AggressiveTokenizerFr,
+  AggressiveTokenizerRu,
+} = require('../../lib/nlp/tokenizers');
 
 describe('NLP Util', () => {
   describe('Get truncated locale', () => {
@@ -143,10 +149,10 @@ describe('NLP Util', () => {
 
   describe('Get tokenizer', () => {
     test('Should return correct tokenizer for the locale', () => {
-      expect(NlpUtil.getTokenizer('en')).toBeInstanceOf(Natural.AggressiveTokenizer); // english
-      expect(NlpUtil.getTokenizer('fa')).toBeInstanceOf(Natural.AggressiveTokenizerFa); // farsi
-      expect(NlpUtil.getTokenizer('fr')).toBeInstanceOf(Natural.AggressiveTokenizerFr); // french
-      expect(NlpUtil.getTokenizer('ru')).toBeInstanceOf(Natural.AggressiveTokenizerRu); // russian
+      expect(NlpUtil.getTokenizer('en')).toBeInstanceOf(AggressiveTokenizer); // english
+      expect(NlpUtil.getTokenizer('fa')).toBeInstanceOf(AggressiveTokenizerFa); // farsi
+      expect(NlpUtil.getTokenizer('fr')).toBeInstanceOf(AggressiveTokenizerFr); // french
+      expect(NlpUtil.getTokenizer('ru')).toBeInstanceOf(AggressiveTokenizerRu); // russian
       expect(NlpUtil.getTokenizer('es')).toBeInstanceOf(Natural.AggressiveTokenizerEs); // spanish
       expect(NlpUtil.getTokenizer('it')).toBeInstanceOf(Natural.AggressiveTokenizerIt); // italian
       expect(NlpUtil.getTokenizer('nl')).toBeInstanceOf(Natural.AggressiveTokenizerNl); // dutch
