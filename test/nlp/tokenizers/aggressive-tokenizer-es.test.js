@@ -21,32 +21,21 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Base class for a tokenizer
- */
-class Tokenizer {
-  /**
-   * Constructor of the class.
-   * @param {Object} settings Settings for this instance.
-   */
-  constructor(settings) {
-    this.settings = settings || {};
-  }
+const { AggressiveTokenizerEs } = require('../../../lib/nlp/tokenizers');
 
-  /**
-   * Remove empty items at left at right of an array.
-   * @param {string[]} arr Array to be trimmed.
-   * @returns {string[]} Trimmed array.
-   */
-  trim(arr) {
-    while (arr[arr.length - 1] === '') {
-      arr.pop();
-    }
-    while (arr[0] === '') {
-      arr.shift();
-    }
-    return arr;
-  }
-}
-
-module.exports = Tokenizer;
+describe('Aggressive Tokenizer Es', () => {
+  describe('Constructor', () => {
+    test('It should create a new instance', () => {
+      const tokenizer = new AggressiveTokenizerEs();
+      expect(tokenizer).toBeDefined();
+    });
+  });
+  describe('Tokenize', () => {
+    test('It must tokenize simple sentence', () => {
+      const tokenizer = new AggressiveTokenizerEs();
+      const expected = ['Esta', 'frase', 'debería', 'ser', 'tokenizada'];
+      const actual = tokenizer.tokenize('Esta frase debería ser tokenizada');
+      expect(actual).toEqual(expected);
+    });
+  });
+});

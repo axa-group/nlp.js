@@ -29,6 +29,13 @@ const {
   AggressiveTokenizerFa,
   AggressiveTokenizerFr,
   AggressiveTokenizerRu,
+  AggressiveTokenizerEs,
+  AggressiveTokenizerIt,
+  AggressiveTokenizerNl,
+  AggressiveTokenizerNo,
+  AggressiveTokenizerPt,
+  AggressiveTokenizerPl,
+  AggressiveTokenizerSv,
 } = require('../../lib/nlp/tokenizers');
 
 describe('NLP Util', () => {
@@ -153,13 +160,13 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('fa')).toBeInstanceOf(AggressiveTokenizerFa); // farsi
       expect(NlpUtil.getTokenizer('fr')).toBeInstanceOf(AggressiveTokenizerFr); // french
       expect(NlpUtil.getTokenizer('ru')).toBeInstanceOf(AggressiveTokenizerRu); // russian
-      expect(NlpUtil.getTokenizer('es')).toBeInstanceOf(Natural.AggressiveTokenizerEs); // spanish
-      expect(NlpUtil.getTokenizer('it')).toBeInstanceOf(Natural.AggressiveTokenizerIt); // italian
-      expect(NlpUtil.getTokenizer('nl')).toBeInstanceOf(Natural.AggressiveTokenizerNl); // dutch
-      expect(NlpUtil.getTokenizer('no')).toBeInstanceOf(Natural.AggressiveTokenizerNo); // norwegian
-      expect(NlpUtil.getTokenizer('pt')).toBeInstanceOf(Natural.AggressiveTokenizerPt); // portuguese
-      expect(NlpUtil.getTokenizer('pl')).toBeInstanceOf(Natural.AggressiveTokenizerPl); // polish
-      expect(NlpUtil.getTokenizer('sv')).toBeInstanceOf(Natural.AggressiveTokenizerSv); // swedish
+      expect(NlpUtil.getTokenizer('es')).toBeInstanceOf(AggressiveTokenizerEs); // spanish
+      expect(NlpUtil.getTokenizer('it')).toBeInstanceOf(AggressiveTokenizerIt); // italian
+      expect(NlpUtil.getTokenizer('nl')).toBeInstanceOf(AggressiveTokenizerNl); // dutch
+      expect(NlpUtil.getTokenizer('no')).toBeInstanceOf(AggressiveTokenizerNo); // norwegian
+      expect(NlpUtil.getTokenizer('pt')).toBeInstanceOf(AggressiveTokenizerPt); // portuguese
+      expect(NlpUtil.getTokenizer('pl')).toBeInstanceOf(AggressiveTokenizerPl); // polish
+      expect(NlpUtil.getTokenizer('sv')).toBeInstanceOf(AggressiveTokenizerSv); // swedish
       expect(NlpUtil.getTokenizer('id')).toBeDefined(); // indonesian
       expect(NlpUtil.getTokenizer('ja')).toBeInstanceOf(Natural.TokenizerJa); // japanese
       expect(NlpUtil.getTokenizer('ar')).toBeInstanceOf(PunctTokenizer); // arabic
