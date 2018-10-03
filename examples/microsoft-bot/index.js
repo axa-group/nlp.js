@@ -17,24 +17,41 @@ fromEntity.addAfterLastCondition('en', 'from', { skip: ['travel'] });
 const toEntity = recognizer.nlpManager.addTrimEntity('toCity');
 toEntity.addBetweenCondition('en', 'to', 'from', { skip: ['travel'] });
 toEntity.addAfterLastCondition('en', 'to', { skip: ['travel'] });
-recognizer.nlpManager.slotManager.addSlot('travel', 'toCity', true, { en: 'Where do you want to go?' });
-recognizer.nlpManager.slotManager.addSlot('travel', 'fromCity', true, { en: 'From where you are traveling?' });
-recognizer.nlpManager.slotManager.addSlot('travel', 'date', true, { en: 'When do you want to travel?' });
-recognizer.nlpManager.addDocument('en', 'I want to travel from %fromCity% to %toCity% %date%', 'travel');
-recognizer.nlpManager.addAnswer('en', 'travel', 'You want to travel from {{ fromCity }} to {{ toCity }} {{ date }}');
-recognizer.nlpManager.train();
+recognizer.nlpManager.slotManager.addSlot('travel', 'toCity', true, {
+  en: 'Where do you want to go?',
+});
+recognizer.nlpManager.slotManager.addSlot('travel', 'fromCity', true, {
+  en: 'From where you are traveling?',
+});
+recognizer.nlpManager.slotManager.addSlot('travel', 'date', true, {
+  en: 'When do you want to travel?',
+});
+recognizer.nlpManager.addDocument(
+  'en',
+  'I want to travel from %fromCity% to %toCity% %date%',
+  'travel',
+);
+recognizer.nlpManager.addAnswer(
+  'en',
+  'travel',
+  'You want to travel from {{ fromCity }} to {{ toCity }} {{ date }}',
+);
 
-// Creates the bot using a memory storage, with a main dialog that
-// use the node-nlp recognizer to calculate the answer.
-const bot = new builder.UniversalBot(connector, (session) => {
-  session.send(`You reached the default message handler. You said '${session.message.text}'.`);
-}).set('storage', new builder.MemoryBotStorage());
+(async () => {
+  await recognizer.nlpManager.train();
 
-recognizer.setBot(bot, true);
+  // Creates the bot using a memory storage, with a main dialog that
+  // use the node-nlp recognizer to calculate the answer.
+  const bot = new builder.UniversalBot(connector, (session) => {
+    session.send(`You reached the default message handler. You said '${session.message.text}'.`);
+  }).set('storage', new builder.MemoryBotStorage());
 
-// Creates the express application
-const app = express();
-const port = process.env.PORT || 3000;
-app.post('/api/messages', connector.listen());
-app.listen(port);
-console.log(`Chatbot listening on port ${port}`);
+  recognizer.setBot(bot, true);
+
+  // Creates the express application
+  const app = express();
+  const port = process.env.PORT || 3000;
+  app.post('/api/messages', connector.listen());
+  app.listen(port);
+  console.log(`Chatbot listening on port ${port}`);
+})();
