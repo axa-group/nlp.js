@@ -23,7 +23,7 @@
 
 const { Recognizer } = require('../../lib');
 
-function fill(recognizer) {
+async function fill(recognizer) {
   recognizer.nlpManager.addLanguage('en');
   const fromEntity = recognizer.nlpManager.addTrimEntity('fromCity');
   fromEntity.addBetweenCondition('en', 'from', 'to', { skip: ['travel'] });
@@ -50,7 +50,7 @@ function fill(recognizer) {
     'travel',
     'You want to travel {{ date }} from {{ fromCity }} to {{ toCity }}'
   );
-  recognizer.nlpManager.train();
+  await recognizer.nlpManager.train();
 }
 
 function mockBot() {
@@ -188,33 +188,34 @@ describe('Recognizer', () => {
     });
     test('It should use context if conversation id is provided', done => {
       const recognizer = new Recognizer();
-      recognizer.loadExcel('./test/nlp/rules.xls');
-      const session1 = {
-        locale: 'en',
-        message: {
-          address: {
-            conversation: {
-              id: 'a1b2c3',
+      recognizer.loadExcel('./test/nlp/rules.xls').then(() => {
+        const session1 = {
+          locale: 'en',
+          message: {
+            address: {
+              conversation: {
+                id: 'a1b2c3',
+              },
             },
+            text: 'Who is spiderman?',
           },
-          text: 'Who is spiderman?',
-        },
-      };
-      const session2 = {
-        locale: 'en',
-        message: {
-          address: {
-            conversation: {
-              id: 'a1b2c3',
+        };
+        const session2 = {
+          locale: 'en',
+          message: {
+            address: {
+              conversation: {
+                id: 'a1b2c3',
+              },
             },
+            text: 'Where he lives?',
           },
-          text: 'Where he lives?',
-        },
-      };
-      recognizer.recognize(session1, () => {
-        recognizer.recognize(session2, (err, result) => {
-          expect(result.answer).toEqual('Hanging on a web');
-          done();
+        };
+        recognizer.recognize(session1, () => {
+          recognizer.recognize(session2, (err, result) => {
+            expect(result.answer).toEqual('Hanging on a web');
+            done();
+          });
         });
       });
     });
@@ -233,9 +234,9 @@ describe('Recognizer', () => {
     });
   });
   describe('Slot filling', () => {
-    test('If all slots are filled return the correct answer', done => {
+    test('If all slots are filled return the correct answer', async () => {
       const recognizer = new Recognizer();
-      fill(recognizer);
+      await fill(recognizer);
       const session = {
         locale: 'en',
         message: {
@@ -247,16 +248,18 @@ describe('Recognizer', () => {
           text: 'I want to travel from Barcelona to London tomorrow',
         },
       };
-      recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual(
-          'You want to travel tomorrow from Barcelona to London'
-        );
-        done();
-      });
+      return new Promise(done =>
+        recognizer.recognize(session, (err, result) => {
+          expect(result.answer).toEqual(
+            'You want to travel tomorrow from Barcelona to London'
+          );
+          done();
+        })
+      );
     });
-    test('It can chain several slots', done => {
+    test('It can chain several slots', async () => {
       const recognizer = new Recognizer();
-      fill(recognizer);
+      await fill(recognizer);
       const session = {
         locale: 'en',
         message: {
@@ -290,61 +293,9 @@ describe('Recognizer', () => {
           text: 'tomorrow',
         },
       };
-      recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual('From where you are traveling?');
-        recognizer.recognize(session2, (err2, result2) => {
-          expect(result2.answer).toEqual('When do you want to travel?');
-          recognizer.recognize(session3, (err3, result3) => {
-            expect(result3.answer).toEqual(
-              'You want to travel tomorrow from Barcelona to London'
-            );
-            done();
-          });
-        });
-      });
-    });
-  });
-
-  describe('Recognize Twice', () => {
-    test('It should not change result if context has last recognized', done => {
-      const recognizer = new Recognizer();
-      fill(recognizer);
-      const session = {
-        locale: 'en',
-        message: {
-          address: {
-            conversation: {
-              id: 'a1b2c3',
-            },
-          },
-          text: 'I want to travel to London',
-        },
-      };
-      const session2 = {
-        locale: 'en',
-        message: {
-          address: {
-            conversation: {
-              id: 'a1b2c3',
-            },
-          },
-          text: 'Barcelona',
-        },
-      };
-      const session3 = {
-        locale: 'en',
-        message: {
-          address: {
-            conversation: {
-              id: 'a1b2c3',
-            },
-          },
-          text: 'tomorrow',
-        },
-      };
-      recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual('From where you are traveling?');
-        recognizer.recognizeTwice(session, () => {
+      return new Promise(done =>
+        recognizer.recognize(session, (err, result) => {
+          expect(result.answer).toEqual('From where you are traveling?');
           recognizer.recognize(session2, (err2, result2) => {
             expect(result2.answer).toEqual('When do you want to travel?');
             recognizer.recognize(session3, (err3, result3) => {
@@ -354,12 +305,68 @@ describe('Recognizer', () => {
               done();
             });
           });
-        });
-      });
+        })
+      );
     });
-    test('It should recognize again if the context has not last recognized', done => {
+  });
+
+  describe('Recognize Twice', () => {
+    test('It should not change result if context has last recognized', async () => {
       const recognizer = new Recognizer();
-      fill(recognizer);
+      await fill(recognizer);
+      const session = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'I want to travel to London',
+        },
+      };
+      const session2 = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'Barcelona',
+        },
+      };
+      const session3 = {
+        locale: 'en',
+        message: {
+          address: {
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+          text: 'tomorrow',
+        },
+      };
+      return new Promise(done =>
+        recognizer.recognize(session, (err, result) => {
+          expect(result.answer).toEqual('From where you are traveling?');
+          recognizer.recognizeTwice(session, () => {
+            recognizer.recognize(session2, (err2, result2) => {
+              expect(result2.answer).toEqual('When do you want to travel?');
+              recognizer.recognize(session3, (err3, result3) => {
+                expect(result3.answer).toEqual(
+                  'You want to travel tomorrow from Barcelona to London'
+                );
+                done();
+              });
+            });
+          });
+        })
+      );
+    });
+    test('It should recognize again if the context has not last recognized', async () => {
+      const recognizer = new Recognizer();
+      await fill(recognizer);
       const session = {
         locale: 'en',
         message: {
@@ -382,13 +389,15 @@ describe('Recognizer', () => {
           text: 'I want to travel to London tomorrow',
         },
       };
-      recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual('From where you are traveling?');
-        recognizer.recognizeTwice(session2, (err2, result2) => {
-          expect(result2).not.toEqual(result);
-          done();
-        });
-      });
+      return new Promise(done =>
+        recognizer.recognize(session, (err, result) => {
+          expect(result.answer).toEqual('From where you are traveling?');
+          recognizer.recognizeTwice(session2, (err2, result2) => {
+            expect(result2).not.toEqual(result);
+            done();
+          });
+        })
+      );
     });
   });
 

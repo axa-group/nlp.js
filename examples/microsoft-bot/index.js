@@ -37,23 +37,26 @@ recognizer.nlpManager.addAnswer(
   'travel',
   'You want to travel from {{ fromCity }} to {{ toCity }} {{ date }}'
 );
-recognizer.nlpManager.train();
 
-// Creates the bot using a memory storage, with a main dialog that
-// use the node-nlp recognizer to calculate the answer.
-const bot = new builder.UniversalBot(connector, session => {
-  session.send(
-    `You reached the default message handler. You said '${
-      session.message.text
-    }'.`
-  );
-}).set('storage', new builder.MemoryBotStorage());
+(async () => {
+  await recognizer.nlpManager.train();
 
-recognizer.setBot(bot, true);
+  // Creates the bot using a memory storage, with a main dialog that
+  // use the node-nlp recognizer to calculate the answer.
+  const bot = new builder.UniversalBot(connector, session => {
+    session.send(
+      `You reached the default message handler. You said '${
+        session.message.text
+      }'.`
+    );
+  }).set('storage', new builder.MemoryBotStorage());
 
-// Creates the express application
-const app = express();
-const port = process.env.PORT || 3000;
-app.post('/api/messages', connector.listen());
-app.listen(port);
-console.log(`Chatbot listening on port ${port}`);
+  recognizer.setBot(bot, true);
+
+  // Creates the express application
+  const app = express();
+  const port = process.env.PORT || 3000;
+  app.post('/api/messages', connector.listen());
+  app.listen(port);
+  console.log(`Chatbot listening on port ${port}`);
+})();
