@@ -153,7 +153,7 @@ describe('Matrix', () => {
       expect(log).toBeInstanceOf(Matrix);
       expect(log.elements).toEqual([
         [0, 0.6931471805599453],
-        [1.0986122886681096, 1.3862943611198906]
+        [1.0986122886681096, 1.3862943611198906],
       ]);
     });
   });

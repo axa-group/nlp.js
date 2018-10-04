@@ -213,7 +213,7 @@ describe('Trim Named Entity', () => {
         accuracy: 1,
         entity: 'entity',
         sourceText: 'Madrid',
-        utteranceText: 'Madrid'
+        utteranceText: 'Madrid',
       });
     });
   });
@@ -288,7 +288,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'I must go',
         utteranceText: 'I must go',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
     test('It must retrieve matchs before a word several times', () => {
@@ -306,7 +306,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'I must go',
         utteranceText: 'I must go',
-        entity: 'entity'
+        entity: 'entity',
       });
       expect(matchs[1]).toEqual({
         type: 'before',
@@ -316,7 +316,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'Barcelona',
         utteranceText: 'Barcelona',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
   });
@@ -336,7 +336,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'I must go',
         utteranceText: 'I must go',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
   });
@@ -356,7 +356,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'I must go from Barcelona',
         utteranceText: 'I must go from Barcelona',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
   });
@@ -376,7 +376,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'Madrid',
         utteranceText: 'Madrid',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
     test('It must retrieve matchs before a word several times', () => {
@@ -394,7 +394,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'Barcelona',
         utteranceText: 'Barcelona',
-        entity: 'entity'
+        entity: 'entity',
       });
       expect(matchs[1]).toEqual({
         type: 'after',
@@ -404,7 +404,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'Madrid',
         utteranceText: 'Madrid',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
   });
@@ -424,7 +424,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'Barcelona from Madrid',
         utteranceText: 'Barcelona from Madrid',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
   });
@@ -444,7 +444,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'Madrid',
         utteranceText: 'Madrid',
-        entity: 'entity'
+        entity: 'entity',
       });
     });
   });
@@ -464,7 +464,7 @@ describe('Trim Named Entity', () => {
         accuracy: 1,
         sourceText: 'Barcelona',
         utteranceText: 'Barcelona',
-        entity: 'fromLocation'
+        entity: 'fromLocation',
       });
       expect(matchs[1]).toEqual({
         type: 'afterLast',
@@ -474,7 +474,7 @@ describe('Trim Named Entity', () => {
         accuracy: 0.99,
         sourceText: 'Barcelona to Madrid',
         utteranceText: 'Barcelona to Madrid',
-        entity: 'fromLocation'
+        entity: 'fromLocation',
       });
     });
     test('It must combine different methods without removing edges', () => {

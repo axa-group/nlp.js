@@ -30,7 +30,7 @@ const matrix1 = [
   [{ w: 2 }, { w: 'name 2' }],
   [{ w: 3 }, { w: 'name 3' }],
   [{ w: 4 }, { w: 'name 4' }],
-  [{ w: 5 }, { w: 'name 5' }]
+  [{ w: 5 }, { w: 'name 5' }],
 ];
 
 const matrix2 = [
@@ -40,7 +40,7 @@ const matrix2 = [
   [{ w: 2 }, { w: 'name 2' }, { w: 'no' }],
   [{ w: 3 }, { w: 'name 3' }, { w: undefined }],
   [{ w: 4 }, { w: 'name 4' }, { w: 'yes' }],
-  [{ w: 5 }, { w: 'name 5' }, { w: 'no' }]
+  [{ w: 5 }, { w: 'name 5' }, { w: 'no' }],
 ];
 
 describe('XTable', () => {

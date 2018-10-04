@@ -43,7 +43,7 @@ describe('NLP Manager', () => {
     test('You can set options when creating', () => {
       const manager = new NlpManager({
         fullSearchWhenGuessed: false,
-        useNlg: false
+        useNlg: false,
       });
       expect(manager.settings.fullSearchWhenGuessed).toBeFalsy();
       expect(manager.settings.useNlg).toBeFalsy();
@@ -912,7 +912,7 @@ describe('NLP Manager', () => {
       );
       manager.train();
       const result = await manager.process('en', 'It was nice to meet you', {
-        name: 'John'
+        name: 'John',
       });
       expect(result.srcAnswer).toMatch(
         new RegExp(
@@ -951,7 +951,7 @@ describe('NLP Manager', () => {
     test('Should call transformer function if it is passed', async () => {
       const transformer = jest.fn(_ => _);
       const manager = new NlpManager({
-        processTransformer: transformer
+        processTransformer: transformer,
       });
       manager.addLanguage(['en', 'ja']);
       manager.addDocument('en', 'Hello', 'greet');
@@ -970,17 +970,17 @@ describe('NLP Manager', () => {
       expect(transformer.mock.calls[0][0]).toMatchObject({
         locale: 'en',
         localeIso2: 'en',
-        utterance: 'where are my keys'
+        utterance: 'where are my keys',
       });
     });
 
     test('Should return transformer function result if it is passed', async () => {
       const transformedValue = {
-        transformed: 'VALUE'
+        transformed: 'VALUE',
       };
       const transformer = jest.fn().mockReturnValue(transformedValue);
       const manager = new NlpManager({
-        processTransformer: transformer
+        processTransformer: transformer,
       });
       manager.addLanguage(['en', 'ja']);
       manager.addDocument('en', 'Hello', 'greet');
@@ -993,13 +993,13 @@ describe('NLP Manager', () => {
 
     test('Should return async transformer function result if it is passed', async () => {
       const transformedValue = {
-        transformed: 'VALUE'
+        transformed: 'VALUE',
       };
       const transformer = jest
         .fn()
         .mockReturnValue(Promise.resolve(transformedValue));
       const manager = new NlpManager({
-        processTransformer: transformer
+        processTransformer: transformer,
       });
       manager.addLanguage(['en', 'ja']);
       manager.addDocument('en', 'Hello', 'greet');
@@ -1192,12 +1192,12 @@ describe('NLP Manager', () => {
       expect(food.locales.en).toEqual({
         burguer: ['burguer', 'hamburguer'],
         pasta: ['pasta', 'spaghetti'],
-        pizza: ['pizza']
+        pizza: ['pizza'],
       });
       expect(food.locales.es).toEqual({
         burguer: ['hamburguesa'],
         pasta: ['pasta', 'spaghetti'],
-        pizza: ['pizza']
+        pizza: ['pizza'],
       });
     });
 

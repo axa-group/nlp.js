@@ -57,7 +57,7 @@ expect.extend({
               )} not to contain resolution ${this.utils.printExpected(
                 argument
               )}`,
-            pass: true
+            pass: true,
           };
         }
       }
@@ -67,9 +67,9 @@ expect.extend({
         `expected ${this.utils.printReceived(
           received
         )} to contain resolution ${this.utils.printExpected(argument)}`,
-      pass: false
+      pass: false,
     };
-  }
+  },
 });
 
 function addTests(base, locale) {
@@ -115,7 +115,7 @@ const languages = [
   { locale: 'fr', name: 'French' },
   { locale: 'pt', name: 'Portuguese' },
   { locale: 'zh', name: 'Chinese' },
-  { locale: 'ja', name: 'Japanese' }
+  { locale: 'ja', name: 'Japanese' },
 ];
 
 describe('NER Manager builtins', () => {

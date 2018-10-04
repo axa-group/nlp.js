@@ -43,7 +43,7 @@ describe('XDoc', () => {
         top: 2,
         bottom: 15,
         left: 1,
-        right: 6
+        right: 6,
       });
     });
   });
@@ -115,26 +115,26 @@ describe('XDoc', () => {
         data: [
           {
             id: '1',
-            name: 'name 1'
+            name: 'name 1',
           },
           {
             id: '2',
-            name: 'name 2'
+            name: 'name 2',
           },
           {
             id: '3',
-            name: 'name 3'
+            name: 'name 3',
           },
           {
             id: '4',
-            name: 'name 4'
+            name: 'name 4',
           },
           {
             id: '5',
-            name: 'name 5'
-          }
+            name: 'name 5',
+          },
         ],
-        name: 'Table 1'
+        name: 'Table 1',
       });
     });
   });
@@ -149,26 +149,26 @@ describe('XDoc', () => {
         data: [
           {
             id: '1',
-            name: 'name 1'
+            name: 'name 1',
           },
           {
             id: '2',
-            name: 'name 2'
+            name: 'name 2',
           },
           {
             id: '3',
-            name: 'name 3'
+            name: 'name 3',
           },
           {
             id: '4',
-            name: 'name 4'
+            name: 'name 4',
           },
           {
             id: '5',
-            name: 'name 5'
-          }
+            name: 'name 5',
+          },
         ],
-        name: 'Table 1'
+        name: 'Table 1',
       });
     });
   });
@@ -183,7 +183,7 @@ describe('XDoc', () => {
         id: '1',
         name: 'name 1',
         flag: 'yes',
-        other: '11'
+        other: '11',
       });
     });
     test('If the table does not exists, return empty array', () => {
@@ -203,7 +203,7 @@ describe('XDoc', () => {
         id: '1',
         name: 'name 1',
         flag: 'yes',
-        other: '11'
+        other: '11',
       });
     });
     test('If the table does not exists, return undefined', () => {

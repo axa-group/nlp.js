@@ -36,7 +36,7 @@ describe('Regex Named Entity', () => {
       entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
       expect(entity).toBeDefined();
       expect(entity.locales.en).toEqual({
-        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi
+        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
       });
     });
     test('It should add a regex to several language', () => {
@@ -47,10 +47,10 @@ describe('Regex Named Entity', () => {
       );
       expect(entity).toBeDefined();
       expect(entity.locales.en).toEqual({
-        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi
+        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
       });
       expect(entity.locales.es).toEqual({
-        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi
+        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
       });
     });
   });

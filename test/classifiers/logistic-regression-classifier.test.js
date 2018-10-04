@@ -70,7 +70,7 @@ describe('Logistic Regression Classifier', () => {
           2.443849977840033,
           -2.768423007562095,
           -1.6689759372483393,
-          -1.6689759372483393
+          -1.6689759372483393,
         ],
         [
           -2.4438499778400344,
@@ -78,8 +78,8 @@ describe('Logistic Regression Classifier', () => {
           -2.4438499778400344,
           2.768423007562096,
           1.6689759372483401,
-          1.6689759372483401
-        ]
+          1.6689759372483401,
+        ],
       ];
       expect(classifier.theta).toHaveLength(expected.length);
       for (let i = 0, l = expected.length; i < l; i += 1) {
@@ -104,7 +104,7 @@ describe('Logistic Regression Classifier', () => {
         1,
         0,
         0,
-        0
+        0,
       ]);
       expect(classifications1).toHaveLength(2);
       expect(classifications1[0].label).toEqual('one');
@@ -117,7 +117,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         1,
-        1
+        1,
       ]);
       expect(classifications2).toHaveLength(2);
       expect(classifications2[0].label).toEqual('two');
@@ -137,7 +137,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         1,
         0,
-        0
+        0,
       ]);
       expect(classifications1).toHaveLength(3);
       expect(classifications1[0].label).toEqual('one');
@@ -151,7 +151,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         0,
-        1
+        1,
       ]);
       expect(classifications2).toHaveLength(3);
       expect(classifications2[0].label).toEqual('two');
@@ -165,7 +165,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         1,
-        1
+        1,
       ]);
       expect(classifications3).toHaveLength(3);
       expect(classifications3[0].label).toEqual('three');
@@ -184,7 +184,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         1,
         0,
-        0
+        0,
       ]);
       expect(classifications1).toHaveLength(2);
       expect(classifications1[0].label).toEqual('one');
@@ -198,7 +198,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         0,
-        1
+        1,
       ]);
       expect(classifications2).toHaveLength(2);
       expect(classifications2[0].label).toEqual('two');
@@ -214,7 +214,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         1,
         0,
-        0
+        0,
       ]);
       expect(classifications1).toHaveLength(3);
       expect(classifications1[0].label).toEqual('one');
@@ -228,7 +228,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         0,
-        1
+        1,
       ]);
       expect(classifications2).toHaveLength(3);
       expect(classifications2[0].label).toEqual('two');
@@ -242,7 +242,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         1,
-        1
+        1,
       ]);
       expect(classifications3).toHaveLength(3);
       expect(classifications3[0].label).toEqual('three');
@@ -263,7 +263,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         1,
         0,
-        0
+        0,
       ]);
       expect(classification1.label).toEqual('one');
       expect(classification1.value).toBeGreaterThan(0.85);
@@ -276,7 +276,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         0,
-        1
+        1,
       ]);
       expect(classification2.label).toEqual('two');
       expect(classification2.value).toBeGreaterThan(0.85);
@@ -289,7 +289,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         0,
         1,
-        1
+        1,
       ]);
       expect(classification3.label).toEqual('three');
       expect(classification3.value).toBeGreaterThan(0.6);
@@ -306,7 +306,7 @@ describe('Logistic Regression Classifier', () => {
         0,
         1,
         0,
-        0
+        0,
       ]);
       expect(classification).toBeUndefined();
     });

@@ -116,7 +116,7 @@ describe('NER Manager', () => {
       const manager = new NerManager();
       manager.addNamedEntityText('entity1', 'option1', 'en', [
         'Something',
-        'Anything'
+        'Anything',
       ]);
       const entity = manager.getNamedEntity('entity1', false);
       expect(entity.locales.en).toEqual({ option1: ['Something', 'Anything'] });
@@ -159,7 +159,7 @@ describe('NER Manager', () => {
       );
       manager.removeNamedEntityText('entity1', 'option1', 'es', [
         'Something',
-        'Anything'
+        'Anything',
       ]);
       const entity = manager.getNamedEntity('entity1', false);
       expect(entity.locales.en).toEqual({ option1: ['Something', 'Anything'] });
@@ -427,7 +427,7 @@ describe('NER Manager', () => {
         sourceText: 'Barcelona',
         start: 22,
         type: 'between',
-        utteranceText: 'Barcelona'
+        utteranceText: 'Barcelona',
       });
       expect(entities[1]).toEqual({
         accuracy: 1,
@@ -437,7 +437,7 @@ describe('NER Manager', () => {
         sourceText: 'travel',
         start: 10,
         type: 'between',
-        utteranceText: 'travel'
+        utteranceText: 'travel',
       });
       expect(entities[2]).toEqual({
         accuracy: 0.99,
@@ -447,7 +447,7 @@ describe('NER Manager', () => {
         sourceText: 'Madrid',
         start: 35,
         type: 'afterLast',
-        utteranceText: 'Madrid'
+        utteranceText: 'Madrid',
       });
     });
     test('A skip word list can be provided', async () => {
@@ -472,7 +472,7 @@ describe('NER Manager', () => {
         sourceText: 'Barcelona',
         start: 22,
         type: 'between',
-        utteranceText: 'Barcelona'
+        utteranceText: 'Barcelona',
       });
       expect(entities[1]).toEqual({
         accuracy: 0.99,
@@ -482,7 +482,7 @@ describe('NER Manager', () => {
         sourceText: 'Madrid',
         start: 35,
         type: 'afterLast',
-        utteranceText: 'Madrid'
+        utteranceText: 'Madrid',
       });
     });
     test('Trim entities can be splitted to fit with other entities', async () => {
@@ -509,7 +509,7 @@ describe('NER Manager', () => {
         sourceText: 'Barcelona',
         start: 22,
         type: 'between',
-        utteranceText: 'Barcelona'
+        utteranceText: 'Barcelona',
       });
       expect(entities[2]).toEqual({
         accuracy: 0.99,
@@ -519,7 +519,7 @@ describe('NER Manager', () => {
         sourceText: 'Madrid',
         start: 35,
         type: 'afterLast',
-        utteranceText: 'Madrid'
+        utteranceText: 'Madrid',
       });
     });
   });

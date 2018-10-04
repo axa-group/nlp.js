@@ -37,10 +37,10 @@ describe('Conversation Context', () => {
         message: {
           address: {
             conversation: {
-              id: expected
-            }
-          }
-        }
+              id: expected,
+            },
+          },
+        },
       };
       const context = new ConversationContext();
       const result = context.getConversationId(session);
@@ -51,10 +51,10 @@ describe('Conversation Context', () => {
         message: {
           address: {
             conversation: {
-              pid: 'a1b2c3'
-            }
-          }
-        }
+              pid: 'a1b2c3',
+            },
+          },
+        },
       };
       const context = new ConversationContext();
       const result = context.getConversationId(session);
@@ -63,8 +63,8 @@ describe('Conversation Context', () => {
     test('It should return undefined if the session does not provide a conversation', () => {
       const session = {
         message: {
-          address: {}
-        }
+          address: {},
+        },
       };
       const context = new ConversationContext();
       const result = context.getConversationId(session);
@@ -72,7 +72,7 @@ describe('Conversation Context', () => {
     });
     test('It should return undefined if the session does not provide an address', () => {
       const session = {
-        message: {}
+        message: {},
       };
       const context = new ConversationContext();
       const result = context.getConversationId(session);

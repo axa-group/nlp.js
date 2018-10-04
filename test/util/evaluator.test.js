@@ -506,7 +506,7 @@ describe('Evaluator', () => {
       const context = {
         a: 12,
         b: 2,
-        tag: (literals, a, b) => `${literals.join('-')}-${a}-${b}`
+        tag: (literals, a, b) => `${literals.join('-')}-${a}-${b}`,
       };
       const evaluator = new Evaluator();
       // eslint-disable-next-line

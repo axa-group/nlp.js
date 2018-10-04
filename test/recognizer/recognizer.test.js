@@ -32,13 +32,13 @@ function fill(recognizer) {
   toEntity.addBetweenCondition('en', 'to', 'from', { skip: ['travel'] });
   toEntity.addAfterLastCondition('en', 'to', { skip: ['travel'] });
   recognizer.nlpManager.slotManager.addSlot('travel', 'toCity', true, {
-    en: 'Where do you want to go?'
+    en: 'Where do you want to go?',
   });
   recognizer.nlpManager.slotManager.addSlot('travel', 'fromCity', true, {
-    en: 'From where you are traveling?'
+    en: 'From where you are traveling?',
   });
   recognizer.nlpManager.slotManager.addSlot('travel', 'date', true, {
-    en: 'When do you want to travel?'
+    en: 'When do you want to travel?',
   });
   recognizer.nlpManager.addDocument(
     'en',
@@ -60,16 +60,16 @@ function mockBot() {
         constructor: {
           bestRouteResult(result, dialogStack, name) {
             return name;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     recognizer(value) {
       this.recognizerValue = value;
     },
     _onDisambiguateRoute() {
       this.defaultDisambiguate = true;
-    }
+    },
   };
 }
 
@@ -176,8 +176,8 @@ describe('Recognizer', () => {
       const session = {
         locale: 'en',
         message: {
-          text: 'What is your age?'
-        }
+          text: 'What is your age?',
+        },
       };
       recognizer.recognize(session, (err, result) => {
         expect(result.intent).toEqual('agent.age');
@@ -194,22 +194,22 @@ describe('Recognizer', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'Who is spiderman?'
-        }
+          text: 'Who is spiderman?',
+        },
       };
       const session2 = {
         locale: 'en',
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'Where he lives?'
-        }
+          text: 'Where he lives?',
+        },
       };
       recognizer.recognize(session1, () => {
         recognizer.recognize(session2, (err, result) => {
@@ -223,7 +223,7 @@ describe('Recognizer', () => {
       recognizer.load('./test/recognizer/model.nlp');
       const session = {
         locale: 'en',
-        message: {}
+        message: {},
       };
       recognizer.recognize(session, (err, result) => {
         expect(result.intent).toBeUndefined();
@@ -241,11 +241,11 @@ describe('Recognizer', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'I want to travel from Barcelona to London tomorrow'
-        }
+          text: 'I want to travel from Barcelona to London tomorrow',
+        },
       };
       recognizer.recognize(session, (err, result) => {
         expect(result.answer).toEqual(
@@ -262,33 +262,33 @@ describe('Recognizer', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'I want to travel to London'
-        }
+          text: 'I want to travel to London',
+        },
       };
       const session2 = {
         locale: 'en',
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'Barcelona'
-        }
+          text: 'Barcelona',
+        },
       };
       const session3 = {
         locale: 'en',
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'tomorrow'
-        }
+          text: 'tomorrow',
+        },
       };
       recognizer.recognize(session, (err, result) => {
         expect(result.answer).toEqual('From where you are traveling?');
@@ -314,33 +314,33 @@ describe('Recognizer', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'I want to travel to London'
-        }
+          text: 'I want to travel to London',
+        },
       };
       const session2 = {
         locale: 'en',
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'Barcelona'
-        }
+          text: 'Barcelona',
+        },
       };
       const session3 = {
         locale: 'en',
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'tomorrow'
-        }
+          text: 'tomorrow',
+        },
       };
       recognizer.recognize(session, (err, result) => {
         expect(result.answer).toEqual('From where you are traveling?');
@@ -365,22 +365,22 @@ describe('Recognizer', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
+              id: 'a1b2c3',
+            },
           },
-          text: 'I want to travel to London'
-        }
+          text: 'I want to travel to London',
+        },
       };
       const session2 = {
         locale: 'en',
         message: {
           address: {
             conversation: {
-              id: 'a1b2c4'
-            }
+              id: 'a1b2c4',
+            },
           },
-          text: 'I want to travel to London tomorrow'
-        }
+          text: 'I want to travel to London tomorrow',
+        },
       };
       recognizer.recognize(session, (err, result) => {
         expect(result.answer).toEqual('From where you are traveling?');
@@ -395,7 +395,7 @@ describe('Recognizer', () => {
   describe('Get dialog id', () => {
     test('Given a session with dialog stack, get the first developer dialog', () => {
       const session = {
-        dialogStack: () => ['not this', 'neither this', '*:/dialog']
+        dialogStack: () => ['not this', 'neither this', '*:/dialog'],
       };
       const recognizer = new Recognizer();
       const dialogId = recognizer.getDialogId(session);
@@ -419,12 +419,12 @@ describe('Recognizer', () => {
       let routeToActiveDialogCalls = 0;
       let selectRouteCalls = 0;
       const route = {
-        libraryName: 'library'
+        libraryName: 'library',
       };
       const library = {
         selectRoute: () => {
           selectRouteCalls += 1;
-        }
+        },
       };
       const bot = {
         name: 'bot',
@@ -432,16 +432,16 @@ describe('Recognizer', () => {
         libraries: {
           BotBuilder: {
             constructor: {
-              bestRouteResult: () => route
-            }
-          }
-        }
+              bestRouteResult: () => route,
+            },
+          },
+        },
       };
       const session = {
         dialogStack: () => [],
         routeToActiveDialog: () => {
           routeToActiveDialogCalls += 1;
-        }
+        },
       };
       const recognizer = new Recognizer();
       recognizer.defaultRouting(bot, session, []);
@@ -455,7 +455,7 @@ describe('Recognizer', () => {
       const library = {
         selectRoute: () => {
           selectRouteCalls += 1;
-        }
+        },
       };
       const bot = {
         name: 'bot',
@@ -463,16 +463,16 @@ describe('Recognizer', () => {
         libraries: {
           BotBuilder: {
             constructor: {
-              bestRouteResult: () => route
-            }
-          }
-        }
+              bestRouteResult: () => route,
+            },
+          },
+        },
       };
       const session = {
         dialogStack: () => [],
         routeToActiveDialog: () => {
           routeToActiveDialogCalls += 1;
-        }
+        },
       };
       const recognizer = new Recognizer();
       recognizer.defaultRouting(bot, session, []);
@@ -490,7 +490,7 @@ describe('Recognizer', () => {
         },
         send: () => {
           sendCalls += 1;
-        }
+        },
       };
       const recognizer = new Recognizer();
       recognizer.processAnswer(session, '/dialog');
@@ -506,7 +506,7 @@ describe('Recognizer', () => {
         },
         send: () => {
           sendCalls += 1;
-        }
+        },
       };
       const recognizer = new Recognizer();
       recognizer.processAnswer(session, 'text');
@@ -532,7 +532,7 @@ describe('Recognizer', () => {
         },
         routeToActiveDialog() {
           return 'active';
-        }
+        },
       };
       const recognizer = new Recognizer();
       recognizer.setBot(bot, true);
@@ -550,8 +550,8 @@ describe('Recognizer', () => {
           return 'active';
         },
         message: {
-          text: 'I want to travel from Barcelona to London tomorrow'
-        }
+          text: 'I want to travel from Barcelona to London tomorrow',
+        },
       };
       const recognizer = new Recognizer();
       fill(recognizer);

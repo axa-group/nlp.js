@@ -29,7 +29,7 @@ const observationList = [
   'observation2',
   'observation3',
   'observation4',
-  'observation5'
+  'observation5',
 ];
 
 describe('Classifier', () => {
@@ -70,7 +70,7 @@ describe('Classifier', () => {
       classifier.addObservation(observationList[0], labelList[0]);
       expect(classifier.observations[labelList[0]]).toBeDefined();
       expect(classifier.observations[labelList[0]]).toEqual([
-        observationList[0]
+        observationList[0],
       ]);
     });
     test('Should increase the observation count', () => {

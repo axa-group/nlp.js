@@ -41,10 +41,10 @@ describe('MemoryConversation Context', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
-          }
-        }
+              id: 'a1b2c3',
+            },
+          },
+        },
       };
       const context = new MemoryConversationContext();
       const conversationContext = await context.getConversationContext(session);
@@ -55,9 +55,9 @@ describe('MemoryConversation Context', () => {
       const session = {
         message: {
           address: {
-            conversation: {}
-          }
-        }
+            conversation: {},
+          },
+        },
       };
       const context = new MemoryConversationContext();
       expect.assertions(1);
@@ -70,10 +70,10 @@ describe('MemoryConversation Context', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
-          }
-        }
+              id: 'a1b2c3',
+            },
+          },
+        },
       };
       const context = new MemoryConversationContext();
       const conversationContext = await context.getConversationContext(session);
@@ -87,19 +87,19 @@ describe('MemoryConversation Context', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
-          }
-        }
+              id: 'a1b2c3',
+            },
+          },
+        },
       };
       const session2 = {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c4'
-            }
-          }
-        }
+              id: 'a1b2c4',
+            },
+          },
+        },
       };
       const context = new MemoryConversationContext();
       const conversationContext1 = await context.getConversationContext(
@@ -118,10 +118,10 @@ describe('MemoryConversation Context', () => {
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3'
-            }
-          }
-        }
+              id: 'a1b2c3',
+            },
+          },
+        },
       };
       const conversationContext = { a: 1 };
       await context.setConversationContext(session, conversationContext);
@@ -134,9 +134,9 @@ describe('MemoryConversation Context', () => {
       const session = {
         message: {
           address: {
-            conversation: {}
-          }
-        }
+            conversation: {},
+          },
+        },
       };
       const context = new MemoryConversationContext();
       expect.assertions(1);

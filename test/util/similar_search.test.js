@@ -164,7 +164,7 @@ describe('Similar Search', () => {
         end: 23,
         len: 18,
         levenshtein: 0,
-        accuracy: 1
+        accuracy: 1,
       });
     });
     test('Should get position of best when several words are similar to search string', () => {
@@ -179,7 +179,7 @@ describe('Similar Search', () => {
         end: 29,
         len: 24,
         levenshtein: 2,
-        accuracy: 0.9166666666666666
+        accuracy: 0.9166666666666666,
       });
     });
     test('Should return 0 to length result when the substring is longer than the string', () => {
@@ -193,7 +193,7 @@ describe('Similar Search', () => {
         end: 15,
         len: 16,
         levenshtein: 8,
-        accuracy: 0.6666666666666666
+        accuracy: 0.6666666666666666,
       });
     });
   });
@@ -211,14 +211,14 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 0.9
-        }
+          accuracy: 0.9,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -226,8 +226,8 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('Edges can overlap in the left', () => {
@@ -237,14 +237,14 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 0,
           end: 9,
           len: 9,
-          accuracy: 0.9
-        }
+          accuracy: 0.9,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -252,8 +252,8 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('Edges can overlap in the right', () => {
@@ -263,14 +263,14 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 2,
           end: 11,
           len: 9,
-          accuracy: 0.9
-        }
+          accuracy: 0.9,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -278,8 +278,8 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('One edge can contain other', () => {
@@ -289,14 +289,14 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 0.9
-        }
+          accuracy: 0.9,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -304,8 +304,8 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('If both have same accuracy, return largest one', () => {
@@ -315,14 +315,14 @@ describe('Similar Search', () => {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -330,8 +330,8 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('If both have same accuracy, return largest one even if goes first', () => {
@@ -341,14 +341,14 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -356,8 +356,8 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('If there are more than 2 edges overlaped, decide 1', () => {
@@ -367,20 +367,20 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 9,
           end: 18,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -388,8 +388,8 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('Should respect non overlaped edges', () => {
@@ -399,20 +399,20 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 12,
           end: 20,
           len: 8,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -420,14 +420,14 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 12,
           end: 20,
           len: 8,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
     test('When there are different groups of overlaped edges, return one per group', () => {
@@ -437,26 +437,26 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 12,
           end: 20,
           len: 8,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 1,
           end: 10,
           len: 9,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 12,
           end: 21,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ];
       const result = similar.reduceEdges(edges);
       expect(result).toEqual([
@@ -464,14 +464,14 @@ describe('Similar Search', () => {
           start: 0,
           end: 11,
           len: 11,
-          accuracy: 1
+          accuracy: 1,
         },
         {
           start: 12,
           end: 21,
           len: 9,
-          accuracy: 1
-        }
+          accuracy: 1,
+        },
       ]);
     });
   });
@@ -488,7 +488,7 @@ describe('Similar Search', () => {
         end: 23,
         len: 18,
         levenshtein: 0,
-        accuracy: 1
+        accuracy: 1,
       });
     });
     test('If there are more than 1 occurence search exact, should return all', () => {
@@ -503,14 +503,14 @@ describe('Similar Search', () => {
         end: 13,
         len: 8,
         levenshtein: 0,
-        accuracy: 1
+        accuracy: 1,
       });
       expect(result[1]).toEqual({
         start: 73,
         end: 80,
         len: 8,
         levenshtein: 0,
-        accuracy: 1
+        accuracy: 1,
       });
     });
     test('Should get more than 1 occurence when searching with threshold', () => {
@@ -525,14 +525,14 @@ describe('Similar Search', () => {
         end: 13,
         len: 8,
         levenshtein: 1,
-        accuracy: 0.875
+        accuracy: 0.875,
       });
       expect(result[1]).toEqual({
         start: 73,
         end: 80,
         len: 8,
         levenshtein: 1,
-        accuracy: 0.875
+        accuracy: 0.875,
       });
     });
     test('Should return 0 to length element in array when the substring is longer than the string and accuracy is at least threshold', () => {
@@ -547,8 +547,8 @@ describe('Similar Search', () => {
           end: 15,
           len: 16,
           levenshtein: 8,
-          accuracy: 0.6666666666666666
-        }
+          accuracy: 0.6666666666666666,
+        },
       ]);
     });
     test('Should return empty array when the substring is longer than the string and accuracy is lower than threshold', () => {
@@ -568,8 +568,8 @@ describe('Similar Search', () => {
         en: {
           spiderman: ['Spiderman', 'Spider-man'],
           'iron man': ['iron man', 'iron-man'],
-          thor: ['Thor']
-        }
+          thor: ['Thor'],
+        },
       };
       const bestEntity = similar.getEdgesFromEntity(
         text1,
@@ -595,8 +595,8 @@ describe('Similar Search', () => {
         en: {
           spiderman: ['Spiderman', 'Spider-man'],
           'iron man': ['iron man', 'iron-man'],
-          thor: ['Thor']
-        }
+          thor: ['Thor'],
+        },
       };
       const bestEntity = similar.getEdgesFromEntity(text1, entity, 'en');
       expect(bestEntity).toBeDefined();
@@ -616,8 +616,8 @@ describe('Similar Search', () => {
         en: {
           spiderman: ['Spiderman', 'Spider-man'],
           'iron man': ['iron man', 'iron-man'],
-          thor: ['Thor']
-        }
+          thor: ['Thor'],
+        },
       };
       const bestEntity = similar.getEdgesFromEntity(
         text1,
@@ -657,8 +657,8 @@ describe('Similar Search', () => {
         en: {
           spiderman: ['Spiderman', 'Spider-man'],
           'iron man': ['iron man', 'iron-man'],
-          thor: ['Thor']
-        }
+          thor: ['Thor'],
+        },
       };
       const bestEntity = similar.getEdgesFromEntity(text1, entity, 'es', 0.8);
       expect(bestEntity).toEqual([]);
@@ -673,16 +673,16 @@ describe('Similar Search', () => {
           en: {
             spiderman: ['Spiderman', 'Spider-man'],
             'iron man': ['iron man', 'iron-man'],
-            thor: ['Thor']
-          }
+            thor: ['Thor'],
+          },
         },
         food: {
           en: {
             burguer: ['Burguer', 'Hamburguer'],
             pizza: ['pizza'],
-            pasta: ['Pasta', 'spaguetti', 'spaghetti']
-          }
-        }
+            pasta: ['Pasta', 'spaguetti', 'spaghetti'],
+          },
+        },
       };
       const bestEntity = similar.getEdgesFromEntities(
         text1,
@@ -718,16 +718,16 @@ describe('Similar Search', () => {
           en: {
             spiderman: ['Spiderman', 'Spider-man'],
             'iron man': ['iron man', 'iron-man'],
-            thor: ['Thor']
-          }
+            thor: ['Thor'],
+          },
         },
         food: {
           en: {
             burguer: ['Burguer', 'Hamburguer'],
             pizza: ['pizza'],
-            pasta: ['Pasta', 'spaguetti', 'spaghetti']
-          }
-        }
+            pasta: ['Pasta', 'spaguetti', 'spaghetti'],
+          },
+        },
       };
       const bestEntity = similar.getEdgesFromEntities(text1, entities, 'en');
       expect(bestEntity).toBeDefined();
@@ -749,16 +749,16 @@ describe('Similar Search', () => {
           en: {
             spiderman: ['Spiderman', 'Spider-man'],
             'iron man': ['iron man', 'iron-man'],
-            thor: ['Thor']
-          }
+            thor: ['Thor'],
+          },
         },
         food: {
           en: {
             burguer: ['Burguer', 'Hamburguer'],
             pizza: ['pizza'],
-            pasta: ['Pasta', 'spaguetti', 'spaghetti']
-          }
-        }
+            pasta: ['Pasta', 'spaguetti', 'spaghetti'],
+          },
+        },
       };
       const bestEntity = similar.getEdgesFromEntities(
         text1,

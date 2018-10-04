@@ -6,7 +6,7 @@ const { Recognizer } = require('../../lib');
 // Creates a connector for the chatbot
 const connector = new builder.ChatConnector({
   appId: process.env.BOT_APP_ID,
-  appPassword: process.env.BOT_APP_PASSWORD
+  appPassword: process.env.BOT_APP_PASSWORD,
 });
 
 // Creates a node-nlp recognizer for the bot
@@ -19,13 +19,13 @@ const toEntity = recognizer.nlpManager.addTrimEntity('toCity');
 toEntity.addBetweenCondition('en', 'to', 'from', { skip: ['travel'] });
 toEntity.addAfterLastCondition('en', 'to', { skip: ['travel'] });
 recognizer.nlpManager.slotManager.addSlot('travel', 'toCity', true, {
-  en: 'Where do you want to go?'
+  en: 'Where do you want to go?',
 });
 recognizer.nlpManager.slotManager.addSlot('travel', 'fromCity', true, {
-  en: 'From where you are traveling?'
+  en: 'From where you are traveling?',
 });
 recognizer.nlpManager.slotManager.addSlot('travel', 'date', true, {
-  en: 'When do you want to travel?'
+  en: 'When do you want to travel?',
 });
 recognizer.nlpManager.addDocument(
   'en',

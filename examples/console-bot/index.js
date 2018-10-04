@@ -38,7 +38,7 @@ say('Say something!');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
-  terminal: false
+  terminal: false,
 });
 rl.on('line', async line => {
   if (line.toLowerCase() === 'quit') {

@@ -3,7 +3,13 @@
   "plugins": ["import", "jest", "prettier"],
   "rules": {
     "class-methods-use-this": 0,
-    "prettier/prettier": ["error", { "singleQuote": true }]
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "es5"
+      }
+    ]
   },
   "env": {
     "node": true,
