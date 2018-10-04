@@ -21,27 +21,27 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { MemoryConversationContext } = require("../../lib");
+const { MemoryConversationContext } = require('../../lib');
 
-describe("MemoryConversation Context", () => {
-  describe("Constructor", () => {
-    test("It should create an instance", () => {
+describe('MemoryConversation Context', () => {
+  describe('Constructor', () => {
+    test('It should create an instance', () => {
       const context = new MemoryConversationContext();
       expect(context).toBeDefined();
     });
-    test("The instance should initialize the properties", () => {
+    test('The instance should initialize the properties', () => {
       const context = new MemoryConversationContext();
       expect(context.conversationContexts).toBeDefined();
     });
   });
 
-  describe("Get conversation context", () => {
-    test("It should return a new context if if the conversation identifier is valid", async () => {
+  describe('Get conversation context', () => {
+    test('It should return a new context if if the conversation identifier is valid', async () => {
       const session = {
         message: {
           address: {
             conversation: {
-              id: "a1b2c3"
+              id: 'a1b2c3'
             }
           }
         }
@@ -51,7 +51,7 @@ describe("MemoryConversation Context", () => {
       expect(conversationContext).toBeDefined();
       expect(conversationContext).toEqual({});
     });
-    test("It should reject if the conversation id does not exists", () => {
+    test('It should reject if the conversation id does not exists', () => {
       const session = {
         message: {
           address: {
@@ -62,15 +62,15 @@ describe("MemoryConversation Context", () => {
       const context = new MemoryConversationContext();
       expect.assertions(1);
       context.getConversationContext(session).catch(e => {
-        expect(e.message).toEqual("No conversation id found");
+        expect(e.message).toEqual('No conversation id found');
       });
     });
-    test("It should return the same object if called second time with same conversation id", async () => {
+    test('It should return the same object if called second time with same conversation id', async () => {
       const session = {
         message: {
           address: {
             conversation: {
-              id: "a1b2c3"
+              id: 'a1b2c3'
             }
           }
         }
@@ -82,12 +82,12 @@ describe("MemoryConversation Context", () => {
       );
       expect(conversationContext2).toBe(conversationContext);
     });
-    test("It should return a different object if called with different conversation id", async () => {
+    test('It should return a different object if called with different conversation id', async () => {
       const session1 = {
         message: {
           address: {
             conversation: {
-              id: "a1b2c3"
+              id: 'a1b2c3'
             }
           }
         }
@@ -96,7 +96,7 @@ describe("MemoryConversation Context", () => {
         message: {
           address: {
             conversation: {
-              id: "a1b2c4"
+              id: 'a1b2c4'
             }
           }
         }
@@ -111,14 +111,14 @@ describe("MemoryConversation Context", () => {
       expect(conversationContext2).not.toBe(conversationContext1);
     });
   });
-  describe("Set conversation context", () => {
-    test("It should set a conversation context", async () => {
+  describe('Set conversation context', () => {
+    test('It should set a conversation context', async () => {
       const context = new MemoryConversationContext();
       const session = {
         message: {
           address: {
             conversation: {
-              id: "a1b2c3"
+              id: 'a1b2c3'
             }
           }
         }
@@ -130,7 +130,7 @@ describe("MemoryConversation Context", () => {
       );
       expect(conversationContext1).toBe(conversationContext);
     });
-    test("It should reject if the conversation id does not exists", () => {
+    test('It should reject if the conversation id does not exists', () => {
       const session = {
         message: {
           address: {
@@ -142,7 +142,7 @@ describe("MemoryConversation Context", () => {
       expect.assertions(1);
       const conversationContext = { a: 1 };
       context.setConversationContext(session, conversationContext).catch(e => {
-        expect(e.message).toEqual("No conversation id found");
+        expect(e.message).toEqual('No conversation id found');
       });
     });
   });

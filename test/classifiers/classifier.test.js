@@ -21,35 +21,35 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Classifier } = require("../../lib");
+const { Classifier } = require('../../lib');
 
-const labelList = ["label1", "label2", "label3"];
+const labelList = ['label1', 'label2', 'label3'];
 const observationList = [
-  "observation1",
-  "observation2",
-  "observation3",
-  "observation4",
-  "observation5"
+  'observation1',
+  'observation2',
+  'observation3',
+  'observation4',
+  'observation5'
 ];
 
-describe("Classifier", () => {
-  describe("constructor", () => {
-    test("Should create an instance", () => {
+describe('Classifier', () => {
+  describe('constructor', () => {
+    test('Should create an instance', () => {
       const classifier = new Classifier();
       expect(classifier).toBeDefined();
     });
-    test("If no settings are supplied, should create a new instance", () => {
+    test('If no settings are supplied, should create a new instance', () => {
       const classifier = new Classifier();
       expect(classifier.settings).toBeDefined();
       expect(classifier.settings).toEqual({});
     });
-    test("If settings are supplied, should be assigned as property", () => {
-      const settings = { name: "test" };
+    test('If settings are supplied, should be assigned as property', () => {
+      const settings = { name: 'test' };
       const classifier = new Classifier(settings);
       expect(classifier.settings).toBeDefined();
       expect(classifier.settings).toEqual(settings);
     });
-    test("Should initialize the properties", () => {
+    test('Should initialize the properties', () => {
       const classifier = new Classifier();
       expect(classifier.observations).toBeDefined();
       expect(classifier.observations).toEqual({});
@@ -59,13 +59,13 @@ describe("Classifier", () => {
     });
   });
 
-  describe("Add observation", () => {
-    test("Should add the label to the label list", () => {
+  describe('Add observation', () => {
+    test('Should add the label to the label list', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       expect(classifier.labels[0]).toBe(labelList[0]);
     });
-    test("Should add the observation", () => {
+    test('Should add the observation', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       expect(classifier.observations[labelList[0]]).toBeDefined();
@@ -73,13 +73,13 @@ describe("Classifier", () => {
         observationList[0]
       ]);
     });
-    test("Should increase the observation count", () => {
+    test('Should increase the observation count', () => {
       const classifier = new Classifier();
       expect(classifier.observationCount).toEqual(0);
       classifier.addObservation(observationList[0], labelList[0]);
       expect(classifier.observationCount).toEqual(1);
     });
-    test("Several observations can be added to the same label", () => {
+    test('Several observations can be added to the same label', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -91,7 +91,7 @@ describe("Classifier", () => {
       );
       expect(classifier.observationCount).toEqual(2);
     });
-    test("Several observations can be added to several labels", () => {
+    test('Several observations can be added to several labels', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -113,8 +113,8 @@ describe("Classifier", () => {
     });
   });
 
-  describe("Remove observation", () => {
-    test("I can remove observations by label", () => {
+  describe('Remove observation', () => {
+    test('I can remove observations by label', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -126,7 +126,7 @@ describe("Classifier", () => {
       );
       expect(classifier.observationCount).toEqual(3);
     });
-    test("If the label does not exists, do nothing", () => {
+    test('If the label does not exists, do nothing', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -135,7 +135,7 @@ describe("Classifier", () => {
       classifier.removeObservationByLabel(observationList[2], labelList[2]);
       expect(classifier.observationCount).toEqual(4);
     });
-    test("If the observation is not in the label it should not modify the instance", () => {
+    test('If the observation is not in the label it should not modify the instance', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -147,7 +147,7 @@ describe("Classifier", () => {
       );
       expect(classifier.observationCount).toEqual(4);
     });
-    test("If I remove all the observations from a label, the label should be removed", () => {
+    test('If I remove all the observations from a label, the label should be removed', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -159,7 +159,7 @@ describe("Classifier", () => {
       expect(classifier.labels).toHaveLength(1);
       expect(classifier.labels).not.toContain(labelList[1]);
     });
-    test("I can remove obsrevations by label with default observation removal", () => {
+    test('I can remove obsrevations by label with default observation removal', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -171,7 +171,7 @@ describe("Classifier", () => {
       );
       expect(classifier.observationCount).toEqual(3);
     });
-    test("If the observation is not in the label it should not modify the instance using default observation removal", () => {
+    test('If the observation is not in the label it should not modify the instance using default observation removal', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -183,7 +183,7 @@ describe("Classifier", () => {
       );
       expect(classifier.observationCount).toEqual(4);
     });
-    test("If I remove all the observations from a label, the label should be removed using default observation removal", () => {
+    test('If I remove all the observations from a label, the label should be removed using default observation removal', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -195,7 +195,7 @@ describe("Classifier", () => {
       expect(classifier.labels).toHaveLength(1);
       expect(classifier.labels).not.toContain(labelList[1]);
     });
-    test("I can remove observations without knowing the label", () => {
+    test('I can remove observations without knowing the label', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -207,7 +207,7 @@ describe("Classifier", () => {
       );
       expect(classifier.observationCount).toEqual(3);
     });
-    test("It should do nothing if the observation does not exists", () => {
+    test('It should do nothing if the observation does not exists', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -218,8 +218,8 @@ describe("Classifier", () => {
     });
   });
 
-  describe("Recalculate Example count", () => {
-    test("Should recalculate if manual modifications are done", () => {
+  describe('Recalculate Example count', () => {
+    test('Should recalculate if manual modifications are done', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -232,13 +232,13 @@ describe("Classifier", () => {
     });
   });
 
-  describe("Create classification matrix", () => {
-    test("Should return an empty array if there are no observations", () => {
+  describe('Create classification matrix', () => {
+    test('Should return an empty array if there are no observations', () => {
       const classifier = new Classifier();
       const matrix = classifier.createClassificationMatrix();
       expect(matrix).toEqual([]);
     });
-    test("Should return an zero matrix relating each observation with each label", () => {
+    test('Should return an zero matrix relating each observation with each label', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
@@ -249,13 +249,13 @@ describe("Classifier", () => {
     });
   });
 
-  describe("Classify Observation", () => {
-    test("This method should throw an error because must be implemented by child", () => {
+  describe('Classify Observation', () => {
+    test('This method should throw an error because must be implemented by child', () => {
       const classifier = new Classifier();
       expect(() => {
         classifier.classifyObservation();
       }).toThrowError(
-        "This method is not implemented. Must be implemented by child classes."
+        'This method is not implemented. Must be implemented by child classes.'
       );
     });
   });

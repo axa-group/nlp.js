@@ -21,15 +21,15 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NlpManager } = require("../../../lib");
-const numberAgeTests = require("./number-age.json");
-const numberTests = require("./number.json");
-const numberOrdinalTests = require("./number-ordinal.json");
-const numberPercentTests = require("./number-percent.json");
-const numberCurrency = require("./number-currency.json");
-const numberDimension = require("./number-dimension.json");
-const sequence = require("./sequence.json");
-const date = require("./date.json");
+const { NlpManager } = require('../../../lib');
+const numberAgeTests = require('./number-age.json');
+const numberTests = require('./number.json');
+const numberOrdinalTests = require('./number-ordinal.json');
+const numberPercentTests = require('./number-percent.json');
+const numberCurrency = require('./number-currency.json');
+const numberDimension = require('./number-dimension.json');
+const sequence = require('./sequence.json');
+const date = require('./date.json');
 
 expect.extend({
   toContainResolution(received, argument) {
@@ -43,7 +43,7 @@ expect.extend({
           if (!actual.resolution[key]) {
             pass = false;
           }
-          if (argument[key] !== "*") {
+          if (argument[key] !== '*') {
             if (!this.equals(actual.resolution[key], argument[key])) {
               pass = false;
             }
@@ -79,13 +79,13 @@ function addTests(base, locale) {
     const keys = Object.keys(testCase);
     for (let j = 0; j < keys.length; j += 1) {
       const key = keys[j];
-      if (key.startsWith("result")) {
+      if (key.startsWith('result')) {
         const current = testCase[key];
         const currentKeys = Object.keys(current);
         for (let k = 0; k < currentKeys.length; k += 1) {
           const currentKey = currentKeys[k];
           if (
-            (currentKey.includes("date") || currentKey.includes("Date")) &&
+            (currentKey.includes('date') || currentKey.includes('Date')) &&
             testCase[key][currentKey].length === 24
           ) {
             testCase[key][currentKey] = new Date(testCase[key][currentKey]);
@@ -110,15 +110,15 @@ function addTests(base, locale) {
 }
 
 const languages = [
-  { locale: "en", name: "English" },
-  { locale: "es", name: "Spanish" },
-  { locale: "fr", name: "French" },
-  { locale: "pt", name: "Portuguese" },
-  { locale: "zh", name: "Chinese" },
-  { locale: "ja", name: "Japanese" }
+  { locale: 'en', name: 'English' },
+  { locale: 'es', name: 'Spanish' },
+  { locale: 'fr', name: 'French' },
+  { locale: 'pt', name: 'Portuguese' },
+  { locale: 'zh', name: 'Chinese' },
+  { locale: 'ja', name: 'Japanese' }
 ];
 
-describe("NER Manager builtins", () => {
+describe('NER Manager builtins', () => {
   languages.forEach(language => {
     describe(`Numbers ${language.name}`, () => {
       addTests(numberTests, language.locale);

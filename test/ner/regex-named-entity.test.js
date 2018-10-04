@@ -21,28 +21,28 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { RegexNamedEntity } = require("../../lib");
+const { RegexNamedEntity } = require('../../lib');
 
-describe("Regex Named Entity", () => {
-  describe("Constructor", () => {
-    test("It should create an instance", () => {
+describe('Regex Named Entity', () => {
+  describe('Constructor', () => {
+    test('It should create an instance', () => {
       const entity = new RegexNamedEntity();
       expect(entity).toBeDefined();
     });
   });
-  describe("Add Regex", () => {
-    test("It should add a regex to a language", () => {
-      const entity = new RegexNamedEntity({ name: "mail" });
-      entity.addRegex("en", /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
+  describe('Add Regex', () => {
+    test('It should add a regex to a language', () => {
+      const entity = new RegexNamedEntity({ name: 'mail' });
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
       expect(entity).toBeDefined();
       expect(entity.locales.en).toEqual({
         regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi
       });
     });
-    test("It should add a regex to several language", () => {
-      const entity = new RegexNamedEntity({ name: "mail" });
+    test('It should add a regex to several language', () => {
+      const entity = new RegexNamedEntity({ name: 'mail' });
       entity.addRegex(
-        ["en", "es"],
+        ['en', 'es'],
         /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi
       );
       expect(entity).toBeDefined();
@@ -54,61 +54,61 @@ describe("Regex Named Entity", () => {
       });
     });
   });
-  describe("Extract", () => {
-    test("It should extract by regex from an utterance", () => {
-      const entity = new RegexNamedEntity({ name: "mail" });
-      const text = "My email is jseijas@gmail.com and yours is not";
-      entity.addRegex("en", /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
-      const edges = entity.extract(text, "en");
+  describe('Extract', () => {
+    test('It should extract by regex from an utterance', () => {
+      const entity = new RegexNamedEntity({ name: 'mail' });
+      const text = 'My email is jseijas@gmail.com and yours is not';
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
+      const edges = entity.extract(text, 'en');
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(1);
       expect(edges[0].start).toEqual(12);
       expect(edges[0].end).toEqual(29);
       expect(edges[0].accuracy).toEqual(1);
-      expect(edges[0].sourceText).toEqual("jseijas@gmail.com");
-      expect(edges[0].entity).toEqual("mail");
-      expect(edges[0].utteranceText).toEqual("jseijas@gmail.com");
+      expect(edges[0].sourceText).toEqual('jseijas@gmail.com');
+      expect(edges[0].entity).toEqual('mail');
+      expect(edges[0].utteranceText).toEqual('jseijas@gmail.com');
     });
-    test("It locale does not exists then fallback", () => {
-      const entity = new RegexNamedEntity({ name: "mail" });
-      const text = "My email is jseijas@gmail.com and yours is not";
-      entity.addRegex("en", /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
-      const edges = entity.extract(text, "es");
+    test('It locale does not exists then fallback', () => {
+      const entity = new RegexNamedEntity({ name: 'mail' });
+      const text = 'My email is jseijas@gmail.com and yours is not';
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
+      const edges = entity.extract(text, 'es');
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(1);
       expect(edges[0].start).toEqual(12);
       expect(edges[0].end).toEqual(29);
       expect(edges[0].accuracy).toEqual(1);
-      expect(edges[0].sourceText).toEqual("jseijas@gmail.com");
-      expect(edges[0].entity).toEqual("mail");
-      expect(edges[0].utteranceText).toEqual("jseijas@gmail.com");
+      expect(edges[0].sourceText).toEqual('jseijas@gmail.com');
+      expect(edges[0].entity).toEqual('mail');
+      expect(edges[0].utteranceText).toEqual('jseijas@gmail.com');
     });
-    test("It locale does not exists neigher fallback return empty array", () => {
-      const entity = new RegexNamedEntity({ name: "mail" });
-      const text = "My email is jseijas@gmail.com and yours is not";
-      entity.addRegex("fr", /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
-      const edges = entity.extract(text, "es");
+    test('It locale does not exists neigher fallback return empty array', () => {
+      const entity = new RegexNamedEntity({ name: 'mail' });
+      const text = 'My email is jseijas@gmail.com and yours is not';
+      entity.addRegex('fr', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
+      const edges = entity.extract(text, 'es');
       expect(edges).toEqual([]);
     });
-    test("It can extract several occurences of the regex", () => {
-      const entity = new RegexNamedEntity({ name: "mail" });
-      const text = "My email is jseijas@gmail.com and yours is other@other.com";
-      entity.addRegex("en", /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
-      const edges = entity.extract(text, "en");
+    test('It can extract several occurences of the regex', () => {
+      const entity = new RegexNamedEntity({ name: 'mail' });
+      const text = 'My email is jseijas@gmail.com and yours is other@other.com';
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
+      const edges = entity.extract(text, 'en');
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(2);
       expect(edges[0].start).toEqual(12);
       expect(edges[0].end).toEqual(29);
       expect(edges[0].accuracy).toEqual(1);
-      expect(edges[0].sourceText).toEqual("jseijas@gmail.com");
-      expect(edges[0].entity).toEqual("mail");
-      expect(edges[0].utteranceText).toEqual("jseijas@gmail.com");
+      expect(edges[0].sourceText).toEqual('jseijas@gmail.com');
+      expect(edges[0].entity).toEqual('mail');
+      expect(edges[0].utteranceText).toEqual('jseijas@gmail.com');
       expect(edges[1].start).toEqual(43);
       expect(edges[1].end).toEqual(58);
       expect(edges[1].accuracy).toEqual(1);
-      expect(edges[1].sourceText).toEqual("other@other.com");
-      expect(edges[1].entity).toEqual("mail");
-      expect(edges[1].utteranceText).toEqual("other@other.com");
+      expect(edges[1].sourceText).toEqual('other@other.com');
+      expect(edges[1].entity).toEqual('mail');
+      expect(edges[1].utteranceText).toEqual('other@other.com');
     });
   });
 });

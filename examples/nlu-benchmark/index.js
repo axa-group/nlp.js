@@ -1,17 +1,17 @@
-const { NlpManager, NlpUtil } = require("../../lib");
-const AskUbuntuCorpus = require("./AskUbuntuCorpus.json");
-const ChatbotCorpus = require("./ChatbotCorpus.json");
-const WebApplicationCorpus = require("./WebApplicationCorpus.json");
+const { NlpManager, NlpUtil } = require('../../lib');
+const AskUbuntuCorpus = require('./AskUbuntuCorpus.json');
+const ChatbotCorpus = require('./ChatbotCorpus.json');
+const WebApplicationCorpus = require('./WebApplicationCorpus.json');
 
 NlpUtil.useAlternative.en = true;
 
 async function scoreCorpus(corpus) {
-  const manager = new NlpManager({ languages: ["en"] });
+  const manager = new NlpManager({ languages: ['en'] });
   const { sentences } = corpus;
   for (let i = 0; i < sentences.length; i += 1) {
     const sentence = sentences[i];
     if (sentence.training) {
-      manager.addDocument("en", sentence.text, sentence.intent);
+      manager.addDocument('en', sentence.text, sentence.intent);
     }
   }
   manager.train();
@@ -21,7 +21,7 @@ async function scoreCorpus(corpus) {
     const sentence = sentences[i];
     if (!sentence.training) {
       /* eslint-disable no-await-in-loop */
-      const result = await manager.process("en", sentence.text);
+      const result = await manager.process('en', sentence.text);
       total += 1;
       if (result.intent === sentence.intent) {
         correct += 1;

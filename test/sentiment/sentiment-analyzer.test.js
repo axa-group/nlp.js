@@ -21,82 +21,82 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { SentimentAnalyzer } = require("../../lib");
+const { SentimentAnalyzer } = require('../../lib');
 
-describe("Sentiment Analyzer", () => {
-  describe("Constructor", () => {
-    test("Should create", () => {
+describe('Sentiment Analyzer', () => {
+  describe('Constructor', () => {
+    test('Should create', () => {
       const analyzer = new SentimentAnalyzer();
       expect(analyzer).toBeDefined();
     });
-    test("By default should load english senticon", () => {
+    test('By default should load english senticon', () => {
       const analyzer = new SentimentAnalyzer();
-      expect(analyzer.settings.language).toEqual("en");
+      expect(analyzer.settings.language).toEqual('en');
       expect(analyzer.settings.tokenizer).toBeDefined();
-      expect(analyzer.settings.type).toEqual("senticon");
+      expect(analyzer.settings.type).toEqual('senticon');
       expect(analyzer.vocabulary).toBeDefined();
-      expect(analyzer.negations).toEqual(["not", "no", "never", "neither"]);
+      expect(analyzer.negations).toEqual(['not', 'no', 'never', 'neither']);
     });
-    test("If I provide a language that not exists, should not throw error", () => {
-      const analyzer = new SentimentAnalyzer({ language: "pt" });
-      expect(analyzer.settings.language).toEqual("pt");
+    test('If I provide a language that not exists, should not throw error', () => {
+      const analyzer = new SentimentAnalyzer({ language: 'pt' });
+      expect(analyzer.settings.language).toEqual('pt');
       expect(analyzer.settings.tokenizer).toBeDefined();
-      expect(analyzer.settings.type).toEqual("senticon");
+      expect(analyzer.settings.type).toEqual('senticon');
       expect(analyzer.vocabulary).toBeUndefined();
       expect(analyzer.negations).toEqual([]);
     });
-    test("It should be able to load languages", () => {
-      ["en", "es", "it", "fr", "nl", "de"].forEach(language => {
+    test('It should be able to load languages', () => {
+      ['en', 'es', 'it', 'fr', 'nl', 'de'].forEach(language => {
         const analyzer = new SentimentAnalyzer({ language });
         expect(analyzer.settings.language).toEqual(language);
         expect(analyzer.settings.tokenizer).toBeDefined();
-        if (language === "en" || language === "es" || language === "de") {
-          expect(analyzer.settings.type).toEqual("senticon");
+        if (language === 'en' || language === 'es' || language === 'de') {
+          expect(analyzer.settings.type).toEqual('senticon');
         } else {
-          expect(analyzer.settings.type).toEqual("pattern");
+          expect(analyzer.settings.type).toEqual('pattern');
         }
         expect(analyzer.vocabulary).toBeDefined();
         expect(analyzer.negations).toBeDefined();
       });
     });
-    test("When loaded, senticon and pattern should be normalized", () => {
-      let analyzer = new SentimentAnalyzer({ language: "en", type: "pattern" });
+    test('When loaded, senticon and pattern should be normalized', () => {
+      let analyzer = new SentimentAnalyzer({ language: 'en', type: 'pattern' });
       let keys = Object.keys(analyzer.vocabulary);
       keys.forEach(key => {
-        expect(typeof analyzer.vocabulary[key]).toEqual("number");
+        expect(typeof analyzer.vocabulary[key]).toEqual('number');
       });
-      analyzer = new SentimentAnalyzer({ language: "en", type: "senticon" });
+      analyzer = new SentimentAnalyzer({ language: 'en', type: 'senticon' });
       keys = Object.keys(analyzer.vocabulary);
       keys.forEach(key => {
-        expect(typeof analyzer.vocabulary[key]).toEqual("number");
+        expect(typeof analyzer.vocabulary[key]).toEqual('number');
       });
     });
   });
 
-  describe("Get Sentiment", () => {
-    test("Get positive sentiment", async () => {
+  describe('Get Sentiment', () => {
+    test('Get positive sentiment', async () => {
       const analyzer = new SentimentAnalyzer();
-      const utterance = "I love cats, are so cute!";
+      const utterance = 'I love cats, are so cute!';
       const result = await analyzer.getSentiment(utterance);
       expect(result).toBeDefined();
       expect(result.score).toEqual(1.032);
       expect(result.numWords).toEqual(6);
       expect(result.numHits).toEqual(2);
       expect(result.comparative).toEqual(0.17200000000000001);
-      expect(result.type).toEqual("senticon");
-      expect(result.language).toEqual("en");
+      expect(result.type).toEqual('senticon');
+      expect(result.language).toEqual('en');
     });
-    test("Get negative sentiment", async () => {
+    test('Get negative sentiment', async () => {
       const analyzer = new SentimentAnalyzer();
-      const utterance = "I hate cats, are awful!";
+      const utterance = 'I hate cats, are awful!';
       const result = await analyzer.getSentiment(utterance);
       expect(result).toBeDefined();
       expect(result.score).toEqual(-1);
       expect(result.numWords).toEqual(5);
       expect(result.numHits).toEqual(1);
       expect(result.comparative).toEqual(-0.2);
-      expect(result.type).toEqual("senticon");
-      expect(result.language).toEqual("en");
+      expect(result.type).toEqual('senticon');
+      expect(result.language).toEqual('en');
     });
   });
 });
