@@ -21,19 +21,19 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Mathops } = require('../../lib');
+const { Mathops } = require("../../lib");
 
-describe('Mathops', () => {
-  describe('Sigmoid', () => {
-    test('Should return the sigmoid of a number', () => {
+describe("Mathops", () => {
+  describe("Sigmoid", () => {
+    test("Should return the sigmoid of a number", () => {
       const result = Mathops.sigmoid(0);
       expect(result).toEqual(0.5);
     });
-    test('If the sigmoid is too high, never reach 1', () => {
+    test("If the sigmoid is too high, never reach 1", () => {
       const result = Mathops.sigmoid(100);
       expect(result).toEqual(0.99999999999999);
     });
-    test('If the sigmoid is too low, never reach 0', () => {
+    test("If the sigmoid is too low, never reach 0", () => {
       const result = Mathops.sigmoid(-1000);
       expect(result).toEqual(1e-14);
     });

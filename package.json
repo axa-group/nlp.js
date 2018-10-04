@@ -5,10 +5,11 @@
   "main": "lib/index.js",
   "scripts": {
     "commit": "git-cz",
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
     "lint": "eslint .",
     "lintfix": "eslint --fix lib/**",
-    "test": "eslint lib/** && jest --coverage --maxWorkers=4",
-    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls"
+    "precommit": "lint-staged",
+    "test": "eslint lib/** && jest --coverage --maxWorkers=4"
   },
   "author": {
     "email": "jesus.seijas@axa-groupsolutions.com",
@@ -86,6 +87,7 @@
   },
   "lint-staged": {
     "*.js": [
+      "prettier --write",
       "eslint --fix",
       "git add"
     ]

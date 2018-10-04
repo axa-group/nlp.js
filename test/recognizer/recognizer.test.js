@@ -21,21 +21,35 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Recognizer } = require('../../lib');
+const { Recognizer } = require("../../lib");
 
 function fill(recognizer) {
-  recognizer.nlpManager.addLanguage('en');
-  const fromEntity = recognizer.nlpManager.addTrimEntity('fromCity');
-  fromEntity.addBetweenCondition('en', 'from', 'to', { skip: ['travel'] });
-  fromEntity.addAfterLastCondition('en', 'from', { skip: ['travel'] });
-  const toEntity = recognizer.nlpManager.addTrimEntity('toCity');
-  toEntity.addBetweenCondition('en', 'to', 'from', { skip: ['travel'] });
-  toEntity.addAfterLastCondition('en', 'to', { skip: ['travel'] });
-  recognizer.nlpManager.slotManager.addSlot('travel', 'toCity', true, { en: 'Where do you want to go?' });
-  recognizer.nlpManager.slotManager.addSlot('travel', 'fromCity', true, { en: 'From where you are traveling?' });
-  recognizer.nlpManager.slotManager.addSlot('travel', 'date', true, { en: 'When do you want to travel?' });
-  recognizer.nlpManager.addDocument('en', 'I want to travel from %fromCity% to %toCity% %date%', 'travel');
-  recognizer.nlpManager.addAnswer('en', 'travel', 'You want to travel {{ date }} from {{ fromCity }} to {{ toCity }}');
+  recognizer.nlpManager.addLanguage("en");
+  const fromEntity = recognizer.nlpManager.addTrimEntity("fromCity");
+  fromEntity.addBetweenCondition("en", "from", "to", { skip: ["travel"] });
+  fromEntity.addAfterLastCondition("en", "from", { skip: ["travel"] });
+  const toEntity = recognizer.nlpManager.addTrimEntity("toCity");
+  toEntity.addBetweenCondition("en", "to", "from", { skip: ["travel"] });
+  toEntity.addAfterLastCondition("en", "to", { skip: ["travel"] });
+  recognizer.nlpManager.slotManager.addSlot("travel", "toCity", true, {
+    en: "Where do you want to go?"
+  });
+  recognizer.nlpManager.slotManager.addSlot("travel", "fromCity", true, {
+    en: "From where you are traveling?"
+  });
+  recognizer.nlpManager.slotManager.addSlot("travel", "date", true, {
+    en: "When do you want to travel?"
+  });
+  recognizer.nlpManager.addDocument(
+    "en",
+    "I want to travel from %fromCity% to %toCity% %date%",
+    "travel"
+  );
+  recognizer.nlpManager.addAnswer(
+    "en",
+    "travel",
+    "You want to travel {{ date }} from {{ fromCity }} to {{ toCity }}"
+  );
   recognizer.nlpManager.train();
 }
 
@@ -46,151 +60,170 @@ function mockBot() {
         constructor: {
           bestRouteResult(result, dialogStack, name) {
             return name;
-          },
-        },
-      },
+          }
+        }
+      }
     },
     recognizer(value) {
       this.recognizerValue = value;
     },
     _onDisambiguateRoute() {
       this.defaultDisambiguate = true;
-    },
+    }
   };
 }
 
-describe('Recognizer', () => {
-  describe('Constructor', () => {
-    test('It should create an instance', () => {
+describe("Recognizer", () => {
+  describe("Constructor", () => {
+    test("It should create an instance", () => {
       const recognizer = new Recognizer();
       expect(recognizer).toBeDefined();
     });
   });
-  describe('The model can be loaded from an excel file', () => {
-    test('It should load the excel and train', () => {
+  describe("The model can be loaded from an excel file", () => {
+    test("It should load the excel and train", () => {
       const recognizer = new Recognizer();
-      recognizer.loadExcel('./test/nlp/rules.xls');
-      expect(recognizer.nlpManager.languages).toEqual(['en', 'es']);
+      recognizer.loadExcel("./test/nlp/rules.xls");
+      expect(recognizer.nlpManager.languages).toEqual(["en", "es"]);
     });
   });
-  describe('The model can be loaded from a model.nlp file', () => {
-    test('It should load the model', () => {
+  describe("The model can be loaded from a model.nlp file", () => {
+    test("It should load the model", () => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
-      expect(recognizer.nlpManager.languages).toEqual(['en']);
+      recognizer.load("./test/recognizer/model.nlp");
+      expect(recognizer.nlpManager.languages).toEqual(["en"]);
     });
   });
-  describe('Process', () => {
-    test('It should process an utterance', async () => {
+  describe("Process", () => {
+    test("It should process an utterance", async () => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
-      const process = await recognizer.process({}, 'en', 'What is your age?');
-      expect(process.intent).toEqual('agent.age');
-      expect(process.language).toEqual('English');
+      recognizer.load("./test/recognizer/model.nlp");
+      const process = await recognizer.process({}, "en", "What is your age?");
+      expect(process.intent).toEqual("agent.age");
+      expect(process.language).toEqual("English");
       expect(process.score).toBeGreaterThan(0.95);
     });
-    test('It should autodetect the language if not provided', async () => {
+    test("It should autodetect the language if not provided", async () => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
-      const process = await recognizer.process({}, undefined, 'What is your age?');
-      expect(process.intent).toEqual('agent.age');
-      expect(process.language).toEqual('English');
+      recognizer.load("./test/recognizer/model.nlp");
+      const process = await recognizer.process(
+        {},
+        undefined,
+        "What is your age?"
+      );
+      expect(process.intent).toEqual("agent.age");
+      expect(process.language).toEqual("English");
       expect(process.score).toBeGreaterThan(0.95);
     });
-    test('It should create a new temporal context if not provided', async () => {
+    test("It should create a new temporal context if not provided", async () => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
-      const process = await recognizer.process(undefined, undefined, 'What is your age?');
-      expect(process.intent).toEqual('agent.age');
-      expect(process.language).toEqual('English');
+      recognizer.load("./test/recognizer/model.nlp");
+      const process = await recognizer.process(
+        undefined,
+        undefined,
+        "What is your age?"
+      );
+      expect(process.intent).toEqual("agent.age");
+      expect(process.language).toEqual("English");
       expect(process.score).toBeGreaterThan(0.95);
     });
-    test('If the intent is None then the answer should not be calculated', async () => {
+    test("If the intent is None then the answer should not be calculated", async () => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
-      const process = await recognizer.process(undefined, undefined, 'yupi caramelo?');
-      expect(process.intent).toEqual('None');
+      recognizer.load("./test/recognizer/model.nlp");
+      const process = await recognizer.process(
+        undefined,
+        undefined,
+        "yupi caramelo?"
+      );
+      expect(process.intent).toEqual("None");
       expect(process.answer).toBeUndefined();
     });
   });
-  describe('Recognize Utterance', () => {
-    test('It should process providing a locale in the model', (done) => {
+  describe("Recognize Utterance", () => {
+    test("It should process providing a locale in the model", done => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
-      recognizer.recognizeUtterance('What is your age?', { locale: 'en' }, (error, result) => {
-        expect(result.intent).toEqual('agent.age');
-        expect(result.language).toEqual('English');
-        expect(result.score).toBeGreaterThan(0.95);
-        done();
-      });
+      recognizer.load("./test/recognizer/model.nlp");
+      recognizer.recognizeUtterance(
+        "What is your age?",
+        { locale: "en" },
+        (error, result) => {
+          expect(result.intent).toEqual("agent.age");
+          expect(result.language).toEqual("English");
+          expect(result.score).toBeGreaterThan(0.95);
+          done();
+        }
+      );
     });
-    test('It should process without providing a model', (done) => {
+    test("It should process without providing a model", done => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
-      recognizer.recognizeUtterance('What is your age?', undefined, (error, result) => {
-        expect(result.intent).toEqual('agent.age');
-        expect(result.language).toEqual('English');
-        expect(result.score).toBeGreaterThan(0.95);
-        done();
-      });
+      recognizer.load("./test/recognizer/model.nlp");
+      recognizer.recognizeUtterance(
+        "What is your age?",
+        undefined,
+        (error, result) => {
+          expect(result.intent).toEqual("agent.age");
+          expect(result.language).toEqual("English");
+          expect(result.score).toBeGreaterThan(0.95);
+          done();
+        }
+      );
     });
   });
-  describe('Recognize', () => {
-    test('It should recognize the intent from the session', (done) => {
+  describe("Recognize", () => {
+    test("It should recognize the intent from the session", done => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
+      recognizer.load("./test/recognizer/model.nlp");
       const session = {
-        locale: 'en',
+        locale: "en",
         message: {
-          text: 'What is your age?',
-        },
+          text: "What is your age?"
+        }
       };
       recognizer.recognize(session, (err, result) => {
-        expect(result.intent).toEqual('agent.age');
-        expect(result.language).toEqual('English');
+        expect(result.intent).toEqual("agent.age");
+        expect(result.language).toEqual("English");
         expect(result.score).toBeGreaterThan(0.95);
         done();
       });
     });
-    test('It should use context if conversation id is provided', (done) => {
+    test("It should use context if conversation id is provided", done => {
       const recognizer = new Recognizer();
-      recognizer.loadExcel('./test/nlp/rules.xls');
+      recognizer.loadExcel("./test/nlp/rules.xls");
       const session1 = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'Who is spiderman?',
-        },
+          text: "Who is spiderman?"
+        }
       };
       const session2 = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'Where he lives?',
-        },
+          text: "Where he lives?"
+        }
       };
       recognizer.recognize(session1, () => {
         recognizer.recognize(session2, (err, result) => {
-          expect(result.answer).toEqual('Hanging on a web');
+          expect(result.answer).toEqual("Hanging on a web");
           done();
         });
       });
     });
-    test('If the utterance cannot be retrieved from the session the intent should be undefined and score 0', (done) => {
+    test("If the utterance cannot be retrieved from the session the intent should be undefined and score 0", done => {
       const recognizer = new Recognizer();
-      recognizer.load('./test/recognizer/model.nlp');
+      recognizer.load("./test/recognizer/model.nlp");
       const session = {
-        locale: 'en',
-        message: {
-        },
+        locale: "en",
+        message: {}
       };
       recognizer.recognize(session, (err, result) => {
         expect(result.intent).toBeUndefined();
@@ -199,68 +232,72 @@ describe('Recognizer', () => {
       });
     });
   });
-  describe('Slot filling', () => {
-    test('If all slots are filled return the correct answer', (done) => {
+  describe("Slot filling", () => {
+    test("If all slots are filled return the correct answer", done => {
       const recognizer = new Recognizer();
       fill(recognizer);
       const session = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'I want to travel from Barcelona to London tomorrow',
-        },
+          text: "I want to travel from Barcelona to London tomorrow"
+        }
       };
       recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+        expect(result.answer).toEqual(
+          "You want to travel tomorrow from Barcelona to London"
+        );
         done();
       });
     });
-    test('It can chain several slots', (done) => {
+    test("It can chain several slots", done => {
       const recognizer = new Recognizer();
       fill(recognizer);
       const session = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'I want to travel to London',
-        },
+          text: "I want to travel to London"
+        }
       };
       const session2 = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'Barcelona',
-        },
+          text: "Barcelona"
+        }
       };
       const session3 = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'tomorrow',
-        },
+          text: "tomorrow"
+        }
       };
       recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual('From where you are traveling?');
+        expect(result.answer).toEqual("From where you are traveling?");
         recognizer.recognize(session2, (err2, result2) => {
-          expect(result2.answer).toEqual('When do you want to travel?');
+          expect(result2.answer).toEqual("When do you want to travel?");
           recognizer.recognize(session3, (err3, result3) => {
-            expect(result3.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+            expect(result3.answer).toEqual(
+              "You want to travel tomorrow from Barcelona to London"
+            );
             done();
           });
         });
@@ -268,83 +305,85 @@ describe('Recognizer', () => {
     });
   });
 
-  describe('Recognize Twice', () => {
-    test('It should not change result if context has last recognized', (done) => {
+  describe("Recognize Twice", () => {
+    test("It should not change result if context has last recognized", done => {
       const recognizer = new Recognizer();
       fill(recognizer);
       const session = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'I want to travel to London',
-        },
+          text: "I want to travel to London"
+        }
       };
       const session2 = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'Barcelona',
-        },
+          text: "Barcelona"
+        }
       };
       const session3 = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'tomorrow',
-        },
+          text: "tomorrow"
+        }
       };
       recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual('From where you are traveling?');
+        expect(result.answer).toEqual("From where you are traveling?");
         recognizer.recognizeTwice(session, () => {
           recognizer.recognize(session2, (err2, result2) => {
-            expect(result2.answer).toEqual('When do you want to travel?');
+            expect(result2.answer).toEqual("When do you want to travel?");
             recognizer.recognize(session3, (err3, result3) => {
-              expect(result3.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+              expect(result3.answer).toEqual(
+                "You want to travel tomorrow from Barcelona to London"
+              );
               done();
             });
           });
         });
       });
     });
-    test('It should recognize again if the context has not last recognized', (done) => {
+    test("It should recognize again if the context has not last recognized", done => {
       const recognizer = new Recognizer();
       fill(recognizer);
       const session = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c3',
-            },
+              id: "a1b2c3"
+            }
           },
-          text: 'I want to travel to London',
-        },
+          text: "I want to travel to London"
+        }
       };
       const session2 = {
-        locale: 'en',
+        locale: "en",
         message: {
           address: {
             conversation: {
-              id: 'a1b2c4',
-            },
+              id: "a1b2c4"
+            }
           },
-          text: 'I want to travel to London tomorrow',
-        },
+          text: "I want to travel to London tomorrow"
+        }
       };
       recognizer.recognize(session, (err, result) => {
-        expect(result.answer).toEqual('From where you are traveling?');
+        expect(result.answer).toEqual("From where you are traveling?");
         recognizer.recognizeTwice(session2, (err2, result2) => {
           expect(result2).not.toEqual(result);
           done();
@@ -353,77 +392,87 @@ describe('Recognizer', () => {
     });
   });
 
-  describe('Get dialog id', () => {
-    test('Given a session with dialog stack, get the first developer dialog', () => {
-      const session = { dialogStack: () => ['not this', 'neither this', '*:/dialog'] };
+  describe("Get dialog id", () => {
+    test("Given a session with dialog stack, get the first developer dialog", () => {
+      const session = {
+        dialogStack: () => ["not this", "neither this", "*:/dialog"]
+      };
       const recognizer = new Recognizer();
       const dialogId = recognizer.getDialogId(session);
-      expect(dialogId).toEqual('/dialog');
+      expect(dialogId).toEqual("/dialog");
     });
-    test('If no developer dialog found, return empty string', () => {
-      const session = { dialogStack: () => ['not this', 'neither this'] };
+    test("If no developer dialog found, return empty string", () => {
+      const session = { dialogStack: () => ["not this", "neither this"] };
       const recognizer = new Recognizer();
       const dialogId = recognizer.getDialogId(session);
-      expect(dialogId).toEqual('');
+      expect(dialogId).toEqual("");
     });
-    test('If dialogStack method does not exists, return empty string', () => {
+    test("If dialogStack method does not exists, return empty string", () => {
       const session = {};
       const recognizer = new Recognizer();
       const dialogId = recognizer.getDialogId(session);
-      expect(dialogId).toEqual('');
+      expect(dialogId).toEqual("");
     });
   });
-  describe('Default routing', () => {
-    test('If a route is given, it should select the route at the bot', () => {
+  describe("Default routing", () => {
+    test("If a route is given, it should select the route at the bot", () => {
       let routeToActiveDialogCalls = 0;
       let selectRouteCalls = 0;
       const route = {
-        libraryName: 'library',
+        libraryName: "library"
       };
       const library = {
-        selectRoute: () => { selectRouteCalls += 1; },
+        selectRoute: () => {
+          selectRouteCalls += 1;
+        }
       };
       const bot = {
-        name: 'bot',
+        name: "bot",
         library: () => library,
         libraries: {
           BotBuilder: {
             constructor: {
-              bestRouteResult: () => route,
-            },
-          },
-        },
+              bestRouteResult: () => route
+            }
+          }
+        }
       };
       const session = {
         dialogStack: () => [],
-        routeToActiveDialog: () => { routeToActiveDialogCalls += 1; },
+        routeToActiveDialog: () => {
+          routeToActiveDialogCalls += 1;
+        }
       };
       const recognizer = new Recognizer();
       recognizer.defaultRouting(bot, session, []);
       expect(selectRouteCalls).toEqual(1);
       expect(routeToActiveDialogCalls).toEqual(0);
     });
-    test('If no route is given, it should route to active dialog', () => {
+    test("If no route is given, it should route to active dialog", () => {
       let routeToActiveDialogCalls = 0;
       let selectRouteCalls = 0;
       const route = undefined;
       const library = {
-        selectRoute: () => { selectRouteCalls += 1; },
+        selectRoute: () => {
+          selectRouteCalls += 1;
+        }
       };
       const bot = {
-        name: 'bot',
+        name: "bot",
         library: () => library,
         libraries: {
           BotBuilder: {
             constructor: {
-              bestRouteResult: () => route,
-            },
-          },
-        },
+              bestRouteResult: () => route
+            }
+          }
+        }
       };
       const session = {
         dialogStack: () => [],
-        routeToActiveDialog: () => { routeToActiveDialogCalls += 1; },
+        routeToActiveDialog: () => {
+          routeToActiveDialogCalls += 1;
+        }
       };
       const recognizer = new Recognizer();
       recognizer.defaultRouting(bot, session, []);
@@ -431,72 +480,83 @@ describe('Recognizer', () => {
       expect(routeToActiveDialogCalls).toEqual(1);
     });
   });
-  describe('Process Answer', () => {
-    test('If the answer starts with / then it is a dialog', () => {
+  describe("Process Answer", () => {
+    test("If the answer starts with / then it is a dialog", () => {
       let beginDialogCalls = 0;
       let sendCalls = 0;
       const session = {
-        beginDialog: () => { beginDialogCalls += 1; },
-        send: () => { sendCalls += 1; },
+        beginDialog: () => {
+          beginDialogCalls += 1;
+        },
+        send: () => {
+          sendCalls += 1;
+        }
       };
       const recognizer = new Recognizer();
-      recognizer.processAnswer(session, '/dialog');
+      recognizer.processAnswer(session, "/dialog");
       expect(beginDialogCalls).toEqual(1);
       expect(sendCalls).toEqual(0);
     });
-    test('If the answer does not starts with / then it is a message', () => {
+    test("If the answer does not starts with / then it is a message", () => {
       let beginDialogCalls = 0;
       let sendCalls = 0;
       const session = {
-        beginDialog: () => { beginDialogCalls += 1; },
-        send: () => { sendCalls += 1; },
+        beginDialog: () => {
+          beginDialogCalls += 1;
+        },
+        send: () => {
+          sendCalls += 1;
+        }
       };
       const recognizer = new Recognizer();
-      recognizer.processAnswer(session, 'text');
+      recognizer.processAnswer(session, "text");
       expect(beginDialogCalls).toEqual(0);
       expect(sendCalls).toEqual(1);
     });
   });
 
-  describe('Set Bot', () => {
-    test('If not activate routing default disambiguate route is still there', () => {
+  describe("Set Bot", () => {
+    test("If not activate routing default disambiguate route is still there", () => {
       const bot = mockBot();
       const recognizer = new Recognizer();
       recognizer.setBot(bot);
+      /* eslint-disable no-underscore-dangle */
       bot._onDisambiguateRoute();
       expect(bot.defaultDisambiguate).toBeTruthy();
     });
-    test('If activate routing disambiguate route is changed', () => {
+    test("If activate routing disambiguate route is changed", () => {
       const bot = mockBot();
       const session = {
         dialogStack() {
-          return ['/'];
+          return ["/"];
         },
         routeToActiveDialog() {
-          return 'active';
-        },
+          return "active";
+        }
       };
       const recognizer = new Recognizer();
       recognizer.setBot(bot, true);
+      /* eslint-disable no-underscore-dangle */
       bot._onDisambiguateRoute(session);
       expect(bot.defaultDisambiguate).toBeFalsy();
     });
-    test('If session contains message', () => {
+    test("If session contains message", () => {
       const bot = mockBot();
       const session = {
         dialogStack() {
-          return ['/'];
+          return ["/"];
         },
         routeToActiveDialog() {
-          return 'active';
+          return "active";
         },
         message: {
-          text: 'I want to travel from Barcelona to London tomorrow',
-        },
+          text: "I want to travel from Barcelona to London tomorrow"
+        }
       };
       const recognizer = new Recognizer();
       fill(recognizer);
       recognizer.setBot(bot, true);
+      /* eslint-disable no-underscore-dangle */
       bot._onDisambiguateRoute(session);
       expect(bot.defaultDisambiguate).toBeFalsy();
     });
