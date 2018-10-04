@@ -40,10 +40,10 @@ manager.addDocument(
   'sawhero',
 );
 manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-manager.train();
-manager.process(
-  'I saw spiderman eating spaghetti today in the city!',
-).then(result => console.log(result));
+await manager.train();
+manager
+  .process('I saw spiderman eating spaghetti today in the city!')
+  .then(result => console.log(result));
 // { locale: 'en',
 //   localeIso2: 'en',
 //   language: 'English',
@@ -83,7 +83,7 @@ manager.process(
 Also, you can save and load the NLP Manager to be reused without having to train it, because the thetas of the ML are also stored.
 
 ```
-      manager.train();
+      await manager.train();
       manager.save(filename);
       manager = new NlpManager();
       manager.load(filename);
@@ -109,14 +109,10 @@ manager.addDocument('en', 'Hello my name is %name%', 'greeting.hello');
 manager.addDocument('en', 'I have to go', 'greeting.bye');
 manager.addAnswer('en', 'greeting.hello', 'Hey there!');
 manager.addAnswer('en', 'greeting.bye', 'Till next time, {{name}}!');
-manager.train();
 
-
-manager
-  .process('en', 'Hello my name is John', context)
-  .then(result => {
-    return manager.process('en', 'I have to go', context)
-  })
+manager.train()
+  .then(result => manager.process('en', 'Hello my name is John', context))
+  .then(result => manager.process('en', 'I have to go', context))
   .then(result => console.log(result.answer));
 ```
 
@@ -133,11 +129,10 @@ You could pass transformer function to NLPManager constructor, which might be us
 
 ```javascript
 const manager = new NlpManager({
- transformer: (originalProcessOutput) => {
-   // put some modifications logic (it might be async)
-   // and return modified value
-   return Promise.resolve({ modified: 'VALUE' });
- }
+  transformer: originalProcessOutput => {
+    // put some modifications logic (it might be async)
+    // and return modified value
+    return Promise.resolve({ modified: 'VALUE' });
+  },
 });
-
 ```

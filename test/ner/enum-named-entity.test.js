@@ -118,7 +118,11 @@ describe('Enum Named Entity', () => {
     });
     test('It should remove several texts from several languages', () => {
       const entity = new EnumNamedEntity({ name: 'entity' });
-      entity.addText('option1', ['en', 'es'], ['option1_1', 'option1_2', 'option1_3']);
+      entity.addText(
+        'option1',
+        ['en', 'es'],
+        ['option1_1', 'option1_2', 'option1_3']
+      );
       entity.removeText('option1', ['en', 'es'], ['option1_2', 'option1_3']);
       const optionEn = entity.getOption('en', 'option1');
       const optionEs = entity.getOption('es', 'option1');

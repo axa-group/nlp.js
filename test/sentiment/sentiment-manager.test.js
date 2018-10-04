@@ -69,7 +69,7 @@ describe('Sentiment Manager', () => {
       expect(result.language).toEqual('en');
       expect(result.vote).toEqual('positive');
     });
-    test('Get negative sentiment', async  () => {
+    test('Get negative sentiment', async () => {
       const sentiment = new SentimentManager();
       const utterance = 'I hate cats, are awful!';
       const result = await sentiment.process('en', utterance);
