@@ -410,12 +410,12 @@ describe('Slot Manager', () => {
             len: 5,
             sourceText: 'hello',
             start: 0,
-            utteranceText: 'hello'
+            utteranceText: 'hello',
           }],
           intent: 'intent',
           localeIso2: 'en',
           srcAnswer: 'answer',
-        }
+        },
       });
     });
   });

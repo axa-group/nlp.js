@@ -2,8 +2,7 @@
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlpjs.png" width="150" height="auto"/>
 </div>
 
-NLP.js
-=======
+# NLP.js
 
 [![Build Status](https://travis-ci.com/axa-group/nlp.js.svg?branch=master)](https://travis-ci.com/axa-group/nlp.js)
 [![Coverage Status](https://coveralls.io/repos/github/axa-group/nlp.js/badge.svg?branch=master)](https://coveralls.io/github/axa-group/nlp.js?branch=master)
@@ -11,6 +10,7 @@ NLP.js
 [![NPM downloads](https://img.shields.io/npm/dm/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp)
 
 "NLP.js" is a general natural language utilities for nodejs. Currently supporting:
+
 - Guess the language of a phrase
 - Fast levenshtein distance of two strings
 - Search the best substring of a string with less levenshtein distance to a given pattern.
@@ -106,7 +106,7 @@ manager.addAnswer('en', 'greetings.hello', 'Hey there!');
 manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 
 // Train and save the model.
-manager.train();
+await manager.train();
 manager.save();
 
 manager.process('en', 'I have to go').then(console.log);

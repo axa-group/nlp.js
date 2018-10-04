@@ -182,7 +182,7 @@ describe('NLP Manager', () => {
   });
 
   describe('Classify', () => {
-    test('Should classify an utterance', () => {
+    test('Should classify an utterance', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['fr', 'jp']);
       manager.addDocument('fr', 'Bonjour', 'greet');
@@ -191,13 +191,13 @@ describe('NLP Manager', () => {
       manager.addDocument('fr', 'J\'ai perdu mes clés', 'keys');
       manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
       manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
-      manager.train();
+      await manager.train();
       const result = manager.classify('fr', 'où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
       expect(result[0].value).toBeGreaterThan(0.8);
     });
-    test('Should guess language if not provided', () => {
+    test('Should guess language if not provided', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
@@ -212,7 +212,7 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
       manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
-      manager.train();
+      await manager.train();
       let result = manager.classify('où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
@@ -222,7 +222,7 @@ describe('NLP Manager', () => {
       expect(result[0].label).toEqual('keys');
       expect(result[0].value).toBeGreaterThan(0.8);
     });
-    test('Should return undefined if there is not classifier for this language', () => {
+    test('Should return undefined if there is not classifier for this language', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
@@ -237,14 +237,14 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
       manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
-      manager.train();
+      await manager.train();
       const result = manager.classify('en', 'where are my keys?');
       expect(result).toBeUndefined();
     });
   });
 
   describe('Train', () => {
-    test('You can train only a language', () => {
+    test('You can train only a language', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
@@ -259,7 +259,7 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
       manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
-      manager.train('fr');
+      await manager.train('fr');
       let result = manager.classify('où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
@@ -267,7 +267,7 @@ describe('NLP Manager', () => {
       result = manager.classify('私の鍵はどこにありますか');
       expect(result).toEqual([]);
     });
-    test('You can train a set of languages', () => {
+    test('You can train a set of languages', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
@@ -282,7 +282,7 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
       manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
-      manager.train(['fr', 'ja', 'es']);
+      await manager.train(['fr', 'ja', 'es']);
       let result = manager.classify('où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
@@ -385,7 +385,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I\'ve lost my keys', 'keys');
       manager.addDocument('en', 'I don\'t find my keys', 'keys');
       manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
-      manager.train();
+      await manager.train();
       const result = await manager.process('Where are my keys');
       expect(result).toBeDefined();
       expect(result.locale).toEqual('en');
@@ -405,7 +405,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I\'ve lost my keys', 'keys');
       manager.addDocument('en', 'I don\'t find my keys', 'keys');
       manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
-      manager.train();
+      await manager.train();
       const result = await manager.process('en', 'where are my keys');
       expect(result).toBeDefined();
       expect(result.locale).toEqual('en');
@@ -428,7 +428,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-      manager.train();
+      await manager.train();
       const result = await manager.process('I saw spiderman eating spaghetti today in the city!');
       expect(result.intent).toEqual('sawhero');
       expect(result.score).toBeGreaterThan(0.85);
@@ -448,7 +448,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument('en', 'I have seen %hero%, he was eating %food%', 'sawhero');
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-      manager.train();
+      await manager.train();
       const result = await manager.process('en', 'I saw spiderman eating spaghetti today in the city!');
       expect(result.intent).toEqual('sawhero');
       expect(result.score).toBeGreaterThan(0.85);
@@ -472,7 +472,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'Where are my keys?', 'keys');
       manager.addDocument('en', 'I don\'t know where my keys are', 'keys');
       manager.addDocument('en', 'I\'ve lost my keys', 'keys');
-      manager.train();
+      await manager.train();
       const result = await manager.process('This should return none');
       expect(result.intent).toEqual('None');
       expect(result.score).toEqual(1);
@@ -520,7 +520,7 @@ describe('NLP Manager', () => {
       manager.addAnswer('en', 'greetings.nicetoseeyou', 'So glad we meet again');
       manager.addAnswer('en', 'greetings.nicetotalktoyou', 'It sure was. We can chat again anytime');
       manager.addAnswer('en', 'greetings.nicetotalktoyou', 'I enjoy talking to you, too');
-      manager.train();
+      await manager.train();
       let result = await manager.process('goodbye');
       expect(result.answer).toMatch(new RegExp(/(Till next time)|(See you soon!)/g));
       result = await manager.process('It was nice to meet you');
@@ -569,7 +569,7 @@ describe('NLP Manager', () => {
       manager.addAnswer('en', 'greetings.nicetoseeyou', 'So glad we meet again');
       manager.addAnswer('en', 'greetings.nicetotalktoyou', 'It sure was. We can chat again anytime');
       manager.addAnswer('en', 'greetings.nicetotalktoyou', 'I enjoy talking to you, too');
-      manager.train();
+      await manager.train();
       const result = await manager.process('en', 'It was nice to meet you', { name: 'John' });
       expect(result.srcAnswer).toMatch(new RegExp(/(It's nice meeting you, too {{name}})|(Likewise. I'm looking forward to helping you out {{name}})|(Nice meeting you, as well {{name}})|(The pleasure is mine {{name}})/g));
       expect(result.answer).toMatch(new RegExp(/(It's nice meeting you, too John)|(Likewise. I'm looking forward to helping you out John)|(Nice meeting you, as well John)|(The pleasure is mine John)/g));
@@ -585,7 +585,7 @@ describe('NLP Manager', () => {
       manager.addDocument('zh', '我找不到钥匙', 'keys');
       manager.addDocument('zh', '我丢了钥匙', 'keys');
       manager.addDocument('zh', '有人偷了我的钥匙', 'keys');
-      manager.train();
+      await manager.train();
       const result = await manager.process('zh', '我不知道我的钥匙在哪里');
       expect(result).toBeDefined();
       expect(result.locale).toEqual('zh');
@@ -609,7 +609,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I\'ve lost my keys', 'keys');
       manager.addDocument('en', 'I don\'t find my keys', 'keys');
       manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
-      manager.train();
+      await manager.train();
 
       expect(transformer).not.toBeCalled();
 
@@ -633,7 +633,7 @@ describe('NLP Manager', () => {
       });
       manager.addLanguage(['en', 'ja']);
       manager.addDocument('en', 'Hello', 'greet');
-      manager.train();
+      await manager.train();
 
       const result = await manager.process('where are my keys');
 
@@ -650,7 +650,7 @@ describe('NLP Manager', () => {
       });
       manager.addLanguage(['en', 'ja']);
       manager.addDocument('en', 'Hello', 'greet');
-      manager.train();
+      await manager.train();
 
       const result = await manager.process('where are my keys');
 
@@ -685,7 +685,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
       manager.assignDomain('sawhero', 'domain');
 
-      manager.train();
+      await manager.train();
       // save current model as JSON string
       const model = manager.export();
       manager = new NlpManager();
@@ -720,7 +720,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
       manager.addDocument('en', 'I want to travel from %from% to %to%', 'travel');
       manager.assignDomain('sawhero', 'domain');
-      manager.train();
+      await manager.train();
       manager.save();
       manager = new NlpManager();
       manager.load();
@@ -839,7 +839,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'I don\'t know where are my keys', 'keys');
       manager.assignDomain('greet', 'domain');
       manager.assignDomain('keys', 'domain');
-      manager.train();
+      await manager.train();
       const result = await manager.process('where are my keys');
       expect(result.domain).toEqual('domain');
     });

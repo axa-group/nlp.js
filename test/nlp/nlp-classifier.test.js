@@ -53,7 +53,7 @@ describe('NLP Classifier', () => {
       expect(classifier.docs).toHaveLength(1);
       classifier.add('bonne nuit', 'greet');
       expect(classifier.docs).toHaveLength(2);
-      classifier.add('J\'ai perdu mes clés', 'keys');
+      classifier.add("J'ai perdu mes clés", 'keys');
       expect(classifier.docs).toHaveLength(3);
       classifier.add('Je ne trouve pas mes clés', 'keys');
       expect(classifier.docs).toHaveLength(4);
@@ -153,26 +153,28 @@ describe('NLP Classifier', () => {
     });
     test('Should throw an error if the utterance is not a string', () => {
       const classifier = new NlpClassifier({ language: 'fr' });
-      expect(() => { classifier.remove([], 'meh'); }).toThrowError('Utterance must be an string');
+      expect(() => {
+        classifier.remove([], 'meh');
+      }).toThrowError('Utterance must be an string');
     });
   });
 
   describe('get classifications', () => {
-    test('Should give the classifications for an utterance', () => {
+    test('Should give the classifications for an utterance', async () => {
       const classifier = new NlpClassifier({ language: 'fr' });
       classifier.add('Bonjour', 'greet');
       classifier.add('bonne nuit', 'greet');
       classifier.add('Bonsoir', 'greet');
-      classifier.add('J\'ai perdu mes clés', 'keys');
+      classifier.add("J'ai perdu mes clés", 'keys');
       classifier.add('Je ne trouve pas mes clés', 'keys');
       classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
-      classifier.train();
+      await classifier.train();
       const classifications = classifier.getClassifications('où sont mes clés');
       expect(classifications).toHaveLength(2);
       expect(classifications[0].label).toEqual('keys');
       expect(classifications[0].value).toBeGreaterThan(0.8);
     });
-    it('Should work even for japanese', () => {
+    it('Should work even for japanese', async () => {
       const classifier = new NlpClassifier({ language: 'ja' });
       classifier.add('おはようございます', 'greet');
       classifier.add('こんにちは', 'greet');
@@ -180,7 +182,7 @@ describe('NLP Classifier', () => {
       classifier.add('私は私の鍵を紛失した', 'keys');
       classifier.add('私は私の鍵がどこにあるのか覚えていない', 'keys');
       classifier.add('私は私の鍵が見つからない', 'keys');
-      classifier.train();
+      await classifier.train();
       const classifications = classifier.getClassifications('私の鍵はどこにありますか');
       expect(classifications).toHaveLength(2);
       expect(classifications[0].label).toEqual('keys');
@@ -189,20 +191,20 @@ describe('NLP Classifier', () => {
   });
 
   describe('Get Best Classification', () => {
-    test('Should give the classifications for an utterance', () => {
+    test('Should give the classifications for an utterance', async () => {
       const classifier = new NlpClassifier({ language: 'fr' });
       classifier.add('Bonjour', 'greet');
       classifier.add('bonne nuit', 'greet');
       classifier.add('Bonsoir', 'greet');
-      classifier.add('J\'ai perdu mes clés', 'keys');
+      classifier.add("J'ai perdu mes clés", 'keys');
       classifier.add('Je ne trouve pas mes clés', 'keys');
       classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
-      classifier.train();
+      await classifier.train();
       const classification = classifier.getBestClassification('où sont mes clés');
       expect(classification.label).toEqual('keys');
       expect(classification.value).toBeGreaterThan(0.8);
     });
-    it('Should work even for japanese', () => {
+    it('Should work even for japanese', async () => {
       const classifier = new NlpClassifier({ language: 'ja' });
       classifier.add('おはようございます', 'greet');
       classifier.add('こんにちは', 'greet');
@@ -210,7 +212,7 @@ describe('NLP Classifier', () => {
       classifier.add('私は私の鍵を紛失した', 'keys');
       classifier.add('私は私の鍵がどこにあるのか覚えていない', 'keys');
       classifier.add('私は私の鍵が見つからない', 'keys');
-      classifier.train();
+      await classifier.train();
       const classification = classifier.getBestClassification('私の鍵はどこにありますか');
       expect(classification.label).toEqual('keys');
       expect(classification.value).toBeGreaterThan(0.8);
