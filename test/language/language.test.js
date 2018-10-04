@@ -60,17 +60,23 @@ describe('Language', () => {
     });
     it('Should identify the language of an utterance', () => {
       const language = new Language();
-      let guess = language.guess('When the night has come And the land is dark And the moon is the only light we see');
+      let guess = language.guess(
+        'When the night has come And the land is dark And the moon is the only light we see'
+      );
       expect(guess[0].alpha3).toEqual('eng');
       expect(guess[0].alpha2).toEqual('en');
       expect(guess[0].language).toEqual('English');
       expect(guess[0].score).toEqual(1);
-      guess = language.guess('Cuando ha llegado la noche Y la tierra está oscura Y la luna es la única luz que vemos');
+      guess = language.guess(
+        'Cuando ha llegado la noche Y la tierra está oscura Y la luna es la única luz que vemos'
+      );
       expect(guess[0].alpha3).toEqual('spa');
       expect(guess[0].alpha2).toEqual('es');
       expect(guess[0].language).toEqual('Spanish');
       expect(guess[0].score).toEqual(1);
-      guess = language.guess('Quan ha arribat la nit, la terra és fosca i la lluna és l\'única llum que veiem');
+      guess = language.guess(
+        "Quan ha arribat la nit, la terra és fosca i la lluna és l'única llum que veiem"
+      );
       expect(guess[0].alpha3).toEqual('cat');
       expect(guess[0].alpha2).toEqual('ca');
       expect(guess[0].language).toEqual('Catalan');
@@ -78,19 +84,31 @@ describe('Language', () => {
     });
     it('Should allow to indicate a limit of responses', () => {
       const language = new Language();
-      let guess = language.guess('When the night has come And the land is dark And the moon is the only light we see', null, 3);
+      let guess = language.guess(
+        'When the night has come And the land is dark And the moon is the only light we see',
+        null,
+        3
+      );
       expect(guess).toHaveLength(3);
       expect(guess[0].alpha3).toEqual('eng');
       expect(guess[0].alpha2).toEqual('en');
       expect(guess[0].language).toEqual('English');
       expect(guess[0].score).toEqual(1);
-      guess = language.guess('Cuando ha llegado la noche Y la tierra está oscura Y la luna es la única luz que vemos', null, 2);
+      guess = language.guess(
+        'Cuando ha llegado la noche Y la tierra está oscura Y la luna es la única luz que vemos',
+        null,
+        2
+      );
       expect(guess).toHaveLength(2);
       expect(guess[0].alpha3).toEqual('spa');
       expect(guess[0].alpha2).toEqual('es');
       expect(guess[0].language).toEqual('Spanish');
       expect(guess[0].score).toEqual(1);
-      guess = language.guess('Quan ha arribat la nit, la terra és fosca i la lluna és l\'única llum que veiem', null, 1);
+      guess = language.guess(
+        "Quan ha arribat la nit, la terra és fosca i la lluna és l'única llum que veiem",
+        null,
+        1
+      );
       expect(guess).toHaveLength(1);
       expect(guess[0].alpha3).toEqual('cat');
       expect(guess[0].alpha2).toEqual('ca');
@@ -101,7 +119,10 @@ describe('Language', () => {
       const language = new Language();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);
-      const guess = language.guess('When the night has come And the land is dark And the moon is the only light we see', keys);
+      const guess = language.guess(
+        'When the night has come And the land is dark And the moon is the only light we see',
+        keys
+      );
       expect(guess[0].alpha3).toEqual('deu');
       expect(guess[0].alpha2).toEqual('de');
       expect(guess[0].language).toEqual('German');
@@ -112,17 +133,23 @@ describe('Language', () => {
   describe('guess best', () => {
     it('Should identify the language of an utterance', () => {
       const language = new Language();
-      let guess = language.guessBest('When the night has come And the land is dark And the moon is the only light we see');
+      let guess = language.guessBest(
+        'When the night has come And the land is dark And the moon is the only light we see'
+      );
       expect(guess.alpha3).toEqual('eng');
       expect(guess.alpha2).toEqual('en');
       expect(guess.language).toEqual('English');
       expect(guess.score).toEqual(1);
-      guess = language.guessBest('Cuando ha llegado la noche Y la tierra está oscura Y la luna es la única luz que vemos');
+      guess = language.guessBest(
+        'Cuando ha llegado la noche Y la tierra está oscura Y la luna es la única luz que vemos'
+      );
       expect(guess.alpha3).toEqual('spa');
       expect(guess.alpha2).toEqual('es');
       expect(guess.language).toEqual('Spanish');
       expect(guess.score).toEqual(1);
-      guess = language.guessBest('Quan ha arribat la nit, la terra és fosca i la lluna és l\'única llum que veiem');
+      guess = language.guessBest(
+        "Quan ha arribat la nit, la terra és fosca i la lluna és l'única llum que veiem"
+      );
       expect(guess.alpha3).toEqual('cat');
       expect(guess.alpha2).toEqual('ca');
       expect(guess.language).toEqual('Catalan');
@@ -132,7 +159,10 @@ describe('Language', () => {
       const language = new Language();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);
-      const guess = language.guessBest('When the night has come And the land is dark And the moon is the only light we see', keys);
+      const guess = language.guessBest(
+        'When the night has come And the land is dark And the moon is the only light we see',
+        keys
+      );
       expect(guess.alpha3).toEqual('deu');
       expect(guess.alpha2).toEqual('de');
       expect(guess.language).toEqual('German');

@@ -5,10 +5,11 @@
   "main": "lib/index.js",
   "scripts": {
     "commit": "git-cz",
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
     "lint": "eslint .",
     "lintfix": "eslint --fix lib/**",
-    "test": "eslint lib/** && jest --coverage --maxWorkers=4",
-    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls"
+    "precommit": "lint-staged",
+    "test": "eslint lib/** && jest --coverage --maxWorkers=4"
   },
   "author": {
     "email": "jesus.seijas@axa-groupsolutions.com",
@@ -34,9 +35,14 @@
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.10.0",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^21.22.0",
-    "jest": "^23.5.0"
+    "eslint-plugin-prettier": "^3.0.0",
+    "husky": "^1.1.0",
+    "jest": "^23.5.0",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3"
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "^1.1.3",
@@ -79,5 +85,12 @@
       "!lib/nlp/stemmers/**"
     ],
     "coverageDirectory": "coverage"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

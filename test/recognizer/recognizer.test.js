@@ -43,12 +43,12 @@ async function fill(recognizer) {
   recognizer.nlpManager.addDocument(
     'en',
     'I want to travel from %fromCity% to %toCity% %date%',
-    'travel',
+    'travel'
   );
   recognizer.nlpManager.addAnswer(
     'en',
     'travel',
-    'You want to travel {{ date }} from {{ fromCity }} to {{ toCity }}',
+    'You want to travel {{ date }} from {{ fromCity }} to {{ toCity }}'
   );
   await recognizer.nlpManager.train();
 }
@@ -106,7 +106,11 @@ describe('Recognizer', () => {
     test('It should autodetect the language if not provided', async () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const process = await recognizer.process({}, undefined, 'What is your age?');
+      const process = await recognizer.process(
+        {},
+        undefined,
+        'What is your age?'
+      );
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
@@ -114,7 +118,11 @@ describe('Recognizer', () => {
     test('It should create a new temporal context if not provided', async () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const process = await recognizer.process(undefined, undefined, 'What is your age?');
+      const process = await recognizer.process(
+        undefined,
+        undefined,
+        'What is your age?'
+      );
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
@@ -122,35 +130,47 @@ describe('Recognizer', () => {
     test('If the intent is None then the answer should not be calculated', async () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const process = await recognizer.process(undefined, undefined, 'yupi caramelo?');
+      const process = await recognizer.process(
+        undefined,
+        undefined,
+        'yupi caramelo?'
+      );
       expect(process.intent).toEqual('None');
       expect(process.answer).toBeUndefined();
     });
   });
   describe('Recognize Utterance', () => {
-    test('It should process providing a locale in the model', (done) => {
+    test('It should process providing a locale in the model', done => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      recognizer.recognizeUtterance('What is your age?', { locale: 'en' }, (error, result) => {
-        expect(result.intent).toEqual('agent.age');
-        expect(result.language).toEqual('English');
-        expect(result.score).toBeGreaterThan(0.95);
-        done();
-      });
+      recognizer.recognizeUtterance(
+        'What is your age?',
+        { locale: 'en' },
+        (error, result) => {
+          expect(result.intent).toEqual('agent.age');
+          expect(result.language).toEqual('English');
+          expect(result.score).toBeGreaterThan(0.95);
+          done();
+        }
+      );
     });
-    test('It should process without providing a model', (done) => {
+    test('It should process without providing a model', done => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      recognizer.recognizeUtterance('What is your age?', undefined, (error, result) => {
-        expect(result.intent).toEqual('agent.age');
-        expect(result.language).toEqual('English');
-        expect(result.score).toBeGreaterThan(0.95);
-        done();
-      });
+      recognizer.recognizeUtterance(
+        'What is your age?',
+        undefined,
+        (error, result) => {
+          expect(result.intent).toEqual('agent.age');
+          expect(result.language).toEqual('English');
+          expect(result.score).toBeGreaterThan(0.95);
+          done();
+        }
+      );
     });
   });
   describe('Recognize', () => {
-    test('It should recognize the intent from the session', (done) => {
+    test('It should recognize the intent from the session', done => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       const session = {
@@ -166,7 +186,7 @@ describe('Recognizer', () => {
         done();
       });
     });
-    test('It should use context if conversation id is provided', (done) => {
+    test('It should use context if conversation id is provided', done => {
       const recognizer = new Recognizer();
       recognizer.loadExcel('./test/nlp/rules.xls').then(() => {
         const session1 = {
@@ -199,7 +219,7 @@ describe('Recognizer', () => {
         });
       });
     });
-    test('If the utterance cannot be retrieved from the session the intent should be undefined and score 0', (done) => {
+    test('If the utterance cannot be retrieved from the session the intent should be undefined and score 0', done => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       const session = {
@@ -230,9 +250,12 @@ describe('Recognizer', () => {
       };
       return new Promise(done =>
         recognizer.recognize(session, (err, result) => {
-          expect(result.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+          expect(result.answer).toEqual(
+            'You want to travel tomorrow from Barcelona to London'
+          );
           done();
-        }));
+        })
+      );
     });
     test('It can chain several slots', async () => {
       const recognizer = new Recognizer();
@@ -276,11 +299,14 @@ describe('Recognizer', () => {
           recognizer.recognize(session2, (err2, result2) => {
             expect(result2.answer).toEqual('When do you want to travel?');
             recognizer.recognize(session3, (err3, result3) => {
-              expect(result3.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+              expect(result3.answer).toEqual(
+                'You want to travel tomorrow from Barcelona to London'
+              );
               done();
             });
           });
-        }));
+        })
+      );
     });
   });
 
@@ -328,12 +354,15 @@ describe('Recognizer', () => {
             recognizer.recognize(session2, (err2, result2) => {
               expect(result2.answer).toEqual('When do you want to travel?');
               recognizer.recognize(session3, (err3, result3) => {
-                expect(result3.answer).toEqual('You want to travel tomorrow from Barcelona to London');
+                expect(result3.answer).toEqual(
+                  'You want to travel tomorrow from Barcelona to London'
+                );
                 done();
               });
             });
           });
-        }));
+        })
+      );
     });
     test('It should recognize again if the context has not last recognized', async () => {
       const recognizer = new Recognizer();
@@ -367,13 +396,16 @@ describe('Recognizer', () => {
             expect(result2).not.toEqual(result);
             done();
           });
-        }));
+        })
+      );
     });
   });
 
   describe('Get dialog id', () => {
     test('Given a session with dialog stack, get the first developer dialog', () => {
-      const session = { dialogStack: () => ['not this', 'neither this', '*:/dialog'] };
+      const session = {
+        dialogStack: () => ['not this', 'neither this', '*:/dialog'],
+      };
       const recognizer = new Recognizer();
       const dialogId = recognizer.getDialogId(session);
       expect(dialogId).toEqual('/dialog');
@@ -497,6 +529,7 @@ describe('Recognizer', () => {
       const bot = mockBot();
       const recognizer = new Recognizer();
       recognizer.setBot(bot);
+      /* eslint-disable no-underscore-dangle */
       bot._onDisambiguateRoute();
       expect(bot.defaultDisambiguate).toBeTruthy();
     });
@@ -512,6 +545,7 @@ describe('Recognizer', () => {
       };
       const recognizer = new Recognizer();
       recognizer.setBot(bot, true);
+      /* eslint-disable no-underscore-dangle */
       bot._onDisambiguateRoute(session);
       expect(bot.defaultDisambiguate).toBeFalsy();
     });
@@ -531,6 +565,7 @@ describe('Recognizer', () => {
       const recognizer = new Recognizer();
       fill(recognizer);
       recognizer.setBot(bot, true);
+      /* eslint-disable no-underscore-dangle */
       bot._onDisambiguateRoute(session);
       expect(bot.defaultDisambiguate).toBeFalsy();
     });

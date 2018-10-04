@@ -33,23 +33,32 @@ describe('Regex Named Entity', () => {
   describe('Add Regex', () => {
     test('It should add a regex to a language', () => {
       const entity = new RegexNamedEntity({ name: 'mail' });
-      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
       expect(entity).toBeDefined();
-      expect(entity.locales.en).toEqual({ regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig });
+      expect(entity.locales.en).toEqual({
+        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
+      });
     });
     test('It should add a regex to several language', () => {
       const entity = new RegexNamedEntity({ name: 'mail' });
-      entity.addRegex(['en', 'es'], /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      entity.addRegex(
+        ['en', 'es'],
+        /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi
+      );
       expect(entity).toBeDefined();
-      expect(entity.locales.en).toEqual({ regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig });
-      expect(entity.locales.es).toEqual({ regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig });
+      expect(entity.locales.en).toEqual({
+        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
+      });
+      expect(entity.locales.es).toEqual({
+        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
+      });
     });
   });
   describe('Extract', () => {
     test('It should extract by regex from an utterance', () => {
       const entity = new RegexNamedEntity({ name: 'mail' });
       const text = 'My email is jseijas@gmail.com and yours is not';
-      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
       const edges = entity.extract(text, 'en');
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(1);
@@ -63,7 +72,7 @@ describe('Regex Named Entity', () => {
     test('It locale does not exists then fallback', () => {
       const entity = new RegexNamedEntity({ name: 'mail' });
       const text = 'My email is jseijas@gmail.com and yours is not';
-      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
       const edges = entity.extract(text, 'es');
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(1);
@@ -77,14 +86,14 @@ describe('Regex Named Entity', () => {
     test('It locale does not exists neigher fallback return empty array', () => {
       const entity = new RegexNamedEntity({ name: 'mail' });
       const text = 'My email is jseijas@gmail.com and yours is not';
-      entity.addRegex('fr', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      entity.addRegex('fr', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
       const edges = entity.extract(text, 'es');
       expect(edges).toEqual([]);
     });
     test('It can extract several occurences of the regex', () => {
       const entity = new RegexNamedEntity({ name: 'mail' });
       const text = 'My email is jseijas@gmail.com and yours is other@other.com';
-      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/ig);
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi);
       const edges = entity.extract(text, 'en');
       expect(edges).toBeDefined();
       expect(edges).toHaveLength(2);

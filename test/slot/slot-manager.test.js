@@ -173,7 +173,7 @@ describe('Slot Manager', () => {
       const actual = manager.existsSlot('intent', 'entity1');
       expect(actual).toBeFalsy();
     });
-    test('If an entity already exists don\'t replace it', () => {
+    test("If an entity already exists don't replace it", () => {
       const manager = new SlotManager();
       const questions = {
         en: 'Enter the entity',
@@ -350,15 +350,17 @@ describe('Slot Manager', () => {
         answer: 'answer',
         srcAnswer: 'answer',
         score: 1,
-        entities: [{
-          entity: 'entity1',
-          utteranceText: 'hello',
-          sourceText: 'hello',
-          accuracy: 0.95,
-          start: 0,
-          end: 4,
-          len: 5,
-        }],
+        entities: [
+          {
+            entity: 'entity1',
+            utteranceText: 'hello',
+            sourceText: 'hello',
+            accuracy: 0.95,
+            start: 0,
+            end: 4,
+            len: 5,
+          },
+        ],
       });
     });
     test('If there are slots left, pick the next one', () => {
@@ -391,27 +393,31 @@ describe('Slot Manager', () => {
         answer: 'answer',
         srcAnswer: 'Enter entity2',
         score: 1,
-        entities: [{
-          entity: 'entity1',
-          utteranceText: 'hello',
-          sourceText: 'hello',
-          accuracy: 0.95,
-          start: 0,
-          end: 4,
-          len: 5,
-        }],
+        entities: [
+          {
+            entity: 'entity1',
+            utteranceText: 'hello',
+            sourceText: 'hello',
+            accuracy: 0.95,
+            start: 0,
+            end: 4,
+            len: 5,
+          },
+        ],
         slotFill: {
           answer: 'answer',
           currentSlot: 'entity2',
-          entities: [{
-            accuracy: 0.95,
-            end: 4,
-            entity: 'entity1',
-            len: 5,
-            sourceText: 'hello',
-            start: 0,
-            utteranceText: 'hello',
-          }],
+          entities: [
+            {
+              accuracy: 0.95,
+              end: 4,
+              entity: 'entity1',
+              len: 5,
+              sourceText: 'hello',
+              start: 0,
+              utteranceText: 'hello',
+            },
+          ],
           intent: 'intent',
           localeIso2: 'en',
           srcAnswer: 'answer',

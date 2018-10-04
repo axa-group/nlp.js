@@ -151,8 +151,10 @@ describe('Matrix', () => {
       const matrix = new Matrix(input, false);
       const log = matrix.log();
       expect(log).toBeInstanceOf(Matrix);
-      expect(log.elements).toEqual([[0, 0.6931471805599453],
-        [1.0986122886681096, 1.3862943611198906]]);
+      expect(log.elements).toEqual([
+        [0, 0.6931471805599453],
+        [1.0986122886681096, 1.3862943611198906],
+      ]);
     });
   });
 
@@ -167,7 +169,11 @@ describe('Matrix', () => {
     test('It should throw an error if the other matrix has not the same amount of rows', () => {
       const input = [[1, 2], [3, 4]];
       const matrix = new Matrix(input, false);
-      expect(() => { matrix.augment([[5, 6], [7, 8], [9, 10]]); }).toThrowError('Cannot operate two matrix with different amount of rows.');
+      expect(() => {
+        matrix.augment([[5, 6], [7, 8], [9, 10]]);
+      }).toThrowError(
+        'Cannot operate two matrix with different amount of rows.'
+      );
     });
     test('If an array is provided, is converted to a matrix', () => {
       const input = [[1, 2], [3, 4]];
@@ -247,7 +253,9 @@ describe('Matrix', () => {
     test('If both matrix have not the same dimensions, an error is thrown', () => {
       const input = [[1, 2], [3, 4]];
       const matrix = new Matrix(input, false);
-      expect(() => { matrix.subtract([[1, 1, 1], [2, 2, 2]]); }).toThrowError('Cannot operate two matrix with different dimensions.');
+      expect(() => {
+        matrix.subtract([[1, 1, 1], [2, 2, 2]]);
+      }).toThrowError('Cannot operate two matrix with different dimensions.');
     });
   });
 
@@ -282,7 +290,9 @@ describe('Matrix', () => {
       const matrixA = new Matrix(inputA, false);
       const inputB = [1, 2, 3];
       const matrixB = new Matrix(inputB, false);
-      expect(() => { matrixA.mulOp(matrixB, (a, b) => a * b); }).toThrowError('Number of rows of A should match number of cols of B.');
+      expect(() => {
+        matrixA.mulOp(matrixB, (a, b) => a * b);
+      }).toThrowError('Number of rows of A should match number of cols of B.');
     });
   });
 
@@ -317,8 +327,9 @@ describe('Matrix', () => {
       const matrixA = new Matrix(inputA, false);
       const inputB = [1, 2, 3];
       const matrixB = new Matrix(inputB, false);
-      expect(() => { matrixA.multiply(matrixB); }).toThrowError('Number of rows of A should match number of cols of B.');
+      expect(() => {
+        matrixA.multiply(matrixB);
+      }).toThrowError('Number of rows of A should match number of cols of B.');
     });
   });
 });
-

@@ -74,7 +74,10 @@ describe('Named Entity', () => {
       expect(actual).toBe(localeEs);
     });
     test('If asking for an routed locale, return the target', () => {
-      const entity = new NamedEntity({ name: 'entity', localeFallback: { ar: 'es' } });
+      const entity = new NamedEntity({
+        name: 'entity',
+        localeFallback: { ar: 'es' },
+      });
       const localeEs = entity.getLocale('es');
       const actual = entity.getLocaleRules('ar');
       expect(actual).toBe(localeEs);

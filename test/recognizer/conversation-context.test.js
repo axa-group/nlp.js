@@ -63,8 +63,7 @@ describe('Conversation Context', () => {
     test('It should return undefined if the session does not provide a conversation', () => {
       const session = {
         message: {
-          address: {
-          },
+          address: {},
         },
       };
       const context = new ConversationContext();
@@ -73,16 +72,14 @@ describe('Conversation Context', () => {
     });
     test('It should return undefined if the session does not provide an address', () => {
       const session = {
-        message: {
-        },
+        message: {},
       };
       const context = new ConversationContext();
       const result = context.getConversationId(session);
       expect(result).toBeUndefined();
     });
     test('It should return undefined if the session does not provide a message', () => {
-      const session = {
-      };
+      const session = {};
       const context = new ConversationContext();
       const result = context.getConversationId(session);
       expect(result).toBeUndefined();
@@ -97,13 +94,17 @@ describe('Conversation Context', () => {
   describe('Get conversation context', () => {
     test('It should throw an error', () => {
       const context = new ConversationContext();
-      expect(() => context.getConversationContext()).toThrow('This method must be implemented by child');
+      expect(() => context.getConversationContext()).toThrow(
+        'This method must be implemented by child'
+      );
     });
   });
   describe('Set conversation context', () => {
     test('It should throw an error', () => {
       const context = new ConversationContext();
-      expect(() => context.setConversationContext()).toThrow('This method must be implemented by child');
+      expect(() => context.setConversationContext()).toThrow(
+        'This method must be implemented by child'
+      );
     });
   });
 });

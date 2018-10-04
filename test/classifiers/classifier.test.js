@@ -24,7 +24,13 @@
 const { Classifier } = require('../../lib');
 
 const labelList = ['label1', 'label2', 'label3'];
-const observationList = ['observation1', 'observation2', 'observation3', 'observation4', 'observation5'];
+const observationList = [
+  'observation1',
+  'observation2',
+  'observation3',
+  'observation4',
+  'observation5',
+];
 
 describe('Classifier', () => {
   describe('constructor', () => {
@@ -63,7 +69,9 @@ describe('Classifier', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       expect(classifier.observations[labelList[0]]).toBeDefined();
-      expect(classifier.observations[labelList[0]]).toEqual([observationList[0]]);
+      expect(classifier.observations[labelList[0]]).toEqual([
+        observationList[0],
+      ]);
     });
     test('Should increase the observation count', () => {
       const classifier = new Classifier();
@@ -75,8 +83,12 @@ describe('Classifier', () => {
       const classifier = new Classifier();
       classifier.addObservation(observationList[0], labelList[0]);
       classifier.addObservation(observationList[1], labelList[0]);
-      expect(classifier.observations[labelList[0]]).toContain(observationList[0]);
-      expect(classifier.observations[labelList[0]]).toContain(observationList[1]);
+      expect(classifier.observations[labelList[0]]).toContain(
+        observationList[0]
+      );
+      expect(classifier.observations[labelList[0]]).toContain(
+        observationList[1]
+      );
       expect(classifier.observationCount).toEqual(2);
     });
     test('Several observations can be added to several labels', () => {
@@ -85,10 +97,18 @@ describe('Classifier', () => {
       classifier.addObservation(observationList[1], labelList[0]);
       classifier.addObservation(observationList[2], labelList[1]);
       classifier.addObservation(observationList[3], labelList[1]);
-      expect(classifier.observations[labelList[0]]).toContain(observationList[0]);
-      expect(classifier.observations[labelList[0]]).toContain(observationList[1]);
-      expect(classifier.observations[labelList[1]]).toContain(observationList[2]);
-      expect(classifier.observations[labelList[1]]).toContain(observationList[3]);
+      expect(classifier.observations[labelList[0]]).toContain(
+        observationList[0]
+      );
+      expect(classifier.observations[labelList[0]]).toContain(
+        observationList[1]
+      );
+      expect(classifier.observations[labelList[1]]).toContain(
+        observationList[2]
+      );
+      expect(classifier.observations[labelList[1]]).toContain(
+        observationList[3]
+      );
       expect(classifier.observationCount).toEqual(4);
     });
   });
@@ -101,7 +121,9 @@ describe('Classifier', () => {
       classifier.addObservation(observationList[2], labelList[1]);
       classifier.addObservation(observationList[3], labelList[1]);
       classifier.removeObservationByLabel(observationList[2], labelList[1]);
-      expect(classifier.observations[labelList[1]]).not.toContain(observationList[2]);
+      expect(classifier.observations[labelList[1]]).not.toContain(
+        observationList[2]
+      );
       expect(classifier.observationCount).toEqual(3);
     });
     test('If the label does not exists, do nothing', () => {
@@ -120,7 +142,9 @@ describe('Classifier', () => {
       classifier.addObservation(observationList[2], labelList[1]);
       classifier.addObservation(observationList[3], labelList[1]);
       classifier.removeObservationByLabel(observationList[2], labelList[0]);
-      expect(classifier.observations[labelList[1]]).toContain(observationList[2]);
+      expect(classifier.observations[labelList[1]]).toContain(
+        observationList[2]
+      );
       expect(classifier.observationCount).toEqual(4);
     });
     test('If I remove all the observations from a label, the label should be removed', () => {
@@ -142,7 +166,9 @@ describe('Classifier', () => {
       classifier.addObservation(observationList[2], labelList[1]);
       classifier.addObservation(observationList[3], labelList[1]);
       classifier.removeObservation(observationList[2], labelList[1]);
-      expect(classifier.observations[labelList[1]]).not.toContain(observationList[2]);
+      expect(classifier.observations[labelList[1]]).not.toContain(
+        observationList[2]
+      );
       expect(classifier.observationCount).toEqual(3);
     });
     test('If the observation is not in the label it should not modify the instance using default observation removal', () => {
@@ -152,7 +178,9 @@ describe('Classifier', () => {
       classifier.addObservation(observationList[2], labelList[1]);
       classifier.addObservation(observationList[3], labelList[1]);
       classifier.removeObservation(observationList[2], labelList[0]);
-      expect(classifier.observations[labelList[1]]).toContain(observationList[2]);
+      expect(classifier.observations[labelList[1]]).toContain(
+        observationList[2]
+      );
       expect(classifier.observationCount).toEqual(4);
     });
     test('If I remove all the observations from a label, the label should be removed using default observation removal', () => {
@@ -174,7 +202,9 @@ describe('Classifier', () => {
       classifier.addObservation(observationList[2], labelList[1]);
       classifier.addObservation(observationList[3], labelList[1]);
       classifier.removeObservation(observationList[2]);
-      expect(classifier.observations[labelList[1]]).not.toContain(observationList[2]);
+      expect(classifier.observations[labelList[1]]).not.toContain(
+        observationList[2]
+      );
       expect(classifier.observationCount).toEqual(3);
     });
     test('It should do nothing if the observation does not exists', () => {
@@ -222,7 +252,11 @@ describe('Classifier', () => {
   describe('Classify Observation', () => {
     test('This method should throw an error because must be implemented by child', () => {
       const classifier = new Classifier();
-      expect(() => { classifier.classifyObservation(); }).toThrowError('This method is not implemented. Must be implemented by child classes.');
+      expect(() => {
+        classifier.classifyObservation();
+      }).toThrowError(
+        'This method is not implemented. Must be implemented by child classes.'
+      );
     });
   });
 });

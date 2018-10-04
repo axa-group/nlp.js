@@ -40,17 +40,22 @@ const rl = readline.createInterface({
   output: process.stdout,
   terminal: false,
 });
-rl.on('line', async (line) => {
+rl.on('line', async line => {
   if (line.toLowerCase() === 'quit') {
     rl.close();
     process.exit();
   } else {
     const result = await nlpManager.process(line);
     console.log(result);
-    const answer = result.score > threshold && result.answer ? result.answer : 'Sorry, I don\'t understand';
+    const answer =
+      result.score > threshold && result.answer
+        ? result.answer
+        : "Sorry, I don't understand";
     let sentiment = '';
     if (result.sentiment.score !== 0) {
-      sentiment = `  ${result.sentiment.score > 0 ? ':)' : ':('}   (${result.sentiment.score})`;
+      sentiment = `  ${result.sentiment.score > 0 ? ':)' : ':('}   (${
+        result.sentiment.score
+      })`;
     }
     say(`bot> ${answer}${sentiment}`);
   }

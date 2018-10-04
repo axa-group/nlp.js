@@ -51,7 +51,9 @@ describe('Similar Search', () => {
       expect(similar.getSimilarity('a', 'b')).toEqual(1);
       expect(similar.getSimilarity('ab', 'ac')).toEqual(1);
       expect(similar.getSimilarity('abc', 'axc')).toEqual(1);
-      expect(similar.getSimilarity('xabxcdxxefxgx', '1ab2cd34ef5g6')).toEqual(6);
+      expect(similar.getSimilarity('xabxcdxxefxgx', '1ab2cd34ef5g6')).toEqual(
+        6
+      );
       expect(similar.getSimilarity('xabxcdxxefxgx', 'abcdefg')).toEqual(6);
       expect(similar.getSimilarity('javawasneat', 'scalaisgreat')).toEqual(7);
       expect(similar.getSimilarity('example', 'samples')).toEqual(3);
@@ -61,13 +63,20 @@ describe('Similar Search', () => {
       expect(similar.getSimilarity('distance', 'difference')).toEqual(5);
       expect(similar.getSimilarity('distance', 'eistancd')).toEqual(2);
       expect(similar.getSimilarity('你好世界', '你好')).toEqual(2);
-      expect(similar.getSimilarity('因為我是中國人所以我會說中文', '因為我是英國人所以我會說英文')).toEqual(2);
+      expect(
+        similar.getSimilarity(
+          '因為我是中國人所以我會說中文',
+          '因為我是英國人所以我會說英文'
+        )
+      ).toEqual(2);
       expect(similar.getSimilarity('mikailovitch', 'Mikhaïlovitch')).toEqual(3);
     });
     test('Should return correct levenshtein distance for long texts', () => {
       const similar = new SimilarSearch();
-      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
-      const text2 = 'Duis erat dolor, cursus in tincidunt a, lobortis in odio. Cras magna sem, pharetra et iaculis quis, faucibus quis tellus. Suspendisse dapibus sapien in justo cursus';
+      const text1 =
+        'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text2 =
+        'Duis erat dolor, cursus in tincidunt a, lobortis in odio. Cras magna sem, pharetra et iaculis quis, faucibus quis tellus. Suspendisse dapibus sapien in justo cursus';
       expect(similar.getSimilarity(text1, text2)).toEqual(143);
     });
     test('It can use collator', () => {
@@ -133,7 +142,8 @@ describe('Similar Search', () => {
     });
     test('Should get position of words on long texts', () => {
       const similar = new SimilarSearch();
-      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text1 =
+        'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const result = similar.getWordPositions(text1);
       expect(result).toHaveLength(26);
       expect(result[0]).toEqual({ start: 0, end: 4, len: 5 });
@@ -144,7 +154,8 @@ describe('Similar Search', () => {
   describe('Get best substring', () => {
     test('Should get position of best when exact', () => {
       const similar = new SimilarSearch();
-      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text1 =
+        'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdum ultricies';
       const result = similar.getBestSubstring(text1, text2);
       expect(result).toBeDefined();
@@ -158,7 +169,8 @@ describe('Similar Search', () => {
     });
     test('Should get position of best when several words are similar to search string', () => {
       const similar = new SimilarSearch();
-      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text1 =
+        'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdumaultriciesbneque';
       const result = similar.getBestSubstring(text1, text2);
       expect(result).toBeDefined();
@@ -466,7 +478,8 @@ describe('Similar Search', () => {
   describe('Get best substring list', () => {
     test('If not threshold is defined, then search for exact occurences', () => {
       const similar = new SimilarSearch();
-      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text1 =
+        'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdum ultricies';
       const result = similar.getBestSubstringList(text1, text2);
       expect(result).toHaveLength(1);
@@ -480,7 +493,8 @@ describe('Similar Search', () => {
     });
     test('If there are more than 1 occurence search exact, should return all', () => {
       const similar = new SimilarSearch();
-      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text1 =
+        'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdum';
       const result = similar.getBestSubstringList(text1, text2);
       expect(result).toHaveLength(2);
@@ -501,7 +515,8 @@ describe('Similar Search', () => {
     });
     test('Should get more than 1 occurence when searching with threshold', () => {
       const similar = new SimilarSearch();
-      const text1 = 'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
+      const text1 =
+        'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'internum';
       const result = similar.getBestSubstringList(text1, text2, undefined, 0.8);
       expect(result).toHaveLength(2);
@@ -526,13 +541,15 @@ describe('Similar Search', () => {
       const text2 = 'interdumaultriciesbneque';
       const result = similar.getBestSubstringList(text1, text2, undefined, 0.6);
       expect(result).toBeDefined();
-      expect(result).toEqual([{
-        start: 0,
-        end: 15,
-        len: 16,
-        levenshtein: 8,
-        accuracy: 0.6666666666666666,
-      }]);
+      expect(result).toEqual([
+        {
+          start: 0,
+          end: 15,
+          len: 16,
+          levenshtein: 8,
+          accuracy: 0.6666666666666666,
+        },
+      ]);
     });
     test('Should return empty array when the substring is longer than the string and accuracy is lower than threshold', () => {
       const similar = new SimilarSearch();
@@ -554,7 +571,13 @@ describe('Similar Search', () => {
           thor: ['Thor'],
         },
       };
-      const bestEntity = similar.getEdgesFromEntity(text1, entity, 'en', 'entity', 0.8);
+      const bestEntity = similar.getEdgesFromEntity(
+        text1,
+        entity,
+        'en',
+        'entity',
+        0.8
+      );
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(1);
       expect(bestEntity[0].start).toEqual(6);
@@ -596,7 +619,13 @@ describe('Similar Search', () => {
           thor: ['Thor'],
         },
       };
-      const bestEntity = similar.getEdgesFromEntity(text1, entity, 'en', 'entity', 0.8);
+      const bestEntity = similar.getEdgesFromEntity(
+        text1,
+        entity,
+        'en',
+        'entity',
+        0.8
+      );
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(3);
       expect(bestEntity[0].start).toEqual(6);
@@ -655,7 +684,13 @@ describe('Similar Search', () => {
           },
         },
       };
-      const bestEntity = similar.getEdgesFromEntities(text1, entities, 'en', undefined, 0.8);
+      const bestEntity = similar.getEdgesFromEntities(
+        text1,
+        entities,
+        'en',
+        undefined,
+        0.8
+      );
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(2);
       expect(bestEntity[0].start).toEqual(6);
@@ -725,7 +760,13 @@ describe('Similar Search', () => {
           },
         },
       };
-      const bestEntity = similar.getEdgesFromEntities(text1, entities, 'en', ['hero'], 0.8);
+      const bestEntity = similar.getEdgesFromEntities(
+        text1,
+        entities,
+        'en',
+        ['hero'],
+        0.8
+      );
       expect(bestEntity).toBeDefined();
       expect(bestEntity).toHaveLength(1);
       expect(bestEntity[0].start).toEqual(6);

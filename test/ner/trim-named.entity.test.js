@@ -58,7 +58,9 @@ describe('Trim Named Entity', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
       entity.addBetweenCondition('en', 'from', 'to');
       const condition = entity.locales.en.conditions[0];
-      const match = condition.regex.exec('I want to travel from Madrid to Barcelona');
+      const match = condition.regex.exec(
+        'I want to travel from Madrid to Barcelona'
+      );
       expect(match[0]).toEqual('Madrid');
     });
     test('Several words can be provided', () => {
@@ -69,7 +71,9 @@ describe('Trim Named Entity', () => {
       expect(condition.type).toEqual('between');
       expect(condition.leftWords).toEqual(['from', 'since']);
       expect(condition.rightWords).toEqual(['to', 'until']);
-      const match = condition.regex.exec('I want to travel from Madrid until Barcelona');
+      const match = condition.regex.exec(
+        'I want to travel from Madrid until Barcelona'
+      );
       expect(match[0]).toEqual('Madrid');
     });
     test('The condition can be case sensitive', () => {
@@ -77,7 +81,9 @@ describe('Trim Named Entity', () => {
       entity.addBetweenCondition('en', 'From', 'To', { caseSensitive: true });
       expect(entity.locales.en.conditions).toHaveLength(1);
       const condition = entity.locales.en.conditions[0];
-      const match = condition.regex.exec('I want to travel from Madrid to Barcelona or From Motril To Armilla');
+      const match = condition.regex.exec(
+        'I want to travel from Madrid to Barcelona or From Motril To Armilla'
+      );
       expect(match[0]).toEqual('Motril');
     });
     test('The condition can be non spaced', () => {
@@ -85,7 +91,9 @@ describe('Trim Named Entity', () => {
       entity.addBetweenCondition('en', 'from', 'to', { noSpaces: true });
       expect(entity.locales.en.conditions).toHaveLength(1);
       const condition = entity.locales.en.conditions[0];
-      const match = condition.regex.exec('I want to travel from Madrid to Barcelona');
+      const match = condition.regex.exec(
+        'I want to travel from Madrid to Barcelona'
+      );
       expect(match[0]).toEqual(' Madrid ');
     });
   });
@@ -192,7 +200,10 @@ describe('Trim Named Entity', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
       entity.addBetweenCondition('en', 'from', 'to');
       const condition = entity.locales.en.conditions[0];
-      const matchs = entity.matchBetween('I have to go from Madrid to Barcelona', condition);
+      const matchs = entity.matchBetween(
+        'I have to go from Madrid to Barcelona',
+        condition
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({
         type: 'between',
@@ -210,33 +221,51 @@ describe('Trim Named Entity', () => {
   describe('Find word', () => {
     test('It should be able to find a word in an utterance', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.findWord('I must go from Barcelona to Madrid', 'from');
+      const matchs = entity.findWord(
+        'I must go from Barcelona to Madrid',
+        'from'
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({ start: 9, end: 15 });
     });
     test('It should be able to find several occurences of a word in an utterance', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.findWord('I must go from Barcelona from Madrid', 'from');
+      const matchs = entity.findWord(
+        'I must go from Barcelona from Madrid',
+        'from'
+      );
       expect(matchs).toHaveLength(2);
       expect(matchs[0]).toEqual({ start: 9, end: 15 });
       expect(matchs[1]).toEqual({ start: 24, end: 30 });
     });
     test('It can be case sensitive', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.findWord('I must go from Barcelona From Madrid', 'From', true);
+      const matchs = entity.findWord(
+        'I must go from Barcelona From Madrid',
+        'From',
+        true
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({ start: 24, end: 30 });
     });
     test('By default is case insensitive', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.findWord('I must go froM Barcelona fRom Madrid', 'FrOm');
+      const matchs = entity.findWord(
+        'I must go froM Barcelona fRom Madrid',
+        'FrOm'
+      );
       expect(matchs).toHaveLength(2);
       expect(matchs[0]).toEqual({ start: 9, end: 15 });
       expect(matchs[1]).toEqual({ start: 24, end: 30 });
     });
     test('It can work without spacing', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.findWord('I must go fromBarcelona From Madrid', 'From', undefined, true);
+      const matchs = entity.findWord(
+        'I must go fromBarcelona From Madrid',
+        'From',
+        undefined,
+        true
+      );
       expect(matchs).toHaveLength(2);
       expect(matchs[0]).toEqual({ start: 10, end: 14 });
       expect(matchs[1]).toEqual({ start: 24, end: 28 });
@@ -246,7 +275,10 @@ describe('Trim Named Entity', () => {
   describe('Get Before Results', () => {
     test('It must retrieve matchs before a word', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getBeforeResults('I must go from Barcelona from Madrid', [{ start: 9, end: 15 }]);
+      const matchs = entity.getBeforeResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 9, end: 15 }]
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({
         type: 'before',
@@ -261,7 +293,10 @@ describe('Trim Named Entity', () => {
     });
     test('It must retrieve matchs before a word several times', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getBeforeResults('I must go from Barcelona from Madrid', [{ start: 9, end: 15 }, { start: 24, end: 30 }]);
+      const matchs = entity.getBeforeResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 9, end: 15 }, { start: 24, end: 30 }]
+      );
       expect(matchs).toHaveLength(2);
       expect(matchs[0]).toEqual({
         type: 'before',
@@ -288,7 +323,10 @@ describe('Trim Named Entity', () => {
   describe('Get Before First', () => {
     test('It must retrieve the first occurance', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getBeforeFirstResults('I must go from Barcelona from Madrid', [{ start: 9, end: 15 }, { start: 24, end: 30 }]);
+      const matchs = entity.getBeforeFirstResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 9, end: 15 }, { start: 24, end: 30 }]
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({
         type: 'beforeFirst',
@@ -305,7 +343,10 @@ describe('Trim Named Entity', () => {
   describe('Get Before Last', () => {
     test('It must retrieve the last occurance', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getBeforeLastResults('I must go from Barcelona from Madrid', [{ start: 9, end: 15 }, { start: 24, end: 30 }]);
+      const matchs = entity.getBeforeLastResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 9, end: 15 }, { start: 24, end: 30 }]
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({
         type: 'beforeLast',
@@ -322,7 +363,10 @@ describe('Trim Named Entity', () => {
   describe('Get After Results', () => {
     test('It must retrieve matchs after a word', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getAfterResults('I must go from Barcelona from Madrid', [{ start: 24, end: 30 }]);
+      const matchs = entity.getAfterResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 24, end: 30 }]
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({
         type: 'after',
@@ -337,7 +381,10 @@ describe('Trim Named Entity', () => {
     });
     test('It must retrieve matchs before a word several times', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getAfterResults('I must go from Barcelona from Madrid', [{ start: 9, end: 15 }, { start: 24, end: 30 }]);
+      const matchs = entity.getAfterResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 9, end: 15 }, { start: 24, end: 30 }]
+      );
       expect(matchs).toHaveLength(2);
       expect(matchs[0]).toEqual({
         type: 'after',
@@ -364,7 +411,10 @@ describe('Trim Named Entity', () => {
   describe('Get After First', () => {
     test('It must retrieve the first occurance', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getAfterFirstResults('I must go from Barcelona from Madrid', [{ start: 9, end: 15 }, { start: 24, end: 30 }]);
+      const matchs = entity.getAfterFirstResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 9, end: 15 }, { start: 24, end: 30 }]
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({
         type: 'afterFirst',
@@ -381,7 +431,10 @@ describe('Trim Named Entity', () => {
   describe('Get After Last', () => {
     test('It must retrieve the last occurance', () => {
       const entity = new TrimNamedEntity({ name: 'entity' });
-      const matchs = entity.getAfterLastResults('I must go from Barcelona from Madrid', [{ start: 9, end: 15 }, { start: 24, end: 30 }]);
+      const matchs = entity.getAfterLastResults(
+        'I must go from Barcelona from Madrid',
+        [{ start: 9, end: 15 }, { start: 24, end: 30 }]
+      );
       expect(matchs).toHaveLength(1);
       expect(matchs[0]).toEqual({
         type: 'afterLast',

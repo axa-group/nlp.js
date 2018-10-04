@@ -95,7 +95,9 @@ describe('XTableUtils', () => {
       expect(() => XTableUtils.number2alpha('A')).toThrow('Invalid number');
     });
     test('Should throw an error if its not a negative number', () => {
-      expect(() => XTableUtils.number2alpha(-10)).toThrow('Number cannot be negative');
+      expect(() => XTableUtils.number2alpha(-10)).toThrow(
+        'Number cannot be negative'
+      );
     });
   });
   describe('excel 2 coord', () => {
@@ -130,7 +132,9 @@ describe('XTableUtils', () => {
       expect(result.bottomright.row).toEqual(123455);
     });
     test('If is not a range raises an error', () => {
-      expect(() => XTableUtils.excel2range('A1B2')).toThrow('Invalid excel range');
+      expect(() => XTableUtils.excel2range('A1B2')).toThrow(
+        'Invalid excel range'
+      );
     });
   });
 });

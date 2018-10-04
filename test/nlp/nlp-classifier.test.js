@@ -60,13 +60,21 @@ describe('NLP Classifier', () => {
     });
     test('Should check that the utterance is an string', () => {
       const classifier = new NlpClassifier({ language: 'fr' });
-      expect(() => classifier.add(1, 'greet')).toThrowError('Utterance must be an string');
-      expect(() => classifier.add(undefined, 'greet')).toThrowError('Utterance must be an string');
+      expect(() => classifier.add(1, 'greet')).toThrowError(
+        'Utterance must be an string'
+      );
+      expect(() => classifier.add(undefined, 'greet')).toThrowError(
+        'Utterance must be an string'
+      );
     });
     test('Should check that the intent is an string', () => {
       const classifier = new NlpClassifier({ language: 'fr' });
-      expect(() => classifier.add('Bonjour', 1)).toThrowError('Intent must be an string');
-      expect(() => classifier.add('Bonjour', undefined)).toThrowError('Intent must be an string');
+      expect(() => classifier.add('Bonjour', 1)).toThrowError(
+        'Intent must be an string'
+      );
+      expect(() => classifier.add('Bonjour', undefined)).toThrowError(
+        'Intent must be an string'
+      );
     });
     test('If the utterance is empty, do not add doc to the classifier', () => {
       const classifier = new NlpClassifier({ language: 'fr' });
@@ -183,7 +191,9 @@ describe('NLP Classifier', () => {
       classifier.add('私は私の鍵がどこにあるのか覚えていない', 'keys');
       classifier.add('私は私の鍵が見つからない', 'keys');
       await classifier.train();
-      const classifications = classifier.getClassifications('私の鍵はどこにありますか');
+      const classifications = classifier.getClassifications(
+        '私の鍵はどこにありますか'
+      );
       expect(classifications).toHaveLength(2);
       expect(classifications[0].label).toEqual('keys');
       expect(classifications[0].value).toBeGreaterThan(0.8);
@@ -200,7 +210,9 @@ describe('NLP Classifier', () => {
       classifier.add('Je ne trouve pas mes clés', 'keys');
       classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
       await classifier.train();
-      const classification = classifier.getBestClassification('où sont mes clés');
+      const classification = classifier.getBestClassification(
+        'où sont mes clés'
+      );
       expect(classification.label).toEqual('keys');
       expect(classification.value).toBeGreaterThan(0.8);
     });
@@ -213,7 +225,9 @@ describe('NLP Classifier', () => {
       classifier.add('私は私の鍵がどこにあるのか覚えていない', 'keys');
       classifier.add('私は私の鍵が見つからない', 'keys');
       await classifier.train();
-      const classification = classifier.getBestClassification('私の鍵はどこにありますか');
+      const classification = classifier.getBestClassification(
+        '私の鍵はどこにありますか'
+      );
       expect(classification.label).toEqual('keys');
       expect(classification.value).toBeGreaterThan(0.8);
     });

@@ -98,13 +98,27 @@ describe('Logistic Regression Classifier', () => {
     test('Should get correct clasifications for basic examples', async () => {
       const classifier = getClassifier2();
       await classifier.train();
-      const classifications1 = classifier.getClassifications([0, 1, 1, 0, 0, 0]);
+      const classifications1 = classifier.getClassifications([
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+      ]);
       expect(classifications1).toHaveLength(2);
       expect(classifications1[0].label).toEqual('one');
       expect(classifications1[0].value).toBeGreaterThan(0.95);
       expect(classifications1[1].label).toEqual('two');
       expect(classifications1[1].value).toBeLessThan(0.05);
-      const classifications2 = classifier.getClassifications([0, 0, 0, 0, 1, 1]);
+      const classifications2 = classifier.getClassifications([
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+      ]);
       expect(classifications2).toHaveLength(2);
       expect(classifications2[0].label).toEqual('two');
       expect(classifications2[0].value).toBeGreaterThan(0.95);
@@ -114,15 +128,45 @@ describe('Logistic Regression Classifier', () => {
     test('Should get correct clasifications for more complex examples', async () => {
       const classifier = getClassifier3();
       await classifier.train();
-      const classifications1 = classifier.getClassifications([1, 1, 0, 0, 0, 0, 1, 0, 0]);
+      const classifications1 = classifier.getClassifications([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
       expect(classifications1).toHaveLength(3);
       expect(classifications1[0].label).toEqual('one');
       expect(classifications1[0].value).toBeGreaterThan(0.85);
-      const classifications2 = classifier.getClassifications([0, 0, 1, 1, 1, 0, 0, 0, 1]);
+      const classifications2 = classifier.getClassifications([
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+      ]);
       expect(classifications2).toHaveLength(3);
       expect(classifications2[0].label).toEqual('two');
       expect(classifications2[0].value).toBeGreaterThan(0.85);
-      const classifications3 = classifier.getClassifications([1, 0, 0, 0, 1, 0, 0, 1, 1]);
+      const classifications3 = classifier.getClassifications([
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+      ]);
       expect(classifications3).toHaveLength(3);
       expect(classifications3[0].label).toEqual('three');
       expect(classifications3[0].value).toBeGreaterThan(0.6);
@@ -131,25 +175,75 @@ describe('Logistic Regression Classifier', () => {
       const classifier = new LogisticRegressionClassifier();
       addObservations3a(classifier);
       await classifier.train();
-      let classifications1 = classifier.getClassifications([1, 1, 0, 0, 0, 0, 1, 0, 0]);
+      let classifications1 = classifier.getClassifications([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
       expect(classifications1).toHaveLength(2);
       expect(classifications1[0].label).toEqual('one');
       expect(classifications1[0].value).toBeGreaterThan(0.85);
-      let classifications2 = classifier.getClassifications([0, 0, 1, 1, 1, 0, 0, 0, 1]);
+      let classifications2 = classifier.getClassifications([
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+      ]);
       expect(classifications2).toHaveLength(2);
       expect(classifications2[0].label).toEqual('two');
       expect(classifications2[0].value).toBeGreaterThan(0.85);
       addObservations3b(classifier);
       await classifier.train();
-      classifications1 = classifier.getClassifications([1, 1, 0, 0, 0, 0, 1, 0, 0]);
+      classifications1 = classifier.getClassifications([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
       expect(classifications1).toHaveLength(3);
       expect(classifications1[0].label).toEqual('one');
       expect(classifications1[0].value).toBeGreaterThan(0.85);
-      classifications2 = classifier.getClassifications([0, 0, 1, 1, 1, 0, 0, 0, 1]);
+      classifications2 = classifier.getClassifications([
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+      ]);
       expect(classifications2).toHaveLength(3);
       expect(classifications2[0].label).toEqual('two');
       expect(classifications2[0].value).toBeGreaterThan(0.85);
-      const classifications3 = classifier.getClassifications([1, 0, 0, 0, 1, 0, 0, 1, 1]);
+      const classifications3 = classifier.getClassifications([
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+      ]);
       expect(classifications3).toHaveLength(3);
       expect(classifications3[0].label).toEqual('three');
       expect(classifications3[0].value).toBeGreaterThan(0.6);
@@ -160,20 +254,60 @@ describe('Logistic Regression Classifier', () => {
     test('Should get the best classification', async () => {
       const classifier = getClassifier3();
       await classifier.train();
-      const classification1 = classifier.getBestClassification([1, 1, 0, 0, 0, 0, 1, 0, 0]);
+      const classification1 = classifier.getBestClassification([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
       expect(classification1.label).toEqual('one');
       expect(classification1.value).toBeGreaterThan(0.85);
-      const classification2 = classifier.getBestClassification([0, 0, 1, 1, 1, 0, 0, 0, 1]);
+      const classification2 = classifier.getBestClassification([
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+      ]);
       expect(classification2.label).toEqual('two');
       expect(classification2.value).toBeGreaterThan(0.85);
-      const classification3 = classifier.getBestClassification([1, 0, 0, 0, 1, 0, 0, 1, 1]);
+      const classification3 = classifier.getBestClassification([
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+      ]);
       expect(classification3.label).toEqual('three');
       expect(classification3.value).toBeGreaterThan(0.6);
     });
     test('If cannot get classifications, then return undefined', async () => {
       const classifier = new LogisticRegressionClassifier({});
       await classifier.train();
-      const classification = classifier.getBestClassification([1, 1, 0, 0, 0, 0, 1, 0, 0]);
+      const classification = classifier.getBestClassification([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
       expect(classification).toBeUndefined();
     });
   });

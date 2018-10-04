@@ -51,14 +51,22 @@ expect.extend({
         }
         if (pass) {
           return {
-            message: () => (`expected ${this.utils.printReceived(received)} not to contain resolution ${this.utils.printExpected(argument)}`),
+            message: () =>
+              `expected ${this.utils.printReceived(
+                received
+              )} not to contain resolution ${this.utils.printExpected(
+                argument
+              )}`,
             pass: true,
           };
         }
       }
     }
     return {
-      message: () => (`expected ${this.utils.printReceived(received)} to contain resolution ${this.utils.printExpected(argument)}`),
+      message: () =>
+        `expected ${this.utils.printReceived(
+          received
+        )} to contain resolution ${this.utils.printExpected(argument)}`,
       pass: false,
     };
   },
@@ -76,7 +84,10 @@ function addTests(base, locale) {
         const currentKeys = Object.keys(current);
         for (let k = 0; k < currentKeys.length; k += 1) {
           const currentKey = currentKeys[k];
-          if ((currentKey.includes('date') || currentKey.includes('Date')) && testCase[key][currentKey].length === 24) {
+          if (
+            (currentKey.includes('date') || currentKey.includes('Date')) &&
+            testCase[key][currentKey].length === 24
+          ) {
             testCase[key][currentKey] = new Date(testCase[key][currentKey]);
           }
         }
@@ -108,7 +119,7 @@ const languages = [
 ];
 
 describe('NER Manager builtins', () => {
-  languages.forEach((language) => {
+  languages.forEach(language => {
     describe(`Numbers ${language.name}`, () => {
       addTests(numberTests, language.locale);
     });

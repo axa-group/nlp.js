@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 const builder = require('botbuilder');
 const express = require('express');
 const { Recognizer } = require('../../lib');
@@ -29,12 +30,12 @@ recognizer.nlpManager.slotManager.addSlot('travel', 'date', true, {
 recognizer.nlpManager.addDocument(
   'en',
   'I want to travel from %fromCity% to %toCity% %date%',
-  'travel',
+  'travel'
 );
 recognizer.nlpManager.addAnswer(
   'en',
   'travel',
-  'You want to travel from {{ fromCity }} to {{ toCity }} {{ date }}',
+  'You want to travel from {{ fromCity }} to {{ toCity }} {{ date }}'
 );
 
 (async () => {
@@ -42,8 +43,12 @@ recognizer.nlpManager.addAnswer(
 
   // Creates the bot using a memory storage, with a main dialog that
   // use the node-nlp recognizer to calculate the answer.
-  const bot = new builder.UniversalBot(connector, (session) => {
-    session.send(`You reached the default message handler. You said '${session.message.text}'.`);
+  const bot = new builder.UniversalBot(connector, session => {
+    session.send(
+      `You reached the default message handler. You said '${
+        session.message.text
+      }'.`
+    );
   }).set('storage', new builder.MemoryBotStorage());
 
   recognizer.setBot(bot, true);
