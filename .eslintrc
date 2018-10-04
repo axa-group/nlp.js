@@ -1,14 +1,9 @@
 {
-  "extends": [
-    "airbnb-base",
-    "plugin:jest/recommended"
-  ],
-  "plugins": [
-    "import",
-    "jest"
-  ],
-  "rules":{
-    "class-methods-use-this": 0
+  "extends": ["airbnb-base", "plugin:jest/recommended", "prettier"],
+  "plugins": ["import", "jest", "prettier"],
+  "rules": {
+    "class-methods-use-this": 0,
+    "prettier/prettier": "error"
   },
   "env": {
     "node": true,
