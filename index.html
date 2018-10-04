@@ -1,0 +1,23 @@
+<html>
+<head>
+  <title>Meh</title>
+  <script src="bundle.js"></script>
+  <script>
+    async function main() {
+      const manager = new window.NLPJS.NlpManager({ languages: ['en'] });
+      manager.addDocument('en', 'Hello', 'greet');
+      manager.addDocument('en', 'Good Morning', 'greet');
+      manager.addDocument('en', 'Good evening', 'greet');
+      manager.addDocument('en', 'I don\'t find my keys', 'keys');
+      manager.addDocument('en', 'I\'ve lost my keys', 'keys');
+      manager.train();
+      const result = await manager.process('Where are my keys?');
+      console.log(result);
+    }
+    main();
+  </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -575,28 +575,6 @@ describe('NLP Manager', () => {
       expect(result.answer).toMatch(new RegExp(/(It's nice meeting you, too John)|(Likewise. I'm looking forward to helping you out John)|(Nice meeting you, as well John)|(The pleasure is mine John)/g));
     });
 
-    test('Should process Chinese', async () => {
-      const manager = new NlpManager();
-      manager.addLanguage(['zh']);
-      manager.addDocument('zh', '你好', 'greet');
-      manager.addDocument('zh', '早上好', 'greet');
-      manager.addDocument('zh', '下午好', 'greet');
-      manager.addDocument('zh', '晚上好', 'greet');
-      manager.addDocument('zh', '我找不到钥匙', 'keys');
-      manager.addDocument('zh', '我丢了钥匙', 'keys');
-      manager.addDocument('zh', '有人偷了我的钥匙', 'keys');
-      manager.train();
-      const result = await manager.process('zh', '我不知道我的钥匙在哪里');
-      expect(result).toBeDefined();
-      expect(result.locale).toEqual('zh');
-      expect(result.localeIso2).toEqual('zh');
-      expect(result.utterance).toEqual('我不知道我的钥匙在哪里');
-      expect(result.classification).toBeDefined();
-      expect(result.classification).toHaveLength(2);
-      expect(result.intent).toEqual('keys');
-      expect(result.score).toBeGreaterThan(0.95);
-    });
-
     test('Should call transformer function if it is passed', async () => {
       const transformer = jest.fn(_ => _);
       const manager = new NlpManager({

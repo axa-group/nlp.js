@@ -103,7 +103,6 @@ const languages = [
   { locale: 'es', name: 'Spanish' },
   { locale: 'fr', name: 'French' },
   { locale: 'pt', name: 'Portuguese' },
-  { locale: 'zh', name: 'Chinese' },
   { locale: 'ja', name: 'Japanese' },
 ];
 
