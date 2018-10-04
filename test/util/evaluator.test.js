@@ -376,7 +376,9 @@ describe('Evaluator', () => {
       const context = { a: 1, b: 2 };
       const evaluator = new Evaluator();
       const question = 'true ^^ false';
-      expect(() => evaluator.evaluate(question, context)).toThrow('Line 1: Unexpected token ^');
+      expect(() => evaluator.evaluate(question, context)).toThrow(
+        'Line 1: Unexpected token ^'
+      );
     });
     test('Should return undefined if left term is undefined', () => {
       const context = { a: 1, b: 2 };
@@ -493,7 +495,7 @@ describe('Evaluator', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
       // eslint-disable-next-line
-      const question = '`${a}-${b}`';
+      const question = "`${a}-${b}`";
       const result = evaluator.evaluate(question, context);
       expect(result).toEqual('12-2');
     });
@@ -501,10 +503,14 @@ describe('Evaluator', () => {
 
   describe('Walk Tagged Template Literal', () => {
     test('Should evaluate a tagged template literal', () => {
-      const context = { a: 12, b: 2, tag: (literals, a, b) => `${literals.join('-')}-${a}-${b}` };
+      const context = {
+        a: 12,
+        b: 2,
+        tag: (literals, a, b) => `${literals.join('-')}-${a}-${b}`,
+      };
       const evaluator = new Evaluator();
       // eslint-disable-next-line
-      const question = 'tag`Hello ${a}hi${b}`';
+      const question = "tag`Hello ${a}hi${b}`";
       const result = evaluator.evaluate(question, context);
       expect(result).toEqual('Hello -hi--12-2');
     });

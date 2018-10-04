@@ -40,10 +40,10 @@ manager.addDocument(
   'sawhero',
 );
 manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-manager.train();
-manager.process(
-  'I saw spiderman eating spaghetti today in the city!',
-).then(result => console.log(result));
+await manager.train();
+manager
+  .process('I saw spiderman eating spaghetti today in the city!')
+  .then(result => console.log(result));
 // { locale: 'en',
 //   localeIso2: 'en',
 //   language: 'English',
@@ -83,7 +83,7 @@ manager.process(
 Also, you can save and load the NLP Manager to be reused without having to train it, because the thetas of the ML are also stored.
 
 ```
-      manager.train();
+      await manager.train();
       manager.save(filename);
       manager = new NlpManager();
       manager.load(filename);
@@ -94,18 +94,16 @@ Also, you can save and load the NLP Manager to be reused without having to train
 
 If no filename is provided by default it is './model.nlp'.
 
-
 ## Transformers
 
 You could pass transformer function to NLPManager constructor, which might be used to modify process output format.
 
 ```javascript
 const manager = new NlpManager({
- transformer: (originalProcessOutput) => {
-   // put some modifications logic (it might be async)
-   // and return modified value
-   return Promise.resolve({ modified: 'VALUE' });
- }
+  transformer: originalProcessOutput => {
+    // put some modifications logic (it might be async)
+    // and return modified value
+    return Promise.resolve({ modified: 'VALUE' });
+  },
 });
-
 ```

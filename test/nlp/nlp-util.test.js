@@ -83,15 +83,29 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
       expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
       expect(NlpUtil.getStemmer('cs').constructor.name).toEqual('CzechStemmer'); // Czech
-      expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
-      expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
-      expect(NlpUtil.getStemmer('de').constructor.name).toEqual('GermanStemmer'); // German
-      expect(NlpUtil.getStemmer('hu').constructor.name).toEqual('HungarianStemmer'); // Hungarian
+      expect(NlpUtil.getStemmer('da').constructor.name).toEqual(
+        'DanishStemmer'
+      ); // Danish
+      expect(NlpUtil.getStemmer('fi').constructor.name).toEqual(
+        'FinnishStemmer'
+      ); // Finnish
+      expect(NlpUtil.getStemmer('de').constructor.name).toEqual(
+        'GermanStemmer'
+      ); // German
+      expect(NlpUtil.getStemmer('hu').constructor.name).toEqual(
+        'HungarianStemmer'
+      ); // Hungarian
       expect(NlpUtil.getStemmer('ga').constructor.name).toEqual('IrishStemmer'); // Irish
-      expect(NlpUtil.getStemmer('ro').constructor.name).toEqual('RomanianStemmer'); // Romanian
-      expect(NlpUtil.getStemmer('sl').constructor.name).toEqual('SloveneStemmer'); // Slovene
+      expect(NlpUtil.getStemmer('ro').constructor.name).toEqual(
+        'RomanianStemmer'
+      ); // Romanian
+      expect(NlpUtil.getStemmer('sl').constructor.name).toEqual(
+        'SloveneStemmer'
+      ); // Slovene
       expect(NlpUtil.getStemmer('ta').constructor.name).toEqual('TamilStemmer'); // Tamil
-      expect(NlpUtil.getStemmer('tr').constructor.name).toEqual('TurkishStemmer'); // Turkish
+      expect(NlpUtil.getStemmer('tr').constructor.name).toEqual(
+        'TurkishStemmer'
+      ); // Turkish
     });
     test('Shoul return a PorterStemmer for unknown locales', () => {
       expect(NlpUtil.getStemmer('aa')).toBe(PorterStemmer);
@@ -135,15 +149,29 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
       expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
       expect(NlpUtil.getStemmer('cs').constructor.name).toEqual('CzechStemmer'); // Czech
-      expect(NlpUtil.getStemmer('da').constructor.name).toEqual('DanishStemmer'); // Danish
-      expect(NlpUtil.getStemmer('fi').constructor.name).toEqual('FinnishStemmer'); // Finnish
-      expect(NlpUtil.getStemmer('de').constructor.name).toEqual('GermanStemmer'); // German
-      expect(NlpUtil.getStemmer('hu').constructor.name).toEqual('HungarianStemmer'); // Hungarian
+      expect(NlpUtil.getStemmer('da').constructor.name).toEqual(
+        'DanishStemmer'
+      ); // Danish
+      expect(NlpUtil.getStemmer('fi').constructor.name).toEqual(
+        'FinnishStemmer'
+      ); // Finnish
+      expect(NlpUtil.getStemmer('de').constructor.name).toEqual(
+        'GermanStemmer'
+      ); // German
+      expect(NlpUtil.getStemmer('hu').constructor.name).toEqual(
+        'HungarianStemmer'
+      ); // Hungarian
       expect(NlpUtil.getStemmer('ga').constructor.name).toEqual('IrishStemmer'); // Irish
-      expect(NlpUtil.getStemmer('ro').constructor.name).toEqual('RomanianStemmer'); // Romanian
-      expect(NlpUtil.getStemmer('sl').constructor.name).toEqual('SloveneStemmer'); // Slovene
+      expect(NlpUtil.getStemmer('ro').constructor.name).toEqual(
+        'RomanianStemmer'
+      ); // Romanian
+      expect(NlpUtil.getStemmer('sl').constructor.name).toEqual(
+        'SloveneStemmer'
+      ); // Slovene
       expect(NlpUtil.getStemmer('ta').constructor.name).toEqual('TamilStemmer'); // Tamil
-      expect(NlpUtil.getStemmer('tr').constructor.name).toEqual('TurkishStemmer'); // Turkish
+      expect(NlpUtil.getStemmer('tr').constructor.name).toEqual(
+        'TurkishStemmer'
+      ); // Turkish
       NlpUtil.useAlternative.en = false;
       NlpUtil.useAlternative.fa = false;
       NlpUtil.useAlternative.fr = false;

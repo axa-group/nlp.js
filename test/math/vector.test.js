@@ -92,7 +92,7 @@ describe('Vector', () => {
     test('It should give every vector cell value in order', () => {
       const result = new Vector([2, 3, 5, 7, 11, 17]);
       let sum = 0;
-      result.forEach((element) => {
+      result.forEach(element => {
         sum += element;
       });
       expect(sum).toEqual(45);
@@ -117,7 +117,10 @@ describe('Vector', () => {
     test('It should be able to operate the vector with a scalar', () => {
       const input = new Vector([2, 3, 5, 7, 11, 17]);
       const operand = 2;
-      const result = input.runOperation(operand, (a, b, index) => a * b * index);
+      const result = input.runOperation(
+        operand,
+        (a, b, index) => a * b * index
+      );
       expect(result.elements).toEqual([0, 6, 20, 42, 88, 170]);
     });
     test('It should be able to operate the vector with another vector', () => {
@@ -129,7 +132,9 @@ describe('Vector', () => {
     test('It should throw an error if the vectors does not have same length', () => {
       const input = new Vector([2, 3, 5, 7, 11, 17]);
       const operand = [1, -1, 2, -2, 3, -3, 4];
-      expect(() => { input.runOperation(operand, (a, b) => a * b); }).toThrowError('Cannot operate two vectors with different dimensions.');
+      expect(() => {
+        input.runOperation(operand, (a, b) => a * b);
+      }).toThrowError('Cannot operate two vectors with different dimensions.');
     });
   });
 
@@ -137,8 +142,12 @@ describe('Vector', () => {
     test('It should return a vector with natural logarithm', () => {
       const input = new Vector([2, 4, 8, 16]);
       const result = input.log();
-      expect(result.elements).toEqual([0.6931471805599453, 1.3862943611198906, 2.0794415416798357,
-        2.772588722239781]);
+      expect(result.elements).toEqual([
+        0.6931471805599453,
+        1.3862943611198906,
+        2.0794415416798357,
+        2.772588722239781,
+      ]);
     });
   });
 
@@ -156,10 +165,12 @@ describe('Vector', () => {
       expect(result.elements).toEqual([0, 2, 6, 14]);
     });
 
-    test('Should raise an exception if the dimensions don\'t match', () => {
+    test("Should raise an exception if the dimensions don't match", () => {
       const input = new Vector([2, 4, 8, 16]);
       const other = new Vector([4, 3, 2]);
-      expect(() => { input.subtract(other); }).toThrowError('Cannot operate two vectors with different dimensions.');
+      expect(() => {
+        input.subtract(other);
+      }).toThrowError('Cannot operate two vectors with different dimensions.');
     });
   });
 
@@ -199,7 +210,9 @@ describe('Vector', () => {
     test('It should throw an error if the vectors have not the same dimension', () => {
       const input = new Vector([2, 4, 8, 16]);
       const other = new Vector([1, 2, 3, 4, 5]);
-      expect(() => { input.dot(other); }).toThrowError('Cannot operate two vectors with different dimensions.');
+      expect(() => {
+        input.dot(other);
+      }).toThrowError('Cannot operate two vectors with different dimensions.');
     });
   });
 

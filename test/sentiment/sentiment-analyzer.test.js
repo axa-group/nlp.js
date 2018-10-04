@@ -46,7 +46,7 @@ describe('Sentiment Analyzer', () => {
       expect(analyzer.negations).toEqual([]);
     });
     test('It should be able to load languages', () => {
-      ['en', 'es', 'it', 'fr', 'nl', 'de'].forEach((language) => {
+      ['en', 'es', 'it', 'fr', 'nl', 'de'].forEach(language => {
         const analyzer = new SentimentAnalyzer({ language });
         expect(analyzer.settings.language).toEqual(language);
         expect(analyzer.settings.tokenizer).toBeDefined();
@@ -62,12 +62,12 @@ describe('Sentiment Analyzer', () => {
     test('When loaded, senticon and pattern should be normalized', () => {
       let analyzer = new SentimentAnalyzer({ language: 'en', type: 'pattern' });
       let keys = Object.keys(analyzer.vocabulary);
-      keys.forEach((key) => {
+      keys.forEach(key => {
         expect(typeof analyzer.vocabulary[key]).toEqual('number');
       });
       analyzer = new SentimentAnalyzer({ language: 'en', type: 'senticon' });
       keys = Object.keys(analyzer.vocabulary);
-      keys.forEach((key) => {
+      keys.forEach(key => {
         expect(typeof analyzer.vocabulary[key]).toEqual('number');
       });
     });

@@ -112,22 +112,28 @@ describe('XDoc', () => {
       expect(xdoc.tables).toHaveLength(5);
       expect(xdoc.tables[0]).toEqual({
         keys: ['id', 'name'],
-        data: [{
-          id: '1',
-          name: 'name 1',
-        }, {
-          id: '2',
-          name: 'name 2',
-        }, {
-          id: '3',
-          name: 'name 3',
-        }, {
-          id: '4',
-          name: 'name 4',
-        }, {
-          id: '5',
-          name: 'name 5',
-        }],
+        data: [
+          {
+            id: '1',
+            name: 'name 1',
+          },
+          {
+            id: '2',
+            name: 'name 2',
+          },
+          {
+            id: '3',
+            name: 'name 3',
+          },
+          {
+            id: '4',
+            name: 'name 4',
+          },
+          {
+            id: '5',
+            name: 'name 5',
+          },
+        ],
         name: 'Table 1',
       });
     });
@@ -140,22 +146,28 @@ describe('XDoc', () => {
       const table = xdoc.getTable('Table 1');
       expect(table).toEqual({
         keys: ['id', 'name'],
-        data: [{
-          id: '1',
-          name: 'name 1',
-        }, {
-          id: '2',
-          name: 'name 2',
-        }, {
-          id: '3',
-          name: 'name 3',
-        }, {
-          id: '4',
-          name: 'name 4',
-        }, {
-          id: '5',
-          name: 'name 5',
-        }],
+        data: [
+          {
+            id: '1',
+            name: 'name 1',
+          },
+          {
+            id: '2',
+            name: 'name 2',
+          },
+          {
+            id: '3',
+            name: 'name 3',
+          },
+          {
+            id: '4',
+            name: 'name 4',
+          },
+          {
+            id: '5',
+            name: 'name 5',
+          },
+        ],
         name: 'Table 1',
       });
     });
