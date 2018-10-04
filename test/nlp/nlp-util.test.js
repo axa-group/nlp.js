@@ -21,9 +21,34 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Natural = require('natural');
 const PunctTokenizer = require('../../lib/nlp/tokenizers/punct-tokenizer');
 const { NlpUtil } = require('../../lib');
+const PorterStemmer = require('../../lib/nlp/stemmers/natural/porter-stemmer');
+const PorterStemmerEs = require('../../lib/nlp/stemmers/natural/porter-stemmer-es');
+const PorterStemmerFa = require('../../lib/nlp/stemmers/natural/porter-stemmer-fa');
+const PorterStemmerFr = require('../../lib/nlp/stemmers/natural/porter-stemmer-fr');
+const PorterStemmerRu = require('../../lib/nlp/stemmers/natural/porter-stemmer-ru');
+const PorterStemmerIt = require('../../lib/nlp/stemmers/natural/porter-stemmer-it');
+const PorterStemmerNo = require('../../lib/nlp/stemmers/natural/porter-stemmer-no');
+const PorterStemmerPt = require('../../lib/nlp/stemmers/natural/porter-stemmer-pt');
+const PorterStemmerSv = require('../../lib/nlp/stemmers/natural/porter-stemmer-sv');
+const PorterStemmerNl = require('../../lib/nlp/stemmers/natural/porter-stemmer-nl');
+const StemmerJa = require('../../lib/nlp/stemmers/natural/stemmer-ja');
+const StemmerId = require('../../lib/nlp/stemmers/natural/indonesian/stemmer_id');
+const {
+  AggressiveTokenizer,
+  AggressiveTokenizerFa,
+  AggressiveTokenizerFr,
+  AggressiveTokenizerRu,
+  AggressiveTokenizerEs,
+  AggressiveTokenizerIt,
+  AggressiveTokenizerNl,
+  AggressiveTokenizerNo,
+  AggressiveTokenizerPt,
+  AggressiveTokenizerPl,
+  AggressiveTokenizerSv,
+  TokenizerJa,
+} = require('../../lib/nlp/tokenizers');
 
 describe('NLP Util', () => {
   describe('Get truncated locale', () => {
@@ -41,30 +66,22 @@ describe('NLP Util', () => {
 
   describe('Get Stemmer', () => {
     test('Should return correct stemmer for the locale', () => {
-      expect(NlpUtil.getStemmer('en')).toBe(Natural.PorterStemmer); // english
-      expect(NlpUtil.getStemmer('fa')).toBe(Natural.PorterStemmerFa); // farsi
-      expect(NlpUtil.getStemmer('fr')).toBe(Natural.PorterStemmerFr); // french
-      expect(NlpUtil.getStemmer('ru')).toBe(Natural.PorterStemmerRu); // russian
-      expect(NlpUtil.getStemmer('es')).toBe(Natural.PorterStemmerEs); // spanish
-      expect(NlpUtil.getStemmer('it')).toBe(Natural.PorterStemmerIt); // italian
-      expect(NlpUtil.getStemmer('no')).toBe(Natural.PorterStemmerNo); // norwegian
-      expect(NlpUtil.getStemmer('pt')).toBe(Natural.PorterStemmerPt); // portugese
-      expect(NlpUtil.getStemmer('sv')).toBe(Natural.PorterStemmerSv); // swedish
-      expect(NlpUtil.getStemmer('nl')).toBe(Natural.PorterStemmerNl); // Dutch
-      expect(NlpUtil.getStemmer('id')).toBe(Natural.StemmerId); // Indonesian
-      expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(Natural.StemmerJa); // Japanese
-      expect(NlpUtil.getStemmer('ar').constructor.name).toEqual(
-        'ArabicStemmer'
-      ); // Arabic
-      expect(NlpUtil.getStemmer('hy').constructor.name).toEqual(
-        'ArmenianStemmer'
-      ); // Armenian
-      expect(NlpUtil.getStemmer('eu').constructor.name).toEqual(
-        'BasqueStemmer'
-      ); // Basque
-      expect(NlpUtil.getStemmer('ca').constructor.name).toEqual(
-        'CatalanStemmer'
-      ); // Catalan
+      expect(NlpUtil.getStemmer('en')).toBe(PorterStemmer); // english
+      expect(NlpUtil.getStemmer('fa')).toBe(PorterStemmerFa); // farsi
+      expect(NlpUtil.getStemmer('fr')).toBe(PorterStemmerFr); // french
+      expect(NlpUtil.getStemmer('ru')).toBe(PorterStemmerRu); // russian
+      expect(NlpUtil.getStemmer('es')).toBe(PorterStemmerEs); // spanish
+      expect(NlpUtil.getStemmer('it')).toBe(PorterStemmerIt); // italian
+      expect(NlpUtil.getStemmer('no')).toBe(PorterStemmerNo); // norwegian
+      expect(NlpUtil.getStemmer('pt')).toBe(PorterStemmerPt); // portugese
+      expect(NlpUtil.getStemmer('sv')).toBe(PorterStemmerSv); // swedish
+      expect(NlpUtil.getStemmer('nl')).toBe(PorterStemmerNl); // Dutch
+      expect(NlpUtil.getStemmer('id')).toBe(StemmerId); // Indonesian
+      expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(StemmerJa); // Japanese
+      expect(NlpUtil.getStemmer('ar').constructor.name).toEqual('ArabicStemmer'); // Arabic
+      expect(NlpUtil.getStemmer('hy').constructor.name).toEqual('ArmenianStemmer'); // Armenian
+      expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
+      expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
       expect(NlpUtil.getStemmer('cs').constructor.name).toEqual('CzechStemmer'); // Czech
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual(
         'DanishStemmer'
@@ -91,9 +108,9 @@ describe('NLP Util', () => {
       ); // Turkish
     });
     test('Shoul return a PorterStemmer for unknown locales', () => {
-      expect(NlpUtil.getStemmer('aa')).toBe(Natural.PorterStemmer);
-      expect(NlpUtil.getStemmer('')).toBe(Natural.PorterStemmer);
-      expect(NlpUtil.getStemmer()).toBe(Natural.PorterStemmer);
+      expect(NlpUtil.getStemmer('aa')).toBe(PorterStemmer);
+      expect(NlpUtil.getStemmer('')).toBe(PorterStemmer);
+      expect(NlpUtil.getStemmer()).toBe(PorterStemmer);
     });
     test('Alternative stemmers can be used for some languages', () => {
       NlpUtil.useAlternative.en = true;
@@ -115,46 +132,22 @@ describe('NLP Util', () => {
       NlpUtil.useAlternative.hu = true;
       NlpUtil.useAlternative.ro = true;
       NlpUtil.useAlternative.tr = true;
-      expect(NlpUtil.getStemmer('en').constructor.name).toEqual(
-        'EnglishStemmer'
-      ); // english
-      expect(NlpUtil.getStemmer('fa')).toBe(Natural.PorterStemmerFa); // farsi
-      expect(NlpUtil.getStemmer('fr').constructor.name).toEqual(
-        'FrenchStemmer'
-      ); // french
-      expect(NlpUtil.getStemmer('ru').constructor.name).toEqual(
-        'RussianStemmer'
-      ); // russian
-      expect(NlpUtil.getStemmer('es').constructor.name).toEqual(
-        'SpanishStemmer'
-      ); // spanish
-      expect(NlpUtil.getStemmer('it').constructor.name).toEqual(
-        'ItalianStemmer'
-      ); // italian
-      expect(NlpUtil.getStemmer('no').constructor.name).toEqual(
-        'NorwegianStemmer'
-      ); // norwegian
-      expect(NlpUtil.getStemmer('pt').constructor.name).toEqual(
-        'PortugueseStemmer'
-      ); // portugese
-      expect(NlpUtil.getStemmer('sv').constructor.name).toEqual(
-        'SwedishStemmer'
-      ); // swedish
+      expect(NlpUtil.getStemmer('en').constructor.name).toEqual('EnglishStemmer'); // english
+      expect(NlpUtil.getStemmer('fa')).toBe(PorterStemmerFa); // farsi
+      expect(NlpUtil.getStemmer('fr').constructor.name).toEqual('FrenchStemmer'); // french
+      expect(NlpUtil.getStemmer('ru').constructor.name).toEqual('RussianStemmer'); // russian
+      expect(NlpUtil.getStemmer('es').constructor.name).toEqual('SpanishStemmer'); // spanish
+      expect(NlpUtil.getStemmer('it').constructor.name).toEqual('ItalianStemmer'); // italian
+      expect(NlpUtil.getStemmer('no').constructor.name).toEqual('NorwegianStemmer'); // norwegian
+      expect(NlpUtil.getStemmer('pt').constructor.name).toEqual('PortugueseStemmer'); // portugese
+      expect(NlpUtil.getStemmer('sv').constructor.name).toEqual('SwedishStemmer'); // swedish
       expect(NlpUtil.getStemmer('nl').constructor.name).toEqual('DutchStemmer'); // Dutch
-      expect(NlpUtil.getStemmer('id')).toBe(Natural.StemmerId); // Indonesian
-      expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(Natural.StemmerJa); // Japanese
-      expect(NlpUtil.getStemmer('ar').constructor.name).toEqual(
-        'ArabicStemmer'
-      ); // Arabic
-      expect(NlpUtil.getStemmer('hy').constructor.name).toEqual(
-        'ArmenianStemmer'
-      ); // Armenian
-      expect(NlpUtil.getStemmer('eu').constructor.name).toEqual(
-        'BasqueStemmer'
-      ); // Basque
-      expect(NlpUtil.getStemmer('ca').constructor.name).toEqual(
-        'CatalanStemmer'
-      ); // Catalan
+      expect(NlpUtil.getStemmer('id')).toBe(StemmerId); // Indonesian
+      expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(StemmerJa); // Japanese
+      expect(NlpUtil.getStemmer('ar').constructor.name).toEqual('ArabicStemmer'); // Arabic
+      expect(NlpUtil.getStemmer('hy').constructor.name).toEqual('ArmenianStemmer'); // Armenian
+      expect(NlpUtil.getStemmer('eu').constructor.name).toEqual('BasqueStemmer'); // Basque
+      expect(NlpUtil.getStemmer('ca').constructor.name).toEqual('CatalanStemmer'); // Catalan
       expect(NlpUtil.getStemmer('cs').constructor.name).toEqual('CzechStemmer'); // Czech
       expect(NlpUtil.getStemmer('da').constructor.name).toEqual(
         'DanishStemmer'
@@ -203,41 +196,19 @@ describe('NLP Util', () => {
 
   describe('Get tokenizer', () => {
     test('Should return correct tokenizer for the locale', () => {
-      expect(NlpUtil.getTokenizer('en')).toBeInstanceOf(
-        Natural.AggressiveTokenizer
-      ); // english
-      expect(NlpUtil.getTokenizer('fa')).toBeInstanceOf(
-        Natural.AggressiveTokenizerFa
-      ); // farsi
-      expect(NlpUtil.getTokenizer('fr')).toBeInstanceOf(
-        Natural.AggressiveTokenizerFr
-      ); // french
-      expect(NlpUtil.getTokenizer('ru')).toBeInstanceOf(
-        Natural.AggressiveTokenizerRu
-      ); // russian
-      expect(NlpUtil.getTokenizer('es')).toBeInstanceOf(
-        Natural.AggressiveTokenizerEs
-      ); // spanish
-      expect(NlpUtil.getTokenizer('it')).toBeInstanceOf(
-        Natural.AggressiveTokenizerIt
-      ); // italian
-      expect(NlpUtil.getTokenizer('nl')).toBeInstanceOf(
-        Natural.AggressiveTokenizerNl
-      ); // dutch
-      expect(NlpUtil.getTokenizer('no')).toBeInstanceOf(
-        Natural.AggressiveTokenizerNo
-      ); // norwegian
-      expect(NlpUtil.getTokenizer('pt')).toBeInstanceOf(
-        Natural.AggressiveTokenizerPt
-      ); // portuguese
-      expect(NlpUtil.getTokenizer('pl')).toBeInstanceOf(
-        Natural.AggressiveTokenizerPl
-      ); // polish
-      expect(NlpUtil.getTokenizer('sv')).toBeInstanceOf(
-        Natural.AggressiveTokenizerSv
-      ); // swedish
+      expect(NlpUtil.getTokenizer('en')).toBeInstanceOf(AggressiveTokenizer); // english
+      expect(NlpUtil.getTokenizer('fa')).toBeInstanceOf(AggressiveTokenizerFa); // farsi
+      expect(NlpUtil.getTokenizer('fr')).toBeInstanceOf(AggressiveTokenizerFr); // french
+      expect(NlpUtil.getTokenizer('ru')).toBeInstanceOf(AggressiveTokenizerRu); // russian
+      expect(NlpUtil.getTokenizer('es')).toBeInstanceOf(AggressiveTokenizerEs); // spanish
+      expect(NlpUtil.getTokenizer('it')).toBeInstanceOf(AggressiveTokenizerIt); // italian
+      expect(NlpUtil.getTokenizer('nl')).toBeInstanceOf(AggressiveTokenizerNl); // dutch
+      expect(NlpUtil.getTokenizer('no')).toBeInstanceOf(AggressiveTokenizerNo); // norwegian
+      expect(NlpUtil.getTokenizer('pt')).toBeInstanceOf(AggressiveTokenizerPt); // portuguese
+      expect(NlpUtil.getTokenizer('pl')).toBeInstanceOf(AggressiveTokenizerPl); // polish
+      expect(NlpUtil.getTokenizer('sv')).toBeInstanceOf(AggressiveTokenizerSv); // swedish
       expect(NlpUtil.getTokenizer('id')).toBeDefined(); // indonesian
-      expect(NlpUtil.getTokenizer('ja')).toBeInstanceOf(Natural.TokenizerJa); // japanese
+      expect(NlpUtil.getTokenizer('ja')).toBeInstanceOf(TokenizerJa); // japanese
       expect(NlpUtil.getTokenizer('ar')).toBeInstanceOf(PunctTokenizer); // arabic
       expect(NlpUtil.getTokenizer('hy')).toBeInstanceOf(PunctTokenizer); // armenian
       expect(NlpUtil.getTokenizer('eu')).toBeInstanceOf(PunctTokenizer); // basque

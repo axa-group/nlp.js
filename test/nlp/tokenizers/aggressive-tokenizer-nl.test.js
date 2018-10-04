@@ -20,32 +20,22 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-/* eslint-disable */
-if (typeof window === 'undefined') {
-  const name = 'novel-segment';
-  const Segment = require(name);
-  class ChineseTokenizer {
-    constructor(settings) {
-      this.settings = settings || {};
-    }
-  
-    tokenize(text) {
-      return ChineseTokenizer.segment.doSegment(text);
-    }
-  }
-  
-  ChineseTokenizer.segment = new Segment();
-  ChineseTokenizer.segment.useDefault();
-  module.exports = ChineseTokenizer;
-} else {
-  class ChineseTokenizer {
-    constructor(settings) {
-      this.settings = settings || {};
-    }
 
-    tokenize(text) {
-      return this.trim(text.split(/\W+/));
-    }
-  }
-  module.exports = ChineseTokenizer;
-}
+const { AggressiveTokenizerNl } = require('../../../lib/nlp/tokenizers');
+
+describe('Aggressive Tokenizer Nl', () => {
+  describe('Constructor', () => {
+    test('It should create a new instance', () => {
+      const tokenizer = new AggressiveTokenizerNl();
+      expect(tokenizer).toBeDefined();
+    });
+  });
+  describe('Tokenize', () => {
+    test('It must tokenize simple sentence', () => {
+      const tokenizer = new AggressiveTokenizerNl();
+      const expected = ['Wanneer', 'de', 'nacht', 'komt', 'en', 'de', 'aarde', 'donker', 'is'];
+      const actual = tokenizer.tokenize('Wanneer de nacht komt en de aarde donker is');
+      expect(actual).toEqual(expected);
+    });
+  });
+});

@@ -20,32 +20,22 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-/* eslint-disable */
-if (typeof window === 'undefined') {
-  const name = 'novel-segment';
-  const Segment = require(name);
-  class ChineseTokenizer {
-    constructor(settings) {
-      this.settings = settings || {};
-    }
-  
-    tokenize(text) {
-      return ChineseTokenizer.segment.doSegment(text);
-    }
-  }
-  
-  ChineseTokenizer.segment = new Segment();
-  ChineseTokenizer.segment.useDefault();
-  module.exports = ChineseTokenizer;
-} else {
-  class ChineseTokenizer {
-    constructor(settings) {
-      this.settings = settings || {};
-    }
 
-    tokenize(text) {
-      return this.trim(text.split(/\W+/));
-    }
-  }
-  module.exports = ChineseTokenizer;
-}
+const { AggressiveTokenizerPt } = require('../../../lib/nlp/tokenizers');
+
+describe('Aggressive Tokenizer Pt', () => {
+  describe('Constructor', () => {
+    test('It should create a new instance', () => {
+      const tokenizer = new AggressiveTokenizerPt();
+      expect(tokenizer).toBeDefined();
+    });
+  });
+  describe('Tokenize', () => {
+    test('It must tokenize simple sentence', () => {
+      const tokenizer = new AggressiveTokenizerPt();
+      const expected = ['Quando', 'a', 'noite', 'chega', 'e', 'a', 'terra', 'está', 'escura'];
+      const actual = tokenizer.tokenize('Quando a noite chega e a terra está escura');
+      expect(actual).toEqual(expected);
+    });
+  });
+});
