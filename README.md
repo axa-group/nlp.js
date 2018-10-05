@@ -148,7 +148,7 @@ You can read the Code of Conduct at [Code of Conduct](https://github.com/axa-gro
 
 This project is developed by AXA Shared Services Spain S.A.
 
-If you need to contact us, you can do it at the email jesus.seijas@axa-groupsolutions.com
+If you need to contact us, you can do it at the email jesus.seijas@axa.com
 
 ## License
 
