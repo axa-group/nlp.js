@@ -81,7 +81,7 @@ manager
 ```
 
 
-## Save/Load
+## Load/Save
 
 Also, you can save and load the NLP Manager to be reused without having to train it, because the thetas of the ML are also stored.
 
