@@ -80,19 +80,55 @@ manager
 //      language: 'en' } }
 ```
 
+
+## Save/Load
+
 Also, you can save and load the NLP Manager to be reused without having to train it, because the thetas of the ML are also stored.
 
+```javascript
+const { NlpManager } = require('node-nlp');
+
+const manager = new NlpManager({ languages: ['en'] });
+await manager.train();
+manager.save(filename);
 ```
-      await manager.train();
-      manager.save(filename);
-      manager = new NlpManager();
-      manager.load(filename);
-      manager
-        .process('I saw spiderman eating spaghetti today in the city!')
-        .then(result => {});
+
+```javascript
+const { NlpManager } = require('node-nlp');
+
+manager = new NlpManager();
+manager.load(filename);
 ```
 
 If no filename is provided by default it is './model.nlp'.
+
+
+## Import/Export
+
+Importing works similar to loading, but instead of a filename takes a JSON string as an argument.
+
+```javascript
+const fs = require('fs');
+const { NlpManager } = require('node-nlp');
+
+const data = fs.readFileSync('model.nlp', 'utf8');
+const manager = new NlpManager();
+manager.import(data);
+// ...
+```
+
+You could use the export function to return this JSON string. The ``export`` function also takes an optional boolean argument that will tell it to minimize the JSON string.
+
+```javascript
+const { NlpManager } = require('node-nlp');
+
+const minified = true;
+const manager = new NlpManager();
+// ...
+await manager.train();
+const data = manager.export(minified);
+```
+
 
 ## Transformers
 

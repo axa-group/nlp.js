@@ -40,6 +40,8 @@
 - [Language Guesser](docs/language-guesser.md)
 - [Similar Search](docs/similar-search.md)
 - [NLP Classifier](docs/nlp-classifier.md)
+  - [Load/Save](docs/nlp-classifier.md#save-load)
+  - [Import/Export](docs/nlp-classifier.md#import-export)
 - [NER Manager](docs/ner-manager.md)
   - [Enum Named Entities](docs/ner-manager.md#enum-named-entities)
   - [Regular Expression Named Entities](docs/ner-manager.md#regular-expression-named-entities)
