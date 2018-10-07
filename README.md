@@ -59,6 +59,8 @@
   - [Duration Extraction](docs/builtin-entity-extraction.md#duration-extraction)
 - [Sentiment Analysis](docs/sentiment-analysis.md)
 - [NLP Manager](docs/nlp-manager.md)
+  - [Load/Save](docs/nlp-manager.md#loadsave)
+  - [Import/Export](docs/nlp-manager.md#importexport)
 - [Slot Filling](docs/slot-filling.md)
 - [Loading from Excel](docs/loading-from-excel.md)
 - [Microsoft Bot Framework](docs/microsoft-bot-framework.md)
