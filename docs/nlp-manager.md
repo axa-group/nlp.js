@@ -153,7 +153,7 @@ This will show this result in console:
 
 ```
 See you soon, John!
-=======
+```
 
 ## Transformers
 
