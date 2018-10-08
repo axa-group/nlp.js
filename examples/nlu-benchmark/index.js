@@ -14,7 +14,7 @@ async function scoreCorpus(corpus) {
       manager.addDocument('en', sentence.text, sentence.intent);
     }
   }
-  manager.train();
+  await manager.train();
   let total = 0;
   let correct = 0;
   for (let i = 0; i < sentences.length; i += 1) {

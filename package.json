@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "main": "lib/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "test": "eslint lib/** && jest --coverage --maxWorkers=4"
   },
   "author": {
-    "email": "jesus.seijas@axa-groupsolutions.com",
+    "email": "jesus.seijas@axa.com",
     "name": "Jesus Seijas"
   },
   "repository": {
@@ -24,7 +24,7 @@
   },
   "maintainers": [
     {
-      "email": "jesus.seijas@axa-groupsolutions.com",
+      "email": "jesus.seijas@axa.com",
       "name": "Jesus Seijas"
     }
   ],
@@ -51,7 +51,6 @@
     "franc": "^4.0.0",
     "handlebars": "^4.0.12",
     "microjob": "^0.2.1",
-    "natural": "^0.6.1",
     "novel-segment": "^2.0.42",
     "xlsx": "^0.13.5"
   },
@@ -84,7 +83,8 @@
       "lib/**.js",
       "!lib/nlp/stemmers/**"
     ],
-    "coverageDirectory": "coverage"
+    "coverageDirectory": "coverage",
+    "testEnvironment": "node"
   },
   "lint-staged": {
     "*.js": [

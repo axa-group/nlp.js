@@ -59,6 +59,8 @@
   - [Duration Extraction](docs/builtin-entity-extraction.md#duration-extraction)
 - [Sentiment Analysis](docs/sentiment-analysis.md)
 - [NLP Manager](docs/nlp-manager.md)
+  - [Load/Save](docs/nlp-manager.md#loadsave)
+  - [Import/Export](docs/nlp-manager.md#importexport)
   - [Context](docs/nlp-manager.md#context)
 - [Slot Filling](docs/slot-filling.md)
 - [Loading from Excel](docs/loading-from-excel.md)
@@ -149,7 +151,7 @@ You can read the Code of Conduct at [Code of Conduct](https://github.com/axa-gro
 
 This project is developed by AXA Shared Services Spain S.A.
 
-If you need to contact us, you can do it at the email jesus.seijas@axa-groupsolutions.com
+If you need to contact us, you can do it at the email jesus.seijas@axa.com
 
 ## License
 
