@@ -102,7 +102,6 @@ manager.load(filename);
 
 If no filename is provided by default it is './model.nlp'.
 
-
 ## Import/Export
 
 Importing works similar to loading, but instead of a filename takes a JSON string as an argument.
@@ -129,6 +128,32 @@ await manager.train();
 const data = manager.export(minified);
 ```
 
+## Context
+
+You can also provide a context to ```NlpManger.process``` so the NLG changes its behaviour based on the context.
+
+```
+const { NlpManager, ConversationContext } = require('node-nlp');
+
+const manager = new NlpManager({ languages: ['en'] });
+const context = new ConversationContext();
+
+manager.addDocument('en', 'Hello my name is %name%', 'greeting.hello');
+manager.addDocument('en', 'I have to go', 'greeting.bye');
+manager.addAnswer('en', 'greeting.hello', 'Hey there!');
+manager.addAnswer('en', 'greeting.bye', 'Till next time, {{name}}!');
+
+manager.train()
+  .then(result => manager.process('en', 'Hello my name is John', context))
+  .then(result => manager.process('en', 'I have to go', context))
+  .then(result => console.log(result.answer));
+```
+
+This will show this result in console:
+
+```
+See you soon, John!
+=======
 
 ## Transformers
 

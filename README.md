@@ -61,6 +61,7 @@
 - [NLP Manager](docs/nlp-manager.md)
   - [Load/Save](docs/nlp-manager.md#loadsave)
   - [Import/Export](docs/nlp-manager.md#importexport)
+  - [Context](docs/nlp-manager.md#context)
 - [Slot Filling](docs/slot-filling.md)
 - [Loading from Excel](docs/loading-from-excel.md)
 - [Microsoft Bot Framework](docs/microsoft-bot-framework.md)
