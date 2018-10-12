@@ -21,12 +21,32 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Classifier = require('./classifier');
-const LogisticRegressionClassifier = require('./logistic-regression-classifier');
-const BinaryNeuralNetworkClassifier = require('./binary-neural-network-classifier');
+const { BinaryNeuralNetworkClassifier } = require('../../lib');
 
-module.exports = {
-  Classifier,
-  LogisticRegressionClassifier,
-  BinaryNeuralNetworkClassifier,
-};
+describe('Binary Neural Network Classifier', () => {
+  describe('Constructor', () => {
+    test('Should create an instance', () => {
+      const classifier = new BinaryNeuralNetworkClassifier();
+      expect(classifier).toBeDefined();
+    });
+    test('Should create a configuration by default', () => {
+      const classifier = new BinaryNeuralNetworkClassifier();
+      expect(classifier.settings.config).toEqual({
+        activation: 'leaky-relu',
+        hiddenLayers: [],
+        learningRate: 0.1,
+        errorThresh: 0.0005,
+      });
+    });
+    test('I can provide a configuration', () => {
+      const config = {
+        activation: 'sigmoid',
+        hiddenLayers: [],
+        learningRate: 0.05,
+        errorThresh: 0.001,
+      };
+      const classifier = new BinaryNeuralNetworkClassifier({ config });
+      expect(classifier.settings.config).toEqual(config);
+    });
+  });
+});
