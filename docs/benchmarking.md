@@ -24,10 +24,10 @@ We compute the `f1` score for each corpus and the overall `f1`:
 
 | Platform\Corpus  | Chatbot | Ask Ubuntu | Web Applications | Overall |
 | ---------------- | ------- | ---------- | ---------------- | ------- |
+| NLP.js           | 0.99    | 0.94       | 0.80             | 0.93    |
 | Watson           | 0.97    | 0.92       | 0.83             | 0.92    |
 | Botfuel          | 0.98    | 0.90       | 0.80             | 0.91    |
 | Luis             | 0.98    | 0.90       | 0.81             | 0.91    |
-| NLP.js           | 0.97    | 0.90       | 0.76             | 0.90    |
 | Snips            | 0.96    | 0.83       | 0.78             | 0.89    |
 | Recast           | 0.99    | 0.86       | 0.75             | 0.89    |
 | RASA             | 0.98    | 0.86       | 0.74             | 0.88    |
