@@ -1,0 +1,402 @@
+[
+{
+  "text": "what's the shortest connection between quiddestraße and odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "what is the cheapest connection between quiddestraße and hauptbahnhof?",
+  "intent": "FindConnection"
+},
+{
+  "text": "what's the shortest way between hauptbahnhof and odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garching to münchner freiheit as fast as possible?",
+  "intent": "FindConnection"
+},
+{
+  "text": "what's the cheapest way from neuperlach süd to lehel?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from neuperlach zentrum to karlsplatz as fast as possible?",
+  "intent": "FindConnection"
+},
+{
+  "text": "could you give me the fastest connection between brudermühlstraße and alte heide?",
+  "intent": "FindConnection"
+},
+{
+  "text": "is there a train from neuperlach zentrum to garching at 3 pm?",
+  "intent": "FindConnection"
+},
+{
+  "text": "can you find a connection from olympiazentrum to lehel at 2 pm?",
+  "intent": "FindConnection"
+},
+{
+  "text": "i need a connection from harras to karl-preis-platz at 8 am.",
+  "intent": "FindConnection"
+},
+{
+  "text": "in need to be at hauptbahnhof at 1 pm, can you search a connection from garching forschungszentrum?",
+  "intent": "FindConnection"
+},
+{
+  "text": "i need to be in garching at 9",
+  "intent": "FindConnection"
+},
+{
+  "text": "can i take a bus from quiddestraße to hauptbahnhof?",
+  "intent": "FindConnection"
+},
+{
+  "text": "can you find the shortest way from moosfeld to milbertshofen?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get to neuperlach süd from garching forschungszentrum?",
+  "intent": "FindConnection"
+},
+{
+  "text": "can you find a bus from quiddestraße to lehel?",
+  "intent": "FindConnection"
+},
+{
+  "text": "is there a tram from karlsplatz to lehel?",
+  "intent": "FindConnection"
+},
+{
+  "text": "is there a bus from garching to moosach at around 5?",
+  "intent": "FindConnection"
+},
+{
+  "text": "is there a bus from odeonsplatz to hauptbahnhof at 3 pm?",
+  "intent": "FindConnection"
+},
+{
+  "text": "can you tell me the cheapest way from garching forschungszentrum to quiddestraße?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get to quiddestraße?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when does the next bus leaves from hauptbahnhof?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "how can i get from garching to hauptbahnhof?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from kurt-eisner-straße to garching?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when the next train in garching,forschungszentrum is leaving?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "what is the next connection from garching forschungszentrum to odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from mossach to garching forschungszentrum?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garching forschungszentrum to odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garching, forschungszentrum to odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garching forschungszentrum to kurt-eisner-straße?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get to boltzmannstraße from quiddestraße?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when does the next train departs from quiddestraße?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when the next train in garching forschungszentrum is leaving?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next u6 leaving from garching?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next train leave from garching forschungszentrum",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next u6?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next subway leaving from garching?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when the next train in garching is leaving?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next train leaving in garching",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next train leaves from odeonsplatz?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next train leaves from quiddestraße?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next train",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next bus leaves at garching forschungszentrum?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next train leaves?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next bus leave in garching?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next s-bahn leaves from hauptbahnhof?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next subway departes from odeonsplatz?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "show me the next bus from garching!",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next tram starts from hauptbahnhof?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when will the next u-bahn depart from garching forschungszentrum?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "show me the next bus from michaelibad.",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next train starts at sendlinger tor?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "hey bot, when does the next bus starts at garching?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next bus leaves at garching?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the bus from quiddestraße?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when can i get a bus at mariahilfplatz?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next bus leaves at romanplatz?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the bus to röblingweg starts?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "next bus from quiddestraße?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next bus leaving from garching?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the train leaving in garching",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the train leaving in garching?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "how can i get from garching to odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is adrians next subway leaving at garching forschungszentrum?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "how can i get from olympiazentrum to hauptbahnhof?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from quiddestraße to boltzmannstraße?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from moosach to garching forschungszentrum?",
+  "intent": "FindConnection"
+},
+{
+  "text": "can you give me a connection from garching to odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is the next train from garching",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when comes the next train",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next train in nordfriedhof",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when does the next train come at garching forschungszentrum",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next train from nordfriedhof to garching forschungszentrum",
+  "intent": "FindConnection"
+},
+{
+  "text": "i want to travel from garching to odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get to sendlinger tor?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how do i get to untere straussäcker?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garching to garching?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garching to sendlinger tor?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garchingto garching?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is the next train from garching",
+  "intent": "DepartureTime"
+},
+{
+  "text": "how do i get from marienplatz zu garching",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get to milbertshofen from garching?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is the next train to garching",
+  "intent": "FindConnection"
+},
+{
+  "text": "how can i get from garching to milbertshofen?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when does the next rocket leaves from garching forschungszentrum?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "connection from untere straßäcker 21 to kieferngarten",
+  "intent": "FindConnection"
+},
+{
+  "text": "how to get from untere strassäcker 21 to frötmaning",
+  "intent": "FindConnection"
+},
+{
+  "text": "how to get from untere strassaecker 21 to frötmaning",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is the next train from untere straßaecker 21 to kieferngarten",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is the next train from untere straßaecker 21, garching to kieferngarten",
+  "intent": "FindConnection"
+},
+{
+  "text": "from garching to perlach",
+  "intent": "FindConnection"
+},
+{
+  "text": "how to get from garching to perlach?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how to get from bonnerplatz to freimann",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is the next train in nordfriedhof?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "when is the next train in münchner freiheit?",
+  "intent": "DepartureTime"
+},
+{
+  "text": "connection from hauptbahnhof to odeonsplatz?",
+  "intent": "FindConnection"
+},
+{
+  "text": "how do i get from olympia einkaufszentrum to hauptbahnhof?",
+  "intent": "FindConnection"
+},
+{
+  "text": "when is the next bus in garching forschungszentrum",
+  "intent": "DepartureTime"
+},
+{
+  "text": "how can i get from garching to marienplatz",
+  "intent": "FindConnection"
+},
+{
+  "text": "from garching to studentenstadt",
+  "intent": "FindConnection"
+}
+]
