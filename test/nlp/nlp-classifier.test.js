@@ -21,7 +21,13 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NlpClassifier } = require('../../lib');
+const {
+  NlpClassifier,
+  LogisticRegressionClassifier,
+  BinaryNeuralNetworkClassifier,
+  NlpUtil,
+} = require('../../lib');
+const corpus = require('./corpus.json');
 
 describe('NLP Classifier', () => {
   describe('constructor', () => {
@@ -36,6 +42,29 @@ describe('NLP Classifier', () => {
       expect(classifier.settings.stemmer).toBeDefined();
       expect(classifier.docs).toEqual([]);
       expect(classifier.features).toEqual({});
+    });
+    test('I can provide my own classifier', () => {
+      const lrc = new LogisticRegressionClassifier();
+      const classifier = new NlpClassifier({ classifier: lrc });
+      expect(classifier.settings.classifier).toBe(lrc);
+    });
+    test('I can decide to not use neural classifier', () => {
+      const classifier = new NlpClassifier({ useNeural: false });
+      expect(classifier.settings.useNeural).toBeFalsy();
+    });
+    test('I can provide my own Binary Relevance classifier', () => {
+      const binary = new BinaryNeuralNetworkClassifier();
+      const classifier = new NlpClassifier({ neuralClassifier: binary });
+      expect(classifier.settings.neuralClassifier).toBe(binary);
+    });
+    test('I can provide my own stemmer', () => {
+      const stemmer = NlpUtil.getStemmer('en');
+      const classifier = new NlpClassifier({ stemmer });
+      expect(classifier.settings.stemmer).toBe(stemmer);
+    });
+    test('I can decide to not keep the stopwords', () => {
+      const classifier = new NlpClassifier({ keepStopWords: false });
+      expect(classifier.settings.keepStopWords).toBeFalsy();
     });
   });
 
@@ -182,6 +211,23 @@ describe('NLP Classifier', () => {
       expect(classifications[0].label).toEqual('keys');
       expect(classifications[0].value).toBeGreaterThan(0.8);
     });
+    test('It should work even without neural', async () => {
+      const classifier = new NlpClassifier({
+        language: 'fr',
+        useNeural: false,
+      });
+      classifier.add('Bonjour', 'greet');
+      classifier.add('bonne nuit', 'greet');
+      classifier.add('Bonsoir', 'greet');
+      classifier.add("J'ai perdu mes clés", 'keys');
+      classifier.add('Je ne trouve pas mes clés', 'keys');
+      classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
+      await classifier.train();
+      const classifications = classifier.getClassifications('où sont mes clés');
+      expect(classifications).toHaveLength(2);
+      expect(classifications[0].label).toEqual('keys');
+      expect(classifications[0].value).toBeGreaterThan(0.8);
+    });
     it('Should work even for japanese', async () => {
       const classifier = new NlpClassifier({ language: 'ja' });
       classifier.add('おはようございます', 'greet');
@@ -230,6 +276,20 @@ describe('NLP Classifier', () => {
       );
       expect(classification.label).toEqual('keys');
       expect(classification.value).toBeGreaterThan(0.8);
+    });
+  });
+
+  describe('Neural classifier', () => {
+    test('If should improve accuracy of LRC', async () => {
+      const classifier = new NlpClassifier({ language: 'en' });
+      for (let i = 0; i < corpus.length; i += 1) {
+        classifier.add(corpus[i].text, corpus[i].intent);
+      }
+      await classifier.train();
+      const classifications = classifier.getClassifications(
+        'next train from garching'
+      );
+      expect(classifications[0].label).toEqual('DepartureTime');
     });
   });
 });
