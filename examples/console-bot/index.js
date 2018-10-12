@@ -47,7 +47,6 @@ function say(message) {
       process.exit();
     } else {
       const result = await nlpManager.process(line);
-      console.log(result);
       const answer =
         result.score > threshold && result.answer
           ? result.answer

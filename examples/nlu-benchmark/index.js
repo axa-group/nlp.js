@@ -71,18 +71,14 @@ async function scoreCorpus(corpus) {
         correct += 1;
       } else {
         analysis[sentence.intent].falsePos += 1;
-        analysis[result.intent].falseNeg += 1;
+        if (analysis[result.intent]) {
+          analysis[result.intent].falseNeg += 1;
+        }
       }
     }
   }
   return { total, correct, analysis };
 }
-
-// analysis["intents"][aIntent]["truePos"] += 1
-//   			else:
-//   				#incorrect
-//   				analysis["intents"][aIntent]["falsePos"] += 1
-//   				analysis["intents"][oIntent]["falseNeg"] += 1
 
 async function process() {
   const askUbuntuResult = await scoreCorpus(AskUbuntuCorpus);
