@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "lintfix": "eslint --fix lib/**",
     "precommit": "lint-staged",
-    "test": "eslint lib/** && jest --coverage --maxWorkers=4"
+    "test": "eslint lib/** && jest --coverage --maxWorkers=4",
+    "jsdoc": "jsdoc -r lib -d docs/static -R README.md"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
