@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "lintfix": "eslint --fix lib/**",
     "precommit": "lint-staged",
-    "test": "eslint lib/** && jest --coverage --maxWorkers=4"
+    "test": "eslint lib/** && jest --coverage --maxWorkers=4",
+    "jsdoc": "jsdoc -r lib -d docs/static -R README.md"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -41,6 +42,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "husky": "^1.1.0",
     "jest": "^23.5.0",
+    "jsdoc": "^3.5.5",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3"
   },
