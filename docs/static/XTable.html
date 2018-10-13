@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: XTable</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: XTable</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>XTable<span class="signature">(matrix)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Represents an excel table, where first row is the title, second row the
+name of each column, and next rows the data.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="XTable"><span class="type-signature"></span>new XTable<span class="signature">(matrix)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Constructor of the class.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>matrix</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Array.&lt;Object>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Matrix with the data from the excel table.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="xtables_xtable.js.html">xtables/xtable.js</a>, <a href="xtables_xtable.js.html#line28">line 28</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="build"><span class="type-signature"></span>build<span class="signature">(block)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Build the instance from a block of the excel representing the table.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>block</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Array.&lt;Object>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Block of data directly from the excel.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="xtables_xtable.js.html">xtables/xtable.js</a>, <a href="xtables_xtable.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="find"><span class="type-signature"></span>find<span class="signature">(query)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Given a query, find the rows that match the given query
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Objet</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Query for the match.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="xtables_xtable.js.html">xtables/xtable.js</a>, <a href="xtables_xtable.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Rows that match the query, cloned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="findOne"><span class="type-signature"></span>findOne<span class="signature">(query)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Givena query, find the first row that match the query.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Query for the match.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="xtables_xtable.js.html">xtables/xtable.js</a>, <a href="xtables_xtable.js.html#line106">line 106</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    First row that match the query, cloned.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="match"><span class="type-signature"></span>match<span class="signature">(row, query)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Indicates if a row match a given query.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>row</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Row to match</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>query</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Query for the match</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="xtables_xtable.js.html">xtables/xtable.js</a>, <a href="xtables_xtable.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    True if the row matchs the query, false otherwise.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BinaryNeuralNetworkClassifier.html">BinaryNeuralNetworkClassifier</a></li><li><a href="Classifier.html">Classifier</a></li><li><a href="ConversationContext.html">ConversationContext</a></li><li><a href="DutchStemmer.html">DutchStemmer</a></li><li><a href="EnglishStemmer.html">EnglishStemmer</a></li><li><a href="EnumNamedEntity.html">EnumNamedEntity</a></li><li><a href="Evaluator.html">Evaluator</a></li><li><a href="HungarianStemmer.html">HungarianStemmer</a></li><li><a href="ItalianStemmer.html">ItalianStemmer</a></li><li><a href="Language.html">Language</a></li><li><a href="LogisticRegressionClassifier.html">LogisticRegressionClassifier</a></li><li><a href="Matrix.html">Matrix</a></li><li><a href="MemoryConversationContext.html">MemoryConversationContext</a></li><li><a href="NamedEntity.html">NamedEntity</a></li><li><a href="NerManager.html">NerManager</a></li><li><a href="NlgManager.html">NlgManager</a></li><li><a href="NlpClassifier.html">NlpClassifier</a></li><li><a href="NlpManager.html">NlpManager</a></li><li><a href="NorwegianStemmer.html">NorwegianStemmer</a></li><li><a href="PortugueseStemmer.html">PortugueseStemmer</a></li><li><a href="Recognizer.html">Recognizer</a></li><li><a href="RegexNamedEntity.html">RegexNamedEntity</a></li><li><a href="RomanianStemmer.html">RomanianStemmer</a></li><li><a href="RussianStemmer.html">RussianStemmer</a></li><li><a href="SentimentAnalyzer.html">SentimentAnalyzer</a></li><li><a href="SentimentManager.html">SentimentManager</a></li><li><a href="SimilarSearch.html">SimilarSearch</a></li><li><a href="SlotManager.html">SlotManager</a></li><li><a href="StemmerJa.html">StemmerJa</a></li><li><a href="SwedishStemmer.html">SwedishStemmer</a></li><li><a href="Tokenizer.html">Tokenizer</a></li><li><a href="TrimNamedEntity.html">TrimNamedEntity</a></li><li><a href="TurkishStemmer.html">TurkishStemmer</a></li><li><a href="Vector.html">Vector</a></li><li><a href="XTable.html">XTable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#endsinArr">endsinArr</a></li><li><a href="global.html#prelude">prelude</a></li><li><a href="global.html#regions">regions</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#stopwords">stopwords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 13 2018 19:14:51 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

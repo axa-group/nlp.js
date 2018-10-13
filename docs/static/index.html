@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><div align="center">
+<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlpjs.png" width="150" height="auto"/>
+</div>
+
+<h1>NLP.js</h1><p><a href="https://travis-ci.com/axa-group/nlp.js"><img src="https://travis-ci.com/axa-group/nlp.js.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/axa-group/nlp.js?branch=master"><img src="https://coveralls.io/repos/github/axa-group/nlp.js/badge.svg?branch=master" alt="Coverage Status"></a>
+<a href="https://www.npmjs.com/package/node-nlp"><img src="https://img.shields.io/npm/v/node-nlp.svg?style=flat" alt="NPM version"></a>
+<a href="https://www.npmjs.com/package/node-nlp"><img src="https://img.shields.io/npm/dm/node-nlp.svg?style=flat" alt="NPM downloads"></a></p>
+<p>&quot;NLP.js&quot; is a general natural language utilities for nodejs. Currently supporting:</p>
+<ul>
+<li>Guess the language of a phrase</li>
+<li>Fast levenshtein distance of two strings</li>
+<li>Search the best substring of a string with less levenshtein distance to a given pattern.</li>
+<li>Get stemmers and tokenizers for several languages.</li>
+<li>Sentiment Analysis for phrases (with negation support).</li>
+<li>Named Entity Recognition and management, multilanguage, and accepting similar strings, so the introduced text does not need to be exact.</li>
+<li>Natural Language Processing Classifier, to classify utterance into intents.</li>
+<li>Natural Language Generation Manager, so from intents and conditions it can generate an answer.</li>
+<li>NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.</li>
+<li>27 languages supported: Arabic (ar), Armenian (hy), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), German (de), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Norwegian (no), Portuguese (pt), Romanian (ro), Russian (ru), Slovene (sl), Spanish (es), Swedish (sv), Tamil (ta), Turkish (tr)</li>
+</ul>
+<div align="center">
+<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
+</div>
+
+<h3>TABLE OF CONTENTS</h3><!--ts-->
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#example-of-use">Example of use</a></li>
+<li><a href="docs/benchmarking.md">Benchmarking</a></li>
+<li><a href="docs/language-support.md">Language Support</a><ul>
+<li><a href="docs/language-support.md#classification">Classification</a></li>
+<li><a href="docs/language-support.md#sentiment-analysis">Sentiment Analysis</a></li>
+<li><a href="docs/language-support.md#builtin-entity-extraction">Builtin Entity Extraction</a></li>
+</ul>
+</li>
+<li><a href="docs/language-guesser.md">Language Guesser</a></li>
+<li><a href="docs/similar-search.md">Similar Search</a></li>
+<li><a href="docs/nlp-classifier.md">NLP Classifier</a></li>
+<li><a href="docs/ner-manager.md">NER Manager</a><ul>
+<li><a href="docs/ner-manager.md#enum-named-entities">Enum Named Entities</a></li>
+<li><a href="docs/ner-manager.md#regular-expression-named-entities">Regular Expression Named Entities</a></li>
+<li><a href="docs/ner-manager.md#trim-named-entities">Trim Named Entities</a></li>
+</ul>
+</li>
+<li><a href="docs/builtin-entity-extraction.md">Builtin Entity Extraction</a><ul>
+<li><a href="docs/builtin-entity-extraction.md#email-extraction">Email Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#ip-extraction">IP Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#hashtag-extraction">Hashtag Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#phone-number-extraction">Phone Number Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#url-extraction">URL Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#number-extraction">Number Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#ordinal-extraction">Ordinal Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#percentage-extraction">Percentage Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#age-extraction">Age Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#currency-extraction">Currency Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#date-extraction">Date Extraction</a></li>
+<li><a href="docs/builtin-entity-extraction.md#duration-extraction">Duration Extraction</a></li>
+</ul>
+</li>
+<li><a href="docs/sentiment-analysis.md">Sentiment Analysis</a></li>
+<li><a href="docs/nlp-manager.md">NLP Manager</a><ul>
+<li><a href="docs/nlp-manager.md#loadsave">Load/Save</a></li>
+<li><a href="docs/nlp-manager.md#importexport">Import/Export</a></li>
+<li><a href="docs/nlp-manager.md#context">Context</a></li>
+</ul>
+</li>
+<li><a href="docs/slot-filling.md">Slot Filling</a></li>
+<li><a href="docs/loading-from-excel.md">Loading from Excel</a></li>
+<li><a href="docs/microsoft-bot-framework.md">Microsoft Bot Framework</a><ul>
+<li><a href="docs/microsoft-bot-framework.md#introduction">Introduction</a></li>
+<li><a href="docs/microsoft-bot-framework.md#example-of-use">Example of use</a></li>
+<li><a href="docs/microsoft-bot-framework.md#recognizer-and-slot-filling">Recognizer and Slot filling</a></li>
+</ul>
+</li>
+<li><a href="#contributing">Contributing</a></li>
+<li><a href="#code-of-conduct">Code of Conduct</a></li>
+<li><a href="#who-is-behind-it">Who is behind it</a></li>
+<li><a href="#license.md">License</a><!--te-->
+</li>
+</ul>
+<h2>Installation</h2><p>If you're looking to use NLP.js in your node application, you can install via NPM like so:</p>
+<pre class="prettyprint source lang-bash"><code>    npm install node-nlp</code></pre><h2>Example of use</h2><p>You can see a great example of use at the folder <a href="https://github.com/axa-group/nlp.js/tree/master/examples/console-bot"><code>/examples/console-bot</code></a>. This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.</p>
+<p>You can start to build your NLP from scratch with few lines:</p>
+<pre class="prettyprint source lang-javascript"><code>const { NlpManager } = require('node-nlp');
+
+const manager = new NlpManager({ languages: ['en'] });
+// Adds the utterances and intents for the NLP
+manager.addDocument('en', 'goodbye for now', 'greetings.bye');
+manager.addDocument('en', 'bye bye take care', 'greetings.bye');
+manager.addDocument('en', 'okay see you later', 'greetings.bye');
+manager.addDocument('en', 'bye for now', 'greetings.bye');
+manager.addDocument('en', 'i must go', 'greetings.bye');
+manager.addDocument('en', 'hello', 'greetings.hello');
+manager.addDocument('en', 'hi', 'greetings.hello');
+manager.addDocument('en', 'howdy', 'greetings.hello');
+
+// Train also the NLG
+manager.addAnswer('en', 'greetings.bye', 'Till next time');
+manager.addAnswer('en', 'greetings.bye', 'see you soon!');
+manager.addAnswer('en', 'greetings.hello', 'Hey there!');
+manager.addAnswer('en', 'greetings.hello', 'Greetings!');
+
+// Train and save the model.
+await manager.train();
+manager.save();
+
+manager.process('en', 'I have to go').then(console.log);</code></pre><p>This will show this result in console:</p>
+<pre class="prettyprint source lang-bash"><code>{ locale: 'en',
+  localeIso2: 'en',
+  language: 'English',
+  utterance: 'I have to go',
+  classification:
+   [ { label: 'greetings.bye', value: 0.9791293407583773 },
+     { label: 'greetings.hello', value: 0.020870659241622735 } ],
+  intent: 'greetings.bye',
+  score: 0.9791293407583773,
+  entities: [],
+  sentiment:
+   { score: 0.5,
+     comparative: 0.125,
+     vote: 'positive',
+     numWords: 4,
+     numHits: 1,
+     type: 'senticon',
+     language: 'en' },
+  answer: 'Till next time' }</code></pre><h2>Contributing</h2><p>You can read the guide of how to contribute at <a href="https://github.com/axa-group/nlp.js/blob/master/CONTRIBUTING.md">Contributing</a>.</p>
+<h2>Code of Conduct</h2><p>You can read the Code of Conduct at <a href="https://github.com/axa-group/nlp.js/blob/master/CODE_OF_CONDUCT.md">Code of Conduct</a>.</p>
+<h2>Who is behind it?</h2><p>This project is developed by AXA Shared Services Spain S.A.</p>
+<p>If you need to contact us, you can do it at the email <a href="mailto:jesus.seijas@axa.com">jesus.seijas@axa.com</a></p>
+<h2>License</h2><p>Copyright (c) AXA Shared Services Spain S.A.</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BinaryNeuralNetworkClassifier.html">BinaryNeuralNetworkClassifier</a></li><li><a href="Classifier.html">Classifier</a></li><li><a href="ConversationContext.html">ConversationContext</a></li><li><a href="DutchStemmer.html">DutchStemmer</a></li><li><a href="EnglishStemmer.html">EnglishStemmer</a></li><li><a href="EnumNamedEntity.html">EnumNamedEntity</a></li><li><a href="Evaluator.html">Evaluator</a></li><li><a href="HungarianStemmer.html">HungarianStemmer</a></li><li><a href="ItalianStemmer.html">ItalianStemmer</a></li><li><a href="Language.html">Language</a></li><li><a href="LogisticRegressionClassifier.html">LogisticRegressionClassifier</a></li><li><a href="Matrix.html">Matrix</a></li><li><a href="MemoryConversationContext.html">MemoryConversationContext</a></li><li><a href="NamedEntity.html">NamedEntity</a></li><li><a href="NerManager.html">NerManager</a></li><li><a href="NlgManager.html">NlgManager</a></li><li><a href="NlpClassifier.html">NlpClassifier</a></li><li><a href="NlpManager.html">NlpManager</a></li><li><a href="NorwegianStemmer.html">NorwegianStemmer</a></li><li><a href="PortugueseStemmer.html">PortugueseStemmer</a></li><li><a href="Recognizer.html">Recognizer</a></li><li><a href="RegexNamedEntity.html">RegexNamedEntity</a></li><li><a href="RomanianStemmer.html">RomanianStemmer</a></li><li><a href="RussianStemmer.html">RussianStemmer</a></li><li><a href="SentimentAnalyzer.html">SentimentAnalyzer</a></li><li><a href="SentimentManager.html">SentimentManager</a></li><li><a href="SimilarSearch.html">SimilarSearch</a></li><li><a href="SlotManager.html">SlotManager</a></li><li><a href="StemmerJa.html">StemmerJa</a></li><li><a href="SwedishStemmer.html">SwedishStemmer</a></li><li><a href="Tokenizer.html">Tokenizer</a></li><li><a href="TrimNamedEntity.html">TrimNamedEntity</a></li><li><a href="TurkishStemmer.html">TurkishStemmer</a></li><li><a href="Vector.html">Vector</a></li><li><a href="XTable.html">XTable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#endsinArr">endsinArr</a></li><li><a href="global.html#prelude">prelude</a></li><li><a href="global.html#regions">regions</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#stopwords">stopwords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 13 2018 19:14:51 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

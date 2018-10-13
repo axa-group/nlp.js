@@ -1,0 +1,3163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: NerManager</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: NerManager</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>NerManager<span class="signature">(settings)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Class for a named entities manager, that can be recognized inside
+a string.
+Basically, a named entity is an enumerator that has a set of options,
+and each option can have several words to refer to this option.
+Example:
+We have the entity "Superhero". Inside "Superhero" we have different
+options:
+- Superman: Superman
+- Spiderman: Spiderman, Spider-man
+- Wolverine: Wolverine, Logan, Patch, Weapon X</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="NerManager"><span class="type-signature"></span>new NerManager<span class="signature">(settings)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Constructor of the class.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Settings for initializing this instance.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addNamedEntity"><span class="type-signature"></span>addNamedEntity<span class="signature">(entityName, type)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Adds a new entity to be managed by the NER. If the entity already exists,
+then returns the already existing one.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entityName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the entity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Type of the entity.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line162">line 162</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Already existing entity or the new one created.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addNamedEntityText"><span class="type-signature"></span>addNamedEntityText<span class="signature">(entityName, optionName, srcLanguages, srcTexts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Add texts to the given languages of an option of an entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entityName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the entity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>optionName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the option.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcLanguages</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Language or languages for adding the texts.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcTexts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Text or texts to be added.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line199">line 199</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="calculateResolution"><span class="type-signature"></span>calculateResolution<span class="signature">(entity, locale)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Given an entity and a locale, calculate the resolution.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Entity instance with resolution.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>locale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Entity language locale.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line241">line 241</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Calculated resolution for the entity.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="findBuiltinEntities"><span class="type-signature"></span>findBuiltinEntities<span class="signature">(utterance, language)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Extract built-in entities for the utterance given the language.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>utterance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Input utterance.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Language locale.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line422">line 422</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Extracted entities as edges array.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="findEntities"><span class="type-signature">(async) </span>findEntities<span class="signature">(utterance, locale, whitelist)</span><span class="type-signature"> &rarr; {Array.&lt;Promise.Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Find entities inside an utterance.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>utterance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Utterance for searching entities.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>locale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Locale of the language.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>whitelist</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Whitelist of entity names.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line475">line 475</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Promise edges of entities found.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Promise.Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="generateEntityUtterance"><span class="type-signature">(async) </span>generateEntityUtterance<span class="signature">(utterance, locale)</span><span class="type-signature"> &rarr; {Promise.String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Find entities on utterance, and replace them by the entity name.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>utterance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Utterance to be processed.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>locale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Locale of the utterance.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line503">line 503</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Promise utterance with entities replaced by entity name.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getEntitiesFromUtterance"><span class="type-signature"></span>getEntitiesFromUtterance<span class="signature">(utterance)</span><span class="type-signature"> &rarr; {Array.&lt;String>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Given an utterance, search for %entity% format inside it, in order to
+return the list of entities referenced by the utterance.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>utterance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Utterance for searching.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line224">line 224</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    List of entities.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;String></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getNamedEntity"><span class="type-signature"></span>getNamedEntity<span class="signature">(entityName, force)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get an entity given its name. If the entity does not exists and the
+force flag is on, then creates the entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entityName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Name of the entity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>force</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Flag to create the entity when it does not exists.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line178">line 178</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The entity, or undefined if not found and not forced.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="inverseTranslate"><span class="type-signature"></span>inverseTranslate<span class="signature">(str, locale)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Given a resolution unit in default language, translate into source language.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Resolution unit in default language.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>locale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Source language locale.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line127">line 127</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Translation or default resolution unit.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="load"><span class="type-signature"></span>load<span class="signature">(obj)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Load this instance from an object.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>obj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Object to load from.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line588">line 588</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="newNamedEntity"><span class="type-signature"></span>newNamedEntity<span class="signature">(entityName, type)</span><span class="type-signature"> &rarr; {<a href="NamedEntity.html">NamedEntity</a>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Creates a new instance of a named entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entityName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">Name of the entity</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    enum
+                
+                </td>
+            
+
+            <td class="description last">Type of the entity</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line143">line 143</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    New named entity.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="NamedEntity.html">NamedEntity</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="prereduceEdges"><span class="type-signature"></span>prereduceEdges<span class="signature">(edges)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Execute a pre-reduction of edges before running the final reduce edges.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>edges</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of edges.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line386">line 386</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Array of reduced edges.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="removeNamedEntity"><span class="type-signature"></span>removeNamedEntity<span class="signature">(entityName)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Removes an entity from the NER.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entityName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the entity.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line188">line 188</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="removeNamedEntityText"><span class="type-signature"></span>removeNamedEntityText<span class="signature">(entityName, optionName, srcLanguages, srcTexts)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Remove texts for the given languages of the option of an entity.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entityName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the entity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>optionName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Name of the option.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcLanguages</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Languages affected.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>srcTexts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Texts to be removed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line211">line 211</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="save"><span class="type-signature"></span>save<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Returns a clone object representing this, for saving.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line526">line 526</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Clone object.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Object</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="splitEdges"><span class="type-signature"></span>splitEdges<span class="signature">(edges)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Given an array of edges, detect the trim edges and find overlaps with
+non trim edges. When an overlap is detected, reduce the trim edged to
+fit with the other edge.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>edges</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Edges to be splited</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line332">line 332</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Splited edges.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="translate"><span class="type-signature"></span>translate<span class="signature">(str, locale)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Given a resolution unit in source language, translate into default language.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Resolution unit in source language.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>locale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Source language locale.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_ner-manager.js.html">ner/ner-manager.js</a>, <a href="ner_ner-manager.js.html#line113">line 113</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Translation or source resolution unit.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BinaryNeuralNetworkClassifier.html">BinaryNeuralNetworkClassifier</a></li><li><a href="Classifier.html">Classifier</a></li><li><a href="ConversationContext.html">ConversationContext</a></li><li><a href="DutchStemmer.html">DutchStemmer</a></li><li><a href="EnglishStemmer.html">EnglishStemmer</a></li><li><a href="EnumNamedEntity.html">EnumNamedEntity</a></li><li><a href="Evaluator.html">Evaluator</a></li><li><a href="HungarianStemmer.html">HungarianStemmer</a></li><li><a href="ItalianStemmer.html">ItalianStemmer</a></li><li><a href="Language.html">Language</a></li><li><a href="LogisticRegressionClassifier.html">LogisticRegressionClassifier</a></li><li><a href="Matrix.html">Matrix</a></li><li><a href="MemoryConversationContext.html">MemoryConversationContext</a></li><li><a href="NamedEntity.html">NamedEntity</a></li><li><a href="NerManager.html">NerManager</a></li><li><a href="NlgManager.html">NlgManager</a></li><li><a href="NlpClassifier.html">NlpClassifier</a></li><li><a href="NlpManager.html">NlpManager</a></li><li><a href="NorwegianStemmer.html">NorwegianStemmer</a></li><li><a href="PortugueseStemmer.html">PortugueseStemmer</a></li><li><a href="Recognizer.html">Recognizer</a></li><li><a href="RegexNamedEntity.html">RegexNamedEntity</a></li><li><a href="RomanianStemmer.html">RomanianStemmer</a></li><li><a href="RussianStemmer.html">RussianStemmer</a></li><li><a href="SentimentAnalyzer.html">SentimentAnalyzer</a></li><li><a href="SentimentManager.html">SentimentManager</a></li><li><a href="SimilarSearch.html">SimilarSearch</a></li><li><a href="SlotManager.html">SlotManager</a></li><li><a href="StemmerJa.html">StemmerJa</a></li><li><a href="SwedishStemmer.html">SwedishStemmer</a></li><li><a href="Tokenizer.html">Tokenizer</a></li><li><a href="TrimNamedEntity.html">TrimNamedEntity</a></li><li><a href="TurkishStemmer.html">TurkishStemmer</a></li><li><a href="Vector.html">Vector</a></li><li><a href="XTable.html">XTable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#endsinArr">endsinArr</a></li><li><a href="global.html#prelude">prelude</a></li><li><a href="global.html#regions">regions</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#stopwords">stopwords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 13 2018 19:14:51 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

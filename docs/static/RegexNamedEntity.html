@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: RegexNamedEntity</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: RegexNamedEntity</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>RegexNamedEntity<span class="signature">(settings)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description">Class for the Enumerated Named Entity.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="RegexNamedEntity"><span class="type-signature"></span>new RegexNamedEntity<span class="signature">(settings)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Constructor of the class.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Settings for the instance.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_regex-named-entity.js.html">ner/regex-named-entity.js</a>, <a href="ner_regex-named-entity.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".regex2str"><span class="type-signature">(static) </span>regex2str<span class="signature">(regex)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Transforms a regular expression to a string.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>regex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">RegExp</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Regular expression.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_regex-named-entity.js.html">ner/regex-named-entity.js</a>, <a href="ner_regex-named-entity.js.html#line121">line 121</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    String representing the regular expression.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id=".str2regex"><span class="type-signature">(static) </span>str2regex<span class="signature">(str)</span><span class="type-signature"> &rarr; {RegExp}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Transforms a string to a regular expression.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>str</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">String to be converted.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_regex-named-entity.js.html">ner/regex-named-entity.js</a>, <a href="ner_regex-named-entity.js.html#line111">line 111</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Regular expression.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">RegExp</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addRegex"><span class="type-signature"></span>addRegex<span class="signature">(srcLanguages, regex)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Assign a regular expression for the given languages
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>srcLanguages</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Target languages</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>regex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">RegExp</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Regular expression.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_regex-named-entity.js.html">ner/regex-named-entity.js</a>, <a href="ner_regex-named-entity.js.html#line44">line 44</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addStrRegex"><span class="type-signature"></span>addStrRegex<span class="signature">(srcLanguages, regex)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Adds a regular expression from a string.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>srcLanguages</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Array of languages.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>regex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Regular expression as string.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_regex-named-entity.js.html">ner/regex-named-entity.js</a>, <a href="ner_regex-named-entity.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="extract"><span class="type-signature"></span>extract<span class="signature">(utterance, language)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Extract edges of an utterance.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>utterance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Input utterance.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>language</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Language of the utterance.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_regex-named-entity.js.html">ner/regex-named-entity.js</a>, <a href="ner_regex-named-entity.js.html#line97">line 97</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Edges extracted.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getMatchs"><span class="type-signature"></span>getMatchs<span class="signature">(utterance, regex)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get the matchs of the regular expression over the utterance.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>utterance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Input utterance.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>regex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">RegExp</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Regular expression.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ner_regex-named-entity.js.html">ner/regex-named-entity.js</a>, <a href="ner_regex-named-entity.js.html#line69">line 69</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Edges found.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;Object></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BinaryNeuralNetworkClassifier.html">BinaryNeuralNetworkClassifier</a></li><li><a href="Classifier.html">Classifier</a></li><li><a href="ConversationContext.html">ConversationContext</a></li><li><a href="DutchStemmer.html">DutchStemmer</a></li><li><a href="EnglishStemmer.html">EnglishStemmer</a></li><li><a href="EnumNamedEntity.html">EnumNamedEntity</a></li><li><a href="Evaluator.html">Evaluator</a></li><li><a href="HungarianStemmer.html">HungarianStemmer</a></li><li><a href="ItalianStemmer.html">ItalianStemmer</a></li><li><a href="Language.html">Language</a></li><li><a href="LogisticRegressionClassifier.html">LogisticRegressionClassifier</a></li><li><a href="Matrix.html">Matrix</a></li><li><a href="MemoryConversationContext.html">MemoryConversationContext</a></li><li><a href="NamedEntity.html">NamedEntity</a></li><li><a href="NerManager.html">NerManager</a></li><li><a href="NlgManager.html">NlgManager</a></li><li><a href="NlpClassifier.html">NlpClassifier</a></li><li><a href="NlpManager.html">NlpManager</a></li><li><a href="NorwegianStemmer.html">NorwegianStemmer</a></li><li><a href="PortugueseStemmer.html">PortugueseStemmer</a></li><li><a href="Recognizer.html">Recognizer</a></li><li><a href="RegexNamedEntity.html">RegexNamedEntity</a></li><li><a href="RomanianStemmer.html">RomanianStemmer</a></li><li><a href="RussianStemmer.html">RussianStemmer</a></li><li><a href="SentimentAnalyzer.html">SentimentAnalyzer</a></li><li><a href="SentimentManager.html">SentimentManager</a></li><li><a href="SimilarSearch.html">SimilarSearch</a></li><li><a href="SlotManager.html">SlotManager</a></li><li><a href="StemmerJa.html">StemmerJa</a></li><li><a href="SwedishStemmer.html">SwedishStemmer</a></li><li><a href="Tokenizer.html">Tokenizer</a></li><li><a href="TrimNamedEntity.html">TrimNamedEntity</a></li><li><a href="TurkishStemmer.html">TurkishStemmer</a></li><li><a href="Vector.html">Vector</a></li><li><a href="XTable.html">XTable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#endsinArr">endsinArr</a></li><li><a href="global.html#prelude">prelude</a></li><li><a href="global.html#regions">regions</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#stopwords">stopwords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 13 2018 19:14:51 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

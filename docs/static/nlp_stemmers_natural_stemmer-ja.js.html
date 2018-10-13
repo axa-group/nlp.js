@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: nlp/stemmers/natural/stemmer-ja.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: nlp/stemmers/natural/stemmer-ja.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ Copyright (c) 2012, Guillaume Marty
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ */
+
+/**
+ * A very basic stemmer that performs the following steps:
+ * * Stem katakana.
+ * Inspired by:
+ * http://svn.apache.org/repos/asf/lucene/dev/trunk/lucene/analysis/kuromoji/src/java/org/apache/lucene/analysis/ja/JapaneseKatakanaStemFilter.java
+ *
+ * This script assumes input is normalized using normalizer_ja().
+ *
+ * \@todo Use .bind() in StemmerJa.prototype.attach().
+ */
+
+var stopwords = require('../../stopwords/stopwords_ja.json');
+var Tokenizer = require('../../tokenizers/tokenizer-ja');
+
+/**
+ * @constructor
+ */
+var StemmerJa = function() {
+};
+
+
+/**
+ * Tokenize and stem a text.
+ * Stop words are excluded except if the second argument is true.
+ *
+ * @param {string} text
+ * @param {boolean} keepStops Whether to keep stop words from the output or not.
+ * @return {Array.&lt;string>}
+ */
+StemmerJa.prototype.tokenizeAndStem = function(text, keepStops) {
+  var self = this;
+  var stemmedTokens = [];
+  var tokens = new Tokenizer().tokenize(text);
+
+  // This is probably faster than an if at each iteration.
+  if (keepStops) {
+    tokens.forEach(function(token) {
+      var resultToken = token.toLowerCase();
+      resultToken = self.stem(resultToken);
+      stemmedTokens.push(resultToken);
+    });
+  } else {
+    tokens.forEach(function(token) {
+      if (stopwords.indexOf(token) == -1) {
+        var resultToken = token.toLowerCase();
+        resultToken = self.stem(resultToken);
+        stemmedTokens.push(resultToken);
+      }
+    });
+  }
+
+  return stemmedTokens;
+};
+
+
+/**
+ * Stem a term.
+ *
+ * @param {string} token
+ * @return {string}
+ */
+StemmerJa.prototype.stem = function(token) {
+  token = this.stemKatakana(token);
+
+  return token;
+};
+
+
+/**
+ * Remove the final prolonged sound mark on katakana if length is superior to
+ * a threshold.
+ *
+ * @param {string} token A katakana string to stem.
+ * @return {string} A katakana string stemmed.
+ */
+StemmerJa.prototype.stemKatakana = function(token) {
+  var HIRAGANA_KATAKANA_PROLONGED_SOUND_MARK = 'ー';
+  var DEFAULT_MINIMUM_LENGTH = 4;
+
+  if (token.length >= DEFAULT_MINIMUM_LENGTH
+      &amp;&amp; token.slice(-1) === HIRAGANA_KATAKANA_PROLONGED_SOUND_MARK
+      &amp;&amp; this.isKatakana(token)) {
+    token = token.slice(0, token.length - 1);
+  }
+  return token;
+};
+
+
+/**
+ * Is a string made of fullwidth katakana only?
+ * This implementation is the fastest I know:
+ * http://jsperf.com/string-contain-katakana-only/2
+ *
+ * @param {string} str A string.
+ * @return {boolean} True if the string has katakana only.
+ */
+StemmerJa.prototype.isKatakana = function(str) {
+  return !!str.match(/^[゠-ヿ]+$/);
+};
+
+// Expose an attach function that will patch String with new methods.
+StemmerJa.prototype.attach = function() {
+  var self = this;
+
+  String.prototype.stem = function() {
+    return self.stem(this);
+  };
+
+  String.prototype.tokenizeAndStem = function(keepStops) {
+    return self.tokenizeAndStem(this, keepStops);
+  };
+};
+
+module.exports = StemmerJa;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BinaryNeuralNetworkClassifier.html">BinaryNeuralNetworkClassifier</a></li><li><a href="Classifier.html">Classifier</a></li><li><a href="ConversationContext.html">ConversationContext</a></li><li><a href="DutchStemmer.html">DutchStemmer</a></li><li><a href="EnglishStemmer.html">EnglishStemmer</a></li><li><a href="EnumNamedEntity.html">EnumNamedEntity</a></li><li><a href="Evaluator.html">Evaluator</a></li><li><a href="HungarianStemmer.html">HungarianStemmer</a></li><li><a href="ItalianStemmer.html">ItalianStemmer</a></li><li><a href="Language.html">Language</a></li><li><a href="LogisticRegressionClassifier.html">LogisticRegressionClassifier</a></li><li><a href="Matrix.html">Matrix</a></li><li><a href="MemoryConversationContext.html">MemoryConversationContext</a></li><li><a href="NamedEntity.html">NamedEntity</a></li><li><a href="NerManager.html">NerManager</a></li><li><a href="NlgManager.html">NlgManager</a></li><li><a href="NlpClassifier.html">NlpClassifier</a></li><li><a href="NlpManager.html">NlpManager</a></li><li><a href="NorwegianStemmer.html">NorwegianStemmer</a></li><li><a href="PortugueseStemmer.html">PortugueseStemmer</a></li><li><a href="Recognizer.html">Recognizer</a></li><li><a href="RegexNamedEntity.html">RegexNamedEntity</a></li><li><a href="RomanianStemmer.html">RomanianStemmer</a></li><li><a href="RussianStemmer.html">RussianStemmer</a></li><li><a href="SentimentAnalyzer.html">SentimentAnalyzer</a></li><li><a href="SentimentManager.html">SentimentManager</a></li><li><a href="SimilarSearch.html">SimilarSearch</a></li><li><a href="SlotManager.html">SlotManager</a></li><li><a href="StemmerJa.html">StemmerJa</a></li><li><a href="SwedishStemmer.html">SwedishStemmer</a></li><li><a href="Tokenizer.html">Tokenizer</a></li><li><a href="TrimNamedEntity.html">TrimNamedEntity</a></li><li><a href="TurkishStemmer.html">TurkishStemmer</a></li><li><a href="Vector.html">Vector</a></li><li><a href="XTable.html">XTable</a></li></ul><h3>Global</h3><ul><li><a href="global.html#endsinArr">endsinArr</a></li><li><a href="global.html#prelude">prelude</a></li><li><a href="global.html#regions">regions</a></li><li><a href="global.html#stem">stem</a></li><li><a href="global.html#stopwords">stopwords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 13 2018 19:14:51 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
