@@ -41,6 +41,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "husky": "^1.1.0",
     "jest": "^23.5.0",
+    "jsdoc": "^3.5.5",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3"
   },
