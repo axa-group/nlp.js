@@ -229,10 +229,8 @@ describe('Slot Manager', () => {
         },
       };
       manager.load({
-        intents: {
-          intent: {
-            entity: src,
-          },
+        intent: {
+          entity: src,
         },
       });
       const slot = manager.getSlot('intent', 'entity');
