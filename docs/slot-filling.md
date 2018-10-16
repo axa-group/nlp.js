@@ -33,7 +33,7 @@ async function main() {
 
 
   manager.addDocument('en', 'I want to travel from %fromCity% to %toCity% %date%', 'travel');
-  manager.train();
+  await manager.train();
   const result = await manager.process('en', 'I want to travel to Madrid tomorrow', {});
   console.log(JSON.stringify(result, null, 2));
 }
