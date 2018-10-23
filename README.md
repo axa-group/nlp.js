@@ -109,10 +109,11 @@ manager.addAnswer('en', 'greetings.hello', 'Hey there!');
 manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 
 // Train and save the model.
-await manager.train();
-manager.save();
-
-manager.process('en', 'I have to go').then(console.log);
+(async() => {
+    await manager.train();
+    manager.save();
+    manager.process('en', 'I have to go').then(console.log);
+})();
 ```
 
 This will show this result in console:
