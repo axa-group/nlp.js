@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlpjs.png" width="150" height="auto"/>
+<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlplogo.gif" width="925" height="auto"/>
 </div>
 
 # NLP.js
