@@ -26,7 +26,7 @@
   },
   {
     "alpha2": "ar",
-    "alpha3": "ara",
+    "alpha3": "arb",
     "name": "Arabic"
   },
   {
@@ -911,7 +911,7 @@
   },
   {
     "alpha2": "zh",
-    "alpha3": "zho",
+    "alpha3": "cmn",
     "name": "Chinese"
   },
   {
