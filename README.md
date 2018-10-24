@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlpjs.png" width="150" height="auto"/>
+<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlplogo.gif" width="925" height="auto"/>
 </div>
 
 # NLP.js
@@ -109,10 +109,11 @@ manager.addAnswer('en', 'greetings.hello', 'Hey there!');
 manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 
 // Train and save the model.
-await manager.train();
-manager.save();
-
-manager.process('en', 'I have to go').then(console.log);
+(async() => {
+    await manager.train();
+    manager.save();
+    manager.process('en', 'I have to go').then(console.log);
+})();
 ```
 
 This will show this result in console:
