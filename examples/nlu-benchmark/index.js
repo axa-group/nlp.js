@@ -51,6 +51,8 @@ async function scoreCorpus(corpus) {
   }
 
   await manager.train();
+  manager.save('./model.nlp');
+
   let total = 0;
   let correct = 0;
   const analysis = {};
