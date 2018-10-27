@@ -112,7 +112,8 @@ manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 (async() => {
     await manager.train();
     manager.save();
-    manager.process('en', 'I have to go').then(console.log);
+    const response = await manager.process('en', 'I have to go');
+    console.log(response);
 })();
 ```
 
