@@ -12,5 +12,10 @@
   "dependencies": {
     "botbuilder": "^3.15.0",
     "express": "^4.16.3"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "botbuilder"
+    ]
   }
 }
