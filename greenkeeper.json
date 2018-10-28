@@ -1,0 +1,10 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "examples/microsoft-bot/package.json",
+        "package.json"
+      ]
+    }
+  }
+}
