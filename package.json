@@ -31,11 +31,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "commitizen": "^2.10.1",
+    "commitizen": "^3.0.4",
     "coveralls": "^3.0.2",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^4.10.0",
-    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint": "^5.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^21.22.0",
@@ -53,9 +53,9 @@
     "esprima": "^4.0.0",
     "franc": "^4.0.0",
     "handlebars": "^4.0.12",
-    "microjob": "^0.2.1",
+    "microjob": "^0.3.0",
     "novel-segment": "^2.0.42",
-    "xlsx": "^0.13.5"
+    "xlsx": "^0.14.0"
   },
   "keywords": [
     "natural language processing",
