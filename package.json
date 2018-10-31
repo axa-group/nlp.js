@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "2.1.2",
+  "version": "2.1.7",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "main": "lib/index.js",
   "scripts": {
@@ -43,7 +43,7 @@
     "husky": "^1.1.0",
     "jest": "^23.5.0",
     "jsdoc": "^3.5.5",
-    "lint-staged": "^7.3.0",
+    "lint-staged": "^8.0.0",
     "prettier": "^1.14.3"
   },
   "dependencies": {
