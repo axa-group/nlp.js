@@ -44,6 +44,7 @@
     "jest": "^23.5.0",
     "jsdoc": "^3.5.5",
     "lint-staged": "^8.0.0",
+    "merge": "^1.2.1",
     "prettier": "^1.14.3"
   },
   "dependencies": {
