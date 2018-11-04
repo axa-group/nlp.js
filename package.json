@@ -49,7 +49,7 @@
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "1.1.3",
-    "brain.js": "^1.4.2",
+    "brain.js": "^1.4.7",
     "escodegen": "^1.10.0",
     "esprima": "^4.0.0",
     "franc": "^4.0.0",
