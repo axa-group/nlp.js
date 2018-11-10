@@ -38,7 +38,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^21.22.0",
+    "eslint-plugin-jest": "^22.0.0",
     "eslint-plugin-prettier": "^3.0.0",
     "husky": "^1.1.0",
     "jest": "^23.5.0",
