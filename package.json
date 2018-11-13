@@ -54,7 +54,7 @@
     "esprima": "^4.0.0",
     "franc": "^4.0.0",
     "handlebars": "^4.0.12",
-    "microjob": "^0.3.0",
+    "microjob": "^0.4.0",
     "novel-segment": "^2.0.42",
     "xlsx": "^0.14.0"
   },
