@@ -37,15 +37,15 @@ describe('NLP Manager', () => {
       expect(manager.slotManager).toBeDefined();
       expect(manager.languages).toEqual([]);
       expect(manager.classifiers).toEqual({});
-      expect(manager.settings.fullSearchWhenGuessed).toBeTruthy();
+      expect(manager.settings.fullSearchWhenGuessed).toBeFalsy();
       expect(manager.settings.useNlg).toBeTruthy();
     });
     test('You can set options when creating', () => {
       const manager = new NlpManager({
-        fullSearchWhenGuessed: false,
+        fullSearchWhenGuessed: true,
         useNlg: false,
       });
-      expect(manager.settings.fullSearchWhenGuessed).toBeFalsy();
+      expect(manager.settings.fullSearchWhenGuessed).toBeTruthy();
       expect(manager.settings.useNlg).toBeFalsy();
     });
 
@@ -124,7 +124,7 @@ describe('NLP Manager', () => {
       manager.addLanguage(['en']);
       expect(() =>
         manager.addDocument('es', 'Dónde están las llaves', 'keys')
-      ).toThrowError('Classifier not found for locale es');
+      ).toThrow('Classifier not found for locale es');
     });
     test('Should add the document to the classifier', () => {
       const manager = new NlpManager();
@@ -216,7 +216,7 @@ describe('NLP Manager', () => {
       manager.addLanguage(['en']);
       expect(() =>
         manager.removeDocument('es', 'Dónde están las llaves', 'keys')
-      ).toThrowError('Classifier not found for locale es');
+      ).toThrow('Classifier not found for locale es');
     });
     test('Should remove the document from the classifier', () => {
       const manager = new NlpManager();
@@ -966,7 +966,7 @@ describe('NLP Manager', () => {
 
       await manager.process('where are my keys');
 
-      expect(transformer).toBeCalled();
+      expect(transformer).toHaveBeenCalled();
       expect(transformer.mock.calls[0][0]).toMatchObject({
         locale: 'en',
         localeIso2: 'en',
@@ -1026,7 +1026,7 @@ describe('NLP Manager', () => {
     });
   });
 
-  describe('Import and export', async () => {
+  describe('Import and export', () => {
     test('Should import and export model as JSON string', async () => {
       let manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
@@ -1088,7 +1088,7 @@ describe('NLP Manager', () => {
     });
   });
 
-  describe('Save and load', async () => {
+  describe('Save and load', () => {
     test('Should allow to save, load and all should be working', async () => {
       let manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
