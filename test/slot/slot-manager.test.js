@@ -317,7 +317,7 @@ describe('Slot Manager', () => {
         intent: 'intent',
         utterance: 'hello',
         answer: 'answer',
-        srcAnswer: 'answer',
+        srcAnswer: 'srcAnswer',
         score: 1,
         entities: [],
       });
@@ -346,7 +346,7 @@ describe('Slot Manager', () => {
         intent: 'intent',
         utterance: 'hello',
         answer: 'answer',
-        srcAnswer: 'answer',
+        srcAnswer: 'srcAnswer',
         score: 1,
         entities: [
           {
@@ -418,7 +418,7 @@ describe('Slot Manager', () => {
           ],
           intent: 'intent',
           localeIso2: 'en',
-          srcAnswer: 'answer',
+          srcAnswer: 'srcAnswer',
         },
       });
     });
