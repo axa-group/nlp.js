@@ -29,6 +29,30 @@ async function scoreCorpus(corpus) {
         }
       }
     }
+  }
+  if (withEntities) {
+    Object.keys(entities).forEach(entity => {
+      Object.keys(entities[entity]).forEach(text => {
+        manager.addNamedEntityText(entity, text, 'en', text);
+      });
+    });
+  }
+
+  for (let i = 0; i < sentences.length; i += 1) {
+    const sentence = sentences[i];
+    let { text } = sentence;
+    if (fullEntities || sentence.training) {
+      if (sentence.entities && sentence.entities.length > 0) {
+        for (let j = 0; j < sentence.entities.length; j += 1) {
+          const entity = sentence.entities[j];
+          if (!entities[entity.entity]) {
+            entities[entity.entity] = {};
+          }
+          entities[entity.entity][entity.text] = 1;
+          text = text.replace(entity.text, `%${entity.entity}%`);
+        }
+      }
+    }
     if (sentence.training) {
       if (text !== sentence.text) {
         if (sentenceUtterance) {
@@ -41,13 +65,6 @@ async function scoreCorpus(corpus) {
         manager.addDocument('en', sentence.text, sentence.intent);
       }
     }
-  }
-  if (withEntities) {
-    Object.keys(entities).forEach(entity => {
-      Object.keys(entities[entity]).forEach(text => {
-        manager.addNamedEntityText(entity, text, 'en', text);
-      });
-    });
   }
 
   await manager.train();
