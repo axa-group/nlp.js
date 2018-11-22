@@ -72,13 +72,87 @@ describe('Get classifications', () => {
   });
   test('Should get correct clasifications for more complex examples', () => {
     const classifier = getClassifier3();
-    const classifications1 = classifier.getClassifications([1, 1, 0, 0, 0, 0, 1, 0, 0]);
+    const classifications1 = classifier.getClassifications([
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ]);
     expect(classifications1).toHaveLength(3);
     expect(classifications1[0].label).toEqual('one');
-    const classifications2 = classifier.getClassifications([0, 0, 1, 1, 1, 0, 0, 0, 1]);
+    const classifications2 = classifier.getClassifications([
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      1,
+    ]);
     expect(classifications2).toHaveLength(3);
     expect(classifications2[0].label).toEqual('two');
-    const classifications3 = classifier.getClassifications([1, 0, 0, 0, 1, 0, 0, 1, 1]);
+    const classifications3 = classifier.getClassifications([
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      1,
+    ]);
+    expect(classifications3).toHaveLength(3);
+    expect(classifications3[0].label).toEqual('three');
+  });
+  test('Smoothing can be changed', () => {
+    const classifier = getClassifier3();
+    classifier.setSmoothing(0.5);
+    expect(classifier.smoothing).toEqual(0.5);
+    const classifications1 = classifier.getClassifications([
+      1,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+    ]);
+    expect(classifications1).toHaveLength(3);
+    expect(classifications1[0].label).toEqual('one');
+    const classifications2 = classifier.getClassifications([
+      0,
+      0,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0,
+      1,
+    ]);
+    expect(classifications2).toHaveLength(3);
+    expect(classifications2[0].label).toEqual('two');
+    const classifications3 = classifier.getClassifications([
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      1,
+    ]);
     expect(classifications3).toHaveLength(3);
     expect(classifications3[0].label).toEqual('three');
   });

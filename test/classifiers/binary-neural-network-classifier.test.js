@@ -23,6 +23,45 @@
 
 const { BinaryNeuralNetworkClassifier } = require('../../lib');
 
+const corpus = [
+  {
+    input: { who: 1, are: 1, you: 1 },
+    output: 'who',
+  },
+  {
+    input: { say: 1, about: 1, you: 1 },
+    output: 'who',
+  },
+  {
+    input: { why: 1, are: 1, you: 1, here: 1 },
+    output: 'who',
+  },
+  {
+    input: { who: 1, developed: 1, you: 1 },
+    output: 'developer',
+  },
+  {
+    input: { who: 1, is: 1, your: 1, developer: 1 },
+    output: 'developer',
+  },
+  {
+    input: { who: 1, do: 1, you: 1, work: 1, for: 1 },
+    output: 'developer',
+  },
+  {
+    input: { when: 1, is: 1, your: 1, birthday: 1 },
+    output: 'birthday',
+  },
+  {
+    input: { when: 1, were: 1, you: 1, borned: 1 },
+    output: 'birthday',
+  },
+  {
+    input: { date: 1, of: 1, your: 1, birthday: 1 },
+    output: 'birthday',
+  },
+];
+
 describe('Binary Neural Network Classifier', () => {
   describe('Constructor', () => {
     test('Should create an instance', () => {
@@ -47,6 +86,52 @@ describe('Binary Neural Network Classifier', () => {
       };
       const classifier = new BinaryNeuralNetworkClassifier({ config });
       expect(classifier.settings.config).toEqual(config);
+    });
+  });
+
+  describe('Classifier', () => {
+    test('Should be able to classify', () => {
+      const classifier = new BinaryNeuralNetworkClassifier();
+      classifier.trainBatch(corpus);
+      const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
+      expect(actual).toHaveLength(3);
+      expect(actual[0].label).toEqual('who');
+    });
+    test('If no feature is provided, all labels should be 0.5', () => {
+      const classifier = new BinaryNeuralNetworkClassifier();
+      classifier.trainBatch(corpus);
+      const actual = classifier.classify({});
+      expect(actual).toHaveLength(3);
+      expect(actual[0].value).toEqual(0.5);
+      expect(actual[1].value).toEqual(0.5);
+      expect(actual[2].value).toEqual(0.5);
+    });
+    test('I can decide time per label', () => {
+      const classifier = new BinaryNeuralNetworkClassifier({
+        labelTimeout: 1000,
+      });
+      classifier.trainBatch(corpus);
+      const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
+      expect(actual).toHaveLength(3);
+      expect(actual[0].label).toEqual('who');
+    });
+    test('I can decide time per label and no global limit', () => {
+      const classifier = new BinaryNeuralNetworkClassifier({
+        labelTimeout: 1000,
+      });
+      classifier.totalTimeout = 0;
+      classifier.trainBatch(corpus);
+      const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
+      expect(actual).toHaveLength(3);
+      expect(actual[0].label).toEqual('who');
+    });
+    test('I can decide time limit to not exists', () => {
+      const classifier = new BinaryNeuralNetworkClassifier();
+      classifier.totalTimeout = 0;
+      classifier.trainBatch(corpus);
+      const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
+      expect(actual).toHaveLength(3);
+      expect(actual[0].label).toEqual('who');
     });
   });
 });

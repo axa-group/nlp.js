@@ -33,8 +33,26 @@ describe('Aggressive Tokenizer Nl', () => {
   describe('Tokenize', () => {
     test('It must tokenize simple sentence', () => {
       const tokenizer = new AggressiveTokenizerNl();
-      const expected = ['Wanneer', 'de', 'nacht', 'komt', 'en', 'de', 'aarde', 'donker', 'is'];
-      const actual = tokenizer.tokenize('Wanneer de nacht komt en de aarde donker is');
+      const expected = [
+        'Wanneer',
+        'de',
+        'nacht',
+        'komt',
+        'en',
+        'de',
+        'aarde',
+        'donker',
+        'is',
+      ];
+      const actual = tokenizer.tokenize(
+        'Wanneer de nacht komt en de aarde donker is'
+      );
+      expect(actual).toEqual(expected);
+    });
+    test('It must tokenize and normalize', () => {
+      const tokenizer = new AggressiveTokenizerNl();
+      const expected = ['Meh', 'meh'];
+      const actual = tokenizer.tokenize('Mèh méh', true);
       expect(actual).toEqual(expected);
     });
   });

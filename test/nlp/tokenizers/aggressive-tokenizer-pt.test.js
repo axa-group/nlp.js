@@ -33,8 +33,39 @@ describe('Aggressive Tokenizer Pt', () => {
   describe('Tokenize', () => {
     test('It must tokenize simple sentence', () => {
       const tokenizer = new AggressiveTokenizerPt();
-      const expected = ['Quando', 'a', 'noite', 'chega', 'e', 'a', 'terra', 'está', 'escura'];
-      const actual = tokenizer.tokenize('Quando a noite chega e a terra está escura');
+      const expected = [
+        'Quando',
+        'a',
+        'noite',
+        'chega',
+        'e',
+        'a',
+        'terra',
+        'está',
+        'escura',
+      ];
+      const actual = tokenizer.tokenize(
+        'Quando a noite chega e a terra está escura'
+      );
+      expect(actual).toEqual(expected);
+    });
+    test('It must tokenize and normalize', () => {
+      const tokenizer = new AggressiveTokenizerPt();
+      const expected = [
+        'Quando',
+        'a',
+        'noite',
+        'chega',
+        'e',
+        'a',
+        'terra',
+        'esta',
+        'escura',
+      ];
+      const actual = tokenizer.tokenize(
+        'Quando a noite chega e a terra está escura',
+        true
+      );
       expect(actual).toEqual(expected);
     });
   });

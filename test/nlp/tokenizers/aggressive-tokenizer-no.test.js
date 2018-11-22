@@ -33,8 +33,33 @@ describe('Aggressive Tokenizer No', () => {
   describe('Tokenize', () => {
     test('It must tokenize simple sentence', () => {
       const tokenizer = new AggressiveTokenizerNo();
-      const expected = ['Når', 'natten', 'kommer', 'og', 'jorden', 'er', 'mørk'];
+      const expected = [
+        'Når',
+        'natten',
+        'kommer',
+        'og',
+        'jorden',
+        'er',
+        'mørk',
+      ];
       const actual = tokenizer.tokenize('Når natten kommer og jorden er mørk');
+      expect(actual).toEqual(expected);
+    });
+    test('It must tokenize and normalize', () => {
+      const tokenizer = new AggressiveTokenizerNo();
+      const expected = [
+        'Nar',
+        'natten',
+        'kommer',
+        'og',
+        'jorden',
+        'er',
+        'mørk',
+      ];
+      const actual = tokenizer.tokenize(
+        'Når natten kommer og jorden er mørk',
+        true
+      );
       expect(actual).toEqual(expected);
     });
   });

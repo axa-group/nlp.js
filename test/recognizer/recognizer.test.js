@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Recognizer } = require('../../lib');
+const { Recognizer, NlpUtil } = require('../../lib');
 
 async function fill(recognizer) {
   recognizer.nlpManager.addLanguage('en');
@@ -96,14 +96,17 @@ describe('Recognizer', () => {
   });
   describe('Process', () => {
     test('It should process an utterance', async () => {
+      NlpUtil.useAlternative.en = false;
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       const process = await recognizer.process({}, 'en', 'What is your age?');
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
+      NlpUtil.useAlternative.en = true;
     });
     test('It should autodetect the language if not provided', async () => {
+      NlpUtil.useAlternative.en = false;
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       const process = await recognizer.process(
@@ -114,8 +117,10 @@ describe('Recognizer', () => {
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
+      NlpUtil.useAlternative.en = true;
     });
     test('It should create a new temporal context if not provided', async () => {
+      NlpUtil.useAlternative.en = false;
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       const process = await recognizer.process(
@@ -126,6 +131,7 @@ describe('Recognizer', () => {
       expect(process.intent).toEqual('agent.age');
       expect(process.language).toEqual('English');
       expect(process.score).toBeGreaterThan(0.95);
+      NlpUtil.useAlternative.en = true;
     });
     test('If the intent is None then the answer should not be calculated', async () => {
       const recognizer = new Recognizer();
@@ -141,6 +147,7 @@ describe('Recognizer', () => {
   });
   describe('Recognize Utterance', () => {
     test('It should process providing a locale in the model', done => {
+      NlpUtil.useAlternative.en = false;
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       recognizer.recognizeUtterance(
@@ -153,8 +160,10 @@ describe('Recognizer', () => {
           done();
         }
       );
+      NlpUtil.useAlternative.en = true;
     });
     test('It should process without providing a model', done => {
+      NlpUtil.useAlternative.en = false;
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       recognizer.recognizeUtterance(
@@ -167,10 +176,12 @@ describe('Recognizer', () => {
           done();
         }
       );
+      NlpUtil.useAlternative.en = true;
     });
   });
   describe('Recognize', () => {
     test('It should recognize the intent from the session', done => {
+      NlpUtil.useAlternative.en = false;
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
       const session = {
@@ -185,6 +196,7 @@ describe('Recognizer', () => {
         expect(result.score).toBeGreaterThan(0.95);
         done();
       });
+      NlpUtil.useAlternative.en = true;
     });
     test('It should use context if conversation id is provided', done => {
       const recognizer = new Recognizer();
