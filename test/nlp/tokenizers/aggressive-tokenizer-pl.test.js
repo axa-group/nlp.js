@@ -33,8 +33,24 @@ describe('Aggressive Tokenizer Pl', () => {
   describe('Tokenize', () => {
     test('It must tokenize simple sentence', () => {
       const tokenizer = new AggressiveTokenizerPl();
-      const expected = ['Kiedy', 'nadchodzi', 'noc', 'i', 'ziemia', 'jest', 'ciemna'];
-      const actual = tokenizer.tokenize('Kiedy nadchodzi noc i ziemia jest ciemna');
+      const expected = [
+        'Kiedy',
+        'nadchodzi',
+        'noc',
+        'i',
+        'ziemia',
+        'jest',
+        'ciemna',
+      ];
+      const actual = tokenizer.tokenize(
+        'Kiedy nadchodzi noc i ziemia jest ciemna'
+      );
+      expect(actual).toEqual(expected);
+    });
+    test('It must tokenize and normalize', () => {
+      const tokenizer = new AggressiveTokenizerPl();
+      const expected = ['Moge', 'prosic', 'Pania', 'do', 'tanca'];
+      const actual = tokenizer.tokenize('Mogę prosić Panią do tańca?', true);
       expect(actual).toEqual(expected);
     });
   });
