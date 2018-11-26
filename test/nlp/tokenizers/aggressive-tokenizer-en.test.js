@@ -21,36 +21,32 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { AggressiveTokenizerPl } = require('../../../lib/nlp/tokenizers');
+const { AggressiveTokenizerEn } = require('../../../lib/nlp/tokenizers');
 
-describe('Aggressive Tokenizer Pl', () => {
+describe('Aggressive Tokenizer En', () => {
   describe('Constructor', () => {
     test('It should create a new instance', () => {
-      const tokenizer = new AggressiveTokenizerPl();
+      const tokenizer = new AggressiveTokenizerEn();
       expect(tokenizer).toBeDefined();
     });
   });
   describe('Tokenize', () => {
     test('It must tokenize simple sentence', () => {
-      const tokenizer = new AggressiveTokenizerPl();
-      const expected = [
-        'Kiedy',
-        'nadchodzi',
-        'noc',
-        'i',
-        'ziemia',
-        'jest',
-        'ciemna',
-      ];
-      const actual = tokenizer.tokenize(
-        'Kiedy nadchodzi noc i ziemia jest ciemna'
-      );
+      const tokenizer = new AggressiveTokenizerEn();
+      const expected = ['This', 'sentence', 'should', 'be', 'tokenized'];
+      const actual = tokenizer.tokenize('This sentence should be tokenized');
       expect(actual).toEqual(expected);
     });
-    test('It must tokenize and normalize', () => {
-      const tokenizer = new AggressiveTokenizerPl();
-      const expected = ['Moge', 'prosic', 'Pania', 'do', 'tanca'];
-      const actual = tokenizer.tokenize('Mogę prosić Panią do tańca?', true);
+    test('It must replace contractions', () => {
+      const tokenizer = new AggressiveTokenizerEn();
+      const expected = ['I', 'am', 'you', 'are', 'is', 'not'];
+      const actual = tokenizer.tokenize(`I'm you're isn't`);
+      expect(actual).toEqual(expected);
+    });
+    test('It must replace slang contractions', () => {
+      const tokenizer = new AggressiveTokenizerEn();
+      const expected = ['I', 'am', 'can', 'not', 'going', 'to', 'want', 'to'];
+      const actual = tokenizer.tokenize(`I'm cannot gonna wanna`);
       expect(actual).toEqual(expected);
     });
   });
