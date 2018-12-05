@@ -23,7 +23,6 @@
 
 const {
   NlpClassifier,
-  LogisticRegressionClassifier,
   BinaryNeuralNetworkClassifier,
   NlpUtil,
 } = require('../../lib');
@@ -35,22 +34,12 @@ describe('NLP Classifier', () => {
       const classifier = new NlpClassifier();
       expect(classifier).toBeDefined();
     });
-    test('Should initializa the default properties', () => {
+    test('Should initialize the default properties', () => {
       const classifier = new NlpClassifier();
       expect(classifier.settings.language).toEqual('en');
-      expect(classifier.settings.classifier).toBeDefined();
       expect(classifier.settings.stemmer).toBeDefined();
       expect(classifier.docs).toEqual([]);
       expect(classifier.features).toEqual({});
-    });
-    test('I can provide my own classifier', () => {
-      const lrc = new LogisticRegressionClassifier();
-      const classifier = new NlpClassifier({ classifier: lrc });
-      expect(classifier.settings.classifier).toBe(lrc);
-    });
-    test('I can decide to not use neural classifier', () => {
-      const classifier = new NlpClassifier({ useNeural: false });
-      expect(classifier.settings.useNeural).toBeFalsy();
     });
     test('I can provide my own Binary Relevance classifier', () => {
       const binary = new BinaryNeuralNetworkClassifier();
@@ -89,19 +78,19 @@ describe('NLP Classifier', () => {
     });
     test('Should check that the utterance is an string', () => {
       const classifier = new NlpClassifier({ language: 'fr' });
-      expect(() => classifier.add(1, 'greet')).toThrowError(
+      expect(() => classifier.add(1, 'greet')).toThrow(
         'Utterance must be an string'
       );
-      expect(() => classifier.add(undefined, 'greet')).toThrowError(
+      expect(() => classifier.add(undefined, 'greet')).toThrow(
         'Utterance must be an string'
       );
     });
     test('Should check that the intent is an string', () => {
       const classifier = new NlpClassifier({ language: 'fr' });
-      expect(() => classifier.add('Bonjour', 1)).toThrowError(
+      expect(() => classifier.add('Bonjour', 1)).toThrow(
         'Intent must be an string'
       );
-      expect(() => classifier.add('Bonjour', undefined)).toThrowError(
+      expect(() => classifier.add('Bonjour', undefined)).toThrow(
         'Intent must be an string'
       );
     });
@@ -192,7 +181,7 @@ describe('NLP Classifier', () => {
       const classifier = new NlpClassifier({ language: 'fr' });
       expect(() => {
         classifier.remove([], 'meh');
-      }).toThrowError('Utterance must be an string');
+      }).toThrow('Utterance must be an string');
     });
   });
 
@@ -209,24 +198,7 @@ describe('NLP Classifier', () => {
       const classifications = classifier.getClassifications('où sont mes clés');
       expect(classifications).toHaveLength(2);
       expect(classifications[0].label).toEqual('keys');
-      expect(classifications[0].value).toBeGreaterThan(0.8);
-    });
-    test('It should work even without neural', async () => {
-      const classifier = new NlpClassifier({
-        language: 'fr',
-        useNeural: false,
-      });
-      classifier.add('Bonjour', 'greet');
-      classifier.add('bonne nuit', 'greet');
-      classifier.add('Bonsoir', 'greet');
-      classifier.add("J'ai perdu mes clés", 'keys');
-      classifier.add('Je ne trouve pas mes clés', 'keys');
-      classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
-      await classifier.train();
-      const classifications = classifier.getClassifications('où sont mes clés');
-      expect(classifications).toHaveLength(2);
-      expect(classifications[0].label).toEqual('keys');
-      expect(classifications[0].value).toBeGreaterThan(0.8);
+      expect(classifications[0].value).toBeGreaterThan(0.7);
     });
     it('Should work even for japanese', async () => {
       const classifier = new NlpClassifier({ language: 'ja' });
@@ -242,7 +214,7 @@ describe('NLP Classifier', () => {
       );
       expect(classifications).toHaveLength(2);
       expect(classifications[0].label).toEqual('keys');
-      expect(classifications[0].value).toBeGreaterThan(0.8);
+      expect(classifications[0].value).toBeGreaterThan(0.7);
     });
   });
 
@@ -260,7 +232,7 @@ describe('NLP Classifier', () => {
         'où sont mes clés'
       );
       expect(classification.label).toEqual('keys');
-      expect(classification.value).toBeGreaterThan(0.8);
+      expect(classification.value).toBeGreaterThan(0.7);
     });
     it('Should work even for japanese', async () => {
       const classifier = new NlpClassifier({ language: 'ja' });
@@ -275,7 +247,7 @@ describe('NLP Classifier', () => {
         '私の鍵はどこにありますか'
       );
       expect(classification.label).toEqual('keys');
-      expect(classification.value).toBeGreaterThan(0.8);
+      expect(classification.value).toBeGreaterThan(0.7);
     });
   });
 
