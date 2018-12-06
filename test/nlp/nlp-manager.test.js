@@ -245,7 +245,7 @@ describe('NLP Manager', () => {
       const result = manager.classify('fr', 'où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.8);
+      expect(result[0].value).toBeGreaterThan(0.7);
     });
     test('Should guess language if not provided', async () => {
       const manager = new NlpManager();
@@ -274,11 +274,11 @@ describe('NLP Manager', () => {
       let result = manager.classify('où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.8);
+      expect(result[0].value).toBeGreaterThan(0.7);
       result = manager.classify('私の鍵はどこにありますか');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.8);
+      expect(result[0].value).toBeGreaterThan(0.7);
     });
     test('Should return undefined if there is not classifier for this language', async () => {
       const manager = new NlpManager();
@@ -337,7 +337,7 @@ describe('NLP Manager', () => {
       let result = manager.classify('où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.8);
+      expect(result[0].value).toBeGreaterThan(0.7);
       result = manager.classify('私の鍵はどこにありますか');
       expect(result).toEqual([]);
     });
@@ -368,11 +368,11 @@ describe('NLP Manager', () => {
       let result = manager.classify('où sont mes clés');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.8);
+      expect(result[0].value).toBeGreaterThan(0.7);
       result = manager.classify('私の鍵はどこにありますか');
       expect(result).toHaveLength(2);
       expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.8);
+      expect(result[0].value).toBeGreaterThan(0.7);
     });
   });
 
@@ -556,7 +556,7 @@ describe('NLP Manager', () => {
       expect(result.classification).toBeDefined();
       expect(result.classification).toHaveLength(2);
       expect(result.intent).toEqual('keys');
-      expect(result.score).toBeGreaterThan(0.95);
+      expect(result.score).toBeGreaterThan(0.7);
     });
     test('Language can be specified', async () => {
       const manager = new NlpManager();
@@ -576,7 +576,7 @@ describe('NLP Manager', () => {
       expect(result.classification).toBeDefined();
       expect(result.classification).toHaveLength(2);
       expect(result.intent).toEqual('keys');
-      expect(result.score).toBeGreaterThan(0.95);
+      expect(result.score).toBeGreaterThan(0.7);
     });
     test('Should search for entities', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
@@ -945,7 +945,7 @@ describe('NLP Manager', () => {
       expect(result.classification).toBeDefined();
       expect(result.classification).toHaveLength(2);
       expect(result.intent).toEqual('keys');
-      expect(result.score).toBeGreaterThan(0.95);
+      expect(result.score).toBeGreaterThan(0.8);
     });
 
     test('Should call transformer function if it is passed', async () => {
