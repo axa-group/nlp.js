@@ -262,6 +262,6 @@ describe('NLP Classifier', () => {
         'next train from garching'
       );
       expect(classifications[0].label).toEqual('DepartureTime');
-    });
+    }, 10000);
   });
 });
