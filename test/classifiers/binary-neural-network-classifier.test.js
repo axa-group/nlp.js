@@ -90,45 +90,45 @@ describe('Binary Neural Network Classifier', () => {
   });
 
   describe('Classifier', () => {
-    test('Should be able to classify', () => {
+    test('Should be able to classify', async () => {
       const classifier = new BinaryNeuralNetworkClassifier();
-      classifier.trainBatch(corpus);
+      await classifier.trainBatch(corpus);
       const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
       expect(actual).toHaveLength(3);
       expect(actual[0].label).toEqual('who');
     });
-    test('If no feature is provided, all labels should be 0.5', () => {
+    test('If no feature is provided, all labels should be 0.5', async () => {
       const classifier = new BinaryNeuralNetworkClassifier();
-      classifier.trainBatch(corpus);
+      await classifier.trainBatch(corpus);
       const actual = classifier.classify({});
       expect(actual).toHaveLength(3);
       expect(actual[0].value).toEqual(0.5);
       expect(actual[1].value).toEqual(0.5);
       expect(actual[2].value).toEqual(0.5);
     });
-    test('I can decide time per label', () => {
+    test('I can decide time per label', async () => {
       const classifier = new BinaryNeuralNetworkClassifier({
         labelTimeout: 1000,
       });
-      classifier.trainBatch(corpus);
+      await classifier.trainBatch(corpus);
       const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
       expect(actual).toHaveLength(3);
       expect(actual[0].label).toEqual('who');
     });
-    test('I can decide time per label and no global limit', () => {
+    test('I can decide time per label and no global limit', async () => {
       const classifier = new BinaryNeuralNetworkClassifier({
         labelTimeout: 1000,
       });
       classifier.totalTimeout = 0;
-      classifier.trainBatch(corpus);
+      await classifier.trainBatch(corpus);
       const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
       expect(actual).toHaveLength(3);
       expect(actual[0].label).toEqual('who');
     });
-    test('I can decide time limit to not exists', () => {
+    test('I can decide time limit to not exists', async () => {
       const classifier = new BinaryNeuralNetworkClassifier();
       classifier.totalTimeout = 0;
-      classifier.trainBatch(corpus);
+      await classifier.trainBatch(corpus);
       const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
       expect(actual).toHaveLength(3);
       expect(actual[0].label).toEqual('who');
