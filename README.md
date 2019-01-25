@@ -20,8 +20,8 @@
 - Natural Language Processing Classifier, to classify utterance into intents.
 - Natural Language Generation Manager, so from intents and conditions it can generate an answer.
 - NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
-- 27 languages supported: Arabic (ar), Armenian (hy), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), German (de), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Norwegian (no), Portuguese (pt), Romanian (ro), Russian (ru), Slovene (sl), Spanish (es), Swedish (sv), Tamil (ta), Turkish (tr)
-
+- 27 languages with stemmers supported: Arabic (ar), Armenian (hy), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), German (de), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Norwegian (no), Portuguese (pt), Romanian (ro), Russian (ru), Slovene (sl), Spanish (es), Swedish (sv), Tamil (ta), Turkish (tr)
+- Any other language is supported through tokenization, even fantasy languages
 <div align="center">
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
 </div>
@@ -37,6 +37,7 @@
   - [Classification](docs/language-support.md#classification)
   - [Sentiment Analysis](docs/language-support.md#sentiment-analysis)
   - [Builtin Entity Extraction](docs/language-support.md#builtin-entity-extraction)
+  - [Example with languages](docs/example-with-languages)
 - [Language Guesser](docs/language-guesser.md)
 - [Similar Search](docs/similar-search.md)
 - [NLP Classifier](docs/nlp-classifier.md)
