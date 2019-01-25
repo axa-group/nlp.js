@@ -37,7 +37,7 @@
   - [Classification](docs/language-support.md#classification)
   - [Sentiment Analysis](docs/language-support.md#sentiment-analysis)
   - [Builtin Entity Extraction](docs/language-support.md#builtin-entity-extraction)
-  - [Example with languages](docs/example-with-languages)
+  - [Example with languages](docs/example-with-languages.md)
 - [Language Guesser](docs/language-guesser.md)
 - [Similar Search](docs/similar-search.md)
 - [NLP Classifier](docs/nlp-classifier.md)
