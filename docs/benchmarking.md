@@ -28,10 +28,13 @@ We compute the `f1` score for each corpus and the overall `f1`:
 | Watson           | 0.97    | 0.92       | 0.83             | 0.92    |
 | Botfuel          | 0.98    | 0.90       | 0.80             | 0.91    |
 | Luis             | 0.98    | 0.90       | 0.81             | 0.91    |
+| NLP.js (no stem) | 1.00    | 0.92       | 0.73             | 0.91    |
 | Snips            | 0.96    | 0.83       | 0.78             | 0.89    |
 | Recast           | 0.99    | 0.86       | 0.75             | 0.89    |
 | RASA             | 0.98    | 0.86       | 0.74             | 0.88    |
 | API (DialogFlow) | 0.93    | 0.85       | 0.80             | 0.87    |
+
+You can se two entries for NLP.js, the best one is using stemmer the other one is only by using the tokenizer and the artificial intelligence. This is added because there are 27 languages supported with stemmers, but any other language is supported using only the tokenizer, but the result is good enough, in fact in english is at the middle of the table, being better than other systems that use more advanced methods than tokenization.
 
 <div align="center">
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/benchmark.png" width="auto" height="auto"/>

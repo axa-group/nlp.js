@@ -35,6 +35,7 @@ const PorterStemmerSv = require('../../lib/nlp/stemmers/natural/porter-stemmer-s
 const PorterStemmerNl = require('../../lib/nlp/stemmers/natural/porter-stemmer-nl');
 const StemmerJa = require('../../lib/nlp/stemmers/natural/stemmer-ja');
 const StemmerId = require('../../lib/nlp/stemmers/natural/indonesian/stemmer_id');
+const TokenizeStemmer = require('../../lib/nlp/stemmers/tokenize-stemmer');
 const {
   AggressiveTokenizer,
   AggressiveTokenizerFa,
@@ -117,10 +118,10 @@ describe('NLP Util', () => {
         'TurkishStemmer'
       ); // Turkish
     });
-    test('Shoul return a PorterStemmer for unknown locales', () => {
-      expect(NlpUtil.getStemmer('aa')).toBe(PorterStemmer);
-      expect(NlpUtil.getStemmer('')).toBe(PorterStemmer);
-      expect(NlpUtil.getStemmer()).toBe(PorterStemmer);
+    test('Shoul return a TokenizeStemmer for unknown locales', () => {
+      expect(NlpUtil.getStemmer('aa')).toBeInstanceOf(TokenizeStemmer);
+      expect(NlpUtil.getStemmer('')).toBeInstanceOf(TokenizeStemmer);
+      expect(NlpUtil.getStemmer()).toBeInstanceOf(TokenizeStemmer);
     });
     test('Alternative stemmers can be used for some languages', () => {
       NlpUtil.useAlternative.en = false;
@@ -294,8 +295,8 @@ describe('NLP Util', () => {
       expect(NlpUtil.getCulture('tr')).toEqual('tr-tr'); // turkish
       expect(NlpUtil.getCulture('zh')).toEqual('zh-cn'); // Chinese
     });
-    test('If the locale is not recognized return default english', () => {
-      expect(NlpUtil.getCulture('aa')).toEqual('en-us'); // english
+    test('If the locale is not recognized return default is built from locale', () => {
+      expect(NlpUtil.getCulture('aa')).toEqual('aa-aa'); // english
     });
   });
 });

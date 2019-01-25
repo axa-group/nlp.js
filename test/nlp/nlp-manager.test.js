@@ -578,6 +578,47 @@ describe('NLP Manager', () => {
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.7);
     });
+    test('Languages with ISO code can be identified even without stemmer', async () => {
+      const manager = new NlpManager({ languages: ['en', 'ko'] });
+      manager.addDocument('en', 'goodbye for now', 'greetings.bye');
+      manager.addDocument('en', 'bye bye take care', 'greetings.bye');
+      manager.addDocument('en', 'okay see you later', 'greetings.bye');
+      manager.addDocument('en', 'bye for now', 'greetings.bye');
+      manager.addDocument('en', 'i must go', 'greetings.bye');
+      manager.addDocument('en', 'hello', 'greetings.hello');
+      manager.addDocument('en', 'hi', 'greetings.hello');
+      manager.addDocument('en', 'howdy', 'greetings.hello');
+      manager.addDocument('ko', '여보세요', 'greetings.hello');
+      manager.addDocument('ko', '안녕하세요!', 'greetings.hello');
+      manager.addDocument('ko', '여보!', 'greetings.hello');
+      manager.addDocument('ko', '어이!', 'greetings.hello');
+      manager.addDocument('ko', '좋은 아침', 'greetings.hello');
+      manager.addDocument('ko', '안녕히 주무세요', 'greetings.hello');
+      manager.addDocument('ko', '안녕', 'greetings.bye');
+      manager.addDocument('ko', '친 공이 타자', 'greetings.bye');
+      manager.addDocument('ko', '상대가 없어 남는 사람', 'greetings.bye');
+      manager.addDocument('ko', '지엽적인 것', 'greetings.bye');
+      await manager.train();
+      const result = await manager.process('상대가 없어 남는 편');
+      expect(result.language).toEqual('Korean');
+      expect(result.intent).toEqual('greetings.bye');
+      expect(result.score).toBeGreaterThan(0.9);
+    });
+    test('Should work with fantasy languages', async () => {
+      const manager = new NlpManager({ languages: ['en', 'kl'] });
+      manager.describeLanguage('kl', 'Klingon');
+      manager.addDocument('kl', 'nuqneH', 'hello');
+      manager.addDocument('kl', 'maj po', 'hello');
+      manager.addDocument('kl', 'maj choS', 'hello');
+      manager.addDocument('kl', 'maj ram', 'hello');
+      manager.addDocument('kl', `nuqDaq ghaH ngaQHa'moHwI'mey?`, 'keys');
+      manager.addDocument('kl', `ngaQHa'moHwI'mey lujta' jIH`, 'keys');
+      await manager.train();
+      const result = await manager.process('kl', `ngaQHa'moHwI'mey nIH vay'`);
+      expect(result.language).toEqual('Klingon');
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.9);
+    });
     test('Should search for entities', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
@@ -962,7 +1003,7 @@ describe('NLP Manager', () => {
       manager.addDocument('en', "I don't know where are my keys", 'keys');
       await manager.train();
 
-      expect(transformer).not.toBeCalled();
+      expect(transformer).not.toHaveBeenCalled();
 
       await manager.process('where are my keys');
 
