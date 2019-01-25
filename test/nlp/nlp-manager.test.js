@@ -604,6 +604,21 @@ describe('NLP Manager', () => {
       expect(result.intent).toEqual('greetings.bye');
       expect(result.score).toBeGreaterThan(0.9);
     });
+    test('Should work with fantasy languages', async () => {
+      const manager = new NlpManager({ languages: ['en', 'kl'] });
+      manager.describeLanguage('kl', 'Klingon');
+      manager.addDocument('kl', 'nuqneH', 'hello');
+      manager.addDocument('kl', 'maj po', 'hello');
+      manager.addDocument('kl', 'maj choS', 'hello');
+      manager.addDocument('kl', 'maj ram', 'hello');
+      manager.addDocument('kl', `nuqDaq ghaH ngaQHa'moHwI'mey?`, 'keys');
+      manager.addDocument('kl', `ngaQHa'moHwI'mey lujta' jIH`, 'keys');
+      await manager.train();
+      const result = await manager.process('kl', `ngaQHa'moHwI'mey nIH vay'`);
+      expect(result.language).toEqual('Klingon');
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.9);
+    });
     test('Should search for entities', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
