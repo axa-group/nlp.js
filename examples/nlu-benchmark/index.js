@@ -10,7 +10,7 @@ const fullEntities = true;
 const entityUtterance = true;
 const sentenceUtterance = true;
 
-const locale = 'zz';
+const locale = 'en';
 
 async function scoreCorpus(corpus) {
   const manager = new NlpManager({ languages: [locale] });
