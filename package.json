@@ -49,12 +49,11 @@
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "1.1.4",
-    "brain.js": "^1.6.1",
+    "brain.js": "1.6.0",
     "escodegen": "^1.11.0",
     "esprima": "^4.0.1",
     "franc": "^4.0.0",
     "handlebars": "^4.0.12",
-    "microjob": "^0.4.2",
     "novel-segment": "^2.2.10",
     "xlsx": "^0.14.1"
   },

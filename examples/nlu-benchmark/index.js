@@ -3,23 +3,20 @@ const AskUbuntuCorpus = require('./AskUbuntuCorpus.json');
 const ChatbotCorpus = require('./ChatbotCorpus.json');
 const WebApplicationCorpus = require('./WebApplicationCorpus.json');
 
-NlpUtil.useAlternative.en = false;
+NlpUtil.useAlternative.en = true;
 
 const withEntities = true;
-const fullEntities = true;
-const entityUtterance = true;
+const entityUtterance = false;
 const sentenceUtterance = true;
 
-const locale = 'en';
-
 async function scoreCorpus(corpus) {
-  const manager = new NlpManager({ languages: [locale] });
+  const manager = new NlpManager({ languages: ['en'] });
   const { sentences } = corpus;
   const entities = {};
   for (let i = 0; i < sentences.length; i += 1) {
     const sentence = sentences[i];
     let { text } = sentence;
-    if (fullEntities || sentence.training) {
+    if (sentence.training) {
       if (sentence.entities && sentence.entities.length > 0) {
         for (let j = 0; j < sentence.entities.length; j += 1) {
           const entity = sentence.entities[j];
@@ -35,7 +32,7 @@ async function scoreCorpus(corpus) {
   if (withEntities) {
     Object.keys(entities).forEach(entity => {
       Object.keys(entities[entity]).forEach(text => {
-        manager.addNamedEntityText(entity, text, locale, text);
+        manager.addNamedEntityText(entity, text, 'en', text);
       });
     });
   }
@@ -43,7 +40,7 @@ async function scoreCorpus(corpus) {
   for (let i = 0; i < sentences.length; i += 1) {
     const sentence = sentences[i];
     let { text } = sentence;
-    if (fullEntities || sentence.training) {
+    if (sentence.training) {
       if (sentence.entities && sentence.entities.length > 0) {
         for (let j = 0; j < sentence.entities.length; j += 1) {
           const entity = sentence.entities[j];
@@ -58,13 +55,13 @@ async function scoreCorpus(corpus) {
     if (sentence.training) {
       if (text !== sentence.text) {
         if (sentenceUtterance) {
-          manager.addDocument(locale, sentence.text, sentence.intent);
+          manager.addDocument('en', sentence.text, sentence.intent);
         }
         if (entityUtterance) {
-          manager.addDocument(locale, text, sentence.intent);
+          manager.addDocument('en', text, sentence.intent);
         }
       } else {
-        manager.addDocument(locale, sentence.text, sentence.intent);
+        manager.addDocument('en', sentence.text, sentence.intent);
       }
     }
   }
@@ -79,7 +76,7 @@ async function scoreCorpus(corpus) {
     const sentence = sentences[i];
     if (!sentence.training) {
       /* eslint-disable no-await-in-loop */
-      const result = await manager.process(locale, sentence.text);
+      const result = await manager.process('en', sentence.text);
       total += 1;
       if (!analysis[result.intent]) {
         analysis[result.intent] = { truePos: 0, falsePos: 0, falseNeg: 0 };
