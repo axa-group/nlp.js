@@ -1,5 +1,9 @@
-./screenshots
-./model.nlp
-./docs
-./examples
-./docs/static
+screenshots
+model.nlp
+docs
+examples
+docs/static
+test
+coverage
+.github
+dist
