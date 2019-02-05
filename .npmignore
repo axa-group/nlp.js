@@ -7,3 +7,4 @@ test
 coverage
 .github
 dist
+.vscode
