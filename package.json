@@ -54,6 +54,7 @@
     "esprima": "^4.0.1",
     "franc": "^4.0.0",
     "handlebars": "^4.0.12",
+    "lodash": "^4.17.11",
     "novel-segment": "^2.2.10",
     "xlsx": "^0.14.1"
   },
