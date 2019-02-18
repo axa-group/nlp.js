@@ -4,7 +4,5 @@ docs
 examples
 docs/static
 test
-coverage
 .github
-dist
 .vscode
