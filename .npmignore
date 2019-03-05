@@ -1,5 +1,6 @@
-./screenshots
-./model.nlp
-./docs
-./examples
-./docs/static
+screenshots
+model.nlp
+docs
+examples
+.github
+.vscode
