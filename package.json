@@ -83,9 +83,10 @@
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/",
+    "collectCoverage": true,
     "collectCoverageFrom": [
-      "lib/**.js",
-      "!lib/nlp/stemmers/**"
+      "./lib/**/**.js",
+      "!./lib/nlp/stemmers/**"
     ],
     "coverageDirectory": "coverage",
     "testEnvironment": "node"
