@@ -145,7 +145,7 @@ It can identify and extract phone numbers from the utterances, this works for an
 
 ## URL Extraction
 
-It can identify and extract phone URLs from the utterances, this works for any language.
+It can identify and extract URLs from the utterances, this works for any language.
 
 ```javascript
 "utterance": "The url is https://something.com",
