@@ -60,6 +60,22 @@ describe('Matrix', () => {
     });
   });
 
+  describe('Set Elements', () => {
+    test('We can set the matrix to an input', () => {
+      const matrix = new Matrix();
+      const input = [1, 2, 3, 4];
+      matrix.setElements(input);
+      expect(matrix.elements).toEqual([[1], [2], [3], [4]]);
+    });
+
+    test('We can provide an empty input', () => {
+      const matrix = new Matrix();
+      const input = [];
+      matrix.setElements(input);
+      expect(matrix.elements).toBeUndefined();
+    });
+  });
+
   describe('Get row', () => {
     test('It should return a Vector representing the row', () => {
       const input = new Matrix([[1, 2], [3, 4]]);
@@ -171,9 +187,7 @@ describe('Matrix', () => {
       const matrix = new Matrix(input, false);
       expect(() => {
         matrix.augment([[5, 6], [7, 8], [9, 10]]);
-      }).toThrowError(
-        'Cannot operate two matrix with different amount of rows.'
-      );
+      }).toThrow('Cannot operate two matrix with different amount of rows.');
     });
     test('If an array is provided, is converted to a matrix', () => {
       const input = [[1, 2], [3, 4]];
@@ -255,7 +269,7 @@ describe('Matrix', () => {
       const matrix = new Matrix(input, false);
       expect(() => {
         matrix.subtract([[1, 1, 1], [2, 2, 2]]);
-      }).toThrowError('Cannot operate two matrix with different dimensions.');
+      }).toThrow('Cannot operate two matrix with different dimensions.');
     });
   });
 
@@ -276,6 +290,14 @@ describe('Matrix', () => {
       expect(result).toBeInstanceOf(Matrix);
       expect(result.elements).toEqual([[7, 10], [15, 22]]);
     });
+    test('If a matrix array is provided, apply the operation', () => {
+      const inputA = [[1, 2], [3, 4]];
+      const matrixA = new Matrix(inputA, false);
+      const inputB = [[1, 2], [3, 4]];
+      const result = matrixA.mulOp(inputB, (a, b) => a * b);
+      expect(result).toBeInstanceOf(Matrix);
+      expect(result.elements).toEqual([[7, 10], [15, 22]]);
+    });
     test('If a vector is provided, convert to matrix', () => {
       const inputA = [[1, 2], [3, 4]];
       const matrixA = new Matrix(inputA, false);
@@ -292,7 +314,7 @@ describe('Matrix', () => {
       const matrixB = new Matrix(inputB, false);
       expect(() => {
         matrixA.mulOp(matrixB, (a, b) => a * b);
-      }).toThrowError('Number of rows of A should match number of cols of B.');
+      }).toThrow('Number of rows of A should match number of cols of B.');
     });
   });
 
@@ -313,6 +335,14 @@ describe('Matrix', () => {
       expect(result).toBeInstanceOf(Matrix);
       expect(result.elements).toEqual([[7, 10], [15, 22]]);
     });
+    test('If a matrix array is provided, apply the operation', () => {
+      const inputA = [[1, 2], [3, 4]];
+      const matrixA = new Matrix(inputA, false);
+      const inputB = [[1, 2], [3, 4]];
+      const result = matrixA.multiply(inputB);
+      expect(result).toBeInstanceOf(Matrix);
+      expect(result.elements).toEqual([[7, 10], [15, 22]]);
+    });
     test('If a vector is provided, convert to matrix', () => {
       const inputA = [[1, 2], [3, 4]];
       const matrixA = new Matrix(inputA, false);
@@ -329,7 +359,7 @@ describe('Matrix', () => {
       const matrixB = new Matrix(inputB, false);
       expect(() => {
         matrixA.multiply(matrixB);
-      }).toThrowError('Number of rows of A should match number of cols of B.');
+      }).toThrow('Number of rows of A should match number of cols of B.');
     });
   });
 });
