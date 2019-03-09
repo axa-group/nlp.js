@@ -186,6 +186,22 @@ describe('Recognizer', () => {
         done();
       });
     });
+    test('If the callback is not provided, return a promise', done => {
+      const recognizer = new Recognizer();
+      recognizer.load('./test/recognizer/model.nlp');
+      const session = {
+        locale: 'en',
+        message: {
+          text: 'What is your age?',
+        },
+      };
+      recognizer.recognize(session).then(result => {
+        expect(result.intent).toEqual('agent.age');
+        expect(result.language).toEqual('English');
+        expect(result.score).toBeGreaterThan(0.7);
+        done();
+      });
+    });
     test('It should use context if conversation id is provided', done => {
       const recognizer = new Recognizer();
       recognizer.loadExcel('./test/nlp/rules.xls').then(() => {
