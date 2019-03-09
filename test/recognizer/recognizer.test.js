@@ -219,6 +219,37 @@ describe('Recognizer', () => {
         });
       });
     });
+    test('It should use context if conversation id is provided in v4', done => {
+      const recognizer = new Recognizer();
+      recognizer.loadExcel('./test/nlp/rules.xls').then(() => {
+        const session1 = {
+          _activity: {
+            type: 'message',
+            locale: 'en',
+            text: 'Who is spiderman',
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+        };
+        const session2 = {
+          _activity: {
+            type: 'message',
+            locale: 'en',
+            text: 'Where he lives?',
+            conversation: {
+              id: 'a1b2c3',
+            },
+          },
+        };
+        recognizer.recognize(session1, () => {
+          recognizer.recognize(session2, (err, result) => {
+            expect(result.answer).toEqual('Hanging on a web');
+            done();
+          });
+        });
+      });
+    });
     test('If the utterance cannot be retrieved from the session the intent should be undefined and score 0', done => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');

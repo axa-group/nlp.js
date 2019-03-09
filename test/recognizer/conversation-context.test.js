@@ -46,6 +46,19 @@ describe('Conversation Context', () => {
       const result = context.getConversationId(session);
       expect(result).toEqual(expected);
     });
+    test('It should return the conversation id if provided in the an v4 session', () => {
+      const expected = 'a1b2c3';
+      const session = {
+        _activity: {
+          conversation: {
+            id: expected,
+          },
+        },
+      };
+      const context = new ConversationContext();
+      const result = context.getConversationId(session);
+      expect(result).toEqual(expected);
+    });
     test('It should return undefined if the session does not provide a conversation identifier', () => {
       const session = {
         message: {

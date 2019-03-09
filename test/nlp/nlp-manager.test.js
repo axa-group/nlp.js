@@ -29,6 +29,14 @@ describe('NLP Manager', () => {
       const manager = new NlpManager();
       expect(manager).toBeDefined();
     });
+    test('Can create a new instance without neural', () => {
+      const manager = new NlpManager({ useNeural: false });
+      expect(manager.useNeural).toBeFalsy();
+    });
+    test('Can create a new instance without LRC', () => {
+      const manager = new NlpManager({ useLRC: false });
+      expect(manager.useLRC).toBeFalsy();
+    });
     test('Should initialize the default properties', () => {
       const manager = new NlpManager();
       expect(manager.nerManager).toBeDefined();
@@ -578,8 +586,31 @@ describe('NLP Manager', () => {
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.7);
     });
+    test('If a language not in the manager is passed, then is guessed', async () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en', 'ja']);
+      manager.addDocument('en', 'Hello', 'greet');
+      manager.addDocument('en', 'Good evening', 'greet');
+      manager.addDocument('en', 'Good morning', 'greet');
+      manager.addDocument('en', "I've lost my keys", 'keys');
+      manager.addDocument('en', "I don't find my keys", 'keys');
+      manager.addDocument('en', "I don't know where are my keys", 'keys');
+      await manager.train();
+      const result = await manager.process('es', 'where are my keys');
+      expect(result).toBeDefined();
+      expect(result.locale).toEqual('en');
+      expect(result.localeIso2).toEqual('en');
+      expect(result.utterance).toEqual('where are my keys');
+      expect(result.classification).toBeDefined();
+      expect(result.classification).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
+    });
     test('Languages with ISO code can be identified even without stemmer', async () => {
-      const manager = new NlpManager({ languages: ['en', 'ko'] });
+      const manager = new NlpManager({
+        languages: ['en', 'ko'],
+        fullSearchWhenGuessed: true,
+      });
       manager.addDocument('en', 'goodbye for now', 'greetings.bye');
       manager.addDocument('en', 'bye bye take care', 'greetings.bye');
       manager.addDocument('en', 'okay see you later', 'greetings.bye');
@@ -1117,6 +1148,65 @@ describe('NLP Manager', () => {
       manager = new NlpManager();
       // load model from JSON String
       manager.import(model);
+      const result = await manager.process(
+        'I saw spiderman eating spaghetti today in the city!'
+      );
+      expect(result.intent).toEqual('sawhero');
+      expect(result.domain).toEqual('domain');
+      expect(result.score).toBeGreaterThan(0.85);
+      expect(result.entities).toHaveLength(2);
+      expect(result.entities[0].sourceText).toEqual('Spiderman');
+      expect(result.entities[1].sourceText).toEqual('spaghetti');
+    });
+    test('Should import and export model as JSON string without minify', async () => {
+      let manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText(
+        'hero',
+        'spiderman',
+        ['en'],
+        ['Spiderman', 'Spider-man']
+      );
+      manager.addNamedEntityText(
+        'hero',
+        'iron man',
+        ['en'],
+        ['iron man', 'iron-man']
+      );
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText(
+        'food',
+        'burguer',
+        ['en'],
+        ['Burguer', 'Hamburguer']
+      );
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText(
+        'food',
+        'pasta',
+        ['en'],
+        ['Pasta', 'spaghetti']
+      );
+      manager.addRegexEntity(
+        'mail',
+        'en',
+        /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi
+      );
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument(
+        'en',
+        'I have seen %hero%, he was eating %food%',
+        'sawhero'
+      );
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      manager.assignDomain('sawhero', 'domain');
+
+      await manager.train();
+      // save current model as JSON string
+      const model = manager.export(true);
+      manager = new NlpManager();
+      // load model from JSON String
+      manager.import(JSON.parse(model));
       const result = await manager.process(
         'I saw spiderman eating spaghetti today in the city!'
       );

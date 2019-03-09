@@ -39,6 +39,12 @@ describe('NLP Excel Reader', () => {
       reader.load('./test/nlp/rules.xls');
       expect(manager.languages).toEqual(['en', 'es']);
     });
+    test('It should read excel without regex entities', () => {
+      const manager = new NlpManager();
+      const reader = new NlpExcelReader(manager);
+      reader.load('./test/nlp/rulesnoregex.xls');
+      expect(manager.languages).toEqual(['en', 'es']);
+    });
     test('It should read named entities', () => {
       const manager = new NlpManager();
       const reader = new NlpExcelReader(manager);
