@@ -2,7 +2,7 @@
 
 The Named Entity Recognition manager is able to store an structure of entities and options of the entity for each language.
 Then, given an utterance and the language, is able to search the options of the entity inside the utterance, and return a list
-of the bests substrings. This is done using a threshold for the accuracy, by default the accuracy is 0.5 but you can provide it in the options when creating the instance.
+of the bests substrings. This is done using a threshold for the accuracy, by default the accuracy is 0.8 but you can provide it in the options when creating the instance.
 
 ## Enum Named Entities
 
