@@ -444,4 +444,52 @@ describe('NLP Classifier', () => {
       ]);
     });
   });
+
+  describe('Stopwords Italian', () => {
+    test('Remove Stopwords in italian', () => {
+      NlpUtil.useAlternative.it = false;
+      const classifier = new NlpClassifier({
+        language: 'it',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'questo è qualcosa che dobbiamo dire'
+      );
+      expect(result).toEqual(['qualcos', 'dobb', 'dir']);
+    });
+
+    test('Dont remove Stopwords in italian', () => {
+      NlpUtil.useAlternative.it = false;
+      const classifier = new NlpClassifier({
+        language: 'it',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'questo è qualcosa che dobbiamo dire'
+      );
+      expect(result).toEqual(['quest', 'è', 'qualcos', 'che', 'dobb', 'dir']);
+    });
+    test('Remove Stopwords in alternative italian', () => {
+      NlpUtil.useAlternative.it = true;
+      const classifier = new NlpClassifier({
+        language: 'it',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'questo è qualcosa che dobbiamo dire'
+      );
+      expect(result).toEqual(['qualcos', 'dobb', 'dir']);
+    });
+    test('Dont remove Stopwords in alternative italian', () => {
+      NlpUtil.useAlternative.it = true;
+      const classifier = new NlpClassifier({
+        language: 'it',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'questo è qualcosa che dobbiamo dire'
+      );
+      expect(result).toEqual(['quest', 'e', 'qualcos', 'che', 'dobb', 'dir']);
+    });
+  });
 });
