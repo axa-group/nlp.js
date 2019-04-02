@@ -269,7 +269,7 @@ describe('NLP Classifier', () => {
     );
   });
 
-  describe('Stopwords tokenizing and stem', () => {
+  describe('Stopwords Spanish', () => {
     test('Remove Stopwords in spanish', () => {
       NlpUtil.useAlternative.es = false;
       const classifier = new NlpClassifier({
@@ -313,6 +313,69 @@ describe('NLP Classifier', () => {
         'Y sobre eso no sé qué decirte'
       );
       expect(result).toEqual(['y', 'sobr', 'eso', 'no', 'se', 'que', 'decirt']);
+    });
+  });
+
+  describe('Stopwords English', () => {
+    test('Remove Stopwords in english', () => {
+      NlpUtil.useAlternative.en = false;
+      const classifier = new NlpClassifier({
+        language: 'en',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'This is something we have to say'
+      );
+      expect(result).toEqual(['someth', 'sai']);
+    });
+    test('Dont remove Stopwords in english', () => {
+      NlpUtil.useAlternative.en = false;
+      const classifier = new NlpClassifier({
+        language: 'en',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'This is something we have to say'
+      );
+      expect(result).toEqual([
+        'thi',
+        'is',
+        'someth',
+        'we',
+        'have',
+        'to',
+        'sai',
+      ]);
+    });
+    test('Remove Stopwords in alternative english', () => {
+      NlpUtil.useAlternative.en = true;
+      const classifier = new NlpClassifier({
+        language: 'en',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'This is something we have to say'
+      );
+      expect(result).toEqual(['someth', 'say']);
+    });
+    test('Dont remove Stopwords in alternative english', () => {
+      NlpUtil.useAlternative.en = true;
+      const classifier = new NlpClassifier({
+        language: 'en',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'This is something we have to say'
+      );
+      expect(result).toEqual([
+        'this',
+        'is',
+        'someth',
+        'we',
+        'have',
+        'to',
+        'say',
+      ]);
     });
   });
 });
