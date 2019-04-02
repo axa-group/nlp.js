@@ -378,4 +378,70 @@ describe('NLP Classifier', () => {
       ]);
     });
   });
+
+  describe('Stopwords French', () => {
+    test('Remove Stopwords in french', () => {
+      NlpUtil.useAlternative.fr = false;
+      const classifier = new NlpClassifier({
+        language: 'fr',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'ce est quelque chose que nous devons dire'
+      );
+      expect(result).toEqual(['quelqu', 'chos', 'devon', 'dir']);
+    });
+
+    test('Dont remove Stopwords in french', () => {
+      NlpUtil.useAlternative.fr = false;
+      const classifier = new NlpClassifier({
+        language: 'fr',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'ce est quelque chose que nous devons dire'
+      );
+      expect(result).toEqual([
+        'ce',
+        'est',
+        'quelqu',
+        'chos',
+        'que',
+        'nous',
+        'devon',
+        'dir',
+      ]);
+    });
+    test('Remove Stopwords in alternative french', () => {
+      NlpUtil.useAlternative.fr = true;
+      const classifier = new NlpClassifier({
+        language: 'fr',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'ce est quelque chose que nous devons dire'
+      );
+      expect(result).toEqual(['quelqu', 'chos', 'devon', 'dir']);
+    });
+    test('Dont remove Stopwords in alternative french', () => {
+      NlpUtil.useAlternative.fr = true;
+      const classifier = new NlpClassifier({
+        language: 'fr',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'ce est quelque chose que nous devons dire'
+      );
+      expect(result).toEqual([
+        'ce',
+        'est',
+        'quelqu',
+        'chos',
+        'que',
+        'nous',
+        'devon',
+        'dir',
+      ]);
+    });
+  });
 });
