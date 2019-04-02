@@ -252,16 +252,67 @@ describe('NLP Classifier', () => {
   });
 
   describe('Neural classifier', () => {
-    test('If should improve accuracy of LRC', async () => {
-      const classifier = new NlpClassifier({ language: 'en' });
-      for (let i = 0; i < corpus.length; i += 1) {
-        classifier.add(corpus[i].text, corpus[i].intent);
-      }
-      await classifier.train();
-      const classifications = classifier.getClassifications(
-        'next train from garching'
+    test(
+      'If should improve accuracy of LRC',
+      async () => {
+        const classifier = new NlpClassifier({ language: 'en' });
+        for (let i = 0; i < corpus.length; i += 1) {
+          classifier.add(corpus[i].text, corpus[i].intent);
+        }
+        await classifier.train();
+        const classifications = classifier.getClassifications(
+          'next train from garching'
+        );
+        expect(classifications[0].label).toEqual('DepartureTime');
+      },
+      10000
+    );
+  });
+
+  describe('Stopwords tokenizing and stem', () => {
+    test('Remove Stopwords in spanish', () => {
+      NlpUtil.useAlternative.es = false;
+      const classifier = new NlpClassifier({
+        language: 'es',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'Y sobre eso no sé qué decirte'
       );
-      expect(classifications[0].label).toEqual('DepartureTime');
-    }, 10000);
+      expect(result).toEqual(['se', 'decirt']);
+    });
+    test('Dont remove Stopwords in spanish', () => {
+      NlpUtil.useAlternative.es = false;
+      const classifier = new NlpClassifier({
+        language: 'es',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'Y sobre eso no sé qué decirte'
+      );
+      expect(result).toEqual(['y', 'sobr', 'eso', 'no', 'se', 'que', 'decirt']);
+    });
+    test('Remove Stopwords in alternative spanish', () => {
+      NlpUtil.useAlternative.es = true;
+      const classifier = new NlpClassifier({
+        language: 'es',
+        keepStopWords: false,
+      });
+      const result = classifier.tokenizeAndStem(
+        'Y sobre eso no sé qué decirte'
+      );
+      expect(result).toEqual(['decirt']);
+    });
+    test('Dont remove Stopwords in alternative spanish', () => {
+      NlpUtil.useAlternative.es = true;
+      const classifier = new NlpClassifier({
+        language: 'es',
+        keepStopWords: true,
+      });
+      const result = classifier.tokenizeAndStem(
+        'Y sobre eso no sé qué decirte'
+      );
+      expect(result).toEqual(['y', 'sobr', 'eso', 'no', 'se', 'que', 'decirt']);
+    });
   });
 });
