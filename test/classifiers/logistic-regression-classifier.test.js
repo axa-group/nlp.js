@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { LogisticRegressionClassifier } = require('../../lib');
+const { Classifier, LogisticRegressionClassifier } = require('../../lib');
 
 function getClassifier2() {
   const classifier = new LogisticRegressionClassifier({});
@@ -316,8 +316,7 @@ describe('Logistic Regression Classifier', () => {
     test('I can clone by toObj and retrieve with fromObj', async () => {
       const classifier = getClassifier3();
       await classifier.train();
-      const clone = new LogisticRegressionClassifier({});
-      clone.fromObj(classifier.toObj());
+      const clone = Classifier.fromObj(classifier.toObj());
       const classifications1 = clone.getClassifications([
         1,
         1,
