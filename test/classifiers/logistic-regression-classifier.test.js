@@ -311,4 +311,55 @@ describe('Logistic Regression Classifier', () => {
       expect(classification).toBeUndefined();
     });
   });
+
+  describe('toObj and fromObj', () => {
+    test('I can clone by toObj and retrieve with fromObj', async () => {
+      const classifier = getClassifier3();
+      await classifier.train();
+      const clone = new LogisticRegressionClassifier({});
+      clone.fromObj(classifier.toObj());
+      const classifications1 = clone.getClassifications([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
+      expect(classifications1).toHaveLength(3);
+      expect(classifications1[0].label).toEqual('one');
+      expect(classifications1[0].value).toBeGreaterThan(0.85);
+      const classifications2 = clone.getClassifications([
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+      ]);
+      expect(classifications2).toHaveLength(3);
+      expect(classifications2[0].label).toEqual('two');
+      expect(classifications2[0].value).toBeGreaterThan(0.85);
+      const classifications3 = clone.getClassifications([
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+      ]);
+      expect(classifications3).toHaveLength(3);
+      expect(classifications3[0].label).toEqual('three');
+      expect(classifications3[0].value).toBeGreaterThan(0.6);
+    });
+  });
 });
