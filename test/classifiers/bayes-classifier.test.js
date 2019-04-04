@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { BayesClassifier } = require('../../lib');
+const { BayesClassifier, Classifier } = require('../../lib');
 
 function getClassifier2() {
   const classifier = new BayesClassifier({});
@@ -155,5 +155,51 @@ describe('Get classifications', () => {
     ]);
     expect(classifications3).toHaveLength(3);
     expect(classifications3[0].label).toEqual('three');
+  });
+
+  describe('toObj and fromObj', () => {
+    test('I can clone by toObj and retrieve with fromObj', () => {
+      const classifier = getClassifier3();
+      const clone = Classifier.fromObj(classifier.toObj());
+      const classifications1 = clone.getClassifications([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
+      expect(classifications1).toHaveLength(3);
+      expect(classifications1[0].label).toEqual('one');
+      const classifications2 = clone.getClassifications([
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+      ]);
+      expect(classifications2).toHaveLength(3);
+      expect(classifications2[0].label).toEqual('two');
+      const classifications3 = clone.getClassifications([
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+      ]);
+      expect(classifications3).toHaveLength(3);
+      expect(classifications3[0].label).toEqual('three');
+    });
   });
 });
