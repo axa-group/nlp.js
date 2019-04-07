@@ -21,10 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const BaseNLU = require('../../lib/nlu/base-nlu');
-const LogisticRegressionNLU = require('../../lib/nlu/logistic-regression-nlu');
-const LogisticRegressionClassifier = require('../../lib/classifiers/logistic-regression-classifier');
-const { NlpUtil } = require('../../lib');
+const {
+  BaseNLU,
+  LogisticRegressionNLU,
+  LogisticRegressionClassifier,
+  NlpUtil,
+} = require('../../lib');
 
 describe('Logistic Regression NLU', () => {
   describe('constructor', () => {
@@ -174,7 +176,7 @@ describe('Logistic Regression NLU', () => {
     test('Should throw an error if the utterance is not a string', () => {
       const nlu = new LogisticRegressionNLU({ language: 'fr' });
       expect(() => {
-        nlu.remove([], 'meh');
+        nlu.remove(1, 'meh');
       }).toThrow('Utterance must be an string');
     });
   });
