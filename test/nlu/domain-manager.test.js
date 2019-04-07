@@ -282,4 +282,19 @@ describe('Domain Manager', () => {
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
   });
+
+  describe('fromObj and toObj', () => {
+    test('It can be exported and imported', async () => {
+      const manager = new DomainManager();
+      addFoodDomain(manager);
+      addPersonalityDomain(manager);
+      await manager.train();
+      const clone = new DomainManager();
+      clone.fromObj(manager.toObj());
+      const actual = clone.getClassifications('tell me what is in my basket');
+      expect(actual.domain).toEqual('food');
+      expect(actual.classifications[0].label).toEqual('order.check');
+      expect(actual.classifications[0].value).toBeGreaterThan(0.8);
+    });
+  });
 });
