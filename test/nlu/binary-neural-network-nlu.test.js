@@ -21,11 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const BaseNLU = require('../../lib/nlu/base-nlu');
-const BinaryNeuralNetworkNLU = require('../../lib/nlu/binary-neural-network-nlu');
-const { NlpUtil } = require('../../lib');
+const { BaseNLU, BinaryNeuralNetworkNLU, NlpUtil } = require('../../lib');
 
-describe('Brain Regression NLU', () => {
+describe('Binary Neural Network NLU', () => {
   describe('constructor', () => {
     test('Should create a new instance', () => {
       const nlu = new BinaryNeuralNetworkNLU();
@@ -168,7 +166,7 @@ describe('Brain Regression NLU', () => {
     test('Should throw an error if the utterance is not a string', () => {
       const nlu = new BinaryNeuralNetworkNLU({ language: 'fr' });
       expect(() => {
-        nlu.remove([], 'meh');
+        nlu.remove(1, 'meh');
       }).toThrow('Utterance must be an string');
     });
   });
