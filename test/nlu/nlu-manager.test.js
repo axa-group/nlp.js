@@ -23,6 +23,106 @@
 
 const { NluManager } = require('../../lib');
 
+function addFoodDomainEn(manager) {
+  manager.assignDomain('en', 'order.check', 'food');
+  manager.addDocument('en', 'what do I have in my basket', 'order.check');
+  manager.addDocument('en', 'check my cart', 'order.check');
+  manager.addDocument('en', "show me what I've ordered", 'order.check');
+  manager.addDocument('en', "what's in my basket", 'order.check');
+  manager.addDocument('en', 'check my order', 'order.check');
+  manager.addDocument('en', 'check what I have ordered', 'order.check');
+  manager.addDocument('en', 'show my order', 'order.check');
+  manager.addDocument('en', 'check my basket', 'order.check');
+
+  manager.assignDomain('en', 'order.check_status', 'food');
+  manager.addDocument(
+    'en',
+    'how soon will it be delivered',
+    'order.check_status'
+  );
+  manager.addDocument(
+    'en',
+    'check the status of my delivery',
+    'order.check_status'
+  );
+  manager.addDocument(
+    'en',
+    'when should I expect delivery',
+    'order.check_status'
+  );
+  manager.addDocument('en', 'check my order status', 'order.check_status');
+  manager.addDocument('en', 'where is my order', 'order.check_status');
+  manager.addDocument('en', 'where is my delivery', 'order.check_status');
+  manager.addDocument('en', 'status of my order', 'order.check_status');
+}
+
+function addFoodDomainEs(manager) {
+  manager.assignDomain('es', 'order.check', 'food');
+  manager.addDocument('es', 'qué tengo en mi cesta', 'order.check');
+  manager.addDocument('es', 'comprueba mi carrito', 'order.check');
+  manager.addDocument('es', 'enséñame qué he pedido', 'order.check');
+  manager.addDocument('es', 'qué hay en mi carrito?', 'order.check');
+  manager.addDocument('es', 'comprueba mi compra', 'order.check');
+  manager.addDocument('es', 'comprueba qué he comprado', 'order.check');
+  manager.addDocument('es', 'muéstrame mi compra', 'order.check');
+
+  manager.assignDomain('es', 'order.check_status', 'food');
+  manager.addDocument('es', 'cuándo me lo van a traer?', 'order.check_status');
+  manager.addDocument('es', 'cómo va la entrega?', 'order.check_status');
+  manager.addDocument(
+    'es',
+    'cuándo me traerán mi pedido?',
+    'order.check_status'
+  );
+  manager.addDocument(
+    'es',
+    'en qué estado está mi pedido?',
+    'order.check_status'
+  );
+  manager.addDocument('es', 'dónde está mi compra?', 'order.check_status');
+  manager.addDocument('es', 'dónde está mi pedido?', 'order.check_status');
+  manager.addDocument('es', 'estado de mi compra', 'order.check_status');
+}
+
+function addPersonalityDomainEn(manager) {
+  manager.assignDomain('en', 'agent.acquaintance', 'personality');
+  manager.addDocument('en', 'say about you', 'agent.acquaintance');
+  manager.addDocument('en', 'why are you here', 'agent.acquaintance');
+  manager.addDocument('en', 'what is your personality', 'agent.acquaintance');
+  manager.addDocument('en', 'describe yourself', 'agent.acquaintance');
+  manager.addDocument('en', 'tell me about yourself', 'agent.acquaintance');
+  manager.addDocument('en', 'tell me about you', 'agent.acquaintance');
+  manager.addDocument('en', 'what are you', 'agent.acquaintance');
+  manager.addDocument('en', 'who are you', 'agent.acquaintance');
+  manager.addDocument('en', 'talk about yourself', 'agent.acquaintance');
+
+  manager.assignDomain('en', 'agent.age', 'personality');
+  manager.addDocument('en', 'your age', 'agent.age');
+  manager.addDocument('en', 'how old is your platform', 'agent.age');
+  manager.addDocument('en', 'how old are you', 'agent.age');
+  manager.addDocument('en', "what's your age", 'agent.age');
+  manager.addDocument('en', "I'd like to know your age", 'agent.age');
+  manager.addDocument('en', 'tell me your age', 'agent.age');
+}
+
+function addPersonalityDomainEs(manager) {
+  manager.assignDomain('es', 'agent.acquaintance', 'personality');
+  manager.addDocument('es', 'cuéntame sobre ti', 'agent.acquaintance');
+  manager.addDocument('es', 'qué haces aquí?', 'agent.acquaintance');
+  manager.addDocument('es', 'cómo es tu personalidad?', 'agent.acquaintance');
+  manager.addDocument('es', 'descríbete', 'agent.acquaintance');
+  manager.addDocument('es', 'quién eres?', 'agent.acquaintance');
+  manager.addDocument('es', 'qué eres?', 'agent.acquaintance');
+  manager.addDocument('es', 'háblame de ti', 'agent.acquaintance');
+
+  manager.assignDomain('es', 'agent.age', 'personality');
+  manager.addDocument('es', 'qué edad tienes?', 'agent.age');
+  manager.addDocument('es', 'cuántos años tienes?', 'agent.age');
+  manager.addDocument('es', 'cuál es tu edad?', 'agent.age');
+  manager.addDocument('es', 'quiero saber tu edad', 'agent.age');
+  manager.addDocument('es', 'dime tu edad', 'agent.age');
+}
+
 describe('NLU Manager', () => {
   describe('constructor', () => {
     test('Should create a new instance', () => {
@@ -227,6 +327,66 @@ describe('NLU Manager', () => {
       expect(() => manager.removeDocument('fr', 'Bonjour', 'greet')).toThrow(
         'Domain Manager not found for locale fr'
       );
+    });
+  });
+
+  describe('Edit Mode', () => {
+    test('When edit mode begans, all domains pass to edit mode', () => {
+      const manager = new NluManager({ languages: ['en', 'es'] });
+      manager.assignDomain('en', 'a', 'domain1');
+      manager.assignDomain('en', 'b', 'domain1');
+      manager.assignDomain('en', 'c', 'domain2');
+      manager.assignDomain('en', 'd', 'domain2');
+      manager.assignDomain('es', 'a', 'domain1');
+      manager.assignDomain('es', 'b', 'domain1');
+      manager.assignDomain('es', 'c', 'domain2');
+      manager.assignDomain('es', 'd', 'domain3');
+      manager.addDocument('en', 'utterance a', 'a');
+      manager.addDocument('en', 'utterance b', 'b');
+      manager.addDocument('en', 'utterance c', 'c');
+      manager.addDocument('en', 'utterance d', 'd');
+      manager.addDocument('es', 'utterance a', 'a');
+      manager.addDocument('es', 'utterance b', 'b');
+      manager.addDocument('es', 'utterance c', 'c');
+      manager.addDocument('es', 'utterance d', 'd');
+      manager.beginEdit();
+      expect(manager.domainManagers.en.domains.domain1.isEditing).toBeTruthy();
+      expect(manager.domainManagers.en.domains.domain2.isEditing).toBeTruthy();
+      expect(manager.domainManagers.es.domains.domain1.isEditing).toBeTruthy();
+      expect(manager.domainManagers.es.domains.domain2.isEditing).toBeTruthy();
+      expect(manager.domainManagers.es.domains.domain3.isEditing).toBeTruthy();
+    });
+  });
+
+  describe('Train', () => {
+    test('Can train several domains', async () => {
+      const manager = new NluManager({ languages: ['en', 'es'] });
+      addFoodDomainEn(manager);
+      addPersonalityDomainEn(manager);
+      addFoodDomainEs(manager);
+      addPersonalityDomainEs(manager);
+      await manager.train();
+    });
+  });
+
+  describe('Get Classifications', () => {
+    test('Can classify if I provide locale', async () => {
+      const manager = new NluManager({ languages: ['en', 'es'] });
+      addFoodDomainEn(manager);
+      addPersonalityDomainEn(manager);
+      addFoodDomainEs(manager);
+      addPersonalityDomainEs(manager);
+      await manager.train();
+      const actual = manager.getClassifications('es', 'dime quién eres tú');
+      expect(actual.domain).toEqual('personality');
+      expect(actual.language).toEqual('Spanish');
+      expect(actual.locale).toEqual('es');
+      expect(actual.localeGuessed).toBeFalsy();
+      expect(actual.localeIso2).toEqual('es');
+      expect(actual.utterance).toEqual('dime quién eres tú');
+      expect(actual.classifications).toHaveLength(2);
+      expect(actual.classifications[0].label).toEqual('agent.acquaintance');
+      expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
   });
 });
