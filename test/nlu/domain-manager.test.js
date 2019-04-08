@@ -297,4 +297,17 @@ describe('Domain Manager', () => {
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
   });
+
+  describe('Begin Edit', () => {
+    test('When edit mode begans, all domains pass to edit mode', () => {
+      const manager = new DomainManager();
+      manager.addDomain('domain1');
+      manager.addDomain('domain2');
+      expect(manager.domains.domain1.isEditing).toBeFalsy();
+      expect(manager.domains.domain2.isEditing).toBeFalsy();
+      manager.beginEdit();
+      expect(manager.domains.domain1.isEditing).toBeTruthy();
+      expect(manager.domains.domain2.isEditing).toBeTruthy();
+    });
+  });
 });
