@@ -201,4 +201,162 @@ describe('Base NLU', () => {
       expect(actual).toBe(expected);
     });
   });
+
+  describe('Edit Mode', () => {
+    test('When entering edit mode all docs are marked as delete', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      const docs = nlu.docs.filter(x => x.status === 'delete');
+      expect(docs).toHaveLength(4);
+    });
+    test('When entering edit mode isEditing is marked as true', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      expect(nlu.isEditing).toBeTruthy();
+    });
+    test('If I add an already existing doc, is marked as untouch', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('bonne nuit', 'greet');
+      expect(nlu.docs[1].status).toEqual('untouch');
+      const docs = nlu.docs.filter(x => x.status === 'delete');
+      expect(docs).toHaveLength(3);
+    });
+    test('If already in edit mode, do not change status of docs', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('bonne nuit', 'greet');
+      nlu.beginEdit();
+      expect(nlu.docs[1].status).toEqual('untouch');
+      const docs = nlu.docs.filter(x => x.status === 'delete');
+      expect(docs).toHaveLength(3);
+    });
+    test('If I add a new doc, status should be create', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('bonne tarda', 'greet');
+      expect(nlu.docs[4].status).toEqual('create');
+      const docs = nlu.docs.filter(x => x.status === 'delete');
+      expect(docs).toHaveLength(4);
+    });
+    test('If I add a new doc, and then add it again, status should be create', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('bonne tarda', 'greet');
+      nlu.add('bonne tarda', 'greet');
+      expect(nlu.docs[4].status).toEqual('create');
+      const docs = nlu.docs.filter(x => x.status === 'delete');
+      expect(docs).toHaveLength(4);
+    });
+    test('If I remove a doc it still have status delete', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.remove('bonne nuit', 'greet');
+      const docs = nlu.docs.filter(x => x.status === 'delete');
+      expect(docs).toHaveLength(4);
+    });
+    test('If I remove a newly added doc it is removed completely', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('bonne tarda', 'greet');
+      nlu.remove('bonne tarda', 'greet');
+      expect(nlu.docs).toHaveLength(4);
+    });
+    test('If I remove an untouch doc it return to delete status', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('bonne nuit', 'greet');
+      nlu.remove('bonne nuit', 'greet');
+      const docs = nlu.docs.filter(x => x.status === 'delete');
+      expect(docs).toHaveLength(4);
+    });
+    test('If I end edit mode with all untouch it returns false', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      const actual = nlu.endEdit();
+      expect(actual).toBeFalsy();
+    });
+    test('If I end edit mode with at least one new doc, return true', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('bonne tarda', 'greet');
+      const actual = nlu.endEdit();
+      expect(actual).toBeTruthy();
+    });
+    test('If I end edit mode with at least one deleted doc, return true', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      const actual = nlu.endEdit();
+      expect(actual).toBeTruthy();
+    });
+    test('If I end edit mode then isEditing status must end', () => {
+      const nlu = new BaseNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.endEdit();
+      expect(nlu.isEditing).toBeFalsy();
+    });
+  });
 });
