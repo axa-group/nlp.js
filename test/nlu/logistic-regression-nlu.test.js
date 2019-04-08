@@ -186,6 +186,43 @@ describe('Logistic Regression NLU', () => {
       const nlu = new LogisticRegressionNLU({ language: 'fr' });
       await nlu.train();
     });
+    test('If I retrain exactly the same, then should not be trained again', async () => {
+      const nlu = new LogisticRegressionNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      await nlu.train();
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      const actual = await nlu.train();
+      expect(actual).toBeFalsy();
+    });
+    test('If I retrain with a modification, should be trained again', async () => {
+      const nlu = new LogisticRegressionNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      await nlu.train();
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      const actual = await nlu.train();
+      expect(actual).toBeTruthy();
+    });
   });
 
   describe('get classifications', () => {
