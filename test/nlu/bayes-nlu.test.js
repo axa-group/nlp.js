@@ -181,6 +181,60 @@ describe('Logistic Regression NLU', () => {
       const nlu = new BayesNLU({ language: 'fr' });
       await nlu.train();
     });
+    test('If I retrain exactly the same, then will not train it', async () => {
+      const nlu = new BayesNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      const trained = await nlu.train();
+      expect(trained).toBeFalsy();
+    });
+    test('If I retrain with some delete, then will train it', async () => {
+      const nlu = new BayesNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      const trained = await nlu.train();
+      expect(trained).toBeTruthy();
+    });
+    test('If I retrain with some new add, then will train it', async () => {
+      const nlu = new BayesNLU({ language: 'fr' });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      nlu.beginEdit();
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      nlu.add('bonne tarda', 'greet');
+      const trained = await nlu.train();
+      expect(trained).toBeTruthy();
+    });
   });
 
   describe('get classifications', () => {
