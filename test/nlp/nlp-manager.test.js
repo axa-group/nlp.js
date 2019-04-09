@@ -39,14 +39,11 @@ describe('NLP Manager', () => {
     });
     test('Should initialize the default properties', () => {
       const manager = new NlpManager();
+      expect(manager.nluManager).toBeDefined();
       expect(manager.nerManager).toBeDefined();
-      expect(manager.guesser).toBeDefined();
       expect(manager.sentiment).toBeDefined();
       expect(manager.slotManager).toBeDefined();
-      expect(manager.languages).toEqual([]);
-      expect(manager.classifiers).toEqual({});
       expect(manager.settings.fullSearchWhenGuessed).toBeFalsy();
-      expect(manager.settings.useNlg).toBeTruthy();
     });
     test('You can set options when creating', () => {
       const manager = new NlpManager({
@@ -68,30 +65,30 @@ describe('NLP Manager', () => {
     test('Should add the language and the classifier', () => {
       const manager = new NlpManager();
       manager.addLanguage('en');
-      expect(manager.languages).toHaveLength(1);
-      expect(manager.languages).toContain('en');
-      expect(manager.classifiers.en).toBeDefined();
+      expect(manager.nluManager.languages).toHaveLength(1);
+      expect(manager.nluManager.languages).toContain('en');
+      expect(manager.nluManager.domainManagers.en).toBeDefined();
     });
     test('Should add several languages', () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'es']);
-      expect(manager.languages).toHaveLength(2);
-      expect(manager.languages).toContain('en');
-      expect(manager.languages).toContain('es');
-      expect(manager.classifiers.en).toBeDefined();
-      expect(manager.classifiers.es).toBeDefined();
+      expect(manager.nluManager.languages).toHaveLength(2);
+      expect(manager.nluManager.languages).toContain('en');
+      expect(manager.nluManager.languages).toContain('es');
+      expect(manager.nluManager.domainManagers.en).toBeDefined();
+      expect(manager.nluManager.domainManagers.es).toBeDefined();
     });
     test('Should not add already existing lenguages', () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'es']);
       manager.addLanguage(['en', 'en', 'es', 'fr']);
-      expect(manager.languages).toHaveLength(3);
-      expect(manager.languages).toContain('en');
-      expect(manager.languages).toContain('es');
-      expect(manager.languages).toContain('fr');
-      expect(manager.classifiers.en).toBeDefined();
-      expect(manager.classifiers.es).toBeDefined();
-      expect(manager.classifiers.fr).toBeDefined();
+      expect(manager.nluManager.languages).toHaveLength(3);
+      expect(manager.nluManager.languages).toContain('en');
+      expect(manager.nluManager.languages).toContain('es');
+      expect(manager.nluManager.languages).toContain('fr');
+      expect(manager.nluManager.domainManagers.en).toBeDefined();
+      expect(manager.nluManager.domainManagers.es).toBeDefined();
+      expect(manager.nluManager.domainManagers.fr).toBeDefined();
     });
   });
 
@@ -117,8 +114,12 @@ describe('NLP Manager', () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'es']);
       manager.addDocument(undefined, 'Dónde están las llaves', 'keys');
-      expect(manager.classifiers.es.docs).toHaveLength(1);
-      expect(manager.classifiers.en.docs).toHaveLength(0);
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs
+      ).toHaveLength(1);
+      expect(
+        manager.nluManager.domainManagers.en.domains.default
+      ).toBeUndefined();
     });
     test('If locale is not defined and cannot be guessed, throw an error', () => {
       const manager = new NlpManager();
@@ -132,13 +133,15 @@ describe('NLP Manager', () => {
       manager.addLanguage(['en']);
       expect(() =>
         manager.addDocument('es', 'Dónde están las llaves', 'keys')
-      ).toThrow('Classifier not found for locale es');
+      ).toThrow('Domain Manager not found for locale es');
     });
     test('Should add the document to the classifier', () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
-      expect(manager.classifiers.es.docs).toHaveLength(1);
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs
+      ).toHaveLength(1);
     });
     test('Should extract managed named entities', () => {
       const manager = new NlpManager();
@@ -210,7 +213,9 @@ describe('NLP Manager', () => {
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument(undefined, 'Dónde están las llaves', 'keys');
-      expect(manager.classifiers.es.docs).toHaveLength(0);
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs
+      ).toHaveLength(0);
     });
     test('If locale is not defined and cannot be guessed, throw an error', () => {
       const manager = new NlpManager();
@@ -224,14 +229,16 @@ describe('NLP Manager', () => {
       manager.addLanguage(['en']);
       expect(() =>
         manager.removeDocument('es', 'Dónde están las llaves', 'keys')
-      ).toThrow('Classifier not found for locale es');
+      ).toThrow('Domain Manager not found for locale es');
     });
     test('Should remove the document from the classifier', () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument('es', 'Dónde están las llaves', 'keys');
-      expect(manager.classifiers.es.docs).toHaveLength(0);
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs
+      ).toHaveLength(0);
     });
   });
 
@@ -251,9 +258,9 @@ describe('NLP Manager', () => {
       );
       await manager.train();
       const result = manager.classify('fr', 'où sont mes clés');
-      expect(result).toHaveLength(2);
-      expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.7);
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
     });
     test('Should guess language if not provided', async () => {
       const manager = new NlpManager();
@@ -280,15 +287,15 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
       await manager.train();
       let result = manager.classify('où sont mes clés');
-      expect(result).toHaveLength(2);
-      expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.7);
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
       result = manager.classify('私の鍵はどこにありますか');
-      expect(result).toHaveLength(2);
-      expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.7);
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
     });
-    test('Should return undefined if there is not classifier for this language', async () => {
+    test('Should return a empty classifications if there is not classifier for this language', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
@@ -313,7 +320,18 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
       await manager.train();
       const result = manager.classify('en', 'where are my keys?');
-      expect(result).toBeUndefined();
+      const expected = {
+        utterance: 'where are my keys?',
+        locale: 'en',
+        languageGuessed: false,
+        localeIso2: 'en',
+        language: 'English',
+        classifications: [],
+        domain: undefined,
+        intent: undefined,
+        score: undefined,
+      };
+      expect(result).toEqual(expected);
     });
   });
 
@@ -343,11 +361,22 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
       await manager.train('fr');
       let result = manager.classify('où sont mes clés');
-      expect(result).toHaveLength(2);
-      expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.7);
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
       result = manager.classify('私の鍵はどこにありますか');
-      expect(result).toEqual([]);
+      const expected = {
+        classifications: [{ label: 'None', value: 1 }],
+        domain: 'default',
+        intent: 'None',
+        language: 'Japanese',
+        languageGuessed: true,
+        locale: 'ja',
+        localeIso2: 'ja',
+        score: 1,
+        utterance: '私の鍵はどこにありますか',
+      };
+      expect(result).toEqual(expected);
     });
     test('You can train a set of languages', async () => {
       const manager = new NlpManager();
@@ -374,40 +403,13 @@ describe('NLP Manager', () => {
       manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
       await manager.train(['fr', 'ja', 'es']);
       let result = manager.classify('où sont mes clés');
-      expect(result).toHaveLength(2);
-      expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.7);
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
       result = manager.classify('私の鍵はどこにありますか');
-      expect(result).toHaveLength(2);
-      expect(result[0].label).toEqual('keys');
-      expect(result[0].value).toBeGreaterThan(0.7);
-    });
-  });
-
-  describe('Is equal classification', () => {
-    test('Should return true if all classifications have 0.5 score', () => {
-      const manager = new NlpManager();
-      const classifications = [];
-      classifications.push({ label: 'a', value: 0.5 });
-      classifications.push({ label: 'b', value: 0.5 });
-      classifications.push({ label: 'c', value: 0.5 });
-      classifications.push({ label: 'd', value: 0.5 });
-      classifications.push({ label: 'e', value: 0.5 });
-      classifications.push({ label: 'f', value: 0.5 });
-      const result = manager.isEqualClassification(classifications);
-      expect(result).toBeTruthy();
-    });
-    test('Should return false if at least one classification score is not 0.5', () => {
-      const manager = new NlpManager();
-      const classifications = [];
-      classifications.push({ label: 'a', value: 0.5 });
-      classifications.push({ label: 'b', value: 0.5 });
-      classifications.push({ label: 'c', value: 0.6 });
-      classifications.push({ label: 'd', value: 0.5 });
-      classifications.push({ label: 'e', value: 0.5 });
-      classifications.push({ label: 'f', value: 0.5 });
-      const result = manager.isEqualClassification(classifications);
-      expect(result).toBeFalsy();
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
     });
   });
 
@@ -561,8 +563,8 @@ describe('NLP Manager', () => {
       expect(result.locale).toEqual('en');
       expect(result.localeIso2).toEqual('en');
       expect(result.utterance).toEqual('Where are my keys');
-      expect(result.classification).toBeDefined();
-      expect(result.classification).toHaveLength(2);
+      expect(result.classifications).toBeDefined();
+      expect(result.classifications).toHaveLength(2);
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.7);
     });
@@ -581,12 +583,12 @@ describe('NLP Manager', () => {
       expect(result.locale).toEqual('en');
       expect(result.localeIso2).toEqual('en');
       expect(result.utterance).toEqual('where are my keys');
-      expect(result.classification).toBeDefined();
-      expect(result.classification).toHaveLength(2);
+      expect(result.classifications).toBeDefined();
+      expect(result.classifications).toHaveLength(2);
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.7);
     });
-    test('If a language not in the manager is passed, then is guessed', async () => {
+    test('If a language not in the manager is passed, then return empty classification', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'ja']);
       manager.addDocument('en', 'Hello', 'greet');
@@ -596,15 +598,16 @@ describe('NLP Manager', () => {
       manager.addDocument('en', "I don't find my keys", 'keys');
       manager.addDocument('en', "I don't know where are my keys", 'keys');
       await manager.train();
-      const result = await manager.process('es', 'where are my keys');
+      const result = await manager.process('es', 'andestán mis llaves');
       expect(result).toBeDefined();
-      expect(result.locale).toEqual('en');
-      expect(result.localeIso2).toEqual('en');
-      expect(result.utterance).toEqual('where are my keys');
-      expect(result.classification).toBeDefined();
-      expect(result.classification).toHaveLength(2);
-      expect(result.intent).toEqual('keys');
-      expect(result.score).toBeGreaterThan(0.7);
+      expect(result.locale).toEqual('es');
+      expect(result.localeIso2).toEqual('es');
+      expect(result.language).toEqual('Spanish');
+      expect(result.utterance).toEqual('andestán mis llaves');
+      expect(result.classifications).toBeDefined();
+      expect(result.classifications).toHaveLength(0);
+      expect(result.intent).toBeUndefined();
+      expect(result.score).toBeUndefined();
     });
     test('Languages with ISO code can be identified even without stemmer', async () => {
       const manager = new NlpManager({
@@ -1014,8 +1017,8 @@ describe('NLP Manager', () => {
       expect(result.locale).toEqual('zh');
       expect(result.localeIso2).toEqual('zh');
       expect(result.utterance).toEqual('我不知道我的钥匙在哪里');
-      expect(result.classification).toBeDefined();
-      expect(result.classification).toHaveLength(2);
+      expect(result.classifications).toBeDefined();
+      expect(result.classifications).toHaveLength(2);
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.8);
     });
@@ -1102,6 +1105,7 @@ describe('NLP Manager', () => {
     test('Should import and export model as JSON string', async () => {
       let manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
+      manager.assignDomain('sawhero', 'domain');
       manager.addNamedEntityText(
         'hero',
         'spiderman',
@@ -1140,7 +1144,6 @@ describe('NLP Manager', () => {
         'sawhero'
       );
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-      manager.assignDomain('sawhero', 'domain');
 
       await manager.train();
       // save current model as JSON string
@@ -1161,6 +1164,7 @@ describe('NLP Manager', () => {
     test('Should import and export model as JSON string without minify', async () => {
       let manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
+      manager.assignDomain('sawhero', 'domain');
       manager.addNamedEntityText(
         'hero',
         'spiderman',
@@ -1199,7 +1203,6 @@ describe('NLP Manager', () => {
         'sawhero'
       );
       manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-      manager.assignDomain('sawhero', 'domain');
 
       await manager.train();
       // save current model as JSON string
@@ -1223,6 +1226,7 @@ describe('NLP Manager', () => {
     test('Should allow to save, load and all should be working', async () => {
       let manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
+      manager.assignDomain('sawhero', 'domain');
       manager.addNamedEntityText(
         'hero',
         'spiderman',
@@ -1269,7 +1273,6 @@ describe('NLP Manager', () => {
         'I want to travel from %from% to %to%',
         'travel'
       );
-      manager.assignDomain('sawhero', 'domain');
       await manager.train();
       manager.save();
       manager = new NlpManager();
@@ -1310,7 +1313,7 @@ describe('NLP Manager', () => {
     test('It should read languages', () => {
       const manager = new NlpManager();
       manager.loadExcel('./test/nlp/rules.xls');
-      expect(manager.languages).toEqual(['en', 'es']);
+      expect(manager.nluManager.languages).toEqual(['en', 'es']);
     });
     test('It should read named entities', () => {
       const manager = new NlpManager();
@@ -1335,21 +1338,39 @@ describe('NLP Manager', () => {
     test('It should create the classifiers for the languages', () => {
       const manager = new NlpManager();
       manager.loadExcel('./test/nlp/rules.xls');
-      expect(manager.classifiers.en).toBeDefined();
-      expect(manager.classifiers.es).toBeDefined();
+      expect(manager.nluManager.domainManagers.en).toBeDefined();
+      expect(manager.nluManager.domainManagers.es).toBeDefined();
     });
     test('The classifiers should contain the intent definition', () => {
       const manager = new NlpManager();
       manager.loadExcel('./test/nlp/rules.xls');
-      expect(manager.classifiers.en.docs).toHaveLength(3);
-      expect(manager.classifiers.en.docs[0].intent).toEqual('whois');
-      expect(manager.classifiers.en.docs[1].intent).toEqual('whereis');
-      expect(manager.classifiers.en.docs[2].intent).toEqual('realname');
-      expect(manager.classifiers.es.docs).toHaveLength(4);
-      expect(manager.classifiers.es.docs[0].intent).toEqual('whois');
-      expect(manager.classifiers.es.docs[1].intent).toEqual('whereis');
-      expect(manager.classifiers.es.docs[2].intent).toEqual('whereis');
-      expect(manager.classifiers.es.docs[3].intent).toEqual('realname');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs
+      ).toHaveLength(3);
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[0].intent
+      ).toEqual('whois');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[1].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[2].intent
+      ).toEqual('realname');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs
+      ).toHaveLength(4);
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[0].intent
+      ).toEqual('whois');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[1].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[2].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[3].intent
+      ).toEqual('realname');
     });
     test('The NLG should be filled', () => {
       const manager = new NlpManager();
@@ -1370,44 +1391,63 @@ describe('NLP Manager', () => {
       manager.addDocument('en', 'Good Morning', 'greet');
       manager.addDocument('en', 'Where are my keys', 'keys');
       const expected = 'default';
-      let actual = manager.getIntentDomain('greet');
+      let actual = manager.getIntentDomain('en', 'greet');
       expect(actual).toEqual(expected);
-      actual = manager.getIntentDomain('keys');
+      actual = manager.getIntentDomain('en', 'keys');
       expect(actual).toEqual(expected);
     });
-    test('The domain of a non existing intent should be undefined', () => {
+    test('The domain of a non existing intent should be default', () => {
       const manager = new NlpManager({ languages: ['en'] });
       manager.addDocument('en', 'Good Morning', 'greet');
       manager.addDocument('en', 'Where are my keys', 'keys');
-      const actual = manager.getIntentDomain('nope');
-      expect(actual).toBeUndefined();
+      const actual = manager.getIntentDomain('en', 'nope');
+      const expected = 'default';
+      expect(actual).toEqual(expected);
     });
     test('It should return the domain of the intent when processing', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'ja']);
+      manager.assignDomain('greet', 'domain');
+      manager.assignDomain('keys', 'domain');
       manager.addDocument('en', 'Hello', 'greet');
       manager.addDocument('en', 'Good evening', 'greet');
       manager.addDocument('en', 'Good morning', 'greet');
       manager.addDocument('en', "I've lost my keys", 'keys');
       manager.addDocument('en', "I don't find my keys", 'keys');
       manager.addDocument('en', "I don't know where are my keys", 'keys');
-      manager.assignDomain('greet', 'domain');
-      manager.assignDomain('keys', 'domain');
       await manager.train();
       const result = await manager.process('where are my keys');
       expect(result.domain).toEqual('domain');
     });
     test('It can provide a list of domains with the intents', () => {
       const manager = new NlpManager({ languages: ['en'] });
-      manager.addDocument('en', 'Good Morning', 'greet');
-      manager.addDocument('en', 'Where are my keys', 'keys');
-      manager.addDocument('en', 'This is another thing', 'another');
       manager.assignDomain('greet', 'domain1');
       manager.assignDomain('keys', 'domain2');
       manager.assignDomain('another', 'domain2');
+      manager.addDocument('en', 'Good Morning', 'greet');
+      manager.addDocument('en', 'Where are my keys', 'keys');
+      manager.addDocument('en', 'This is another thing', 'another');
       const actual = manager.getDomains();
-      const expected = { domain1: ['greet'], domain2: ['keys', 'another'] };
+      const expected = {
+        en: {
+          domain1: ['greet'],
+          domain2: ['keys', 'another'],
+        },
+      };
       expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('Begin Edit', () => {
+    test('It should clear all but the NLU manager', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      const oldNlu = manager.nluManager;
+      const oldNer = manager.nerManager;
+      const oldNlg = manager.nlgManager;
+      manager.beginEdit();
+      expect(manager.nluManager).toBe(oldNlu);
+      expect(manager.nerManager).not.toBe(oldNer);
+      expect(manager.nlgManager).not.toBe(oldNlg);
     });
   });
 });

@@ -369,6 +369,33 @@ describe('NLU Manager', () => {
     });
   });
 
+  describe('Fill Language', () => {
+    test('If not data is provided, then guess undefined', () => {
+      const manager = new NluManager();
+      const actual = manager.fillLanguage({ utterance: '' });
+      expect(actual.language).toBeUndefined();
+      expect(actual.locale).toBeUndefined();
+      expect(actual.localeIso2).toBeUndefined();
+    });
+    test('If has language but not data is provided, then guess as unique existing language', () => {
+      const manager = new NluManager({ languages: ['en'] });
+      const actual = manager.fillLanguage({ utterance: '' });
+      expect(actual.language).toEqual('English');
+      expect(actual.locale).toEqual('en');
+      expect(actual.localeIso2).toEqual('en');
+    });
+    test('If has language the provided is not in the list, return the source one', () => {
+      const manager = new NluManager({ languages: ['en'] });
+      const actual = manager.fillLanguage({
+        locale: 'es',
+        utterance: 'la lluvia en sevilla es pura maravilla',
+      });
+      expect(actual.language).toEqual('Spanish');
+      expect(actual.locale).toEqual('es');
+      expect(actual.localeIso2).toEqual('es');
+    });
+  });
+
   describe('Get Classifications', () => {
     test('Can classify if I provide locale', async () => {
       const manager = new NluManager({ languages: ['en', 'es'] });
@@ -387,6 +414,56 @@ describe('NLU Manager', () => {
       expect(actual.classifications).toHaveLength(2);
       expect(actual.classifications[0].label).toEqual('agent.acquaintance');
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
+    });
+  });
+
+  describe('toObj and fromObj', () => {
+    test('Can export and import', async () => {
+      const manager = new NluManager({ languages: ['en', 'es'] });
+      addFoodDomainEn(manager);
+      addPersonalityDomainEn(manager);
+      addFoodDomainEs(manager);
+      addPersonalityDomainEs(manager);
+      await manager.train();
+      const clone = new NluManager();
+      clone.fromObj(manager.toObj());
+      const actual = clone.getClassifications('es', 'dime quién eres tú');
+      expect(actual.domain).toEqual('personality');
+      expect(actual.language).toEqual('Spanish');
+      expect(actual.locale).toEqual('es');
+      expect(actual.localeGuessed).toBeFalsy();
+      expect(actual.localeIso2).toEqual('es');
+      expect(actual.utterance).toEqual('dime quién eres tú');
+      expect(actual.classifications).toHaveLength(2);
+      expect(actual.classifications[0].label).toEqual('agent.acquaintance');
+      expect(actual.classifications[0].value).toBeGreaterThan(0.8);
+    });
+  });
+
+  describe('Is equal classification', () => {
+    test('Should return true if all classifications have 0.5 score', () => {
+      const manager = new NluManager();
+      const classifications = [];
+      classifications.push({ label: 'a', value: 0.5 });
+      classifications.push({ label: 'b', value: 0.5 });
+      classifications.push({ label: 'c', value: 0.5 });
+      classifications.push({ label: 'd', value: 0.5 });
+      classifications.push({ label: 'e', value: 0.5 });
+      classifications.push({ label: 'f', value: 0.5 });
+      const result = manager.isEqualClassification(classifications);
+      expect(result).toBeTruthy();
+    });
+    test('Should return false if at least one classification score is not 0.5', () => {
+      const manager = new NluManager();
+      const classifications = [];
+      classifications.push({ label: 'a', value: 0.5 });
+      classifications.push({ label: 'b', value: 0.5 });
+      classifications.push({ label: 'c', value: 0.6 });
+      classifications.push({ label: 'd', value: 0.5 });
+      classifications.push({ label: 'e', value: 0.5 });
+      classifications.push({ label: 'f', value: 0.5 });
+      const result = manager.isEqualClassification(classifications);
+      expect(result).toBeFalsy();
     });
   });
 });

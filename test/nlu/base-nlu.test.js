@@ -172,27 +172,6 @@ describe('Base NLU', () => {
     });
   });
 
-  describe('Is equal classification', () => {
-    test('It should return true if all the classifications are 0.5', () => {
-      const nlu = new BaseNLU();
-      const actual = nlu.isEqualClassification([
-        { value: 0.5 },
-        { value: 0.5 },
-        { value: 0.5 },
-      ]);
-      expect(actual).toBeTruthy();
-    });
-    test('It should return false if not all the classifications are 0.5', () => {
-      const nlu = new BaseNLU();
-      const actual = nlu.isEqualClassification([
-        { value: 0.5 },
-        { value: 0.4 },
-        { value: 0.5 },
-      ]);
-      expect(actual).toBeFalsy();
-    });
-  });
-
   describe('Normalize Neural', () => {
     test('If called with 0 total, do not calculate', () => {
       const nlu = new BaseNLU();

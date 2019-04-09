@@ -84,14 +84,14 @@ describe('Recognizer', () => {
     test('It should load the excel and train', () => {
       const recognizer = new Recognizer();
       recognizer.loadExcel('./test/nlp/rules.xls');
-      expect(recognizer.nlpManager.languages).toEqual(['en', 'es']);
+      expect(recognizer.nlpManager.nluManager.languages).toEqual(['en', 'es']);
     });
   });
   describe('The model can be loaded from a model.nlp file', () => {
     test('It should load the model', () => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      expect(recognizer.nlpManager.languages).toEqual(['en']);
+      expect(recognizer.nlpManager.nluManager.languages).toEqual(['en']);
     });
   });
   describe('Process', () => {
