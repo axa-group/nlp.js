@@ -34,7 +34,10 @@ describe('Aggressive Tokenizer Es', () => {
     test('It must tokenize simple sentence', () => {
       const tokenizer = new AggressiveTokenizerEs();
       const expected = ['Esta', 'frase', 'debería', 'ser', 'tokenizada'];
-      const actual = tokenizer.tokenize('Esta frase debería ser tokenizada');
+      const actual = tokenizer.tokenize(
+        'Esta frase debería ser tokenizada',
+        false
+      );
       expect(actual).toEqual(expected);
     });
     test('It must tokenize and normalize', () => {

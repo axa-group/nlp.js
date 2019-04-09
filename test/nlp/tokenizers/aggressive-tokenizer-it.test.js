@@ -45,7 +45,8 @@ describe('Aggressive Tokenizer It', () => {
         'oscura',
       ];
       const actual = tokenizer.tokenize(
-        'Quando arriva la notte e la terra è oscura'
+        'Quando arriva la notte e la terra è oscura',
+        false
       );
       expect(actual).toEqual(expected);
     });

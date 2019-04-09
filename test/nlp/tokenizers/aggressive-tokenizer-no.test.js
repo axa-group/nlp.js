@@ -42,7 +42,10 @@ describe('Aggressive Tokenizer No', () => {
         'er',
         'mørk',
       ];
-      const actual = tokenizer.tokenize('Når natten kommer og jorden er mørk');
+      const actual = tokenizer.tokenize(
+        'Når natten kommer og jorden er mørk',
+        false
+      );
       expect(actual).toEqual(expected);
     });
     test('It must tokenize and normalize', () => {
