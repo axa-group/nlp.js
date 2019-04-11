@@ -125,6 +125,20 @@ describe('Logistic Regression Classifier', () => {
       expect(classifications2[1].label).toEqual('one');
       expect(classifications2[1].value).toBeLessThan(0.05);
     });
+    test('Should return empty array if no thetha', async () => {
+      const classifier = getClassifier2();
+      await classifier.train();
+      classifier.theta = undefined;
+      const classifications1 = classifier.getClassifications([
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+      ]);
+      expect(classifications1).toEqual([]);
+    });
     test('Should get correct clasifications for more complex examples', async () => {
       const classifier = getClassifier3();
       await classifier.train();
