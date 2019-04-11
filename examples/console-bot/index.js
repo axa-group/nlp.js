@@ -25,7 +25,7 @@ const readline = require('readline');
 const { NlpManager } = require('../../lib');
 const trainnlp = require('./train-nlp');
 
-const threshold = 0.7;
+const threshold = 0.5;
 const nlpManager = new NlpManager({ languages: ['en'] });
 
 function say(message) {
