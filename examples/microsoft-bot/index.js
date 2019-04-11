@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 const builder = require('botbuilder');
 const express = require('express');
 const { Recognizer } = require('../../lib');
