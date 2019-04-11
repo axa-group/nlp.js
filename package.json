@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "2.5.2",
+  "version": "3.0.0",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "main": "lib/index.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "lintfix": "eslint --fix lib/**",
     "precommit": "lint-staged",
     "test": "eslint lib/** && jest --coverage --maxWorkers=4",
-    "jsdoc": "jsdoc -r lib -d docs/static -R README.md"
+    "jsdoc": "jsdoc -r lib -d docs/static -R README.md",
+    "browserdist": "browserify ./lib | uglifyjs > ./dist/bundle.js"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
