@@ -62,7 +62,7 @@ const corpus = [
   },
 ];
 
-describe('Binary Neural Network Classifier', () => {
+describe('Brain Classifier', () => {
   describe('Constructor', () => {
     test('Should create an instance', () => {
       const classifier = new BrainClassifier();
@@ -73,9 +73,13 @@ describe('Binary Neural Network Classifier', () => {
       expect(classifier.settings.config).toEqual({
         activation: 'leaky-relu',
         hiddenLayers: [],
-        learningRate: 0.1,
-        errorThresh: 0.0005,
+        learningRate: 0.4,
+        errorThresh: 0.00005,
+        iterations: 20000,
+        momentum: 0.5,
+        deltaErrorThresh: 0.0000001,
         timeout: 120000,
+        maxDecimals: 9,
       });
     });
     test('I can provide a configuration', () => {
