@@ -252,16 +252,55 @@ describe('NLP Classifier', () => {
   });
 
   describe('Neural classifier', () => {
-    test('If should improve accuracy of LRC', async () => {
-      const classifier = new NlpClassifier({ language: 'en' });
-      for (let i = 0; i < corpus.length; i += 1) {
-        classifier.add(corpus[i].text, corpus[i].intent);
-      }
+    test(
+      'If should improve accuracy of LRC',
+      async () => {
+        const classifier = new NlpClassifier({ language: 'en' });
+        for (let i = 0; i < corpus.length; i += 1) {
+          classifier.add(corpus[i].text, corpus[i].intent);
+        }
+        await classifier.train();
+        const classifications = classifier.getClassifications(
+          'next train from garching'
+        );
+        expect(classifications[0].label).toEqual('DepartureTime');
+      },
+      10000
+    );
+  });
+
+  describe('Individual classifier persistence', () => {
+    test('Should save individual classifiers', async () => {
+      const classifier = new NlpClassifier({ language: 'fr' });
+      classifier.add('Bonjour', 'greet');
+      classifier.add('bonne nuit', 'greet');
+      classifier.add('Bonsoir', 'greet');
+      classifier.add("J'ai perdu mes clés", 'keys');
+      classifier.add('Je ne trouve pas mes clés', 'keys');
+      classifier.add('Je ne me souviens pas où sont mes clés', 'keys');
       await classifier.train();
-      const classifications = classifier.getClassifications(
-        'next train from garching'
+      const classifications = classifier.getClassifications('où sont mes clés');
+      classifier.save('./test/nlp/test-classifier.nlp');
+      const loadedClassifier = new NlpClassifier({ language: 'fr' });
+      loadedClassifier.load('./test/nlp/test-classifier.nlp');
+      const loadedClassifications = loadedClassifier.getClassifications(
+        'où sont mes clés'
       );
-      expect(classifications[0].label).toEqual('DepartureTime');
-    }, 10000);
+      const aLength = classifications.length;
+      const bLength = loadedClassifications.length;
+      expect(aLength).toBeGreaterThan(0);
+      expect(bLength).toBeGreaterThan(0);
+      expect(aLength).toEqual(bLength);
+      for (let i = 0; i < aLength; i += 1) {
+        const aClassification = classifications[i];
+        const bClassification = loadedClassifications[i];
+        const aLabel = aClassification.label;
+        const aValue = aClassification.value;
+        const bLabel = bClassification.label;
+        const bValue = bClassification.value;
+        expect(aLabel).toEqual(bLabel);
+        expect(aValue).toEqual(bValue);
+      }
+    });
   });
 });
