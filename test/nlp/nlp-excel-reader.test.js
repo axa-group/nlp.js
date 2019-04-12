@@ -37,13 +37,13 @@ describe('NLP Excel Reader', () => {
       const manager = new NlpManager();
       const reader = new NlpExcelReader(manager);
       reader.load('./test/nlp/rules.xls');
-      expect(manager.languages).toEqual(['en', 'es']);
+      expect(manager.nluManager.languages).toEqual(['en', 'es']);
     });
     test('It should read excel without regex entities', () => {
       const manager = new NlpManager();
       const reader = new NlpExcelReader(manager);
       reader.load('./test/nlp/rulesnoregex.xls');
-      expect(manager.languages).toEqual(['en', 'es']);
+      expect(manager.nluManager.languages).toEqual(['en', 'es']);
     });
     test('It should read named entities', () => {
       const manager = new NlpManager();
@@ -61,22 +61,40 @@ describe('NLP Excel Reader', () => {
       const manager = new NlpManager();
       const reader = new NlpExcelReader(manager);
       reader.load('./test/nlp/rules.xls');
-      expect(manager.classifiers.en).toBeDefined();
-      expect(manager.classifiers.es).toBeDefined();
+      expect(manager.nluManager.domainManagers.en).toBeDefined();
+      expect(manager.nluManager.domainManagers.es).toBeDefined();
     });
     test('The classifiers should contain the intent definition', () => {
       const manager = new NlpManager();
       const reader = new NlpExcelReader(manager);
       reader.load('./test/nlp/rules.xls');
-      expect(manager.classifiers.en.docs).toHaveLength(3);
-      expect(manager.classifiers.en.docs[0].intent).toEqual('whois');
-      expect(manager.classifiers.en.docs[1].intent).toEqual('whereis');
-      expect(manager.classifiers.en.docs[2].intent).toEqual('realname');
-      expect(manager.classifiers.es.docs).toHaveLength(4);
-      expect(manager.classifiers.es.docs[0].intent).toEqual('whois');
-      expect(manager.classifiers.es.docs[1].intent).toEqual('whereis');
-      expect(manager.classifiers.es.docs[2].intent).toEqual('whereis');
-      expect(manager.classifiers.es.docs[3].intent).toEqual('realname');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs
+      ).toHaveLength(3);
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[0].intent
+      ).toEqual('whois');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[1].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[2].intent
+      ).toEqual('realname');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs
+      ).toHaveLength(4);
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[0].intent
+      ).toEqual('whois');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[1].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[2].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.es.domains.default.docs[3].intent
+      ).toEqual('realname');
     });
     test('The NLG should be filled', () => {
       const manager = new NlpManager();

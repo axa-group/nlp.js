@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { BrainClassifier } = require('../../lib');
+const { BrainClassifier, Classifier } = require('../../lib');
 
 const corpus = [
   {
@@ -62,7 +62,7 @@ const corpus = [
   },
 ];
 
-describe('Binary Neural Network Classifier', () => {
+describe('Brain Classifier', () => {
   describe('Constructor', () => {
     test('Should create an instance', () => {
       const classifier = new BrainClassifier();
@@ -73,9 +73,13 @@ describe('Binary Neural Network Classifier', () => {
       expect(classifier.settings.config).toEqual({
         activation: 'leaky-relu',
         hiddenLayers: [],
-        learningRate: 0.1,
-        errorThresh: 0.0005,
+        learningRate: 0.4,
+        errorThresh: 0.00005,
+        iterations: 20000,
+        momentum: 0.5,
+        deltaErrorThresh: 0.0000001,
         timeout: 120000,
+        maxDecimals: 9,
       });
     });
     test('I can provide a configuration', () => {
@@ -130,6 +134,17 @@ describe('Binary Neural Network Classifier', () => {
       classifier.totalTimeout = 0;
       classifier.trainBatch(corpus);
       const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
+      expect(actual).toHaveLength(3);
+      expect(actual[0].label).toEqual('who');
+    });
+  });
+
+  describe('toObj and fromObj', () => {
+    test('Should be able to import/export', async () => {
+      const classifier = new BrainClassifier();
+      await classifier.trainBatch(corpus);
+      const clone = Classifier.fromObj(classifier.toObj());
+      const actual = clone.classify({ tell: 1, me: 1, about: 1, you: 1 });
       expect(actual).toHaveLength(3);
       expect(actual[0].label).toEqual('who');
     });

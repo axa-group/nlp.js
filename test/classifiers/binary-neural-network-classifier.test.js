@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { BinaryNeuralNetworkClassifier } = require('../../lib');
+const { BinaryNeuralNetworkClassifier, Classifier } = require('../../lib');
 
 const corpus = [
   {
@@ -77,6 +77,7 @@ describe('Binary Neural Network Classifier', () => {
         errorThresh: 0.0005,
       });
     });
+
     test('I can provide a configuration', () => {
       const config = {
         activation: 'sigmoid',
@@ -132,6 +133,30 @@ describe('Binary Neural Network Classifier', () => {
       const actual = classifier.classify({ tell: 1, me: 1, about: 1, you: 1 });
       expect(actual).toHaveLength(3);
       expect(actual[0].label).toEqual('who');
+    });
+  });
+
+  describe('toObj and fromObj', () => {
+    test('Should be able to import/export', async () => {
+      const classifier = new BinaryNeuralNetworkClassifier();
+      await classifier.trainBatch(corpus);
+      const clone = Classifier.fromObj(classifier.toObj());
+      const actual = clone.classify({ tell: 1, me: 1, about: 1, you: 1 });
+      expect(actual).toHaveLength(3);
+      expect(actual[0].label).toEqual('who');
+    });
+  });
+
+  describe('Classify Observation', () => {
+    test('If not observation, then return 0.5 in all labels', async () => {
+      const classifier = new BinaryNeuralNetworkClassifier();
+      await classifier.trainBatch(corpus);
+      const actual = [];
+      classifier.classifyObservation({}, actual);
+      expect(actual).toHaveLength(3);
+      expect(actual[0].value).toEqual(0.5);
+      expect(actual[1].value).toEqual(0.5);
+      expect(actual[2].value).toEqual(0.5);
     });
   });
 });

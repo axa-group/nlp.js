@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { LogisticRegressionClassifier } = require('../../lib');
+const { Classifier, LogisticRegressionClassifier } = require('../../lib');
 
 function getClassifier2() {
   const classifier = new LogisticRegressionClassifier({});
@@ -124,6 +124,20 @@ describe('Logistic Regression Classifier', () => {
       expect(classifications2[0].value).toBeGreaterThan(0.95);
       expect(classifications2[1].label).toEqual('one');
       expect(classifications2[1].value).toBeLessThan(0.05);
+    });
+    test('Should return empty array if no thetha', async () => {
+      const classifier = getClassifier2();
+      await classifier.train();
+      classifier.theta = undefined;
+      const classifications1 = classifier.getClassifications([
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+      ]);
+      expect(classifications1).toEqual([]);
     });
     test('Should get correct clasifications for more complex examples', async () => {
       const classifier = getClassifier3();
@@ -309,6 +323,56 @@ describe('Logistic Regression Classifier', () => {
         0,
       ]);
       expect(classification).toBeUndefined();
+    });
+  });
+
+  describe('toObj and fromObj', () => {
+    test('I can clone by toObj and retrieve with fromObj', async () => {
+      const classifier = getClassifier3();
+      await classifier.train();
+      const clone = Classifier.fromObj(classifier.toObj());
+      const classifications1 = clone.getClassifications([
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]);
+      expect(classifications1).toHaveLength(3);
+      expect(classifications1[0].label).toEqual('one');
+      expect(classifications1[0].value).toBeGreaterThan(0.85);
+      const classifications2 = clone.getClassifications([
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        1,
+      ]);
+      expect(classifications2).toHaveLength(3);
+      expect(classifications2[0].label).toEqual('two');
+      expect(classifications2[0].value).toBeGreaterThan(0.85);
+      const classifications3 = clone.getClassifications([
+        1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+      ]);
+      expect(classifications3).toHaveLength(3);
+      expect(classifications3[0].label).toEqual('three');
+      expect(classifications3[0].value).toBeGreaterThan(0.6);
     });
   });
 });
