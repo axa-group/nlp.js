@@ -787,5 +787,5 @@ module.exports = async function trainnlp(manager, say) {
     'user.needsadvice',
     "I'm not sure I'll have the best answer, but I'll try"
   );
-  manager.save('./model.nlp');
+  manager.save('./model.nlp', true);
 };
