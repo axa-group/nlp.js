@@ -640,6 +640,29 @@ describe('NLP Manager', () => {
     });
     test('Should work with fantasy languages', async () => {
       const manager = new NlpManager({ languages: ['en', 'kl'] });
+      manager.addDocument('en', 'goodbye for now', 'greetings.bye');
+      manager.addDocument('en', 'bye bye take care', 'greetings.bye');
+      manager.addDocument('en', 'okay see you later', 'greetings.bye');
+      manager.addDocument('en', 'bye for now', 'greetings.bye');
+      manager.addDocument('en', 'i must go', 'greetings.bye');
+      manager.addDocument('en', 'hello', 'greetings.hello');
+      manager.addDocument('en', 'hi', 'greetings.hello');
+      manager.addDocument('en', 'howdy', 'greetings.hello');
+      manager.describeLanguage('kl', 'Klingon');
+      manager.addDocument('kl', 'nuqneH', 'hello');
+      manager.addDocument('kl', 'maj po', 'hello');
+      manager.addDocument('kl', 'maj choS', 'hello');
+      manager.addDocument('kl', 'maj ram', 'hello');
+      manager.addDocument('kl', `nuqDaq ghaH ngaQHa'moHwI'mey?`, 'keys');
+      manager.addDocument('kl', `ngaQHa'moHwI'mey lujta' jIH`, 'keys');
+      await manager.train();
+      const result = await manager.process(`ngaQHa'moHwI'mey nIH vay'`);
+      expect(result.language).toEqual('Klingon');
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.9);
+    });
+    test('Should even guess the fantasy language', async () => {
+      const manager = new NlpManager({ languages: ['en', 'kl'] });
       manager.describeLanguage('kl', 'Klingon');
       manager.addDocument('kl', 'nuqneH', 'hello');
       manager.addDocument('kl', 'maj po', 'hello');
