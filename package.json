@@ -11,7 +11,7 @@
     "precommit": "lint-staged",
     "test": "eslint lib/** && jest --coverage --maxWorkers=4",
     "jsdoc": "jsdoc -r lib -d docs/static -R README.md",
-    "browserdist": "browserify ./lib | uglifyjs > ./dist/bundle.js"
+    "browserdist": "browserify --i xlsx --i novel-segment ./lib | uglifyjs > ./dist/bundle.js"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
