@@ -23,6 +23,27 @@
 
 const { Recognizer } = require('../../lib');
 
+class SessionMock {
+  constructor(locale, text) {
+    this.locale = locale;
+    this.message = {
+      text,
+    };
+  }
+
+  dialogStack() {
+    return ['/'];
+  }
+
+  routeToActiveDialog() {
+    return 'active';
+  }
+
+  send(text) {
+    this.messageSent = text;
+  }
+}
+
 async function fill(recognizer) {
   recognizer.nlpManager.addLanguage('en');
   const fromEntity = recognizer.nlpManager.addTrimEntity('fromCity');
@@ -45,6 +66,7 @@ async function fill(recognizer) {
     'I want to travel from %fromCity% to %toCity% %date%',
     'travel'
   );
+  recognizer.nlpManager.addDocument('en', 'good morning', 'greet');
   recognizer.nlpManager.addAnswer(
     'en',
     'travel',
@@ -53,7 +75,7 @@ async function fill(recognizer) {
   await recognizer.nlpManager.train();
 }
 
-function mockBot() {
+function mockBot(beginRouting = true) {
   return {
     libraries: {
       BotBuilder: {
@@ -69,6 +91,9 @@ function mockBot() {
     },
     _onDisambiguateRoute() {
       this.defaultDisambiguate = true;
+    },
+    onBeginRouting() {
+      return beginRouting;
     },
   };
 }
@@ -173,12 +198,7 @@ describe('Recognizer', () => {
     test('It should recognize the intent from the session', done => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const session = {
-        locale: 'en',
-        message: {
-          text: 'What is your age?',
-        },
-      };
+      const session = new SessionMock('en', 'What is your age?');
       recognizer.recognize(session, (err, result) => {
         expect(result.intent).toEqual('agent.age');
         expect(result.language).toEqual('English');
@@ -189,12 +209,7 @@ describe('Recognizer', () => {
     test('If the callback is not provided, return a promise', done => {
       const recognizer = new Recognizer();
       recognizer.load('./test/recognizer/model.nlp');
-      const session = {
-        locale: 'en',
-        message: {
-          text: 'What is your age?',
-        },
-      };
+      const session = new SessionMock('en', 'What is your age?');
       recognizer.recognize(session).then(result => {
         expect(result.intent).toEqual('agent.age');
         expect(result.language).toEqual('English');
@@ -596,7 +611,7 @@ describe('Recognizer', () => {
       bot._onDisambiguateRoute(session);
       expect(bot.defaultDisambiguate).toBeFalsy();
     });
-    test('If session contains message', () => {
+    test('If recognizer onBeginRouting is false, return undefined', async () => {
       const bot = mockBot();
       const session = {
         dialogStack() {
@@ -610,11 +625,86 @@ describe('Recognizer', () => {
         },
       };
       const recognizer = new Recognizer();
-      fill(recognizer);
+      await fill(recognizer);
+      recognizer.setBot(bot, true);
+      recognizer.onBeginRouting = () => {
+        return false;
+      };
+      /* eslint-disable no-underscore-dangle */
+      const actual = bot._onDisambiguateRoute(session);
+      expect(actual).toBeUndefined();
+    });
+    test('If session contains message must process it', async () => {
+      const bot = mockBot();
+      const session = new SessionMock(
+        undefined,
+        'I want to travel from Barcelona to London tomorrow'
+      );
+      const recognizer = new Recognizer();
+      await fill(recognizer);
       recognizer.setBot(bot, true);
       /* eslint-disable no-underscore-dangle */
-      bot._onDisambiguateRoute(session);
-      expect(bot.defaultDisambiguate).toBeFalsy();
+      bot._onDisambiguateRoute(session, undefined, () => {
+        expect(session.messageSent).toEqual(
+          'You want to travel tomorrow from Barcelona to London'
+        );
+      });
+    });
+    test('If there is no answer should be no message sent', async () => {
+      const bot = mockBot();
+      const session = new SessionMock(undefined, 'good morning');
+      const recognizer = new Recognizer();
+      await fill(recognizer);
+      recognizer.setBot(bot, true);
+      /* eslint-disable no-underscore-dangle */
+      bot._onDisambiguateRoute(session, undefined, () => {
+        expect(session.messageSent).toBeUndefined();
+      });
+    });
+    test('If there is onRecognizedRouting and there is answer, should be called', async () => {
+      const bot = mockBot();
+      const session = new SessionMock(
+        undefined,
+        'I want to travel from Barcelona to London tomorrow'
+      );
+      const recognizer = new Recognizer();
+      await fill(recognizer);
+      recognizer.setBot(bot, true);
+      recognizer.onRecognizedRouting = () => {
+        recognizer.onRecognizedRoutingCalled = true;
+      };
+      /* eslint-disable no-underscore-dangle */
+      bot._onDisambiguateRoute(session, undefined, () => {
+        expect(recognizer.onRecognizedRoutingCalled).toBeTruthy();
+      });
+    });
+    test('If there is onUnrecognizedRouting and there is no answer, should be called', async () => {
+      const bot = mockBot();
+      const session = new SessionMock(undefined, 'good morning');
+      const recognizer = new Recognizer();
+      await fill(recognizer);
+      recognizer.setBot(bot, true);
+      recognizer.onUnrecognizedRouting = () => {
+        recognizer.onUnrecognizedRoutingCalled = true;
+      };
+      /* eslint-disable no-underscore-dangle */
+      bot._onDisambiguateRoute(session, undefined, () => {
+        expect(recognizer.onUnrecognizedRoutingCalled).toBeTruthy();
+      });
+    });
+    test('If there is onNoTextRouting and there is no text, should be called', async () => {
+      const bot = mockBot();
+      const session = new SessionMock();
+      const recognizer = new Recognizer();
+      await fill(recognizer);
+      recognizer.setBot(bot, true);
+      recognizer.onNoTextRouting = () => {
+        recognizer.onNoTextRoutingCalled = true;
+      };
+      /* eslint-disable no-underscore-dangle */
+      bot._onDisambiguateRoute(session, undefined, () => {
+        expect(recognizer.onNoTextRoutingCalled).toBeTruthy();
+      });
     });
   });
 });
