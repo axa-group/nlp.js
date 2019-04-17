@@ -35,7 +35,7 @@ const classification = classifier.getBestClassification('où sont mes clés');
 // value is { label: 'keys', value: 0.994927593677957 }
 ```
 
-Currently 27 languages are supported:
+Currently 29 languages are supported:
 
 - Arabic (ar)
 - Armenian (hy)
@@ -49,6 +49,7 @@ Currently 27 languages are supported:
 - Farsi (fa)
 - Finnish (fi)
 - French (fr)
+- Galician (gl)
 - German (de)
 - Hungarian (hu)
 - Indonesian (id)
@@ -62,5 +63,6 @@ Currently 27 languages are supported:
 - Slovene (sl)
 - Spanish (es)
 - Swedish (sv)
-- Turkish (tr)
+- Tagalog (tl)
 - Tamil (ta)
+- Turkish (tr)
