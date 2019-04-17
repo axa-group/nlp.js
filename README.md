@@ -35,6 +35,7 @@ The version 3 comes with some important changes, mainly focused on improve perfo
 - Added Tagalog and Galician languages.
 - The console-bot example training time in version 2.x in my laptop was 108 seconds, in the version 3.x the training time went down to 3 seconds, so the improvement in performance is notable.
 - Also the size of the model.nlp files is decreased, the console-bot example went from 1614KB down to 928KB.
+- The browser version has decreased from 5.08MB down to 2.3MB
 
 ### TABLE OF CONTENTS
 
