@@ -26,6 +26,16 @@
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
 </div>
 
+## New in version 3!
+
+The version 3 comes with some important changes, mainly focused on improve performance:
+- NlpClassifier no longer exists, in favor of NluManager as the manager of several NLU classes, and is able to manage several languages and several domains inside each language.
+- Now by default, each domain of a language has it's own neural network classifier. When a language has more than 1 domain, a master neural network is trained that instead of classifying into the intent, classify into de domain. That way the models are faster to train and have a better score.
+- The language guesser is now trained with the trigrams from the utterances used to train. That means that has a best guessing, and also that non-existing languages are guessed (example, klingon).
+- Added Tagalog and Galician languages.
+- The console-bot example training time in version 2.x in my laptop was 108 seconds, in the version 3.x the training time went down to 3 seconds, so the improvement in performance is notable.
+- Also the size of the model.nlp files is decreased, the console-bot example went from 1614KB down to 928KB.
+
 ### TABLE OF CONTENTS
 
 <!--ts-->
@@ -40,7 +50,7 @@
   - [Example with languages](docs/example-with-languages.md)
 - [Language Guesser](docs/language-guesser.md)
 - [Similar Search](docs/similar-search.md)
-- [NLU](docs/nlu.md)
+- [NLU](docs/nlu-manager.md)
   - [NLU Manager](docs/nlu-manager.md)
   - [Brain NLU](docs/brain-nlu.md)
   - [Bayes NLU](docs/bayes-nlu.md)
