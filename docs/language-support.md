@@ -22,6 +22,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Farsi (fa)      |    X    |          |        |
 | Finnish (fi)    |         |    X     |        |
 | French (fr)     |    X    |    X     |        |
+| Galician (gl)   |         |          |   X    |
 | German (de)     |         |    X     |        |
 | Hungarian (hu)  |         |    X     |        |
 | Indonesian (id) |    X    |          |        |
@@ -35,6 +36,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Slovene (sl)    |         |    X     |        |
 | Spanish (es)    |    X    |    X     |        |
 | Swedish (sv)    |    X    |    X     |        |
+| Tagalog (tl)    |         |          |   X    |
 | Tamil (ta)      |         |    X     |        |
 | Turkish (tr)    |         |    X     |        |
 
@@ -54,6 +56,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Farsi (fa)      |       |          |         |
 | Finnish (fi)    |       |          |         |
 | French (fr)     |       |          |    X    |
+| Galician (gl)   |       |          |         |
 | German (de)     |       |    X     |         |
 | Hungarian (hu)  |       |          |         |
 | Indonesian (id) |       |          |         |
@@ -67,8 +70,9 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Slovene (sl)    |       |          |         |
 | Spanish (es)    |   X   |    X     |         |
 | Swedish (sv)    |       |          |         |
-| Turkish (tr)    |       |          |         |
+| Tagalog (tl)    |       |          |         |
 | Tamil (ta)      |       |          |         |
+| Turkish (tr)    |       |          |         |
 
 ## Builtin Entity Extraction
 
