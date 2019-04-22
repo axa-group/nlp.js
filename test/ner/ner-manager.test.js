@@ -257,6 +257,21 @@ describe('NER Manager', () => {
       expect(entities[0].entity).toEqual('hero');
       expect(entities[0].utteranceText).toEqual('spiderman');
     });
+    test('Should find chinese entities', async () => {
+      const manager = new NerManager();
+      manager.addNamedEntityText('place', '餐廳', ['zh'], ['餐廳']);
+      const entities = await manager.findEntities('找餐廳', 'zh');
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(1);
+      expect(entities[0].start).toEqual(1);
+      expect(entities[0].end).toEqual(2);
+      expect(entities[0].levenshtein).toEqual(0);
+      expect(entities[0].accuracy).toEqual(1);
+      expect(entities[0].option).toEqual('餐廳');
+      expect(entities[0].sourceText).toEqual('餐廳');
+      expect(entities[0].entity).toEqual('place');
+      expect(entities[0].utteranceText).toEqual('餐廳');
+    });
     test('Should find an entity if levenshtein greater than threshold', async () => {
       const manager = new NerManager({ threshold: 0.8 });
       manager.addNamedEntityText(
