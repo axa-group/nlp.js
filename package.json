@@ -7,11 +7,14 @@
     "commit": "git-cz",
     "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
     "lint": "eslint .",
+    "lintit": "eslint ",
     "lintfix": "eslint --fix lib/**",
     "precommit": "lint-staged",
     "test": "eslint lib/** && jest --coverage --maxWorkers=4",
+    "justtest": "jest",
     "jsdoc": "jsdoc -r lib -d docs/static -R README.md",
-    "browserdist": "browserify --i xlsx --i novel-segment ./lib | uglifyjs --compress --mangle > ./dist/bundle.js"
+    "browserdist": "browserify --i xlsx --i novel-segment ./lib | uglifyjs --compress --mangle > ./dist/bundle.js",
+    "jest:debug": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
