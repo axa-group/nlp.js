@@ -52,6 +52,7 @@
     "escodegen": "^1.11.1",
     "esprima": "^4.0.1",
     "handlebars": "^4.1.2",
+    "kuromoji": "^0.1.2",
     "novel-segment": "^2.2.20",
     "xlsx": "^0.14.2"
   },

@@ -168,7 +168,9 @@ describe('NLP Util', () => {
       ); // swedish
       expect(NlpUtil.getStemmer('nl').constructor.name).toEqual('DutchStemmer'); // Dutch
       expect(NlpUtil.getStemmer('id')).toBe(StemmerId); // Indonesian
-      expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(StemmerJa); // Japanese
+      expect(NlpUtil.getStemmer('ja').constructor.name).toEqual(
+        'JapaneseStemmer'
+      ); // Japanese
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual(
         'ArabicStemmer'
       ); // Arabic
