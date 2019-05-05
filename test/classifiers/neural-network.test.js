@@ -105,15 +105,9 @@ describe('Neural Network', () => {
       net.initialize();
       const farray4 = new Float32Array(4);
       const farray2 = new Float32Array(2);
-      expect(net.biases).toEqual([undefined, farray4]);
-      expect(net.weights).toEqual([
-        undefined,
-        [farray2, farray2, farray2, farray2],
-      ]);
-      expect(net.changes).toEqual([
-        undefined,
-        [farray2, farray2, farray2, farray2],
-      ]);
+      expect(net.biases).toEqual(farray4);
+      expect(net.weights).toEqual([farray2, farray2, farray2, farray2]);
+      expect(net.changes).toEqual([farray2, farray2, farray2, farray2]);
       expect(net.outputs).toEqual([[], []]);
       expect(net.deltas).toEqual([[], []]);
       expect(net.errors).toEqual([[], []]);
