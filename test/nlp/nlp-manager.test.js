@@ -905,6 +905,125 @@ describe('NLP Manager', () => {
         )
       );
     });
+    test('If the intent has actions, then return the also the actions', async () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addDocument('en', 'goodbye for now', 'greetings.bye');
+      manager.addDocument('en', 'bye bye take care', 'greetings.bye');
+      manager.addDocument('en', 'okay see you later', 'greetings.bye');
+      manager.addDocument('en', 'bye for now', 'greetings.bye');
+      manager.addDocument('en', 'i must go', 'greetings.bye');
+      manager.addDocument('en', 'hello', 'greetings.hello');
+      manager.addDocument('en', 'hi', 'greetings.hello');
+      manager.addDocument('en', 'howdy', 'greetings.hello');
+      manager.addDocument('en', 'how is your day', 'greetings.howareyou');
+      manager.addDocument('en', 'how is your day going', 'greetings.howareyou');
+      manager.addDocument('en', 'how are you', 'greetings.howareyou');
+      manager.addDocument('en', 'how are you doing', 'greetings.howareyou');
+      manager.addDocument('en', 'what about your day', 'greetings.howareyou');
+      manager.addDocument('en', 'are you alright', 'greetings.howareyou');
+      manager.addDocument('en', 'nice to meet you', 'greetings.nicetomeetyou');
+      manager.addDocument(
+        'en',
+        'pleased to meet you',
+        'greetings.nicetomeetyou'
+      );
+      manager.addDocument(
+        'en',
+        'it was very nice to meet you',
+        'greetings.nicetomeetyou'
+      );
+      manager.addDocument('en', 'glad to meet you', 'greetings.nicetomeetyou');
+      manager.addDocument('en', 'nice meeting you', 'greetings.nicetomeetyou');
+      manager.addDocument('en', 'nice to see you', 'greetings.nicetoseeyou');
+      manager.addDocument('en', 'good to see you', 'greetings.nicetoseeyou');
+      manager.addDocument('en', 'great to see you', 'greetings.nicetoseeyou');
+      manager.addDocument('en', 'lovely to see you', 'greetings.nicetoseeyou');
+      manager.addDocument(
+        'en',
+        'nice to talk to you',
+        'greetings.nicetotalktoyou'
+      );
+      manager.addDocument(
+        'en',
+        "it's nice to talk to you",
+        'greetings.nicetotalktoyou'
+      );
+      manager.addDocument(
+        'en',
+        'nice talking to you',
+        'greetings.nicetotalktoyou'
+      );
+      manager.addDocument(
+        'en',
+        "it's been nice talking to you",
+        'greetings.nicetotalktoyou'
+      );
+      manager.addAction('greetings.bye', 'cleanSession', 'true');
+      manager.addAction('greetings.bye', 'beginDialog', '"/"');
+      manager.addAnswer('en', 'greetings.bye', 'Till next time');
+      manager.addAnswer('en', 'greetings.bye', 'See you soon!');
+      manager.addAnswer('en', 'greetings.hello', 'Hey there!');
+      manager.addAnswer('en', 'greetings.hello', 'Greetings!');
+      manager.addAnswer('en', 'greetings.howareyou', 'Feeling wonderful!');
+      manager.addAnswer(
+        'en',
+        'greetings.howareyou',
+        'Wonderful! Thanks for asking'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        "It's nice meeting you, too"
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        "Likewise. I'm looking forward to helping you out"
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        'Nice meeting you, as well'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        'The pleasure is mine'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetoseeyou',
+        'Same here. I was starting to miss you'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetoseeyou',
+        'So glad we meet again'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetotalktoyou',
+        'It sure was. We can chat again anytime'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetotalktoyou',
+        'I enjoy talking to you, too'
+      );
+      await manager.train();
+      let result = await manager.process('goodbye');
+      expect(result.actions).toHaveLength(2);
+      expect(result.actions[0].action).toEqual('cleanSession');
+      expect(result.actions[0].parameters).toEqual('true');
+      expect(result.actions[1].action).toEqual('beginDialog');
+      expect(result.actions[1].parameters).toEqual('"/"');
+      result = await manager.process('It was nice to meet you');
+      expect(result.answer).toMatch(
+        new RegExp(
+          /(It's nice meeting you, too)|(Likewise. I'm looking forward to helping you out)|(Nice meeting you, as well)|(The pleasure is mine)/g
+        )
+      );
+    });
     test('If the NLG is trained, and the answer contains a template, replace with context variables', async () => {
       const manager = new NlpManager({ languages: ['en'] });
       manager.addDocument('en', 'goodbye for now', 'greetings.bye');
@@ -1121,6 +1240,37 @@ describe('NLP Manager', () => {
         {}
       );
       expect(answers).toHaveLength(1);
+    });
+  });
+
+  describe('Add action', () => {
+    test('It should add an action for the given intent', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addAction('greetings.bye', 'cleanSession', 'true');
+      const actions = manager.getActions('greetings.bye');
+      expect(actions).toHaveLength(1);
+      expect(actions[0].action).toEqual('cleanSession');
+      expect(actions[0].parameters).toEqual('true');
+    });
+  });
+
+  describe('Remove action', () => {
+    test('It should remove an action', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addAction('greetings.bye', 'cleanSession', 'true');
+      manager.removeAction('greetings.bye', 'cleanSession', 'true');
+      const actions = manager.getActions('greetings.bye');
+      expect(actions).toHaveLength(0);
+    });
+  });
+
+  describe('Remove actions', () => {
+    test('It should remove all actions of an intent', () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      manager.addAction('greetings.bye', 'cleanSession', 'true');
+      manager.removeActions('greetings.bye');
+      const actions = manager.getActions('greetings.bye');
+      expect(actions).toHaveLength(0);
     });
   });
 

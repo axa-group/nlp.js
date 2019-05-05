@@ -28,6 +28,11 @@ class SessionMock {
     this.locale = locale;
     this.message = {
       text,
+      address: {
+        conversation: {
+          id: 'a1b2c3',
+        },
+      },
     };
   }
 
@@ -73,6 +78,28 @@ async function fill(recognizer) {
     'You want to travel {{ date }} from {{ fromCity }} to {{ toCity }}'
   );
   await recognizer.nlpManager.train();
+}
+
+async function fillActions(srcRecognizer) {
+  const recognizer = srcRecognizer;
+  const manager = recognizer.nlpManager;
+  manager.addLanguage('en');
+  manager.addDocument('en', 'Good morning', 'greet');
+  manager.addDocument('en', 'Goodbye', 'bye');
+  manager.addAnswer('en', 'greet', 'Hello');
+  manager.addAnswer('en', 'bye', 'Goodbye');
+  manager.addAction('greet', 'start', '"Fernando"');
+  if (!recognizer.actions) {
+    recognizer.actions = {};
+  }
+  recognizer.actions.start = (srcRecognizer2, context, name) => {
+    const recognizer2 = srcRecognizer2;
+    if (!recognizer2.context) {
+      recognizer2.context = {};
+    }
+    recognizer2.context.name = name;
+  };
+  await manager.train();
 }
 
 function mockBot(beginRouting = true) {
@@ -295,6 +322,22 @@ describe('Recognizer', () => {
       });
     });
   });
+
+  describe('Actions', () => {
+    test('It should be able to execute actions', async () => {
+      const bot = mockBot();
+      const session = new SessionMock(undefined, 'Good morning');
+      const recognizer = new Recognizer();
+      await fillActions(recognizer);
+      recognizer.setBot(bot, true);
+      // eslint-disable-next-line
+      bot._onDisambiguateRoute(session, undefined, () => {
+        expect(recognizer.context.name).toEqual('Fernando');
+        expect(session.messageSent).toEqual('Hello');
+      });
+    });
+  });
+
   describe('Slot filling', () => {
     test('If all slots are filled return the correct answer', async () => {
       const recognizer = new Recognizer();
