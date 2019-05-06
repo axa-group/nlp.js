@@ -538,4 +538,24 @@ describe('NER Manager', () => {
       });
     });
   });
+
+  describe('Generate entity utterance', () => {
+    test('Should replace entities by they names', async () => {
+      const manager = new NerManager();
+      manager.addNamedEntityText('hero', 'ironman', ['en'], ['ironman']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      const utterance = 'I saw thor and ironman, they where eating pizza';
+      const result = await manager.generateEntityUtterance(utterance, 'en');
+      expect(result).toEqual(
+        'I saw %hero% and %hero%, they where eating %food%'
+      );
+    });
+    test('Should replace nothing if no entities', async () => {
+      const manager = new NerManager();
+      const utterance = 'I saw thor and ironman, they where eating pizza';
+      const result = await manager.generateEntityUtterance(utterance, 'en');
+      expect(result).toEqual('I saw thor and ironman, they where eating pizza');
+    });
+  });
 });
