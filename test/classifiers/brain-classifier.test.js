@@ -77,7 +77,7 @@ describe('Brain Classifier', () => {
         errorThresh: 0.00005,
         iterations: 20000,
         momentum: 0.5,
-        deltaErrorThresh: 0.0000001,
+        deltaErrorThresh: 0.000001,
         timeout: 120000,
         maxDecimals: 9,
         leakyReluAlpha: 0.06,
