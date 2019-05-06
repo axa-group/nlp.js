@@ -152,3 +152,53 @@ manager.findEntities(
 //     utteranceText: 'travel',
 //     entity: 'fromEntity' } ]
 ```
+
+## Utterances with duplicated Entities
+
+Utterances with more than one entity with the same name are supported, providing a "whitelist" with numbered entity names.
+
+The "numbered entity" format must be in the form `${entityName}_${integer}`. E.g. "hero\_1", "food\_2", etc.
+
+```javascript
+const { NerManager } = require('node-nlp');
+
+const manager = new NerManager();
+
+manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spider-man']);
+manager.addNamedEntityText('hero', 'iron man', ['en'], ['ironman']);
+manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+manager.addNamedEntityText('food', 'pasta', ['en'], ['spaghetti']);
+
+const entities = manager.findEntities(
+  'I saw spiderman eating spaghetti and ironman eating pizza',
+  'en',
+  ['hero_1', 'hero_2', 'food_1', 'food_2'],
+);
+
+// entities = [
+//   {
+//     entity: "hero_1",
+//     option: "spiderman",
+//     utteranceText: "spiderman",
+//     ...
+//   },
+//   {
+//     entity: "food_1",
+//     option: "pasta",
+//     utteranceText: "spaghetti",
+//     ...
+//   },
+//   {
+//     entity: "hero_2",
+//     option: "iron man",
+//     utteranceText: "ironman",
+//     ...
+//   },
+//   {
+//     entity: "food_2",
+//     option: "pizza",
+//     utteranceText: "pizza",
+//     ...
+//   }
+// ]
+```
