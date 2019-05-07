@@ -281,6 +281,19 @@ describe('Domain Manager', () => {
       expect(actual.classifications[0].label).toEqual('order.check');
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
+    test('Domain name can be provided to classify', async () => {
+      const manager = new DomainManager();
+      addFoodDomain(manager);
+      addPersonalityDomain(manager);
+      await manager.train();
+      const actual = manager.getClassifications(
+        'tell me what is in my basket',
+        'food'
+      );
+      expect(actual.domain).toEqual('food');
+      expect(actual.classifications[0].label).toEqual('order.check');
+      expect(actual.classifications[0].value).toBeGreaterThan(0.8);
+    });
   });
 
   describe('fromObj and toObj', () => {
