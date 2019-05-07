@@ -135,7 +135,7 @@ Utterances with more than one entity with the same name are supported by providi
 The "numbered entity" format must be in the form `${entityName}_${integer}`. E.g. "hero\_1", "food\_2", etc.
 
 ```javascript
-const { NerManager } = require('node-nlp');
+const { NlpManager } = require('node-nlp');
 
 async function main() {
   const manager = new NlpManager({ languages: ['en'] });
