@@ -3,18 +3,24 @@
 The Sentiment Analysis module is able to calculate the sentiment based on the AFINN.
 Languages accepted:
 
+- eu: Basque
+- ca: Catalan
 - en: English
 - es: Spanish
 - nl: Dutch
 - fr: French
 - it: Italian
 - de: German
+- gl: Galician
 
 | Language | AFINN | Senticon | Pattern | Negations |
 | -------- | :---: | :------: | :-----: | :-------: |
+| Basque   |       |    X     |         |           |
+| Catalan  |       |    X     |         |           |
 | Dutch    |       |          |    X    |     X     |
 | English  |   X   |    X     |    X    |     X     |
 | French   |       |          |    X    |           |
+| Galician |       |    X     |         |           |
 | Italian  |       |          |    X    |           |
 | Spanish  |   X   |    X     |         |     X     |
 | German   |       |    X     |         |     X     |
@@ -23,11 +29,15 @@ By default Senticon is used if possible, otherwise AFINN, and last one Pattern:
 
 | Language | AFINN | Senticon | Pattern |
 | -------- | :---: | :------: | :-----: |
+| Basque   |       |    X     |         |
+| Catalan  |       |    X     |         |
 | Dutch    |       |          |    X    |
 | English  |       |    X     |         |
 | French   |       |          |    X    |
+| Galician |       |    X     |         |
 | Italian  |       |          |    X    |
 | Spanish  |       |    X     |         |
+| German   |       |    X     |         |
 
 You can use a SentimentAnalyzer if you want to manage only one language:
 
