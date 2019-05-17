@@ -46,18 +46,20 @@ describe('Sentiment Analyzer', () => {
       expect(analyzer.negations).toEqual([]);
     });
     test('It should be able to load languages', () => {
-      ['en', 'es', 'it', 'fr', 'nl', 'de'].forEach(language => {
-        const analyzer = new SentimentAnalyzer({ language });
-        expect(analyzer.settings.language).toEqual(language);
-        expect(analyzer.settings.tokenizer).toBeDefined();
-        if (language === 'en' || language === 'es' || language === 'de') {
-          expect(analyzer.settings.type).toEqual('senticon');
-        } else {
-          expect(analyzer.settings.type).toEqual('pattern');
+      ['en', 'es', 'it', 'fr', 'nl', 'de', 'eu', 'gl', 'ca'].forEach(
+        language => {
+          const analyzer = new SentimentAnalyzer({ language });
+          expect(analyzer.settings.language).toEqual(language);
+          expect(analyzer.settings.tokenizer).toBeDefined();
+          if (['en', 'es', 'de', 'eu', 'gl', 'ca'].includes(language)) {
+            expect(analyzer.settings.type).toEqual('senticon');
+          } else {
+            expect(analyzer.settings.type).toEqual('pattern');
+          }
+          expect(analyzer.vocabulary).toBeDefined();
+          expect(analyzer.negations).toBeDefined();
         }
-        expect(analyzer.vocabulary).toBeDefined();
-        expect(analyzer.negations).toBeDefined();
-      });
+      );
     });
     test('When loaded, senticon and pattern should be normalized', () => {
       let analyzer = new SentimentAnalyzer({ language: 'en', type: 'pattern' });
@@ -75,7 +77,7 @@ describe('Sentiment Analyzer', () => {
 
   describe('Get Sentiment', () => {
     test('Get positive sentiment', async () => {
-      const analyzer = new SentimentAnalyzer();
+      const analyzer = new SentimentAnalyzer({ useStemmer: false });
       const utterance = 'I love cats, are so cute!';
       const result = await analyzer.getSentiment(utterance);
       expect(result).toBeDefined();
@@ -87,7 +89,7 @@ describe('Sentiment Analyzer', () => {
       expect(result.language).toEqual('en');
     });
     test('Get negative sentiment', async () => {
-      const analyzer = new SentimentAnalyzer();
+      const analyzer = new SentimentAnalyzer({ useStemmer: false });
       const utterance = 'I hate cats, are awful!';
       const result = await analyzer.getSentiment(utterance);
       expect(result).toBeDefined();

@@ -57,7 +57,7 @@ describe('Sentiment Manager', () => {
 
   describe('Process', () => {
     test('Get positive sentiment', async () => {
-      const sentiment = new SentimentManager();
+      const sentiment = new SentimentManager({ useStemmer: false });
       const utterance = 'I love cats, are so cute!';
       const result = await sentiment.process('en', utterance);
       expect(result).toBeDefined();
@@ -70,7 +70,7 @@ describe('Sentiment Manager', () => {
       expect(result.vote).toEqual('positive');
     });
     test('Get negative sentiment', async () => {
-      const sentiment = new SentimentManager();
+      const sentiment = new SentimentManager({ useStemmer: false });
       const utterance = 'I hate cats, are awful!';
       const result = await sentiment.process('en', utterance);
       expect(result).toBeDefined();
@@ -83,7 +83,7 @@ describe('Sentiment Manager', () => {
       expect(result.vote).toEqual('negative');
     });
     test('Get positive sentiment deutsch', async () => {
-      const sentiment = new SentimentManager();
+      const sentiment = new SentimentManager({ useStemmer: false });
       const utterance = 'Ich liebe Kätzchen';
       const result = await sentiment.process('de', utterance);
       expect(result).toBeDefined();
@@ -95,7 +95,7 @@ describe('Sentiment Manager', () => {
       expect(result.vote).toEqual('positive');
     });
     test('Get negative sentiment deutsch', async () => {
-      const sentiment = new SentimentManager();
+      const sentiment = new SentimentManager({ useStemmer: false });
       const utterance = 'Ich hasse Katzen, ich werde wirklich krank.';
       const result = await sentiment.process('de', utterance);
       expect(result).toBeDefined();
@@ -104,6 +104,32 @@ describe('Sentiment Manager', () => {
       expect(result.numHits).toEqual(2);
       expect(result.type).toEqual('senticon');
       expect(result.language).toEqual('de');
+      expect(result.vote).toEqual('negative');
+    });
+    test('Get positive sentiment basque with stemmer', async () => {
+      const sentiment = new SentimentManager();
+      const utterance =
+        '2018ko martxoaren 30ean, Baionako Etxepare Lizeoko ikasleek Axut !-en, Artedrama eta Le Petit Théâtre de Pain antzerki taldeen "Zazpi senideko" obra berria ikusteko parada izanen dute. Aitzineko bi egunetan ere, hainbat tailerretan parte hartzeko parada ukanen dute. Sorkuntza laguntzeaz gain, Euskal kultur erakundeak lizeoan iraganen diren mediazio tailer batzuk sustatzen ditu.';
+      const result = await sentiment.process('eu', utterance);
+      expect(result).toBeDefined();
+      expect(result.score).toBeGreaterThan(0);
+      expect(result.numWords).toEqual(51);
+      expect(result.numHits).toEqual(9);
+      expect(result.type).toEqual('senticon');
+      expect(result.language).toEqual('eu');
+      expect(result.vote).toEqual('positive');
+    });
+    test('Get negative sentiment basque with stemmer', async () => {
+      const sentiment = new SentimentManager();
+      const utterance =
+        'Luzaz talde amateurrak bakarrik izan ondoan, orain profesionalak ere agertu dira. Hautatzen dituzten testuak euskal idazleenak ala egokipenak dira (Brecht, Réza, Koltès...).';
+      const result = await sentiment.process('eu', utterance);
+      expect(result).toBeDefined();
+      expect(result.score).toBeLessThan(0);
+      expect(result.numWords).toEqual(23);
+      expect(result.numHits).toEqual(5);
+      expect(result.type).toEqual('senticon');
+      expect(result.language).toEqual('eu');
       expect(result.vote).toEqual('negative');
     });
   });
