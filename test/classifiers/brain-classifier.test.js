@@ -73,13 +73,14 @@ describe('Brain Classifier', () => {
       expect(classifier.settings.config).toEqual({
         activation: 'leaky-relu',
         hiddenLayers: [],
-        learningRate: 0.4,
+        learningRate: 0.8,
         errorThresh: 0.00005,
         iterations: 20000,
         momentum: 0.5,
-        deltaErrorThresh: 0.0000001,
+        deltaErrorThresh: 0.000001,
         timeout: 120000,
         maxDecimals: 9,
+        leakyReluAlpha: 0.06,
       });
     });
     test('I can provide a configuration', () => {

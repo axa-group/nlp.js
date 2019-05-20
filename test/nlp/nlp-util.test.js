@@ -168,7 +168,9 @@ describe('NLP Util', () => {
       ); // swedish
       expect(NlpUtil.getStemmer('nl').constructor.name).toEqual('DutchStemmer'); // Dutch
       expect(NlpUtil.getStemmer('id')).toBe(StemmerId); // Indonesian
-      expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(StemmerJa); // Japanese
+      expect(NlpUtil.getStemmer('ja').constructor.name).toEqual(
+        'JapaneseStemmer'
+      ); // Japanese
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual(
         'ArabicStemmer'
       ); // Arabic
@@ -294,9 +296,14 @@ describe('NLP Util', () => {
       expect(NlpUtil.getCulture('ta')).toEqual('ta-in'); // tamil
       expect(NlpUtil.getCulture('tr')).toEqual('tr-tr'); // turkish
       expect(NlpUtil.getCulture('zh')).toEqual('zh-cn'); // Chinese
+      expect(NlpUtil.getCulture('gl')).toEqual('gl-es'); // Galician
+      expect(NlpUtil.getCulture('tl')).toEqual('tl-ph'); // Tagalog
     });
     test('If the locale is not recognized return default is built from locale', () => {
-      expect(NlpUtil.getCulture('aa')).toEqual('aa-aa'); // english
+      expect(NlpUtil.getCulture('aa')).toEqual('aa-aa');
+    });
+    test('If no locale is provided return en-us', () => {
+      expect(NlpUtil.getCulture()).toEqual('en-us'); // english
     });
   });
 });

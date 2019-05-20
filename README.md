@@ -61,6 +61,7 @@ The version 3 comes with some important changes, mainly focused on improve perfo
   - [Enum Named Entities](docs/ner-manager.md#enum-named-entities)
   - [Regular Expression Named Entities](docs/ner-manager.md#regular-expression-named-entities)
   - [Trim Named Entities](docs/ner-manager.md#trim-named-entities)
+  - [Utterances with duplicated Entities](docs/ner-manager.md#utterances-with-duplicated-entities)
 - [Builtin Entity Extraction](docs/builtin-entity-extraction.md)
   - [Email Extraction](docs/builtin-entity-extraction.md#email-extraction)
   - [IP Extraction](docs/builtin-entity-extraction.md#ip-extraction)

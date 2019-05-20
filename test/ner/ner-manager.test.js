@@ -224,6 +224,15 @@ describe('NER Manager', () => {
       );
       expect(entities).toEqual(['entity1', 'entity3']);
     });
+    test('Should find numerated entities inside utterance', () => {
+      const manager = new NerManager();
+      manager.addNamedEntity('hero');
+      manager.addNamedEntity('food');
+      const entities = manager.getEntitiesFromUtterance(
+        'Those are %hero_1% and %hero_3%, with some %food% and %food_6%'
+      );
+      expect(entities).toEqual(['hero_1', 'hero_3', 'food', 'food_6']);
+    });
   });
 
   describe('Find entities', () => {
@@ -436,16 +445,6 @@ describe('NER Manager', () => {
       expect(entities).toHaveLength(3);
       expect(entities[0]).toEqual({
         accuracy: 1,
-        end: 30,
-        len: 9,
-        entity: 'fromLocation',
-        sourceText: 'Barcelona',
-        start: 22,
-        type: 'between',
-        utteranceText: 'Barcelona',
-      });
-      expect(entities[1]).toEqual({
-        accuracy: 1,
         end: 15,
         len: 6,
         entity: 'toLocation',
@@ -453,6 +452,16 @@ describe('NER Manager', () => {
         start: 10,
         type: 'between',
         utteranceText: 'travel',
+      });
+      expect(entities[1]).toEqual({
+        accuracy: 1,
+        end: 30,
+        len: 9,
+        entity: 'fromLocation',
+        sourceText: 'Barcelona',
+        start: 22,
+        type: 'between',
+        utteranceText: 'Barcelona',
       });
       expect(entities[2]).toEqual({
         accuracy: 0.99,
@@ -514,9 +523,7 @@ describe('NER Manager', () => {
       );
       expect(entities).toBeDefined();
       expect(entities).toHaveLength(3);
-      expect(entities[0].utteranceText).toEqual('tomorrow');
-      expect(entities[0].entity).toEqual('date');
-      expect(entities[1]).toEqual({
+      expect(entities[0]).toEqual({
         accuracy: 1,
         end: 30,
         len: 9,
@@ -526,7 +533,7 @@ describe('NER Manager', () => {
         type: 'between',
         utteranceText: 'Barcelona',
       });
-      expect(entities[2]).toEqual({
+      expect(entities[1]).toEqual({
         accuracy: 0.99,
         end: 40,
         len: 6,
@@ -536,6 +543,148 @@ describe('NER Manager', () => {
         type: 'afterLast',
         utteranceText: 'Madrid',
       });
+      expect(entities[2].utteranceText).toEqual('tomorrow');
+      expect(entities[2].entity).toEqual('date');
+    });
+  });
+
+  describe('Find numbered entities', () => {
+    async function findEntities(utterance, whitelist) {
+      const manager = new NerManager();
+      manager.addNamedEntityText('hero', 'ironman', ['en'], ['iron man']);
+      manager.addNamedEntityText('hero', 'spiderman', ['en'], ['Spider-man']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText('food', 'pasta', ['en'], ['spaghetti']);
+      return manager.findEntities(utterance, 'en', whitelist);
+    }
+    test('Should find numbered entities', async () => {
+      const entities = await findEntities(
+        'I saw spiderman eating spaghetti and ironman eating pizza',
+        ['hero_1', 'hero_2', 'food_1', 'food_2']
+      );
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(4);
+      expect(entities[0].option).toEqual('spiderman');
+      expect(entities[0].sourceText).toEqual('Spider-man');
+      expect(entities[0].entity).toEqual('hero_1');
+      expect(entities[0].utteranceText).toEqual('spiderman');
+      expect(entities[1].option).toEqual('pasta');
+      expect(entities[1].sourceText).toEqual('spaghetti');
+      expect(entities[1].entity).toEqual('food_1');
+      expect(entities[1].utteranceText).toEqual('spaghetti');
+      expect(entities[2].option).toEqual('ironman');
+      expect(entities[2].sourceText).toEqual('iron man');
+      expect(entities[2].entity).toEqual('hero_2');
+      expect(entities[2].utteranceText).toEqual('ironman');
+      expect(entities[3].option).toEqual('pizza');
+      expect(entities[3].sourceText).toEqual('pizza');
+      expect(entities[3].entity).toEqual('food_2');
+      expect(entities[3].utteranceText).toEqual('pizza');
+    });
+    test('Should find numbered and non-numbered entities', async () => {
+      const entities = await findEntities(
+        'I saw spiderman together with ironman, they where eating spaghetti',
+        ['hero_1', 'hero_2', 'food']
+      );
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(3);
+      expect(entities[0].option).toEqual('spiderman');
+      expect(entities[0].sourceText).toEqual('Spider-man');
+      expect(entities[0].entity).toEqual('hero_1');
+      expect(entities[0].utteranceText).toEqual('spiderman');
+      expect(entities[1].option).toEqual('ironman');
+      expect(entities[1].sourceText).toEqual('iron man');
+      expect(entities[1].entity).toEqual('hero_2');
+      expect(entities[1].utteranceText).toEqual('ironman');
+      expect(entities[2].option).toEqual('pasta');
+      expect(entities[2].sourceText).toEqual('spaghetti');
+      expect(entities[2].entity).toEqual('food');
+      expect(entities[2].utteranceText).toEqual('spaghetti');
+    });
+    test('Should assign the whitelist names to the entities', async () => {
+      const entities = await findEntities(
+        'I saw spiderman together with ironman, they where eating spaghetti',
+        ['hero', 'hero_2', 'food_6']
+      );
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(3);
+      expect(entities[0].option).toEqual('spiderman');
+      expect(entities[0].sourceText).toEqual('Spider-man');
+      expect(entities[0].entity).toEqual('hero');
+      expect(entities[0].utteranceText).toEqual('spiderman');
+      expect(entities[1].option).toEqual('ironman');
+      expect(entities[1].sourceText).toEqual('iron man');
+      expect(entities[1].entity).toEqual('hero_2');
+      expect(entities[1].utteranceText).toEqual('ironman');
+      expect(entities[2].option).toEqual('pasta');
+      expect(entities[2].sourceText).toEqual('spaghetti');
+      expect(entities[2].entity).toEqual('food_6');
+      expect(entities[2].utteranceText).toEqual('spaghetti');
+    });
+    test('Should assign names to found entities in whitelist order', async () => {
+      const entities = await findEntities(
+        'I saw spiderman together with ironman, they where eating spaghetti',
+        ['hero_1', 'hero_2', 'hero_3', 'food_1', 'food_2']
+      );
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(3);
+      expect(entities[0].option).toEqual('spiderman');
+      expect(entities[0].sourceText).toEqual('Spider-man');
+      expect(entities[0].entity).toEqual('hero_1');
+      expect(entities[0].utteranceText).toEqual('spiderman');
+      expect(entities[1].option).toEqual('ironman');
+      expect(entities[1].sourceText).toEqual('iron man');
+      expect(entities[1].entity).toEqual('hero_2');
+      expect(entities[1].utteranceText).toEqual('ironman');
+      expect(entities[2].option).toEqual('pasta');
+      expect(entities[2].sourceText).toEqual('spaghetti');
+      expect(entities[2].entity).toEqual('food_1');
+      expect(entities[2].utteranceText).toEqual('spaghetti');
+    });
+    test('Should use numbered names only once', async () => {
+      const entities = await findEntities(
+        'I saw spiderman eating spaghetti and ironman eating pizza',
+        ['hero_2', 'food_2']
+      );
+      expect(entities).toBeDefined();
+      expect(entities).toHaveLength(4);
+      expect(entities[0].option).toEqual('spiderman');
+      expect(entities[0].sourceText).toEqual('Spider-man');
+      expect(entities[0].entity).toEqual('hero_2');
+      expect(entities[0].utteranceText).toEqual('spiderman');
+      expect(entities[1].option).toEqual('pasta');
+      expect(entities[1].sourceText).toEqual('spaghetti');
+      expect(entities[1].entity).toEqual('food_2');
+      expect(entities[1].utteranceText).toEqual('spaghetti');
+      expect(entities[2].option).toEqual('ironman');
+      expect(entities[2].sourceText).toEqual('iron man');
+      expect(entities[2].entity).toEqual('hero');
+      expect(entities[2].utteranceText).toEqual('ironman');
+      expect(entities[3].option).toEqual('pizza');
+      expect(entities[3].sourceText).toEqual('pizza');
+      expect(entities[3].entity).toEqual('food');
+      expect(entities[3].utteranceText).toEqual('pizza');
+    });
+  });
+
+  describe('Generate entity utterance', () => {
+    test('Should replace entities by their names', async () => {
+      const manager = new NerManager();
+      manager.addNamedEntityText('hero', 'ironman', ['en'], ['ironman']);
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      const utterance = 'I saw thor and ironman, they where eating pizza';
+      const result = await manager.generateEntityUtterance(utterance, 'en');
+      expect(result).toEqual(
+        'I saw %hero% and %hero%, they where eating %food%'
+      );
+    });
+    test('Should replace nothing if no entities', async () => {
+      const manager = new NerManager();
+      const utterance = 'I saw thor and ironman, they where eating pizza';
+      const result = await manager.generateEntityUtterance(utterance, 'en');
+      expect(result).toEqual('I saw thor and ironman, they where eating pizza');
     });
   });
 });
