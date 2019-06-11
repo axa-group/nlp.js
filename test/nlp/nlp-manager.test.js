@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NlpManager } = require('../../lib');
+const NlpManager = require('../../lib/nlp/nlp-manager');
 
 describe('NLP Manager', () => {
   describe('constructor', () => {

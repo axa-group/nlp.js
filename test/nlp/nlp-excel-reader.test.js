@@ -21,7 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NlpManager, NlpExcelReader } = require('../../lib');
+const NlpManager = require('../../lib/nlp/nlp-manager');
+const NlpExcelReader = require('../../lib/nlp/nlp-excel-reader');
 
 describe('NLP Excel Reader', () => {
   describe('Constructor', () => {

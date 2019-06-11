@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NlpManager } = require('../../../lib');
+const NlpManager = require('../../../lib/nlp/nlp-manager');
 const numberAgeTests = require('./number-age.json');
 const numberTests = require('./number.json');
 const numberOrdinalTests = require('./number-ordinal.json');
