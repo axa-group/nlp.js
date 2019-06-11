@@ -109,11 +109,14 @@ describe('RN NLP Manager', () => {
       const result = await manager.process('en', 'It was nice to meet you', {
         name: 'John',
       });
+      /*
+      // srcAnswer is resolved in getAnswer for rn-nlp-manager
       expect(result.srcAnswer).toMatch(
         new RegExp(
           /(It's nice meeting you, too {{name}})|(Likewise. I'm looking forward to helping you out {{name}})|(Nice meeting you, as well {{name}})|(The pleasure is mine {{name}})/g
         )
       );
+      */
       expect(result.answer).toMatch(
         new RegExp(
           /(It's nice meeting you, too John)|(Likewise. I'm looking forward to helping you out John)|(Nice meeting you, as well John)|(The pleasure is mine John)/g
