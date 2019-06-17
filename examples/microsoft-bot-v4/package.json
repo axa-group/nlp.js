@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "botbuilder": "^4.1.6",
+    "botbuilder": "^4.4.0",
     "express": "^4.16.3"
   },
   "greenkeeper": {
