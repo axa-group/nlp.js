@@ -110,7 +110,6 @@ describe('Neural Network', () => {
       expect(net.changes).toEqual([farray2, farray2, farray2, farray2]);
       expect(net.inputs).toEqual([]);
       expect(net.outputs).toEqual([]);
-      expect(net.inputDeltas).toEqual([]);
       expect(net.outputDeltas).toEqual([]);
       expect(net.outputErrors).toEqual([]);
     });
