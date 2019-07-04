@@ -489,5 +489,21 @@ describe('Trim Named Entity', () => {
       const matchs = entity.extract('I must go from Barcelona to Madrid');
       expect(matchs).toHaveLength(7);
     });
+    test('It should be able to retrieve at start of utterance', () => {
+      const entity = new TrimNamedEntity({ name: 'fromLocation' });
+      entity.addAfterLastCondition('en', 'from');
+      const matchs = entity.extract('from Barcelona to Madrid');
+      expect(matchs).toHaveLength(1);
+      expect(matchs[0]).toEqual({
+        type: 'afterLast',
+        start: 5,
+        end: 23,
+        len: 19,
+        accuracy: 0.99,
+        sourceText: 'Barcelona to Madrid',
+        utteranceText: 'Barcelona to Madrid',
+        entity: 'fromLocation',
+      });
+    });
   });
 });
