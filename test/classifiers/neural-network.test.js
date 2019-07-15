@@ -169,6 +169,8 @@ describe('Neural Network', () => {
           learningRate: 0.3,
           momentum: 0.1,
           leakyReluAlpha: 0.05,
+          log: false,
+          maxDecimals: undefined,
         },
       };
       expect(actual).toEqual(expected);
