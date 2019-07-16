@@ -43,6 +43,7 @@ The version 3 comes with some important changes, mainly focused on improve perfo
 
 - [Installation](#installation)
 - [Example of use](#example-of-use)
+- [Log Training Progress](#log-training-progress)
 - [Benchmarking](docs/benchmarking.md)
 - [Language Support](docs/language-support.md)
   - [Classification](docs/language-support.md#classification)
@@ -157,6 +158,20 @@ This will show this result in console:
      type: 'senticon',
      language: 'en' },
   answer: 'Till next time' }
+```
+
+## Log Training Pogress
+
+You can also add a log progress, so you can trace what is happening during the training.
+You can log the progress into console:
+
+```javascript
+const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: true } });
+```
+Or you can provide your own log function:
+```javascript
+const logfn = (status, time) => console.log(status, time);
+const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
 ```
 
 ## Contributing
