@@ -441,11 +441,11 @@ describe('NLU Manager', () => {
   });
 
   describe('Is equal classification', () => {
-    test('Should return true if all classifications have 0.5 score', () => {
+    test('Should return true if the two frist classifications have the same score', () => {
       const manager = new NluManager();
       const classifications = [];
-      classifications.push({ label: 'a', value: 0.5 });
-      classifications.push({ label: 'b', value: 0.5 });
+      classifications.push({ label: 'a', value: 0.6 });
+      classifications.push({ label: 'b', value: 0.6 });
       classifications.push({ label: 'c', value: 0.5 });
       classifications.push({ label: 'd', value: 0.5 });
       classifications.push({ label: 'e', value: 0.5 });
@@ -453,11 +453,11 @@ describe('NLU Manager', () => {
       const result = manager.isEqualClassification(classifications);
       expect(result).toBeTruthy();
     });
-    test('Should return false if at least one classification score is not 0.5', () => {
+    test('Should return false if first score is different than second score', () => {
       const manager = new NluManager();
       const classifications = [];
-      classifications.push({ label: 'a', value: 0.5 });
-      classifications.push({ label: 'b', value: 0.5 });
+      classifications.push({ label: 'a', value: 0.7 });
+      classifications.push({ label: 'b', value: 0.6 });
       classifications.push({ label: 'c', value: 0.6 });
       classifications.push({ label: 'd', value: 0.5 });
       classifications.push({ label: 'e', value: 0.5 });
