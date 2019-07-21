@@ -10,7 +10,7 @@ const entityUtterance = false;
 const sentenceUtterance = true;
 
 async function scoreCorpus(corpus) {
-  const manager = new NlpManager({ languages: ['en'] });
+  const manager = new NlpManager({ languages: ['en'], nlu: { log: true } });
   const { sentences } = corpus;
   const entities = {};
   for (let i = 0; i < sentences.length; i += 1) {
