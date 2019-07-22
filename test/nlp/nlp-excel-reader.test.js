@@ -70,7 +70,7 @@ describe('NLP Excel Reader', () => {
       reader.load('./test/nlp/rules.xls');
       expect(
         manager.nluManager.domainManagers.en.domains.default.docs
-      ).toHaveLength(3);
+      ).toHaveLength(5);
       expect(
         manager.nluManager.domainManagers.en.domains.default.docs[0].intent
       ).toEqual('whois');
@@ -79,6 +79,12 @@ describe('NLP Excel Reader', () => {
       ).toEqual('whereis');
       expect(
         manager.nluManager.domainManagers.en.domains.default.docs[2].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[3].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.en.domains.default.docs[4].intent
       ).toEqual('realname');
       expect(
         manager.nluManager.domainManagers.es.domains.default.docs

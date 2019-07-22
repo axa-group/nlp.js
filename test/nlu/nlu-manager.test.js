@@ -397,8 +397,8 @@ describe('NLU Manager', () => {
   });
 
   describe('Get Classifications', () => {
-    test('Can classify if I provide locale', async () => {
-      const manager = new NluManager({ languages: ['en', 'es'] });
+    test('Can classify if I provide locale without using None Feature', async () => {
+      const manager = new NluManager({ languages: ['en', 'es'], useNoneFeature: false });
       addFoodDomainEn(manager);
       addPersonalityDomainEn(manager);
       addFoodDomainEs(manager);
@@ -415,9 +415,47 @@ describe('NLU Manager', () => {
       expect(actual.classifications[0].label).toEqual('agent.acquaintance');
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
+    test('Can classify if I provide locale', async () => {
+      const manager = new NluManager({ languages: ['en', 'es'] });
+      addFoodDomainEn(manager);
+      addPersonalityDomainEn(manager);
+      addFoodDomainEs(manager);
+      addPersonalityDomainEs(manager);
+      await manager.train();
+      const actual = manager.getClassifications('es', 'dime quién eres tú');
+      expect(actual.domain).toEqual('personality');
+      expect(actual.language).toEqual('Spanish');
+      expect(actual.locale).toEqual('es');
+      expect(actual.localeGuessed).toBeFalsy();
+      expect(actual.localeIso2).toEqual('es');
+      expect(actual.utterance).toEqual('dime quién eres tú');
+      expect(actual.classifications).toHaveLength(3);
+      expect(actual.classifications[0].label).toEqual('agent.acquaintance');
+      expect(actual.classifications[0].value).toBeGreaterThan(0.8);
+    });
   });
 
   describe('toObj and fromObj', () => {
+    test('Can export and import without using None Feature', async () => {
+      const manager = new NluManager({ languages: ['en', 'es'], useNoneFeature: false });
+      addFoodDomainEn(manager);
+      addPersonalityDomainEn(manager);
+      addFoodDomainEs(manager);
+      addPersonalityDomainEs(manager);
+      await manager.train();
+      const clone = new NluManager();
+      clone.fromObj(manager.toObj());
+      const actual = clone.getClassifications('es', 'dime quién eres tú');
+      expect(actual.domain).toEqual('personality');
+      expect(actual.language).toEqual('Spanish');
+      expect(actual.locale).toEqual('es');
+      expect(actual.localeGuessed).toBeFalsy();
+      expect(actual.localeIso2).toEqual('es');
+      expect(actual.utterance).toEqual('dime quién eres tú');
+      expect(actual.classifications).toHaveLength(2);
+      expect(actual.classifications[0].label).toEqual('agent.acquaintance');
+      expect(actual.classifications[0].value).toBeGreaterThan(0.8);
+    });
     test('Can export and import', async () => {
       const manager = new NluManager({ languages: ['en', 'es'] });
       addFoodDomainEn(manager);
@@ -434,7 +472,7 @@ describe('NLU Manager', () => {
       expect(actual.localeGuessed).toBeFalsy();
       expect(actual.localeIso2).toEqual('es');
       expect(actual.utterance).toEqual('dime quién eres tú');
-      expect(actual.classifications).toHaveLength(2);
+      expect(actual.classifications).toHaveLength(3);
       expect(actual.classifications[0].label).toEqual('agent.acquaintance');
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });

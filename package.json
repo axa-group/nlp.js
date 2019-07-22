@@ -50,7 +50,6 @@
     "@microsoft/recognizers-text-suite": "1.1.4",
     "escodegen": "^1.11.1",
     "esprima": "^4.0.1",
-    "handlebars": "^4.1.2",
     "kuromoji": "^0.1.2",
     "lodash": ">=4.17.13",
     "novel-segment": "^2.2.32",
