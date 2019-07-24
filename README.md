@@ -184,13 +184,13 @@ You can read the Code of Conduct at [Code of Conduct](https://github.com/axa-gro
 
 ## Who is behind it?
 
-This project is developed by AXA Shared Services Spain S.A.
+This project is developed by AXA Group Operations Spain S.A.
 
 If you need to contact us, you can do it at the email jesus.seijas@axa.com
 
 ## License
 
-Copyright (c) AXA Shared Services Spain S.A.
+Copyright (c) AXA Group Operations Spain S.A.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
