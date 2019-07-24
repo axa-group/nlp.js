@@ -23,7 +23,7 @@
 
 const { BaseNLU, BrainNLU, NlpUtil } = require('../../lib');
 
-describe('Brain Regression NLU', () => {
+describe('Brain NLU', () => {
   describe('constructor', () => {
     test('Should create a new instance', () => {
       const nlu = new BrainNLU();
@@ -216,6 +216,20 @@ describe('Brain Regression NLU', () => {
   });
 
   describe('get classifications', () => {
+    test('Should give the classifications for an utterance without using None feature', async () => {
+      const nlu = new BrainNLU({ language: 'fr', useNoneFeature: false });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      await nlu.train();
+      const classification = nlu.getClassifications('où sont mes clés');
+      expect(classification).toHaveLength(2);
+      expect(classification[0].label).toEqual('keys');
+      expect(classification[0].value).toBeGreaterThan(0.7);
+    });
     test('Should give the classifications for an utterance', async () => {
       const nlu = new BrainNLU({ language: 'fr' });
       nlu.add('Bonjour', 'greet');
@@ -226,7 +240,7 @@ describe('Brain Regression NLU', () => {
       nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
       await nlu.train();
       const classification = nlu.getClassifications('où sont mes clés');
-      expect(classification).toHaveLength(2);
+      expect(classification).toHaveLength(3);
       expect(classification[0].label).toEqual('keys');
       expect(classification[0].value).toBeGreaterThan(0.7);
     });
@@ -280,6 +294,21 @@ describe('Brain Regression NLU', () => {
   });
 
   describe('toObj and fromObj', () => {
+    test('Should give the classifications after export/import without using None Feature', async () => {
+      const nlu = new BrainNLU({ language: 'fr', useNoneFeature: false });
+      nlu.add('Bonjour', 'greet');
+      nlu.add('bonne nuit', 'greet');
+      nlu.add('Bonsoir', 'greet');
+      nlu.add("J'ai perdu mes clés", 'keys');
+      nlu.add('Je ne trouve pas mes clés', 'keys');
+      nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
+      await nlu.train();
+      const clone = BaseNLU.fromObj(nlu.toObj());
+      const classification = clone.getClassifications('où sont mes clés');
+      expect(classification).toHaveLength(2);
+      expect(classification[0].label).toEqual('keys');
+      expect(classification[0].value).toBeGreaterThan(0.7);
+    });
     test('Should give the classifications after export/import', async () => {
       const nlu = new BrainNLU({ language: 'fr' });
       nlu.add('Bonjour', 'greet');
@@ -291,7 +320,7 @@ describe('Brain Regression NLU', () => {
       await nlu.train();
       const clone = BaseNLU.fromObj(nlu.toObj());
       const classification = clone.getClassifications('où sont mes clés');
-      expect(classification).toHaveLength(2);
+      expect(classification).toHaveLength(3);
       expect(classification[0].label).toEqual('keys');
       expect(classification[0].value).toBeGreaterThan(0.7);
     });

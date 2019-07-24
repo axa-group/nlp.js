@@ -109,7 +109,7 @@ describe('Domain Manager', () => {
       expect(manager.stemmer).toBeDefined();
       expect(manager.nluClassName).toEqual('BrainNLU');
       expect(manager.useMasterDomain).toBeTruthy();
-      expect(manager.trainByDomain).toBeTruthy();
+      expect(manager.trainByDomain).toBeFalsy();
       expect(manager.keepStopwords).toBeTruthy();
       expect(manager.domains).toBeDefined();
     });
@@ -171,11 +171,17 @@ describe('Domain Manager', () => {
     test('I can add an utterance', () => {
       const manager = new DomainManager();
       manager.add('personality', 'who are you?', 'agent.acquaintance');
+      expect(manager.domains.master_domain).toBeDefined();
+      expect(manager.domains.master_domain.docs).toHaveLength(1);
+    });
+    test('I can add an utterance with train by domain', () => {
+      const manager = new DomainManager({ trainByDomain: true });
+      manager.add('personality', 'who are you?', 'agent.acquaintance');
       expect(manager.domains.personality).toBeDefined();
       expect(manager.domains.personality.docs).toHaveLength(1);
     });
     test('If I add the same utterance to different domain it changes', () => {
-      const manager = new DomainManager();
+      const manager = new DomainManager({ trainByDomain: true });
       manager.add('personality1', 'who are you?', 'agent.acquaintance');
       manager.add('personality2', 'who are you?', 'agent.acquaintance');
       expect(manager.domains.personality1).toBeDefined();
@@ -193,15 +199,15 @@ describe('Domain Manager', () => {
   });
 
   describe('Remove', () => {
-    test('Utterances can be removed', () => {
-      const manager = new DomainManager();
+    test('Utterances can be removed when training by domain', () => {
+      const manager = new DomainManager({ trainByDomain: true });
       manager.add('personality', 'who are you?', 'agent.acquaintance');
       manager.remove('personality', 'who are you', 'agent.acquaintance');
       expect(manager.domains.personality).toBeDefined();
       expect(manager.domains.personality.docs).toHaveLength(0);
     });
     test('Utterances can be removed when not training by domain', () => {
-      const manager = new DomainManager({ trainByDomain: false });
+      const manager = new DomainManager();
       manager.add('personality', 'who are you?', 'agent.acquaintance');
       manager.remove('personality', 'who are you?', 'agent.acquaintance');
       expect(manager.domains.personality).toBeUndefined();
@@ -282,7 +288,7 @@ describe('Domain Manager', () => {
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
     test('Domain name can be provided to classify', async () => {
-      const manager = new DomainManager();
+      const manager = new DomainManager({ trainByDomain: true });
       addFoodDomain(manager);
       addPersonalityDomain(manager);
       await manager.train();
