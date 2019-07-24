@@ -69,6 +69,44 @@ describe('NLP Excel Reader', () => {
       const reader = new NlpExcelReader(manager);
       reader.load('./test/nlp/rules.xls');
       expect(
+        manager.nluManager.domainManagers.en.domains.master_domain.docs
+      ).toHaveLength(5);
+      expect(
+        manager.nluManager.domainManagers.en.domains.master_domain.docs[0].intent
+      ).toEqual('whois');
+      expect(
+        manager.nluManager.domainManagers.en.domains.master_domain.docs[1].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.en.domains.master_domain.docs[2].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.en.domains.master_domain.docs[3].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.en.domains.master_domain.docs[4].intent
+      ).toEqual('realname');
+      expect(
+        manager.nluManager.domainManagers.es.domains.master_domain.docs
+      ).toHaveLength(4);
+      expect(
+        manager.nluManager.domainManagers.es.domains.master_domain.docs[0].intent
+      ).toEqual('whois');
+      expect(
+        manager.nluManager.domainManagers.es.domains.master_domain.docs[1].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.es.domains.master_domain.docs[2].intent
+      ).toEqual('whereis');
+      expect(
+        manager.nluManager.domainManagers.es.domains.master_domain.docs[3].intent
+      ).toEqual('realname');
+    });
+    test('The classifiers should contain the intent definition when training by domain', () => {
+      const manager = new NlpManager({ nlu: { trainByDomain: true }});
+      const reader = new NlpExcelReader(manager);
+      reader.load('./test/nlp/rules.xls');
+      expect(
         manager.nluManager.domainManagers.en.domains.default.docs
       ).toHaveLength(5);
       expect(

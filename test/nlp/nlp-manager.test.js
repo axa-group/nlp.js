@@ -111,7 +111,7 @@ describe('NLP Manager', () => {
 
   describe('Add document', () => {
     test('If locale is not defined, then guess it', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { trainByDomain: true }});
       manager.addLanguage(['en', 'es']);
       manager.addDocument(undefined, 'Dónde están las llaves', 'keys');
       expect(
@@ -136,7 +136,7 @@ describe('NLP Manager', () => {
       ).toThrow('Domain Manager not found for locale es');
     });
     test('Should add the document to the classifier', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { trainByDomain: true }});
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       expect(
@@ -209,7 +209,7 @@ describe('NLP Manager', () => {
 
   describe('Remove document', () => {
     test('If locale is not defined must be guessed', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { trainByDomain: true }});
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument(undefined, 'Dónde están las llaves', 'keys');
@@ -232,7 +232,7 @@ describe('NLP Manager', () => {
       ).toThrow('Domain Manager not found for locale es');
     });
     test('Should remove the document from the classifier', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { trainByDomain: true }});
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument('es', 'Dónde están las llaves', 'keys');
@@ -356,7 +356,7 @@ describe('NLP Manager', () => {
 
   describe('Train', () => {
     test('You can train only a language', async () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { trainByDomain: true }});
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
       manager.addDocument('fr', 'bonne nuit', 'greet');
@@ -1554,7 +1554,7 @@ describe('NLP Manager', () => {
       expect(manager.nluManager.domainManagers.es).toBeDefined();
     });
     test('The classifiers should contain the intent definition', () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { trainByDomain: true }});
       manager.loadExcel('./test/nlp/rules.xls');
       expect(
         manager.nluManager.domainManagers.en.domains.default.docs

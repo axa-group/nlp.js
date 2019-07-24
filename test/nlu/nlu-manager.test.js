@@ -275,10 +275,22 @@ describe('NLU Manager', () => {
       const manager = new NluManager();
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
+      expect(manager.domainManagers.es.domains.master_domain.docs).toHaveLength(1);
+    });
+    test('A document can be added training by domain', () => {
+      const manager = new NluManager({ trainByDomain: true });
+      manager.addLanguage(['en', 'es']);
+      manager.addDocument('es', 'Dónde están las llaves', 'keys');
       expect(manager.domainManagers.es.domains.default.docs).toHaveLength(1);
     });
     test('If locale is not defined, then guess it', () => {
       const manager = new NluManager();
+      manager.addLanguage(['en', 'es']);
+      manager.addDocument(undefined, 'Dónde están las llaves', 'keys');
+      expect(manager.domainManagers.es.domains.master_domain.docs).toHaveLength(1);
+    });
+    test('If locale is not defined, then guess it training by domain', () => {
+      const manager = new NluManager({ trainByDomain: true });
       manager.addLanguage(['en', 'es']);
       manager.addDocument(undefined, 'Dónde están las llaves', 'keys');
       expect(manager.domainManagers.es.domains.default.docs).toHaveLength(1);
@@ -305,10 +317,24 @@ describe('NLU Manager', () => {
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument('es', 'Dónde están las llaves', 'keys');
+      expect(manager.domainManagers.es.domains.master_domain.docs).toHaveLength(0);
+    });
+    test('A document can be removed training by domain', () => {
+      const manager = new NluManager({ trainByDomain: true });
+      manager.addLanguage(['en', 'es']);
+      manager.addDocument('es', 'Dónde están las llaves', 'keys');
+      manager.removeDocument('es', 'Dónde están las llaves', 'keys');
       expect(manager.domainManagers.es.domains.default.docs).toHaveLength(0);
     });
     test('If locale is not defined then guess it', () => {
       const manager = new NluManager();
+      manager.addLanguage(['en', 'es']);
+      manager.addDocument('es', 'Dónde están las llaves', 'keys');
+      manager.removeDocument(undefined, 'Dónde están las llaves', 'keys');
+      expect(manager.domainManagers.es.domains.master_domain.docs).toHaveLength(0);
+    });
+    test('If locale is not defined then guess it training by domain', () => {
+      const manager = new NluManager({ trainByDomain: true });
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument(undefined, 'Dónde están las llaves', 'keys');
@@ -332,7 +358,7 @@ describe('NLU Manager', () => {
 
   describe('Edit Mode', () => {
     test('When edit mode begans, all domains pass to edit mode', () => {
-      const manager = new NluManager({ languages: ['en', 'es'] });
+      const manager = new NluManager({ languages: ['en', 'es'], trainByDomain: true });
       manager.assignDomain('en', 'a', 'domain1');
       manager.assignDomain('en', 'b', 'domain1');
       manager.assignDomain('en', 'c', 'domain2');
@@ -398,7 +424,7 @@ describe('NLU Manager', () => {
 
   describe('Get Classifications', () => {
     test('Can classify if I provide locale without using None Feature', async () => {
-      const manager = new NluManager({ languages: ['en', 'es'], useNoneFeature: false });
+      const manager = new NluManager({ languages: ['en', 'es'], useNoneFeature: false, trainByDomain: true });
       addFoodDomainEn(manager);
       addPersonalityDomainEn(manager);
       addFoodDomainEs(manager);
@@ -416,7 +442,7 @@ describe('NLU Manager', () => {
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
     test('Can classify if I provide locale', async () => {
-      const manager = new NluManager({ languages: ['en', 'es'] });
+      const manager = new NluManager({ languages: ['en', 'es'], trainByDomain: true });
       addFoodDomainEn(manager);
       addPersonalityDomainEn(manager);
       addFoodDomainEs(manager);
@@ -437,7 +463,7 @@ describe('NLU Manager', () => {
 
   describe('toObj and fromObj', () => {
     test('Can export and import without using None Feature', async () => {
-      const manager = new NluManager({ languages: ['en', 'es'], useNoneFeature: false });
+      const manager = new NluManager({ languages: ['en', 'es'], useNoneFeature: false, trainByDomain: true });
       addFoodDomainEn(manager);
       addPersonalityDomainEn(manager);
       addFoodDomainEs(manager);
@@ -457,7 +483,7 @@ describe('NLU Manager', () => {
       expect(actual.classifications[0].value).toBeGreaterThan(0.8);
     });
     test('Can export and import', async () => {
-      const manager = new NluManager({ languages: ['en', 'es'] });
+      const manager = new NluManager({ languages: ['en', 'es'], trainByDomain: true });
       addFoodDomainEn(manager);
       addPersonalityDomainEn(manager);
       addFoodDomainEs(manager);
