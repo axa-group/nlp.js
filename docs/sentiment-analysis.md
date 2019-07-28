@@ -12,11 +12,15 @@ Languages accepted:
 - it: Italian
 - de: German
 - gl: Galician
+- da: Danish
+- fi: Finnish
+- ru: Russian
 
 | Language | AFINN | Senticon | Pattern | Negations |
 | -------- | :---: | :------: | :-----: | :-------: |
 | Basque   |       |    X     |         |           |
 | Catalan  |       |    X     |         |           |
+| Danish   |   X   |          |         |           |
 | Dutch    |       |          |    X    |     X     |
 | English  |   X   |    X     |    X    |     X     |
 | French   |       |          |    X    |           |
@@ -24,6 +28,8 @@ Languages accepted:
 | Italian  |       |          |    X    |           |
 | Spanish  |   X   |    X     |         |     X     |
 | German   |       |    X     |         |     X     |
+| Finnish  |   X   |          |         |           |
+| Russian  |   X   |          |         |           |
 
 By default Senticon is used if possible, otherwise AFINN, and last one Pattern:
 

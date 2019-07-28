@@ -60,6 +60,14 @@ describe('Sentiment Analyzer', () => {
           expect(analyzer.negations).toBeDefined();
         }
       );
+      ['da', 'fi', 'ru'].forEach(language => {
+        const analyzer = new SentimentAnalyzer({ language });
+        expect(analyzer.settings.language).toEqual(language);
+        expect(analyzer.settings.tokenizer).toBeDefined();
+        expect(analyzer.settings.type).toEqual('afinn');
+        expect(analyzer.vocabulary).toBeDefined();
+        expect(analyzer.negations).toBeDefined();
+      });
     });
     test('When loaded, senticon and pattern should be normalized', () => {
       let analyzer = new SentimentAnalyzer({ language: 'en', type: 'pattern' });
