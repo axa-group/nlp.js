@@ -50,11 +50,11 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Catalan (ca)    |       |    X     |         |
 | Chinese (zh)    |       |          |         |
 | Czech (cs)      |       |          |         |
-| Danish (da)     |       |          |         |
+| Danish (da)     |   X   |          |         |
 | Dutch (nl)      |       |          |    X    |
 | English (en)    |   X   |    X     |    X    |
 | Farsi (fa)      |       |          |         |
-| Finnish (fi)    |       |          |         |
+| Finnish (fi)    |   X   |          |         |
 | French (fr)     |       |          |    X    |
 | Galician (gl)   |       |    X     |         |
 | German (de)     |       |    X     |         |
@@ -66,7 +66,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Norwegian (no)  |       |          |         |
 | Portuguese (pt) |       |          |         |
 | Romanian (ro)   |       |          |         |
-| Russian (ru)    |       |          |         |
+| Russian (ru)    |   X   |          |         |
 | Slovene (sl)    |       |          |         |
 | Spanish (es)    |   X   |    X     |         |
 | Swedish (sv)    |       |          |         |
