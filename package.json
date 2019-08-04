@@ -52,7 +52,7 @@
     "esprima": "^4.0.1",
     "kuromoji": "^0.1.2",
     "novel-segment": "^2.3.2",
-    "xlsx": "^0.14.4"
+    "xlsx": "^0.15.0"
   },
   "keywords": [
     "natural language processing",
