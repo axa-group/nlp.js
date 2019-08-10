@@ -42,6 +42,7 @@ The version 3 comes with some important changes, mainly focused on improve perfo
 <!--ts-->
 
 - [Installation](#installation)
+- [React Native](#react-native)
 - [Example of use](#example-of-use)
 - [Log Training Progress](#log-training-progress)
 - [Benchmarking](docs/benchmarking.md)
@@ -100,6 +101,20 @@ If you're looking to use NLP.js in your node application, you can install via NP
 ```bash
     npm install node-nlp
 ```
+
+## React Native
+
+There is a version of NLP.js that works in React Native, so you can build chatbots that can be trained and executed in the mobile even without internet. You can install it via NPM:
+
+```bash
+    npm install node-nlp-rn
+```
+
+Some Limitations:
+- No Chinese
+- Japanese stemmer is not the complete one
+- No excel import
+- No load from file neither save to file, but it still have import form json and export to json.
 
 ## Example of use
 
