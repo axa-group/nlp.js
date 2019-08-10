@@ -32,15 +32,11 @@ describe('Similar Search', () => {
     test('Should initialize default parameters if no settings provided', () => {
       const similar = new SimilarSearch();
       expect(similar.alphanumeric).toBeDefined();
-      expect(similar.collator).toBeDefined();
-      expect(similar.useCollator).toEqual(false);
       expect(similar.normalize).toEqual(false);
     });
     test('Should initialize parameters based on settings', () => {
       const similar = new SimilarSearch({ normalize: true });
       expect(similar.alphanumeric).toBeDefined();
-      expect(similar.collator).toBeDefined();
-      expect(similar.useCollator).toEqual(false);
       expect(similar.normalize).toEqual(true);
     });
   });
@@ -78,10 +74,6 @@ describe('Similar Search', () => {
       const text2 =
         'Duis erat dolor, cursus in tincidunt a, lobortis in odio. Cras magna sem, pharetra et iaculis quis, faucibus quis tellus. Suspendisse dapibus sapien in justo cursus';
       expect(similar.getSimilarity(text1, text2)).toEqual(143);
-    });
-    test('It can use collator', () => {
-      const similar = new SimilarSearch({ useCollator: true });
-      expect(similar.getSimilarity('mikailovitch', 'Mikhaïlovitch')).toEqual(1);
     });
     test('It can use normalize (faster than collator)', () => {
       const similar = new SimilarSearch({ normalize: true });

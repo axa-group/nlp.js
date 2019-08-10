@@ -1,6 +1,6 @@
 {
-  "name": "node-nlp",
-  "version": "3.5.0",
+  "name": "node-nlp-rn",
+  "version": "3.5.1",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "main": "lib/index.js",
   "scripts": {
@@ -49,10 +49,7 @@
   "dependencies": {
     "@microsoft/recognizers-text-suite": "1.1.4",
     "escodegen": "^1.11.1",
-    "esprima": "^4.0.1",
-    "kuromoji": "^0.1.2",
-    "novel-segment": "^2.3.2",
-    "xlsx": "^0.14.4"
+    "esprima": "^4.0.1"
   },
   "keywords": [
     "natural language processing",

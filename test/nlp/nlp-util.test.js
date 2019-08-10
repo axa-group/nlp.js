@@ -34,7 +34,6 @@ const PorterStemmerPt = require('../../lib/nlp/stemmers/natural/porter-stemmer-p
 const PorterStemmerSv = require('../../lib/nlp/stemmers/natural/porter-stemmer-sv');
 const PorterStemmerNl = require('../../lib/nlp/stemmers/natural/porter-stemmer-nl');
 const StemmerJa = require('../../lib/nlp/stemmers/natural/stemmer-ja');
-const StemmerId = require('../../lib/nlp/stemmers/natural/indonesian/stemmer_id');
 const TokenizeStemmer = require('../../lib/nlp/stemmers/tokenize-stemmer');
 const {
   AggressiveTokenizer,
@@ -79,7 +78,6 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('pt')).toBe(PorterStemmerPt); // portugese
       expect(NlpUtil.getStemmer('sv')).toBe(PorterStemmerSv); // swedish
       expect(NlpUtil.getStemmer('nl')).toBe(PorterStemmerNl); // Dutch
-      expect(NlpUtil.getStemmer('id')).toBe(StemmerId); // Indonesian
       expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(StemmerJa); // Japanese
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual(
         'ArabicStemmer'
@@ -167,10 +165,7 @@ describe('NLP Util', () => {
         'SwedishStemmer'
       ); // swedish
       expect(NlpUtil.getStemmer('nl').constructor.name).toEqual('DutchStemmer'); // Dutch
-      expect(NlpUtil.getStemmer('id')).toBe(StemmerId); // Indonesian
-      expect(NlpUtil.getStemmer('ja').constructor.name).toEqual(
-        'JapaneseStemmer'
-      ); // Japanese
+      expect(NlpUtil.getStemmer('ja').constructor.name).toEqual('StemmerJa'); // Japanese
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual(
         'ArabicStemmer'
       ); // Arabic
