@@ -44,6 +44,7 @@ The version 3 comes with some important changes, mainly focused on improve perfo
 - [Installation](#installation)
 - [React Native](#react-native)
 - [Example of use](#example-of-use)
+- [False Positives](#false-positives)
 - [Log Training Progress](#log-training-progress)
 - [Benchmarking](docs/benchmarking.md)
 - [Language Support](docs/language-support.md)
@@ -146,7 +147,7 @@ manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 (async() => {
     await manager.train();
     manager.save();
-    const response = await manager.process('en', 'I have to go');
+    const response = await manager.process('en', 'I should go now');
     console.log(response);
 })();
 ```
@@ -154,25 +155,47 @@ manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 This will show this result in console:
 
 ```bash
-{ locale: 'en',
+{ utterance: 'I should go now',
+  locale: 'en',
+  languageGuessed: false,
   localeIso2: 'en',
   language: 'English',
-  utterance: 'I have to go',
-  classification:
-   [ { label: 'greetings.bye', value: 0.9791293407583773 },
-     { label: 'greetings.hello', value: 0.020870659241622735 } ],
+  domain: 'default',
+  classifications:
+   [ { label: 'greetings.bye', value: 0.698219120207268 },
+     { label: 'None', value: 0.30178087979273216 },
+     { label: 'greetings.hello', value: 0 } ],
   intent: 'greetings.bye',
-  score: 0.9791293407583773,
-  entities: [],
+  score: 0.698219120207268,
+  entities:
+   [ { start: 12,
+       end: 14,
+       len: 3,
+       accuracy: 0.95,
+       sourceText: 'now',
+       utteranceText: 'now',
+       entity: 'datetime',
+       resolution: [Object] } ],
   sentiment:
-   { score: 0.5,
-     comparative: 0.125,
+   { score: 1,
+     comparative: 0.25,
      vote: 'positive',
      numWords: 4,
-     numHits: 1,
+     numHits: 2,
      type: 'senticon',
      language: 'en' },
+  actions: [],
+  srcAnswer: 'Till next time',
   answer: 'Till next time' }
+```
+
+## False Positives
+
+By default, the neural network try to avoid false positives. To achieve that, one of the internal processes is that words never seen by the network, are represented as a feature that give some weight into the None intent. So if you try the previous example with "I have to go" it will return the None intent because 2 of the 4 words have been never seen while training.
+If you don't want to avoid those false positives, and you feel more confortable with classifications into the intents that you declare, then you can disable this behaviour with the useNoneFeature setting to false:
+
+```javascript
+const manager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
 ```
 
 ## Log Training Pogress
