@@ -32,27 +32,27 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "coveralls": "^3.0.5",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-config-prettier": "^6.0.0",
+    "coveralls": "^3.0.6",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.1.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.13.5",
+    "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "husky": "^3.0.1",
-    "jest": "^24.8.0",
-    "lint-staged": "^9.2.0",
+    "husky": "^3.0.4",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.3",
     "lodash": ">=4.17.13",
     "merge": "^1.2.1",
     "prettier": "^1.18.2"
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "1.1.4",
-    "escodegen": "^1.11.1",
+    "escodegen": "^1.12.0",
     "esprima": "^4.0.1",
     "kuromoji": "^0.1.2",
-    "novel-segment": "^2.3.2",
-    "xlsx": "^0.14.4"
+    "novel-segment": "^2.4.0",
+    "xlsx": "^0.15.1"
   },
   "keywords": [
     "natural language processing",
