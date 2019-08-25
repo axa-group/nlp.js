@@ -111,7 +111,7 @@ describe('NLP Manager', () => {
 
   describe('Add document', () => {
     test('If locale is not defined, then guess it', () => {
-      const manager = new NlpManager({ nlu: { trainByDomain: true }});
+      const manager = new NlpManager({ nlu: { trainByDomain: true } });
       manager.addLanguage(['en', 'es']);
       manager.addDocument(undefined, 'Dónde están las llaves', 'keys');
       expect(
@@ -136,7 +136,7 @@ describe('NLP Manager', () => {
       ).toThrow('Domain Manager not found for locale es');
     });
     test('Should add the document to the classifier', () => {
-      const manager = new NlpManager({ nlu: { trainByDomain: true }});
+      const manager = new NlpManager({ nlu: { trainByDomain: true } });
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       expect(
@@ -209,7 +209,7 @@ describe('NLP Manager', () => {
 
   describe('Remove document', () => {
     test('If locale is not defined must be guessed', () => {
-      const manager = new NlpManager({ nlu: { trainByDomain: true }});
+      const manager = new NlpManager({ nlu: { trainByDomain: true } });
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument(undefined, 'Dónde están las llaves', 'keys');
@@ -232,7 +232,7 @@ describe('NLP Manager', () => {
       ).toThrow('Domain Manager not found for locale es');
     });
     test('Should remove the document from the classifier', () => {
-      const manager = new NlpManager({ nlu: { trainByDomain: true }});
+      const manager = new NlpManager({ nlu: { trainByDomain: true } });
       manager.addLanguage(['en', 'es']);
       manager.addDocument('es', 'Dónde están las llaves', 'keys');
       manager.removeDocument('es', 'Dónde están las llaves', 'keys');
@@ -244,7 +244,7 @@ describe('NLP Manager', () => {
 
   describe('Classify', () => {
     test('Should classify an utterance without None feature', async () => {
-      const manager = new NlpManager({ nlu: { useNoneFeature: false }});
+      const manager = new NlpManager({ nlu: { useNoneFeature: false } });
       manager.addLanguage(['fr', 'jp']);
       manager.addDocument('fr', 'Bonjour', 'greet');
       manager.addDocument('fr', 'bonne nuit', 'greet');
@@ -356,7 +356,7 @@ describe('NLP Manager', () => {
 
   describe('Train', () => {
     test('You can train only a language', async () => {
-      const manager = new NlpManager({ nlu: { trainByDomain: true }});
+      const manager = new NlpManager({ nlu: { trainByDomain: true } });
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
       manager.addDocument('fr', 'bonne nuit', 'greet');
@@ -568,7 +568,7 @@ describe('NLP Manager', () => {
 
   describe('Process', () => {
     test('Should classify an utterance without None feature', async () => {
-      const manager = new NlpManager({ nlu: { useNoneFeature: false }});
+      const manager = new NlpManager({ nlu: { useNoneFeature: false } });
       manager.addLanguage(['en', 'ja']);
       manager.addDocument('en', 'Hello', 'greet');
       manager.addDocument('en', 'Good evening', 'greet');
@@ -756,7 +756,7 @@ describe('NLP Manager', () => {
         'I saw spiderman eating spaghetti today in the city!'
       );
       expect(result.intent).toEqual('sawhero');
-      expect(result.score).toBeGreaterThan(0.85);
+      expect(result.score).toBeGreaterThan(0.5);
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
@@ -803,7 +803,7 @@ describe('NLP Manager', () => {
         'I saw spiderman eating spaghetti today in the city!'
       );
       expect(result.intent).toEqual('sawhero');
-      expect(result.score).toBeGreaterThan(0.85);
+      expect(result.score).toBeGreaterThan(0.5);
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
@@ -1368,7 +1368,7 @@ describe('NLP Manager', () => {
       );
       expect(result.intent).toEqual('sawhero');
       expect(result.domain).toEqual('domain');
-      expect(result.score).toBeGreaterThan(0.85);
+      expect(result.score).toBeGreaterThan(0.5);
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
@@ -1427,7 +1427,7 @@ describe('NLP Manager', () => {
       );
       expect(result.intent).toEqual('sawhero');
       expect(result.domain).toEqual('domain');
-      expect(result.score).toBeGreaterThan(0.85);
+      expect(result.score).toBeGreaterThan(0.5);
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
@@ -1494,7 +1494,7 @@ describe('NLP Manager', () => {
       );
       expect(result.intent).toEqual('sawhero');
       expect(result.domain).toEqual('domain');
-      expect(result.score).toBeGreaterThan(0.85);
+      expect(result.score).toBeGreaterThan(0.5);
       expect(result.entities).toHaveLength(2);
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
@@ -1554,7 +1554,7 @@ describe('NLP Manager', () => {
       expect(manager.nluManager.domainManagers.es).toBeDefined();
     });
     test('The classifiers should contain the intent definition', () => {
-      const manager = new NlpManager({ nlu: { trainByDomain: true }});
+      const manager = new NlpManager({ nlu: { trainByDomain: true } });
       manager.loadExcel('./test/nlp/rules.xls');
       expect(
         manager.nluManager.domainManagers.en.domains.default.docs
