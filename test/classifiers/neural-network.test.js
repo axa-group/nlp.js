@@ -160,6 +160,7 @@ describe('Neural Network', () => {
           iterations: 20000,
           errorThresh: 0.005,
           deltaErrorThresh: 0.0000001,
+          fixedError: false,
           learningRate: 0.3,
           momentum: 0.1,
           leakyReluAlpha: 0.05,
