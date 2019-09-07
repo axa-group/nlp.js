@@ -1,6 +1,6 @@
 # Language Support
 
-Any language is supported, even fantasy languages, but there are 27 languages with stemmer support. The difference between using an stemmer or only tokenization exists, but with a good training is not so big. You can take a look into [Benchmarking](docs/benchmarking.md). For english, using the SIGDIAL22 to compare, with stemmer the success is 94%, only with tokenization is 91%, so is good enough.
+Any language is supported, even fantasy languages, but there are 30 languages with stemmer support. The difference between using an stemmer or only tokenization exists, but with a good training is not so big. You can take a look into [Benchmarking](docs/benchmarking.md). For english, using the SIGDIAL22 to compare, with stemmer the success is 94%, only with tokenization is 91%, so is good enough.
 
 Inside Stemmers there are three type of stemmers: Natural, Snowball and Custom. Natural stemmers are these supported by the Natural library, while Snowball stemmers are the ported version from the Snowball ones from Java. Custom stemmers are those with custom development out of the scope of Natural or Snowball.
 
@@ -38,6 +38,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Swedish (sv)    |    X    |    X     |        |
 | Tagalog (tl)    |         |          |   X    |
 | Tamil (ta)      |         |    X     |        |
+| Thai (th)       |         |          |   X    |
 | Turkish (tr)    |         |    X     |        |
 
 ## Sentiment Analysis
@@ -72,6 +73,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Swedish (sv)    |       |          |         |
 | Tagalog (tl)    |       |          |         |
 | Tamil (ta)      |       |          |         |
+| Thai (th)       |       |          |         |
 | Turkish (tr)    |       |          |         |
 
 ## Builtin Entity Extraction

@@ -43,7 +43,7 @@ async function main() {
 }
 main();```
 
-Currently 29 languages are supported:
+Currently 30 languages are supported:
 
 - Arabic (ar)
 - Armenian (hy)
@@ -73,4 +73,5 @@ Currently 29 languages are supported:
 - Swedish (sv)
 - Tagalog (tl)
 - Tamil (ta)
+- Thai (th)
 - Turkish (tr)
