@@ -294,6 +294,7 @@ describe('NLP Util', () => {
       expect(NlpUtil.getCulture('ro')).toEqual('ro-ro'); // romanian
       expect(NlpUtil.getCulture('sl')).toEqual('sl-sl'); // slovene
       expect(NlpUtil.getCulture('ta')).toEqual('ta-in'); // tamil
+      expect(NlpUtil.getCulture('th')).toEqual('th-th'); // thai
       expect(NlpUtil.getCulture('tr')).toEqual('tr-tr'); // turkish
       expect(NlpUtil.getCulture('zh')).toEqual('zh-cn'); // Chinese
       expect(NlpUtil.getCulture('gl')).toEqual('gl-es'); // Galician

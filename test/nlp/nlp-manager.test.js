@@ -1182,6 +1182,28 @@ describe('NLP Manager', () => {
       );
     });
 
+    test('Should process Thai', async () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['th']);
+      manager.addDocument('th', 'สวัสดี', 'greet');
+      manager.addDocument('th', 'สวัสดีตอนเช้าค่ะ', 'greet');
+      manager.addDocument('th', 'ราตรีสวัสดิ์', 'greet');
+      manager.addDocument('th', 'สวัสดีตอนเย็น', 'greet');
+      manager.addDocument('th', 'ฉันทำกุญแจของฉันหาย', 'keys');
+      manager.addDocument('th', 'กุญแจของฉันอยู่ที่ไหน', 'keys');
+      manager.addDocument('th', 'ฉันไม่พบกุญแจของฉัน', 'keys');
+      await manager.train();
+      const result = await manager.process('th', 'ฉันไม่รู้ว่ากุญแจอยู่ที่ไหน');
+      expect(result).toBeDefined();
+      expect(result.locale).toEqual('th');
+      expect(result.localeIso2).toEqual('th');
+      expect(result.utterance).toEqual('ฉันไม่รู้ว่ากุญแจอยู่ที่ไหน');
+      expect(result.classifications).toBeDefined();
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.8);
+    });
+
     test('Should process Chinese', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['zh']);
