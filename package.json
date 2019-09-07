@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "3.7.1",
+  "version": "3.7.2",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "main": "lib/index.js",
   "scripts": {
