@@ -1204,6 +1204,27 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.8);
     });
 
+    test('Should process Bengali', async () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['bn']);
+      manager.addDocument('bn', 'হ্যালো', 'greet');
+      manager.addDocument('bn', 'শুভ সন্ধ্যা', 'greet');
+      manager.addDocument('bn', 'সুপ্রভাত', 'greet');
+      manager.addDocument('bn', 'আমি আমার চাবি হারিয়েছি', 'keys');
+      manager.addDocument('bn', 'আমি আমার চাবিগুলি পাই না', 'keys');
+      manager.addDocument('bn', 'আমি জানি না আমার চাবিগুলি কোথায়?', 'keys');
+      await manager.train();
+      const result = await manager.process('bn', 'যেখানে আমার কি হয়');
+      expect(result).toBeDefined();
+      expect(result.locale).toEqual('bn');
+      expect(result.localeIso2).toEqual('bn');
+      expect(result.utterance).toEqual('যেখানে আমার কি হয়');
+      expect(result.classifications).toBeDefined();
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.8);
+    });
+
     test('Should process Chinese', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['zh']);
