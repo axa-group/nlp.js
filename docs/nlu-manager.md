@@ -143,11 +143,12 @@ main();
 
 
 
-Currently 30 languages are supported:
+Currently 33 languages are supported:
 
 - Arabic (ar)
 - Armenian (hy)
 - Basque (eu)
+- Bengali (bn)
 - Catala (ca)
 - Chinese (zh)
 - Czech (cs)
@@ -159,6 +160,8 @@ Currently 30 languages are supported:
 - French (fr)
 - Galician (gl)
 - German (de)
+- Greek (el)
+- Hindi (hi)
 - Hungarian (hu)
 - Indonesian (id)
 - Irish (ga)

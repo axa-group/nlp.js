@@ -13,6 +13,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Arabic (ar)     |         |    X     |        |
 | Armenian (hy)   |         |    X     |        |
 | Basque (eu)     |         |    X     |        |
+| Bengali (bn)    |         |          |   X
 | Catalan (ca)    |         |    X     |        |
 | Chinese (zh)    |         |          |   X    |
 | Czech (cx)      |         |    X     |        |
@@ -24,6 +25,8 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | French (fr)     |    X    |    X     |        |
 | Galician (gl)   |         |          |   X    |
 | German (de)     |         |    X     |        |
+| Greek (el)      |         |          |   X    |
+| Hindi (hi)      |         |          |   X    |
 | Hungarian (hu)  |         |    X     |        |
 | Indonesian (id) |    X    |          |        |
 | Irish (ga)      |         |    X     |        |
@@ -48,6 +51,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Arabic (ar)     |       |          |         |
 | Armenian (hy)   |       |          |         |
 | Basque (eu)     |       |    X     |         |
+| Bengali (bn)    |       |          |         |
 | Catalan (ca)    |       |    X     |         |
 | Chinese (zh)    |       |          |         |
 | Czech (cs)      |       |          |         |
@@ -59,6 +63,8 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | French (fr)     |       |          |    X    |
 | Galician (gl)   |       |    X     |         |
 | German (de)     |       |    X     |         |
+| Greek (el)      |       |          |         |
+| Hindi (hi)      |       |          |         |
 | Hungarian (hu)  |       |          |         |
 | Indonesian (id) |       |          |         |
 | Irish (ga)      |       |          |         |
