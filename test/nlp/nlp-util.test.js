@@ -24,7 +24,6 @@
 const PunctTokenizer = require('../../lib/nlp/tokenizers/punct-tokenizer');
 const { NlpUtil } = require('../../lib');
 const PorterStemmer = require('../../lib/nlp/stemmers/natural/porter-stemmer');
-const PorterStemmerEs = require('../../lib/nlp/stemmers/natural/porter-stemmer-es');
 const PorterStemmerFa = require('../../lib/nlp/stemmers/natural/porter-stemmer-fa');
 const PorterStemmerFr = require('../../lib/nlp/stemmers/natural/porter-stemmer-fr');
 const PorterStemmerRu = require('../../lib/nlp/stemmers/natural/porter-stemmer-ru');
@@ -73,7 +72,6 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('fa')).toBe(PorterStemmerFa); // farsi
       expect(NlpUtil.getStemmer('fr')).toBe(PorterStemmerFr); // french
       expect(NlpUtil.getStemmer('ru')).toBe(PorterStemmerRu); // russian
-      expect(NlpUtil.getStemmer('es')).toBe(PorterStemmerEs); // spanish
       expect(NlpUtil.getStemmer('it')).toBe(PorterStemmerIt); // italian
       expect(NlpUtil.getStemmer('no')).toBe(PorterStemmerNo); // norwegian
       expect(NlpUtil.getStemmer('pt')).toBe(PorterStemmerPt); // portugese
@@ -81,6 +79,9 @@ describe('NLP Util', () => {
       expect(NlpUtil.getStemmer('nl')).toBe(PorterStemmerNl); // Dutch
       expect(NlpUtil.getStemmer('id')).toBe(StemmerId); // Indonesian
       expect(NlpUtil.getStemmer('ja')).toBeInstanceOf(StemmerJa); // Japanese
+      expect(NlpUtil.getStemmer('es').constructor.name).toEqual(
+        'SpanishStemmer'
+      ); // Spanish
       expect(NlpUtil.getStemmer('ar').constructor.name).toEqual(
         'ArabicStemmer'
       ); // Arabic
