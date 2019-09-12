@@ -78,3 +78,4 @@ Currently 33 languages are supported:
 - Tamil (ta)
 - Thai (th)
 - Turkish (tr)
+- Ukrainian (uk)
