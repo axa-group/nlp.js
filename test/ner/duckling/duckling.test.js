@@ -7,7 +7,7 @@ function getManager(locale) {
     ner: { useDuckling: true },
   });
   manager.nerManager.nerRecognizer.request = (utterance, language) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       if (language.startsWith('en')) {
         switch (utterance) {
           case 'The email is user@user.com, check it out':
@@ -82,6 +82,8 @@ function getManager(locale) {
                 '[{"body":"12/12/2019 at 9am","start":0,"value":{"values":[{"value":"2019-12-12T09:00:00.000+00:00","grain":"hour","type":"value"}],"value":"2019-12-12T09:00:00.000+00:00","grain":"hour","type":"value"},"end":17,"dim":"time","latent":false}]'
               )
             );
+          case 'raise exception':
+            return reject(new Error('Exception!'));
           default:
             return resolve({});
         }
@@ -122,6 +124,14 @@ describe('Duckling Integration', () => {
   });
 
   describe('English', () => {
+    test('When there is an exception, return empty array', async () => {
+      const locale = 'en';
+      const manager = getManager(locale);
+      const input = 'raise exception';
+      const actual = await manager.process(locale, input);
+      const expected = [];
+      expect(actual.entities).toEqual(expected);
+    });
     test('Duckling English Email', async () => {
       const locale = 'en';
       const manager = getManager(locale);
