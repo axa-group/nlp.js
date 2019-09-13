@@ -1,4 +1,5 @@
 const { NlpManager } = require('../../../lib');
+const NerDuckling = require('../../../lib/ner/ner-duckling');
 
 function getManager(locale) {
   const manager = new NlpManager({
@@ -92,6 +93,20 @@ function getManager(locale) {
 }
 
 describe('Duckling Integration', () => {
+  describe('Constructor', () => {
+    test('Should put the port if is https', () => {
+      const ner = new NerDuckling({ ducklingUrl: 'https://something.com' });
+      expect(ner.port).toEqual(443);
+    });
+    test('Should put the port if is http', () => {
+      const ner = new NerDuckling({ ducklingUrl: 'http://something.com' });
+      expect(ner.port).toEqual(80);
+    });
+    test('Should put the port if provided', () => {
+      const ner = new NerDuckling({ ducklingUrl: 'http://something.com:8080' });
+      expect(ner.port).toEqual('8080');
+    });
+  });
   describe('English', () => {
     test('Duckling English Email', async () => {
       const locale = 'en';
