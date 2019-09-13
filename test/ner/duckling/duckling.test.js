@@ -107,6 +107,16 @@ describe('Duckling Integration', () => {
       expect(ner.port).toEqual('8080');
     });
   });
+
+  describe('Get locale', () => {
+    test('It should return the culture locale from a 2 char locale', () => {
+      const ner = new NerDuckling({ ducklingUrl: 'https://something.com' });
+      const expected = 'es-ES';
+      const actual = ner.getLocale('es');
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe('English', () => {
     test('Duckling English Email', async () => {
       const locale = 'en';
