@@ -106,6 +106,10 @@ describe('Duckling Integration', () => {
       const ner = new NerDuckling({ ducklingUrl: 'http://something.com:8080' });
       expect(ner.port).toEqual('8080');
     });
+    test('Can create without providing settings', () => {
+      const ner = new NerDuckling();
+      expect(ner.url.href).toEqual('http://localhost:8000/parse');
+    });
   });
 
   describe('Get locale', () => {
