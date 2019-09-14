@@ -117,8 +117,14 @@ describe('Duckling Integration', () => {
   describe('Get locale', () => {
     test('It should return the culture locale from a 2 char locale', () => {
       const ner = new NerDuckling({ ducklingUrl: 'https://something.com' });
-      const expected = 'es-ES';
+      const expected = 'es_ES';
       const actual = ner.getLocale('es');
+      expect(actual).toEqual(expected);
+    });
+    test('It should return the nb_NO if no locale is provided', () => {
+      const ner = new NerDuckling({ ducklingUrl: 'https://something.com' });
+      const expected = 'nb_NO';
+      const actual = ner.getLocale('no');
       expect(actual).toEqual(expected);
     });
   });
