@@ -1,5 +1,47 @@
 # Builtin Entity Extraction
 
+For integration with duckling please visit [Builtin Duckling](builtin-duckling.md). Duckling support more languages, but you will need to have an instance of duckling up and running.
+
+Those are the languages supported using Duckling or not using it:
+
+| Language      | Locale | Without Duckling | With Duckling |
+| :------------ | :----: | :--------------: | :-----------: |
+| Arabic        |   ar   |                  |       X       |
+| Armenian      |   hy   |                  |               |
+| Basque        |   eu   |                  |               |
+| Bengali       |   bn   |                  |       X       |
+| Catala        |   ca   |                  |               |
+| Chinese       |   zh   |         X        |       X       |
+| Czech         |   cs   |                  |       X       |
+| Danish        |   da   |                  |       X       |
+| Dutch         |   nl   |                  |       X       |
+| English       |   en   |         X        |       X       |
+| Farsi         |   fa   |                  |               |
+| Finnish       |   fi   |                  |       X       |
+| French        |   fr   |         X        |       X       |
+| Galician      |   gl   |                  |               |
+| German        |   de   |                  |       X       |
+| Greek         |   el   |                  |       X       |
+| Hindi         |   hi   |                  |       X       |
+| Hungarian     |   hu   |                  |       X       |
+| Indonesian    |   id   |                  |       X       |
+| Italian       |   it   |                  |       X       |
+| Irish         |   ga   |                  |       X       |
+| Japanese      |   ja   |         X        |       X       |
+| Norwegian     |   no   |                  |       X       |
+| Portuguese    |   pt   |         X        |       X       |
+| Romanian      |   ro   |                  |       X       |
+| Russian       |   ru   |                  |       X       |
+| Spanish       |   es   |         X        |       X       |
+| Swedish       |   sv   |                  |       X       |
+| Tamil         |   ta   |                  |       X       |
+| Thai          |   th   |                  |       *1      |
+| Tagalog       |   tl   |                  |               |
+| Turkish       |   tr   |                  |       X       |
+| Ukrainian     |   uk   |                  |       X       |
+
+*1: Thai is not supported by duckling, but there exists a repo in github with an implementation of the thai rules of duckling: https://github.com/pantuwong/thai_duckling
+
 The NER Manager includes by default a builtin entity extraction with different bundles available for different languages.
 The entity extraction is done even if the utterance is not matched to an intent.
 
