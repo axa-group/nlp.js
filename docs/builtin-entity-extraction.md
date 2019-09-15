@@ -277,7 +277,7 @@ The text feature also works for fractions.
 
 ## Ordinal Extraction
 
-It can identify and extract numbers. This works only for English, Spanish, French and Portuguese.
+It can identify and extract ordinal numbers. This works only for English, Spanish, French and Portuguese.
 
 ```javascript
 "utterance": "He was 2nd",
