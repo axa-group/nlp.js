@@ -5,6 +5,14 @@ Instead of using the existing builtin entity extraction, you can integrate with 
 * [Language support](#language-support)
 * [How to integrate with duckling](#how-to-integrate-with-duckling)
 * [Email Extraction](#email-extraction)
+* [Phone Number Extraction](#phone-number-extraction)
+* [URL Extraction](#url-extraction)
+* [Number Extraction](#number-extraction)
+* [Ordinal Extraction](#ordinal-extraction)
+* [Dimension Extraction](#dimension-extraction)
+* [Quantity Extraction](#quantity-extraction)
+* [Amount of Money Extraction](#amount-of-money-extraction)
+* [Date Extraction](#date-extraction)
 
 ## Language support
 
@@ -519,6 +527,326 @@ The answer will be:
     "comparative": 0,
     "vote": "neutral",
     "numWords": 3,
+    "numHits": 0,
+    "type": "senticon",
+    "language": "en"
+  },
+  "actions": []
+}
+```
+
+## Dimension Extraction
+
+It can identify and extract different dimensions, like distance or temperature.
+
+```javascript
+const { NlpManager } = require('node-nlp');
+
+(async () => {
+  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  const result = await manager.process(
+    '120km'
+  );
+  console.log(JSON.stringify(result, null, 2));
+})();
+```
+
+The answer will be:
+
+```json
+{
+  "utterance": "120km",
+  "locale": "en",
+  "languageGuessed": false,
+  "localeIso2": "en",
+  "language": "English",
+  "classifications": [
+    {
+      "label": "None",
+      "value": 1
+    }
+  ],
+  "intent": "None",
+  "score": 1,
+  "entities": [
+    {
+      "start": 0,
+      "end": 4,
+      "len": 5,
+      "accuracy": 0.95,
+      "sourceText": "120km",
+      "utteranceText": "120km",
+      "entity": "dimension",
+      "resolution": {
+        "strValue": "120",
+        "value": 120,
+        "unit": "kilometre",
+        "subtype": "distance"
+      }
+    }
+  ],
+  "sourceEntities": [
+    {
+      "body": "120km",
+      "start": 0,
+      "value": {
+        "value": 120,
+        "type": "value",
+        "unit": "kilometre"
+      },
+      "end": 5,
+      "dim": "distance",
+      "latent": false
+    }
+  ],
+  "sentiment": {
+    "score": 0,
+    "comparative": 0,
+    "vote": "neutral",
+    "numWords": 1,
+    "numHits": 0,
+    "type": "senticon",
+    "language": "en"
+  },
+  "actions": []
+}
+```
+
+## Quantity Extraction
+
+It can identify and extract quantities of producs, example "three cups of sugar". It identifies the amount (3), the unit (cup) and the product (sugar).
+
+```javascript
+const { NlpManager } = require('node-nlp');
+
+(async () => {
+  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  const result = await manager.process(
+    'three cups of sugar'
+  );
+  console.log(JSON.stringify(result, null, 2));
+})();
+```
+
+The answer will be:
+
+```json
+{
+  "utterance": "three cups of sugar",
+  "locale": "en",
+  "languageGuessed": false,
+  "localeIso2": "en",
+  "language": "English",
+  "classifications": [
+    {
+      "label": "None",
+      "value": 1
+    }
+  ],
+  "intent": "None",
+  "score": 1,
+  "entities": [
+    {
+      "start": 0,
+      "end": 18,
+      "len": 19,
+      "accuracy": 0.95,
+      "sourceText": "three cups of sugar",
+      "utteranceText": "three cups of sugar",
+      "entity": "quantity",
+      "resolution": {
+        "strValue": "3",
+        "value": 3,
+        "unit": "cup",
+        "product": "sugar"
+      }
+    }
+  ],
+  "sourceEntities": [
+    {
+      "body": "three cups of sugar",
+      "start": 0,
+      "value": {
+        "value": 3,
+        "type": "value",
+        "product": "sugar",
+        "unit": "cup"
+      },
+      "end": 19,
+      "dim": "quantity",
+      "latent": false
+    }
+  ],
+  "sentiment": {
+    "score": 0.25,
+    "comparative": 0.0625,
+    "vote": "positive",
+    "numWords": 4,
+    "numHits": 1,
+    "type": "senticon",
+    "language": "en"
+  },
+  "actions": []
+}
+```
+
+## Amount of Money Extraction
+
+It can extract amounts of money with the currenty.
+
+```javascript
+const { NlpManager } = require('node-nlp');
+
+(async () => {
+  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  const result = await manager.process(
+    'It was 42.5€'
+  );
+  console.log(JSON.stringify(result, null, 2));
+})();
+```
+
+The answer will be:
+
+```json
+{
+  "utterance": "It was 42.5€",
+  "locale": "en",
+  "languageGuessed": false,
+  "localeIso2": "en",
+  "language": "English",
+  "classifications": [
+    {
+      "label": "None",
+      "value": 1
+    }
+  ],
+  "intent": "None",
+  "score": 1,
+  "entities": [
+    {
+      "start": 7,
+      "end": 11,
+      "len": 5,
+      "accuracy": 0.95,
+      "sourceText": "42.5€",
+      "utteranceText": "42.5€",
+      "entity": "currency",
+      "resolution": {
+        "strValue": "42.5",
+        "value": 42.5,
+        "unit": "EUR"
+      }
+    }
+  ],
+  "sourceEntities": [
+    {
+      "body": "42.5€",
+      "start": 7,
+      "value": {
+        "value": 42.5,
+        "type": "value",
+        "unit": "EUR"
+      },
+      "end": 12,
+      "dim": "amount-of-money",
+      "latent": false
+    }
+  ],
+  "sentiment": {
+    "score": 0,
+    "comparative": 0,
+    "vote": "neutral",
+    "numWords": 4,
+    "numHits": 0,
+    "type": "senticon",
+    "language": "en"
+  },
+  "actions": []
+}
+```
+
+## Date Extraction
+
+It can identify and extract dates and times.
+
+```javascript
+const { NlpManager } = require('node-nlp');
+
+(async () => {
+  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  const result = await manager.process(
+    '12/12/2019 at 9am'
+  );
+  console.log(JSON.stringify(result, null, 2));
+})();
+```
+
+The answer will be:
+
+```json
+{
+  "utterance": "12/12/2019 at 9am",
+  "locale": "en",
+  "languageGuessed": false,
+  "localeIso2": "en",
+  "language": "English",
+  "classifications": [
+    {
+      "label": "None",
+      "value": 1
+    }
+  ],
+  "intent": "None",
+  "score": 1,
+  "entities": [
+    {
+      "start": 0,
+      "end": 16,
+      "len": 17,
+      "accuracy": 0.95,
+      "sourceText": "12/12/2019 at 9am",
+      "utteranceText": "12/12/2019 at 9am",
+      "entity": "date",
+      "resolution": {
+        "value": "2019-12-12T09:00:00.000+00:00",
+        "grain": "hour",
+        "values": [
+          {
+            "value": "2019-12-12T09:00:00.000+00:00",
+            "grain": "hour",
+            "type": "value"
+          }
+        ]
+      }
+    }
+  ],
+  "sourceEntities": [
+    {
+      "body": "12/12/2019 at 9am",
+      "start": 0,
+      "value": {
+        "values": [
+          {
+            "value": "2019-12-12T09:00:00.000+00:00",
+            "grain": "hour",
+            "type": "value"
+          }
+        ],
+        "value": "2019-12-12T09:00:00.000+00:00",
+        "grain": "hour",
+        "type": "value"
+      },
+      "end": 17,
+      "dim": "time",
+      "latent": false
+    }
+  ],
+  "sentiment": {
+    "score": 0,
+    "comparative": 0,
+    "vote": "neutral",
+    "numWords": 5,
     "numHits": 0,
     "type": "senticon",
     "language": "en"
