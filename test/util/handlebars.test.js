@@ -63,5 +63,32 @@ describe('Handlebars', () => {
       const answer = Handlebars.compile('Hello {{ name }} {{ double(a + b) }}')(context);
       expect(answer).toEqual('Hello Jesus 106');
     });
+    it('Should be able to process arrays', () => {
+      const context = {
+        name: 'Jesus',
+        a: 43,
+        b: 10,
+        double: x => x * 2
+      }
+      const answer = Handlebars.compile(['Hello {{ name }}', 'This is {{ double(a + b) }}'])(context);
+      expect(answer).toEqual(['Hello Jesus','This is 106']);
+    });
+    it('Should be able to process objects', () => {
+      const context = {
+        name: 'Jesus',
+        a: 43,
+        b: 10,
+        double: x => x * 2
+      }
+      const obj = {
+        name: '{{ name }}',
+        nested: {
+          id: '{{ double(a+b) }}',
+        }
+      }
+      const answer = Handlebars.compile(obj)(context);
+      expect(answer).toEqual({ name: 'Jesus', nested: { id: '106' }});
+    });
+
   });
 });
