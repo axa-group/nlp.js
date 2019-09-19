@@ -48,6 +48,9 @@ describe('Similar Search', () => {
   describe('get similarity', () => {
     test('Should return correct levenshtein distance', () => {
       const similar = new SimilarSearch();
+      expect(similar.getSimilarity('potatoe', 'potatoe')).toEqual(0);
+      expect(similar.getSimilarity('', '123')).toEqual(3);
+      expect(similar.getSimilarity('123', '')).toEqual(3);
       expect(similar.getSimilarity('a', 'b')).toEqual(1);
       expect(similar.getSimilarity('ab', 'ac')).toEqual(1);
       expect(similar.getSimilarity('abc', 'axc')).toEqual(1);
@@ -82,6 +85,9 @@ describe('Similar Search', () => {
     test('It can use collator', () => {
       const similar = new SimilarSearch({ useCollator: true });
       expect(similar.getSimilarity('mikailovitch', 'Mikhaïlovitch')).toEqual(1);
+      expect(similar.getSimilarity('potatoe', 'potatoe')).toEqual(0);
+      expect(similar.getSimilarity('', '123')).toEqual(3);
+      expect(similar.getSimilarity('123', '')).toEqual(3);
     });
     test('It can use normalize (faster than collator)', () => {
       const similar = new SimilarSearch({ normalize: true });
