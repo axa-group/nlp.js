@@ -35,6 +35,7 @@ const PorterStemmerNl = require('../../lib/nlp/stemmers/natural/porter-stemmer-n
 const StemmerJa = require('../../lib/nlp/stemmers/natural/stemmer-ja');
 const StemmerId = require('../../lib/nlp/stemmers/natural/indonesian/stemmer_id');
 const TokenizeStemmer = require('../../lib/nlp/stemmers/tokenize-stemmer');
+const AutoStemmer = require('../../lib/nlp/stemmers/auto-stemmer');
 const {
   AggressiveTokenizer,
   AggressiveTokenizerFa,
@@ -47,6 +48,7 @@ const {
   AggressiveTokenizerPt,
   AggressiveTokenizerPl,
   AggressiveTokenizerSv,
+  DefaultTokenizer,
   TokenizerJa,
 } = require('../../lib/nlp/tokenizers');
 
@@ -119,10 +121,20 @@ describe('NLP Util', () => {
         'TurkishStemmer'
       ); // Turkish
     });
-    test('Shoul return a TokenizeStemmer for unknown locales', () => {
-      expect(NlpUtil.getStemmer('aa')).toBeInstanceOf(TokenizeStemmer);
-      expect(NlpUtil.getStemmer('')).toBeInstanceOf(TokenizeStemmer);
-      expect(NlpUtil.getStemmer()).toBeInstanceOf(TokenizeStemmer);
+    test('Shoul return a AutoStemmer for unknown locales', () => {
+      expect(NlpUtil.getStemmer('aa')).toBeInstanceOf(AutoStemmer);
+      expect(NlpUtil.getStemmer('')).toBeInstanceOf(AutoStemmer);
+      expect(NlpUtil.getStemmer()).toBeInstanceOf(AutoStemmer);
+    });
+    test('Shoul return a TokenizeStemmer for unknown locales if AutoStemmer is deactivated', () => {
+      NlpUtil.useAutoStemmer = false;
+      try {
+        expect(NlpUtil.getStemmer('aa')).toBeInstanceOf(TokenizeStemmer);
+        expect(NlpUtil.getStemmer('')).toBeInstanceOf(TokenizeStemmer);
+        expect(NlpUtil.getStemmer()).toBeInstanceOf(TokenizeStemmer);
+      } finally {
+        NlpUtil.useAutoStemmer = true;
+      }
     });
     test('Alternative stemmers can be used for some languages', () => {
       NlpUtil.useAlternative.en = false;
@@ -260,10 +272,10 @@ describe('NLP Util', () => {
       expect(NlpUtil.getTokenizer('ta')).toBeInstanceOf(PunctTokenizer); // tamil
       expect(NlpUtil.getTokenizer('tr')).toBeInstanceOf(PunctTokenizer); // turkish
     });
-    test('Shoul return an Punctuation word Tokenizer for unknown locales', () => {
-      expect(NlpUtil.getTokenizer('aa')).toBeInstanceOf(PunctTokenizer);
-      expect(NlpUtil.getTokenizer('')).toBeInstanceOf(PunctTokenizer);
-      expect(NlpUtil.getTokenizer()).toBeInstanceOf(PunctTokenizer);
+    test('Shoul return an Default word Tokenizer for unknown locales', () => {
+      expect(NlpUtil.getTokenizer('aa')).toBeInstanceOf(DefaultTokenizer);
+      expect(NlpUtil.getTokenizer('')).toBeInstanceOf(DefaultTokenizer);
+      expect(NlpUtil.getTokenizer()).toBeInstanceOf(DefaultTokenizer);
     });
   });
 
