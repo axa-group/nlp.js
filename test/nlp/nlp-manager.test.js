@@ -1736,4 +1736,23 @@ describe('NLP Manager', () => {
       expect(manager.nlgManager).not.toBe(oldNlg);
     });
   });
+
+  describe('Spell Checking', () => {
+    test('If speel checking is provided, can fix words', async () => {
+      const manager = new NlpManager({
+        languages: ['fr'],
+        nlu: { spellCheck: true },
+        ner: { builtins: [] },
+      });
+      manager.addDocument('fr', 'Bonjour!', 'greetings');
+      manager.addDocument('fr', 'bonjour', 'greetings');
+      manager.addDocument('fr', 'salut', 'greetings');
+      manager.addDocument('fr', 'au revoire', 'bye');
+      await manager.train();
+      const result1 = await manager.process('fr', 'Bonjou');
+      expect(result1.intent).toEqual('greetings');
+      const result2 = await manager.process('fr', 'Bonjourd');
+      expect(result2.intent).toEqual('greetings');
+    });
+  });
 });
