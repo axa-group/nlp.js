@@ -62,15 +62,5 @@ describe('Similar Search', () => {
       const actual = spellCheck.checkToken('working', 1);
       expect(actual).toEqual('wording');
     });
-    test('If there is a switch of characters, is similar', () => {
-      const spellCheck = new SpellCheck({
-        bonjour: 1,
-        workin: 1,
-        workingo: 1,
-        other: 2,
-      });
-      const actual = spellCheck.checkToken('bojnour', 1);
-      expect(actual).toEqual('bonjour');
-    });
   });
 });
