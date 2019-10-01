@@ -11,7 +11,7 @@
     "precommit": "lint-staged",
     "test": "eslint lib/** && jest --coverage --maxWorkers=4",
     "jsdoc": "jsdoc -r lib -d docs/static -R README.md",
-    "browserdist": "browserify --i xlsx --i novel-segment ./lib | uglifyjs --compress --mangle > ./dist/bundle.js"
+    "browserdist": "browserify --i xlsx --i novel-segment ./lib | terser --compress --mangle > ./dist/bundle.js"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -32,6 +32,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "browserify": "16.5.0",
     "coveralls": "^3.0.6",
     "eslint": "^6.4.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -44,7 +45,8 @@
     "lint-staged": "^9.2.5",
     "lodash": ">=4.17.15",
     "merge": "^1.2.1",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "terser": "4.3.4"
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "1.1.4",
