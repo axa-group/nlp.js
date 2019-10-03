@@ -15,6 +15,8 @@ Languages accepted:
 - da: Danish
 - fi: Finnish
 - ru: Russian
+- pt: Portuguese
+
 
 | Language | AFINN | Senticon | Pattern | Negations |
 | -------- | :---: | :------: | :-----: | :-------: |
@@ -30,6 +32,7 @@ Languages accepted:
 | German   |       |    X     |         |     X     |
 | Finnish  |   X   |          |         |           |
 | Russian  |   X   |          |         |           |
+| Portuguese |   X   |          |         |     X     |
 
 By default Senticon is used if possible, otherwise AFINN, and last one Pattern:
 

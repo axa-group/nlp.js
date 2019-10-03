@@ -64,7 +64,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Italian (it)    |       |          |    X    |
 | Japanese (ja)   |       |          |         |
 | Norwegian (no)  |       |          |         |
-| Portuguese (pt) |       |          |         |
+| Portuguese (pt) |   X   |          |         |
 | Romanian (ro)   |       |          |         |
 | Russian (ru)    |   X   |          |         |
 | Slovene (sl)    |       |          |         |
