@@ -4,6 +4,7 @@ The Sentiment Analysis module is able to calculate the sentiment based on the AF
 Languages accepted:
 
 - eu: Basque
+- bn: Bengali
 - ca: Catalan
 - en: English
 - es: Spanish
@@ -21,6 +22,7 @@ Languages accepted:
 | Language | AFINN | Senticon | Pattern | Negations |
 | -------- | :---: | :------: | :-----: | :-------: |
 | Basque   |       |    X     |         |           |
+| Bengali  |   X   |          |         |           |
 | Catalan  |       |    X     |         |           |
 | Danish   |   X   |          |         |           |
 | Dutch    |       |          |    X    |     X     |
@@ -38,6 +40,7 @@ By default Senticon is used if possible, otherwise AFINN, and last one Pattern:
 
 | Language | AFINN | Senticon | Pattern |
 | -------- | :---: | :------: | :-----: |
+| Bengali  |   X   |          |         |
 | Basque   |       |    X     |         |
 | Catalan  |       |    X     |         |
 | Dutch    |       |          |    X    |

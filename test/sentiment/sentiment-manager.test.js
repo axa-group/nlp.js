@@ -82,6 +82,32 @@ describe('Sentiment Manager', () => {
       expect(result.language).toEqual('en');
       expect(result.vote).toEqual('negative');
     });
+    test('Get positive sentiment bengali', async () => {
+      const sentiment = new SentimentManager({ useStemmer: false });
+      const utterance = 'আমি বিড়াল ভালবাসি, খুব সুন্দর';
+      const result = await sentiment.process('bn', utterance);
+      expect(result).toBeDefined();
+      expect(result.score).toEqual(3.2);
+      expect(result.numWords).toEqual(5);
+      expect(result.numHits).toEqual(1);
+      expect(result.comparative).toEqual(0.64);
+      expect(result.type).toEqual('afinn');
+      expect(result.language).toEqual('bn');
+      expect(result.vote).toEqual('positive');
+    });
+    test('Get negative sentiment bengali', async () => {
+      const sentiment = new SentimentManager({ useStemmer: false });
+      const utterance = 'আমি বিড়ালদের ঘৃণা করি, ভয়াবহ';
+      const result = await sentiment.process('bn', utterance);
+      expect(result).toBeDefined();
+      expect(result.score).toEqual(-4);
+      expect(result.numWords).toEqual(5);
+      expect(result.numHits).toEqual(2);
+      expect(result.comparative).toEqual(-0.8);
+      expect(result.type).toEqual('afinn');
+      expect(result.language).toEqual('bn');
+      expect(result.vote).toEqual('negative');
+    });
     test('Get positive sentiment deutsch', async () => {
       const sentiment = new SentimentManager({ useStemmer: false });
       const utterance = 'Ich liebe Kätzchen';
