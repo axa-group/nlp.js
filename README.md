@@ -102,6 +102,7 @@ The version 3 comes with some important changes, mainly focused on improve perfo
   - [Example of use](docs/microsoft-bot-framework.md#example-of-use)
   - [Recognizer and Slot filling](docs/microsoft-bot-framework.md#recognizer-and-slot-filling)
 - [Contributing](#contributing)
+- [Contributors](#contributors)
 - [Code of Conduct](#code-of-conduct)
 - [Who is behind it](#who-is-behind-it)
 - [License](#license.md)
@@ -227,6 +228,14 @@ const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
 ## Contributing
 
 You can read the guide of how to contribute at [Contributing](https://github.com/axa-group/nlp.js/blob/master/CONTRIBUTING.md).
+
+## Contributors
+
+<a href="https://github.com/axa-group/nlp.js/graphs/contributors">
+  <img src="https://contributors-img.firebaseapp.com/image?repo=axa-group/nlp.js" />
+</a>
+
+Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
 ## Code of Conduct
 
