@@ -115,8 +115,7 @@ const languages = [
   { locale: 'fr', name: 'French' },
   { locale: 'pt', name: 'Portuguese' },
   { locale: 'zh', name: 'Chinese' },
-  { locale: 'ja', name: 'Japanese' },
-];
+  { locale: 'ja', name: 'Japanese' },];
 
 describe('NER Manager builtins', () => {
   languages.forEach(language => {
@@ -145,4 +144,19 @@ describe('NER Manager builtins', () => {
       addTests(date, language.locale);
     });
   });
+  describe(`Date english`, () => {
+    test('tomorrow morning', async () => {
+      const manager = new NlpManager({ languages: ['en'] });
+      const { entities: results } = await manager.process('tomorrow morning');
+      const [result] = results;
+      expect(result).toBeDefined();
+      expect(result.end).toEqual(15);
+      expect(result.entity).toEqual('datetimerange');
+      expect(result.len).toEqual(16);
+      expect(result.sourceText).toEqual('tomorrow morning');
+      expect(result.resolution).toBeDefined();
+    });
+  });
 });
+
+
