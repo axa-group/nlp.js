@@ -60,7 +60,7 @@ describe('Sentiment Analyzer', () => {
           expect(analyzer.negations).toBeDefined();
         }
       );
-      ['da', 'fi', 'ru', 'pt'].forEach(language => {
+      ['da', 'fi', 'ru', 'pt', 'bn'].forEach(language => {
         const analyzer = new SentimentAnalyzer({ language });
         expect(analyzer.settings.language).toEqual(language);
         expect(analyzer.settings.tokenizer).toBeDefined();
