@@ -3,7 +3,9 @@
   <title>Test</title>
   <script src='./bundle.js'></script>
   <script>
-    const manager = new window.NLPJS.NlpManager({ languages: ['en'], useNeural: false });
+    const a = window.performance.now();
+    console.log(a);
+    const manager = new window.NLPJS.NlpManager({ languages: ['en'], nlu: { log: true } });
     async function main() {
       manager.addDocument('en', 'say about you', 'agent.acquaintance');
       manager.addDocument('en', 'why are you here', 'agent.acquaintance');
