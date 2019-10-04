@@ -11,8 +11,7 @@
     "precommit": "lint-staged",
     "test": "eslint lib/** && jest --coverage --maxWorkers=4",
     "jsdoc": "jsdoc -r lib -d docs/static -R README.md",
-    "browserdist": "browserify --i xlsx --i novel-segment ./lib | terser --compress --mangle > ./dist/bundle.js",
-    "browserdist2": "browserify --i xlsx --i novel-segment ./lib | terser > ./dist/bundle.js"
+    "browserdist": "browserify --i xlsx --i novel-segment ./lib | terser --compress --mangle > ./dist/bundle.js"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
