@@ -54,7 +54,6 @@
     "esprima": "^4.0.1",
     "kuromoji": "^0.1.2",
     "novel-segment": "^2.5.0",
-    "uglifyify": "^5.0.2",
     "xlsx": "^0.15.1"
   },
   "keywords": [
