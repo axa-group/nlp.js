@@ -52,7 +52,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Arabic (ar)     |       |          |         |
 | Armenian (hy)   |       |          |         |
 | Basque (eu)     |       |    X     |         |
-| Bengali (bn)    |       |          |         |
+| Bengali (bn)    |   X   |          |         |
 | Catalan (ca)    |       |    X     |         |
 | Chinese (zh)    |       |          |         |
 | Czech (cs)      |       |          |         |
@@ -72,7 +72,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Italian (it)    |       |          |    X    |
 | Japanese (ja)   |       |          |         |
 | Norwegian (no)  |       |          |         |
-| Portuguese (pt) |       |          |         |
+| Portuguese (pt) |   X   |          |         |
 | Romanian (ro)   |       |          |         |
 | Russian (ru)    |   X   |          |         |
 | Slovene (sl)    |       |          |         |

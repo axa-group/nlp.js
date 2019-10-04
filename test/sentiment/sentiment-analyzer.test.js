@@ -38,8 +38,8 @@ describe('Sentiment Analyzer', () => {
       expect(analyzer.negations).toEqual(['not', 'no', 'never', 'neither']);
     });
     test('If I provide a language that not exists, should not throw error', () => {
-      const analyzer = new SentimentAnalyzer({ language: 'pt' });
-      expect(analyzer.settings.language).toEqual('pt');
+      const analyzer = new SentimentAnalyzer({ language: 'hu' });
+      expect(analyzer.settings.language).toEqual('hu');
       expect(analyzer.settings.tokenizer).toBeDefined();
       expect(analyzer.settings.type).toEqual('senticon');
       expect(analyzer.vocabulary).toBeUndefined();
@@ -60,7 +60,7 @@ describe('Sentiment Analyzer', () => {
           expect(analyzer.negations).toBeDefined();
         }
       );
-      ['da', 'fi', 'ru'].forEach(language => {
+      ['da', 'fi', 'ru', 'pt', 'bn'].forEach(language => {
         const analyzer = new SentimentAnalyzer({ language });
         expect(analyzer.settings.language).toEqual(language);
         expect(analyzer.settings.tokenizer).toBeDefined();
