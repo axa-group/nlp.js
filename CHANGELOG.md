@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to release of this project will be documented in this file.
 
-For detailed change-info on the commit level please [https://github.com/axa-group/nlp.js/commits/master](see our GitHub commit history).
+For detailed change-info on the commit level please [see our GitHub commit history](https://github.com/axa-group/nlp.js/commits/master).
 
 ## [3.9.0] - 2019-09-15
 ### Added
