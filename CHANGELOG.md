@@ -3,7 +3,94 @@ All notable changes to release of this project will be documented in this file.
 
 For detailed change-info on the commit level please [https://github.com/axa-group/nlp.js/commits/master](see our GitHub commit history).
 
+## [3.9.0] - 2019-09-15
+### Added
+- Support for Ukrainian language
+- Duckling support
 
+### Changed
+- General code cleanup removing dead & unused code from the project
+- Dependencies have been updated
+- README.md has been updated
+
+### Fixed
+- now using url.parse instead of new URL due to support of node version 8
+
+## [3.8.0] - 2019-09-12
+### Added
+- Support for Bengali language
+- Support for Greek language
+
+## [3.7.2] - 2019-09-07
+### Added
+- Support for Thai language
+
+## [3.7.1] - 2019-09-07
+### Added
+- Added examples for huge training (10k intents) and benchmark (Corpus50)
+
+## [3.7.0] - 2019-09-05
+### Added
+- Improved false-positive avoidance
+- Training of huge datasets is now feasible
+
+## [3.5.2] - 2019-08-20
+### Added
+- English tokenizer has been improved
+
+### Changed
+- Dependencies have been updated
+- Package lockfile (JS) has been updated
+- README.md has been updated
+
+### Fixed
+- Various typos in the documentation
+- Bugs regarding contraction
+
+## [3.5.1] - 2019-08-09
+### Added
+- Model sizes has been significantly reduced
+
+## [3.5.0] - 2019-08-09
+### Added
+- Emoji support 🥳
+- Sentiment analysis for the following languages: Finish, Danish, Russian
+- Added a "default" sentiment analysis
+
+### Changed
+- Documentation has been updated
+
+## [3.4.0] - 2019-07-24
+### Added
+- Added a default intent and score when score is less than threshold
+- Now uses decay learning rate 
+
+### Changed
+- Updated license in documentation
+- Removed handlebars dependency
+- Dependencies have been updated
+- Adjustments to tests
+
+## [3.2.1] - 2019-07-16
+### Fixed
+- Fixed an error that occured when retrieving entites from whitelist
+
+## [3.1.1] - 2019-05-06
+### Changed
+- General performance update. Increaed performance over 3.1.0
+
+## [3.1.0] - 2019-05-05
+### Added
+- Actions
+- Japanase language stemmer
+
+### Changed
+- Now builds in node v12
+- Dependencies have been updated
+- Tweaked hyperparameters for best performance
+
+### Fixed
+- Issues with NLP Util tests have been fixed
 
 ## [3.0.2] - 2019-04-19
 ### Fixed
