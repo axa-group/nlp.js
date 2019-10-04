@@ -11,7 +11,7 @@
     "precommit": "lint-staged",
     "test": "eslint lib/** && jest --coverage --maxWorkers=4",
     "jsdoc": "jsdoc -r lib -d docs/static -R README.md",
-    "browserdist": "browserify --i xlsx --i novel-segment ./lib | uglifyjs --compress --mangle > ./dist/bundle.js"
+    "browserdist": "browserify -t uglifyify --i xlsx --i novel-segment ./lib > ./dist/bundle.js"
   },
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -32,6 +32,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^16.5.0",
     "coveralls": "^3.0.6",
     "eslint": "^6.4.0",
     "eslint-config-airbnb-base": "^14.0.0",
@@ -52,6 +53,7 @@
     "esprima": "^4.0.1",
     "kuromoji": "^0.1.2",
     "novel-segment": "^2.5.0",
+    "uglifyify": "^5.0.2",
     "xlsx": "^0.15.1"
   },
   "keywords": [
