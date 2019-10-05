@@ -46,7 +46,7 @@
     "lodash": ">=4.17.15",
     "merge": "^1.2.1",
     "prettier": "^1.18.2",
-    "terser": "4.3.5"
+    "terser": "4.3.7"
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "1.1.4",
