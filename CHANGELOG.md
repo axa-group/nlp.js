@@ -3,6 +3,26 @@ All notable changes to release of this project will be documented in this file.
 
 For detailed change-info on the commit level please [see our GitHub commit history](https://github.com/axa-group/nlp.js/commits/master).
 
+## [3.10.0] - 2019-10-07
+### Added
+- Traverse for handlebars, so answers now can be arrays or objects
+- Automatic stemmer: is able to learn rules from languages without stemmer when the languages are inflected.
+- Tests of the automatic stemmer in polish 
+- Spell checking: now users can write with small typos
+- Changelog
+- Portuguese sentiment analysis
+- Contributor pictures to the readme
+- Bengali sentiment analysis
+
+### Changed
+- Faster Levenshtein implementation
+- Now the browser version is generated with terser
+
+### Fixed
+- Extended NER to support datetimerange
+- Sort classifications in the NER manager
+- Use performance.now instead of process.hrtime for browser compatibility
+
 ## [3.9.0] - 2019-09-15
 ### Added
 - Support for Ukrainian language
