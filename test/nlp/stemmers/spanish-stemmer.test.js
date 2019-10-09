@@ -33,11 +33,11 @@ describe('Spanish Stemmer', () => {
   describe('Stem', () => {
     test('Should tokenize and stem spanish text', () => {
       const text =
-        'Me compraría una gato trepadora perfectamente si lo considerara aconsejable';
+        'Amigos, compraría una gato trepadora perfectamente si lo considerara aconsejable';
       const stemmer = NlpUtil.getStemmer('es');
       const actual = stemmer.tokenizeAndStem(text);
       const expected = [
-        'me',
+        'amig',
         'compr',
         'una',
         'gat',
