@@ -33,13 +33,14 @@ describe('Spanish Stemmer', () => {
   describe('Stem', () => {
     test('Should tokenize and stem spanish text', () => {
       const text =
-        'Amigos, compraría una gato trepadora perfectamente si lo considerara aconsejable';
+        'Amigos, nos aburrimos. Compraría gato trepador perfectamente si lo considerara aconsejable y reiremos';
       const stemmer = NlpUtil.getStemmer('es');
       const actual = stemmer.tokenizeAndStem(text);
       const expected = [
         'amig',
+        'nos',
+        'aburr',
         'compr',
-        'una',
         'gat',
         'trepador', // TODO should be trep
         'perfect',
@@ -47,6 +48,8 @@ describe('Spanish Stemmer', () => {
         'lo',
         'considerar', // TODO should be consider
         'aconsej',
+        'y',
+        'reir',
       ];
       expect(actual).toEqual(expected);
     });
