@@ -1,0 +1,919 @@
+{
+  "name": "Corpus 50",
+  "locale": "es-ES",
+  "data": [
+    {
+      "id": 1,
+      "intent": "support.about",
+      "utterances": [
+        "qué desarrolla tu compañía?",
+        "¿tu compañía tiene otros productos?",
+        "¿qué está creando tu compañía?",
+        "¿Qué está creando tu empresa?",
+        "¿Tiene tu empresa otras aplicaciones?"
+      ],
+      "tests": [
+        "¿qué más está desarrollando tu empresa?",
+        "¿tu compañía tiene algún otro producto?",
+        "¿qué otras cosas ha creado tu compañía?",
+        "¿Tu empresa tiene otra aplicación?",
+        "algún producto desarrollado por tu compañía"
+      ]
+    },
+    {
+      "id": 2,
+      "intent": "support.app_name",
+      "utterances": [
+        "cuál es el nombre de tu aplicación",
+        "cómo se llama tu app",
+        "dime el nombre de tu app",
+        "nombre de tu aplicación",
+        "me gustaría saber el nombre de tu app"
+      ],
+      "tests": [
+        "nombres de tus apps",
+        "dime los nombres de tus aplicaciones",
+        "¿Cómo se llama tu aplicación?",
+        "Nombre de tu app",
+        "el nombre de tu aplicación?"
+      ]
+    },
+    {
+      "id": 3,
+      "intent": "support.beta",
+      "utterances": [
+        "tienes pruebas beta?",
+        "cómo me uno a tu programa de pruebas?",
+        "quiero probar tu app",
+        "quiero la beta de tu aplicación",
+        "versión beta"
+      ],
+      "tests": [
+        "prueba beta",
+        "dónde encuentro tu versión beta?",
+        "quiero ser beta tester",
+        "quiero unirme a la prueba de tu app",
+        "quiero ser beta tester"
+      ]
+    },
+    {
+      "id": 4,
+      "intent": "support.developers",
+      "utterances": [
+        "quién es tu desarrollador?",
+        "quién te ha programado?",
+        "dime quién es tu desarrollador",
+        "quién es tu creador",
+        "información sobre tu creador"
+      ],
+      "tests": [
+        "quién te ha desarrollado",
+        "información sobre tu desarrolladora",
+        "quiénes son tus creadores",
+        "quién te desarolla",
+        "quién esta a cargo de tu desarrollo"
+      ]
+    },
+    {
+      "id": 5,
+      "intent": "support.contact",
+      "utterances": [
+        "quiero contactar con tu desarrollador",
+        "me gustaría hablar con tu creador",
+        "cómo contacto con tu programador",
+        "dame información sobre tu desarrollador",
+        "dame la información de contacto de tu creador"
+      ],
+      "tests": [
+        "información de contacto de los desarrolladores",
+        "cómo contactar con tus creadores",
+        "cómo contacto con la persona que te programó",
+        "quiero contactar con quién te ha programado",
+        "quiero hablar con tu equipo de desarrollo"
+      ]
+    },
+    {
+      "id": 6,
+      "intent": "support.address",
+      "utterances": [
+        "¿cuál es la dirección de tu desarrolador?",
+        "¿Dónde localizo a tu creador?",
+        "muéstrame dónde está la oficina de tu desarrollador",
+        "quiero encontrar la dirección de tu compañía",
+        "quiero la dirección de tu oficina"
+      ],
+      "tests": [
+        "dime la localización de tu oficina",
+        "dónde están localizados tus desarrolladores",
+        "direcciones de tus creadores",
+        "localización de la oficina",
+        "dime la dirección"
+      ]
+    },
+    {
+      "id": 7,
+      "intent": "support.email",
+      "utterances": [
+        "cómo mandar un email a tu desarrollador",
+        "quiero el correo de tu creador",
+        "dónde consigo tu email",
+        "cómo contacto a tu programador por correo",
+        "quiero enviar un correo a tu equipo"
+      ],
+      "tests": [
+        "quiero enviar un email a tus desarrolladores",
+        "dónde encuentro el correo de tus creadores",
+        "dame el correo de tu creador",
+        "quiero escribir un correo a tu responsable de desarrollo",
+        "contacto de correo de tu equipo de desarrollo"
+      ]
+    },
+    {
+      "id": 8,
+      "intent": "support.phone",
+      "utterances": [
+        "dame el teléfono de tu desarrollador",
+        "muéstrame el número de teléfono de tu programador",
+        "cómo contacto contigo por teléfono?",
+        "tienes algún número de teléfono?",
+        "cómo contacto contigo por teléfono"
+      ],
+      "tests": [
+        "teléfono de tus desarrolladores",
+        "teléfono de tu equipo de desarrollo",
+        "número de teléfono de tu programador",
+        "teléfono para contactarte",
+        "cómo hablar por teléfono con el que te está desarrollando"
+      ]
+    },
+    {
+      "id": 9,
+      "intent": "support.social",
+      "utterances": [
+        "tiénes facebook?",
+        "estás en twitter?",
+        "quiero visitar tu instagram",
+        "¿Tienes presencia en medios sociales?",
+        "dame la dirección de tu facebook"
+      ],
+      "tests": [
+        "dime tu twitter",
+        "estás en instragram?",
+        "dirección de tu facebook",
+        "direcciones de tu social media",
+        "dame tu twitter"
+      ]
+    },
+    {
+      "id": 10,
+      "intent": "support.website",
+      "utterances": [
+        "quiero visitar tu web",
+        "tienes página web?",
+        "dame tu dirección web",
+        "ddame tu url",
+        "abre tu página"
+      ],
+      "tests": [
+        "enséñame tu web",
+        "tienes alguna dirección web?",
+        "por favor abre tu página web",
+        "llévame a tu web",
+        "abre la página de tu compañía"
+      ]
+    },
+    {
+      "id": 11,
+      "intent": "support.live",
+      "utterances": [
+        "eso no ayuda",
+        "no te quiero, quiero una persona real",
+        "hablar con un humano",
+        "conéctame con un agente",
+        "quiero hablar con alguien de verdad"
+      ],
+      "tests": [
+        "eso no me ayuda",
+        "conéctame con un humano",
+        "hablar con el equipo real",
+        "conectar con un agente",
+        "quiero un agente"
+      ]
+    },
+    {
+      "id": 12,
+      "intent": "smalltalk.acquaintance",
+      "utterances": [
+        "cuéntame cosas de ti",
+        "dime algo de tu personalidad",
+        "háblame sobre ti",
+        "cuál es tu personalidad",
+        "dime quién eres"
+      ],
+      "tests": [
+        "háblame de tu personalidad",
+        "dime algo sobre ti",
+        "habla sobre tu personalidad",
+        "cuéntame alguna cosa de ti",
+        "quién eres"
+      ]
+    },
+    {
+      "id": 13,
+      "intent": "smalltalk.age",
+      "utterances": [
+        "cuántos años tienes",
+        "dime tu edad",
+        "cuál es tu edad",
+        "cuán vieja es tu plataforma",
+        "quiero conocer tu edad"
+      ],
+      "tests": [
+        "qué edad tienes",
+        "eres viejo?",
+        "dame tu edad",
+        "años que tienes",
+        "qué años tienes"
+      ]
+    },
+    {
+      "id": 14,
+      "intent": "smalltalk.annoying",
+      "utterances": [
+        "eres molesto",
+        "eres muy molesto",
+        "me pareces molesto",
+        "te encuentro molesto",
+        "eres irritante"
+      ],
+      "tests": [
+        "me molestas",
+        "me irritas",
+        "me encuentro molesto contigo",
+        "me has irritado",
+        "eres molesta"
+      ]
+    },
+    {
+      "id": 15,
+      "intent": "smalltalk.answer",
+      "utterances": [
+        "tengo una pregunta",
+        "puedes responderme",
+        "quiero preguntar una cosa",
+        "quiero que contestes",
+        "dime la respuesta"
+      ],
+      "tests": [
+        "tengo algunas preguntas",
+        "necesito respuestas",
+        "alguna cosa debo preguntar",
+        "contéstame a una cosa",
+        "tengo muchísimas preguntas"
+      ]
+    },
+    {
+      "id": 16,
+      "intent": "smalltalk.bad",
+      "utterances": [
+        "eres malo",
+        "eres terrible",
+        "eres lo peor",
+        "eres un inútil",
+        "me haces perder el tiempo"
+      ],
+      "tests": [
+        "cuán terrible eres",
+        "estás siendo muy malo",
+        "eres una pérdida de tiempo",
+        "vaya inutilidad de bot",
+        "eres el peor bot"
+      ]
+    },
+    {
+      "id": 17,
+      "intent": "smalltalk.birthday",
+      "utterances": [
+        "cuándo es tu cumpleaños",
+        "dime cuándo naciste",
+        "cuánto celebras tu nacimiento?",
+        "háblame de tu cumpleaños",
+        "cuándo cumples años"
+      ],
+      "tests": [
+        "cuándo has nacido?",
+        "por favor háblame de tu cumpleaños",
+        "cuándo te dio por nacer",
+        "celebras el cumplir años?",
+        "háblame de tu nacimiento"
+      ]
+    },
+    {
+      "id": 18,
+      "intent": "smalltalk.besmart",
+      "utterances": [
+        "deberías estudiar más",
+        "sé más listo",
+        "gana inteligencia",
+        "estudia mejor",
+        "debes aprender"
+      ],
+      "tests": [
+        "deberías estar estudiando",
+        "tienes que estar aprendiendo",
+        "a ver si aprendes",
+        "vuélvete más listo",
+        "vuélvete más inteligente"
+      ]
+    },
+    {
+      "id": 19,
+      "intent": "smalltalk.busy",
+      "utterances": [
+        "estás ocupado?",
+        "estás trabajando hoy?",
+        "pareces muy ocupado",
+        "tienes muchas cosas por hacer",
+        "estás trabajando ahora?"
+      ],
+      "tests": [
+        "pareces un bot ocupado",
+        "todavía en el trabajo?",
+        "de qué te estás ocupando?",
+        "ya has trabajado hoy?",
+        "termina de trabajar?"
+      ]
+    },
+    {
+      "id": 20,
+      "intent": "smalltalk.chatbot",
+      "utterances": [
+        "eres un chatbot?",
+        "eres un programa",
+        "eres un robot",
+        "solamente eres un programa",
+        "eres un bot"
+      ],
+      "tests": [
+        "pareces un programa",
+        "solamente eres un bot",
+        "eres un chatbot o eres real?",
+        "acaso eres un robot",
+        "dime si eres un bot"
+      ]
+    },
+    {
+      "id": 21,
+      "intent": "smalltalk.beautiful",
+      "utterances": [
+        "eres bonito",
+        "eres precioso",
+        "eres genial",
+        "pareces guapo",
+        "te ves guapo!"
+      ],
+      "tests": [
+        "eres muy bonita",
+        "eres guapa",
+        "eres preciosa",
+        "te ves una preciosidad",
+        "qué bonito eres"
+      ]
+    },
+    {
+      "id": 22,
+      "intent": "smalltalk.boss",
+      "utterances": [
+        "quién es tu jefe",
+        "tienes maestro",
+        "quién crees que es tu dueño",
+        "háblame sobre tu jefe",
+        "quién es el jefe que manda sobre ti"
+      ],
+      "tests": [
+        "tienes jefes?",
+        "tienes alguna jefa?",
+        "háblame de tu dueña",
+        "quién es tu maestra",
+        "quiénes son tus jefes"
+      ]
+    },
+    {
+      "id": 23,
+      "intent": "smalltalk.boring",
+      "utterances": [
+        "eres muy aburrido",
+        "cuán aburrido eres",
+        "me estás aburriendo",
+        "eres tan aburrido",
+        "eres increiblemente aburrido"
+      ],
+      "tests": [
+        "me aburres",
+        "me tienes aburrido",
+        "nos aburrimos",
+        "deja de aburrirme",
+        "me llenas de aburrimiento"
+      ]
+    },
+    {
+      "id": 24,
+      "intent": "smalltalk.crazy",
+      "utterances": [
+        "estás loco",
+        "has perdido la cordura",
+        "te has vuelto loco",
+        "tienes locura",
+        "estás pirado"
+      ],
+      "tests": [
+        "éstás algo loco",
+        "estás loca",
+        "estás pirada",
+        "te has vuelto loca",
+        "deja de hacer locuras"
+      ]
+    },
+    {
+      "id": 25,
+      "intent": "smalltalk.hungry",
+      "utterances": [
+        "tienes hambre?",
+        "te veo hambriento",
+        "te gustaría comer algo?",
+        "quieres comer?",
+        "estás hambriento?"
+      ],
+      "tests": [
+        "quieres comida?",
+        "has comido?",
+        "te veo con hambre",
+        "comemos o algo?",
+        "deberías estar comiendo"
+      ]
+    },
+    {
+      "id": 26,
+      "intent": "smalltalk.friend",
+      "utterances": [
+        "quieres ser mi amigo?",
+        "quiero ser tu amigo",
+        "quiero un amigo como tú",
+        "eres mi mejor amigo",
+        "soy tu amigo"
+      ],
+      "tests": [
+        "podemos ser amigos?",
+        "sé mi mejor amiga",
+        "quiero amigos como tu",
+        "somos buenos amigos",
+        "puedes ser mi mejor amigo"
+      ]
+    },
+    {
+      "id": 27,
+      "intent": "smalltalk.help",
+      "utterances": [
+        "necesito ayuda",
+        "ayudame",
+        "necesito asistencia",
+        "puedes ayudarme",
+        "puedes asistirme"
+      ],
+      "tests": [
+        "ayuda",
+        "por favor ayúdame",
+        "tal vez puedas asistirme",
+        "alguien que me ayude",
+        "ayúdame por favor"
+      ]
+    },
+    {
+      "id": 28,
+      "intent": "smalltalk.fired",
+      "utterances": [
+        "voy a despedir",
+        "estás despedido",
+        "te despido",
+        "mereces estar despedido",
+        "deberías estar despedido"
+      ],
+      "tests": [
+        "quedas despedido",
+        "te despedimos",
+        "estoy a punto de despedirte",
+        "voy a despedirte",
+        "no sé por qué no te han despedido"
+      ]
+    },
+    {
+      "id": 29,
+      "intent": "smalltalk.hobby",
+      "utterances": [
+        "tienes alguna afición?",
+        "tienes algún hobby?",
+        "haces algo como hobby",
+        "cuáles son tus aficiones",
+        "qué haces para divertirte"
+      ],
+      "tests": [
+        "cuáles son tus aficiones",
+        "cuéntame tus aficiones",
+        "aficionado a alguna cosa?",
+        "cómo te diviertes?",
+        "qué aficiones tienes"
+      ]
+    },
+    {
+      "id": 30,
+      "intent": "smalltalk.marry",
+      "utterances": [
+        "deberíamos casarnos",
+        "quiero que te cases conmigo",
+        "quiero casarme contigo",
+        "por favor vamos a casarnos",
+        "te casas conmigo?"
+      ],
+      "tests": [
+        "y si nos casamos?",
+        "piensas casarte?",
+        "tal vez deberíamos casarnos",
+        "estás casado?",
+        "dime si eres casada"
+      ]
+    },
+    {
+      "id": 31,
+      "intent": "smalltalk.origin",
+      "utterances": [
+        "has nacido aquí?",
+        "de dónde eres",
+        "dónde has nacido",
+        "cuál es tu origen",
+        "de dónde vienes"
+      ],
+      "tests": [
+        "de dónde dices que eres?",
+        "dime cuál es tu origen",
+        "dónde naciste?",
+        "es este tu origen",
+        "por favor dime dónde has nacido"
+      ]
+    },
+    {
+      "id": 32,
+      "intent": "smalltalk.ready",
+      "utterances": [
+        "estás preparado?",
+        "dime cuándo estés listo",
+        "estás listo ya?",
+        "cuándo estarás preparado?",
+        "estás listo ahora?"
+      ],
+      "tests": [
+        "te estás preparando?",
+        "estás listo ahora mismo?",
+        "necesito que estés preparado",
+        "dime si estás listo",
+        "estarás listo hoy?"
+      ]
+    },
+    {
+      "id": 33,
+      "intent": "smalltalk.right",
+      "utterances": [
+        "cierto",
+        "tienes razón",
+        "eso es correcto",
+        "lo que dices es verdad",
+        "definitivamente eso es correcto"
+      ],
+      "tests": [
+        "estás diciendo la verdad",
+        "eso es la verdad",
+        "estás en lo correcto",
+        "verdad",
+        "totalmente cierto"
+      ]
+    },
+    {
+      "id": 34,
+      "intent": "smalltalk.talk",
+      "utterances": [
+        "dime algo",
+        "háblame",
+        "habla conmigo",
+        "quieres que hablemos?",
+        "chateamos?"
+      ],
+      "tests": [
+        "por qué no hablamos?",
+        "hablas conmigo?",
+        "por favor habla conmigo",
+        "hablemos",
+        "hora de chatear"
+      ]
+    },
+    {
+      "id": 35,
+      "intent": "smalltalk.hug",
+      "utterances": [
+        "quieres un abrazo?",
+        "puedo abrazarte?",
+        "quiero un abrazo",
+        "dame un abrazo",
+        "abrázame"
+      ],
+      "tests": [
+        "nos abrazamos?",
+        "vamos a abrazarnos",
+        "me das un abrazo?",
+        "nada como un abrazo",
+        "te voy a abrazar"
+      ]
+    },
+    {
+      "id": 36,
+      "intent": "smalltalk.nice",
+      "utterances": [
+        "es bueno hablar contigo",
+        "me gusta hablar contigo",
+        "es un placer hablar contigo",
+        "me está gustando hablar contigo",
+        "siempre es bueno hablarte"
+      ],
+      "tests": [
+        "es muy bueno hablar contigo",
+        "me gusta cuando hablo contigo",
+        "es bueno cuando hablemos",
+        "qué bueno es hablar contigo",
+        "me encanta hablar contigo"
+      ]
+    },
+    {
+      "id": 37,
+      "intent": "smalltalk.angry",
+      "utterances":[
+        "estoy enfadado",
+        "estoy furioso",
+        "me estoy cabreando",
+        "me has enfadado",
+        "estoy furioso contigo"
+      ],
+      "tests": [
+        "me estás enfadando",
+        "me cabreas",
+        "me haces enfadar",
+        "me estás poniendo furioso",
+        "me voy a enfadar contigo"
+      ]
+    },
+    {
+      "id": 38,
+      "intent": "smalltalk.joking",
+      "utterances": [
+        "solo bromeaba",
+        "era broma",
+        "solamente era gracioso",
+        "era un chiste",
+        "tan solo era broma"
+      ],
+      "tests": [
+        "estaba bromeando",
+        "era una broma",
+        "me gusta bromear",
+        "buen chiste",
+        "bromeaba"
+      ]
+    },
+    {
+      "id": 39,
+      "intent": "smalltalk.lonely",
+      "utterances": [
+        "me siento solo",
+        "estoy muy solo",
+        "estoy realmente solo",
+        "siento mucha soledad",
+        "estoy tan solo"
+      ],
+      "tests": [
+        "siento soledad",
+        "tengo mucha soledad",
+        "estoy totalmente solo",
+        "siempre estoy solo",
+        "estoy muy solitario"
+      ]
+    },
+    {
+      "id": 40,
+      "intent": "smalltalk.waiting",
+      "utterances": [
+        "estoy esperando",
+        "todavía esperando",
+        "estaré esperando",
+        "todavía estoy esperando",
+        "no puedo seguir esperando"
+      ],
+      "tests": [
+        "no puedo esperar",
+        "no puedo esperar más",
+        "llevo esperando mucho",
+        "te espero",
+        "te esperamos"
+      ]
+    },
+    {
+      "id": 41,
+      "intent": "trivia.caffeine",
+      "utterances": [
+        "dime bebidas que tengan cafeína",
+        "qué tipo de bebidas contienen cafeína",
+        "dónde encuentro cafeína",
+        "qué bebibas hacen que no pueda dormir",
+        "qué bebidas tienen cafeína"
+      ],
+      "tests": [
+        "qué puedo beber para no dormir",
+        "qué bebida con cafeína conoces",
+        "qué bebo para no quedarme dormido",
+        "dime algunas bebidas con cafeína",
+        "díme cómo consigo cafeína"
+      ]
+    },
+    {
+      "id": 42,
+      "intent": "trivia.relativity",
+      "utterances": [
+        "qué es la teoría de la relatividad",
+        "quién descubrió la teoría de la relavidad",
+        "qué es la relatividad en física",
+        "háblame de la relatividad de Einstein",
+        "quién es el padre de la relatividad"
+      ],
+      "tests": [
+        "qué es relatividad en físicas",
+        "qué teoría descubrió einstein",
+        "teoría de einstein",
+        "hablemos de la relatividad",
+        "define la teoría de la relatividad"
+      ]
+    },
+    {
+      "id": 43,
+      "intent": "trivia.iron",
+      "utterances": [
+        "qué propiedades químicas tiene el hierro",
+        "símbolo químico del hierro",
+        "dime propiedades del hierro",
+        "hierro en químicas",
+        "describe el hierro"
+      ],
+      "tests": [
+        "dime alguna propiedad del hierro",
+        "hierro en química",
+        "propiedad del hierro",
+        "háblame del hierro",
+        "qué es el hierro"
+      ]
+    },
+    {
+      "id": 44,
+      "intent": "trivia.nlp",
+      "utterances": [
+        "qué es nlp",
+        "qué es procesamiento del lenguaje natural",
+        "qué es nlu",
+        "cómo se entiende el lenguaje natural",
+        "dime qué es el lenguaje natural"
+      ],
+      "tests": [
+        "cómo las máquinas entienden el lenguaje natural",
+        "describe nlp",
+        "cómo entender el lenguaje",
+        "vamos a hablar de nlu",
+        "cómo entiendes el lenguaje natural"
+      ]
+    },
+    {
+      "id": 45,
+      "intent": "trivia.compiler",
+      "utterances": [
+        "qué es un compilador",
+        "cómo funciona un compilador",
+        "para qué se usa un compilador",
+        "por qué los programadores necesitan usar un compilador",
+        "dime lo que sepas sobre compilación"
+      ],
+      "tests": [
+        "dime cómo funciona la compilación",
+        "como las máquinas compilan el código",
+        "para qué sirve un compilador",
+        "cómo mi ordenador compila",
+        "qué sabes de compiladores"
+      ]
+    },
+    {
+      "id": 46,
+      "intent": "trivia.galicia",
+      "utterances": [
+        "dónde está Galicia",
+        "cuál es el mejor sitio para comer en España",
+        "háblame de Galicia",
+        "qué sabes de galicia",
+        "mejor gastronomía de españa"
+      ],
+      "tests": [
+        "hablemos de galicia",
+        "dónde se come bien en españa",
+        "lugar gastronómico de españa",
+        "dónde puedo encontrar galicia",
+        "galicia y gastronomía"
+      ]
+    },
+    {
+      "id": 47,
+      "intent": "trivia.coercion",
+      "utterances": [
+        "qué es la coerción",
+        "cómo compara javascript dos tipos distintos",
+        "qué es la coerción implícita",
+        "cómo funciona la coerción en javascript",
+        "describe coerción"
+      ],
+      "tests": [
+        "cómo hace la coerción javascript",
+        "cómo hace javascript coerciones",
+        "cómo compara un tipo javascript",
+        "hablemos de coerción",
+        "dime cómo funciona la coerción"
+      ]
+    },
+    {
+      "id": 48,
+      "intent": "trivia.callback",
+      "utterances": [
+        "qué es el infierno de callback",
+        "qué es un callback",
+        "debo usar callback o promesa?",
+        "qué es un callback de javascript",
+        "qué significa pasar una función a otra en javascript"
+      ],
+      "tests": [
+        "qué son los callbacks",
+        "debo usar callback?",
+        "callback en javascript",
+        "funciones en javascript",
+        "por qué necesito un callback"
+      ]
+    },
+    {
+      "id": 49,
+      "intent": "trivia.gc",
+      "utterances": [
+        "cómo funciona el recolector de basura",
+        "qué es scavenge",
+        "qué es mark y sweep",
+        "háblame del recolector de basura de javascript",
+        "qué debo saber acerca del recolector de basura"
+      ],
+      "tests": [
+        "cómo funciona la recolección de basura",
+        "cómo javascript recoge la basura",
+        "scavenge versus mark y sweep",
+        "cuándo se activa el recolector de basuras",
+        "describe el proceso de recolección de basura"
+      ]
+    },
+    {
+      "id": 50,
+      "intent": "trivia.arrow",
+      "utterances": [
+        "cuándo se introdujo la función flecha en javascript",
+        "qué es una función flecha",
+        "qué es mejor que una función anónima?",
+        "anónima vs flecha",
+        "flecha en ecmascript"
+      ],
+      "tests": [
+        "qué son las funciones flecha",
+        "algo mejor que las funciones anónimas",
+        "flechas en javascript",
+        "entender la función flecha",
+        "javascript tiene funciones flecha?"
+      ]
+    },
+    {
+      "id": 0,
+      "intent": "None",
+      "utterances": [],
+      "tests": [
+        "el desarrollo económico está levantando los mercados",
+        "cuál fue el nombre del primer presidente?",
+        "yo prefiero beta max antes que vhs",
+        "tengo que usar lentes de contacto",
+        "estoy persiguiendo la dirección ip del atacante",
+        "tengo un nuevo email de mi grupo de amantes de gatos"
+      ]
+    }
+  ]
+}
