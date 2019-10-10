@@ -46,7 +46,7 @@ describe('Spanish Stemmer', () => {
         'perfect',
         'si',
         'lo',
-        'considerar', // TODO should be consider
+        'consider',
         'aconsej',
         'y',
         'reir',
