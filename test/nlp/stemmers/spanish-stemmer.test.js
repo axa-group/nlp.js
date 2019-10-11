@@ -26,7 +26,7 @@ const { NlpUtil } = require('../../../lib');
 describe('Spanish Stemmer', () => {
   describe('Constructor', () => {
     test('It should create a new instance', () => {
-      const stemmer = NlpUtil.getStemmer('gl');
+      const stemmer = NlpUtil.getStemmer('es');
       expect(stemmer).toBeDefined();
     });
   });
@@ -42,7 +42,7 @@ describe('Spanish Stemmer', () => {
         'aburr',
         'compr',
         'gat',
-        'trepador', // TODO should be trep
+        'trep',
         'perfect',
         'si',
         'lo',
