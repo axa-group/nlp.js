@@ -9,7 +9,7 @@
 [![NPM version](https://img.shields.io/npm/v/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp)
 [![NPM downloads](https://img.shields.io/npm/dm/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp) [![Greenkeeper badge](https://badges.greenkeeper.io/axa-group/nlp.js.svg)](https://greenkeeper.io/)
 
-"NLP.js" is a general natural language utilities for nodejs. Currently supporting:
+"NLP.js" is a general natural language utility for nodejs. Currently supporting:
 
 - Guess the language of a phrase
 - Fast levenshtein distance of two strings
@@ -19,7 +19,7 @@
 - Named Entity Recognition and management, multilanguage, and accepting similar strings, so the introduced text does not need to be exact.
 - Natural Language Processing Classifier, to classify utterance into intents.
 - Natural Language Generation Manager, so from intents and conditions it can generate an answer.
-- NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
+- NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance, and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
 - 34 languages with stemmers supported: Arabic (ar), Armenian (hy), Bengali (bn), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), Galician (gl), German (de), Greek (el), Hindi (hi), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Norwegian (no), Portuguese (pt), Romanian (ro), Russian (ru), Slovene (sl), Spanish (es), Swedish (sv), Tagalog (tl), Tamil (ta), Thai (th), Turkish (tr), Ukrainian (uk)
 - Any other language is supported through tokenization, even fantasy languages
 <div align="center">
@@ -28,13 +28,13 @@
 
 ## New in version 3!
 
-The version 3 comes with some important changes, mainly focused on improve performance:
+The version 3 comes with some important changes, mainly focused on improving performance:
 - NlpClassifier no longer exists, in favor of NluManager as the manager of several NLU classes, and is able to manage several languages and several domains inside each language.
 - Now by default, each domain of a language has it's own neural network classifier. When a language has more than 1 domain, a master neural network is trained that instead of classifying into the intent, classify into de domain. That way the models are faster to train and have a better score.
-- The language guesser is now trained with the trigrams from the utterances used to train. That means that has a best guessing, and also that non-existing languages are guessed (example, klingon).
+- The language guesser is now trained with the trigrams from the utterances used to train. That means that has the best guessing, and also that non-existing languages are guessed (example, klingon).
 - Added Tagalog and Galician languages.
 - The console-bot example training time in version 2.x in my laptop was 108 seconds, in the version 3.x the training time went down to 3 seconds, so the improvement in performance is notable.
-- Also the size of the model.nlp files is decreased, the console-bot example went from 1614KB down to 928KB.
+- Also the size of the model.nlp files are decreased, the console-bot example went from 1614KB down to 928KB.
 - The browser version has decreased from 5.08MB down to 2.3MB
 
 ### TABLE OF CONTENTS
@@ -118,7 +118,7 @@ If you're looking to use NLP.js in your node application, you can install via NP
 
 ## React Native
 
-There is a version of NLP.js that works in React Native, so you can build chatbots that can be trained and executed in the mobile even without internet. You can install it via NPM:
+There is a version of NLP.js that works in React Native, so you can build chatbots that can be trained and executed on the mobile even without internet. You can install it via NPM:
 
 ```bash
     npm install node-nlp-rn
@@ -128,7 +128,7 @@ Some Limitations:
 - No Chinese
 - Japanese stemmer is not the complete one
 - No excel import
-- No load from file neither save to file, but it still have import form json and export to json.
+- No load from file neither save to file, but it still has import form json and export to json.
 
 ## Example of use
 
@@ -204,14 +204,14 @@ This will show this result in console:
 
 ## False Positives
 
-By default, the neural network try to avoid false positives. To achieve that, one of the internal processes is that words never seen by the network, are represented as a feature that give some weight into the None intent. So if you try the previous example with "I have to go" it will return the None intent because 2 of the 4 words have been never seen while training.
-If you don't want to avoid those false positives, and you feel more confortable with classifications into the intents that you declare, then you can disable this behaviour with the useNoneFeature setting to false:
+By default, the neural network tries to avoid false positives. To achieve that, one of the internal processes is that words never seen by the network, are represented as a feature that gives some weight into the None intent. So if you try the previous example with "I have to go" it will return the None intent because 2 of the 4 words have been never seen while training.
+If you don't want to avoid those false positives, and you feel more comfortable with classifications into the intents that you declare, then you can disable this behavior with the useNoneFeature setting to false:
 
 ```javascript
 const manager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
 ```
 
-## Log Training Pogress
+## Log Training Progress
 
 You can also add a log progress, so you can trace what is happening during the training.
 You can log the progress into console:
