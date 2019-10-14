@@ -944,8 +944,14 @@ describe('NLP Manager', () => {
         )
       );
     });
-    test('If the intent has actions, then return the also the actions', async () => {
-      const manager = new NlpManager({ languages: ['en'] });
+    test('If the intent has actions, then return also the actions', async () => {
+      const manager = new NlpManager({
+        languages: ['en'],
+        action: {
+          cleanSession: () => 'cleaned',
+          beginDialog: () => 'started',
+        },
+      });
       manager.addDocument('en', 'goodbye for now', 'greetings.bye');
       manager.addDocument('en', 'bye bye take care', 'greetings.bye');
       manager.addDocument('en', 'okay see you later', 'greetings.bye');
@@ -997,8 +1003,8 @@ describe('NLP Manager', () => {
         "it's been nice talking to you",
         'greetings.nicetotalktoyou'
       );
-      manager.addAction('greetings.bye', 'cleanSession', 'true');
-      manager.addAction('greetings.bye', 'beginDialog', '"/"');
+      manager.addAction('greetings.bye', 'cleanSession', ['true']);
+      manager.addAction('greetings.bye', 'beginDialog', ['"/"']);
       manager.addAnswer('en', 'greetings.bye', 'Till next time');
       manager.addAnswer('en', 'greetings.bye', 'See you soon!');
       manager.addAnswer('en', 'greetings.hello', 'Hey there!');
@@ -1053,9 +1059,9 @@ describe('NLP Manager', () => {
       let result = await manager.process('goodbye');
       expect(result.actions).toHaveLength(2);
       expect(result.actions[0].action).toEqual('cleanSession');
-      expect(result.actions[0].parameters).toEqual('true');
+      expect(result.actions[0].parameters).toEqual(['true']);
       expect(result.actions[1].action).toEqual('beginDialog');
-      expect(result.actions[1].parameters).toEqual('"/"');
+      expect(result.actions[1].parameters).toEqual(['"/"']);
       result = await manager.process('It was nice to meet you');
       expect(result.answer).toMatch(
         new RegExp(
@@ -1063,6 +1069,37 @@ describe('NLP Manager', () => {
         )
       );
     });
+    test('If the intent has actions, then aaply the actions to the answer', async () => {
+      const manager = new NlpManager({
+        languages: ['en'],
+        action: {
+          action1: (input, ...parameters) => {
+            return `(${input}#${parameters.join(',')})`;
+          },
+          action2: (input, ...parameters) => {
+            return `[${input}#${parameters.join(',')}]`;
+          },
+        },
+      });
+      manager.addDocument('en', 'goodbye for now', 'greetings.bye');
+      manager.addDocument('en', 'bye bye take care', 'greetings.bye');
+
+      manager.addDocument('en', 'hello', 'greetings.hello');
+      manager.addDocument('en', 'hi', 'greetings.hello');
+
+      manager.addAction('greetings.bye', 'action1', ['a', 'b']);
+      manager.addAction('greetings.bye', 'action2', ['c', 'd']);
+
+      manager.addAnswer('en', 'greetings.bye', 'See you soon!');
+      manager.addAnswer('en', 'greetings.hello', 'Hey there!');
+
+      await manager.train();
+
+      const result = await manager.process('goodbye');
+
+      expect(result.answer).toEqual('[(See you soon!#a,b)#c,d]');
+    });
+
     test('If the NLG is trained, and the answer contains a template, replace with context variables', async () => {
       const manager = new NlpManager({ languages: ['en'] });
       manager.addDocument('en', 'goodbye for now', 'greetings.bye');
@@ -1352,20 +1389,26 @@ describe('NLP Manager', () => {
 
   describe('Add action', () => {
     test('It should add an action for the given intent', () => {
-      const manager = new NlpManager({ languages: ['en'] });
-      manager.addAction('greetings.bye', 'cleanSession', 'true');
+      const manager = new NlpManager({
+        languages: ['en'],
+        action: {
+          cleanSession: () => 'cleaned',
+        },
+      });
+      manager.addAction('greetings.bye', 'cleanSession', ['true']);
       const actions = manager.getActions('greetings.bye');
+
       expect(actions).toHaveLength(1);
       expect(actions[0].action).toEqual('cleanSession');
-      expect(actions[0].parameters).toEqual('true');
+      expect(actions[0].parameters).toEqual(['true']);
     });
   });
 
   describe('Remove action', () => {
     test('It should remove an action', () => {
       const manager = new NlpManager({ languages: ['en'] });
-      manager.addAction('greetings.bye', 'cleanSession', 'true');
-      manager.removeAction('greetings.bye', 'cleanSession', 'true');
+      manager.addAction('greetings.bye', 'cleanSession', ['true']);
+      manager.removeAction('greetings.bye', 'cleanSession', ['true']);
       const actions = manager.getActions('greetings.bye');
       expect(actions).toHaveLength(0);
     });
@@ -1374,7 +1417,7 @@ describe('NLP Manager', () => {
   describe('Remove actions', () => {
     test('It should remove all actions of an intent', () => {
       const manager = new NlpManager({ languages: ['en'] });
-      manager.addAction('greetings.bye', 'cleanSession', 'true');
+      manager.addAction('greetings.bye', 'cleanSession', ['true']);
       manager.removeActions('greetings.bye');
       const actions = manager.getActions('greetings.bye');
       expect(actions).toHaveLength(0);

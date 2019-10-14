@@ -9,7 +9,9 @@
         "singleQuote": true,
         "trailingComma": "es5"
       }
-    ]
+    ],
+    "no-restricted-syntax": 0,
+    "no-await-in-loop": "off"
   },
   "env": {
     "node": true,
