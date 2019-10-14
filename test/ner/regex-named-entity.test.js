@@ -39,6 +39,14 @@ describe('Regex Named Entity', () => {
         regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
       });
     });
+    test('It should add "g" flag if it\'s missing in the regex', () => {
+      const entity = new RegexNamedEntity({ name: 'mail' });
+      entity.addRegex('en', /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/i);
+      expect(entity).toBeDefined();
+      expect(entity.locales.en).toEqual({
+        regex: /\b(\w[-._\w]*\w@\w[-._\w]*\w\.\w{2,3})\b/gi,
+      });
+    });
     test('It should add a regex to several language', () => {
       const entity = new RegexNamedEntity({ name: 'mail' });
       entity.addRegex(
