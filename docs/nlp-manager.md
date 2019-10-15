@@ -1,12 +1,16 @@
 # NLP Manager
 
-The NLP Manager is able to manage several languages. For each one, he manages the Named Entities, and is able to train the NLP classifier. Once we have it trained, we can ask the NLP manager to process one utterance. We can even don't tell the language and the NLP Manger will guess it from the languages that it knows.
-When the utterance is processed, the NLP manager will:
+The `NlpManager` is able to manage several languages. It manages the named entities, and trains the NLP classifier for each language. Once trained, `NlpManager` is ready to process utterances. It will try to guess the language, if one isn't provided when processing an utterance. During processing, the `NlpManager` will:
 
 - Identify the language
-- Classify the utterance using ML, and returns the classifications and the best intent and score
-- Gets the entities from the utterance. If the NLP was trained using entities in the format %entity%, then the search for entities will be limited to those that are present in this intent; otherwise, all the possible entities will be checked.
-- Gets the sentiment analysis.
+- Classify the utterance, using Machine Learning (ML)
+- Find named, and/or default entities in the utterance
+- Limit entities to those described with variables in the highest scoring intent, _if present_ (variable syntax for intents uses wildcard operators `%entity_name%`)
+- Replace variables in the best answer with matched entities (variable syntax for answers uses handlebars: `{{entity_name}}`)
+- Analyze sentiment
+- Return the intent, entities, classifications, associated score(s), answer, and sentiment
+
+> Note that periods are not supported in the entity names when using them as variables. Don't use `{{entity.name}}`. Use `{{entity_name}}` instead. The intent variable names must match the answer variable names.
 
 ```javascript
 const { NlpManager } = require('node-nlp');
@@ -80,10 +84,18 @@ manager
 //      language: 'en' } }
 ```
 
+## Saving and Loading Models
+`NlpManager` has support for saving, and loading the models of trained managers. These models include the thetas that are produced by the ML algorithms, so they can be loaded into instances of `NlpManager` without having to train them again.
 
-## Load/Save
+In addition to reducing startup time, this can be useful when a system doesn't have write permissions to local disk, or in cases where we benefit from deterministic results, such as A/B testing (or testing in general).
 
-Also, you can save and load the NLP Manager to be reused without having to train it, because the thetas of the ML are also stored.
+There are two approaches to saving and loading models: [using files](#saveload-using-files), and [using JSON](#importexport-using-json).
+
+### Save/Load Using Files
+
+`NlpManager.save` writes a model file to disk, and `NlpManager.load` reads a model file from disk.
+
+Saving a model file:
 
 ```javascript
 const { NlpManager } = require('node-nlp');
@@ -93,6 +105,8 @@ await manager.train();
 manager.save(filename);
 ```
 
+Loading a model file:
+
 ```javascript
 const { NlpManager } = require('node-nlp');
 
@@ -100,23 +114,13 @@ manager = new NlpManager();
 manager.load(filename);
 ```
 
-If no filename is provided by default it is './model.nlp'.
+> Note that if no filename is provided, './model.nlp' will be used by default.
 
-## Import/Export
+### Import/Export Using JSON
 
-Importing works similar to loading, but instead of a filename takes a JSON string as an argument.
+`NlpManager.export` returns a model in JSON format, and `NlpManager.import` reads a model in JSON format. When exporting a model, you can choose whether or not to minify it.
 
-```javascript
-const fs = require('fs');
-const { NlpManager } = require('node-nlp');
-
-const data = fs.readFileSync('model.nlp', 'utf8');
-const manager = new NlpManager();
-manager.import(data);
-// ...
-```
-
-You could use the export function to return this JSON string. The ``export`` function also takes an optional boolean argument that will tell it to minimize the JSON string.
+Exporting a model:
 
 ```javascript
 const { NlpManager } = require('node-nlp');
@@ -128,11 +132,25 @@ await manager.train();
 const data = manager.export(minified);
 ```
 
+Importing a model:
+
+```javascript
+const fs = require('fs');
+const { NlpManager } = require('node-nlp');
+
+const data = fs.readFileSync('model.nlp', 'utf8');
+const manager = new NlpManager();
+manager.import(data);
+// ...
+```
+
 ## Context
 
-You can also provide a context to ```NlpManger.process``` so the NLG changes its behaviour based on the context.
+You can also provide a context to `NlpManger.process` so the NLG changes its behaviour based on the context.
 
-```
+In this example, the manager chooses, "Till next time, {{name}}!" as the answer, and is able to use the `%name%` in the answer because context from the greeting is provided. The final result is, "Till next time, John!".
+
+```javascript
 const { NlpManager, ConversationContext } = require('node-nlp');
 
 const manager = new NlpManager({ languages: ['en'] });
@@ -149,22 +167,40 @@ manager.train()
   .then(result => console.log(result.answer));
 ```
 
-This will show this result in console:
-
-```
-See you soon, John!
-```
-
 ## Transformers
 
-You could pass transformer function to NLPManager constructor, which might be used to modify process output format.
+The NLPManager constructor accepts a `processTransformer` function, which can be used to intercept, and modify the output of the manager's `process` function. When present, it will run after `process` completes, and the result of this function is what will be returned by `process`.
 
 ```javascript
 const manager = new NlpManager({
-  transformer: originalProcessOutput => {
-    // put some modifications logic (it might be async)
-    // and return modified value
-    return Promise.resolve({ modified: 'VALUE' });
-  },
+  processTransformer: async (originalProcessOutput) => {
+    return {
+      ...originalProcessOutput,
+      ...{
+        anything: 'you want'
+      }
+    }
+  }
+});
+```
+
+or with Promises:
+
+```javascript
+const manager = new NlpManager({
+  processTransformer: (originalProcessOutput) => new Promise((resolve, reject) =>  {
+      originalProcessOutput.context = 'modify or add properties'
+      resolve(originalProcessOutput)
+  })
+});
+```
+
+it can be synchronous, too:
+
+```javascript
+const manager = new NlpManager({
+  processTransformer: function (originalProcessOutput) {
+    return Object.assign(originalProcessOutput, { anything: 'you want' })
+  }
 });
 ```
