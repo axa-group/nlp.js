@@ -45,7 +45,7 @@ describe('Spanish Stemmer', () => {
         'trep',
         'perfect',
         'si',
-        'lo',
+        'el',
         'consider',
         'aconsej',
         'y',
