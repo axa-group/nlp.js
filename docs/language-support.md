@@ -106,3 +106,53 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 - 2: Only for % symbol non text numbers
 - 3: Only for dimension acronyms (km, s, km/h...) non text numbers
 - 4: Only dd/MM/yyyy formats or similars, non text
+
+## Auto Stemmer
+
+Previously, if we wanted to score a corpus in a language which stemmer is not yet implemented (you can see the list of current stemmers [here](https://github.com/axa-group/nlp.js/tree/master/lib/nlp/stemmers)), we had to use a `Token Stemmer`. For instance, Polish:
+
+```javascript
+const stemmer = new TokenStemmer(NlpUtil.getTokenizer("pl"));
+
+const managerTokenizer = new NlpManager({
+  languages: ["pl"],
+  nlu: { useStemDict: false, log: false, useNoneFeature: true, stemmer },
+  ner: { builtins: [] }
+});
+
+scoreCorpus(corpus, managerTokenizer);
+// 0.59765625
+```
+
+But how to stem word without knowing the rules of a language? Sometimes reducing a word to its stem can be very complex, because of the morphology of the language. In languages with very little inflection like English, the stem is usually not distinct from the "normal" form of the word, so the process of stemming is quite trivial.
+
+But it's not the case of highly inflected languages (most of the Indo-European languages), because their words can be composed with one or more morphemes to assign grammatical properties, making the stems very different from the root word.
+
+The goal of the Auto Stemmer is to automatically learn how to stem that highly inflected languages. For this, the Auto Stemmer will try to learn which are the potential suffixes of a language according to the training corpus, and then find out the part of each word that never changes whoch will be considered as the stem of the word.
+
+### Example: Polish Auto-Stemmer
+
+As told before, we can take advantage of the Auto-Stemmer to learn automatically the rules of Polish from the training corpus:
+
+```javascript
+/*
+
+  If no stemmer is provided to NlpManager, an AutoStemmer instance according to the locale provided is created internally in NlpUtil.autoStemmers object.
+
+  NlpUtil.autoStemmers['pl'] = new AutoStemmer(NlpUtil.getTokenizer('pl'));
+
+*/
+
+const managerTokenizer = new NlpManager({
+  languages: ["pl"],
+  nlu: { useStemDict: false, log: false, useNoneFeature: true },
+  ner: { builtins: [] }
+});
+
+scoreCorpus(corpus, managerTokenizer);
+// 0.81640625,
+```
+
+That's how you can build a stemmer from an unknown language. Still not the perfect stemmer for the specific language, but you can obtain better results.
+
+You can run the test [here](https://github.com/axa-group/nlp.js/blob/master/test/nlp/stemmers/auto-stemmer.test.js).

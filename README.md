@@ -52,6 +52,7 @@ The version 3 comes with some important changes, mainly focused on improving per
   - [Sentiment Analysis](docs/language-support.md#sentiment-analysis)
   - [Builtin Entity Extraction](docs/language-support.md#builtin-entity-extraction)
   - [Example with languages](docs/example-with-languages.md)
+  - [Auto Stemmer](docs/language-support.md#auto-stemmer)
 - [Language Guesser](docs/language-guesser.md)
 - [Similar Search](docs/similar-search.md)
 - [NLU](docs/nlu-manager.md)
