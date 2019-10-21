@@ -3,6 +3,7 @@
   "plugins": ["import", "jest", "prettier"],
   "rules": {
     "class-methods-use-this": 0,
+    "no-misleading-character-class": 0,
     "prettier/prettier": [
       "error",
       {

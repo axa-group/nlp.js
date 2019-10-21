@@ -1,17 +1,12 @@
 {
-  "name": "node-nlp",
-  "version": "3.10.1",
+  "name": "root",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
-  "main": "lib/index.js",
   "scripts": {
-    "commit": "git-cz",
     "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
+    "postinstall": "lerna bootstrap",
     "lint": "eslint .",
-    "lintfix": "eslint --fix lib/**",
-    "precommit": "lint-staged",
-    "test": "eslint lib/** && jest --coverage --maxWorkers=4",
-    "jsdoc": "jsdoc -r lib -d docs/static -R README.md",
-    "browserdist": "browserify --i xlsx --i novel-segment ./lib | terser --compress --mangle > ./dist/bundle.js"
+    "lintfix": "eslint --fix .",
+    "test": "eslint . && jest --silent --coverage --maxWorkers=4 ."
   },
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -31,68 +26,28 @@
     }
   ],
   "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
-    "browserify": "^16.5.0",
-    "coveralls": "^3.0.6",
+    "coveralls": "^3.0.7",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.17.0",
+    "eslint-plugin-jest": "^22.19.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "husky": "^3.0.8",
+    "https-proxy-agent": "^3.0.0",
     "jest": "^24.9.0",
-    "lint-staged": "^9.4.1",
-    "lodash": ">=4.17.15",
-    "merge": "^1.2.1",
-    "prettier": "^1.18.2",
-    "terser": "4.3.9"
-  },
-  "dependencies": {
-    "@microsoft/recognizers-text-suite": "1.1.4",
-    "escodegen": "^1.12.0",
-    "esprima": "^4.0.1",
-    "kuromoji": "^0.1.2",
-    "novel-segment": "^2.5.0",
-    "xlsx": "^0.15.1"
-  },
-  "keywords": [
-    "natural language processing",
-    "artifical intelligence",
-    "natural language understanding",
-    "natural language generation",
-    "NLP",
-    "NLU",
-    "NLG",
-    "sentiment analysis",
-    "classifier",
-    "logistic regression",
-    "Natural",
-    "entity extraction",
-    "named entity recognition",
-    "chatbot",
-    "bot"
-  ],
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
+    "lerna": "^3.18.1",
+    "prettier": "^1.18.2"
   },
   "jest": {
     "verbose": true,
     "testURL": "http://localhost/",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "./lib/**/**.js",
-      "!./lib/nlp/stemmers/**"
+      "**/src/**/**.js"
     ],
     "coverageDirectory": "coverage",
     "testEnvironment": "node"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
   }
 }

@@ -1,0 +1,31 @@
+{
+  "name": "@nlpjs/evaluator",
+  "version": "1.0.0",
+  "description": "Evaluator",
+  "author": {
+    "email": "jesus.seijas@axa.com",
+    "name": "Jesus Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "escodegen": "^1.12.0",
+    "esprima": "^4.0.1"
+  }
+}
