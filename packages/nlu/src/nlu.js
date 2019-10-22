@@ -21,29 +21,38 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Clonable = require('./clonable');
-const { Container, defaultContainer } = require('./container');
-const Tokenizer = require('./tokenizer');
-const Normalizer = require('./normalizer');
-const Stemmer = require('./stemmer');
-const Stopwords = require('./stopwords');
-const {
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-} = require('./helper');
+const { Clonable } = require('@nlpjs/core');
 
-module.exports = {
-  Clonable,
-  Container,
-  defaultContainer,
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  Tokenizer,
-  Normalizer,
-  Stemmer,
-  Stopwords,
-};
+class Nlu extends Clonable {
+  constructor(settings = {}, container) {
+    super({ settings: {} }, container);
+    this.applySettings(this.settings, settings);
+    this.applySettings(this.settings, {
+      locale: 'en',
+      keepStopwords: true,
+      nonefeatureValue: 1,
+      nonedeltaMultiplier: 1.2,
+      spellcheckDistance: 0,
+    });
+    this.applySettings(this, {
+      pipelinePrepare: [
+        'normalize',
+        'tokenize',
+        'removeStopwords',
+        'stem',
+        'output.tokens',
+      ],
+    });
+  }
+
+  async prepare(text, settings) {
+    const input = {
+      locale: this.locale,
+      text,
+      settings: settings || this.settings,
+    };
+    return this.runPipeline(input, this.pipelinePrepare);
+  }
+}
+
+module.exports = Nlu;

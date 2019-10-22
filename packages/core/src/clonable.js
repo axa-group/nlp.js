@@ -20,13 +20,15 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+const { defaultContainer } = require('./container');
 
 class Clonable {
   /**
    * Constructor of the class
    * @param {object} settings
    */
-  constructor(settings) {
+  constructor(settings, container = defaultContainer) {
+    this.container = container;
     this.applySettings(this, settings);
   }
 
@@ -42,6 +44,7 @@ class Clonable {
         obj[key] = settings[key];
       }
     });
+    return obj;
   }
 
   toJSON() {
@@ -50,7 +53,7 @@ class Clonable {
     const keys = Object.keys(this);
     for (let i = 0; i < keys.length; i += 1) {
       const key = keys[i];
-      if (key !== 'jsonExport' && key !== 'jsonImport') {
+      if (key !== 'jsonExport' && key !== 'jsonImport' && key !== 'container') {
         const fn = settings[key] === undefined ? true : settings[key];
         if (typeof fn === 'function') {
           const value = fn.bind(this)(result, this, key, this[key]);
@@ -105,6 +108,10 @@ class Clonable {
       result[keys[i]] = values[i];
     }
     return result;
+  }
+
+  async runPipeline(input, pipeline) {
+    return this.container.runPipeline(pipeline || this.pipeline, input, this);
   }
 }
 

@@ -23,10 +23,18 @@
 
 const { Container } = require('../src');
 const Cloned = require('./assets/cloned');
+const Lower = require('./assets/lower');
+const Char = require('./assets/char');
 
 class Other {
   constructor() {
     this.name = 'name';
+  }
+
+  run(srcInput) {
+    const input = srcInput;
+    input.str = input.arr.join('');
+    return input;
   }
 }
 
@@ -92,6 +100,7 @@ describe('Container', () => {
       const actual = instance.fromJSON(json);
       expect(actual).toBeInstanceOf(Other);
       expect(actual.className).toBeUndefined();
+      expect(actual.name).toEqual('name');
     });
     test('If the class is registered and Clonable, then create an instance', () => {
       const cloned = new Cloned(settings);
@@ -104,6 +113,119 @@ describe('Container', () => {
       expect(actual.values).toEqual({ a: 1, b: 2, c: 3 });
       expect(actual.surname).toEqual(settings.surname);
       expect(actual.className).toBeUndefined();
+    });
+    test('If the class is not registered, then clone the instance', () => {
+      const other = new Other();
+      const instance = new Container();
+      const json = instance.toJSON(other);
+      const actual = instance.fromJSON(json);
+      expect(actual).toBeInstanceOf(Object);
+      expect(actual.className).toBeUndefined();
+      expect(actual.name).toEqual('name');
+    });
+  });
+
+  describe('Register', () => {
+    test('An instance can be registered as singleton', () => {
+      const instance = new Container();
+      const other = new Other();
+      instance.register('other', other);
+      expect(instance.factory.other).toBeDefined();
+      expect(instance.factory.other.instance).toBe(other);
+      expect(instance.factory.other.isSingleton).toBeTruthy();
+      expect(instance.factory.other.name).toEqual('other');
+    });
+    test('A class can be registered as singleton, so an instance will be created', () => {
+      const instance = new Container();
+      instance.register('other', Other);
+      expect(instance.factory.other).toBeDefined();
+      expect(instance.factory.other.instance).toBeInstanceOf(Other);
+      expect(instance.factory.other.isSingleton).toBeTruthy();
+      expect(instance.factory.other.name).toEqual('other');
+    });
+    test('A class can be registered as no singleton', () => {
+      const instance = new Container();
+      instance.register('other', Other, false);
+      expect(instance.factory.other).toBeDefined();
+      expect(instance.factory.other.instance).toBe(Other);
+      expect(instance.factory.other.isSingleton).toBeFalsy();
+      expect(instance.factory.other.name).toEqual('other');
+    });
+    test('If an instance is registered as no singleton, its constructor is extracted', () => {
+      const instance = new Container();
+      const other = new Other();
+      instance.register('other', other, false);
+      expect(instance.factory.other).toBeDefined();
+      expect(instance.factory.other.instance).toBe(Other);
+      expect(instance.factory.other.isSingleton).toBeFalsy();
+      expect(instance.factory.other.name).toEqual('other');
+    });
+  });
+
+  describe('Get', () => {
+    test('If no item exists with this name, return undefined', () => {
+      const instance = new Container();
+      const other = new Other();
+      instance.register('other', other);
+      const actual = instance.get('another');
+      expect(actual).toBeUndefined();
+    });
+    test('We can get a singleton instance and should be the original object', () => {
+      const instance = new Container();
+      const other = new Other();
+      instance.register('other', other);
+      const actual = instance.get('other');
+      expect(actual).toBe(other);
+    });
+    test('We can get a singleton class and everytime should be the same object', () => {
+      const instance = new Container();
+      instance.register('other', Other);
+      const actual = instance.get('other');
+      expect(actual).toBeInstanceOf(Other);
+      const actual2 = instance.get('other');
+      expect(actual2).toBe(actual);
+    });
+    test('If is not a singleton, return different instances', () => {
+      const instance = new Container();
+      const other = new Other();
+      instance.register('other', other, false);
+      const actual = instance.get('other');
+      expect(actual).toBeInstanceOf(Other);
+      expect(actual).not.toBe(other);
+      const actual2 = instance.get('other');
+      expect(actual2).toBeInstanceOf(Other);
+      expect(actual2).not.toBe(other);
+      expect(actual2).not.toBe(actual);
+    });
+    test('If is not a singleton and registering a class, return different instances', () => {
+      const instance = new Container();
+      instance.register('other', Other, false);
+      const actual = instance.get('other');
+      expect(actual).toBeInstanceOf(Other);
+      const actual2 = instance.get('other');
+      expect(actual2).toBeInstanceOf(Other);
+      expect(actual2).not.toBe(actual);
+    });
+  });
+
+  describe('Pipeline', () => {
+    test('I can register and run a pipeline', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = ['lower', 'char', 'char.filter', ''];
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({
+        source: 'VECTOR',
+        str: 'vctor',
+        arr: ['v', 'c', 't', 'o', 'r'],
+        excludeChars: 'e',
+      });
     });
   });
 });

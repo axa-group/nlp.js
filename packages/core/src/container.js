@@ -21,10 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const Tokenizer = require('./tokenizer');
+const Normalizer = require('./normalizer');
+const Stemmer = require('./stemmer');
+const Stopwords = require('./stopwords');
+
 class Container {
   constructor() {
     this.classes = {};
     this.factory = {};
+    this.defaultBootstrap();
   }
 
   addClass(clazz, name) {
@@ -76,6 +82,44 @@ class Container {
     const Clazz = item.instance;
     return new Clazz(settings);
   }
+
+  async runPipeline(pipeline, input, srcObject) {
+    let currentInput = input;
+    for (let i = 0; i < pipeline.length; i += 1) {
+      const current = pipeline[i];
+      const tokens = current.split('.');
+      let currentObject;
+      if (tokens[0]) {
+        currentObject =
+          tokens[0] === 'output' ? currentInput : this.get(tokens[0]);
+      } else {
+        currentObject = srcObject;
+      }
+      try {
+        const method = currentObject[tokens[1] || 'run'];
+        if (typeof method === 'function') {
+          currentInput = await method.bind(currentObject)(currentInput);
+        } else {
+          currentInput = method;
+        }
+      } catch (err) {
+        throw new Error(`Error executing "${current}" step of the pipeline`);
+      }
+    }
+    return currentInput;
+  }
+
+  defaultBootstrap() {
+    this.register('normalize', new Normalizer(this));
+    this.register('tokenize', new Tokenizer(this));
+    this.register('stem', new Stemmer(this));
+    this.register('removeStopwords', new Stopwords(this));
+  }
 }
 
-module.exports = Container;
+const defaultContainer = new Container();
+
+module.exports = {
+  Container,
+  defaultContainer,
+};

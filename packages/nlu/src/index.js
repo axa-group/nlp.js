@@ -21,29 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Clonable = require('./clonable');
-const { Container, defaultContainer } = require('./container');
-const Tokenizer = require('./tokenizer');
-const Normalizer = require('./normalizer');
-const Stemmer = require('./stemmer');
-const Stopwords = require('./stopwords');
-const {
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-} = require('./helper');
+const Nlu = require('./nlu');
+const NluNeural = require('./nlu-neural');
 
 module.exports = {
-  Clonable,
-  Container,
-  defaultContainer,
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  Tokenizer,
-  Normalizer,
-  Stemmer,
-  Stopwords,
+  Nlu,
+  NluNeural,
 };
