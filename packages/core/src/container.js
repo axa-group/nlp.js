@@ -21,16 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Tokenizer = require('./tokenizer');
-const Normalizer = require('./normalizer');
-const Stemmer = require('./stemmer');
-const Stopwords = require('./stopwords');
-
 class Container {
   constructor() {
     this.classes = {};
     this.factory = {};
-    this.defaultBootstrap();
   }
 
   addClass(clazz, name) {
@@ -109,11 +103,14 @@ class Container {
     return currentInput;
   }
 
-  defaultBootstrap() {
-    this.register('normalize', new Normalizer(this));
-    this.register('tokenize', new Tokenizer(this));
-    this.register('stem', new Stemmer(this));
-    this.register('removeStopwords', new Stopwords(this));
+  use(item, name) {
+    if (typeof item === 'function') {
+      const Clazz = item;
+      const instance = new Clazz(this);
+      this.register(name || instance.name, instance);
+    } else {
+      this.register(name || item.name, item);
+    }
   }
 }
 

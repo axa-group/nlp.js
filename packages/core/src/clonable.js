@@ -113,6 +113,10 @@ class Clonable {
   async runPipeline(input, pipeline) {
     return this.container.runPipeline(pipeline || this.pipeline, input, this);
   }
+
+  use(item) {
+    this.container.use(item);
+  }
 }
 
 module.exports = Clonable;

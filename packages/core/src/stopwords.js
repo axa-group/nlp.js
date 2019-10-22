@@ -1,6 +1,7 @@
 class Stopwords {
   constructor(container) {
     this.container = container;
+    this.name = 'removeStopwords';
   }
 
   removeStopwords(tokens) {

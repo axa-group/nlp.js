@@ -1,6 +1,7 @@
 class Stemmer {
   constructor(container) {
     this.container = container;
+    this.name = 'stem';
   }
 
   stem(tokens) {

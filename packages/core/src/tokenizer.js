@@ -1,6 +1,7 @@
 class Tokenizer {
   constructor(container) {
     this.container = container;
+    this.name = 'tokenize';
   }
 
   tokenize(text) {

@@ -1,6 +1,7 @@
 class Normalizer {
   constructor(container) {
     this.container = container;
+    this.name = 'normalize';
   }
 
   normalize(text) {

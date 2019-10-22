@@ -46,12 +46,31 @@ class Nlu extends Clonable {
   }
 
   async prepare(text, settings) {
-    const input = {
-      locale: this.locale,
-      text,
-      settings: settings || this.settings,
-    };
-    return this.runPipeline(input, this.pipelinePrepare);
+    if (typeof text === 'string') {
+      const input = {
+        locale: this.locale,
+        text,
+        settings: settings || this.settings,
+      };
+      return this.runPipeline(input, this.pipelinePrepare);
+    }
+    if (typeof text === 'object') {
+      if (Array.isArray(text)) {
+        const result = [];
+        for (let i = 0; i < text.length; i += 1) {
+          result.push(await this.prepare(text[i], settings));
+        }
+        return result;
+      }
+      const item = text.text || text.utterance || text.texts || text.utterances;
+      if (item) {
+        const result = await this.prepare(item, settings);
+        return { tokens: result, ...text };
+      }
+    }
+    throw new Error(
+      `Error at nlu.prepare: expected a text but received ${text}`
+    );
   }
 }
 
