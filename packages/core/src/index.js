@@ -23,6 +23,8 @@
 
 const Clonable = require('./clonable');
 const { Container, defaultContainer } = require('./container');
+const Among = require('./among');
+const BaseStemmer = require('./base-stemmer');
 const Tokenizer = require('./tokenizer');
 const Normalizer = require('./normalizer');
 const Stemmer = require('./stemmer');
@@ -35,6 +37,8 @@ const {
 } = require('./helper');
 
 module.exports = {
+  Among,
+  BaseStemmer,
   Clonable,
   Container,
   defaultContainer,

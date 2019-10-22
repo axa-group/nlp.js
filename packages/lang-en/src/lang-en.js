@@ -21,26 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Normalizer {
-  constructor(container) {
-    this.container = container;
-    this.name = 'normalize';
-  }
+const TokenizerEn = require('./tokenizer-en');
+const StemmerEn = require('./stemmer-en');
+const StopwordsEn = require('./stopwords-en');
 
-  normalize(text) {
-    return text
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase();
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    const locale = input.locale || 'en';
-    const normalizer = this.container.get(`normalizer-${locale}`) || this;
-    input.text = normalizer.normalize(input.text, input);
-    return input;
+class LangEn {
+  register(container) {
+    container.use(TokenizerEn);
+    container.use(StemmerEn);
+    container.use(StopwordsEn);
   }
 }
 
-module.exports = Normalizer;
+module.exports = LangEn;

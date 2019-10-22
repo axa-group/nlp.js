@@ -21,26 +21,15 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Normalizer {
-  constructor(container) {
-    this.container = container;
-    this.name = 'normalize';
-  }
-
-  normalize(text) {
-    return text
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase();
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    const locale = input.locale || 'en';
-    const normalizer = this.container.get(`normalizer-${locale}`) || this;
-    input.text = normalizer.normalize(input.text, input);
-    return input;
+class Among {
+  constructor(s, sub, result, method, instance) {
+    this.s_size = s.length;
+    this.s = s;
+    this.substring_i = sub;
+    this.result = result;
+    this.method = method;
+    this.instance = instance;
   }
 }
 
-module.exports = Normalizer;
+module.exports = Among;

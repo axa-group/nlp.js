@@ -104,12 +104,17 @@ class Container {
   }
 
   use(item, name) {
+    let instance;
     if (typeof item === 'function') {
       const Clazz = item;
-      const instance = new Clazz(this);
-      this.register(name || instance.name, instance);
+      instance = new Clazz(this);
     } else {
-      this.register(name || item.name, item);
+      instance = item;
+    }
+    if (instance.register) {
+      instance.register(this);
+    } else {
+      this.register(name || instance.name, instance);
     }
   }
 }
