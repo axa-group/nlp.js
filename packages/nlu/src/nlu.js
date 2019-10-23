@@ -33,6 +33,7 @@ class Nlu extends Clonable {
       nonefeatureValue: 1,
       nonedeltaMultiplier: 1.2,
       spellcheckDistance: 0,
+      filterZeros: true,
     });
     this.applySettings(this, {
       pipelinePrepare: [
@@ -40,17 +41,28 @@ class Nlu extends Clonable {
         'tokenize',
         'removeStopwords',
         'stem',
+        'arrToObj',
         'output.tokens',
+      ],
+      pipelineTrain: ['.prepareCorpus', '.innerTrain'],
+      pipelineProcess: [
+        '.prepare',
+        '.calculateNoneFeature',
+        '.innerProcess',
+        '.convertToArray',
+        '.normalizeClassifications',
+        'output.classifications',
       ],
     });
   }
 
-  async prepare(text, settings) {
+  async prepare(text, srcSettings) {
+    const settings = srcSettings || this.settings;
     if (typeof text === 'string') {
       const input = {
         locale: this.locale,
         text,
-        settings: settings || this.settings,
+        settings,
       };
       return this.runPipeline(input, this.pipelinePrepare);
     }
@@ -62,15 +74,94 @@ class Nlu extends Clonable {
         }
         return result;
       }
-      const item = text.text || text.utterance || text.texts || text.utterances;
+      const item = settings.fieldNameSrc
+        ? text[settings.fieldNameSrc]
+        : text.text || text.utterance || text.texts || text.utterances;
       if (item) {
         const result = await this.prepare(item, settings);
-        return { tokens: result, ...text };
+        const targetField = settings.fieldNameTgt || 'tokens';
+        return { [targetField]: result, ...text };
       }
     }
     throw new Error(
       `Error at nlu.prepare: expected a text but received ${text}`
     );
+  }
+
+  async prepareCorpus(srcInput) {
+    this.features = {};
+    const input = srcInput;
+    const { corpus } = input;
+    const result = [];
+    for (let i = 0; i < corpus.length; i += 1) {
+      const item = {
+        input: await this.prepare(corpus[i].utterance, input.settings),
+        output: { [corpus[i].intent]: 1 },
+      };
+      const keys = Object.keys(input);
+      for (let j = 0; j < keys.length; j += 1) {
+        this.features[keys[j]] = 1;
+      }
+      result.push(item);
+    }
+    input.corpus = result;
+    return input;
+  }
+
+  convertToArray(srcInput) {
+    const input = srcInput;
+    const { classifications } = input;
+    const keys = Object.keys(classifications);
+    const result = [];
+    for (let i = 0; i < keys.length; i += 1) {
+      const intent = keys[i];
+      const score = classifications[intent];
+      if (score > 0 || !input.settings.filterZeros) {
+        result.push({ intent, score });
+      }
+    }
+    input.classifications = result.sort((a, b) => b.score - a.score);
+    return input;
+  }
+
+  normalizeClassifications(srcInput) {
+    const input = srcInput;
+    const { classifications } = input;
+    let total = 0;
+    for (let i = 0; i < classifications.length; i += 1) {
+      classifications[i].score **= 2;
+      total += classifications[i].score;
+    }
+    if (total > 0) {
+      for (let i = 0; i < classifications.length; i += 1) {
+        classifications[i].score /= total;
+      }
+    }
+    return input;
+  }
+
+  calculateNoneFeature(input) {
+    return input;
+  }
+
+  async innerTrain() {
+    throw new Error('This method should be implemented by child classes');
+  }
+
+  async train(corpus, settings) {
+    const input = {
+      corpus,
+      settings: settings || this.settings,
+    };
+    return this.runPipeline(input, this.pipelineTrain);
+  }
+
+  async process(utterance, settings) {
+    const input = {
+      text: utterance,
+      settings: settings || this.settings,
+    };
+    return this.runPipeline(input, this.pipelineProcess);
   }
 }
 

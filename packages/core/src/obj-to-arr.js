@@ -21,22 +21,17 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NeuralNetwork } = require('@nlpjs/neural');
-const Nlu = require('./nlu');
-
-class NeuralNlu extends Nlu {
-  innerTrain(srcInput) {
-    const input = srcInput;
-    this.neuralNetwork = new NeuralNetwork(input.settings);
-    input.status = this.neuralNetwork.train(input.corpus);
-    return input;
+class ObjToArr {
+  constructor(container) {
+    this.container = container;
+    this.name = 'objToArr';
   }
 
-  innerProcess(srcInput) {
+  run(srcInput) {
     const input = srcInput;
-    input.classifications = this.neuralNetwork.run(input.tokens);
+    input.tokens = Object.keys(input.tokens);
     return input;
   }
 }
 
-module.exports = NeuralNlu;
+module.exports = ObjToArr;

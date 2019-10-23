@@ -21,14 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const Among = require('./among');
+const ArrToObj = require('./arr-to-obj');
+const BaseStemmer = require('./base-stemmer');
 const Clonable = require('./clonable');
 const { Container, defaultContainer } = require('./container');
-const Among = require('./among');
-const BaseStemmer = require('./base-stemmer');
-const Tokenizer = require('./tokenizer');
 const Normalizer = require('./normalizer');
+const ObjToArr = require('./obj-to-arr');
 const Stemmer = require('./stemmer');
 const Stopwords = require('./stopwords');
+const Tokenizer = require('./tokenizer');
 const {
   hasUnicode,
   unicodeToArray,
@@ -38,6 +40,7 @@ const {
 
 module.exports = {
   Among,
+  ArrToObj,
   BaseStemmer,
   Clonable,
   Container,
@@ -46,8 +49,9 @@ module.exports = {
   unicodeToArray,
   asciiToArray,
   stringToArray,
-  Tokenizer,
   Normalizer,
+  ObjToArr,
   Stemmer,
   Stopwords,
+  Tokenizer,
 };

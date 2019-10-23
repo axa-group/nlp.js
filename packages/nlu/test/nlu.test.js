@@ -22,6 +22,7 @@
  */
 
 const {
+  ArrToObj,
   Container,
   Normalizer,
   Tokenizer,
@@ -32,6 +33,7 @@ const Nlu = require('../src/nlu');
 
 function bootstrap() {
   const container = new Container();
+  container.use(ArrToObj);
   container.use(Normalizer);
   container.use(Tokenizer);
   container.use(Stemmer);
@@ -68,7 +70,12 @@ describe('NLU', () => {
       const nlu = new Nlu({ locale: 'en', keepStopwords: false }, bootstrap());
       const input = 'Allí hay un ratón';
       const actual = await nlu.prepare(input);
-      expect(actual).toEqual(['alli', 'hay', 'un', 'raton']);
+      expect(actual).toEqual({
+        alli: 1,
+        hay: 1,
+        un: 1,
+        raton: 1,
+      });
     });
     test('Prepare should throw and exception if no text available', async () => {
       const nlu = new Nlu({ locale: 'en', keepStopwords: false }, bootstrap());
@@ -89,8 +96,8 @@ describe('NLU', () => {
       const input = ['Allí hay un ratón', 'y vino el señor doctor'];
       const actual = await nlu.prepare(input);
       expect(actual).toEqual([
-        ['alli', 'hay', 'un', 'raton'],
-        ['y', 'vino', 'el', 'senor', 'doctor'],
+        { alli: 1, hay: 1, un: 1, raton: 1 },
+        { y: 1, vino: 1, el: 1, senor: 1, doctor: 1 },
       ]);
     });
     test('Prepare can process an object with text', async () => {
@@ -99,7 +106,7 @@ describe('NLU', () => {
       const actual = await nlu.prepare(input);
       expect(actual).toEqual({
         text: 'Allí hay un ratón',
-        tokens: ['alli', 'hay', 'un', 'raton'],
+        tokens: { alli: 1, hay: 1, un: 1, raton: 1 },
         intent: 'mouse',
       });
     });
@@ -109,7 +116,7 @@ describe('NLU', () => {
       const actual = await nlu.prepare(input);
       expect(actual).toEqual({
         utterance: 'Allí hay un ratón',
-        tokens: ['alli', 'hay', 'un', 'raton'],
+        tokens: { alli: 1, hay: 1, un: 1, raton: 1 },
         intent: 'mouse',
       });
     });
@@ -123,12 +130,12 @@ describe('NLU', () => {
       expect(actual).toEqual([
         {
           text: 'Allí hay un ratón',
-          tokens: ['alli', 'hay', 'un', 'raton'],
+          tokens: { alli: 1, hay: 1, un: 1, raton: 1 },
           intent: 'mouse',
         },
         {
           text: 'y vino el señor doctor',
-          tokens: ['y', 'vino', 'el', 'senor', 'doctor'],
+          tokens: { y: 1, vino: 1, el: 1, senor: 1, doctor: 1 },
           intent: 'doctor',
         },
       ]);
@@ -143,12 +150,12 @@ describe('NLU', () => {
       expect(actual).toEqual([
         {
           utterance: 'Allí hay un ratón',
-          tokens: ['alli', 'hay', 'un', 'raton'],
+          tokens: { alli: 1, hay: 1, un: 1, raton: 1 },
           intent: 'mouse',
         },
         {
           utterance: 'y vino el señor doctor',
-          tokens: ['y', 'vino', 'el', 'senor', 'doctor'],
+          tokens: { y: 1, vino: 1, el: 1, senor: 1, doctor: 1 },
           intent: 'doctor',
         },
       ]);
@@ -164,8 +171,8 @@ describe('NLU', () => {
         intent: 'doctor',
         texts: ['Y vino el señor doctor', 'manejando un cuatrimotor'],
         tokens: [
-          ['y', 'vino', 'el', 'senor', 'doctor'],
-          ['manejando', 'un', 'cuatrimotor'],
+          { y: 1, vino: 1, el: 1, senor: 1, doctor: 1 },
+          { manejando: 1, un: 1, cuatrimotor: 1 },
         ],
       });
     });
@@ -180,8 +187,8 @@ describe('NLU', () => {
         intent: 'doctor',
         utterances: ['Y vino el señor doctor', 'manejando un cuatrimotor'],
         tokens: [
-          ['y', 'vino', 'el', 'senor', 'doctor'],
-          ['manejando', 'un', 'cuatrimotor'],
+          { y: 1, vino: 1, el: 1, senor: 1, doctor: 1 },
+          { manejando: 1, un: 1, cuatrimotor: 1 },
         ],
       });
     });
@@ -203,14 +210,14 @@ describe('NLU', () => {
           intent: 'doctor',
           utterances: ['Y vino el señor doctor', 'manejando un cuatrimotor'],
           tokens: [
-            ['y', 'vino', 'el', 'senor', 'doctor'],
-            ['manejando', 'un', 'cuatrimotor'],
+            { y: 1, vino: 1, el: 1, senor: 1, doctor: 1 },
+            { manejando: 1, un: 1, cuatrimotor: 1 },
           ],
         },
         {
           intent: 'mouse',
           utterances: ['Ahí hay un ratón'],
-          tokens: [['ahi', 'hay', 'un', 'raton']],
+          tokens: [{ ahi: 1, hay: 1, un: 1, raton: 1 }],
         },
       ]);
     });
