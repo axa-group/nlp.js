@@ -20,10 +20,15 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-const { Clonable } = require('@nlpjs/core');
+const {
+  Clonable,
+  LookupTable,
+  toHash,
+  lookupToArray,
+  lookupToObject,
+  getTypedArrayFn,
+} = require('@nlpjs/core');
 const defaultSettings = require('./default-settings.json');
-const Perceptron = require('./perceptron');
 
 let performance;
 // eslint-disable-next-line
@@ -36,14 +41,11 @@ if (typeof window === 'undefined') {
 }
 
 /**
- * Class for a fully connected neural network
+ * Class for a dense neural network, with an input and output layers fully connected,
+ * using a leaky-relu activation
  */
 class NeuralNetwork extends Clonable {
-  /**
-   * Constructor of the class
-   * @param {object} settings Settings for the perceptrons
-   */
-  constructor(settings) {
+  constructor(settings = {}) {
     super({});
     this.perceptronSettings = {};
     this.applySettings(this.perceptronSettings, settings);
@@ -57,112 +59,118 @@ class NeuralNetwork extends Clonable {
       this.logFn = this.perceptronSettings.log;
     }
     this.jsonExport = {
-      perceptrons: () => this.perceptrons.map(x => x.toJSON()),
+      perceptrons: this.exportPerceptrons,
     };
     this.jsonImport = {
       perceptrons: this.importPerceptrons,
     };
   }
 
-  importPerceptrons(target, source, key, value) {
-    const result = [];
-    for (let i = 0; i < value.length; i += 1) {
-      const perceptron = new Perceptron({
-        feature: value[i].feature,
-        features: source.features,
-        ...source.perceptronSettings,
-      });
-      perceptron.fromJSON(value[i]);
-      result.push(perceptron);
-    }
-    return result;
-  }
-
   initialize() {
+    const size = this.sizes[1];
+    this.inputs = [];
+    this.outputs = [];
     this.perceptrons = [];
-    for (let i = 0; i < this.outputs.length; i += 1) {
-      this.perceptrons.push(
-        new Perceptron({
-          feature: this.outputs[i],
-          features: this.features,
-          ...this.perceptronSettings,
-        })
-      );
+    for (let node = 0; node < size; node += 1) {
+      this.perceptrons.push({
+        weights: new Float32Array(this.sizes[0]),
+        changes: new Float32Array(this.sizes[0]),
+        bias: 0,
+      });
     }
   }
 
-  run(input, keys) {
-    if (this.outputs) {
-      const result = {};
-      for (let i = 0; i < this.outputs.length; i += 1) {
-        const perceptron = this.perceptrons[i];
-        result[this.outputs[i]] = perceptron.run(input, keys);
-      }
-      return result;
+  get isRunnable() {
+    return !!this.sizes;
+  }
+
+  run(srcInput) {
+    if (this.isRunnable) {
+      const input = lookupToArray(this.inputLookup, srcInput);
+      return lookupToObject(this.outputLookup, this.runInput(input).slice(0));
     }
     return undefined;
   }
 
-  initializeNoneFeature(data) {
+  runInput(input) {
+    this.inputs = input;
+    const { alpha } = this.perceptronSettings;
+    const keys = Object.keys(input);
+    for (let node = 0; node < this.sizes[1]; node += 1) {
+      const perceptron = this.perceptrons[node];
+      const { weights, bias } = perceptron;
+      let sum = bias;
+      for (let i = 0; i < keys.length; i += 1) {
+        const key = keys[i];
+        if (weights[key]) {
+          if (input[key] === 1) {
+            sum += weights[key];
+          } else {
+            sum += input[key] * weights[key];
+          }
+        }
+      }
+      this.outputs[node] = sum < 0 ? 0 : alpha * sum;
+    }
+    return this.outputs;
+  }
+
+  /**
+   * If the model is not initilized, then initialize it.
+   * @param {Object} data Data for the initialization.
+   */
+  verifyIsInitialized(data) {
+    if (!this.sizes) {
+      this.sizes = [data[0].input.length, data[0].output.length];
+      this.initialize();
+    }
+  }
+
+  train(srcData) {
     const useNoneFeature =
-      data[data.length - 1].input.nonefeature !== undefined;
+      srcData[srcData.length - 1].input.nonefeature !== undefined;
     if (useNoneFeature) {
       const intents = {};
-      for (let i = 0; i < data.length - 1; i += 1) {
-        const tokens = Object.keys(data[i].output);
+      for (let i = 0; i < srcData.length - 1; i += 1) {
+        const tokens = Object.keys(srcData[i].output);
         for (let j = 0; j < tokens.length; j += 1) {
           if (!intents[tokens[j]]) {
             intents[tokens[j]] = 1;
           }
         }
       }
-      const current = data[data.length - 1];
+      const current = srcData[srcData.length - 1];
       const keys = Object.keys(intents);
       for (let i = 0; i < keys.length; i += 1) {
         current.output[keys[i]] = 0.0000001;
       }
     }
-  }
-
-  getFeatures(data) {
-    const inputKeys = {};
+    const data = this.formatData(srcData);
+    const dataDict = [];
     for (let i = 0; i < data.length; i += 1) {
-      const current = data[i];
-      current.keys = Object.keys(current.input);
-      for (let j = 0; j < current.keys.length; j += 1) {
-        inputKeys[current.keys[j]] = 1;
+      const current = data[i].input;
+      const currentObj = {};
+      for (let j = 0; j < current.length; j += 1) {
+        if (current[j]) {
+          currentObj[j] = current[j];
+        }
       }
+      dataDict.push(currentObj);
     }
-    return Object.keys(inputKeys);
-  }
-
-  train(data) {
-    this.initializeNoneFeature(data);
-    this.features = this.getFeatures(data);
-    const outputKeys = {};
-    for (let i = 0; i < data.length; i += 1) {
-      const current = data[i];
-      const keys = Object.keys(current.output);
-      for (let j = 0; j < keys.length; j += 1) {
-        outputKeys[keys[j]] = 1;
-      }
-    }
-    this.outputs = Object.keys(outputKeys);
-    this.initialize();
     if (!this.status) {
       this.status = { error: Infinity, deltaError: Infinity, iterations: 0 };
     }
+    this.verifyIsInitialized(data);
     let minError;
     let minDelta;
     if (!this.perceptronSettings.fixedError) {
       minError =
-        this.outputs.length > 50
-          ? (this.perceptronSettings.errorThresh * 50) / this.outputs.length
+        this.sizes[1] > 50
+          ? (this.perceptronSettings.errorThresh * 50) / this.sizes[1]
           : this.perceptronSettings.errorThresh;
       minDelta =
-        this.outputs.length > 50
-          ? (this.perceptronSettings.deltaErrorThresh * 50) /
-            this.outputs.length
+        this.sizes[1] > 50
+          ? (this.perceptronSettings.deltaErrorThresh * 50) / this.sizes[1]
           : this.perceptronSettings.deltaErrorThresh;
     } else {
       minError = this.perceptronSettings.errorThresh;
@@ -179,13 +187,13 @@ class NeuralNetwork extends Clonable {
       this.status.error = 0;
       for (let i = 0; i < data.length; i += 1) {
         const current = data[i];
-        for (let j = 0; j < this.perceptrons.length; j += 1) {
-          const perceptron = this.perceptrons[j];
-          this.status.error +=
-            perceptron.calculateDeltas(current, this.status.iterations) ** 2;
-        }
+        this.status.error += this.calculateDeltas(
+          current.input,
+          current.output,
+          this.runInput(dataDict[i])
+        );
       }
-      this.status.error /= data.length * this.outputs.length;
+      this.status.error /= data.length;
       this.status.deltaError = Math.abs(this.status.error - lastError);
       const hrend = performance.now();
       if (this.logFn) {
@@ -193,6 +201,127 @@ class NeuralNetwork extends Clonable {
       }
     }
     return this.status;
+  }
+
+  calculateDeltas(incoming, target, outputs, marknode) {
+    const { learningRate, alpha, momentum } = this.perceptronSettings;
+    const numOutputs = this.sizes[1];
+    let error = 0;
+    const decayLearningRate =
+      learningRate / (1 + 0.001 * this.status.iterations);
+    const startNode = marknode === undefined ? 0 : marknode;
+    const endNode = marknode === undefined ? numOutputs : marknode + 1;
+    for (let node = startNode; node < endNode; node += 1) {
+      const perceptron = this.perceptrons[node];
+      const { changes, weights } = perceptron;
+      const output = outputs[node];
+      const currentError = target[node] - output;
+      if (currentError) {
+        error += currentError ** 2;
+        const delta =
+          (output > 0 ? 1 : alpha) * currentError * decayLearningRate;
+        for (let k = 0; k < incoming.length; k += 1) {
+          const change = delta * incoming[k] + momentum * changes[k];
+          changes[k] = change;
+          weights[k] += change;
+        }
+        perceptron.bias += delta;
+      } else {
+        for (let k; k < incoming.length; k += 1) {
+          const change = momentum * changes[k];
+          changes[k] = change;
+          weights[k] += change;
+        }
+      }
+    }
+    return error / numOutputs;
+  }
+
+  formatData(data) {
+    if (!this.inputLookup) {
+      this.inputLookup = new LookupTable(data, 'input').table;
+      this.outputLookup = new LookupTable(data, 'output').table;
+    }
+    const formatInput = getTypedArrayFn(this.inputLookup);
+    const formatOutput = getTypedArrayFn(this.outputLookup);
+    const result = [];
+    for (let i = 0; i < data.length; i += 1) {
+      result.push({
+        input: formatInput(data[i].input),
+        output: formatOutput(data[i].output),
+      });
+    }
+    return result;
+  }
+
+  adjust(n) {
+    return this.perceptronSettings.maxDecimals &&
+      this.perceptronSettings.maxDecimals < 17
+      ? parseFloat(n.toFixed(this.perceptronSettings.maxDecimals))
+      : n;
+  }
+
+  toJSON() {
+    const layers = [];
+    if (this.isRunnable) {
+      for (let layer = 0; layer <= 1; layer += 1) {
+        layers[layer] = {};
+        const nodes = Object.keys(
+          layer === 0 ? this.inputLookup : this.outputLookup
+        );
+        for (let j = 0; j < nodes.length; j += 1) {
+          const perceptron = this.perceptrons[j];
+          const node = nodes[j];
+          layers[layer][node] = {};
+          const currentNode = layers[layer][node];
+          if (layer > 0) {
+            currentNode.bias = this.adjust(perceptron.bias);
+            currentNode.weights = {};
+            const keys = Object.keys(layers[layer - 1]);
+            for (let k = 0; k < keys.length; k += 1) {
+              const currentWeight = this.adjust(
+                perceptron.weights[this.inputLookup[keys[k]]]
+              );
+              if (currentWeight !== 0) {
+                currentNode.weights[keys[k]] = currentWeight;
+              }
+            }
+          }
+        }
+      }
+    }
+    return {
+      sizes: this.sizes,
+      layers,
+      perceptronSettings: this.perceptronSettings,
+    };
+  }
+
+  fromJSON(json) {
+    this.sizes = json.sizes;
+    this.perceptronSettings = json.perceptronSettings;
+    if (!this.sizes) return;
+    this.initialize();
+    this.inputLookup = toHash(json.layers[0]);
+    const features = Object.keys(this.inputLookup);
+    const outputLayer = json.layers[1];
+    this.outputLookup = toHash(outputLayer);
+    const nodes = Object.keys(outputLayer);
+    this.sizes[1] = nodes.length;
+    for (let j = 0; j < nodes.length; j += 1) {
+      const node = nodes[j];
+      const perceptron = this.perceptrons[j];
+      perceptron.bias = outputLayer[node].bias;
+      const weights = new Float32Array(this.sizes[0]);
+      for (let k = 0; k < features.length; k += 1) {
+        const feature = features[k];
+        if (outputLayer[node].weights[feature]) {
+          const index = this.inputLookup[feature];
+          weights[index] = outputLayer[node].weights[feature];
+        }
+      }
+      perceptron.weights = weights;
+    }
   }
 }
 

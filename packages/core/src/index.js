@@ -32,6 +32,12 @@ const Stemmer = require('./stemmer');
 const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
 const {
+  LookupTable,
+  toArray,
+  toHash,
+  lookupToArray,
+  lookupToObject,
+  getTypedArrayFn,
   hasUnicode,
   unicodeToArray,
   asciiToArray,
@@ -45,6 +51,12 @@ module.exports = {
   Clonable,
   Container,
   defaultContainer,
+  LookupTable,
+  toArray,
+  toHash,
+  lookupToArray,
+  lookupToObject,
+  getTypedArrayFn,
   hasUnicode,
   unicodeToArray,
   asciiToArray,

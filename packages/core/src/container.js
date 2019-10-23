@@ -89,15 +89,11 @@ class Container {
       } else {
         currentObject = srcObject;
       }
-      try {
-        const method = currentObject[tokens[1] || 'run'];
-        if (typeof method === 'function') {
-          currentInput = await method.bind(currentObject)(currentInput);
-        } else {
-          currentInput = method;
-        }
-      } catch (err) {
-        throw new Error(`Error executing "${current}" step of the pipeline`);
+      const method = currentObject[tokens[1] || 'run'];
+      if (typeof method === 'function') {
+        currentInput = await method.bind(currentObject)(currentInput);
+      } else {
+        currentInput = method;
       }
     }
     return currentInput;

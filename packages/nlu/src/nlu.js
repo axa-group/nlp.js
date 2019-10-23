@@ -44,7 +44,7 @@ class Nlu extends Clonable {
         'arrToObj',
         'output.tokens',
       ],
-      pipelineTrain: ['.prepareCorpus', '.innerTrain'],
+      pipelineTrain: ['.prepareCorpus', '.addNoneFeature', '.innerTrain'],
       pipelineProcess: [
         '.prepare',
         '.calculateNoneFeature',
@@ -90,21 +90,32 @@ class Nlu extends Clonable {
 
   async prepareCorpus(srcInput) {
     this.features = {};
+    this.intents = {};
     const input = srcInput;
     const { corpus } = input;
     const result = [];
     for (let i = 0; i < corpus.length; i += 1) {
+      const { intent } = corpus[i];
       const item = {
         input: await this.prepare(corpus[i].utterance, input.settings),
-        output: { [corpus[i].intent]: 1 },
+        output: { [intent]: 1 },
       };
-      const keys = Object.keys(input);
+      const keys = Object.keys(item.input);
       for (let j = 0; j < keys.length; j += 1) {
         this.features[keys[j]] = 1;
       }
+      this.intents[intent] = 1;
       result.push(item);
     }
+    this.numFeatures = Object.keys(this.features).length;
+    this.numIntents = Object.keys(this.intents).length;
     input.corpus = result;
+    return input;
+  }
+
+  addNoneFeature(input) {
+    const { corpus } = input;
+    corpus.push({ input: { nonefeature: 1 }, output: { None: 1 } });
     return input;
   }
 
@@ -140,7 +151,31 @@ class Nlu extends Clonable {
     return input;
   }
 
-  calculateNoneFeature(input) {
+  calculateNoneFeature(srcInput) {
+    const input = srcInput;
+    const { tokens } = input;
+    const keys = Object.keys(tokens);
+    let unknownTokens = 0;
+    for (let i = 0; i < keys.length; i += 1) {
+      const token = keys[i];
+      if (token === 'nonefeature') {
+        tokens[token] = this.nonefeatureValue;
+      } else if (!this.features[token]) {
+        unknownTokens += 1;
+      }
+    }
+    let nonedelta =
+      input.settings.nonedeltaValue === undefined
+        ? this.numIntents / this.numFeatures
+        : this.settings.nonedeltaValue;
+    let nonevalue = 0;
+    for (let i = 0; i < unknownTokens; i += 1) {
+      nonevalue += nonedelta;
+      nonedelta *= this.settings.nonedeltaMultiplier;
+    }
+    if (nonevalue) {
+      tokens.nonefeature = nonevalue;
+    }
     return input;
   }
 
