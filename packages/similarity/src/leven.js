@@ -73,7 +73,9 @@ function leven(left, right) {
     j += 1;
     result = j;
     for (let i = 0; i < leftLength; i += 1) {
-      temp2 = bCharCode === charCodeCache[i] ? temp : temp + 1;
+      /* eslint-disable */
+      temp2 = temp + (bCharCode !== charCodeCache[i])|0;
+      /* eslint-enable */
       temp = array[i];
       if (temp > result) {
         array[i] = temp2 > result ? result + 1 : temp2;
