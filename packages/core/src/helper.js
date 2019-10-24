@@ -47,9 +47,19 @@ const asciiToArray = str => str.split('');
 const stringToArray = str =>
   hasUnicode(str) ? unicodeToArray(str) : asciiToArray(str);
 
+function compareWildcars(text, rule) {
+  const escapeRegex = str => str.replace(/([.*+^=!:${}()|[\]/\\])/g, '\\$1');
+  const regexRule = `^${rule
+    .split('*')
+    .map(escapeRegex)
+    .join('.*')}$`.replace(/\?/g, '.');
+  return new RegExp(regexRule).test(text);
+}
+
 module.exports = {
   hasUnicode,
   unicodeToArray,
   asciiToArray,
   stringToArray,
+  compareWildcars,
 };

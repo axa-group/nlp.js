@@ -36,6 +36,7 @@ const {
   unicodeToArray,
   asciiToArray,
   stringToArray,
+  compareWildcars,
 } = require('./helper');
 
 module.exports = {
@@ -49,6 +50,7 @@ module.exports = {
   unicodeToArray,
   asciiToArray,
   stringToArray,
+  compareWildcars,
   Normalizer,
   ObjToArr,
   Stemmer,

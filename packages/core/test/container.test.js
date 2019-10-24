@@ -227,29 +227,53 @@ describe('Container', () => {
         excludeChars: 'e',
       });
     });
-  });
-  test('Pipelines can have set and delete and pass parameters', async () => {
-    const instance = new Container();
-    instance.register('lower', Lower);
-    instance.register('char', Char);
-    const pipeline = [
-      'set input.str "magdalena"',
-      'lower',
-      'char',
-      'char.filter',
-      'this',
-      'delete input.arr',
-    ];
-    const input = {
-      source: 'VECTOR',
-      str: 'VECTOR',
-      excludeChars: 'e',
-    };
-    const actual = await instance.runPipeline(pipeline, input, new Other());
-    expect(actual).toEqual({
-      source: 'VECTOR',
-      str: 'magdalna',
-      excludeChars: 'e',
+    test('Pipelines can have set and delete and pass parameters', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = [
+        'set input.str "magdalena"',
+        'lower',
+        'char',
+        'char.filter',
+        'this',
+        'delete input.arr',
+      ];
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({
+        source: 'VECTOR',
+        str: 'magdalna',
+        excludeChars: 'e',
+      });
+    });
+    test('Pipelines can have sub pipelines', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      instance.registerPipeline('lowerch?r', ['lower', 'char']);
+      const pipeline = [
+        'set input.str "magdalena"',
+        '#lowerchar',
+        'char.filter',
+        'this',
+        'delete input.arr',
+      ];
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({
+        source: 'VECTOR',
+        str: 'magdalna',
+        excludeChars: 'e',
+      });
     });
   });
 });
