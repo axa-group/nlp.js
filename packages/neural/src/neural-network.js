@@ -20,14 +20,14 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+const { Clonable } = require('@nlpjs/core');
 const {
-  Clonable,
   LookupTable,
   toHash,
   lookupToArray,
   lookupToObject,
   getTypedArrayFn,
-} = require('@nlpjs/core');
+} = require('./helper');
 const defaultSettings = require('./default-settings.json');
 
 let performance;
