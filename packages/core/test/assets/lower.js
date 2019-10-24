@@ -22,14 +22,15 @@
  */
 
 class Lower {
-  toLower(srcInput) {
+  toLower(srcInput, text) {
     const input = srcInput;
-    input.str = input.str.toLowerCase();
+    input.str = text.toLowerCase();
     return input;
   }
 
-  run(input) {
-    return this.toLower(input.str ? input : { str: input });
+  run(input, arg) {
+    const text = arg || input;
+    return this.toLower(input, text.str ? text.str : text);
   }
 }
 

@@ -213,7 +213,7 @@ describe('Container', () => {
       const instance = new Container();
       instance.register('lower', Lower);
       instance.register('char', Char);
-      const pipeline = ['lower', 'char', 'char.filter', ''];
+      const pipeline = ['lower', 'char', 'char.filter', 'this'];
       const input = {
         source: 'VECTOR',
         str: 'VECTOR',
@@ -226,6 +226,30 @@ describe('Container', () => {
         arr: ['v', 'c', 't', 'o', 'r'],
         excludeChars: 'e',
       });
+    });
+  });
+  test('Pipelines can have set and delete and pass parameters', async () => {
+    const instance = new Container();
+    instance.register('lower', Lower);
+    instance.register('char', Char);
+    const pipeline = [
+      'set input.str "magdalena"',
+      'lower',
+      'char',
+      'char.filter',
+      'this',
+      'delete input.arr',
+    ];
+    const input = {
+      source: 'VECTOR',
+      str: 'VECTOR',
+      excludeChars: 'e',
+    };
+    const actual = await instance.runPipeline(pipeline, input, new Other());
+    expect(actual).toEqual({
+      source: 'VECTOR',
+      str: 'magdalna',
+      excludeChars: 'e',
     });
   });
 });

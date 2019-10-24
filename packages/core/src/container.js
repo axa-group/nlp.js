@@ -77,24 +77,97 @@ class Container {
     return new Clazz(settings);
   }
 
+  resolvePath(step, input, srcObject) {
+    const tokens = step.split('.');
+    if (tokens.length === 0) {
+      return input;
+    }
+    const token = tokens[0].trim();
+    const isnum = /^\d+$/.test(token);
+    if (isnum) {
+      return parseFloat(token);
+    }
+    if (token.startsWith('"')) {
+      return token.replace(/^"(.+(?="$))"$/, '$1');
+    }
+    if (token.startsWith("'")) {
+      return token.replace(/^'(.+(?='$))'$/, '$1');
+    }
+    let currentObject = srcObject;
+    if (token === 'input' || token === 'output') {
+      currentObject = input;
+    } else if (token && token !== 'this') {
+      currentObject = this.get(token);
+    }
+    for (let i = 1; i < tokens.length; i += 1) {
+      const currentToken = tokens[i];
+      if (!currentObject[currentToken]) {
+        throw Error(`Path not found in pipeline "${step}"`);
+      }
+      currentObject = currentObject[currentToken];
+    }
+    return currentObject;
+  }
+
+  setValue(path, valuePath, input, srcObject) {
+    const value = this.resolvePath(valuePath, input, srcObject);
+    const tokens = path.split('.');
+    const newPath = tokens.slice(0, -1).join('.');
+    const currentObject = this.resolvePath(newPath, input, srcObject);
+    currentObject[tokens[tokens.length - 1]] = value;
+  }
+
+  deleteValue(path, input, srcObject) {
+    const tokens = path.split('.');
+    const newPath = tokens.slice(0, -1).join('.');
+    const currentObject = this.resolvePath(newPath, input, srcObject);
+    delete currentObject[tokens[tokens.length - 1]];
+  }
+
+  getValue(path, input, srcObject) {
+    const tokens = path.split('.');
+    const newPath = tokens.slice(0, -1).join('.');
+    const currentObject = this.resolvePath(newPath, input, srcObject);
+    return currentObject[tokens[tokens.length - 1]];
+  }
+
+  async executeAction(step, input, srcObject) {
+    const tokens = step.split(' ');
+    if (tokens.length === 0) {
+      return undefined;
+    }
+    const firstToken = tokens[0];
+    if (firstToken === 'set') {
+      this.setValue(tokens[1], tokens[2], input, srcObject);
+      return input;
+    }
+    if (firstToken === 'delete') {
+      this.deleteValue(tokens[1], input, srcObject);
+      return input;
+    }
+    if (firstToken === 'get') {
+      return this.getValue(tokens[1], input, srcObject);
+    }
+    const currentObject = this.resolvePath(tokens[0], input, srcObject);
+    const args = [];
+    for (let i = 1; i < tokens.length; i += 1) {
+      args.push(this.resolvePath(tokens[i], input, srcObject));
+    }
+    const method = currentObject.run || currentObject;
+    if (!method) {
+      return currentObject;
+    }
+    if (typeof method === 'function') {
+      return method.bind(currentObject)(input, ...args);
+    }
+    return method;
+  }
+
   async runPipeline(pipeline, input, srcObject) {
     let currentInput = input;
     for (let i = 0; i < pipeline.length; i += 1) {
       const current = pipeline[i];
-      const tokens = current.split('.');
-      let currentObject;
-      if (tokens[0]) {
-        currentObject =
-          tokens[0] === 'output' ? currentInput : this.get(tokens[0]);
-      } else {
-        currentObject = srcObject;
-      }
-      const method = currentObject[tokens[1] || 'run'];
-      if (typeof method === 'function') {
-        currentInput = await method.bind(currentObject)(currentInput);
-      } else {
-        currentInput = method;
-      }
+      currentInput = await this.executeAction(current, currentInput, srcObject);
     }
     return currentInput;
   }
