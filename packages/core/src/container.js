@@ -28,6 +28,7 @@ class Container {
     this.classes = {};
     this.factory = {};
     this.pipelines = {};
+    this.configurations = {};
   }
 
   addClass(clazz, name) {
@@ -82,9 +83,6 @@ class Container {
 
   resolvePath(step, input, srcObject) {
     const tokens = step.split('.');
-    if (tokens.length === 0) {
-      return input;
-    }
     const token = tokens[0].trim();
     const isnum = /^\d+$/.test(token);
     if (isnum) {
@@ -232,6 +230,23 @@ class Container {
     for (let i = 0; i < keys.length; i += 1) {
       if (compareWildcars(tag, keys[i])) {
         return this.pipelines[keys[i]];
+      }
+    }
+    return undefined;
+  }
+
+  registerConfiguration(tag, configuration) {
+    this.configurations[tag] = configuration;
+  }
+
+  getConfiguration(tag) {
+    if (this.configurations[tag]) {
+      return this.configurations[tag];
+    }
+    const keys = Object.keys(this.configurations);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (compareWildcars(tag, keys[i])) {
+        return this.configurations[keys[i]];
       }
     }
     return undefined;

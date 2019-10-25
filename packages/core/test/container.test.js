@@ -208,6 +208,45 @@ describe('Container', () => {
     });
   });
 
+  describe('Resolve Path', () => {
+    test('If not path is provided returns the source object', () => {
+      const instance = new Container();
+      const input = {};
+      const srcObject = new Other();
+      const actual = instance.resolvePath('', input, srcObject);
+      expect(actual).toBe(srcObject);
+    });
+    test('If path is a number, return the number', () => {
+      const instance = new Container();
+      const input = {};
+      const srcObject = new Other();
+      const actual = instance.resolvePath('17', input, srcObject);
+      expect(actual).toBe(17);
+    });
+    test('If path is an string double quoted, returns the string without quotes', () => {
+      const instance = new Container();
+      const input = {};
+      const srcObject = new Other();
+      const actual = instance.resolvePath('"hello"', input, srcObject);
+      expect(actual).toBe('hello');
+    });
+    test('If path is an string single quoted, returns the string without quotes', () => {
+      const instance = new Container();
+      const input = {};
+      const srcObject = new Other();
+      const actual = instance.resolvePath("'hello'", input, srcObject);
+      expect(actual).toBe('hello');
+    });
+    test('If the path does not exists throw an error', () => {
+      const instance = new Container();
+      const input = {};
+      const srcObject = new Other();
+      expect(() =>
+        instance.resolvePath('this.potato', input, srcObject)
+      ).toThrow('Path not found in pipeline "this.potato"');
+    });
+  });
+
   describe('Pipeline', () => {
     test('I can register and run a pipeline', async () => {
       const instance = new Container();
@@ -274,6 +313,26 @@ describe('Container', () => {
         str: 'magdalna',
         excludeChars: 'e',
       });
+    });
+    test('Pipelines can get parameters from input', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      instance.registerPipeline('lowerch?r', ['lower', 'char']);
+      const pipeline = [
+        'set input.str "magdalena"',
+        '#lowerchar',
+        'char.filter',
+        'this',
+        'get input.str',
+      ];
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual('magdalna');
     });
   });
 });
