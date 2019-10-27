@@ -21,18 +21,26 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const TokenizerEs = require('./tokenizer-es');
-const StemmerEs = require('./stemmer-es');
-const StopwordsEs = require('./stopwords-es');
-const NormalizerEs = require('./normalizer-es');
+const { Normalizer } = require('@nlpjs/core');
 
-class LangEs {
-  register(container) {
-    container.use(TokenizerEs);
-    container.use(StemmerEs);
-    container.use(StopwordsEs);
-    container.use(NormalizerEs);
+class NormalizerAr extends Normalizer {
+  constructor(container) {
+    super(container);
+    this.name = 'normalizer-ar';
+  }
+
+  normalize(text) {
+    return text
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
+
+  run(srcInput) {
+    const input = srcInput;
+    input.text = this.normalize(input.text, input);
+    return input;
   }
 }
 
-module.exports = LangEs;
+module.exports = NormalizerAr;

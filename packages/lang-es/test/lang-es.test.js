@@ -12,6 +12,8 @@ describe('Language Spanish', () => {
       expect(stemmer.constructor.name).toEqual('StemmerEs');
       const stopwords = instance.get('stopwords-es');
       expect(stopwords.constructor.name).toEqual('StopwordsEs');
+      const normalizer = instance.get('normalizer-es');
+      expect(normalizer.constructor.name).toEqual('NormalizerEs');
     });
   });
 });

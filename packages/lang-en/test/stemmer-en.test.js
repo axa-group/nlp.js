@@ -1,7 +1,6 @@
-const { Normalizer } = require('@nlpjs/core');
-const { TokenizerEn, StemmerEn } = require('../src');
+const { TokenizerEn, StemmerEn, NormalizerEn } = require('../src');
 
-const normalizer = new Normalizer();
+const normalizer = new NormalizerEn();
 const tokenizer = new TokenizerEn();
 const stemmer = new StemmerEn();
 

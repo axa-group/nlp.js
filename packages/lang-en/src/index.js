@@ -25,10 +25,12 @@ const LangEn = require('./lang-en');
 const TokenizerEn = require('./tokenizer-en');
 const StemmerEn = require('./stemmer-en');
 const StopwordsEn = require('./stopwords-en');
+const NormalizerEn = require('./normalizer-en');
 
 module.exports = {
   LangEn,
   StemmerEn,
   StopwordsEn,
   TokenizerEn,
+  NormalizerEn,
 };

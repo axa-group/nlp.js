@@ -24,12 +24,14 @@
 const StemmerAr = require('./stemmer-ar');
 const TokenizerAr = require('./tokenizer-ar');
 const StopwordsAr = require('./stopwords-ar');
+const NormalizerAr = require('./normalizer-ar');
 
 class LangAr {
   register(container) {
     container.use(StemmerAr);
     container.use(TokenizerAr);
     container.use(StopwordsAr);
+    container.use(NormalizerAr);
   }
 }
 
