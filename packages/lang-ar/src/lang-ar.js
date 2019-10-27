@@ -21,23 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Tokenizer {
-  constructor(container) {
-    this.container = container;
-    this.name = 'tokenize';
-  }
+const StemmerAr = require('./stemmer-ar');
+const TokenizerAr = require('./tokenizer-ar');
+const StopwordsAr = require('./stopwords-ar');
 
-  tokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    const locale = input.locale || 'en';
-    const tokenizer = this.container.get(`tokenizer-${locale}`) || this;
-    input.tokens = tokenizer.tokenize(input.text, input).filter(x => x);
-    return input;
+class LangAr {
+  register(container) {
+    container.use(StemmerAr);
+    container.use(TokenizerAr);
+    container.use(StopwordsAr);
   }
 }
 
-module.exports = Tokenizer;
+module.exports = LangAr;

@@ -21,23 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class Tokenizer {
-  constructor(container) {
-    this.container = container;
-    this.name = 'tokenize';
-  }
+const { Stopwords } = require('@nlpjs/core');
 
-  tokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    const locale = input.locale || 'en';
-    const tokenizer = this.container.get(`tokenizer-${locale}`) || this;
-    input.tokens = tokenizer.tokenize(input.text, input).filter(x => x);
-    return input;
+class StopwordsAr extends Stopwords {
+  constructor(container, words) {
+    super(container);
+    this.name = 'stopwords-ar';
+    this.dictionary = {};
+    const list = words || [];
+    this.build(list);
   }
 }
 
-module.exports = Tokenizer;
+module.exports = StopwordsAr;
