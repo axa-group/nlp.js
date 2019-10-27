@@ -45,7 +45,8 @@
     "testURL": "http://localhost/",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "**/src/**/**.js"
+      "**/src/**/**.js",
+      "!./packages/lang-**/**"
     ],
     "coverageDirectory": "coverage",
     "testEnvironment": "node"
