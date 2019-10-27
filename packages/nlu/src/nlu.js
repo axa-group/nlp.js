@@ -27,37 +27,67 @@ class Nlu extends Clonable {
   constructor(settings = {}, container) {
     super({ settings: {} }, container);
     this.applySettings(this.settings, settings);
-    this.applySettings(this.settings, {
-      locale: 'en',
-      keepStopwords: true,
-      nonefeatureValue: 1,
-      nonedeltaMultiplier: 1.2,
-      spellcheckDistance: 0,
-      filterZeros: true,
-    });
+    this.applySettings(this.settings, { locale: 'en' });
+    if (!this.settings.tag) {
+      this.settings.tag = `nlu-${this.settings.locale}`;
+    }
+    this.registerDefault();
+    this.applySettings(
+      this.settings,
+      this.container.getConfiguration(this.settings.tag)
+    );
     this.applySettings(this, {
-      pipelinePrepare: this.container.buildPipeline([
+      pipelinePrepare: this.container.getPipeline(
+        `${this.settings.tag}-prepare`
+      ),
+      pipelineTrain: this.container.getPipeline(`${this.settings.tag}-train`),
+      pipelineProcess: this.container.getPipeline(
+        `${this.settings.tag}-process`
+      ),
+    });
+  }
+
+  registerDefault() {
+    this.container.registerConfiguration(
+      'nlu-??',
+      {
+        keepStopwords: true,
+        nonefeatureValue: 1,
+        nonedeltaMultiplier: 1.2,
+        spellcheckDistance: 0,
+        filterZeros: true,
+      },
+      false
+    );
+    this.container.registerPipeline(
+      'nlu-??-prepare',
+      [
         'normalize',
         'tokenize',
         'removeStopwords',
         'stem',
         'arrToObj',
         'output.tokens',
-      ]),
-      pipelineTrain: this.container.buildPipeline([
-        '.prepareCorpus',
-        '.addNoneFeature',
-        '.innerTrain',
-      ]),
-      pipelineProcess: this.container.buildPipeline([
+      ],
+      false
+    );
+    this.container.registerPipeline(
+      'nlu-??-train',
+      ['.prepareCorpus', '.addNoneFeature', '.innerTrain'],
+      false
+    );
+    this.container.registerPipeline(
+      'nlu-??-process',
+      [
         '.prepare',
         '.calculateNoneFeature',
         '.innerProcess',
         '.convertToArray',
         '.normalizeClassifications',
         'output.classifications',
-      ]),
-    });
+      ],
+      false
+    );
   }
 
   async prepare(text, srcSettings) {

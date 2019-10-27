@@ -240,7 +240,6 @@ class DefaultCompiler {
       );
       context.cursor += 1;
     }
-    console.log(context);
     return input;
   }
 }

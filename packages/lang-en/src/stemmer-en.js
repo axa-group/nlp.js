@@ -37,13 +37,6 @@ class StemmerEn extends BaseStemmer {
     this.I_p1 = 0;
   }
 
-  copy_from(other) {
-    this.B_Y_found = other.B_Y_found;
-    this.I_p2 = other.I_p2;
-    this.I_p1 = other.I_p1;
-    super.copy_from(other);
-  }
-
   r_prelude() {
     let v_1;
     let v_2;

@@ -43,15 +43,6 @@ class BaseStemmer {
     return this.current;
   }
 
-  copy_from(other) {
-    this.current = other.current;
-    this.cursor = other.cursor;
-    this.limit = other.limit;
-    this.limit_backward = other.limit_backward;
-    this.bra = other.bra;
-    this.ket = other.ket;
-  }
-
   in_grouping(s, min, max) {
     if (this.cursor >= this.limit) return false;
     let ch = this.current.charCodeAt(this.cursor);
@@ -100,38 +91,6 @@ class BaseStemmer {
       return true;
     }
     return false;
-  }
-
-  in_range(min, max) {
-    if (this.cursor >= this.limit) return false;
-    const ch = this.current.charCodeAt(this.cursor);
-    if (ch > max || ch < min) return false;
-    this.cursor++;
-    return true;
-  }
-
-  in_range_b(min, max) {
-    if (this.cursor <= this.limit_backward) return false;
-    const ch = this.current.charCodeAt(this.cursor - 1);
-    if (ch > max || ch < min) return false;
-    this.cursor--;
-    return true;
-  }
-
-  out_range(min, max) {
-    if (this.cursor >= this.limit) return false;
-    const ch = this.current.charCodeAt(this.cursor);
-    if (!(ch > max || ch < min)) return false;
-    this.cursor++;
-    return true;
-  }
-
-  out_range_b(min, max) {
-    if (this.cursor <= this.limit_backward) return false;
-    const ch = this.current.charCodeAt(this.cursor - 1);
-    if (!(ch > max || ch < min)) return false;
-    this.cursor--;
-    return true;
   }
 
   eq_s(s_size, s) {
@@ -332,10 +291,6 @@ class BaseStemmer {
       result = this.current.slice(this.bra, this.ket);
     }
     return result;
-  }
-
-  assign_to(s) {
-    return this.current.slice(0, this.limit);
   }
 
   stemWord(word) {

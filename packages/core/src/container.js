@@ -91,7 +91,10 @@ class Container {
 
   resolvePath(step, context, input, srcObject) {
     const tokens = step.split('.');
-    const token = tokens[0].trim() === '' ? 'context' : tokens[0].trim();
+    let token = tokens[0].trim();
+    if (!token) {
+      token = step.startsWith('.') ? 'this' : 'context';
+    }
     const isnum = /^\d+$/.test(token);
     if (isnum) {
       return parseFloat(token);
@@ -123,7 +126,11 @@ class Container {
       if (!currentObject || !currentObject[currentToken]) {
         throw Error(`Path not found in pipeline "${step}"`);
       }
+      const prevCurrentObject = currentObject;
       currentObject = currentObject[currentToken];
+      if (typeof currentObject === 'function') {
+        currentObject = currentObject.bind(prevCurrentObject);
+      }
     }
     return currentObject;
   }
@@ -253,8 +260,10 @@ class Container {
     };
   }
 
-  registerPipeline(tag, pipeline) {
-    this.pipelines[tag] = this.buildPipeline(pipeline);
+  registerPipeline(tag, pipeline, overwrite = true) {
+    if (overwrite || !this.pipelines[tag]) {
+      this.pipelines[tag] = this.buildPipeline(pipeline);
+    }
   }
 
   getPipeline(tag) {
@@ -270,8 +279,10 @@ class Container {
     return undefined;
   }
 
-  registerConfiguration(tag, configuration) {
-    this.configurations[tag] = configuration;
+  registerConfiguration(tag, configuration, overwrite = true) {
+    if (overwrite || !this.configurations[tag]) {
+      this.configurations[tag] = configuration;
+    }
   }
 
   getConfiguration(tag) {
