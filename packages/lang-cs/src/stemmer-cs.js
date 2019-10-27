@@ -401,7 +401,7 @@ class StemmerCs extends BaseStemmer {
     } while (false);
     return true;
   }
-  stem() {
+  innerStem() {
     let v_1;
     v_1 = this.cursor;
     lab0: do {
@@ -423,13 +423,6 @@ class StemmerCs extends BaseStemmer {
     }
     this.cursor = this.limit_backward;
     return true;
-  }
-  stem(...args) {
-    switch (args.length) {
-      case 0:
-        return this.stem(...args);
-    }
-    return super.stem(...args);
   }
 }
 
