@@ -36,23 +36,27 @@ class Nlu extends Clonable {
       filterZeros: true,
     });
     this.applySettings(this, {
-      pipelinePrepare: [
+      pipelinePrepare: this.container.buildPipeline([
         'normalize',
         'tokenize',
         'removeStopwords',
         'stem',
         'arrToObj',
         'output.tokens',
-      ],
-      pipelineTrain: ['.prepareCorpus', '.addNoneFeature', '.innerTrain'],
-      pipelineProcess: [
+      ]),
+      pipelineTrain: this.container.buildPipeline([
+        '.prepareCorpus',
+        '.addNoneFeature',
+        '.innerTrain',
+      ]),
+      pipelineProcess: this.container.buildPipeline([
         '.prepare',
         '.calculateNoneFeature',
         '.innerProcess',
         '.convertToArray',
         '.normalizeClassifications',
         'output.classifications',
-      ],
+      ]),
     });
   }
 

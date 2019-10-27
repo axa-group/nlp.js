@@ -209,19 +209,26 @@ describe('Container', () => {
   });
 
   describe('Resolve Path', () => {
-    test('If not path is provided returns the source object', () => {
-      const instance = new Container();
-      const input = {};
-      const srcObject = new Other();
-      const actual = instance.resolvePath('', input, srcObject);
-      expect(actual).toBe(srcObject);
-    });
     test('If path is a number, return the number', () => {
       const instance = new Container();
       const input = {};
       const srcObject = new Other();
       const actual = instance.resolvePath('17', input, srcObject);
       expect(actual).toBe(17);
+    });
+    test('If path is a boolean true, return the boolean true', () => {
+      const instance = new Container();
+      const input = {};
+      const srcObject = new Other();
+      const actual = instance.resolvePath('true', input, srcObject);
+      expect(actual).toBe(true);
+    });
+    test('If path is a boolean false, return the boolean false', () => {
+      const instance = new Container();
+      const input = {};
+      const srcObject = new Other();
+      const actual = instance.resolvePath('false', input, srcObject);
+      expect(actual).toBe(false);
     });
     test('If path is an string double quoted, returns the string without quotes', () => {
       const instance = new Container();
@@ -247,12 +254,51 @@ describe('Container', () => {
     });
   });
 
+  describe('Use', () => {
+    test('Container can use plugins by class', () => {
+      const instance = new Container();
+      instance.use(Lower, 'lower');
+      expect(instance.factory.lower).toBeDefined();
+      expect(instance.factory.lower.instance).toBeInstanceOf(Lower);
+    });
+    test('Container can use plugins by instance', () => {
+      const instance = new Container();
+      const lower = new Lower();
+      instance.use(lower, 'lower');
+      expect(instance.factory.lower).toBeDefined();
+      expect(instance.factory.lower.instance).toBe(lower);
+    });
+    test('Container can use plugins by instance if name is not provided use the name property', () => {
+      const instance = new Container();
+      const lower = new Lower();
+      lower.name = 'lower';
+      instance.use(lower);
+      expect(instance.factory.lower).toBeDefined();
+      expect(instance.factory.lower.instance).toBe(lower);
+    });
+    test('Plugins can have a method register than is triggered before registering', () => {
+      const instance = new Container();
+      const lower = new Lower();
+      let registered = false;
+      lower.register = () => {
+        registered = true;
+      };
+      instance.use(lower, 'lower');
+      expect(registered).toBeTruthy();
+    });
+  });
+
   describe('Pipeline', () => {
     test('I can register and run a pipeline', async () => {
       const instance = new Container();
       instance.register('lower', Lower);
       instance.register('char', Char);
-      const pipeline = ['lower', 'char', 'char.filter', 'this'];
+      const pipeline = instance.buildPipeline([
+        'lower',
+        'char',
+        'char.filter',
+        'this',
+      ]);
       const input = {
         source: 'VECTOR',
         str: 'VECTOR',
@@ -266,18 +312,55 @@ describe('Container', () => {
         excludeChars: 'e',
       });
     });
+    test('Pipelines can have comments', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'lower',
+        'char',
+        '// this will filter characters',
+        'char.filter',
+        'this',
+      ]);
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({
+        source: 'VECTOR',
+        str: 'vctor',
+        arr: ['v', 'c', 't', 'o', 'r'],
+        excludeChars: 'e',
+      });
+    });
+    test('Default get return floating value', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline(['set floating 7', 'get']);
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual(7);
+    });
     test('Pipelines can have set and delete and pass parameters', async () => {
       const instance = new Container();
       instance.register('lower', Lower);
       instance.register('char', Char);
-      const pipeline = [
+      const pipeline = instance.buildPipeline([
         'set input.str "magdalena"',
         'lower',
         'char',
         'char.filter',
         'this',
         'delete input.arr',
-      ];
+      ]);
       const input = {
         source: 'VECTOR',
         str: 'VECTOR',
@@ -290,18 +373,194 @@ describe('Container', () => {
         excludeChars: 'e',
       });
     });
+    test('Pipelines can inc variables by 1', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'inc input.value',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({ value: 8 });
+    });
+    test('Pipelines can inc variables by a value', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'inc input.value 3',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({ value: 10 });
+    });
+    test('Pipelines can dec variables by 1', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'dec input.value',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({ value: 6 });
+    });
+    test('Pipelines can dec variables by a value', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'dec input.value 3',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({ value: 4 });
+    });
+    test('Pipelines can use eq operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'eq input.value 7',
+        'get',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toBe(true);
+    });
+    test('Pipelines can use neq operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'neq input.value 7',
+        'get',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toBe(false);
+    });
+    test('Pipelines can use lt operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'lt input.value 7',
+        'get',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toBe(false);
+    });
+    test('Pipelines can use le operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'le input.value 7',
+        'get',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toBe(true);
+    });
+    test('Pipelines can use gt operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'gt input.value 7',
+        'get',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toBe(false);
+    });
+    test('Pipelines can use ge operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set input.value 7',
+        'ge input.value 7',
+        'get',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toBe(true);
+    });
+    test('Pipelines can use label and jne operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set counter 0',
+        'label first',
+        'inc counter',
+        'eq counter 10',
+        'jne first',
+        'get counter',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual(10);
+    });
+    test('Pipelines can use label and je operator', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set counter 0',
+        'label first',
+        'inc counter',
+        'eq counter 1',
+        'je first',
+        'get counter',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual(2);
+    });
+    test('Pipelines can use label and goto operator... but do not do that', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'set counter 0',
+        'label first',
+        'inc counter',
+        'eq counter 10',
+        'je last',
+        'goto first',
+        'label last',
+        'get counter',
+      ]);
+      const input = {};
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual(10);
+    });
     test('Pipelines can have sub pipelines', async () => {
       const instance = new Container();
       instance.register('lower', Lower);
       instance.register('char', Char);
       instance.registerPipeline('lowerch?r', ['lower', 'char']);
-      const pipeline = [
+      const pipeline = instance.buildPipeline([
         'set input.str "magdalena"',
         '#lowerchar',
         'char.filter',
         'this',
         'delete input.arr',
-      ];
+      ]);
       const input = {
         source: 'VECTOR',
         str: 'VECTOR',
@@ -319,13 +578,13 @@ describe('Container', () => {
       instance.register('lower', Lower);
       instance.register('char', Char);
       instance.registerPipeline('lowerch?r', ['lower', 'char']);
-      const pipeline = [
+      const pipeline = instance.buildPipeline([
         'set input.str "magdalena"',
         '#lowerchar',
         'char.filter',
         'this',
         'get input.str',
-      ];
+      ]);
       const input = {
         source: 'VECTOR',
         str: 'VECTOR',
@@ -333,6 +592,103 @@ describe('Container', () => {
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
       expect(actual).toEqual('magdalna');
+    });
+    test('Pipeline task can have parameters', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'lower "magdalena"',
+        'char',
+        'char.filter',
+        'this',
+        'delete input.arr',
+      ]);
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({
+        source: 'VECTOR',
+        str: 'magdalna',
+        excludeChars: 'e',
+      });
+    });
+    test('If the pipeline is recursive then throw an error', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      instance.registerPipeline('lowerchar', ['#lowerchar', 'char']);
+      const pipeline = instance.buildPipeline([
+        'set input.str "magdalena"',
+        '#lowerchar',
+        'char.filter',
+        'this',
+        'delete input.arr',
+      ]);
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      await expect(
+        instance.runPipeline(pipeline, input, new Other())
+      ).rejects.toThrow(
+        'Pipeline depth is too high: perhaps you are using recursive pipelines?'
+      );
+    });
+    test('If the subpipeline does not exists then throw an error', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      instance.registerPipeline('lowerchar', ['#lowerchar', 'char']);
+      const pipeline = instance.buildPipeline([
+        'set input.str "magdalena"',
+        '#loperchar',
+        'char.filter',
+        'this',
+        'delete input.arr',
+      ]);
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      await expect(
+        instance.runPipeline(pipeline, input, new Other())
+      ).rejects.toThrow('Pipeline #loperchar not found.');
+    });
+  });
+
+  describe('Register Configuration', () => {
+    test('Configuration objects can be registered by name', () => {
+      const instance = new Container();
+      const conf = { name: 'configuration' };
+      instance.registerConfiguration('conf', conf);
+      expect(instance.configurations.conf).toBe(conf);
+    });
+    test('Configuration objects can be retrieved using get', () => {
+      const instance = new Container();
+      const conf = { name: 'configuration' };
+      instance.registerConfiguration('conf', conf);
+      const actual = instance.getConfiguration('conf');
+      expect(actual).toBe(conf);
+    });
+    test('Wildcards can be used in the name', () => {
+      const instance = new Container();
+      const conf = { name: 'configuration' };
+      instance.registerConfiguration('conf-??', conf);
+      const actual = instance.getConfiguration('conf-en');
+      expect(actual).toBe(conf);
+    });
+    test('If no matching configuration exists return undefined', () => {
+      const instance = new Container();
+      const conf = { name: 'configuration' };
+      instance.registerConfiguration('conf-??', conf);
+      const actual = instance.getConfiguration('confs-en');
+      expect(actual).toBeUndefined();
     });
   });
 });

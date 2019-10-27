@@ -22,6 +22,7 @@
  */
 
 const { compareWildcars } = require('./helper');
+const DefaultCompiler = require('./default-compiler');
 
 class Container {
   constructor() {
@@ -29,6 +30,13 @@ class Container {
     this.factory = {};
     this.pipelines = {};
     this.configurations = {};
+    this.compilers = {};
+    this.registerCompiler(DefaultCompiler);
+  }
+
+  registerCompiler(Compiler, name) {
+    const instance = new Compiler(this);
+    this.compilers[name || instance.name] = instance;
   }
 
   addClass(clazz, name) {
@@ -81,9 +89,9 @@ class Container {
     return new Clazz(settings);
   }
 
-  resolvePath(step, input, srcObject) {
+  resolvePath(step, context, input, srcObject) {
     const tokens = step.split('.');
-    const token = tokens[0].trim();
+    const token = tokens[0].trim() === '' ? 'context' : tokens[0].trim();
     const isnum = /^\d+$/.test(token);
     if (isnum) {
       return parseFloat(token);
@@ -94,15 +102,25 @@ class Container {
     if (token.startsWith("'")) {
       return token.replace(/^'(.+(?='$))'$/, '$1');
     }
-    let currentObject = srcObject;
+    if (token === 'true') {
+      return true;
+    }
+    if (token === 'false') {
+      return false;
+    }
+    let currentObject = context;
     if (token === 'input' || token === 'output') {
       currentObject = input;
-    } else if (token && token !== 'this') {
-      currentObject = this.get(token);
+    } else if (token && token !== 'context' && token !== 'this') {
+      currentObject = this.get(token) || currentObject[token];
+    } else if (token && token === 'context') {
+      currentObject = context;
+    } else if (token === 'this') {
+      currentObject = srcObject;
     }
     for (let i = 1; i < tokens.length; i += 1) {
       const currentToken = tokens[i];
-      if (!currentObject[currentToken]) {
+      if (!currentObject || !currentObject[currentToken]) {
         throw Error(`Path not found in pipeline "${step}"`);
       }
       currentObject = currentObject[currentToken];
@@ -110,97 +128,101 @@ class Container {
     return currentObject;
   }
 
-  setValue(path, valuePath, input, srcObject) {
-    const value = this.resolvePath(valuePath, input, srcObject);
+  setValue(path, valuePath, context, input, srcObject) {
+    const value = this.resolvePath(valuePath, context, input, srcObject);
     const tokens = path.split('.');
     const newPath = tokens.slice(0, -1).join('.');
-    const currentObject = this.resolvePath(newPath, input, srcObject);
+    const currentObject = this.resolvePath(newPath, context, input, srcObject);
     currentObject[tokens[tokens.length - 1]] = value;
   }
 
-  deleteValue(path, input, srcObject) {
+  incValue(path, valuePath, context, input, srcObject) {
+    const value = this.resolvePath(valuePath, context, input, srcObject);
+    const tokens = path.split('.');
+    if (path.startsWith('.')) {
+      tokens.push('this');
+    }
+    const newPath = tokens.slice(0, -1).join('.');
+    const currentObject = this.resolvePath(newPath, context, input, srcObject);
+    currentObject[tokens[tokens.length - 1]] += value;
+  }
+
+  decValue(path, valuePath, context, input, srcObject) {
+    const value = this.resolvePath(valuePath, context, input, srcObject);
     const tokens = path.split('.');
     const newPath = tokens.slice(0, -1).join('.');
-    const currentObject = this.resolvePath(newPath, input, srcObject);
+    const currentObject = this.resolvePath(newPath, context, input, srcObject);
+    currentObject[tokens[tokens.length - 1]] -= value;
+  }
+
+  eqValue(pathA, pathB, srcContext, input, srcObject) {
+    const context = srcContext;
+    const valueA = this.resolvePath(pathA, context, input, srcObject);
+    const valueB = this.resolvePath(pathB, context, input, srcObject);
+    context.floating = valueA === valueB;
+  }
+
+  neqValue(pathA, pathB, srcContext, input, srcObject) {
+    const context = srcContext;
+    const valueA = this.resolvePath(pathA, context, input, srcObject);
+    const valueB = this.resolvePath(pathB, context, input, srcObject);
+    context.floating = valueA !== valueB;
+  }
+
+  gtValue(pathA, pathB, srcContext, input, srcObject) {
+    const context = srcContext;
+    const valueA = this.resolvePath(pathA, context, input, srcObject);
+    const valueB = this.resolvePath(pathB, context, input, srcObject);
+    context.floating = valueA > valueB;
+  }
+
+  geValue(pathA, pathB, srcContext, input, srcObject) {
+    const context = srcContext;
+    const valueA = this.resolvePath(pathA, context, input, srcObject);
+    const valueB = this.resolvePath(pathB, context, input, srcObject);
+    context.floating = valueA >= valueB;
+  }
+
+  ltValue(pathA, pathB, srcContext, input, srcObject) {
+    const context = srcContext;
+    const valueA = this.resolvePath(pathA, context, input, srcObject);
+    const valueB = this.resolvePath(pathB, context, input, srcObject);
+    context.floating = valueA < valueB;
+  }
+
+  leValue(pathA, pathB, srcContext, input, srcObject) {
+    const context = srcContext;
+    const valueA = this.resolvePath(pathA, context, input, srcObject);
+    const valueB = this.resolvePath(pathB, context, input, srcObject);
+    context.floating = valueA <= valueB;
+  }
+
+  deleteValue(path, context, input, srcObject) {
+    const tokens = path.split('.');
+    const newPath = tokens.slice(0, -1).join('.');
+    const currentObject = this.resolvePath(newPath, context, input, srcObject);
     delete currentObject[tokens[tokens.length - 1]];
   }
 
-  getValue(path, input, srcObject) {
+  getValue(path = 'floating', context, input, srcObject) {
     const tokens = path.split('.');
     const newPath = tokens.slice(0, -1).join('.');
-    const currentObject = this.resolvePath(newPath, input, srcObject);
+    const currentObject = this.resolvePath(newPath, context, input, srcObject);
     return currentObject[tokens[tokens.length - 1]];
   }
 
-  async executeAction(step, input, srcObject) {
-    const tokens = step.split(' ');
-    if (tokens.length === 0) {
-      return undefined;
-    }
-    const firstToken = tokens[0];
-    if (firstToken === 'set') {
-      this.setValue(tokens[1], tokens[2], input, srcObject);
-      return input;
-    }
-    if (firstToken === 'delete') {
-      this.deleteValue(tokens[1], input, srcObject);
-      return input;
-    }
-    if (firstToken === 'get') {
-      return this.getValue(tokens[1], input, srcObject);
-    }
-    const currentObject = this.resolvePath(tokens[0], input, srcObject);
-    const args = [];
-    for (let i = 1; i < tokens.length; i += 1) {
-      args.push(this.resolvePath(tokens[i], input, srcObject));
-    }
-    const method = currentObject.run || currentObject;
-    if (!method) {
-      return currentObject;
-    }
-    if (typeof method === 'function') {
-      return method.bind(currentObject)(input, ...args);
-    }
-    return method;
-  }
-
-  fillPipeline(srcPipeline, index) {
-    if (index > 10) {
+  async runPipeline(pipeline, input, srcObject, depth = 0) {
+    if (depth > 10) {
       throw new Error(
         'Pipeline depth is too high: perhaps you are using recursive pipelines?'
       );
     }
-    const result = [];
-    let someTag = false;
-    for (let i = 0; i < srcPipeline.length; i += 1) {
-      const current = srcPipeline[i];
-      if (current.startsWith('#')) {
-        const otherPipeline = this.getPipeline(current.slice(1));
-        if (!otherPipeline) {
-          throw new Error(`Pipeline ${current} not found.`);
-        }
-        for (let j = 0; j < otherPipeline.length; j += 1) {
-          result.push(otherPipeline[j]);
-        }
-        someTag = true;
-      } else {
-        result.push(current);
-      }
-    }
-    if (someTag) {
-      return this.fillPipeline(result, index + 1);
-    }
-    return result;
-  }
-
-  async runPipeline(srcPipeline, input, srcObject) {
-    const pipeline = this.fillPipeline(srcPipeline, 0);
-    let currentInput = input;
-    for (let i = 0; i < pipeline.length; i += 1) {
-      const current = pipeline[i];
-      currentInput = await this.executeAction(current, currentInput, srcObject);
-    }
-    return currentInput;
+    return pipeline.compiler.execute(
+      pipeline.compiled,
+      input,
+      srcObject,
+      depth
+    );
   }
 
   use(item, name) {
@@ -213,13 +235,26 @@ class Container {
     }
     if (instance.register) {
       instance.register(this);
-    } else {
-      this.register(name || instance.name, instance);
     }
+    this.register(name || instance.name, instance);
+  }
+
+  buildPipeline(pipeline) {
+    const compilerName =
+      !pipeline || !pipeline.length || !pipeline[0].startsWith('// compiler=')
+        ? 'default'
+        : pipeline[0].slice(12);
+    const compiler = this.compilers[compilerName] || this.compilers.default;
+    const compiled = compiler.compile(pipeline);
+    return {
+      pipeline,
+      compiler,
+      compiled,
+    };
   }
 
   registerPipeline(tag, pipeline) {
-    this.pipelines[tag] = pipeline;
+    this.pipelines[tag] = this.buildPipeline(pipeline);
   }
 
   getPipeline(tag) {
