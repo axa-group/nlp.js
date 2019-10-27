@@ -24,8 +24,12 @@ manager.addAnswer('en', 'greetings.bye', 'see you soon!');
 manager.addAnswer('en', 'greetings.hello', 'Hey there!');
 manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 
-// Train and save the model.
-await manager.train();
+async function train() {
+  await manager.train();
+}
+
+// Train and save the model
+train();
 manager.save();
 
 manager.process('en', 'I have to go').then(console.log);
