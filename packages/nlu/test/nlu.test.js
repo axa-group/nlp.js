@@ -30,6 +30,15 @@ const {
   Stopwords,
 } = require('@nlpjs/core');
 const Nlu = require('../src/nlu');
+const srccorpus = require('./corpus50.json');
+
+const corpus = [];
+for (let i = 0; i < srccorpus.data.length; i += 1) {
+  const { intent, utterances } = srccorpus.data[i];
+  for (let j = 0; j < utterances.length; j += 1) {
+    corpus.push({ utterance: utterances[j], intent });
+  }
+}
 
 function bootstrap() {
   const container = new Container();
@@ -220,6 +229,33 @@ describe('NLU', () => {
           tokens: [{ ahi: 1, hay: 1, un: 1, raton: 1 }],
         },
       ]);
+    });
+  });
+
+  describe('Prepare corpus', () => {
+    test('It should convert strings to word objects', async () => {
+      const nlu = new Nlu({ locale: 'en', keepStopwords: false }, bootstrap());
+      const actual = await nlu.prepareCorpus({
+        corpus,
+        settings: nlu.settings,
+      });
+      expect(actual.corpus).toHaveLength(250);
+      expect(actual.corpus[0]).toEqual({
+        input: { what: 1, does: 1, your: 1, company: 1, develop: 1 },
+        output: { 'support.about': 1 },
+      });
+    });
+  });
+
+  describe('Add None Feature', () => {
+    test('It should add a nonefeature input labeled as None', () => {
+      const nlu = new Nlu({ locale: 'en', keepStopwords: false }, bootstrap());
+      const actual = nlu.addNoneFeature({ corpus: [] });
+      expect(actual.corpus).toHaveLength(1);
+      expect(actual.corpus[0]).toEqual({
+        input: { nonefeature: 1 },
+        output: { None: 1 },
+      });
     });
   });
 });
