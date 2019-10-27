@@ -25,6 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@nlpjs/core": "^1.0.0",
     "@nlpjs/lang-en": "^1.0.0"
   }
 }

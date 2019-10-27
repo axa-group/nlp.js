@@ -37,6 +37,11 @@ class NeuralNlu extends Nlu {
     input.classifications = this.neuralNetwork.run(input.tokens);
     return input;
   }
+
+  registerDefault() {
+    super.registerDefault();
+    this.container.register('NeuralNlu', NeuralNlu, false);
+  }
 }
 
 module.exports = NeuralNlu;
