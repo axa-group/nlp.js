@@ -422,7 +422,7 @@ class StemmerEl extends BaseStemmer {
     return result;
   }
 
-  stem() {
+  innerStem() {
     const srcWord = this.getCurrent();
     let word = srcWord;
     word = word.replace('ς', 'σ');

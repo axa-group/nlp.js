@@ -805,7 +805,7 @@ class StemmerPt extends BaseStemmer {
     return true;
   }
 
-  stem() {
+  innerStem() {
     let v_1;
     let v_2;
     let v_3;

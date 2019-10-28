@@ -294,7 +294,7 @@ class StemmerGa extends BaseStemmer {
     }
     return true;
   }
-  stem() {
+  innerStem() {
     let v_1;
     let v_2;
     let v_3;
@@ -339,13 +339,6 @@ class StemmerGa extends BaseStemmer {
     this.cursor = this.limit - v_5;
     this.cursor = this.limit_backward;
     return true;
-  }
-  stem(...args) {
-    switch (args.length) {
-      case 0:
-        return this.stem(...args);
-    }
-    return super.stem(...args);
   }
 }
 

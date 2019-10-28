@@ -360,14 +360,11 @@ class StemmerJa extends BaseStemmer {
     return true;
   }
 
-  /**
-   * Tokenize and stem a text.
-   * @param {String} text Input text.
-   * @param {boolean} keepStops Keep stopwords or not
-   */
-  tokenizeAndStem(text) {
+  stem(text, input) {
     let tokens;
-    if (StemmerJa.normalizeFormality) {
+    const normalizeFormality =
+      input.normalizeFormality === undefined ? true : input.normalizeFormality;
+    if (normalizeFormality) {
       tokens = this.formalityLevel(text).informalTokens;
     } else {
       tokens = this.parse(text).map(token => token.reading);
@@ -380,11 +377,23 @@ class StemmerJa extends BaseStemmer {
         )
       )
       .filter(token => token !== '');
-    if (StemmerJa.removeNumbers) {
+    const removeNumbers =
+      input.removeNumbers === undefined ? true : input.removeNumbers;
+    if (removeNumbers) {
       tokens = tokens.filter(x => !this.isNumber(x));
     }
-    tokens = tokens.filter(x => x.length >= StemmerJa.stemMinLength);
+    const stemMinLength =
+      input.stemMinLength === undefined ? 2 : input.stemMinLength;
+    tokens = tokens.filter(x => x.length >= stemMinLength);
     return tokens;
+  }
+
+  run(srcInput) {
+    const input = srcInput;
+    const locale = input.locale || 'en';
+    const stemmer = this.container.get(`stemmer-${locale}`) || this;
+    input.tokens = stemmer.stem(input.text || input.tokens.join(' '), input);
+    return input;
   }
 
   /**
@@ -462,9 +471,5 @@ class StemmerJa extends BaseStemmer {
     };
   }
 }
-
-StemmerJa.removeNumbers = true;
-StemmerJa.stemMinLength = 2;
-StemmerJa.normalizeFormality = true;
 
 module.exports = StemmerJa;
