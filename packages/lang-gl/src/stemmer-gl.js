@@ -42,7 +42,7 @@ class StemmerGl extends BaseStemmer {
     return word;
   }
 
-  stem() {
+  innerStem() {
     let word = this.getCurrent();
     word = this.processSuffixes(word, StemmerGl.pluralSuffixes);
     word = this.processSuffixes(word, StemmerGl.unifySuffixes);
