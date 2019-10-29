@@ -148,6 +148,13 @@ const {
   TokenizerHy,
 } = require('@nlpjs/lang-hy');
 const {
+  LangId,
+  NormalizerId,
+  StemmerId,
+  StopwordsId,
+  TokenizerId,
+} = require('@nlpjs/lang-id');
+const {
   LangIt,
   NormalizerIt,
   StemmerIt,
@@ -370,6 +377,12 @@ module.exports = {
   StemmerIt,
   StopwordsIt,
   TokenizerIt,
+
+  LangId,
+  NormalizerId,
+  StemmerId,
+  StopwordsId,
+  TokenizerId,
 
   LangJa,
   NormalizerJa,
