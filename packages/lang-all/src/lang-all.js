@@ -20,14 +20,75 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-const { TokenizerEn, StemmerEn, StopwordsEn } = require('@nlpjs/lang-en');
+const { LangAr } = require('@nlpjs/lang-ar');
+const { LangBn } = require('@nlpjs/lang-bn');
+const { LangCa } = require('@nlpjs/lang-ca');
+const { LangCs } = require('@nlpjs/lang-cs');
+const { LangDa } = require('@nlpjs/lang-da');
+const { LangDe } = require('@nlpjs/lang-de');
+const { LangEl } = require('@nlpjs/lang-el');
+const { LangEn } = require('@nlpjs/lang-en');
+const { LangEs } = require('@nlpjs/lang-es');
+const { LangEu } = require('@nlpjs/lang-eu');
+const { LangFa } = require('@nlpjs/lang-fa');
+const { LangFi } = require('@nlpjs/lang-fi');
+const { LangFr } = require('@nlpjs/lang-fr');
+const { LangGa } = require('@nlpjs/lang-ga');
+const { LangGl } = require('@nlpjs/lang-gl');
+const { LangHi } = require('@nlpjs/lang-hi');
+const { LangHu } = require('@nlpjs/lang-hu');
+const { LangHy } = require('@nlpjs/lang-hy');
+const { LangIt } = require('@nlpjs/lang-it');
+const { LangJa } = require('@nlpjs/lang-ja');
+const { LangNl } = require('@nlpjs/lang-nl');
+const { LangNo } = require('@nlpjs/lang-no');
+const { LangPt } = require('@nlpjs/lang-pt');
+const { LangRo } = require('@nlpjs/lang-ro');
+const { LangRu } = require('@nlpjs/lang-ru');
+const { LangSl } = require('@nlpjs/lang-sl');
+const { LangSv } = require('@nlpjs/lang-sv');
+const { LangTa } = require('@nlpjs/lang-ta');
+const { LangTh } = require('@nlpjs/lang-th');
+const { LangTl } = require('@nlpjs/lang-tl');
+const { LangTr } = require('@nlpjs/lang-tr');
+const { LangUk } = require('@nlpjs/lang-uk');
+const { LangZh } = require('@nlpjs/lang-zh');
 
 class LangAll {
   register(container) {
-    container.use(TokenizerEn);
-    container.use(StemmerEn);
-    container.use(StopwordsEn);
+    container.use(LangAr);
+    container.use(LangBn);
+    container.use(LangCa);
+    container.use(LangCs);
+    container.use(LangDa);
+    container.use(LangDe);
+    container.use(LangEl);
+    container.use(LangEn);
+    container.use(LangEs);
+    container.use(LangEu);
+    container.use(LangFa);
+    container.use(LangFi);
+    container.use(LangFr);
+    container.use(LangGa);
+    container.use(LangGl);
+    container.use(LangHi);
+    container.use(LangHu);
+    container.use(LangHy);
+    container.use(LangIt);
+    container.use(LangJa);
+    container.use(LangNl);
+    container.use(LangNo);
+    container.use(LangPt);
+    container.use(LangRo);
+    container.use(LangRu);
+    container.use(LangSl);
+    container.use(LangSv);
+    container.use(LangTa);
+    container.use(LangTh);
+    container.use(LangTl);
+    container.use(LangTr);
+    container.use(LangUk);
+    container.use(LangZh);
   }
 }
 
