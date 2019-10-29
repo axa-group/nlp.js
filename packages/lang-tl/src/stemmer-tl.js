@@ -140,7 +140,7 @@ class StemmerTl extends BaseStemmer {
     return firstSlice === word.slice(middle) ? firstSlice : word;
   }
 
-  stem() {
+  innerStem() {
     let word = this.getCurrent();
     word = this.removePrefix(word);
     word = this.removeSuffix(word);
