@@ -86,7 +86,7 @@ class Container {
       return item.instance;
     }
     const Clazz = item.instance;
-    return new Clazz(settings);
+    return new Clazz(settings, this);
   }
 
   resolvePath(step, context, input, srcObject) {
@@ -223,6 +223,12 @@ class Container {
       throw new Error(
         'Pipeline depth is too high: perhaps you are using recursive pipelines?'
       );
+    }
+    if (!pipeline.compiler) {
+      const tag = JSON.stringify(pipeline);
+      this.registerPipeline(tag, pipeline, false);
+      const built = this.getPipeline(tag);
+      return built.compiler.execute(built.compiled, input, srcObject, depth);
     }
     return pipeline.compiler.execute(
       pipeline.compiled,

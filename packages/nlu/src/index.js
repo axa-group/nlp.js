@@ -23,8 +23,10 @@
 
 const Nlu = require('./nlu');
 const NluNeural = require('./nlu-neural');
+const DomainManager = require('./domain-manager');
 
 module.exports = {
   Nlu,
   NluNeural,
+  DomainManager,
 };

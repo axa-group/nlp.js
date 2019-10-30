@@ -31,11 +31,32 @@ class Stemmer {
     return tokens;
   }
 
-  run(srcInput) {
+  getStemmer(srcInput) {
     const input = srcInput;
     const locale = input.locale || 'en';
-    const stemmer = this.container.get(`stemmer-${locale}`) || this;
-    input.tokens = stemmer.stem(input.tokens, input);
+    return this.container.get(`stemmer-${locale}`) || this;
+  }
+
+  async addForTraining(srcInput) {
+    const stemmer = this.getStemmer(srcInput);
+    if (stemmer.addUtterance) {
+      await stemmer.addUtterance(srcInput.utterance, srcInput.intent);
+    }
+    return srcInput;
+  }
+
+  async train(srcInput) {
+    const stemmer = this.getStemmer(srcInput);
+    if (stemmer.innerTrain) {
+      await stemmer.innerTrain();
+    }
+    return srcInput;
+  }
+
+  async run(srcInput) {
+    const input = srcInput;
+    const stemmer = this.getStemmer(input);
+    input.tokens = await stemmer.stem(input.tokens, input);
     return input;
   }
 }
