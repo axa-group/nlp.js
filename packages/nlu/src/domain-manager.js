@@ -89,6 +89,9 @@ class DomainManager extends Clonable {
   }
 
   getDomainInstance(domainName) {
+    if (!this.settings.nluByDomain) {
+      this.settings.nluByDomain = {};
+    }
     const domainSettings = this.settings.nluByDomain[domainName] ||
       this.settings.nluByDomain.default || {
         className: 'NeuralNlu',
