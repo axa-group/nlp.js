@@ -20,11 +20,12 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+const { defaultContainer } = require('./container');
 
 /* eslint-disable */
 class BaseStemmer {
-  constructor(container, dictionary) {
-    this.container = container;
+  constructor(container = defaultContainer, dictionary) {
+    this.container = container.container || container;
     this.cache = {};
     this.setCurrent("");
     this.dictionary = dictionary || { before: {}, after: {}};

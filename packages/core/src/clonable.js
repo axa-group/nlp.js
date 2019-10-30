@@ -27,8 +27,8 @@ class Clonable {
    * Constructor of the class
    * @param {object} settings
    */
-  constructor(settings, container = defaultContainer) {
-    this.container = container;
+  constructor(settings = {}, container = defaultContainer) {
+    this.container = settings.container || container;
     this.applySettings(this, settings);
   }
 
@@ -108,6 +108,10 @@ class Clonable {
       result[keys[i]] = values[i];
     }
     return result;
+  }
+
+  getPipeline(tag) {
+    return this.container.getPipeline(tag);
   }
 
   async runPipeline(input, pipeline) {

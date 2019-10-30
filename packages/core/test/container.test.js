@@ -556,7 +556,7 @@ describe('Container', () => {
       instance.registerPipeline('lowerch?r', ['lower', 'char']);
       const pipeline = instance.buildPipeline([
         'set input.str "magdalena"',
-        '#lowerchar',
+        '$lowerchar',
         'char.filter',
         'this',
         'delete input.arr',
@@ -580,7 +580,7 @@ describe('Container', () => {
       instance.registerPipeline('lowerch?r', ['lower', 'char']);
       const pipeline = instance.buildPipeline([
         'set input.str "magdalena"',
-        '#lowerchar',
+        '$lowerchar',
         'char.filter',
         'this',
         'get input.str',
@@ -620,10 +620,10 @@ describe('Container', () => {
       const instance = new Container();
       instance.register('lower', Lower);
       instance.register('char', Char);
-      instance.registerPipeline('lowerchar', ['#lowerchar', 'char']);
+      instance.registerPipeline('lowerchar', ['$lowerchar', 'char']);
       const pipeline = instance.buildPipeline([
         'set input.str "magdalena"',
-        '#lowerchar',
+        '$lowerchar',
         'char.filter',
         'this',
         'delete input.arr',
@@ -643,10 +643,10 @@ describe('Container', () => {
       const instance = new Container();
       instance.register('lower', Lower);
       instance.register('char', Char);
-      instance.registerPipeline('lowerchar', ['#lowerchar', 'char']);
+      instance.registerPipeline('lowerchar', ['$lowerchar', 'char']);
       const pipeline = instance.buildPipeline([
         'set input.str "magdalena"',
-        '#loperchar',
+        '$loperchar',
         'char.filter',
         'this',
         'delete input.arr',
@@ -658,7 +658,7 @@ describe('Container', () => {
       };
       await expect(
         instance.runPipeline(pipeline, input, new Other())
-      ).rejects.toThrow('Pipeline #loperchar not found.');
+      ).rejects.toThrow('Pipeline $loperchar not found.');
     });
   });
 

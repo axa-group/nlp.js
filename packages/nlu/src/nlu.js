@@ -25,7 +25,13 @@ const { Clonable } = require('@nlpjs/core');
 
 class Nlu extends Clonable {
   constructor(settings = {}, container) {
-    super({ settings: {} }, container);
+    super(
+      {
+        settings: {},
+        container: settings.container || container,
+      },
+      container
+    );
     this.applySettings(this.settings, settings);
     this.applySettings(this.settings, { locale: 'en' });
     if (!this.settings.tag) {
@@ -37,13 +43,9 @@ class Nlu extends Clonable {
       this.container.getConfiguration(this.settings.tag)
     );
     this.applySettings(this, {
-      pipelinePrepare: this.container.getPipeline(
-        `${this.settings.tag}-prepare`
-      ),
-      pipelineTrain: this.container.getPipeline(`${this.settings.tag}-train`),
-      pipelineProcess: this.container.getPipeline(
-        `${this.settings.tag}-process`
-      ),
+      pipelinePrepare: this.getPipeline(`${this.settings.tag}-prepare`),
+      pipelineTrain: this.getPipeline(`${this.settings.tag}-train`),
+      pipelineProcess: this.getPipeline(`${this.settings.tag}-process`),
     });
   }
 
@@ -56,6 +58,7 @@ class Nlu extends Clonable {
         nonedeltaMultiplier: 1.2,
         spellcheckDistance: 0,
         filterZeros: true,
+        log: true,
       },
       false
     );

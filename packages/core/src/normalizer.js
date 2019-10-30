@@ -21,9 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const { defaultContainer } = require('./container');
+
 class Normalizer {
-  constructor(container) {
-    this.container = container;
+  constructor(container = defaultContainer) {
+    this.container = container.container || container;
     this.name = 'normalize';
   }
 

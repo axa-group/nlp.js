@@ -31,6 +31,7 @@ const ObjToArr = require('./obj-to-arr');
 const Stemmer = require('./stemmer');
 const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
+const Timer = require('./timer');
 const {
   hasUnicode,
   unicodeToArray,
@@ -56,4 +57,5 @@ module.exports = {
   Stemmer,
   Stopwords,
   Tokenizer,
+  Timer,
 };

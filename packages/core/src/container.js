@@ -242,7 +242,7 @@ class Container {
     let instance;
     if (typeof item === 'function') {
       const Clazz = item;
-      instance = new Clazz(this);
+      instance = new Clazz({ container: this });
     } else {
       instance = item;
     }

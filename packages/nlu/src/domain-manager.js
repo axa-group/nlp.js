@@ -27,7 +27,13 @@ const defaultDomainName = 'master_domain';
 
 class DomainManager extends Clonable {
   constructor(settings = {}, container) {
-    super({ settings: {} }, container);
+    super(
+      {
+        settings: {},
+        container: settings.container || container,
+      },
+      container
+    );
     this.applySettings(this.settings, settings);
     this.applySettings(this.settings, { locale: 'en' });
     if (!this.settings.tag) {
@@ -44,7 +50,8 @@ class DomainManager extends Clonable {
     this.intentDict = {};
     this.sentences = [];
     this.applySettings(this, {
-      pipelineTrain: this.container.getPipeline(`${this.settings.tag}-train`),
+      pipelineTrain: this.getPipeline(`${this.settings.tag}-train`),
+      pipelineProcess: this.getPipeline(`${this.settings.tag}-process`),
     });
   }
 
@@ -65,7 +72,18 @@ class DomainManager extends Clonable {
     );
     this.container.registerPipeline(
       'domain-manager-??-train',
-      ['.trainStemmer'],
+      [
+        '.trainStemmer',
+        '.generateCorpus',
+        '.fillStemDict',
+        '.innerTrain',
+        'output.status',
+      ],
+      false
+    );
+    this.container.registerPipeline(
+      'domain-manager-??-process',
+      ['.innerClassify', 'output.classification'],
       false
     );
   }
@@ -93,7 +111,12 @@ class DomainManager extends Clonable {
     delete this.domains[name];
   }
 
-  generateStemKey(tokens) {
+  async generateStemKey(srcTokens) {
+    let tokens =
+      typeof srcTokens === 'string' ? await this.prepare(srcTokens) : srcTokens;
+    if (!Array.isArray(tokens)) {
+      tokens = Object.keys(tokens);
+    }
     return tokens
       .slice()
       .sort()
@@ -138,6 +161,80 @@ class DomainManager extends Clonable {
       await this.runPipeline(subInput, ['stem.addForTraining']);
     }
     await this.runPipeline(input, ['stem.train']);
+    return input;
+  }
+
+  innerGenerateCorpus(domainName) {
+    this.intentDict = {};
+    const result = {};
+    result[defaultDomainName] = [];
+    for (let i = 0; i < this.sentences.length; i += 1) {
+      const sentence = this.sentences[i];
+      this.intentDict[sentence.intent] = sentence.domain;
+      const domain = domainName || sentence.domain;
+      if (!result[domain]) {
+        result[domain] = [];
+      }
+      const domainObj = result[domain];
+      domainObj.push({
+        utterance: sentence.utterance,
+        intent: sentence.intent,
+      });
+      if (!domainName) {
+        result[defaultDomainName].push({
+          utterance: sentence.utterance,
+          intent: sentence.domain,
+        });
+      }
+    }
+    return result;
+  }
+
+  async generateCorpus(srcInput) {
+    const input = srcInput;
+    input.corpus = this.innerGenerateCorpus(
+      this.settings.trainByDomain ? undefined : defaultDomainName
+    );
+    return input;
+  }
+
+  async prepare(srcInput) {
+    const input = srcInput;
+    const isString = typeof input === 'string';
+    const utterance = isString ? input : input.utterance;
+    const nlu = this.addDomain(defaultDomainName);
+    const tokens = nlu.prepare(utterance);
+    if (isString) {
+      return tokens;
+    }
+    input.stems = tokens;
+    return input;
+  }
+
+  async fillStemDict(srcInput) {
+    this.stemDict = {};
+    for (let i = 0; i < this.sentences.length; i += 1) {
+      const key = await this.generateStemKey(this.sentences[i].utterance);
+      this.stemDict[key] = {
+        intent: this.sentences[i].intent,
+        domain: this.sentences[i].domain,
+      };
+    }
+    return srcInput;
+  }
+
+  async innerTrain(srcInput) {
+    const input = srcInput;
+    const { corpus } = input;
+    const keys = Object.keys(corpus);
+    const status = {};
+    for (let i = 0; i < keys.length; i += 1) {
+      const nlu = this.addDomain(keys[i]);
+      const result = await nlu.train(corpus[keys[i]]);
+      status[keys[i]] = result.status;
+    }
+    input.status = status;
+    return input;
   }
 
   async train(settings) {
@@ -145,7 +242,78 @@ class DomainManager extends Clonable {
       domainManager: this,
       settings: settings || this.settings,
     };
-    this.runPipeline(input, this.pipelineTrain);
+    return this.runPipeline(input, this.pipelineTrain);
+  }
+
+  async classifyByStemDict(utterance, domainName) {
+    const key = await this.generateStemKey(utterance);
+    const resolved = this.stemDict[key];
+    if (resolved && (!domainName || resolved.domain === domainName)) {
+      const classifications = [];
+      classifications.push({
+        intent: resolved.intent,
+        score: 1,
+      });
+      const intents = Object.keys(this.intentDict);
+      for (let i = 0; i < intents.length; i += 1) {
+        classifications.push({ intent: intents[i], score: 0 });
+      }
+      return { domain: resolved.domain, classifications };
+    }
+    return undefined;
+  }
+
+  async innerClassify(srcInput, domainName) {
+    const input = srcInput;
+    if (input.settings.useStemDict) {
+      const result = await this.classifyByStemDict(input.utterance, domainName);
+      if (result) {
+        input.classification = result;
+        return input;
+      }
+    }
+    if (domainName) {
+      const nlu = this.domains[domainName];
+      if (!nlu) {
+        input.classification = {
+          domain: 'default',
+          classifications: [{ intent: 'None', score: 1 }],
+        };
+        return input;
+      }
+      const classifications = await nlu.process(input.utterance);
+      const finalDomain =
+        domainName === defaultDomainName
+          ? this.intentDict[classifications[0].intent]
+          : domainName;
+      input.classification = {
+        domain: finalDomain,
+        classifications,
+      };
+      return input;
+    }
+    let domain = defaultDomainName;
+    if (input.settings.trainByDomain) {
+      const nlu = this.domains[defaultDomainName];
+      const classifications = nlu.process(input.utterance);
+      domain = classifications[0].intent;
+      if (domain === 'None') {
+        input.classification = {
+          domain: 'default',
+          classifications: [{ intent: 'None', score: 1 }],
+        };
+        return input;
+      }
+    }
+    return this.innerClassify(input, domain);
+  }
+
+  async process(utterance, settings) {
+    const input = {
+      utterance,
+      settings: settings || this.settings,
+    };
+    return this.runPipeline(input, this.pipelineProcess);
   }
 }
 
