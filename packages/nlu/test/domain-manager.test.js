@@ -1,3 +1,26 @@
+/*
+ * Copyright (c) AXA Group Operations Spain S.A.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 const { DomainManager } = require('../src');
 const container = require('./bootstrap');
 const { addFoodDomain, addPersonalityDomain } = require('./domains');
@@ -192,6 +215,26 @@ describe('Domain Manager', () => {
       expect(actual.domain).toEqual('food');
       expect(actual.classifications[0].intent).toEqual('order.check');
       expect(actual.classifications[0].score).toBeGreaterThan(0.5);
+    });
+    test('Can be trained by domain', async () => {
+      const manager = new DomainManager({ container, trainByDomain: true });
+      addFoodDomain(manager);
+      addPersonalityDomain(manager);
+      await manager.train();
+      const actual = await manager.process('tell me what is in my basket');
+      expect(actual.domain).toEqual('food');
+      expect(actual.classifications[0].intent).toEqual('order.check');
+      expect(actual.classifications[0].score).toBeGreaterThan(0.5);
+    });
+    test('Will have score 1 if stems are in stem dict', async () => {
+      const manager = new DomainManager({ container, trainByDomain: true });
+      addFoodDomain(manager);
+      addPersonalityDomain(manager);
+      await manager.train();
+      const actual = await manager.process('check my cart');
+      expect(actual.domain).toEqual('food');
+      expect(actual.classifications[0].intent).toEqual('order.check');
+      expect(actual.classifications[0].score).toEqual(1);
     });
   });
 });
