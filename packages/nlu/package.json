@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^1.0.0",
+    "@nlpjs/language": "^1.0.0",
     "@nlpjs/neural": "^1.0.0"
   }
 }

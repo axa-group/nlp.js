@@ -312,10 +312,13 @@ class DomainManager extends Clonable {
   }
 
   async process(utterance, settings) {
-    const input = {
-      utterance,
-      settings: settings || this.settings,
-    };
+    const input =
+      typeof utterance === 'string'
+        ? {
+            utterance,
+            settings: settings || this.settings,
+          }
+        : utterance;
     return this.runPipeline(input, this.pipelineProcess);
   }
 }
