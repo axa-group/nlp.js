@@ -100,6 +100,16 @@ class NluManager extends Clonable {
   guessLanguage(srcInput) {
     const input = srcInput;
     const isString = typeof input === 'string';
+    if (this.locales.length === 1) {
+      if (isString) {
+        return this.locales[0];
+      }
+      [input.locale] = this.locales;
+      return input;
+    }
+    if (!input) {
+      return isString ? undefined : input;
+    }
     if (!isString && input.locale) {
       return input;
     }
@@ -111,7 +121,7 @@ class NluManager extends Clonable {
       [input.locale] = this.locales;
     }
     const guess = this.guesser.guess(utterance, this.locales, 1);
-    const locale = guess && guess.length > 0 ? guess[0].alpha2 : 'en';
+    const locale = guess && guess.length > 0 ? guess[0].alpha2 : undefined;
     if (isString) {
       return locale;
     }
@@ -173,11 +183,7 @@ class NluManager extends Clonable {
   }
 
   consolidateManager(locale) {
-    let manager = this.domainManagers[locale];
-    if (!manager) {
-      this.addLanguage(locale);
-    }
-    manager = this.domainManagers[locale];
+    const manager = this.domainManagers[locale];
     if (!manager) {
       throw new Error(`Domain Manager not found for locale ${locale}`);
     }
@@ -193,7 +199,7 @@ class NluManager extends Clonable {
   }
 
   remove(srcLocale, utterance, intent) {
-    const locale = this.consolidateLocale(srcLocale);
+    const locale = this.consolidateLocale(srcLocale, utterance);
     const manager = this.consolidateManager(locale);
     const domain = this.getIntentDomain(locale, intent);
     manager.remove(domain, utterance, intent);
@@ -225,12 +231,14 @@ class NluManager extends Clonable {
       input.locale = this.guessLanguage(input.utterance);
       input.languageGuessed = true;
     }
-    input.localeIso2 = input.locale.substr(0, 2).toLowerCase();
-    input.language = (
-      this.languageNames[input.localeIso2] ||
-      this.guesser.languagesAlpha2[input.localeIso2] ||
-      {}
-    ).name;
+    if (input.locale) {
+      input.localeIso2 = input.locale.substr(0, 2).toLowerCase();
+      input.language = (
+        this.languageNames[input.localeIso2] ||
+        this.guesser.languagesAlpha2[input.localeIso2] ||
+        {}
+      ).name;
+    }
     return input;
   }
 
@@ -264,7 +272,6 @@ class NluManager extends Clonable {
       return input;
     }
     const classifications = await domain.process(srcInput);
-    input.domain = classifications.domain;
     input.classifications = classifications.classifications.sort(
       (a, b) => b.score - a.score
     );
@@ -273,6 +280,14 @@ class NluManager extends Clonable {
     }
     input.intent = input.classifications[0].intent;
     input.score = input.classifications[0].score;
+    if (input.intent === 'None') {
+      classifications.domain = 'default';
+    } else if (classifications.domain === 'default') {
+      input.domain = this.getIntentDomain(input.locale, input.intent);
+    } else {
+      input.domain = classifications.domain;
+    }
+
     return input;
   }
 

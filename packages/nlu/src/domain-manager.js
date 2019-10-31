@@ -299,6 +299,13 @@ class DomainManager extends Clonable {
     if (input.settings.trainByDomain) {
       const nlu = this.domains[defaultDomainName];
       const classifications = await nlu.process(input.utterance);
+      if (Object.keys(this.domains).length === 1) {
+        input.classification = {
+          domain: 'default',
+          classifications,
+        };
+        return input;
+      }
       domain = classifications[0].intent;
       if (domain === 'None') {
         input.classification = {
