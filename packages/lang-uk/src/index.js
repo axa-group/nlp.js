@@ -26,6 +26,7 @@ const TokenizerUk = require('./tokenizer-uk');
 const StemmerUk = require('./stemmer-uk');
 const StopwordsUk = require('./stopwords-uk');
 const NormalizerUk = require('./normalizer-uk');
+const SentimentUk = require('./sentiment/sentiment_uk');
 
 module.exports = {
   LangUk,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsUk,
   TokenizerUk,
   NormalizerUk,
+  SentimentUk,
 };

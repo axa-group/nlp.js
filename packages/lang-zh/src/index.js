@@ -26,6 +26,7 @@ const TokenizerZh = require('./tokenizer-zh');
 const StemmerZh = require('./stemmer-zh');
 const StopwordsZh = require('./stopwords-zh');
 const NormalizerZh = require('./normalizer-zh');
+const SentimentZh = require('./sentiment/sentiment_zh');
 
 module.exports = {
   LangZh,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsZh,
   TokenizerZh,
   NormalizerZh,
+  SentimentZh,
 };
