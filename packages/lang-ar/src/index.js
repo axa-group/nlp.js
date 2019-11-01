@@ -26,6 +26,7 @@ const StemmerAr = require('./stemmer-ar');
 const TokenizerAr = require('./tokenizer-ar');
 const StopwordsAr = require('./stopwords-ar');
 const NormalizerAr = require('./normalizer-ar');
+const SentimentAr = require('./sentiment/sentiment_ar');
 
 module.exports = {
   LangAr,
@@ -33,4 +34,5 @@ module.exports = {
   TokenizerAr,
   StopwordsAr,
   NormalizerAr,
+  SentimentAr,
 };
