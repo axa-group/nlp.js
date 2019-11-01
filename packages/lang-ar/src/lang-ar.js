@@ -25,6 +25,7 @@ const StemmerAr = require('./stemmer-ar');
 const TokenizerAr = require('./tokenizer-ar');
 const StopwordsAr = require('./stopwords-ar');
 const NormalizerAr = require('./normalizer-ar');
+const SentimentAr = require('./sentiment/sentiment_ar');
 
 class LangAr {
   register(container) {
@@ -32,6 +33,7 @@ class LangAr {
     container.use(TokenizerAr);
     container.use(StopwordsAr);
     container.use(NormalizerAr);
+    container.register('sentiment-ar', SentimentAr);
   }
 }
 

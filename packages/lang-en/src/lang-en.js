@@ -25,6 +25,7 @@ const TokenizerEn = require('./tokenizer-en');
 const StemmerEn = require('./stemmer-en');
 const StopwordsEn = require('./stopwords-en');
 const NormalizerEn = require('./normalizer-en');
+const SentimentEn = require('./sentiment/sentiment_en');
 
 class LangEn {
   register(container) {
@@ -32,6 +33,7 @@ class LangEn {
     container.use(StemmerEn);
     container.use(StopwordsEn);
     container.use(NormalizerEn);
+    container.register('sentiment-en', SentimentEn);
   }
 }
 

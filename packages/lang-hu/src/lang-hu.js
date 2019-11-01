@@ -25,6 +25,7 @@ const TokenizerHu = require('./tokenizer-hu');
 const StemmerHu = require('./stemmer-hu');
 const StopwordsHu = require('./stopwords-hu');
 const NormalizerHu = require('./normalizer-hu');
+const SentimentHu = require('./sentiment/sentiment_hu');
 
 class LangHu {
   register(container) {
@@ -32,6 +33,7 @@ class LangHu {
     container.use(StemmerHu);
     container.use(StopwordsHu);
     container.use(NormalizerHu);
+    container.register('sentiment-hu', SentimentHu);
   }
 }
 

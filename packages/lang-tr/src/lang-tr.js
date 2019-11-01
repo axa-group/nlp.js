@@ -25,6 +25,7 @@ const TokenizerTr = require('./tokenizer-tr');
 const StemmerTr = require('./stemmer-tr');
 const StopwordsTr = require('./stopwords-tr');
 const NormalizerTr = require('./normalizer-tr');
+const SentimentTr = require('./sentiment/sentiment_tr');
 
 class LangTr {
   register(container) {
@@ -32,6 +33,7 @@ class LangTr {
     container.use(StemmerTr);
     container.use(StopwordsTr);
     container.use(NormalizerTr);
+    container.register('sentiment-tr', SentimentTr);
   }
 }
 

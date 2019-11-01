@@ -25,6 +25,7 @@ const TokenizerId = require('./tokenizer-id');
 const StemmerId = require('./stemmer-id');
 const StopwordsId = require('./stopwords-id');
 const NormalizerId = require('./normalizer-id');
+const SentimentId = require('./sentiment/sentiment_id');
 
 class LangId {
   register(container) {
@@ -32,6 +33,7 @@ class LangId {
     container.use(StemmerId);
     container.use(StopwordsId);
     container.use(NormalizerId);
+    container.register('sentiment-id', SentimentId);
   }
 }
 

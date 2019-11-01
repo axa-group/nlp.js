@@ -25,6 +25,7 @@ const TokenizerFa = require('./tokenizer-fa');
 const StemmerFa = require('./stemmer-fa');
 const StopwordsFa = require('./stopwords-fa');
 const NormalizerFa = require('./normalizer-fa');
+const SentimentFa = require('./sentiment/sentiment_fa');
 
 class LangFa {
   register(container) {
@@ -32,6 +33,7 @@ class LangFa {
     container.use(StemmerFa);
     container.use(StopwordsFa);
     container.use(NormalizerFa);
+    container.register('sentiment-fa', SentimentFa);
   }
 }
 

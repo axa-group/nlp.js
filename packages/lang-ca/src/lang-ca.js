@@ -25,6 +25,7 @@ const TokenizerCa = require('./tokenizer-ca');
 const StemmerCa = require('./stemmer-ca');
 const StopwordsCa = require('./stopwords-ca');
 const NormalizerCa = require('./normalizer-ca');
+const SentimentCa = require('./sentiment/sentiment_ca');
 
 class LangCa {
   register(container) {
@@ -32,6 +33,7 @@ class LangCa {
     container.use(StemmerCa);
     container.use(StopwordsCa);
     container.use(NormalizerCa);
+    container.register('sentiment-ca', SentimentCa);
   }
 }
 

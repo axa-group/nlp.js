@@ -25,6 +25,7 @@ const TokenizerDa = require('./tokenizer-da');
 const StemmerDa = require('./stemmer-da');
 const StopwordsDa = require('./stopwords-da');
 const NormalizerDa = require('./normalizer-da');
+const SentimentDa = require('./sentiment/sentiment_da');
 
 class LangDa {
   register(container) {
@@ -32,6 +33,7 @@ class LangDa {
     container.use(StemmerDa);
     container.use(StopwordsDa);
     container.use(NormalizerDa);
+    container.register('sentiment-da', SentimentDa);
   }
 }
 
