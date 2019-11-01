@@ -26,6 +26,7 @@ const TokenizerEs = require('./tokenizer-es');
 const StemmerEs = require('./stemmer-es');
 const StopwordsEs = require('./stopwords-es');
 const NormalizerEs = require('./normalizer-es');
+const SentimentEs = require('./sentiment/sentiment_es');
 
 module.exports = {
   LangEs,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsEs,
   TokenizerEs,
   NormalizerEs,
+  SentimentEs,
 };
