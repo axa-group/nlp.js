@@ -24,6 +24,7 @@
 const {
   LangAr,
   NormalizerAr,
+  SentimentAr,
   StemmerAr,
   StopwordsAr,
   TokenizerAr,
@@ -31,6 +32,7 @@ const {
 const {
   LangBn,
   NormalizerBn,
+  SentimentBn,
   StemmerBn,
   StopwordsBn,
   TokenizerBn,
@@ -38,6 +40,7 @@ const {
 const {
   LangCa,
   NormalizerCa,
+  SentimentCa,
   StemmerCa,
   StopwordsCa,
   TokenizerCa,
@@ -45,6 +48,7 @@ const {
 const {
   LangCs,
   NormalizerCs,
+  SentimentCs,
   StemmerCs,
   StopwordsCs,
   TokenizerCs,
@@ -52,6 +56,7 @@ const {
 const {
   LangDa,
   NormalizerDa,
+  SentimentDa,
   StemmerDa,
   StopwordsDa,
   TokenizerDa,
@@ -59,6 +64,7 @@ const {
 const {
   LangDe,
   NormalizerDe,
+  SentimentDe,
   StemmerDe,
   StopwordsDe,
   TokenizerDe,
@@ -66,6 +72,7 @@ const {
 const {
   LangEl,
   NormalizerEl,
+  SentimentEl,
   StemmerEl,
   StopwordsEl,
   TokenizerEl,
@@ -73,6 +80,7 @@ const {
 const {
   LangEn,
   NormalizerEn,
+  SentimentEn,
   StemmerEn,
   StopwordsEn,
   TokenizerEn,
@@ -80,6 +88,7 @@ const {
 const {
   LangEs,
   NormalizerEs,
+  SentimentEs,
   StemmerEs,
   StopwordsEs,
   TokenizerEs,
@@ -87,6 +96,7 @@ const {
 const {
   LangEu,
   NormalizerEu,
+  SentimentEu,
   StemmerEu,
   StopwordsEu,
   TokenizerEu,
@@ -94,6 +104,7 @@ const {
 const {
   LangFa,
   NormalizerFa,
+  SentimentFa,
   StemmerFa,
   StopwordsFa,
   TokenizerFa,
@@ -101,6 +112,7 @@ const {
 const {
   LangFi,
   NormalizerFi,
+  SentimentFi,
   StemmerFi,
   StopwordsFi,
   TokenizerFi,
@@ -108,6 +120,7 @@ const {
 const {
   LangFr,
   NormalizerFr,
+  SentimentFr,
   StemmerFr,
   StopwordsFr,
   TokenizerFr,
@@ -115,6 +128,7 @@ const {
 const {
   LangGa,
   NormalizerGa,
+  SentimentGa,
   StemmerGa,
   StopwordsGa,
   TokenizerGa,
@@ -122,6 +136,7 @@ const {
 const {
   LangGl,
   NormalizerGl,
+  SentimentGl,
   StemmerGl,
   StopwordsGl,
   TokenizerGl,
@@ -129,6 +144,7 @@ const {
 const {
   LangHi,
   NormalizerHi,
+  SentimentHi,
   StemmerHi,
   StopwordsHi,
   TokenizerHi,
@@ -136,6 +152,7 @@ const {
 const {
   LangHu,
   NormalizerHu,
+  SentimentHu,
   StemmerHu,
   StopwordsHu,
   TokenizerHu,
@@ -143,6 +160,7 @@ const {
 const {
   LangHy,
   NormalizerHy,
+  SentimentHy,
   StemmerHy,
   StopwordsHy,
   TokenizerHy,
@@ -150,6 +168,7 @@ const {
 const {
   LangId,
   NormalizerId,
+  SentimentId,
   StemmerId,
   StopwordsId,
   TokenizerId,
@@ -157,6 +176,7 @@ const {
 const {
   LangIt,
   NormalizerIt,
+  SentimentIt,
   StemmerIt,
   StopwordsIt,
   TokenizerIt,
@@ -164,6 +184,7 @@ const {
 const {
   LangJa,
   NormalizerJa,
+  SentimentJa,
   StemmerJa,
   StopwordsJa,
   TokenizerJa,
@@ -171,6 +192,7 @@ const {
 const {
   LangNl,
   NormalizerNl,
+  SentimentNl,
   StemmerNl,
   StopwordsNl,
   TokenizerNl,
@@ -178,6 +200,7 @@ const {
 const {
   LangNo,
   NormalizerNo,
+  SentimentNo,
   StemmerNo,
   StopwordsNo,
   TokenizerNo,
@@ -185,6 +208,7 @@ const {
 const {
   LangPt,
   NormalizerPt,
+  SentimentPt,
   StemmerPt,
   StopwordsPt,
   TokenizerPt,
@@ -192,6 +216,7 @@ const {
 const {
   LangRo,
   NormalizerRo,
+  SentimentRo,
   StemmerRo,
   StopwordsRo,
   TokenizerRo,
@@ -199,6 +224,7 @@ const {
 const {
   LangRu,
   NormalizerRu,
+  SentimentRu,
   StemmerRu,
   StopwordsRu,
   TokenizerRu,
@@ -206,6 +232,7 @@ const {
 const {
   LangSl,
   NormalizerSl,
+  SentimentSl,
   StemmerSl,
   StopwordsSl,
   TokenizerSl,
@@ -213,6 +240,7 @@ const {
 const {
   LangSv,
   NormalizerSv,
+  SentimentSv,
   StemmerSv,
   StopwordsSv,
   TokenizerSv,
@@ -220,6 +248,7 @@ const {
 const {
   LangTa,
   NormalizerTa,
+  SentimentTa,
   StemmerTa,
   StopwordsTa,
   TokenizerTa,
@@ -227,6 +256,7 @@ const {
 const {
   LangTh,
   NormalizerTh,
+  SentimentTh,
   StemmerTh,
   StopwordsTh,
   TokenizerTh,
@@ -234,6 +264,7 @@ const {
 const {
   LangTl,
   NormalizerTl,
+  SentimentTl,
   StemmerTl,
   StopwordsTl,
   TokenizerTl,
@@ -241,6 +272,7 @@ const {
 const {
   LangTr,
   NormalizerTr,
+  SentimentTr,
   StemmerTr,
   StopwordsTr,
   TokenizerTr,
@@ -248,6 +280,7 @@ const {
 const {
   LangUk,
   NormalizerUk,
+  SentimentUk,
   StemmerUk,
   StopwordsUk,
   TokenizerUk,
@@ -255,6 +288,7 @@ const {
 const {
   LangZh,
   NormalizerZh,
+  SentimentZh,
   StemmerZh,
   StopwordsZh,
   TokenizerZh,
@@ -266,204 +300,238 @@ module.exports = {
 
   LangAr,
   NormalizerAr,
+  SentimentAr,
   StemmerAr,
   StopwordsAr,
   TokenizerAr,
 
   LangBn,
   NormalizerBn,
+  SentimentBn,
   StemmerBn,
   StopwordsBn,
   TokenizerBn,
 
   LangCa,
   NormalizerCa,
+  SentimentCa,
   StemmerCa,
   StopwordsCa,
   TokenizerCa,
 
   LangCs,
   NormalizerCs,
+  SentimentCs,
   StemmerCs,
   StopwordsCs,
   TokenizerCs,
 
   LangDa,
   NormalizerDa,
+  SentimentDa,
   StemmerDa,
   StopwordsDa,
   TokenizerDa,
 
   LangDe,
   NormalizerDe,
+  SentimentDe,
   StemmerDe,
   StopwordsDe,
   TokenizerDe,
 
   LangEl,
   NormalizerEl,
+  SentimentEl,
   StemmerEl,
   StopwordsEl,
   TokenizerEl,
 
   LangEn,
   NormalizerEn,
+  SentimentEn,
   StemmerEn,
   StopwordsEn,
   TokenizerEn,
 
   LangEs,
   NormalizerEs,
+  SentimentEs,
   StemmerEs,
   StopwordsEs,
   TokenizerEs,
 
   LangEu,
   NormalizerEu,
+  SentimentEu,
   StemmerEu,
   StopwordsEu,
   TokenizerEu,
 
   LangFa,
   NormalizerFa,
+  SentimentFa,
   StemmerFa,
   StopwordsFa,
   TokenizerFa,
 
   LangFi,
   NormalizerFi,
+  SentimentFi,
   StemmerFi,
   StopwordsFi,
   TokenizerFi,
 
   LangFr,
   NormalizerFr,
+  SentimentFr,
   StemmerFr,
   StopwordsFr,
   TokenizerFr,
 
   LangGa,
   NormalizerGa,
+  SentimentGa,
   StemmerGa,
   StopwordsGa,
   TokenizerGa,
 
   LangGl,
   NormalizerGl,
+  SentimentGl,
   StemmerGl,
   StopwordsGl,
   TokenizerGl,
 
   LangHi,
   NormalizerHi,
+  SentimentHi,
   StemmerHi,
   StopwordsHi,
   TokenizerHi,
 
   LangHu,
   NormalizerHu,
+  SentimentHu,
   StemmerHu,
   StopwordsHu,
   TokenizerHu,
 
   LangHy,
   NormalizerHy,
+  SentimentHy,
   StemmerHy,
   StopwordsHy,
   TokenizerHy,
 
   LangIt,
   NormalizerIt,
+  SentimentIt,
   StemmerIt,
   StopwordsIt,
   TokenizerIt,
 
   LangId,
   NormalizerId,
+  SentimentId,
   StemmerId,
   StopwordsId,
   TokenizerId,
 
   LangJa,
   NormalizerJa,
+  SentimentJa,
   StemmerJa,
   StopwordsJa,
   TokenizerJa,
 
   LangNl,
   NormalizerNl,
+  SentimentNl,
   StemmerNl,
   StopwordsNl,
   TokenizerNl,
 
   LangNo,
   NormalizerNo,
+  SentimentNo,
   StemmerNo,
   StopwordsNo,
   TokenizerNo,
 
   LangPt,
   NormalizerPt,
+  SentimentPt,
   StemmerPt,
   StopwordsPt,
   TokenizerPt,
 
   LangRo,
   NormalizerRo,
+  SentimentRo,
   StemmerRo,
   StopwordsRo,
   TokenizerRo,
 
   LangRu,
   NormalizerRu,
+  SentimentRu,
   StemmerRu,
   StopwordsRu,
   TokenizerRu,
 
   LangSl,
   NormalizerSl,
+  SentimentSl,
   StemmerSl,
   StopwordsSl,
   TokenizerSl,
 
   LangSv,
   NormalizerSv,
+  SentimentSv,
   StemmerSv,
   StopwordsSv,
   TokenizerSv,
 
   LangTa,
   NormalizerTa,
+  SentimentTa,
   StemmerTa,
   StopwordsTa,
   TokenizerTa,
 
   LangTh,
   NormalizerTh,
+  SentimentTh,
   StemmerTh,
   StopwordsTh,
   TokenizerTh,
 
   LangTl,
   NormalizerTl,
+  SentimentTl,
   StemmerTl,
   StopwordsTl,
   TokenizerTl,
 
   LangTr,
   NormalizerTr,
+  SentimentTr,
   StemmerTr,
   StopwordsTr,
   TokenizerTr,
 
   LangUk,
   NormalizerUk,
+  SentimentUk,
   StemmerUk,
   StopwordsUk,
   TokenizerUk,
 
   LangZh,
   NormalizerZh,
+  SentimentZh,
   StemmerZh,
   StopwordsZh,
   TokenizerZh,
