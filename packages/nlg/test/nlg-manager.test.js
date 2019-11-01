@@ -221,49 +221,4 @@ describe('NLG Manager', () => {
       expect(input.answers).toHaveLength(1);
     });
   });
-
-  //     const evaluator = this.container.get('Evaluator');
-  //     if (evaluator) {
-  //       const context = input.context || {};
-  //       const filtered = [];
-  //       for (let i = 0; i < answers.length; i += 1) {
-  //         const answer = answers[i];
-  //         if (answer.opts && answer.opts.condition) {
-  //           if (evaluator.evaluate(answer.opts.condition, context) === true) {
-  //             filtered.push(answer);
-  //           }
-  //         } else {
-  //           filtered.push(answer);
-  //         }
-  //       }
-  //       input.answers = filtered;
-  //     }
-  //   }
-  //   return input;
-  // }
-
-  // describe('Find answer', () => {
-  //   test('It should return one answer from intent and locale with no condition', () => {
-  //     const manager = new NlgManager();
-  //     manager.addAnswer('en', 'greet', 'Hello');
-  //     manager.addAnswer('en', 'greet', 'Greetings');
-  //     manager.addAnswer('en', 'greet', 'Hi');
-  //     const result = manager.findAnswer('en', 'greet', {});
-  //     expect(result).toBeDefined();
-  //   });
-  //   test('It should return undefined if there is no answer', () => {
-  //     const manager = new NlgManager();
-  //     manager.addAnswer('en', 'greet', 'Hello');
-  //     manager.addAnswer('en', 'greet', 'Greetings');
-  //     manager.addAnswer('en', 'greet', 'Hi');
-  //     const result = manager.findAnswer('en', 'bye', {});
-  //     expect(result).toBeUndefined();
-  //   });
-  //   test('It should return the existing answer if there is only 1', () => {
-  //     const manager = new NlgManager();
-  //     manager.addAnswer('en', 'greet', 'Hello');
-  //     const result = manager.findAnswer('en', 'greet', {});
-  //     expect(result.response).toEqual('Hello');
-  //   });
-  // });
 });
