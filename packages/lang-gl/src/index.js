@@ -26,6 +26,7 @@ const TokenizerGl = require('./tokenizer-gl');
 const StemmerGl = require('./stemmer-gl');
 const StopwordsGl = require('./stopwords-gl');
 const NormalizerGl = require('./normalizer-gl');
+const SentimentGl = require('./sentiment/sentiment_gl');
 
 module.exports = {
   LangGl,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsGl,
   TokenizerGl,
   NormalizerGl,
+  SentimentGl,
 };
