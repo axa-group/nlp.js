@@ -26,6 +26,7 @@ const TokenizerHu = require('./tokenizer-hu');
 const StemmerHu = require('./stemmer-hu');
 const StopwordsHu = require('./stopwords-hu');
 const NormalizerHu = require('./normalizer-hu');
+const SentimentHu = require('./sentiment/sentiment_hu');
 
 module.exports = {
   LangHu,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsHu,
   TokenizerHu,
   NormalizerHu,
+  SentimentHu,
 };

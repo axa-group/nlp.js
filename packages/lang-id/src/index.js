@@ -26,6 +26,7 @@ const TokenizerId = require('./tokenizer-id');
 const StemmerId = require('./stemmer-id');
 const StopwordsId = require('./stopwords-id');
 const NormalizerId = require('./normalizer-id');
+const SentimentId = require('./sentiment/sentiment_id');
 
 module.exports = {
   LangId,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsId,
   TokenizerId,
   NormalizerId,
+  SentimentId,
 };
