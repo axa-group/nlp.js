@@ -26,6 +26,7 @@ const TokenizerFr = require('./tokenizer-fr');
 const StemmerFr = require('./stemmer-fr');
 const StopwordsFr = require('./stopwords-fr');
 const NormalizerFr = require('./normalizer-fr');
+const SentimentFr = require('./sentiment/sentiment_fr');
 
 module.exports = {
   LangFr,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsFr,
   TokenizerFr,
   NormalizerFr,
+  SentimentFr,
 };
