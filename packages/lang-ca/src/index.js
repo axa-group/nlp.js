@@ -26,6 +26,7 @@ const TokenizerCa = require('./tokenizer-ca');
 const StemmerCa = require('./stemmer-ca');
 const StopwordsCa = require('./stopwords-ca');
 const NormalizerCa = require('./normalizer-ca');
+const SentimentCa = require('./sentiment/sentiment_ca');
 
 module.exports = {
   LangCa,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsCa,
   TokenizerCa,
   NormalizerCa,
+  SentimentCa,
 };
