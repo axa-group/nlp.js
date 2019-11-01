@@ -26,6 +26,7 @@ const TokenizerGa = require('./tokenizer-ga');
 const StemmerGa = require('./stemmer-ga');
 const StopwordsGa = require('./stopwords-ga');
 const NormalizerGa = require('./normalizer-ga');
+const SentimentGa = require('./sentiment/sentiment_ga');
 
 module.exports = {
   LangGa,
@@ -33,4 +34,5 @@ module.exports = {
   StopwordsGa,
   TokenizerGa,
   NormalizerGa,
+  SentimentGa,
 };
