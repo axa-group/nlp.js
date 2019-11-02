@@ -252,9 +252,23 @@ class Container {
     this.register(name || instance.name, instance);
   }
 
-  buildPipeline(pipeline) {
+  buildPipeline(srcPipeline, prevPipeline = []) {
+    const pipeline = [];
+    if (srcPipeline && srcPipeline.length > 0) {
+      for (let i = 0; i < srcPipeline.length; i += 1) {
+        const line = srcPipeline[i];
+        if (line.trim() === '$super') {
+          for (let j = 0; j < prevPipeline.length; j += 1) {
+            pipeline.push(prevPipeline[j]);
+          }
+        } else {
+          pipeline.push(line);
+        }
+      }
+    }
+    console.log(pipeline);
     const compilerName =
-      !pipeline || !pipeline.length || !pipeline[0].startsWith('// compiler=')
+      !pipeline.length || !pipeline[0].startsWith('// compiler=')
         ? 'default'
         : pipeline[0].slice(12);
     const compiler = this.compilers[compilerName] || this.compilers.default;
@@ -268,7 +282,10 @@ class Container {
 
   registerPipeline(tag, pipeline, overwrite = true) {
     if (overwrite || !this.pipelines[tag]) {
-      this.pipelines[tag] = this.buildPipeline(pipeline);
+      const prevPipeline = this.pipelines[tag]
+        ? this.pipelines[tag].pipeline
+        : [];
+      this.pipelines[tag] = this.buildPipeline(pipeline, prevPipeline);
     }
   }
 

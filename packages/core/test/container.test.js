@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Container } = require('../src');
+const { Container, Timer } = require('../src');
 const Cloned = require('./assets/cloned');
 const Lower = require('./assets/lower');
 const Char = require('./assets/char');
@@ -572,6 +572,32 @@ describe('Container', () => {
         str: 'magdalna',
         excludeChars: 'e',
       });
+    });
+    test('Pipelines can be decorated with $super', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      instance.use(Timer);
+      instance.registerPipeline('lowerchar', ['lower', 'char']);
+      instance.registerPipeline('lowerchar', [
+        'timer.start',
+        '$super',
+        'timer.stop',
+      ]);
+      const pipeline = instance.buildPipeline([
+        'set input.str "magdalena"',
+        '$lowerchar',
+        'char.filter',
+        'this',
+      ]);
+      const input = {
+        source: 'VECTOR',
+        str: 'VECTOR',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual.elapsed).toBeDefined();
+      expect(actual.str).toEqual('magdalna');
     });
     test('Pipelines can get parameters from input', async () => {
       const instance = new Container();
