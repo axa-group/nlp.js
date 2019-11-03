@@ -21,6 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
+const path = require('path');
+
 const rsAstralRange = '\\ud800-\\udfff';
 const rsComboMarksRange = '\\u0300-\\u036f';
 const reComboHalfMarksRange = '\\ufe20-\\ufe2f';
@@ -79,10 +82,38 @@ function compareWildcars(text, rule) {
   return new RegExp(regexRule).test(text);
 }
 
+function listFiles(folderPath, recursive = true) {
+  if (fs.existsSync(folderPath)) {
+    const all = fs.readdirSync(folderPath).map(x => path.join(folderPath, x));
+    const files = all.filter(x => fs.statSync(x).isFile());
+    if (recursive) {
+      const dirs = all.filter(x => !files.includes(x));
+      const dirFiles = dirs.reduce(
+        (prev, current) => prev.concat(listFiles(current)),
+        []
+      );
+      return [...files, ...dirFiles];
+    }
+    return files;
+  }
+  return [];
+}
+
+function getAbsolutePath(relative) {
+  return path.normalize(path.join(process.cwd(), relative));
+}
+
+function listFilesAbsolute(folderPath, recursive = true) {
+  const files = listFiles(folderPath, recursive);
+  return files.map(x => getAbsolutePath(x));
+}
+
 module.exports = {
   hasUnicode,
   unicodeToArray,
   asciiToArray,
   stringToArray,
   compareWildcars,
+  listFiles,
+  listFilesAbsolute,
 };

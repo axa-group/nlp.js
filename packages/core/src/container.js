@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
 const { compareWildcars } = require('./helper');
 const DefaultCompiler = require('./default-compiler');
 
@@ -218,12 +219,16 @@ class Container {
     return currentObject[tokens[tokens.length - 1]];
   }
 
-  async runPipeline(pipeline, input, srcObject, depth = 0) {
+  async runPipeline(srcPipeline, input, srcObject, depth = 0) {
     if (depth > 10) {
       throw new Error(
         'Pipeline depth is too high: perhaps you are using recursive pipelines?'
       );
     }
+    const pipeline =
+      typeof srcPipeline === 'string'
+        ? this.getPipeline(srcPipeline)
+        : srcPipeline;
     if (!pipeline.compiler) {
       const tag = JSON.stringify(pipeline);
       this.registerPipeline(tag, pipeline, false);
@@ -266,7 +271,6 @@ class Container {
         }
       }
     }
-    console.log(pipeline);
     const compilerName =
       !pipeline.length || !pipeline[0].startsWith('// compiler=')
         ? 'default'
@@ -282,10 +286,11 @@ class Container {
 
   registerPipeline(tag, pipeline, overwrite = true) {
     if (overwrite || !this.pipelines[tag]) {
-      const prevPipeline = this.pipelines[tag]
-        ? this.pipelines[tag].pipeline
-        : [];
-      this.pipelines[tag] = this.buildPipeline(pipeline, prevPipeline);
+      const prev = this.getPipeline(tag);
+      this.pipelines[tag] = this.buildPipeline(
+        pipeline,
+        prev ? prev.pipeline : []
+      );
     }
   }
 
@@ -319,6 +324,34 @@ class Container {
       }
     }
     return undefined;
+  }
+
+  loadPipelinesFromString(str = '') {
+    const lines = str.split('\n');
+    let currentName = '';
+    let currentPipeline = [];
+    for (let i = 0; i < lines.length; i += 1) {
+      const line = lines[i].trim();
+      if (line !== '') {
+        if (line.startsWith('##')) {
+          if (currentName) {
+            this.registerPipeline(currentName, currentPipeline);
+          }
+          currentName = line.slice(2).trim();
+          currentPipeline = [];
+        } else if (currentName) {
+          currentPipeline.push(line);
+        }
+      }
+    }
+    if (currentName) {
+      this.registerPipeline(currentName, currentPipeline);
+    }
+  }
+
+  loadPipelinesFromFile(fileName) {
+    const str = fs.readFileSync(fileName, 'utf8');
+    this.loadPipelinesFromString(str);
   }
 }
 

@@ -24,6 +24,7 @@
 const Among = require('./among');
 const ArrToObj = require('./arr-to-obj');
 const BaseStemmer = require('./base-stemmer');
+const containerBootstrap = require('./container-bootstrap');
 const Clonable = require('./clonable');
 const { Container, defaultContainer } = require('./container');
 const Normalizer = require('./normalizer');
@@ -38,12 +39,15 @@ const {
   asciiToArray,
   stringToArray,
   compareWildcars,
+  listFiles,
+  listFilesAbsolute,
 } = require('./helper');
 
 module.exports = {
   Among,
   ArrToObj,
   BaseStemmer,
+  containerBootstrap,
   Clonable,
   Container,
   defaultContainer,
@@ -52,6 +56,8 @@ module.exports = {
   asciiToArray,
   stringToArray,
   compareWildcars,
+  listFiles,
+  listFilesAbsolute,
   Normalizer,
   ObjToArr,
   Stemmer,
