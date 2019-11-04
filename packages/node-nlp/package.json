@@ -1,0 +1,37 @@
+{
+  "name": "node-nlp",
+  "version": "1.0.0",
+  "description": "Sentiment Analysis",
+  "author": {
+    "email": "jesus.seijas@axa.com",
+    "name": "Jesus Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/core": "^1.0.0",
+    "@nlpjs/language": "^1.0.0",
+    "@nlpjs/lang-all": "^1.0.0",
+    "@nlpjs/emoji": "^1.0.0",
+    "@nlpjs/evaluator": "^1.0.0",
+    "@nlpjs/nlg": "^1.0.0",
+    "@nlpjs/nlu": "^1.0.0",
+    "@nlpjs/sentiment": "^1.0.0"
+  }
+}
