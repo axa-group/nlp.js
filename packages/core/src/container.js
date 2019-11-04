@@ -103,6 +103,7 @@ class Container {
         subtype: 'number',
         src: step,
         value: parseFloat(token),
+        context,
         container: this,
       };
     }
@@ -112,6 +113,7 @@ class Container {
         subtype: 'string',
         src: step,
         value: token.replace(/^"(.+(?="$))"$/, '$1'),
+        context,
         container: this,
       };
     }
@@ -121,6 +123,7 @@ class Container {
         subtype: 'string',
         src: step,
         value: token.replace(/^'(.+(?='$))'$/, '$1'),
+        context,
         container: this,
       };
     }
@@ -130,6 +133,7 @@ class Container {
         subtype: 'boolean',
         src: step,
         value: true,
+        context,
         container: this,
       };
     }
@@ -139,6 +143,7 @@ class Container {
         subtype: 'boolean',
         src: step,
         value: false,
+        context,
         container: this,
       };
     }
@@ -170,6 +175,7 @@ class Container {
         type: 'function',
         src: step,
         value: currentObject,
+        context,
         container: this,
       };
     }
@@ -177,6 +183,7 @@ class Container {
       type: 'reference',
       src: step,
       value: currentObject,
+      context,
       container: this,
     };
   }
