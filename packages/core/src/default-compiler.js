@@ -103,7 +103,14 @@ class DefaultCompiler {
     );
     const args = [];
     for (let i = 1; i < step.length; i += 1) {
-      args.push(this.container.resolvePath(step[i].value, input, srcObject));
+      args.push(
+        this.container.resolvePathWithType(
+          step[i].value,
+          context,
+          input,
+          srcObject
+        )
+      );
     }
     const method = currentObject.run || currentObject;
     if (typeof method === 'function') {

@@ -90,7 +90,7 @@ class Container {
     return new Clazz(settings, this);
   }
 
-  resolvePath(step, context, input, srcObject) {
+  resolvePathWithType(step, context, input, srcObject) {
     const tokens = step.split('.');
     let token = tokens[0].trim();
     if (!token) {
@@ -98,19 +98,49 @@ class Container {
     }
     const isnum = /^\d+$/.test(token);
     if (isnum) {
-      return parseFloat(token);
+      return {
+        type: 'literal',
+        subtype: 'number',
+        src: step,
+        value: parseFloat(token),
+        container: this,
+      };
     }
     if (token.startsWith('"')) {
-      return token.replace(/^"(.+(?="$))"$/, '$1');
+      return {
+        type: 'literal',
+        subtype: 'string',
+        src: step,
+        value: token.replace(/^"(.+(?="$))"$/, '$1'),
+        container: this,
+      };
     }
     if (token.startsWith("'")) {
-      return token.replace(/^'(.+(?='$))'$/, '$1');
+      return {
+        type: 'literal',
+        subtype: 'string',
+        src: step,
+        value: token.replace(/^'(.+(?='$))'$/, '$1'),
+        container: this,
+      };
     }
     if (token === 'true') {
-      return true;
+      return {
+        type: 'literal',
+        subtype: 'boolean',
+        src: step,
+        value: true,
+        container: this,
+      };
     }
     if (token === 'false') {
-      return false;
+      return {
+        type: 'literal',
+        subtype: 'boolean',
+        src: step,
+        value: false,
+        container: this,
+      };
     }
     let currentObject = context;
     if (token === 'input' || token === 'output') {
@@ -125,7 +155,9 @@ class Container {
     for (let i = 1; i < tokens.length; i += 1) {
       const currentToken = tokens[i];
       if (!currentObject || !currentObject[currentToken]) {
-        throw Error(`Path not found in pipeline "${step}"`);
+        if (i < tokens.length - 1) {
+          throw Error(`Path not found in pipeline "${step}"`);
+        }
       }
       const prevCurrentObject = currentObject;
       currentObject = currentObject[currentToken];
@@ -133,7 +165,25 @@ class Container {
         currentObject = currentObject.bind(prevCurrentObject);
       }
     }
-    return currentObject;
+    if (typeof currentObject === 'function') {
+      return {
+        type: 'function',
+        src: step,
+        value: currentObject,
+        container: this,
+      };
+    }
+    return {
+      type: 'reference',
+      src: step,
+      value: currentObject,
+      container: this,
+    };
+  }
+
+  resolvePath(step, context, input, srcObject) {
+    const result = this.resolvePathWithType(step, context, input, srcObject);
+    return result ? result.value : result;
   }
 
   setValue(path, valuePath, context, input, srcObject) {

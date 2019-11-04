@@ -33,7 +33,7 @@ class Other {
 
   run(srcInput) {
     const input = srcInput;
-    input.str = input.arr.join('');
+    input.text = input.arr.join('');
     return input;
   }
 }
@@ -241,7 +241,7 @@ describe('Container', () => {
       const instance = new Container();
       const input = {};
       const srcObject = new Other();
-      const actual = instance.resolvePath("'hello'", input, srcObject);
+      const actual = instance.resolvePath("'hello'", {}, input, srcObject);
       expect(actual).toBe('hello');
     });
     test('If the path does not exists throw an error', () => {
@@ -249,8 +249,8 @@ describe('Container', () => {
       const input = {};
       const srcObject = new Other();
       expect(() =>
-        instance.resolvePath('this.potato', input, srcObject)
-      ).toThrow('Path not found in pipeline "this.potato"');
+        instance.resolvePath('this.potato.cucumber', {}, input, srcObject)
+      ).toThrow('Path not found in pipeline "this.potato.cucumber"');
     });
   });
 
@@ -301,13 +301,13 @@ describe('Container', () => {
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
       expect(actual).toEqual({
         source: 'VECTOR',
-        str: 'vctor',
+        text: 'vctor',
         arr: ['v', 'c', 't', 'o', 'r'],
         excludeChars: 'e',
       });
@@ -325,13 +325,13 @@ describe('Container', () => {
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
       expect(actual).toEqual({
         source: 'VECTOR',
-        str: 'vctor',
+        text: 'vctor',
         arr: ['v', 'c', 't', 'o', 'r'],
         excludeChars: 'e',
       });
@@ -343,7 +343,7 @@ describe('Container', () => {
       const pipeline = instance.buildPipeline(['set floating 7', 'get']);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
@@ -354,7 +354,7 @@ describe('Container', () => {
       instance.register('lower', Lower);
       instance.register('char', Char);
       const pipeline = instance.buildPipeline([
-        'set input.str "magdalena"',
+        'set input.text "magdalena"',
         'lower',
         'char',
         'char.filter',
@@ -363,13 +363,13 @@ describe('Container', () => {
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
       expect(actual).toEqual({
         source: 'VECTOR',
-        str: 'magdalna',
+        text: 'magdalna',
         excludeChars: 'e',
       });
     });
@@ -555,7 +555,7 @@ describe('Container', () => {
       instance.register('char', Char);
       instance.registerPipeline('lowerch?r', ['lower', 'char']);
       const pipeline = instance.buildPipeline([
-        'set input.str "magdalena"',
+        'set input.text "magdalena"',
         '$lowerchar',
         'char.filter',
         'this',
@@ -563,13 +563,13 @@ describe('Container', () => {
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
       expect(actual).toEqual({
         source: 'VECTOR',
-        str: 'magdalna',
+        text: 'magdalna',
         excludeChars: 'e',
       });
     });
@@ -585,19 +585,19 @@ describe('Container', () => {
         'timer.stop',
       ]);
       const pipeline = instance.buildPipeline([
-        'set input.str "magdalena"',
+        'set input.text "magdalena"',
         '$lowerchar',
         'char.filter',
         'this',
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
       expect(actual.elapsed).toBeDefined();
-      expect(actual.str).toEqual('magdalna');
+      expect(actual.text).toEqual('magdalna');
     });
     test('Pipelines can get parameters from input', async () => {
       const instance = new Container();
@@ -605,15 +605,15 @@ describe('Container', () => {
       instance.register('char', Char);
       instance.registerPipeline('lowerch?r', ['lower', 'char']);
       const pipeline = instance.buildPipeline([
-        'set input.str "magdalena"',
+        'set input.text "magdalena"',
         '$lowerchar',
         'char.filter',
         'this',
-        'get input.str',
+        'get input.text',
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
@@ -632,13 +632,38 @@ describe('Container', () => {
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       const actual = await instance.runPipeline(pipeline, input, new Other());
       expect(actual).toEqual({
         source: 'VECTOR',
-        str: 'magdalna',
+        text: 'magdalna',
+        excludeChars: 'e',
+      });
+    });
+    test('Pipeline task can have reference parameters', async () => {
+      const instance = new Container();
+      instance.register('lower', Lower);
+      instance.register('char', Char);
+      const pipeline = instance.buildPipeline([
+        'lower input.something',
+        'char',
+        'char.filter',
+        'this',
+        'delete input.arr',
+      ]);
+      const input = {
+        source: 'VECTOR',
+        text: 'VECTOR',
+        something: 'MAGDALENA',
+        excludeChars: 'e',
+      };
+      const actual = await instance.runPipeline(pipeline, input, new Other());
+      expect(actual).toEqual({
+        source: 'VECTOR',
+        text: 'VECTOR',
+        something: 'magdalena',
         excludeChars: 'e',
       });
     });
@@ -648,7 +673,7 @@ describe('Container', () => {
       instance.register('char', Char);
       instance.registerPipeline('lowerchar', ['$lowerchar', 'char']);
       const pipeline = instance.buildPipeline([
-        'set input.str "magdalena"',
+        'set input.text "magdalena"',
         '$lowerchar',
         'char.filter',
         'this',
@@ -656,7 +681,7 @@ describe('Container', () => {
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       await expect(
@@ -671,7 +696,7 @@ describe('Container', () => {
       instance.register('char', Char);
       instance.registerPipeline('lowerchar', ['$lowerchar', 'char']);
       const pipeline = instance.buildPipeline([
-        'set input.str "magdalena"',
+        'set input.text "magdalena"',
         '$loperchar',
         'char.filter',
         'this',
@@ -679,7 +704,7 @@ describe('Container', () => {
       ]);
       const input = {
         source: 'VECTOR',
-        str: 'VECTOR',
+        text: 'VECTOR',
         excludeChars: 'e',
       };
       await expect(

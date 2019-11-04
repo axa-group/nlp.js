@@ -22,15 +22,35 @@
  */
 
 class Lower {
-  toLower(srcInput, text) {
+  constructor() {
+    this.name = 'lower';
+  }
+
+  toLower(srcInput, text, holder, container) {
     const input = srcInput;
-    input.str = text.toLowerCase();
+    const result = text.toLowerCase();
+    if (holder && container) {
+      container.setValue(holder, `"${result}"`, {}, input, this);
+    } else {
+      input.text = result;
+    }
     return input;
   }
 
-  run(input, arg) {
-    const text = arg || input;
-    return this.toLower(input, text.str ? text.str : text);
+  run(input, arg1, arg2) {
+    let text = input.text ? input.text : input;
+    let holder;
+    let container;
+    if (arg1) {
+      if (arg1.type === 'literal') {
+        text = arg1.value;
+      } else if (arg1.type === 'reference') {
+        text = arg2 ? arg2.value : arg1.value;
+        holder = arg1.src;
+        container = arg1.container;
+      }
+    }
+    return this.toLower(input, text, holder, container);
   }
 }
 

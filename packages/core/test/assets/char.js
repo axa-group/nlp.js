@@ -24,7 +24,7 @@
 class Char {
   toChars(srcInput) {
     const input = srcInput;
-    input.arr = input.str.split('');
+    input.arr = input.text.split('');
     return input;
   }
 
@@ -35,7 +35,7 @@ class Char {
   }
 
   run(input) {
-    return this.toChars(input.str ? input : { str: input });
+    return this.toChars(input.text ? input : { text: input });
   }
 }
 
