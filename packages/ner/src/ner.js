@@ -49,7 +49,11 @@ class Ner extends Clonable {
   }
 
   registerDefault() {
-    this.container.registerPipeline('ner-??-process', [], false);
+    this.container.registerPipeline(
+      'ner-??-process',
+      ['.decideRules', 'extract-enum'],
+      false
+    );
   }
 
   getRulesByName(locale = '*', name, force = false) {
@@ -135,6 +139,12 @@ class Ner extends Clonable {
     return result;
   }
 
+  decideRules(srcInput) {
+    const input = srcInput;
+    input.nerRules = this.getRules(input.locale || 'en');
+    return input;
+  }
+
   getRuleOption(rules, option) {
     for (let i = 0; i < rules.length; i += 1) {
       if (rules[i].option === option) {
@@ -200,6 +210,10 @@ class Ner extends Clonable {
         }
       }
     }
+  }
+
+  process(input) {
+    return this.runPipeline(input, this.pipelineProcess);
   }
 }
 
