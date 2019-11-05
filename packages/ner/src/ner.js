@@ -51,7 +51,7 @@ class Ner extends Clonable {
   registerDefault() {
     this.container.registerPipeline(
       'ner-??-process',
-      ['.decideRules', 'extract-enum'],
+      ['.decideRules', 'extract-enum', 'extract-regex'],
       false
     );
   }
@@ -210,6 +210,25 @@ class Ner extends Clonable {
         }
       }
     }
+  }
+
+  static str2regex(str) {
+    const index = str.lastIndexOf('/');
+    return new RegExp(str.slice(1, index), str.slice(index + 1));
+  }
+
+  static regex2str(regex) {
+    return regex.toString();
+  }
+
+  addRegexRule(locale, name, srcRegex) {
+    const regex =
+      typeof srcRegex === 'string' ? Ner.str2regex(srcRegex) : srcRegex;
+    const globalFlag = 'g';
+    const fixedRegex = regex.flags.includes(globalFlag)
+      ? regex
+      : new RegExp(regex.source, `${regex.flags}${globalFlag}`);
+    this.addRule(locale, name, 'regex', fixedRegex);
   }
 
   process(input) {

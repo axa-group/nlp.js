@@ -23,8 +23,10 @@
 
 const Ner = require('./ner');
 const ExtractorEnum = require('./extractor-enum');
+const ExtractorRegex = require('./extractor-regex');
 
 module.exports = {
   Ner,
   ExtractorEnum,
+  ExtractorRegex,
 };

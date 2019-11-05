@@ -213,7 +213,7 @@ class ExtractorEnum {
     const input = srcInput;
     const wordPositions = this.getWordPositions(input.text || input.utterance);
     const rules = this.getRules(input);
-    const edges = [];
+    const edges = input.edges || [];
     for (let i = 0; i < rules.length; i += 1) {
       const newEdges = this.extractFromRule(
         input.text || input.utterance,
