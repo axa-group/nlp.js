@@ -52,6 +52,26 @@ class Ner extends Clonable {
     this.container.registerPipeline('ner-??-process', [], false);
   }
 
+  getRulesByName(locale = '*', name, force = false) {
+    if (!this.rules[locale]) {
+      if (!force) {
+        return undefined;
+      }
+      this.rules[locale] = {};
+    }
+    if (!this.rules[locale][name]) {
+      if (!force) {
+        return undefined;
+      }
+      this.rules[locale][name] = {
+        name,
+        type: 'enum',
+        rules: [],
+      };
+    }
+    return this.rules[locale][name];
+  }
+
   addRule(locale = '*', name, type, rule) {
     if (!this.rules[locale]) {
       this.rules[locale] = {};
@@ -66,10 +86,17 @@ class Ner extends Clonable {
     this.rules[locale][name].rules.push(rule);
   }
 
+  asString(item) {
+    if (item && item.toString) {
+      return item.toString();
+    }
+    return JSON.stringify(item);
+  }
+
   findRule(rules, rule) {
-    const str = JSON.stringify(rule);
+    const str = this.asString(rule);
     for (let i = 0; i < rules.length; i += 1) {
-      if (JSON.stringify(rules[i]) === str) {
+      if (this.asString(rules[i]) === str) {
         return i;
       }
     }
@@ -81,10 +108,11 @@ class Ner extends Clonable {
       if (this.rules[locale][name]) {
         if (!rule) {
           delete this.rules[locale][name];
-        }
-        const index = this.findRule(this.rules[locale][name].rules, rule);
-        if (index > -1) {
-          this.rules[locale][name].splice(index, 1);
+        } else {
+          const index = this.findRule(this.rules[locale][name].rules, rule);
+          if (index > -1) {
+            this.rules[locale][name].rules.splice(index, 1);
+          }
         }
       }
     }
@@ -101,10 +129,77 @@ class Ner extends Clonable {
     if (locale !== '*' && this.rules['*']) {
       const keys = Object.keys(this.rules['*']);
       for (let i = 0; i < keys.length; i += 1) {
-        result.push(this.rules[locale][keys[i]]);
+        result.push(this.rules['*'][keys[i]]);
       }
     }
     return result;
+  }
+
+  getRuleOption(rules, option) {
+    for (let i = 0; i < rules.length; i += 1) {
+      if (rules[i].option === option) {
+        return rules[i];
+      }
+    }
+    return undefined;
+  }
+
+  addRuleOptionTexts(locale, name, option, srcTexts) {
+    if (Array.isArray(locale)) {
+      for (let i = 0; i < locale.length; i += 1) {
+        this.addRuleOptionTexts(locale[i], name, option, srcTexts);
+      }
+    } else {
+      let texts = srcTexts || option;
+      if (!Array.isArray(texts)) {
+        texts = [texts];
+      }
+      const rules = this.getRulesByName(locale, name, true);
+      let ruleOption = this.getRuleOption(rules.rules, option);
+      if (!ruleOption) {
+        ruleOption = {
+          option,
+          texts,
+        };
+        rules.rules.push(ruleOption);
+      } else {
+        const dict = {};
+        for (let i = 0; i < ruleOption.texts.length; i += 1) {
+          dict[ruleOption.texts[i]] = 1;
+        }
+        for (let i = 0; i < texts.length; i += 1) {
+          dict[texts[i]] = 1;
+        }
+        ruleOption.texts = Object.keys(dict);
+      }
+    }
+  }
+
+  removeRuleOptionTexts(locale, name, option, srcTexts) {
+    if (Array.isArray(locale)) {
+      for (let i = 0; i < locale.length; i += 1) {
+        this.removeRuleOptionTexts(locale[i], name, option, srcTexts);
+      }
+    } else {
+      let texts = srcTexts || option;
+      if (!Array.isArray(texts)) {
+        texts = [texts];
+      }
+      const rules = this.getRulesByName(locale, name, false);
+      if (rules) {
+        const ruleOption = this.getRuleOption(rules.rules, option);
+        if (ruleOption) {
+          const dict = {};
+          for (let i = 0; i < ruleOption.texts.length; i += 1) {
+            dict[ruleOption.texts[i]] = 1;
+          }
+          for (let i = 0; i < texts.length; i += 1) {
+            delete dict[texts[i]];
+          }
+          ruleOption.texts = Object.keys(dict);
+        }
+      }
+    }
   }
 }
 
