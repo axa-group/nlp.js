@@ -51,7 +51,7 @@ class NlgManager extends Clonable {
     this.container.registerConfiguration('nlg-manager', {}, false);
     this.container.registerPipeline(
       'nlg-manager-find',
-      ['.findAllAnswers', '.filterAnswers', '.chooseRandom'],
+      ['.findAllAnswers', '.filterAnswers', '.renderRandom', '.chooseRandom'],
       false
     );
   }
@@ -95,6 +95,40 @@ class NlgManager extends Clonable {
     const { answers } = input;
     if (answers && answers.length) {
       input.answer = answers[Math.floor(Math.random() * answers.length)].answer;
+    }
+    return input;
+  }
+
+  renderText(srcText) {
+    if (!srcText) {
+      return srcText;
+    }
+    let text = srcText;
+    let matchFound;
+    do {
+      const match = /\((?:[^()]+)\|(?:[^()]+)\)/g.exec(text);
+      if (match) {
+        for (let i = 0; i < match.length; i += 1) {
+          const source = match[i];
+          const options = source.substring(1, source.length - 1).split('|');
+          text = text.replace(
+            source,
+            options[Math.floor(Math.random() * options.length)]
+          );
+        }
+        matchFound = true;
+      } else {
+        matchFound = false;
+      }
+    } while (matchFound);
+    return text;
+  }
+
+  renderRandom(srcInput) {
+    const input = srcInput;
+    const { answers } = input;
+    for (let i = 0; i < answers.length; i += 1) {
+      answers[i] = this.renderText(answers[i]);
     }
     return input;
   }
