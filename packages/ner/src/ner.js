@@ -275,28 +275,28 @@ class Ner extends Clonable {
     this.addRule(locale, name, 'trim', rule);
   }
 
-  addAfterCondition(locale, words, opts) {
-    this.addPositionCondition(TrimType.After, locale, words, opts);
+  addAfterCondition(locale, name, words, opts) {
+    this.addPositionCondition(locale, name, TrimType.After, words, opts);
   }
 
-  addAfterFirstCondition(locale, words, opts) {
-    this.addPositionCondition(TrimType.AfterFirst, locale, words, opts);
+  addAfterFirstCondition(locale, name, words, opts) {
+    this.addPositionCondition(locale, name, TrimType.AfterFirst, words, opts);
   }
 
-  addAfterLastCondition(locale, words, opts) {
-    this.addPositionCondition(TrimType.AfterLast, locale, words, opts);
+  addAfterLastCondition(locale, name, words, opts) {
+    this.addPositionCondition(locale, name, TrimType.AfterLast, words, opts);
   }
 
-  addBeforeCondition(locale, words, opts) {
-    this.addPositionCondition(TrimType.Before, locale, words, opts);
+  addBeforeCondition(locale, name, words, opts) {
+    this.addPositionCondition(locale, name, TrimType.Before, words, opts);
   }
 
-  addBeforeFirstCondition(locale, words, opts) {
-    this.addPositionCondition(TrimType.BeforeFirst, locale, words, opts);
+  addBeforeFirstCondition(locale, name, words, opts) {
+    this.addPositionCondition(locale, name, TrimType.BeforeFirst, words, opts);
   }
 
-  addBeforeLastCondition(locale, words, opts) {
-    this.addPositionCondition(TrimType.BeforeLast, locale, words, opts);
+  addBeforeLastCondition(locale, name, words, opts) {
+    this.addPositionCondition(locale, name, TrimType.BeforeLast, words, opts);
   }
 
   process(input) {

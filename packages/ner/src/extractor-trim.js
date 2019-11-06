@@ -51,21 +51,22 @@ class ExtractorTrim {
     return false;
   }
 
-  matchBetween(utterance, condition) {
+  matchBetween(utterance, condition, name) {
     const result = [];
     let matchFound;
     do {
       const match = condition.regex.exec(` ${utterance} `);
       if (match) {
         result.push({
-          type: TrimType.Between,
+          type: 'trim',
+          subtype: TrimType.Between,
           start: match.index - 1,
           end: condition.regex.lastIndex - 2,
           len: match[0].length,
           accuracy: 1,
           sourceText: match[0],
           utteranceText: match[0],
-          entity: this.name,
+          entity: name,
         });
         matchFound = true;
       } else {
@@ -103,7 +104,7 @@ class ExtractorTrim {
     return result;
   }
 
-  getBeforeResults(utterance, wordPositions) {
+  getBeforeResults(utterance, wordPositions, name) {
     const result = [];
     let startPos = 0;
     let endPos = 0;
@@ -111,57 +112,60 @@ class ExtractorTrim {
       endPos = wordPositions[i].start;
       const text = utterance.substring(startPos, endPos);
       result.push({
-        type: TrimType.Before,
+        type: 'trim',
+        subtype: TrimType.Before,
         start: startPos,
         end: endPos - 1,
         len: text.length,
         accuracy: 0.99,
         sourceText: text,
         utteranceText: text,
-        entity: this.name,
+        entity: name,
       });
       startPos = wordPositions[i].end;
     }
     return result;
   }
 
-  getBeforeFirstResults(utterance, wordPositions) {
+  getBeforeFirstResults(utterance, wordPositions, name) {
     const result = [];
     const startPos = 0;
     const endPos = wordPositions[0].start;
     const text = utterance.substring(startPos, endPos);
     result.push({
-      type: TrimType.BeforeFirst,
+      type: 'trim',
+      subtype: TrimType.BeforeFirst,
       start: startPos,
       end: endPos - 1,
       len: text.length,
       accuracy: 0.99,
       sourceText: text,
       utteranceText: text,
-      entity: this.name,
+      entity: name,
     });
     return result;
   }
 
-  getBeforeLastResults(utterance, wordPositions) {
+  getBeforeLastResults(utterance, wordPositions, name) {
     const result = [];
     const startPos = 0;
     const endPos = wordPositions[wordPositions.length - 1].start;
     const text = utterance.substring(startPos, endPos);
     result.push({
-      type: TrimType.BeforeLast,
+      type: 'trim',
+      subtype: TrimType.BeforeLast,
       start: startPos,
       end: endPos - 1,
       len: text.length,
       accuracy: 0.99,
       sourceText: text,
       utteranceText: text,
-      entity: this.name,
+      entity: name,
     });
     return result;
   }
 
-  getAfterResults(utterance, wordPositions) {
+  getAfterResults(utterance, wordPositions, name) {
     const result = [];
     let startPos = 0;
     let endPos = utterance.length;
@@ -169,76 +173,79 @@ class ExtractorTrim {
       startPos = wordPositions[i].end;
       const text = utterance.substring(startPos, endPos);
       result.unshift({
-        type: TrimType.After,
+        type: 'trim',
+        subtype: TrimType.After,
         start: startPos,
         end: endPos - 1,
         len: text.length,
         accuracy: 0.99,
         sourceText: text,
         utteranceText: text,
-        entity: this.name,
+        entity: name,
       });
       endPos = wordPositions[i].start;
     }
     return result;
   }
 
-  getAfterFirstResults(utterance, wordPositions) {
+  getAfterFirstResults(utterance, wordPositions, name) {
     const result = [];
     const startPos = wordPositions[0].end;
     const endPos = utterance.length;
     const text = utterance.substring(startPos, endPos);
     result.push({
-      type: TrimType.AfterFirst,
+      type: 'trim',
+      subtype: TrimType.AfterFirst,
       start: startPos,
       end: endPos - 1,
       len: text.length,
       accuracy: 0.99,
       sourceText: text,
       utteranceText: text,
-      entity: this.name,
+      entity: name,
     });
     return result;
   }
 
-  getAfterLastResults(utterance, wordPositions) {
+  getAfterLastResults(utterance, wordPositions, name) {
     const result = [];
     const startPos = wordPositions[wordPositions.length - 1].end;
     const endPos = utterance.length;
     const text = utterance.substring(startPos, endPos);
     result.push({
-      type: TrimType.AfterLast,
+      type: 'trim',
+      subtype: TrimType.AfterLast,
       start: startPos,
       end: endPos - 1,
       len: text.length,
       accuracy: 0.99,
       sourceText: text,
       utteranceText: text,
-      entity: this.name,
+      entity: name,
     });
     return result;
   }
 
-  getResults(utterance, wordPositions, type) {
+  getResults(utterance, wordPositions, type, name) {
     switch (type) {
       case TrimType.Before:
-        return this.getBeforeResults(utterance, wordPositions, type);
+        return this.getBeforeResults(utterance, wordPositions, name);
       case TrimType.BeforeFirst:
-        return this.getBeforeFirstResults(utterance, wordPositions, type);
+        return this.getBeforeFirstResults(utterance, wordPositions, name);
       case TrimType.BeforeLast:
-        return this.getBeforeLastResults(utterance, wordPositions, type);
+        return this.getBeforeLastResults(utterance, wordPositions, name);
       case TrimType.After:
-        return this.getAfterResults(utterance, wordPositions, type);
+        return this.getAfterResults(utterance, wordPositions, name);
       case TrimType.AfterFirst:
-        return this.getAfterFirstResults(utterance, wordPositions, type);
+        return this.getAfterFirstResults(utterance, wordPositions, name);
       case TrimType.AfterLast:
-        return this.getAfterLastResults(utterance, wordPositions, type);
+        return this.getAfterLastResults(utterance, wordPositions, name);
       default:
         return [];
     }
   }
 
-  match(utterance, condition) {
+  match(utterance, condition, type, name) {
     const result = [];
     for (let i = 0; i < condition.words.length; i += 1) {
       const word = condition.options.noSpaces
@@ -246,9 +253,7 @@ class ExtractorTrim {
         : ` ${condition.words[i]}`;
       const wordPositions = this.findWord(utterance, word);
       if (wordPositions.length > 0) {
-        result.push(
-          ...this.getResults(utterance, wordPositions, condition.type)
-        );
+        result.push(...this.getResults(utterance, wordPositions, type, name));
       }
     }
     const filteredResult = [];
@@ -273,9 +278,9 @@ class ExtractorTrim {
     for (let i = 0; i < rule.rules.length; i += 1) {
       const current = rule.rules[i];
       if (current.type === TrimType.Between) {
-        edges.push(...this.matchBetween(utterance, current));
+        edges.push(...this.matchBetween(utterance, current, rule.name));
       } else {
-        edges.push(...this.match(utterance, current));
+        edges.push(...this.match(utterance, current, current.type, rule.name));
       }
     }
     return edges;
