@@ -1,0 +1,32 @@
+[
+  {
+    "utterance": "28/10/2018",
+    "result": { "strValue": "2018-10-28", "date": "2018-10-28T00:00:00.000Z", "type": "date", "timex": "2018-10-28" }
+  },
+  {
+    "utteranceEn": "I'll go back on 15",
+    "utteranceEs": "Volveré el 15",
+    "utteranceFr": "Je reviendrai en 15",
+    "utterancePt": "Voltarei no 15",
+    "utteranceJa": "私は15日に戻ります",
+    "avoid": ["pt", "ja"],
+    "result": { "type": "interval", "timex": "XXXX-XX-15", "futureDate": "*", "pastDate": "*", "strFutureValue": "*", "strPastValue": "*" }
+  },
+  {
+    "utteranceEn": "I'll go back January 12, 2016",
+    "utteranceEs": "Volveré el 12 de enero, 2016",
+    "utteranceFr": "Je reviendrai Lundi 12 Janvier, 2016",
+    "utterancePt": "voltarei em 12 de janeiro, 2016",
+    "utteranceJa": "私は2016年1月12日に戻ります",
+    "avoid": ["pt", "ja"],
+    "result": { "type": "date", "timex": "2016-01-12", "strValue": "2016-01-12", "date": "2016-01-12T00:00:00.000Z" }
+  },
+  {
+    "utteranceEn": "I'll be out in Jan",
+    "utteranceEs": "Volveré en Enero",
+    "utteranceFr": "Je reviendrai Janvier",
+    "utterancePt": "voltarei em janeiro",
+    "avoid": ["pt", "ja"],
+    "result": { "type": "interval", "timex": "XXXX-01", "futureEndDate": "*", "futureStartDate": "*", "pastEndDate": "*", "pastStartDate": "*", "strFutureEndValue": "*", "strFutureStartValue": "*", "strPastEndValue": "*", "strPastStartValue": "*" }
+  }
+]

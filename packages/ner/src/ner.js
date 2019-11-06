@@ -52,7 +52,13 @@ class Ner extends Clonable {
   registerDefault() {
     this.container.registerPipeline(
       'ner-??-process',
-      ['.decideRules', 'extract-enum', 'extract-regex', 'extract-trim'],
+      [
+        '.decideRules',
+        'extract-enum',
+        'extract-regex',
+        'extract-trim',
+        'extract-builtin',
+      ],
       false
     );
   }

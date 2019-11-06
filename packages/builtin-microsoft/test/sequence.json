@@ -1,0 +1,38 @@
+[
+  {
+    "utteranceEn": "My email is something@host.com",
+    "utteranceEs": "Mi mail es something@host.com",
+    "utteranceFr": "Mon email est something@host.com",
+    "utterancePt": "Meu e-mail é something@host.com",
+    "utteranceZh": "我的电子邮件是something@host.com",
+    "result": { "value": "something@host.com" }
+  },
+  {
+    "utteranceEn": "My ip is 8.8.8.8",
+    "utteranceEs": "Mi ip es 8.8.8.8",
+    "utteranceFr": "Mon ip est 8.8.8.8",
+    "utterancePt": "Meu ip é 8.8.8.8",
+    "utteranceZh": "我的IP是8.8.8.8",
+    "result": { "value": "8.8.8.8", "type": "ipv4" }
+  },
+  {
+    "utteranceEn": "My ip is ABEF:452::FE10",
+    "utteranceEs": "Mi ip es ABEF:452::FE10",
+    "utteranceFr": "Mon ip est ABEF:452::FE10",
+    "utterancePt": "Meu ip é ABEF:452::FE10",
+    "utteranceZh": "我的ip是ABEF:452::FE10",
+    "result": { "value": "ABEF:452::FE10", "type": "ipv6" }
+  },
+  {
+    "utterance": "#proudtobeaxa",
+    "result": { "value": "#proudtobeaxa" }
+  },
+  {
+    "utterance": "+1 541-754-3010",
+    "result": { "value": "+1 541-754-3010" }
+  },
+  {
+    "utterance": "https://abc.com",
+    "result": { "value": "https://abc.com" }
+  }
+]

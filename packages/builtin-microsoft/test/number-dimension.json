@@ -1,0 +1,59 @@
+[
+  {
+    "utteranceEn": "we are insulted, said langa from the greek catholic headquarters , some 325 kilometer northwest of bucharest.",
+    "utteranceEs": "Fuimos insultados, dijo Langa desde el cuartel general católico griego, a unos 325 kilómetros al noroeste de Bucarest.",
+    "utteranceFr": "Nous sommes insultés, a dit langa du siège social catholique grec, nord-ouest environ de 325 kilomètres de Bucarest.",
+    "utterancePt": "Fuimos insultados, dijo Langa desde el cuartel general católico griego, a unos 325 quilometro ao noroeste de Bucarest.",
+    "utteranceZh": "我们受到了侮辱，来自希腊天主教总部的langa说，在布加勒斯特西北约325公里处。",
+    "utteranceJa":"ブカレストの北西約325キロメートルにあるギリシャのカトリック教徒本部のランガは、私たちは侮辱されていると言います。",
+    "avoid": ["ja"],
+    "result": { "strValue": "325", "value": 325, "unit": "Kilometer" },
+    "resultEn": { "localeUnit": "Kilometer" },
+    "resultEs": { "localeUnit": "Kilómetro" },
+    "resultFr": { "localeUnit": "Kilomètres" },
+    "resultPt": { "localeUnit": "Quilômetro" },
+    "resultZh": { "localeUnit": "千米" },
+    "resultJa": { "localeUnit" : "キロメートル"}
+  },
+  {
+    "utterance": "120 km/h",
+    "result": { "strValue": "120", "value": 120, "unit": "Kilometer per hour" },
+    "resultEn": { "localeUnit": "Kilometer per hour" },
+    "resultEs": { "localeUnit": "Kilómetro por hora" },
+    "resultFr": { "localeUnit": "Kilomètre par heure" },
+    "resultPt": { "localeUnit": "Quilômetro por hora" },
+    "resultZh": { "localeUnit": "公里每小时" },
+    "resultJa": { "localeUnit": "時速キロメートル" }
+  },
+  {
+    "utterance": "120 m3",
+    "result": { "strValue": "120", "value": 120, "unit": "Cubic meter" },
+    "resultEn": { "localeUnit": "Cubic meter" },
+    "resultEs": { "localeUnit": "Metro cúbico" },
+    "resultFr": { "localeUnit": "Mètre cube" },
+    "resultPt": { "localeUnit": "Metro cúbico" },    
+    "resultZh": { "localeUnit": "立方米" },
+    "resultJa": { "localeUnit": "立方メートル" }
+  },
+  {
+    "utterance": "120 kg",
+    "utteranceZh": "120公斤",
+    "result": { "strValue": "120", "value": 120, "unit": "Kilogram" },
+    "resultEn": { "localeUnit": "Kilogram" },
+    "resultEs": { "localeUnit": "Kilogramo" },
+    "resultFr": { "localeUnit": "Kilogramme" },
+    "resultPt": { "localeUnit": "Quilograma" },
+    "resultZh": { "localeUnit": "千克" },
+    "resultJa": { "localeUnit": "キログラム" }
+  },
+  {
+    "utterance": "120 °f",
+    "result": { "strValue": "120", "value": 120, "unit": "F" },
+    "resultEn": { "localeUnit": "F" },
+    "resultEs": { "localeUnit": "Grado Fahrenheit" },
+    "resultFr": { "localeUnit": "F" },
+    "resultPt": { "localeUnit": "Grau Fahrenheit" },
+    "resultZh": { "localeUnit": "F" },
+    "resultJa": { "localeUnit": "F" }
+  }
+]

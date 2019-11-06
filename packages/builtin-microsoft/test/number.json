@@ -1,0 +1,74 @@
+[
+  {
+    "utterance": "192",
+    "result": { "strValue": "192", "value": 192, "subtype": "integer" }
+  },
+  {
+    "utterance": "192.",
+    "result": { "strValue": "192", "value": 192, "subtype": "integer" }
+  },
+  {
+    "utterance": "0.08",
+    "result": { "strValue": "0.08", "value": 0.08, "subtype": "float" }
+  },
+  {
+    "utterance": "0,08",
+    "avoid": ["en", "zh", "ja"],
+    "result": { "strValue": "0.08", "value": 0.08, "subtype": "float" }
+  },
+  {
+    "utterance": "0.23456000",
+    "result": { "strValue": "0.23456", "value": 0.23456, "subtype": "float" }
+  },
+  {
+    "utterance": "0,23456000",
+    "avoid": ["en", "zh", "ja"],
+    "result": { "strValue": "0.23456", "value": 0.23456, "subtype": "float" }
+  },
+  {
+    "utterance": "4.80",
+    "result": { "strValue": "4.8", "value": 4.8, "subtype": "float" }
+  },
+  {
+    "utterance": "4,80",
+    "avoid": ["en", "zh", "ja"],
+    "result": { "strValue": "4.8", "value": 4.8, "subtype": "float" }
+  },
+  {
+    "utteranceEn": "sixteen",
+    "utteranceEs": "dieciseis",
+    "utteranceFr": "seize",
+    "utterancePt": "dezesseis",
+    "utteranzeZh": "十六",
+    "utteranzeJa": "十六",
+    "result": { "strValue": "16", "value": 16, "subtype": "integer" }
+  },
+  {
+    "utteranceEn": "one hundred and three and two thirds",
+    "utteranceEs": "ciento tres con dos tercios",
+    "utteranceFr": "cent trois et deux tiers",
+    "utterancePt": "cento e três com dois terços",
+    "utteranceZh": "一百三十三分之二",
+    "utteranceJa": "一百三十三分之二",
+    "avoid": ["pt", "zh", "ja"],
+    "result": { "strValue": "103.666666666667", "value": 103.666666666667, "subtype": "float" }
+  },
+  {
+    "utteranceEn": "one over 3",
+    "utteranceEs": "uno sobre tres",
+    "utteranceFr": "un sur trois",
+    "utterancePt": "um sobre tres",
+    "utteranceZh": "三分之一",
+    "utteranceJa": "三分の一",
+    "result": { "strValue": "0.333333333333333", "value": 0.333333333333333, "subtype": "float" }
+  },
+  {
+    "utteranceEn": "ninety eight",
+    "utteranceEs": "noventa y ocho",
+    "utteranceFr": "quatre vingt dix huit",
+    "utterancePt": "noventa e oito",
+    "utteranceZh": "九十八",
+    "utteranceJa": "九十八",
+    "result": { "strValue": "98", "value": 98, "subtype": "integer" }
+  }
+]

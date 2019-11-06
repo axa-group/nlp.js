@@ -1,0 +1,24 @@
+[
+  {
+    "utterance": "100%",
+    "result": { "strValue": "100%", "value": 100, "subtype": "integer" }
+  },
+  {
+    "utteranceEn": "100 percent",
+    "utteranceEs": "100 por ciento",
+    "utteranceFr": "100 pourcent",
+    "utterancePt": "100 por cento",
+    "utteranceZh": "１０ 成",
+    "utteranceJa": "十 割",
+    "result": { "strValue": "100%", "value": 100, "subtype": "integer" }
+  },
+  {
+    "utteranceEn": "thirty five percentage",
+    "utteranceEs": "treinta y cinco por ciento",
+    "utteranceFr": "trente cinq pourcent",
+    "utterancePt": "trinta e cinco por cento",
+    "utteranceZh": "三成半",
+    "utteranceJa": "三十五パーセント",
+    "result": { "strValue": "35%", "value": 35, "subtype": "integer" }
+  }
+]
