@@ -22,6 +22,7 @@
  */
 
 const { Clonable } = require('@nlpjs/core');
+const { TrimType } = require('./trim-types');
 
 class Ner extends Clonable {
   constructor(settings = {}, container) {
@@ -51,7 +52,7 @@ class Ner extends Clonable {
   registerDefault() {
     this.container.registerPipeline(
       'ner-??-process',
-      ['.decideRules', 'extract-enum', 'extract-regex'],
+      ['.decideRules', 'extract-enum', 'extract-regex', 'extract-trim'],
       false
     );
   }
@@ -229,6 +230,73 @@ class Ner extends Clonable {
       ? regex
       : new RegExp(regex.source, `${regex.flags}${globalFlag}`);
     this.addRule(locale, name, 'regex', fixedRegex);
+  }
+
+  addBetweenCondition(locale, name, srcLeftWords, srcRightWords, srcOptions) {
+    const options = srcOptions || {};
+    const leftWords = Array.isArray(srcLeftWords)
+      ? srcLeftWords
+      : [srcLeftWords];
+    const rightWords = Array.isArray(srcRightWords)
+      ? srcRightWords
+      : [srcRightWords];
+    const conditions = [];
+    for (let i = 0; i < leftWords.length; i += 1) {
+      for (let j = 0; j < rightWords.length; j += 1) {
+        const leftWord =
+          options.noSpaces === true ? leftWords[i] : ` ${leftWords[i]} `;
+        const rightWord =
+          options.noSpaces === true ? rightWords[j] : ` ${rightWords[j]} `;
+        conditions.push(`(?<=${leftWord})(.*)(?=${rightWord})`);
+      }
+    }
+    let regex = `/${conditions.join('|')}/g`;
+    if (!(options.caseSensitive === true)) {
+      regex += 'i';
+    }
+    const rule = {
+      type: 'between',
+      leftWords,
+      rightWords,
+      regex: Ner.str2regex(regex),
+      options,
+    };
+    this.addRule(locale, name, 'trim', rule);
+  }
+
+  addPositionCondition(locale, name, position, srcWords, srcOptions) {
+    const options = srcOptions || {};
+    const words = Array.isArray(srcWords) ? srcWords : [srcWords];
+    const rule = {
+      type: position,
+      words,
+      options,
+    };
+    this.addRule(locale, name, 'trim', rule);
+  }
+
+  addAfterCondition(locale, words, opts) {
+    this.addPositionCondition(TrimType.After, locale, words, opts);
+  }
+
+  addAfterFirstCondition(locale, words, opts) {
+    this.addPositionCondition(TrimType.AfterFirst, locale, words, opts);
+  }
+
+  addAfterLastCondition(locale, words, opts) {
+    this.addPositionCondition(TrimType.AfterLast, locale, words, opts);
+  }
+
+  addBeforeCondition(locale, words, opts) {
+    this.addPositionCondition(TrimType.Before, locale, words, opts);
+  }
+
+  addBeforeFirstCondition(locale, words, opts) {
+    this.addPositionCondition(TrimType.BeforeFirst, locale, words, opts);
+  }
+
+  addBeforeLastCondition(locale, words, opts) {
+    this.addPositionCondition(TrimType.BeforeLast, locale, words, opts);
   }
 
   process(input) {

@@ -22,11 +22,12 @@
  */
 
 const { containerBootstrap } = require('@nlpjs/core');
-const { Ner, ExtractorEnum, ExtractorRegex } = require('../src');
+const { Ner, ExtractorEnum, ExtractorRegex, ExtractorTrim } = require('../src');
 
 const container = containerBootstrap();
 container.use(ExtractorEnum);
 container.use(ExtractorRegex);
+container.use(ExtractorTrim);
 
 describe('Extractor Enum', () => {
   describe('Constructor', () => {

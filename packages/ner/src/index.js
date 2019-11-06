@@ -24,9 +24,11 @@
 const Ner = require('./ner');
 const ExtractorEnum = require('./extractor-enum');
 const ExtractorRegex = require('./extractor-regex');
+const ExtractorTrim = require('./extractor-trim');
 
 module.exports = {
   Ner,
   ExtractorEnum,
   ExtractorRegex,
+  ExtractorTrim,
 };
