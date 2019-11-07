@@ -159,31 +159,38 @@ class Nlu extends Clonable {
   convertToArray(srcInput) {
     const input = srcInput;
     const { classifications } = input;
-    const keys = Object.keys(classifications);
-    const result = [];
-    for (let i = 0; i < keys.length; i += 1) {
-      const intent = keys[i];
-      const score = classifications[intent];
-      if (score > 0 || !input.settings.filterZeros) {
-        result.push({ intent, score });
+    if (classifications) {
+      const keys = Object.keys(classifications);
+      const result = [];
+      for (let i = 0; i < keys.length; i += 1) {
+        const intent = keys[i];
+        const score = classifications[intent];
+        if (score > 0 || !input.settings.filterZeros) {
+          result.push({ intent, score });
+        }
       }
+      input.classifications = result.sort((a, b) => b.score - a.score);
     }
-    input.classifications = result.sort((a, b) => b.score - a.score);
     return input;
   }
 
   normalizeClassifications(srcInput) {
     const input = srcInput;
     const { classifications } = input;
-    let total = 0;
-    for (let i = 0; i < classifications.length; i += 1) {
-      classifications[i].score **= 2;
-      total += classifications[i].score;
-    }
-    if (total > 0) {
+    if (classifications) {
+      let total = 0;
       for (let i = 0; i < classifications.length; i += 1) {
-        classifications[i].score /= total;
+        classifications[i].score **= 2;
+        total += classifications[i].score;
       }
+      if (total > 0) {
+        for (let i = 0; i < classifications.length; i += 1) {
+          classifications[i].score /= total;
+        }
+      }
+    } else if (input.nluAnswer) {
+      input.classifications =
+        input.nluAnswer.classifications || input.nluAnswer.intents;
     }
     return input;
   }
