@@ -9,7 +9,47 @@ const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
 const Timer = require('./timer');
 
-function containerBootstrap(settings = {}) {
+const defaultPathConfiguration = './conf.json';
+const defaultPathPipeline = './pipelines.md';
+const defaultPathPlugins = './plugins';
+
+function loadPipelines(instance, fileName) {
+  if (Array.isArray(fileName)) {
+    for (let i = 0; i < fileName.length; i += 1) {
+      loadPipelines(instance, fileName[i]);
+    }
+  } else if (fs.existsSync(fileName)) {
+    if (fs.lstatSync(fileName).isDirectory()) {
+      const files = listFilesAbsolute(fileName).filter(x => x.endsWith('.md'));
+      for (let i = 0; i < files.length; i += 1) {
+        loadPipelines(instance, files[i]);
+      }
+    } else {
+      instance.loadPipelinesFromFile(fileName);
+    }
+  }
+}
+
+function loadPlugins(instance, fileName) {
+  if (Array.isArray(fileName)) {
+    for (let i = 0; i < fileName.length; i += 1) {
+      loadPlugins(instance, fileName[i]);
+    }
+  } else if (fs.existsSync(fileName)) {
+    if (fs.lstatSync(fileName).isDirectory()) {
+      const files = listFilesAbsolute(fileName).filter(x => x.endsWith('.js'));
+      for (let i = 0; i < files.length; i += 1) {
+        loadPlugins(instance, files[i]);
+      }
+    } else {
+      /* eslint-disable-next-line */
+      const plugin = require(fileName);
+      instance.use(plugin);
+    }
+  }
+}
+
+function containerBootstrap(srcSettings = {}) {
   const instance = new Container();
   instance.use(ArrToObj);
   instance.use(Normalizer);
@@ -18,17 +58,47 @@ function containerBootstrap(settings = {}) {
   instance.use(Stopwords);
   instance.use(Tokenizer);
   instance.use(Timer);
-  const pathPipeline = settings.pathPipeline || './pipelines.md';
-  if (fs.existsSync(pathPipeline)) {
-    instance.loadPipelinesFromFile(pathPipeline);
+  let settings = srcSettings;
+  if (typeof settings === 'string') {
+    settings = {
+      pathConfiguration: srcSettings,
+      pathPipeline: defaultPathPipeline,
+      pathPlugins: defaultPathPlugins,
+    };
+  } else {
+    if (!settings.pathConfiguration) {
+      settings.pathConfiguration = defaultPathConfiguration;
+    }
+    if (!settings.pathPipeline) {
+      settings.pathPipeline = defaultPathPipeline;
+    }
+    if (!settings.pathPlugins) {
+      settings.pathPlugins = defaultPathPlugins;
+    }
   }
-  const pathPlugins = settings.pathPlugins || './plugins';
-  const files = listFilesAbsolute(pathPlugins).filter(x => x.endsWith('.js'));
-  for (let i = 0; i < files.length; i += 1) {
-    /* eslint-disable-next-line */
-    const plugin = require(files[i]);
-    instance.use(plugin);
+  if (fs.existsSync(settings.pathConfiguration)) {
+    const configuration = JSON.parse(
+      fs.readFileSync(settings.pathConfiguration, 'utf8')
+    );
+    if (configuration.pathPipeline) {
+      settings.pathPipeline = configuration.pathPipeline;
+    }
+    if (configuration.pathPlugins) {
+      settings.pathPlugins = configuration.pathPlugins;
+    }
+    if (configuration.settings) {
+      const keys = Object.keys(configuration.settings);
+      for (let i = 0; i < keys.length; i += 1) {
+        instance.registerConfiguration(
+          keys[i],
+          configuration.settings[keys[i]],
+          true
+        );
+      }
+    }
   }
+  loadPipelines(instance, settings.pathPipeline || './pipelines.md');
+  loadPlugins(instance, settings.pathPlugins || './plugins');
   return instance;
 }
 
