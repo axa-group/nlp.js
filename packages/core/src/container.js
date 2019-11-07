@@ -25,7 +25,13 @@ const fs = require('fs');
 const { compareWildcars } = require('./helper');
 const DefaultCompiler = require('./default-compiler');
 
+/**
+ * Container class
+ */
 class Container {
+  /**
+   * Constructor of the class.
+   */
   constructor() {
     this.classes = {};
     this.factory = {};

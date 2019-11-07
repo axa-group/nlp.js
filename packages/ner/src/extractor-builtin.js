@@ -34,11 +34,11 @@ class ExtractorBuiltin {
     return srcInput;
   }
 
-  run(srcInput) {
+  async run(srcInput) {
     const input = srcInput;
     const locale = input.locale || 'en';
     const extractor = this.container.get(`extract-builtin-${locale}`) || this;
-    const newInput = extractor.extract({
+    const newInput = await extractor.extract({
       text: input.text || input.utterance,
       locale: input.locale,
     });
