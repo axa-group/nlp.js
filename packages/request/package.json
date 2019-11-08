@@ -1,7 +1,7 @@
 {
-  "name": "@nlpjs/nlu-luis",
+  "name": "@nlpjs/request",
   "version": "1.0.0",
-  "description": "Natural Language Understanding",
+  "description": "Request",
   "author": {
     "email": "jesus.seijas@axa.com",
     "name": "Jesus Seijas"
@@ -25,8 +25,6 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^1.0.0",
-    "@nlpjs/nlu": "^1.0.0",
-    "@nlpjs/request": "^1.0.0"
+    "https-proxy-agent": "^3.0.1"
   }
 }

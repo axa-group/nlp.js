@@ -22,54 +22,19 @@
  */
 
 const { Nlu } = require('@nlpjs/nlu');
-const https = require('https');
-const url = require('url');
-const querystring = require('querystring');
+const { request } = require('@nlpjs/request');
 
 class NluLuis extends Nlu {
-  constructor(settings, container) {
-    super(settings, container);
-    this.url = url.parse(this.settings.luisUrl || '');
-    this.port = this.url.port || 443;
-  }
-
   innerTrain(srcInput) {
     const input = srcInput;
     return input;
   }
 
-  request(utterance) {
-    return new Promise((resolve, reject) => {
-      const options = {
-        host: this.url.hostname,
-        port: this.port,
-        method: 'GET',
-        path: `${this.url.path}${querystring.escape(utterance)}`,
-        headers: {},
-      };
-      const req = https.request(options, res => {
-        let result = '';
-        res.on('data', chunk => {
-          result += chunk;
-        });
-        res.on('end', () => {
-          try {
-            const obj = JSON.parse(result);
-            resolve(obj);
-          } catch (err) {
-            reject(err);
-          }
-        });
-        res.on('error', err => reject(err));
-      });
-      req.on('error', err => reject(err));
-      req.end();
-    });
-  }
-
   async innerProcess(srcInput) {
     const input = srcInput;
-    input.nluAnswer = await this.request(input.text || input.utterance);
+    input.nluAnswer = await request(
+      `${this.settings.luisUrl}${input.text || input.utterance}`
+    );
     return input;
   }
 
