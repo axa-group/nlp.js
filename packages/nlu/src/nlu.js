@@ -188,9 +188,8 @@ class Nlu extends Clonable {
           classifications[i].score /= total;
         }
       }
-    } else if (input.nluAnswer) {
-      input.classifications =
-        input.nluAnswer.classifications || input.nluAnswer.intents;
+    } else {
+      input.classifications = input.nluAnswer;
     }
     return input;
   }
@@ -240,7 +239,20 @@ class Nlu extends Clonable {
       text: utterance,
       settings: settings || this.settings,
     };
-    return this.runPipeline(input, this.pipelineProcess);
+    const output = await this.runPipeline(input, this.pipelineProcess);
+    if (Array.isArray(output)) {
+      return {
+        classifications: output,
+        entities: undefined
+      }
+    } else {
+      if (output.intents) {
+        output.classifications = output.intents;
+        delete output.intents;
+      }
+      output.entities = output.entities;
+      return output;
+    }
   }
 }
 

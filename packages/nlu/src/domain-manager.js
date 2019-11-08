@@ -284,7 +284,14 @@ class DomainManager extends Clonable {
         };
         return input;
       }
-      const classifications = await nlu.process(input.utterance);
+      const nluAnswer = await nlu.process(input.utterance);
+      let classifications;
+      if (Array.isArray(nluAnswer)) {
+        classifications = nluAnswer;
+      } else {
+        classifications = nluAnswer.classifications;
+        input.nluAnswer = nluAnswer;
+      }
       const finalDomain =
         domainName === defaultDomainName
           ? this.intentDict[classifications[0].intent]
