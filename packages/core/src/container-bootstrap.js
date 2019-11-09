@@ -53,8 +53,6 @@ function loadPlugins(instance, fileName) {
 function traverse(obj) {
   if (typeof obj === 'string') {
     if (obj.startsWith('$')) {
-      console.log(obj.slice(1));
-      console.log(process.env.LUIS_URL);
       return process.env[obj.slice(1)];
     }
     return obj;
