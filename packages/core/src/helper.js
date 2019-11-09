@@ -113,27 +113,29 @@ function listFilesAbsolute(folderPath, recursive = true) {
 
 function loadEnv(fileName = '.env') {
   const absolutePath = getAbsolutePath(fileName);
-  const content = fs.readFileSync(absolutePath, 'utf8');
-  const lines = content.split(/\n|\r|\r\n/);
-  for (let i = 0; i < lines.length; i += 1) {
-    const line = lines[i];
-    const keyValueArr = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
-    if (keyValueArr) {
-      const key = keyValueArr[1];
-      let val = keyValueArr[2] || '';
-      const endVal = val.length - 1;
-      const isDoubleQuoted = val[0] === '"' && val[endVal] === '"';
-      const isSingleQuoted = val[0] === "'" && val[endVal] === "'";
-      if (isSingleQuoted || isDoubleQuoted) {
-        val = val.substring(1, endVal);
-        if (isDoubleQuoted) {
-          val = val.replace(/\\n/g, '\n');
+  if (fs.existsSync(absolutePath)) {
+    const content = fs.readFileSync(absolutePath, 'utf8');
+    const lines = content.split(/\n|\r|\r\n/);
+    for (let i = 0; i < lines.length; i += 1) {
+      const line = lines[i];
+      const keyValueArr = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (keyValueArr) {
+        const key = keyValueArr[1];
+        let val = keyValueArr[2] || '';
+        const endVal = val.length - 1;
+        const isDoubleQuoted = val[0] === '"' && val[endVal] === '"';
+        const isSingleQuoted = val[0] === "'" && val[endVal] === "'";
+        if (isSingleQuoted || isDoubleQuoted) {
+          val = val.substring(1, endVal);
+          if (isDoubleQuoted) {
+            val = val.replace(/\\n/g, '\n');
+          }
+        } else {
+          val = val.trim();
         }
-      } else {
-        val = val.trim();
-      }
-      if (process.env[key] === undefined) {
-        process.env[key] = val;
+        if (process.env[key] === undefined) {
+          process.env[key] = val;
+        }
       }
     }
   }
