@@ -27,7 +27,7 @@ const Nlu = require('./nlu');
 class NeuralNlu extends Nlu {
   innerTrain(srcInput) {
     const input = srcInput;
-    this.neuralNetwork = new NeuralNetwork(input.settings);
+    this.neuralNetwork = new NeuralNetwork(input.settings, this.container);
     input.status = this.neuralNetwork.train(input.corpus);
     return input;
   }

@@ -30,7 +30,10 @@ class Clonable {
   constructor(settings = {}, container = defaultContainer) {
     this.container = settings.container || container;
     this.applySettings(this, settings);
-    this.logger = this.container.get('logger');
+  }
+
+  get logger() {
+    return this.container.get('logger')
   }
 
   /**
