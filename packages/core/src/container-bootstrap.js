@@ -3,7 +3,7 @@ const ArrToObj = require('./arr-to-obj');
 const { Container } = require('./container');
 const Normalizer = require('./normalizer');
 const ObjToArr = require('./obj-to-arr');
-const { listFilesAbsolute } = require('./helper');
+const { listFilesAbsolute, getAbsolutePath } = require('./helper');
 const Stemmer = require('./stemmer');
 const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
@@ -50,6 +50,29 @@ function loadPlugins(instance, fileName) {
   }
 }
 
+function traverse(obj) {
+  if (typeof obj === 'string') {
+    if (obj.startsWith('$')) {
+      console.log(obj.slice(1));
+      console.log(process.env.LUIS_URL);
+      return process.env[obj.slice(1)];
+    }
+    return obj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(x => traverse(x));
+  }
+  if (typeof obj === 'object') {
+    const keys = Object.keys(obj);
+    const result = {};
+    for (let i = 0; i < keys.length; i += 1) {
+      result[keys[i]] = traverse(obj[keys[i]]);
+    }
+    return result;
+  }
+  return obj;
+}
+
 function containerBootstrap(srcSettings = {}) {
   const instance = new Container();
   instance.use(ArrToObj);
@@ -78,10 +101,12 @@ function containerBootstrap(srcSettings = {}) {
       settings.pathPlugins = defaultPathPlugins;
     }
   }
+  settings.pathConfiguration = getAbsolutePath(settings.pathConfiguration);
   if (fs.existsSync(settings.pathConfiguration)) {
-    const configuration = JSON.parse(
-      fs.readFileSync(settings.pathConfiguration, 'utf8')
+    const configuration = traverse(
+      JSON.parse(fs.readFileSync(settings.pathConfiguration, 'utf8'))
     );
+
     if (configuration.pathPipeline) {
       settings.pathPipeline = configuration.pathPipeline;
     }
@@ -96,6 +121,13 @@ function containerBootstrap(srcSettings = {}) {
           configuration.settings[keys[i]],
           true
         );
+      }
+    }
+    if (configuration.use) {
+      for (let i = 0; i < configuration.use.length; i += 1) {
+        /* eslint-disable-next-line */
+        const lib = require(getAbsolutePath(configuration.use[i].path));
+        instance.use(lib[configuration.use[i].className]);
       }
     }
   }

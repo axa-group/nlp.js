@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Clonable } = require('@nlpjs/core');
+const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { NluManager } = require('@nlpjs/nlu');
 
 class Nlp extends Clonable {
@@ -29,7 +29,7 @@ class Nlp extends Clonable {
     super(
       {
         settings: {},
-        container: settings.container || container,
+        container: settings.container || container || containerBootstrap(),
       },
       container
     );
@@ -49,10 +49,28 @@ class Nlp extends Clonable {
     //   pipelineTrain: this.getPipeline(`${this.settings.tag}-train`),
     //   pipelineProcess: this.getPipeline(`${this.settings.tag}-process`),
     // });
+    this.initialize();
   }
 
   registerDefault() {
     this.use(NluManager);
+  }
+
+  initialize() {
+    if (this.settings.nlu) {
+      const locales = Object.keys(this.settings.nlu);
+      for (let i = 0; i < locales.length; i += 1) {
+        const locale = locales[i];
+        const domains = Object.keys(this.settings.nlu[locale]);
+        for (let j = 0; j < domains.length; j += 1) {
+          const domain = domains[j];
+          const settings = this.settings.nlu[locale][domain];
+          const { className } = settings;
+          delete settings.className;
+          this.useNlu(className, locale, domain, settings);
+        }
+      }
+    }
   }
 
   useNlu(clazz, locale, domain, settings) {
@@ -64,7 +82,8 @@ class Nlp extends Clonable {
         this.useNlu(clazz, locale[i], domain, settings);
       }
     } else {
-      const className = this.container.use(clazz);
+      const className =
+        typeof clazz === 'string' ? clazz : this.container.use(clazz);
       let config = this.container.getConfiguration(`domain-manager-${locale}`);
       if (!config) {
         config = {};
@@ -86,6 +105,7 @@ class Nlp extends Clonable {
   }
 
   train() {
+    this.nluManager.addLanguage(this.settings.languages);
     return this.nluManager.train();
   }
 

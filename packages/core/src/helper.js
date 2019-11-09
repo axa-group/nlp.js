@@ -132,7 +132,7 @@ function loadEnv(fileName = '.env') {
       } else {
         val = val.trim();
       }
-      if (process.env[key] !== undefined) {
+      if (process.env[key] === undefined) {
         process.env[key] = val;
       }
     }
@@ -145,6 +145,7 @@ module.exports = {
   asciiToArray,
   stringToArray,
   compareWildcars,
+  getAbsolutePath,
   listFiles,
   listFilesAbsolute,
   loadEnv,

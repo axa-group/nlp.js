@@ -40,8 +40,10 @@ const {
   asciiToArray,
   stringToArray,
   compareWildcars,
+  getAbsolutePath,
   listFiles,
   listFilesAbsolute,
+  loadEnv,
 } = require('./helper');
 
 module.exports = {
@@ -57,8 +59,10 @@ module.exports = {
   asciiToArray,
   stringToArray,
   compareWildcars,
+  getAbsolutePath,
   listFiles,
   listFilesAbsolute,
+  loadEnv,
   Normalizer,
   ObjToArr,
   Stemmer,
