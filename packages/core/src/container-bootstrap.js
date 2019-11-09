@@ -99,7 +99,10 @@ function containerBootstrap(srcSettings = {}, mustLoadEnv = true) {
       settings.pathPlugins = defaultPathPlugins;
     }
   }
-  if (srcSettings.loadEnv || (srcSettings.loadEnv === undefined && mustLoadEnv)) {
+  if (
+    srcSettings.loadEnv ||
+    (srcSettings.loadEnv === undefined && mustLoadEnv)
+  ) {
     loadEnv();
   }
   settings.pathConfiguration = getAbsolutePath(settings.pathConfiguration);
