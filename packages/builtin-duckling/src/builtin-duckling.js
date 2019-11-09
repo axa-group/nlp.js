@@ -231,7 +231,7 @@ class BuiltinDuckling extends Clonable {
       const result = await this.request(utterance, language);
       return { edges: this.transform(result), source: result };
     } catch (ex) {
-      console.log(ex);
+      this.logger.error(ex);
       return { edges: [] };
     }
   }

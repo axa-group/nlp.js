@@ -8,6 +8,7 @@ const Stemmer = require('./stemmer');
 const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
 const Timer = require('./timer');
+const logger = require('./logger');
 
 const defaultPathConfiguration = './conf.json';
 const defaultPathPipeline = './pipelines.md';
@@ -58,6 +59,7 @@ function containerBootstrap(srcSettings = {}) {
   instance.use(Stopwords);
   instance.use(Tokenizer);
   instance.use(Timer);
+  instance.use(logger);
   let settings = srcSettings;
   if (typeof settings === 'string') {
     settings = {

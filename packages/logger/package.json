@@ -1,7 +1,7 @@
 {
-  "name": "@nlpjs/nlp",
+  "name": "@nlpjs/logger",
   "version": "1.0.0",
-  "description": "Natural Language Processing",
+  "description": "Logger",
   "author": {
     "email": "jesus.seijas@axa.com",
     "name": "Jesus Seijas"
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^1.0.0",
-    "@nlpjs/nlu": "^1.0.0"
+    "pino": "^5.13.6",
+    "pino-pretty": "^3.3.0"
   }
 }

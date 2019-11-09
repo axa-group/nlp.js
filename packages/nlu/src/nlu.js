@@ -243,16 +243,14 @@ class Nlu extends Clonable {
     if (Array.isArray(output)) {
       return {
         classifications: output,
-        entities: undefined
-      }
-    } else {
-      if (output.intents) {
-        output.classifications = output.intents;
-        delete output.intents;
-      }
-      output.entities = output.entities;
-      return output;
+        entities: undefined,
+      };
     }
+    if (output.intents) {
+      output.classifications = output.intents;
+      delete output.intents;
+    }
+    return output;
   }
 }
 

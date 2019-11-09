@@ -62,7 +62,10 @@ describe('NLU Neural', () => {
       for (let i = 0; i < srccorpus.data.length; i += 1) {
         const { intent, tests } = srccorpus.data[i];
         for (let j = 0; j < tests.length; j += 1) {
-          const result = await nlu.process(tests[j]);
+          let result = await nlu.process(tests[j]);
+          if (result.classifications) {
+            result = result.classifications;
+          }
           const best = result[0] || 'None';
           if (best.intent === intent) {
             if (intent === 'None' || best.score >= 0.5) {

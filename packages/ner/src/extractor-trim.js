@@ -298,7 +298,6 @@ class ExtractorTrim {
       for (let j = 0; j < newEdges.length; j += 1) {
         edges.push(newEdges[j]);
       }
-      console.log(newEdges);
     }
     edges.sort((a, b) => a.start - b.start);
     input.edges = reduceEdges(edges, false);

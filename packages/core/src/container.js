@@ -317,7 +317,10 @@ class Container {
     if (instance.register) {
       instance.register(this);
     }
-    this.register(name || instance.name, instance);
+    const tag = instance.settings ? instance.settings.tag : undefined;
+    const itemName = name || instance.name || tag;
+    this.register(itemName, instance);
+    return itemName;
   }
 
   buildPipeline(srcPipeline, prevPipeline = []) {
@@ -390,7 +393,7 @@ class Container {
   }
 
   loadPipelinesFromString(str = '') {
-    const lines = str.split('\n');
+    const lines = str.split(/\n|\r|\r\n/);
     let currentName = '';
     let currentPipeline = [];
     for (let i = 0; i < lines.length; i += 1) {

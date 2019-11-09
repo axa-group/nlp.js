@@ -21,49 +21,47 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Among = require('./among');
-const ArrToObj = require('./arr-to-obj');
-const BaseStemmer = require('./base-stemmer');
-const containerBootstrap = require('./container-bootstrap');
-const Clonable = require('./clonable');
-const { Container, defaultContainer } = require('./container');
-const Normalizer = require('./normalizer');
-const ObjToArr = require('./obj-to-arr');
-const Stemmer = require('./stemmer');
-const Stopwords = require('./stopwords');
-const Tokenizer = require('./tokenizer');
-const Timer = require('./timer');
-const logger = require('./logger');
-const {
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  compareWildcars,
-  listFiles,
-  listFilesAbsolute,
-} = require('./helper');
+class Logger {
+  constructor() {
+    this.name = 'logger';
+  }
 
-module.exports = {
-  Among,
-  ArrToObj,
-  BaseStemmer,
-  containerBootstrap,
-  Clonable,
-  Container,
-  defaultContainer,
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  compareWildcars,
-  listFiles,
-  listFilesAbsolute,
-  Normalizer,
-  ObjToArr,
-  Stemmer,
-  Stopwords,
-  Tokenizer,
-  Timer,
-  logger,
-};
+  debug(...args) {
+    // eslint-disable-next-line no-console
+    console.debug(...args);
+  }
+
+  info(...args) {
+    // eslint-disable-next-line no-console
+    console.info(...args);
+  }
+
+  warn(...args) {
+    // eslint-disable-next-line no-console
+    console.warn(...args);
+  }
+
+  error(...args) {
+    // eslint-disable-next-line no-console
+    console.error(...args);
+  }
+
+  log(...args) {
+    // eslint-disable-next-line no-console
+    console.log(...args);
+  }
+
+  trace(...args) {
+    // eslint-disable-next-line no-console
+    console.trace(...args);
+  }
+
+  fatal(...args) {
+    // eslint-disable-next-line no-console
+    console.error(...args);
+  }
+}
+
+const logger = new Logger();
+
+module.exports = logger;

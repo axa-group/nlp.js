@@ -20,7 +20,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-const { Clonable } = require('@nlpjs/core');
+const { Clonable, logger } = require('@nlpjs/core');
 const {
   LookupTable,
   toHash,
@@ -52,7 +52,7 @@ class NeuralNetwork extends Clonable {
     this.applySettings(this.perceptronSettings, defaultSettings);
     if (this.perceptronSettings.log === true) {
       this.logFn = (status, time) =>
-        console.log(
+        logger.debug(
           `Epoch ${status.iterations} loss ${status.error} time ${time}ms`
         );
     } else if (typeof this.perceptronSettings.log === 'function') {

@@ -152,7 +152,6 @@ class BuiltinMicrosoft extends Clonable {
   }
 
   calculateResolution(entity, locale) {
-    console.log(entity);
     const { resolution } = entity;
     if (['number', 'ordinal', 'percentage'].includes(entity.typeName)) {
       let resValue = resolution.value;
