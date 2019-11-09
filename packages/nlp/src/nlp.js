@@ -43,12 +43,6 @@ class Nlp extends Clonable {
       this.container.getConfiguration(this.settings.tag)
     );
     this.nluManager = this.container.get('nlu-manager');
-    // new NluManager(this.settings.nlu, this.container);
-    // this.applySettings(this, {
-    //   pipelinePrepare: this.getPipeline(`${this.settings.tag}-prepare`),
-    //   pipelineTrain: this.getPipeline(`${this.settings.tag}-train`),
-    //   pipelineProcess: this.getPipeline(`${this.settings.tag}-process`),
-    // });
     this.initialize();
   }
 

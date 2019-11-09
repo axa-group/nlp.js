@@ -3,7 +3,7 @@ const ArrToObj = require('./arr-to-obj');
 const { Container } = require('./container');
 const Normalizer = require('./normalizer');
 const ObjToArr = require('./obj-to-arr');
-const { listFilesAbsolute, getAbsolutePath } = require('./helper');
+const { listFilesAbsolute, getAbsolutePath, loadEnv } = require('./helper');
 const Stemmer = require('./stemmer');
 const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
@@ -71,7 +71,7 @@ function traverse(obj) {
   return obj;
 }
 
-function containerBootstrap(srcSettings = {}) {
+function containerBootstrap(srcSettings = {}, mustLoadEnv = true) {
   const instance = new Container();
   instance.use(ArrToObj);
   instance.use(Normalizer);
@@ -98,6 +98,9 @@ function containerBootstrap(srcSettings = {}) {
     if (!settings.pathPlugins) {
       settings.pathPlugins = defaultPathPlugins;
     }
+  }
+  if (srcSettings.loadEnv || (srcSettings.loadEnv === undefined && mustLoadEnv)) {
+    loadEnv();
   }
   settings.pathConfiguration = getAbsolutePath(settings.pathConfiguration);
   if (fs.existsSync(settings.pathConfiguration)) {
