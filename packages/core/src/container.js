@@ -24,6 +24,7 @@
 const fs = require('fs');
 const { compareWildcars } = require('./helper');
 const DefaultCompiler = require('./default-compiler');
+const logger = require('./logger');
 
 /**
  * Container class
@@ -39,6 +40,7 @@ class Container {
     this.configurations = {};
     this.compilers = {};
     this.registerCompiler(DefaultCompiler);
+    this.use(logger);
   }
 
   registerCompiler(Compiler, name) {

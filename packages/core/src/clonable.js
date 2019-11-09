@@ -33,7 +33,7 @@ class Clonable {
   }
 
   get logger() {
-    return this.container.get('logger')
+    return this.container.get('logger');
   }
 
   /**
