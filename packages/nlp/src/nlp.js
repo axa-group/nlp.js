@@ -23,6 +23,13 @@
 
 const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { NluManager } = require('@nlpjs/nlu');
+const {
+  Ner,
+  ExtractorEnum,
+  ExtractorRegex,
+  ExtractorTrim,
+  ExtractorBuiltin,
+} = require('@nlpjs/ner');
 
 class Nlp extends Clonable {
   constructor(settings = {}, container) {
@@ -43,11 +50,17 @@ class Nlp extends Clonable {
       this.container.getConfiguration(this.settings.tag)
     );
     this.nluManager = this.container.get('nlu-manager', this.settings.nlu);
+    this.ner = this.container.get('ner', this.settings.ner);
     this.initialize();
   }
 
   registerDefault() {
     this.use(NluManager);
+    this.use(Ner);
+    this.use(ExtractorEnum);
+    this.use(ExtractorRegex);
+    this.use(ExtractorTrim);
+    this.use(ExtractorBuiltin);
   }
 
   initialize() {
@@ -112,6 +125,58 @@ class Nlp extends Clonable {
 
   removeDocument(locale, utterance, intent) {
     return this.nluManager.remove(locale, utterance, intent);
+  }
+
+  addNerRule(locale, name, type, rule) {
+    return this.ner.addRule(locale, name, type, rule);
+  }
+
+  removeNerRule(locale, name, rule) {
+    return this.ner.removeRule(locale, name, rule);
+  }
+
+  addNerRuleOptionTexts(locale, name, option, texts) {
+    return this.ner.addRuleOptionTexts(locale, name, option, texts);
+  }
+
+  removeNerRuleOptionTexts(locale, name, option, texts) {
+    return this.ner.removeRuleOptionTexts(locale, name, option, texts);
+  }
+
+  addNerRegexRule(locale, name, regex) {
+    return this.ner.addRegexRule(locale, name, regex);
+  }
+
+  addNerBetweenCondition(locale, name, left, right, opts) {
+    return this.ner.addBetweenCondition(locale, name, left, right, opts);
+  }
+
+  addNerPositionCondition(locale, name, position, words, opts) {
+    return this.ner.addPositionCondition(locale, name, position, words, opts);
+  }
+
+  addNerAfterCondition(locale, name, words, opts) {
+    return this.ner.addAfterCondition(locale, name, words, opts);
+  }
+
+  addNerAfterFirstCondition(locale, name, words, opts) {
+    return this.ner.addAfterFirstCondition(locale, name, words, opts);
+  }
+
+  addNerAfterLastCondition(locale, name, words, opts) {
+    return this.ner.addAfterLastCondition(locale, name, words, opts);
+  }
+
+  addNerBeforeCondition(locale, name, words, opts) {
+    return this.ner.addBeforeCondition(locale, name, words, opts);
+  }
+
+  addNerBeforeFirstCondition(locale, name, words, opts) {
+    return this.ner.addBeeforeFirstCondition(locale, name, words, opts);
+  }
+
+  addNerBeforeLastCondition(locale, name, words, opts) {
+    return this.ner.addBeforeLastCondition(locale, name, words, opts);
   }
 
   train() {

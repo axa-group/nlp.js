@@ -34,9 +34,9 @@ class Ner extends Clonable {
       container
     );
     this.applySettings(this.settings, settings);
-    this.applySettings(this.settings, { locale: 'en' });
+    this.applySettings(this.settings);
     if (!this.settings.tag) {
-      this.settings.tag = `ner-${this.settings.locale}`;
+      this.settings.tag = `ner`;
     }
     this.registerDefault();
     this.applySettings(
@@ -50,6 +50,17 @@ class Ner extends Clonable {
   }
 
   registerDefault() {
+    this.container.registerPipeline(
+      'ner-process',
+      [
+        '.decideRules',
+        'extract-enum',
+        'extract-regex',
+        'extract-trim',
+        'extract-builtin',
+      ],
+      false
+    );
     this.container.registerPipeline(
       'ner-??-process',
       [
@@ -306,7 +317,12 @@ class Ner extends Clonable {
   }
 
   process(input) {
-    return this.runPipeline(input, this.pipelineProcess);
+    return this.runPipeline(
+      input,
+      input.locale
+        ? `${this.settings.tag}-${input.locale}-process`
+        : this.pipelineProcess
+    );
   }
 }
 
