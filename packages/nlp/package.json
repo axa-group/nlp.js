@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^1.0.0",
+    "@nlpjs/ner": "^1.0.0",
     "@nlpjs/nlu": "^1.0.0"
   }
 }

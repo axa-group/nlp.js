@@ -42,7 +42,7 @@ class Nlp extends Clonable {
       this.settings,
       this.container.getConfiguration(this.settings.tag)
     );
-    this.nluManager = this.container.get('nlu-manager');
+    this.nluManager = this.container.get('nlu-manager', this.settings.nlu);
     this.initialize();
   }
 
@@ -96,6 +96,22 @@ class Nlp extends Clonable {
       config.nluByDomain[domainName].className = className;
       config.nluByDomain[domainName].settings = settings;
     }
+  }
+
+  guessLanguage(input) {
+    return this.nluManager.guessLanguage(input);
+  }
+
+  addLanguage(locales) {
+    return this.nluManager.addLanguage(locales);
+  }
+
+  addDocument(locale, utterance, intent) {
+    return this.nluManager.add(locale, utterance, intent);
+  }
+
+  removeDocument(locale, utterance, intent) {
+    return this.nluManager.remove(locale, utterance, intent);
   }
 
   train() {

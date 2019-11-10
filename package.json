@@ -26,9 +26,7 @@
     }
   ],
   "license": "MIT",
-  "dependencies": {
-    "node-nlp": "^3.10.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "coveralls": "^3.0.7",
     "eslint": "^6.5.1",
