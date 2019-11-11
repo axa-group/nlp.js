@@ -37,14 +37,14 @@ const {
   StopwordsBn,
   TokenizerBn,
 } = require('@nlpjs/lang-bn');
-const {
-  LangCa,
-  NormalizerCa,
-  SentimentCa,
-  StemmerCa,
-  StopwordsCa,
-  TokenizerCa,
-} = require('@nlpjs/lang-ca');
+// const {
+//   LangCa,
+//   NormalizerCa,
+//   SentimentCa,
+//   StemmerCa,
+//   StopwordsCa,
+//   TokenizerCa,
+// } = require('@nlpjs/lang-ca');
 const {
   LangCs,
   NormalizerCs,
@@ -312,12 +312,12 @@ module.exports = {
   StopwordsBn,
   TokenizerBn,
 
-  LangCa,
-  NormalizerCa,
-  SentimentCa,
-  StemmerCa,
-  StopwordsCa,
-  TokenizerCa,
+  // LangCa,
+  // NormalizerCa,
+  // SentimentCa,
+  // StemmerCa,
+  // StopwordsCa,
+  // TokenizerCa,
 
   LangCs,
   NormalizerCs,

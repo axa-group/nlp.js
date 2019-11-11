@@ -71,8 +71,8 @@ function traverse(obj) {
   return obj;
 }
 
-function containerBootstrap(srcSettings = {}, mustLoadEnv = true) {
-  const instance = new Container();
+function containerBootstrap(srcSettings = {}, mustLoadEnv = true, container) {
+  const instance = container || new Container();
   instance.use(ArrToObj);
   instance.use(Normalizer);
   instance.use(ObjToArr);

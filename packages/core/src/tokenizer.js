@@ -21,15 +21,29 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 const { defaultContainer } = require('./container');
+const Normalizer = require('./normalizer');
 
 class Tokenizer {
-  constructor(container = defaultContainer) {
+  constructor(container = defaultContainer, normalize) {
     this.container = container.container || container;
     this.name = 'tokenize';
+    if (normalize) {
+      this.shouldNormalize = true;
+      if (normalize !== true) {
+        this.normmalizer = normalize;
+      } else {
+        this.normalizer = new Normalizer();
+      }
+    } else {
+      this.shouldNormalize = false;
+    }
   }
 
   tokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+    const normalized = this.shouldNormalize
+      ? this.normalizer.normalize(text)
+      : text;
+    return normalized.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
   }
 
   run(srcInput) {
