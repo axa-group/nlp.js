@@ -30,6 +30,7 @@
     "@nlpjs/lang-all": "^1.0.0",
     "@nlpjs/emoji": "^1.0.0",
     "@nlpjs/evaluator": "^1.0.0",
+    "@nlpjs/neural": "^1.0.0",
     "@nlpjs/nlg": "^1.0.0",
     "@nlpjs/nlu": "^1.0.0",
     "@nlpjs/sentiment": "^1.0.0",

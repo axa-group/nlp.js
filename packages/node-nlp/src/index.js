@@ -26,6 +26,7 @@ const { NlpUtil } = require('./nlp');
 const { XTableUtils, XTable, XDoc } = require('./xtables');
 const { removeEmojis, Evaluator, SpellCheck, Handlebars } = require('./util');
 const { ActionManager, NlgManager } = require('./nlg');
+const { NeuralNetwork } = require('./classifiers');
 
 module.exports = {
   Language,
@@ -39,4 +40,5 @@ module.exports = {
   Handlebars,
   ActionManager,
   NlgManager,
+  NeuralNetwork,
 };
