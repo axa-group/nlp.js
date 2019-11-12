@@ -23,15 +23,9 @@
 const { Tokenizer } = require('@nlpjs/core');
 
 class TokenizerId extends Tokenizer {
-  constructor(container) {
-    super(container);
+  constructor(container, shouldTokenize) {
+    super(container, shouldTokenize);
     this.name = 'tokenizer-id';
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text);
-    return input;
   }
 }
 

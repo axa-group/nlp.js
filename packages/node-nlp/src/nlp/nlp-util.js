@@ -79,7 +79,9 @@ class NlpUtil {
       1
     )}`;
     const TokenizerClass = LangAll[name];
-    return TokenizerClass ? new TokenizerClass() : new Tokenizer();
+    return TokenizerClass
+      ? new TokenizerClass(undefined, true)
+      : new Tokenizer(undefined, true);
   }
 
   static getCulture(locale) {
@@ -135,6 +137,6 @@ NlpUtil.useNoneFeature = {
 NlpUtil.tokenizers = {};
 
 containerBootstrap({}, true, defaultContainer);
-defaultContainer.use(LangAll);
+defaultContainer.use(LangAll.LangAll);
 
 module.exports = NlpUtil;

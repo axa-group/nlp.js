@@ -24,23 +24,17 @@ const { Tokenizer } = require('@nlpjs/core');
 const Segment = require('novel-segment');
 
 class TokenizerZh extends Tokenizer {
-  constructor(container) {
-    super(container);
+  constructor(container, shouldTokenize) {
+    super(container, shouldTokenize);
     this.name = 'tokenizer-zh';
   }
 
-  tokenize(text) {
+  innerTokenize(text) {
     if (!this.segment) {
       this.segment = new Segment();
       this.segment.useDefault();
     }
     return this.segment.doSegment(text);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text);
-    return input;
   }
 }
 

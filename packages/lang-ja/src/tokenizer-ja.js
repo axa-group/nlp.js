@@ -24,8 +24,8 @@ const { Tokenizer } = require('@nlpjs/core');
 const JapaneseRules = require('./japanese-rules.json');
 
 class TokenizerJa extends Tokenizer {
-  constructor(container) {
-    super(container);
+  constructor(container, shouldTokenize) {
+    super(container, shouldTokenize);
     this.name = 'tokenizer-ja';
     this.chartype = [
       [/[〇一二三四五六七八九十百千万億兆]/, 'M'],
@@ -62,7 +62,7 @@ class TokenizerJa extends Tokenizer {
       .filter(token => token !== '');
   }
 
-  tokenize(srcText) {
+  innerTokenize(srcText) {
     if (!srcText || srcText === '') {
       return [];
     }
@@ -154,12 +154,6 @@ class TokenizerJa extends Tokenizer {
     }
     result.push(word);
     return this.removePuncTokens(result);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text);
-    return input;
   }
 }
 

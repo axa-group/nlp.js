@@ -21,9 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-class TokenizerEn {
-  constructor(container) {
-    this.container = container;
+const { Tokenizer } = require('@nlpjs/core');
+
+class TokenizerEn extends Tokenizer {
+  constructor(container, shouldNormalize) {
+    super(container, shouldNormalize);
     this.name = 'tokenizer-en';
   }
 
@@ -58,16 +60,10 @@ class TokenizerEn {
     return result;
   }
 
-  tokenize(text) {
+  innerTokenize(text) {
     const replaced = this.replace(text);
     const arr = replaced.split(/\W+/).filter(x => x);
     return this.replaceContractions(arr, text);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text).filter(x => x);
-    return input;
   }
 }
 

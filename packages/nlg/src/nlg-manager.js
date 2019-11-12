@@ -76,8 +76,16 @@ class NlgManager extends Clonable {
         const filtered = [];
         for (let i = 0; i < answers.length; i += 1) {
           const answer = answers[i];
-          if (answer.opts && answer.opts.condition) {
-            if (evaluator.evaluate(answer.opts.condition, context) === true) {
+          if (answer.opts) {
+            const condition =
+              typeof answer.opts === 'string'
+                ? answer.opts
+                : answer.opts.condition;
+            if (condition) {
+              if (evaluator.evaluate(condition, context) === true) {
+                filtered.push(answer);
+              }
+            } else {
               filtered.push(answer);
             }
           } else {

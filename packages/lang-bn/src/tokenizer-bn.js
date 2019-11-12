@@ -24,19 +24,13 @@
 const { Tokenizer } = require('@nlpjs/core');
 
 class TokenizerBn extends Tokenizer {
-  constructor(container) {
-    super(container);
+  constructor(container, shouldNormalize) {
+    super(container, shouldNormalize);
     this.name = 'tokenizer-bn';
   }
 
-  tokenize(text) {
+  innerTokenize(text) {
     return text.split(/[\s,.!?;:([\]'"¡¿।-]+/).filter(x => x);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text).filter(x => x);
-    return input;
   }
 }
 

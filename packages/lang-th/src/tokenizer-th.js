@@ -24,8 +24,8 @@ const { Tokenizer } = require('@nlpjs/core');
 const aspects = require('./thai-aspects.json');
 
 class TokenizerTh extends Tokenizer {
-  constructor(container) {
-    super(container);
+  constructor(container, shouldTokenize) {
+    super(container, shouldTokenize);
     this.name = 'tokenizer-th';
   }
 
@@ -132,7 +132,7 @@ class TokenizerTh extends Tokenizer {
     return tokens;
   }
 
-  tokenize(str) {
+  innerTokenize(str) {
     if (!this.dict) {
       this.buildDictionary();
     }
@@ -177,12 +177,6 @@ class TokenizerTh extends Tokenizer {
       result.push(...str.slice(index).split(/\W+/));
     }
     return result;
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text);
-    return input;
   }
 }
 

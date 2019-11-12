@@ -24,26 +24,36 @@ const { defaultContainer } = require('./container');
 const Normalizer = require('./normalizer');
 
 class Tokenizer {
-  constructor(container = defaultContainer, normalize) {
+  constructor(container = defaultContainer, shouldNormalize = false) {
     this.container = container.container || container;
+
     this.name = 'tokenize';
-    if (normalize) {
-      this.shouldNormalize = true;
-      if (normalize !== true) {
-        this.normmalizer = normalize;
-      } else {
-        this.normalizer = new Normalizer();
-      }
-    } else {
-      this.shouldNormalize = false;
-    }
+    this.shouldNormalize = shouldNormalize;
   }
 
-  tokenize(text) {
-    const normalized = this.shouldNormalize
-      ? this.normalizer.normalize(text)
-      : text;
-    return normalized.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+  getNormalizer() {
+    if (!this.normalizer) {
+      this.normalizer =
+        this.container.get(`normalizer-${this.name.slice(-2)}`) ||
+        new Normalizer();
+    }
+    return this.normalizer;
+  }
+
+  normalize(text, force) {
+    if ((force === undefined && this.shouldNormalize) || force === true) {
+      const normalizer = this.getNormalizer();
+      return normalizer.normalize(text);
+    }
+    return text;
+  }
+
+  innerTokenize(text) {
+    return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+  }
+
+  tokenize(text, normalize) {
+    return this.innerTokenize(this.normalize(text, normalize));
   }
 
   run(srcInput) {

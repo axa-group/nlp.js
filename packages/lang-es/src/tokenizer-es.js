@@ -20,21 +20,16 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+const { Tokenizer } = require('@nlpjs/core');
 
-class TokenizerEs {
-  constructor(container) {
-    this.container = container;
+class TokenizerEs extends Tokenizer {
+  constructor(container, shouldNormalize) {
+    super(container, shouldNormalize);
     this.name = 'tokenizer-es';
   }
 
-  tokenize(text) {
+  innerTokenize(text) {
     return text.split(/[^a-zA-Zá-úÁ-ÚñÑüÜ]+/).filter(x => x);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text);
-    return input;
   }
 }
 

@@ -83,7 +83,7 @@ class StemmerUk extends BaseStemmer {
     }
   }
 
-  innnerStem() {
+  innerStem() {
     const word = { str: this.getCurrent(), start: '' };
     const matchVowel = word.str.match(/[аеиоуюяіїє]/);
     if (!matchVowel) {

@@ -21,7 +21,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 const { defaultContainer } = require('./container');
-const Normalizer = require('./normalizer');
 const Tokenizer = require('./tokenizer');
 
 /* eslint-disable */
@@ -326,18 +325,18 @@ class BaseStemmer {
     return this.stemWords(tokens);
   }
 
-  tokenizeAndStem(text, keepStops = true) {
-    if (!this.normalizer) {
-      this.normalizer = new Normalizer
-    }
-    if (!this.normalizer) {
-      this.normalizer = new Normalizer();
-    }
+  getTokenizer() {
     if (!this.tokenizer) {
-      this.tokenizer = new Tokenizer();
+      this.tokenizer =
+        this.container.get(`tokenizer-${this.name.slice(-2)}`) ||
+        new Tokenizer();
     }
-    const normalized = this.normalizer.normalize(text);
-    let tokens = this.tokenizer.tokenize(normalized);
+    return this.tokenizer;
+  }
+
+  tokenizeAndStem(text, keepStops = true) {
+    const tokenizer = this.getTokenizer();
+    let tokens = tokenizer.tokenize(text, true);
     if (!keepStops && this.stopwords) {
       tokens = this.stopwords.removeStopwords(tokens);
     }

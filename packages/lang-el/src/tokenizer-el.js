@@ -23,15 +23,9 @@
 const { Tokenizer } = require('@nlpjs/core');
 
 class TokenizerEl extends Tokenizer {
-  constructor(container) {
-    super(container);
+  constructor(container, shouldNormalize) {
+    super(container, shouldNormalize);
     this.name = 'tokenizer-el';
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text);
-    return input;
   }
 }
 

@@ -22,19 +22,11 @@
  */
 
 const { Tokenizer } = require('@nlpjs/core');
-const Normalizer = require('./normalizer-ar');
 
 class TokenizerAr extends Tokenizer {
-  constructor(container) {
-    super(container);
+  constructor(container, shouldNormalize) {
+    super(container, shouldNormalize);
     this.name = 'tokenizer-ar';
-    this.normalizer = new Normalizer(this.container);
-  }
-
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = this.tokenize(input.text).filter(x => x);
-    return input;
   }
 }
 
