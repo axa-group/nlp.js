@@ -48,14 +48,16 @@ class Stopwords {
   }
 
   run(srcInput) {
-    if (srcInput.settings && srcInput.settings.keepStopwords) {
-      return srcInput;
+    if (srcInput.settings && srcInput.settings.keepStopwords === false) {
+      const input = srcInput;
+      const locale = input.locale || 'en';
+      const remover = this.container.get(`stopwords-${locale}`) || this;
+      input.tokens = remover
+        .removeStopwords(input.tokens, input)
+        .filter(x => x);
+      return input;
     }
-    const input = srcInput;
-    const locale = input.locale || 'en';
-    const remover = this.container.get(`stopwords-${locale}`) || this;
-    input.tokens = remover.removeStopwords(input.tokens, input).filter(x => x);
-    return input;
+    return srcInput;
   }
 }
 

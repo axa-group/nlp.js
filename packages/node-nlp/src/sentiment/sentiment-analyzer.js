@@ -34,10 +34,11 @@ class SentimentAnalyzer extends SentimentAnalyzerBase {
     this.container.use(Nlu);
   }
 
-  async getSentiment(utterance, locale = 'en') {
+  async getSentiment(utterance, locale = 'en', settings = {}) {
     const input = {
       utterance,
       locale,
+      ...settings,
     };
     const result = await this.process(input);
     return result.sentiment;

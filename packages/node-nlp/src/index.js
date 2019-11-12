@@ -27,7 +27,7 @@ const { XTableUtils, XTable, XDoc } = require('./xtables');
 const { removeEmojis, Evaluator, SpellCheck, Handlebars } = require('./util');
 const { ActionManager, NlgManager } = require('./nlg');
 const { NeuralNetwork } = require('./classifiers');
-const { SentimentAnalyzer } = require('./sentiment');
+const { SentimentAnalyzer, SentimentManager } = require('./sentiment');
 
 module.exports = {
   Language,
@@ -43,4 +43,5 @@ module.exports = {
   NlgManager,
   NeuralNetwork,
   SentimentAnalyzer,
+  SentimentManager,
 };

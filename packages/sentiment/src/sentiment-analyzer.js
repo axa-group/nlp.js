@@ -67,6 +67,7 @@ class SentimentAnalyzer extends Clonable {
       this.getPipeline(`nlu-${locale || 'en'}-prepare`);
     const input = {
       text,
+      locale,
       settings: settings || this.settings,
     };
     return this.runPipeline(input, pipeline);
