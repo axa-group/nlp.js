@@ -21,26 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Language } = require('./language');
-const { NlpUtil } = require('./nlp');
-const { XTableUtils, XTable, XDoc } = require('./xtables');
-const { removeEmojis, Evaluator, SpellCheck, Handlebars } = require('./util');
-const { ActionManager, NlgManager } = require('./nlg');
-const { NeuralNetwork } = require('./classifiers');
-const { SentimentAnalyzer } = require('./sentiment');
+const SentimentAnalyzer = require('./sentiment-analyzer');
 
 module.exports = {
-  Language,
-  NlpUtil,
-  XTableUtils,
-  XTable,
-  XDoc,
-  removeEmojis,
-  Evaluator,
-  SpellCheck,
-  Handlebars,
-  ActionManager,
-  NlgManager,
-  NeuralNetwork,
   SentimentAnalyzer,
 };

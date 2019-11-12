@@ -21,26 +21,27 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Language } = require('./language');
-const { NlpUtil } = require('./nlp');
-const { XTableUtils, XTable, XDoc } = require('./xtables');
-const { removeEmojis, Evaluator, SpellCheck, Handlebars } = require('./util');
-const { ActionManager, NlgManager } = require('./nlg');
-const { NeuralNetwork } = require('./classifiers');
-const { SentimentAnalyzer } = require('./sentiment');
+const {
+  SentimentAnalyzer: SentimentAnalyzerBase,
+} = require('@nlpjs/sentiment');
+const { LangAll } = require('@nlpjs/lang-all');
+const { Nlu } = require('@nlpjs/nlu');
 
-module.exports = {
-  Language,
-  NlpUtil,
-  XTableUtils,
-  XTable,
-  XDoc,
-  removeEmojis,
-  Evaluator,
-  SpellCheck,
-  Handlebars,
-  ActionManager,
-  NlgManager,
-  NeuralNetwork,
-  SentimentAnalyzer,
-};
+class SentimentAnalyzer extends SentimentAnalyzerBase {
+  constructor(settings = {}, container) {
+    super(settings, container);
+    this.container.use(LangAll);
+    this.container.use(Nlu);
+  }
+
+  async getSentiment(utterance, locale = 'en') {
+    const input = {
+      utterance,
+      locale,
+    };
+    const result = await this.process(input);
+    return result.sentiment;
+  }
+}
+
+module.exports = SentimentAnalyzer;

@@ -64,7 +64,7 @@ class SentimentAnalyzer extends Clonable {
   prepare(locale, text, settings) {
     const pipeline =
       this.getPipeline(`${this.settings.tag}-prepare`) ||
-      this.getPipeline(`nlu-${locale}-prepare`);
+      this.getPipeline(`nlu-${locale || 'en'}-prepare`);
     const input = {
       text,
       settings: settings || this.settings,
@@ -116,7 +116,7 @@ class SentimentAnalyzer extends Clonable {
     return input;
   }
 
-  async calculate(srcInput) {
+  calculate(srcInput) {
     const input = srcInput;
     const tokens = Array.isArray(input.tokens)
       ? input.tokens

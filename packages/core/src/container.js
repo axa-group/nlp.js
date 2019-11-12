@@ -294,6 +294,9 @@ class Container {
       typeof srcPipeline === 'string'
         ? this.getPipeline(srcPipeline)
         : srcPipeline;
+    if (!pipeline) {
+      throw new Error(`Pipeline not found ${srcPipeline}`);
+    }
     if (!pipeline.compiler) {
       const tag = JSON.stringify(pipeline);
       this.registerPipeline(tag, pipeline, false);
