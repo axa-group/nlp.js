@@ -89,6 +89,15 @@ class SpellCheck {
   }
 
   check(tokens, distance) {
+    if (!Array.isArray(tokens)) {
+      const keys = Object.keys(tokens);
+      const processed = this.check(keys, distance);
+      const obj = {};
+      for (let i = 0; i < processed.length; i += 1) {
+        obj[processed[i]] = tokens[keys[i]];
+      }
+      return obj;
+    }
     const result = [];
     for (let i = 0; i < tokens.length; i += 1) {
       result.push(this.checkToken(tokens[i], distance));

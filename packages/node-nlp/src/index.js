@@ -22,7 +22,7 @@
  */
 
 const { Language } = require('./language');
-const { NlpUtil } = require('./nlp');
+const { NlpUtil, NlpManager } = require('./nlp');
 const { XTableUtils, XTable, XDoc } = require('./xtables');
 const { removeEmojis, Evaluator, SpellCheck, Handlebars } = require('./util');
 const { ActionManager, NlgManager } = require('./nlg');
@@ -32,6 +32,7 @@ const { SentimentAnalyzer, SentimentManager } = require('./sentiment');
 module.exports = {
   Language,
   NlpUtil,
+  NlpManager,
   XTableUtils,
   XTable,
   XDoc,

@@ -41,18 +41,7 @@ class SentimentManager {
     // do nothing
   }
 
-  /**
-   * Process a phrase of a given locale, calculating the sentiment analysis.
-   * @param {String} locale Locale of the phrase.
-   * @param {String} phrase Phrase to calculate the sentiment.
-   * @returns {Promise.Object} Promise sentiment analysis of the phrase.
-   */
-  async process(locale, phrase) {
-    const sentiment = await this.analyzer.getSentiment(
-      phrase,
-      locale,
-      this.settings
-    );
+  translate(sentiment) {
     let vote;
     if (sentiment.score > 0) {
       vote = 'positive';
@@ -70,6 +59,21 @@ class SentimentManager {
       type: sentiment.type,
       language: sentiment.locale,
     };
+  }
+
+  /**
+   * Process a phrase of a given locale, calculating the sentiment analysis.
+   * @param {String} locale Locale of the phrase.
+   * @param {String} phrase Phrase to calculate the sentiment.
+   * @returns {Promise.Object} Promise sentiment analysis of the phrase.
+   */
+  async process(locale, phrase) {
+    const sentiment = await this.analyzer.getSentiment(
+      phrase,
+      locale,
+      this.settings
+    );
+    return this.translate(sentiment);
   }
 }
 

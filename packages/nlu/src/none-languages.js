@@ -21,8 +21,41 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NeuralNetwork } = require('@nlpjs/neural');
-
-module.exports = {
-  NeuralNetwork,
+const useNoneFeature = {
+  bn: false,
+  el: true,
+  en: true,
+  hi: false,
+  fa: false,
+  fr: true,
+  ru: true,
+  es: true,
+  gl: true,
+  it: true,
+  nl: true,
+  no: true,
+  pt: true,
+  pl: true,
+  sv: true,
+  tl: true,
+  id: true,
+  ja: false,
+  ar: false,
+  hy: false,
+  eu: true,
+  ca: true,
+  cs: true,
+  da: true,
+  fi: true,
+  de: true,
+  hu: true,
+  ga: true,
+  ro: true,
+  sl: true,
+  ta: false,
+  th: false,
+  tr: true,
+  zh: false,
 };
+
+module.exports = useNoneFeature;

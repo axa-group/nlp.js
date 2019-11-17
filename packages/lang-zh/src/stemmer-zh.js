@@ -29,12 +29,14 @@ class StemmerZh {
     this.name = 'stemmer-zh';
   }
 
-  stem(text, input) {
+  async stem(text, input) {
     if (!this.segment) {
       this.segment = new Segment();
-      this.segment.useDefault();
+      await this.segment.useDefault();
     }
-    return this.segment.doSegment(text, {
+    const inputText =
+      typeof text === 'string' ? text : input.utterance || input.text;
+    return this.segment.doSegment(inputText, {
       simple: true,
       stripPunctuation: true,
       convertSynonym: true,
@@ -42,11 +44,14 @@ class StemmerZh {
     });
   }
 
-  run(srcInput) {
+  async run(srcInput) {
     const input = srcInput;
     const locale = input.locale || 'en';
     const stemmer = this.container.get(`stemmer-${locale}`) || this;
-    input.tokens = stemmer.stem(input.text || input.tokens.join(' '), input);
+    input.tokens = await stemmer.stem(
+      input.text || input.tokens.join(' '),
+      input
+    );
     return input;
   }
 }

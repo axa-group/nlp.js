@@ -247,7 +247,7 @@ describe('Extractor Enum', () => {
       };
       const actual = await ner.process(input);
       expect(actual).toBe(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           start: 6,
           end: 14,

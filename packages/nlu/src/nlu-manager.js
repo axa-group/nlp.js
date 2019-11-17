@@ -82,17 +82,23 @@ class NluManager extends Clonable {
   }
 
   addLanguage(srcLocales) {
-    const locales = Array.isArray(srcLocales) ? srcLocales : [srcLocales];
-    for (let i = 0; i < locales.length; i += 1) {
-      const locale = locales[i].substr(0, 2).toLowerCase();
-      if (!this.locales.includes(locale)) {
-        this.locales.push(locale);
-      }
-      if (!this.domainManagers[locale]) {
-        this.domainManagers[locale] = new DomainManager(
-          { locale, ...this.settings.domain },
-          this.container
-        );
+    if (srcLocales) {
+      const locales = Array.isArray(srcLocales) ? srcLocales : [srcLocales];
+      for (let i = 0; i < locales.length; i += 1) {
+        const locale = locales[i].substr(0, 2).toLowerCase();
+        if (!this.locales.includes(locale)) {
+          this.locales.push(locale);
+        }
+        if (!this.domainManagers[locale]) {
+          this.domainManagers[locale] = new DomainManager(
+            {
+              locale,
+              ...this.settings.domain,
+              useNoneFeature: this.settings.useNoneFeature,
+            },
+            this.container
+          );
+        }
       }
     }
   }
@@ -219,7 +225,7 @@ class NluManager extends Clonable {
   async train(settings) {
     const input = {
       nluManager: this,
-      settings: settings || this.settings,
+      settings: this.applySettings(settings, this.settings),
     };
     return this.runPipeline(input, this.pipelineTrain);
   }

@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const path = require('path');
 const { BaseStemmer } = require('@nlpjs/core');
 
 const kuromoji = require('kuromoji');
@@ -48,16 +49,15 @@ class StemmerJa extends BaseStemmer {
       if (StemmerJa.tokenizer) {
         resolve();
       } else {
-        kuromoji
-          .builder({ dicPath: './node_modules/kuromoji/dict' })
-          .build((err, tokenizer) => {
-            if (err) {
-              reject(err);
-            } else {
-              StemmerJa.tokenizer = tokenizer;
-              resolve();
-            }
-          });
+        const dicPath = path.join(__dirname, '../node_modules/kuromoji/dict');
+        kuromoji.builder({ dicPath }).build((err, tokenizer) => {
+          if (err) {
+            reject(err);
+          } else {
+            StemmerJa.tokenizer = tokenizer;
+            resolve();
+          }
+        });
       }
     });
   }
@@ -360,7 +360,9 @@ class StemmerJa extends BaseStemmer {
     return true;
   }
 
-  stem(text, input) {
+  async stem(text, input) {
+    await this.init();
+    text = input.text;
     let tokens;
     const normalizeFormality =
       input.normalizeFormality === undefined ? true : input.normalizeFormality;

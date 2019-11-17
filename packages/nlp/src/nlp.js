@@ -21,8 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
 const { Clonable, containerBootstrap } = require('@nlpjs/core');
-const { NluManager } = require('@nlpjs/nlu');
+const { NluManager, NluNeural } = require('@nlpjs/nlu');
 const {
   Ner,
   ExtractorEnum,
@@ -30,6 +31,8 @@ const {
   ExtractorTrim,
   ExtractorBuiltin,
 } = require('@nlpjs/ner');
+const { ActionManager, NlgManager } = require('@nlpjs/nlg');
+const { SentimentAnalyzer } = require('@nlpjs/sentiment');
 
 class Nlp extends Clonable {
   constructor(settings = {}, container) {
@@ -51,6 +54,15 @@ class Nlp extends Clonable {
     );
     this.nluManager = this.container.get('nlu-manager', this.settings.nlu);
     this.ner = this.container.get('ner', this.settings.ner);
+    this.nlgManager = this.container.get('nlg-manager', this.settings.nlg);
+    this.actionManager = this.container.get(
+      'action-manager',
+      this.settings.action
+    );
+    this.sentiment = this.container.get(
+      'sentiment-analyzer',
+      this.settings.sentiment
+    );
     this.initialize();
   }
 
@@ -61,6 +73,10 @@ class Nlp extends Clonable {
     this.use(ExtractorRegex);
     this.use(ExtractorTrim);
     this.use(ExtractorBuiltin);
+    this.use(NlgManager);
+    this.use(ActionManager);
+    this.use(NluNeural);
+    this.use(SentimentAnalyzer);
   }
 
   initialize() {
@@ -77,6 +93,15 @@ class Nlp extends Clonable {
           this.useNlu(className, locale, domain, settings);
         }
       }
+    }
+    if (this.settings.languages) {
+      this.addLanguage(this.settings.languages);
+    }
+    if (this.settings.locales) {
+      this.addLanguage(this.settings.locales);
+    }
+    if (this.settings.corpora) {
+      this.addCorpora(this.settings.corpora);
     }
   }
 
@@ -127,6 +152,10 @@ class Nlp extends Clonable {
     return this.nluManager.remove(locale, utterance, intent);
   }
 
+  getRulesByName(locale, name) {
+    return this.ner.getRulesByName(locale, name);
+  }
+
   addNerRule(locale, name, type, rule) {
     return this.ner.addRule(locale, name, type, rule);
   }
@@ -172,11 +201,87 @@ class Nlp extends Clonable {
   }
 
   addNerBeforeFirstCondition(locale, name, words, opts) {
-    return this.ner.addBeeforeFirstCondition(locale, name, words, opts);
+    return this.ner.addBeforeFirstCondition(locale, name, words, opts);
   }
 
   addNerBeforeLastCondition(locale, name, words, opts) {
     return this.ner.addBeforeLastCondition(locale, name, words, opts);
+  }
+
+  assignDomain(locale, intent, domain) {
+    return this.nluManager.assignDomain(locale, intent, domain);
+  }
+
+  getIntentDomain(locale, intent) {
+    return this.nluManager.getIntentDomain(locale, intent);
+  }
+
+  getDomains() {
+    return this.nluManager.getDomains();
+  }
+
+  addAction(intent, action, parameters) {
+    return this.actionManager.addAction(intent, action, parameters);
+  }
+
+  getActions(intent) {
+    return this.actionManager.findActions(intent);
+  }
+
+  removeAction(intent, action, parameters) {
+    return this.actionManager.removeAction(intent, action, parameters);
+  }
+
+  removeActions(intent) {
+    return this.actionManager.removeActions(intent);
+  }
+
+  addAnswer(locale, intent, answer, opts) {
+    return this.nlgManager.add(locale, intent, answer, opts);
+  }
+
+  removeAnswer(locale, intent, answer, opts) {
+    return this.nlgManager.remove(locale, intent, answer, opts);
+  }
+
+  findAllAnswers(locale, intent) {
+    const response = this.nlgManager.findAllAnswers({ locale, intent });
+    return response.answers;
+  }
+
+  addCorpora(names) {
+    for (let i = 0; i < names.length; i += 1) {
+      this.addCorpus(names[i]);
+    }
+  }
+
+  addCorpus(fileName) {
+    const corpus = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+    const locale = corpus.locale.slice(0, 2);
+    this.addLanguage(locale);
+    const { data } = corpus;
+    for (let i = 0; i < data.length; i += 1) {
+      const current = data[i];
+      const { intent, utterances } = current;
+      for (let j = 0; j < utterances.length; j += 1) {
+        this.addDocument(locale, utterances[j], intent);
+      }
+    }
+  }
+
+  getSentiment(locale, utterance) {
+    if (typeof locale === 'object') {
+      return this.sentiment.process(locale);
+    }
+    if (!utterance) {
+      utterance = locale;
+      locale = this.guessLanguage(utterance);
+    }
+    return this.sentiment.process({ utterance, locale });
+  }
+
+  describeLanguage(locale, name) {
+    this.nluManager.describeLanguage(locale, name);
   }
 
   train() {
@@ -184,8 +289,48 @@ class Nlp extends Clonable {
     return this.nluManager.train();
   }
 
-  process(locale, utterance, domain, settings) {
-    return this.nluManager.process(locale, utterance, domain, settings);
+  async classify(locale, utterance, settings) {
+    return this.nluManager.process(
+      locale,
+      utterance,
+      settings || this.settings.nlu
+    );
+  }
+
+  async extractEntities(locale, utterance, context, settings) {
+    if (typeof locale === 'object') {
+      return this.ner.process(locale);
+    }
+    if (!utterance) {
+      utterance = locale;
+      locale = undefined;
+    }
+    if (!locale) {
+      locale = this.guessLanguage(utterance);
+    }
+    const output = await this.ner.process({
+      locale,
+      utterance,
+      context,
+      settings: this.applySettings(settings, this.settings.ner),
+    });
+    return output;
+  }
+
+  async process(locale, utterance, context, settings) {
+    let output = await this.nluManager.process(
+      locale,
+      utterance,
+      context,
+      settings || this.settings.nlu
+    );
+    output.context = context;
+    output = await this.ner.process({ ...output });
+    const answers = await this.nlgManager.run({ ...output });
+    output.answers = answers.answers;
+    output.answer = answers.answer;
+    delete output.context;
+    return output;
   }
 }
 

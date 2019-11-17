@@ -69,6 +69,7 @@ class Ner extends Clonable {
         'extract-regex',
         'extract-trim',
         'extract-builtin',
+        '.reduceEdges',
       ],
       false
     );
@@ -314,6 +315,13 @@ class Ner extends Clonable {
 
   addBeforeLastCondition(locale, name, words, opts) {
     this.addPositionCondition(locale, name, TrimType.BeforeLast, words, opts);
+  }
+
+  reduceEdges(input) {
+    input.entities = input.edges;
+    delete input.edges;
+    delete input.nerRules;
+    return input;
   }
 
   process(input) {

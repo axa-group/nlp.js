@@ -112,6 +112,9 @@ class DefaultCompiler {
         )
       );
     }
+    if (!currentObject) {
+      throw new Error(`Method not found for step ${JSON.stringify(step)}`);
+    }
     const method = currentObject.run || currentObject;
     if (typeof method === 'function') {
       return method.bind(currentObject)(input, ...args);

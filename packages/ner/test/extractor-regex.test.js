@@ -57,7 +57,7 @@ describe('Extractor Regex', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           start: 12,
           end: 28,
@@ -82,7 +82,7 @@ describe('Extractor Regex', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           start: 12,
           end: 28,

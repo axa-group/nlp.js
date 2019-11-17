@@ -28,6 +28,14 @@ class ArrToObj {
     this.name = 'arrToObj';
   }
 
+  static arrToObj(arr) {
+    const result = {};
+    for (let i = 0; i < arr.length; i += 1) {
+      result[arr[i]] = 1;
+    }
+    return result;
+  }
+
   run(srcInput) {
     const input = srcInput;
     const result = {};

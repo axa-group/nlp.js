@@ -67,7 +67,7 @@ describe('NLG Manager', () => {
       const manager = new NlgManager({ container });
       const input = { answers: [{ answer: 'a' }, { answer: 'b' }] };
       const responses = {};
-      for (let i = 0; i < 10; i += 1) {
+      for (let i = 0; i < 100; i += 1) {
         responses[manager.chooseRandom(input).answer] = 1;
       }
       expect(responses).toEqual({ a: 1, b: 1 });

@@ -127,6 +127,9 @@ class NeuralNetwork extends Clonable {
   }
 
   train(srcData) {
+    if (!srcData || !srcData.length) {
+      return {};
+    }
     const useNoneFeature =
       srcData[srcData.length - 1].input.nonefeature !== undefined;
     if (useNoneFeature) {

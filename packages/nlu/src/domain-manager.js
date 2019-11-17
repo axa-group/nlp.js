@@ -99,7 +99,10 @@ class DomainManager extends Clonable {
       };
     return this.container.get(
       domainSettings.className || 'NeuralNlu',
-      domainSettings.settings || {}
+      this.applySettings(
+        { locale: this.settings.locale },
+        domainSettings.settings || {}
+      )
     );
   }
 
@@ -115,8 +118,13 @@ class DomainManager extends Clonable {
   }
 
   async generateStemKey(srcTokens) {
-    let tokens =
-      typeof srcTokens === 'string' ? await this.prepare(srcTokens) : srcTokens;
+    let tokens;
+    if (typeof srcTokens !== 'string') {
+      tokens = srcTokens;
+    } else {
+      const input = await this.prepare({ utterance: srcTokens });
+      tokens = await input.stems;
+    }
     if (!Array.isArray(tokens)) {
       tokens = Object.keys(tokens);
     }
@@ -233,7 +241,9 @@ class DomainManager extends Clonable {
     const status = {};
     for (let i = 0; i < keys.length; i += 1) {
       const nlu = this.addDomain(keys[i]);
-      const result = await nlu.train(corpus[keys[i]]);
+      const result = await nlu.train(corpus[keys[i]], {
+        useNoneFeature: this.settings.useNoneFeature,
+      });
       status[keys[i]] = result.status;
     }
     input.status = status;
@@ -284,7 +294,7 @@ class DomainManager extends Clonable {
         };
         return input;
       }
-      const nluAnswer = await nlu.process(input.utterance);
+      const nluAnswer = await nlu.process(input.utterance, input.settings);
       let classifications;
       if (Array.isArray(nluAnswer)) {
         classifications = nluAnswer;

@@ -22,7 +22,9 @@
  */
 
 const NlpUtil = require('./nlp-util');
+const NlpManager = require('./nlp-manager');
 
 module.exports = {
   NlpUtil,
+  NlpManager,
 };

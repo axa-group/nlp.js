@@ -21,8 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NeuralNetwork } = require('@nlpjs/neural');
+const compile = require('./compile');
 
-module.exports = {
-  NeuralNetwork,
-};
+class Template {
+  compile(str, context) {
+    return compile(str)(context);
+  }
+}
+
+module.exports = Template;

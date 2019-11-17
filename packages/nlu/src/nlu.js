@@ -22,6 +22,8 @@
  */
 
 const { Clonable } = require('@nlpjs/core');
+const { SpellCheck } = require('@nlpjs/similarity');
+const useNoneFeature = require('./none-languages');
 
 class Nlu extends Clonable {
   constructor(settings = {}, container) {
@@ -47,6 +49,7 @@ class Nlu extends Clonable {
       pipelineTrain: this.getPipeline(`${this.settings.tag}-train`),
       pipelineProcess: this.getPipeline(`${this.settings.tag}-process`),
     });
+    this.spellCheck = new SpellCheck();
   }
 
   registerDefault() {
@@ -56,7 +59,8 @@ class Nlu extends Clonable {
         keepStopwords: true,
         nonefeatureValue: 1,
         nonedeltaMultiplier: 1.2,
-        spellcheckDistance: 0,
+        spellCheck: false,
+        spellCheckDistance: 1,
         filterZeros: true,
         log: true,
       },
@@ -83,9 +87,11 @@ class Nlu extends Clonable {
       'nlu-??-process',
       [
         '.prepare',
-        '.calculateNoneFeature',
+        '.doSpellCheck',
+        '.textToFeatures',
         '.innerProcess',
         '.convertToArray',
+        '.filterNonActivated',
         '.normalizeClassifications',
         'output.classifications',
       ],
@@ -97,7 +103,7 @@ class Nlu extends Clonable {
     const settings = srcSettings || this.settings;
     if (typeof text === 'string') {
       const input = {
-        locale: this.locale,
+        locale: this.settings.locale,
         text,
         settings,
       };
@@ -125,9 +131,37 @@ class Nlu extends Clonable {
     );
   }
 
+  async doSpellCheck(input, srcSettings) {
+    const settings = this.applySettings(srcSettings || {}, this.settings);
+    let shouldSpellCheck =
+      input.settings.spellCheck === undefined
+        ? undefined
+        : input.settings.spellCheck;
+    let spellCheckDistance =
+      input.settings.spellCheckDistance === undefined
+        ? undefined
+        : input.settings.spellCheckDistance;
+    if (shouldSpellCheck === undefined) {
+      shouldSpellCheck =
+        settings.spellCheck === undefined ? undefined : settings.spellCheck;
+    }
+    if (spellCheckDistance === undefined) {
+      spellCheckDistance =
+        settings.spellCheckDistance === undefined
+          ? 1
+          : settings.spellCheckDistance;
+    }
+    if (shouldSpellCheck) {
+      const tokens = this.spellCheck.check(input.tokens, spellCheckDistance);
+      input.tokens = tokens;
+    }
+    return input;
+  }
+
   async prepareCorpus(srcInput) {
     this.features = {};
     this.intents = {};
+    this.intentFeatures = {};
     const input = srcInput;
     const { corpus } = input;
     const result = [];
@@ -138,12 +172,21 @@ class Nlu extends Clonable {
         output: { [intent]: 1 },
       };
       const keys = Object.keys(item.input);
+      if (!this.intentFeatures[intent]) {
+        this.intentFeatures[intent] = {};
+      }
       for (let j = 0; j < keys.length; j += 1) {
         this.features[keys[j]] = 1;
+        this.intentFeatures[intent][keys[j]] = 1;
       }
       this.intents[intent] = 1;
       result.push(item);
     }
+    const keys = Object.keys(this.intentFeatures);
+    for (let i = 0; i < keys.length; i += 1) {
+      this.intentFeatures[keys[i]] = Object.keys(this.intentFeatures[keys[i]]);
+    }
+    this.spellCheck.setFeatures(this.features);
     this.numFeatures = Object.keys(this.features).length;
     this.numIntents = Object.keys(this.intents).length;
     input.corpus = result;
@@ -152,7 +195,14 @@ class Nlu extends Clonable {
 
   addNoneFeature(input) {
     const { corpus } = input;
-    corpus.push({ input: { nonefeature: 1 }, output: { None: 1 } });
+    const locale = input.locale || this.settings.locale;
+    if (
+      (input.settings && input.settings.useNoneFeature) ||
+      ((!input.settings || input.settings.useNoneFeature === undefined) &&
+        useNoneFeature[locale])
+    ) {
+      corpus.push({ input: { nonefeature: 1 }, output: { None: 1 } });
+    }
     return input;
   }
 
@@ -172,6 +222,42 @@ class Nlu extends Clonable {
       input.classifications = result.sort((a, b) => b.score - a.score);
     }
     return input;
+  }
+
+  someSimilar(tokensA, tokensB) {
+    for (let i = 0; i < tokensB.length; i += 1) {
+      if (tokensA[tokensB[i]]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getWhitelist(tokens) {
+    const result = {};
+    const intents = Object.keys(this.intentFeatures);
+    for (let i = 0; i < intents.length; i += 1) {
+      if (this.someSimilar(tokens, this.intentFeatures[intents[i]])) {
+        result[intents[i]] = 1;
+      }
+    }
+    return result;
+  }
+
+  filterNonActivated(srcInput) {
+    if (!this.intentFeatures || !srcInput.classifications) {
+      return srcInput;
+    }
+    const whitelist = this.getWhitelist(srcInput.tokens);
+    whitelist.None = 1;
+    const { classifications } = srcInput;
+    for (let i = 0; i < classifications.length; i += 1) {
+      const classification = classifications[i];
+      if (!whitelist[classification.intent]) {
+        classification.score = 0;
+      }
+    }
+    return srcInput;
   }
 
   normalizeClassifications(srcInput) {
@@ -194,17 +280,21 @@ class Nlu extends Clonable {
     return input;
   }
 
-  calculateNoneFeature(srcInput) {
+  textToFeatures(srcInput) {
+    const locale = srcInput.locale || this.settings.locale;
     const input = srcInput;
     const { tokens } = input;
     const keys = Object.keys(tokens);
     let unknownTokens = 0;
+    const features = {};
     for (let i = 0; i < keys.length; i += 1) {
       const token = keys[i];
       if (token === 'nonefeature') {
         tokens[token] = this.nonefeatureValue;
       } else if (!this.features[token]) {
         unknownTokens += 1;
+      } else {
+        features[token] = tokens[token];
       }
     }
     let nonedelta =
@@ -216,9 +306,16 @@ class Nlu extends Clonable {
       nonevalue += nonedelta;
       nonedelta *= this.settings.nonedeltaMultiplier;
     }
-    if (nonevalue) {
-      tokens.nonefeature = nonevalue;
+    if (
+      (input.settings ||
+        input.settings.useNoneFeature ||
+        ((input.settings || input.settings.useNoneFeature === undefined) &&
+          useNoneFeature[locale])) &&
+      nonevalue
+    ) {
+      features.nonefeature = nonevalue;
     }
+    input.tokens = features;
     return input;
   }
 
@@ -229,7 +326,7 @@ class Nlu extends Clonable {
   async train(corpus, settings) {
     const input = {
       corpus,
-      settings: settings || this.settings,
+      settings: this.applySettings(settings, this.settings),
     };
     return this.runPipeline(input, this.pipelineTrain);
   }
@@ -237,7 +334,7 @@ class Nlu extends Clonable {
   async process(utterance, settings) {
     const input = {
       text: utterance,
-      settings: settings || this.settings,
+      settings: this.applySettings(settings || {}, this.settings),
     };
     const output = await this.runPipeline(input, this.pipelineProcess);
     if (Array.isArray(output)) {

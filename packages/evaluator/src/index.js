@@ -23,8 +23,10 @@
 
 const Evaluator = require('./evaluator');
 const compile = require('./compile');
+const Template = require('./template');
 
 module.exports = {
   Evaluator,
   compile,
+  Template,
 };

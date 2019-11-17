@@ -92,6 +92,9 @@ class Container {
       return undefined;
     }
     if (item.isSingleton) {
+      if (item.instance && item.instance.applySettings) {
+        item.instance.applySettings(item.instance.settings, settings);
+      }
       return item.instance;
     }
     const Clazz = item.instance;
@@ -323,7 +326,8 @@ class Container {
       instance.register(this);
     }
     const tag = instance.settings ? instance.settings.tag : undefined;
-    const itemName = name || instance.name || tag;
+    const itemName =
+      name || instance.name || tag || item.name || instance.constructor.name;
     this.register(itemName, instance);
     return itemName;
   }

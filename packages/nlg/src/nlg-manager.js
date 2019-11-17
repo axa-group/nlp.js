@@ -107,7 +107,7 @@ class NlgManager extends Clonable {
     return input;
   }
 
-  renderText(srcText) {
+  renderText(srcText, context) {
     if (!srcText) {
       return srcText;
     }
@@ -129,14 +129,18 @@ class NlgManager extends Clonable {
         matchFound = false;
       }
     } while (matchFound);
+    const template = this.container.get('Template');
+    if (template && context) {
+      return template.compile(srcText, context);
+    }
     return text;
   }
 
   renderRandom(srcInput) {
     const input = srcInput;
-    const { answers } = input;
+    const { answers, context } = input;
     for (let i = 0; i < answers.length; i += 1) {
-      answers[i] = this.renderText(answers[i]);
+      answers[i] = this.renderText(answers[i], context);
     }
     return input;
   }

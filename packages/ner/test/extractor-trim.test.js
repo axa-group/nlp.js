@@ -53,7 +53,7 @@ describe('Extractor Trim', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           start: 18,
           end: 23,
@@ -75,7 +75,7 @@ describe('Extractor Trim', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           type: 'trim',
           subtype: 'before',
@@ -108,7 +108,7 @@ describe('Extractor Trim', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           type: 'trim',
           subtype: 'beforeLast',
@@ -130,7 +130,7 @@ describe('Extractor Trim', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           type: 'trim',
           subtype: 'beforeFirst',
@@ -152,7 +152,7 @@ describe('Extractor Trim', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           type: 'trim',
           subtype: 'after',
@@ -185,7 +185,7 @@ describe('Extractor Trim', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           type: 'trim',
           subtype: 'afterFirst',
@@ -207,7 +207,7 @@ describe('Extractor Trim', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual.edges).toEqual([
+      expect(actual.entities).toEqual([
         {
           type: 'trim',
           subtype: 'afterLast',

@@ -45,7 +45,7 @@ describe('NLU', () => {
       expect(nlu.settings.keepStopwords).toBeTruthy();
       expect(nlu.settings.nonefeatureValue).toEqual(1);
       expect(nlu.settings.nonedeltaMultiplier).toEqual(1.2);
-      expect(nlu.settings.spellcheckDistance).toEqual(0);
+      expect(nlu.settings.spellCheckDistance).toEqual(1);
     });
     test('The settings can be provided in constructor', () => {
       const nlu = new Nlu({ locale: 'fr', keepStopwords: false });
@@ -53,7 +53,7 @@ describe('NLU', () => {
       expect(nlu.settings.keepStopwords).toBeFalsy();
       expect(nlu.settings.nonefeatureValue).toEqual(1);
       expect(nlu.settings.nonedeltaMultiplier).toEqual(1.2);
-      expect(nlu.settings.spellcheckDistance).toEqual(0);
+      expect(nlu.settings.spellCheckDistance).toEqual(1);
     });
   });
 
