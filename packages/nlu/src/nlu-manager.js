@@ -298,12 +298,15 @@ class NluManager extends Clonable {
   }
 
   process(locale, utterance, domain, settings) {
-    const input = {
-      locale: utterance === undefined ? undefined : locale,
-      utterance: utterance === undefined ? locale : utterance,
-      domain,
-      settings: settings || this.settings,
-    };
+    const input =
+      typeof locale === 'object'
+        ? locale
+        : {
+            locale: utterance === undefined ? undefined : locale,
+            utterance: utterance === undefined ? locale : utterance,
+            domain,
+            settings: settings || this.settings,
+          };
     return this.runPipeline(input, this.pipelineProcess);
   }
 }

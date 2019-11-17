@@ -470,94 +470,93 @@ describe('NLP Manager', () => {
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
     });
-    // test('Should search for entities if the language is specified', async () => {
-    //   const manager = new NlpManager({ ner: { builtins: [] } });
-    //   manager.addLanguage(['en']);
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'spiderman',
-    //     ['en'],
-    //     ['Spiderman', 'Spider-man']
-    //   );
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'iron man',
-    //     ['en'],
-    //     ['iron man', 'iron-man']
-    //   );
-    //   manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'burguer',
-    //     ['en'],
-    //     ['Burguer', 'Hamburguer']
-    //   );
-    //   manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'pasta',
-    //     ['en'],
-    //     ['Pasta', 'spaghetti']
-    //   );
-    //   manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
-    //   manager.addDocument(
-    //     'en',
-    //     'I have seen %hero%, he was eating %food%',
-    //     'sawhero'
-    //   );
-    //   manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-    //   const result = await manager.extractEntities(
-    //     'en',
-    //     'I saw spiderman eating spaghetti today in the city!'
-    //   );
-    //   expect(result.entities).toHaveLength(2);
-    //   expect(result.entities[0].sourceText).toEqual('Spiderman');
-    //   expect(result.entities[1].sourceText).toEqual('spaghetti');
-    // });
-    // test('If the locale is not one of the nlp manager, then guess language', async () => {
-    //   const manager = new NlpManager({ ner: { builtins: [] } });
-    //   manager.addLanguage(['en']);
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'spiderman',
-    //     ['en'],
-    //     ['Spiderman', 'Spider-man']
-    //   );
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'iron man',
-    //     ['en'],
-    //     ['iron man', 'iron-man']
-    //   );
-    //   manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'burguer',
-    //     ['en'],
-    //     ['Burguer', 'Hamburguer']
-    //   );
-    //   manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'pasta',
-    //     ['en'],
-    //     ['Pasta', 'spaghetti']
-    //   );
-    //   manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
-    //   manager.addDocument(
-    //     'en',
-    //     'I have seen %hero%, he was eating %food%',
-    //     'sawhero'
-    //   );
-    //   manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-    //   const result = await manager.extractEntities(
-    //     'es',
-    //     'I saw spiderman eating spaghetti today in the city!'
-    //   );
-    //   expect(result.entities).toHaveLength(2);
-    //   expect(result.entities[0].sourceText).toEqual('Spiderman');
-    //   expect(result.entities[1].sourceText).toEqual('spaghetti');
-    // });
+    test('Should search for entities if the language is specified', async () => {
+      const manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText(
+        'hero',
+        'spiderman',
+        ['en'],
+        ['Spiderman', 'Spider-man']
+      );
+      manager.addNamedEntityText(
+        'hero',
+        'iron man',
+        ['en'],
+        ['iron man', 'iron-man']
+      );
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText(
+        'food',
+        'burguer',
+        ['en'],
+        ['Burguer', 'Hamburguer']
+      );
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText(
+        'food',
+        'pasta',
+        ['en'],
+        ['Pasta', 'spaghetti']
+      );
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument(
+        'en',
+        'I have seen %hero%, he was eating %food%',
+        'sawhero'
+      );
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      const result = await manager.extractEntities(
+        'en',
+        'I saw spiderman eating spaghetti today in the city!'
+      );
+      expect(result.entities).toHaveLength(2);
+      expect(result.entities[0].sourceText).toEqual('Spiderman');
+      expect(result.entities[1].sourceText).toEqual('spaghetti');
+    });
+    test('If the locale is not provided, then guess language', async () => {
+      const manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText(
+        'hero',
+        'spiderman',
+        ['en'],
+        ['Spiderman', 'Spider-man']
+      );
+      manager.addNamedEntityText(
+        'hero',
+        'iron man',
+        ['en'],
+        ['iron man', 'iron-man']
+      );
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText(
+        'food',
+        'burguer',
+        ['en'],
+        ['Burguer', 'Hamburguer']
+      );
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText(
+        'food',
+        'pasta',
+        ['en'],
+        ['Pasta', 'spaghetti']
+      );
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument(
+        'en',
+        'I have seen %hero%, he was eating %food%',
+        'sawhero'
+      );
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      const result = await manager.extractEntities(
+        'I saw spiderman eating spaghetti today in the city!'
+      );
+      expect(result.entities).toHaveLength(2);
+      expect(result.entities[0].sourceText).toEqual('Spiderman');
+      expect(result.entities[1].sourceText).toEqual('spaghetti');
+    });
   });
 
   describe('Process', () => {
@@ -709,52 +708,52 @@ describe('NLP Manager', () => {
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.9);
     });
-    // test('Should search for entities', async () => {
-    //   const manager = new NlpManager({ ner: { builtins: [] } });
-    //   manager.addLanguage(['en']);
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'spiderman',
-    //     ['en'],
-    //     ['Spiderman', 'Spider-man']
-    //   );
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'iron man',
-    //     ['en'],
-    //     ['iron man', 'iron-man']
-    //   );
-    //   manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'burguer',
-    //     ['en'],
-    //     ['Burguer', 'Hamburguer']
-    //   );
-    //   manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'pasta',
-    //     ['en'],
-    //     ['Pasta', 'spaghetti']
-    //   );
-    //   manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
-    //   manager.addDocument(
-    //     'en',
-    //     'I have seen %hero%, he was eating %food%',
-    //     'sawhero'
-    //   );
-    //   manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-    //   await manager.train();
-    //   const result = await manager.process(
-    //     'I saw spiderman eating spaghetti today in the city!'
-    //   );
-    //   expect(result.intent).toEqual('sawhero');
-    //   expect(result.score).toBeGreaterThan(0.5);
-    //   expect(result.entities).toHaveLength(2);
-    //   expect(result.entities[0].sourceText).toEqual('Spiderman');
-    //   expect(result.entities[1].sourceText).toEqual('spaghetti');
-    // });
+    test('Should search for entities', async () => {
+      const manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText(
+        'hero',
+        'spiderman',
+        ['en'],
+        ['Spiderman', 'Spider-man']
+      );
+      manager.addNamedEntityText(
+        'hero',
+        'iron man',
+        ['en'],
+        ['iron man', 'iron-man']
+      );
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText(
+        'food',
+        'burguer',
+        ['en'],
+        ['Burguer', 'Hamburguer']
+      );
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText(
+        'food',
+        'pasta',
+        ['en'],
+        ['Pasta', 'spaghetti']
+      );
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument(
+        'en',
+        'I have seen %hero%, he was eating %food%',
+        'sawhero'
+      );
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      await manager.train();
+      const result = await manager.process(
+        'I saw spiderman eating spaghetti today in the city!'
+      );
+      expect(result.intent).toEqual('sawhero');
+      expect(result.score).toBeGreaterThan(0.5);
+      expect(result.entities).toHaveLength(2);
+      expect(result.entities[0].sourceText).toEqual('Spiderman');
+      expect(result.entities[1].sourceText).toEqual('spaghetti');
+    });
     // test('Should search for entities if the language is specified', async () => {
     //   const manager = new NlpManager({ ner: { builtins: [] } });
     //   manager.addLanguage(['en']);

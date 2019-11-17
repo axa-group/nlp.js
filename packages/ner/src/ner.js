@@ -332,6 +332,32 @@ class Ner extends Clonable {
         : this.pipelineProcess
     );
   }
+
+  async generateEntityUtterance(locale, utterance) {
+    let input = {
+      locale,
+      utterance,
+    };
+    input = await this.process(input);
+    const { entities } = input;
+    if (entities.length === 0) {
+      return utterance;
+    }
+    entities.sort((a, b) => a.start - b.start);
+    let index = 0;
+    let result = '';
+    for (let i = 0; i < entities.length; i += 1) {
+      const entity = entities[i];
+      const left = utterance.slice(index, entity.start);
+      index = entity.end + 1;
+      result += left;
+      result += `${this.settings.entityPreffix || '@'}${entity.entity}${this
+        .settings.entitySuffix || ''}`;
+    }
+    const right = utterance.slice(entities[entities.length - 1].end + 1);
+    result += right;
+    return result;
+  }
 }
 
 module.exports = Ner;

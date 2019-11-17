@@ -34,6 +34,10 @@ class NlpManager {
       this.settings.container = containerBootstrap();
     }
     this.container = this.settings.container;
+    this.container.registerConfiguration('ner', {
+      entityPreffix: '%',
+      entitySuffix: '%',
+    });
     this.container.use(LangAll);
     this.container.use(Evaluator);
     this.container.use(Template);

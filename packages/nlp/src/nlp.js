@@ -318,12 +318,41 @@ class Nlp extends Clonable {
   }
 
   async process(locale, utterance, context, settings) {
-    let output = await this.nluManager.process(
+    if (!utterance) {
+      utterance = locale;
+      locale = undefined;
+    }
+    if (!locale) {
+      locale = this.guessLanguage(utterance);
+    }
+    const input = {
       locale,
       utterance,
       context,
-      settings || this.settings.nlu
+      settings: this.applySettings(settings, this.settings.nlu),
+    };
+    let output = await this.nluManager.process(input);
+    const optionalUtterance = await this.ner.generateEntityUtterance(
+      locale,
+      utterance
     );
+    if (optionalUtterance && optionalUtterance !== utterance) {
+      const optionalInput = {
+        locale,
+        utterance: optionalUtterance,
+        context,
+        settings: this.applySettings(settings, this.settings.nlu),
+      };
+      const optionalOutput = await this.nluManager.process(optionalInput);
+      if (
+        optionalOutput &&
+        (optionalOutput.score > output.score || output.intent === 'None')
+      ) {
+        output = optionalOutput;
+        output.utterance = utterance;
+        output.optionalUtterance = optionalUtterance;
+      }
+    }
     output.context = context;
     output = await this.ner.process({ ...output });
     const answers = await this.nlgManager.run({ ...output });
