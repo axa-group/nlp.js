@@ -73,8 +73,11 @@ class NlpManager {
     return this.nlp.guessLanguage(text);
   }
 
-  addAction(intent, action, parameters) {
-    return this.nlp.addAction(intent, action, parameters);
+  addAction(intent, action, parameters, fn) {
+    if (!fn) {
+      fn = this.settings.action ? this.settings.action[action] : undefined;
+    }
+    return this.nlp.addAction(intent, action, parameters, fn);
   }
 
   getActions(intent) {

@@ -107,7 +107,7 @@ class SentimentAnalyzer extends Clonable {
 
   async getTokens(srcInput) {
     const input = srcInput;
-    if (!input.tokens) {
+    if (!input.tokens && input.sentimentDictionary.type) {
       input.tokens = await this.prepare(
         input.locale,
         input.utterance || input.text,
@@ -119,42 +119,60 @@ class SentimentAnalyzer extends Clonable {
 
   calculate(srcInput) {
     const input = srcInput;
-    const tokens = Array.isArray(input.tokens)
-      ? input.tokens
-      : Object.keys(input.tokens);
-    if (Object.keys(input.sentimentDictionary.dictionary).length === 0) {
+    if (input.sentimentDictionary.type) {
+      const tokens = Array.isArray(input.tokens)
+        ? input.tokens
+        : Object.keys(input.tokens);
+      if (Object.keys(input.sentimentDictionary.dictionary).length === 0) {
+        input.sentiment = {
+          score: 0,
+          numWords: tokens.length,
+          numHits: 0,
+          average: 0,
+          type: input.sentimentDictionary.type,
+          locale: input.locale,
+        };
+      } else {
+        const { dictionary } = input.sentimentDictionary;
+        const { negations } = input.sentimentDictionary;
+        let score = 0;
+        let negator = 1;
+        let numHits = 0;
+        for (let i = 0; i < tokens.length; i += 1) {
+          const token = tokens[i].toLowerCase();
+          if (negations.indexOf(token) !== -1) {
+            negator = -1;
+            numHits += 1;
+          } else if (dictionary[token] !== undefined) {
+            score += negator * dictionary[token];
+            numHits += 1;
+          }
+        }
+        input.sentiment = {
+          score,
+          numWords: tokens.length,
+          numHits,
+          average: score / tokens.length,
+          type: input.sentimentDictionary.type,
+          locale: input.locale,
+        };
+      }
+    } else {
       input.sentiment = {
         score: 0,
-        numWords: tokens.length,
+        numWords: 0,
         numHits: 0,
         average: 0,
         type: input.sentimentDictionary.type,
         locale: input.locale,
       };
+    }
+    if (input.sentiment.score > 0) {
+      input.sentiment.vote = 'positive';
+    } else if (input.sentiment.score < 0) {
+      input.sentiment.vote = 'negative';
     } else {
-      const { dictionary } = input.sentimentDictionary;
-      const { negations } = input.sentimentDictionary;
-      let score = 0;
-      let negator = 1;
-      let numHits = 0;
-      for (let i = 0; i < tokens.length; i += 1) {
-        const token = tokens[i].toLowerCase();
-        if (negations.indexOf(token) !== -1) {
-          negator = -1;
-          numHits += 1;
-        } else if (dictionary[token] !== undefined) {
-          score += negator * dictionary[token];
-          numHits += 1;
-        }
-      }
-      input.sentiment = {
-        score,
-        numWords: tokens.length,
-        numHits,
-        average: score / tokens.length,
-        type: input.sentimentDictionary.type,
-        locale: input.locale,
-      };
+      input.sentiment.vote = 'neutral';
     }
     return input;
   }

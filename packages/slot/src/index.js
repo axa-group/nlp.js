@@ -21,31 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NeuralNetwork } = require('@nlpjs/neural');
-const Nlu = require('./nlu');
+const SlotManager = require('./slot-manager');
 
-class NeuralNlu extends Nlu {
-  innerTrain(srcInput) {
-    const input = srcInput;
-    this.neuralNetwork = new NeuralNetwork(input.settings, this.container);
-    input.status = this.neuralNetwork.train(input.corpus);
-    return input;
-  }
-
-  innerProcess(srcInput) {
-    const input = srcInput;
-    if (!this.neuralNetwork) {
-      input.classifications = { None: 1 };
-    } else {
-      input.classifications = this.neuralNetwork.run(input.tokens);
-    }
-    return input;
-  }
-
-  registerDefault() {
-    super.registerDefault();
-    this.container.register('NeuralNlu', NeuralNlu, false);
-  }
-}
-
-module.exports = NeuralNlu;
+module.exports = {
+  SlotManager,
+};

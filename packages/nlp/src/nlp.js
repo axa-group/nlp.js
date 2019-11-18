@@ -59,6 +59,10 @@ class Nlp extends Clonable {
       'action-manager',
       this.settings.action
     );
+    this.actionManager = this.container.get(
+      'action-manager',
+      this.settings.action
+    );
     this.sentiment = this.container.get(
       'sentiment-analyzer',
       this.settings.sentiment
@@ -220,8 +224,8 @@ class Nlp extends Clonable {
     return this.nluManager.getDomains();
   }
 
-  addAction(intent, action, parameters) {
-    return this.actionManager.addAction(intent, action, parameters);
+  addAction(intent, action, parameters, fn) {
+    return this.actionManager.addAction(intent, action, parameters, fn);
   }
 
   getActions(intent) {
@@ -358,7 +362,11 @@ class Nlp extends Clonable {
     const answers = await this.nlgManager.run({ ...output });
     output.answers = answers.answers;
     output.answer = answers.answer;
+    output = await this.actionManager.run({ ...output });
+    const sentiment = await this.getSentiment(locale, utterance);
+    output.sentiment = sentiment ? sentiment.sentiment : undefined;
     delete output.context;
+    delete output.settings;
     return output;
   }
 }

@@ -102,10 +102,29 @@ class ActionManager extends Clonable {
    */
   async processActions(intent, input) {
     const actionList = this.findActions(intent);
+    if (typeof input === 'object') {
+      input.actions = actionList.map(x => ({
+        action: x.action,
+        parameters: x.parameters,
+      }));
+    }
     let processedAnswer = input;
 
     for (const { fn, parameters } of actionList) {
-      processedAnswer = await fn(processedAnswer, ...parameters);
+      if (fn) {
+        const newProcessedAnswer = await fn(processedAnswer, ...parameters);
+        if (newProcessedAnswer) {
+          if (typeof processedAnswer === 'object') {
+            if (typeof newProcessedAnswer === 'object') {
+              processedAnswer = newProcessedAnswer;
+            } else {
+              processedAnswer.answer = newProcessedAnswer;
+            }
+          } else {
+            processedAnswer = newProcessedAnswer;
+          }
+        }
+      }
     }
 
     return processedAnswer;
@@ -117,12 +136,15 @@ class ActionManager extends Clonable {
    * @param {String} action Action to be executed
    * @param {String} parameters Parameters of the action
    */
-  addAction(intent, action, parameters) {
+  addAction(intent, action, parameters, fn) {
     if (this.posAction(intent, action, parameters) === -1) {
       if (!this.actions[intent]) {
         this.actions[intent] = [];
       }
       this.actions[intent].push({ action, parameters });
+      if (fn) {
+        this.actionsMap[action] = fn;
+      }
     }
   }
 

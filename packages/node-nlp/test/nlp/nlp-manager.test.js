@@ -135,39 +135,39 @@ describe('NLP Manager', () => {
         1
       );
     });
-    // test('Should extract managed named entities', () => {
-    //   const manager = new NlpManager();
-    //   manager.addLanguage(['en', 'es']);
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'spiderman',
-    //     ['en'],
-    //     ['Spiderman', 'Spider-man']
-    //   );
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'iron man',
-    //     ['en'],
-    //     ['iron man', 'iron-man']
-    //   );
-    //   manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'burguer',
-    //     ['en'],
-    //     ['Burguer', 'Hamburguer']
-    //   );
-    //   manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'pasta',
-    //     ['en'],
-    //     ['Pasta', 'spaghetti']
-    //   );
-    //   manager.addDocument('en', 'I saw %hero%', 'sawhero');
-    //   expect(manager.slotManager.intents.sawhero).toBeDefined();
-    //   expect(manager.slotManager.intents.sawhero.hero).toBeDefined();
-    // });
+    //   test('Should extract managed named entities', () => {
+    //     const manager = new NlpManager();
+    //     manager.addLanguage(['en', 'es']);
+    //     manager.addNamedEntityText(
+    //       'hero',
+    //       'spiderman',
+    //       ['en'],
+    //       ['Spiderman', 'Spider-man']
+    //     );
+    //     manager.addNamedEntityText(
+    //       'hero',
+    //       'iron man',
+    //       ['en'],
+    //       ['iron man', 'iron-man']
+    //     );
+    //     manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+    //     manager.addNamedEntityText(
+    //       'food',
+    //       'burguer',
+    //       ['en'],
+    //       ['Burguer', 'Hamburguer']
+    //     );
+    //     manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+    //     manager.addNamedEntityText(
+    //       'food',
+    //       'pasta',
+    //       ['en'],
+    //       ['Pasta', 'spaghetti']
+    //     );
+    //     manager.addDocument('en', 'I saw %hero%', 'sawhero');
+    //     expect(manager.slotManager.intents.sawhero).toBeDefined();
+    //     expect(manager.slotManager.intents.sawhero.hero).toBeDefined();
+    //   });
   });
 
   describe('Remove named entity text', () => {
@@ -352,6 +352,16 @@ describe('NLP Manager', () => {
         answers: [],
         entities: [],
         sourceEntities: [],
+        actions: [],
+        sentiment: {
+          average: 0.0625,
+          locale: 'en',
+          numHits: 1,
+          numWords: 4,
+          score: 0.25,
+          type: 'senticon',
+          vote: 'positive',
+        },
       };
       expect(result).toEqual(expected);
     });
@@ -754,60 +764,60 @@ describe('NLP Manager', () => {
       expect(result.entities[0].sourceText).toEqual('Spiderman');
       expect(result.entities[1].sourceText).toEqual('spaghetti');
     });
-    // test('Should search for entities if the language is specified', async () => {
-    //   const manager = new NlpManager({ ner: { builtins: [] } });
-    //   manager.addLanguage(['en']);
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'spiderman',
-    //     ['en'],
-    //     ['Spiderman', 'Spider-man']
-    //   );
-    //   manager.addNamedEntityText(
-    //     'hero',
-    //     'iron man',
-    //     ['en'],
-    //     ['iron man', 'iron-man']
-    //   );
-    //   manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'burguer',
-    //     ['en'],
-    //     ['Burguer', 'Hamburguer']
-    //   );
-    //   manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-    //   manager.addNamedEntityText(
-    //     'food',
-    //     'pasta',
-    //     ['en'],
-    //     ['Pasta', 'spaghetti']
-    //   );
-    //   manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
-    //   manager.addDocument(
-    //     'en',
-    //     'I have seen %hero%, he was eating %food%',
-    //     'sawhero'
-    //   );
-    //   manager.addDocument('en', 'I want to eat %food%', 'wanteat');
-    //   await manager.train();
-    //   const result = await manager.process(
-    //     'en',
-    //     'I saw spiderman eating spaghetti today in the city!'
-    //   );
-    //   expect(result.intent).toEqual('sawhero');
-    //   expect(result.score).toBeGreaterThan(0.5);
-    //   expect(result.entities).toHaveLength(2);
-    //   expect(result.entities[0].sourceText).toEqual('Spiderman');
-    //   expect(result.entities[1].sourceText).toEqual('spaghetti');
-    // });
-    // test('Should give the sentiment even if NLP not trained', async () => {
-    //   const manager = new NlpManager();
-    //   manager.addLanguage(['en']);
-    //   const result = await manager.process('I love cats');
-    //   expect(result.sentiment).toBeDefined();
-    //   expect(result.sentiment.vote).toEqual('positive');
-    // });
+    test('Should search for entities if the language is specified', async () => {
+      const manager = new NlpManager({ ner: { builtins: [] } });
+      manager.addLanguage(['en']);
+      manager.addNamedEntityText(
+        'hero',
+        'spiderman',
+        ['en'],
+        ['Spiderman', 'Spider-man']
+      );
+      manager.addNamedEntityText(
+        'hero',
+        'iron man',
+        ['en'],
+        ['iron man', 'iron-man']
+      );
+      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+      manager.addNamedEntityText(
+        'food',
+        'burguer',
+        ['en'],
+        ['Burguer', 'Hamburguer']
+      );
+      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+      manager.addNamedEntityText(
+        'food',
+        'pasta',
+        ['en'],
+        ['Pasta', 'spaghetti']
+      );
+      manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
+      manager.addDocument(
+        'en',
+        'I have seen %hero%, he was eating %food%',
+        'sawhero'
+      );
+      manager.addDocument('en', 'I want to eat %food%', 'wanteat');
+      await manager.train();
+      const result = await manager.process(
+        'en',
+        'I saw spiderman eating spaghetti today in the city!'
+      );
+      expect(result.intent).toEqual('sawhero');
+      expect(result.score).toBeGreaterThan(0.5);
+      expect(result.entities).toHaveLength(2);
+      expect(result.entities[0].sourceText).toEqual('Spiderman');
+      expect(result.entities[1].sourceText).toEqual('spaghetti');
+    });
+    test('Should give the sentiment even if NLP not trained', async () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en']);
+      const result = await manager.process('I love cats');
+      expect(result.sentiment).toBeDefined();
+      expect(result.sentiment.vote).toEqual('positive');
+    });
     test('Should return None with score 1 if the utterance cannot be classified', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en']);
@@ -937,155 +947,155 @@ describe('NLP Manager', () => {
         )
       );
     });
-    // test('If the intent has actions, then return also the actions', async () => {
-    //   const manager = new NlpManager({
-    //     languages: ['en'],
-    //     action: {
-    //       cleanSession: () => 'cleaned',
-    //       beginDialog: () => 'started',
-    //     },
-    //   });
-    //   manager.addDocument('en', 'goodbye for now', 'greetings.bye');
-    //   manager.addDocument('en', 'bye bye take care', 'greetings.bye');
-    //   manager.addDocument('en', 'okay see you later', 'greetings.bye');
-    //   manager.addDocument('en', 'bye for now', 'greetings.bye');
-    //   manager.addDocument('en', 'i must go', 'greetings.bye');
-    //   manager.addDocument('en', 'hello', 'greetings.hello');
-    //   manager.addDocument('en', 'hi', 'greetings.hello');
-    //   manager.addDocument('en', 'howdy', 'greetings.hello');
-    //   manager.addDocument('en', 'how is your day', 'greetings.howareyou');
-    //   manager.addDocument('en', 'how is your day going', 'greetings.howareyou');
-    //   manager.addDocument('en', 'how are you', 'greetings.howareyou');
-    //   manager.addDocument('en', 'how are you doing', 'greetings.howareyou');
-    //   manager.addDocument('en', 'what about your day', 'greetings.howareyou');
-    //   manager.addDocument('en', 'are you alright', 'greetings.howareyou');
-    //   manager.addDocument('en', 'nice to meet you', 'greetings.nicetomeetyou');
-    //   manager.addDocument(
-    //     'en',
-    //     'pleased to meet you',
-    //     'greetings.nicetomeetyou'
-    //   );
-    //   manager.addDocument(
-    //     'en',
-    //     'it was very nice to meet you',
-    //     'greetings.nicetomeetyou'
-    //   );
-    //   manager.addDocument('en', 'glad to meet you', 'greetings.nicetomeetyou');
-    //   manager.addDocument('en', 'nice meeting you', 'greetings.nicetomeetyou');
-    //   manager.addDocument('en', 'nice to see you', 'greetings.nicetoseeyou');
-    //   manager.addDocument('en', 'good to see you', 'greetings.nicetoseeyou');
-    //   manager.addDocument('en', 'great to see you', 'greetings.nicetoseeyou');
-    //   manager.addDocument('en', 'lovely to see you', 'greetings.nicetoseeyou');
-    //   manager.addDocument(
-    //     'en',
-    //     'nice to talk to you',
-    //     'greetings.nicetotalktoyou'
-    //   );
-    //   manager.addDocument(
-    //     'en',
-    //     "it's nice to talk to you",
-    //     'greetings.nicetotalktoyou'
-    //   );
-    //   manager.addDocument(
-    //     'en',
-    //     'nice talking to you',
-    //     'greetings.nicetotalktoyou'
-    //   );
-    //   manager.addDocument(
-    //     'en',
-    //     "it's been nice talking to you",
-    //     'greetings.nicetotalktoyou'
-    //   );
-    //   manager.addAction('greetings.bye', 'cleanSession', ['true']);
-    //   manager.addAction('greetings.bye', 'beginDialog', ['"/"']);
-    //   manager.addAnswer('en', 'greetings.bye', 'Till next time');
-    //   manager.addAnswer('en', 'greetings.bye', 'See you soon!');
-    //   manager.addAnswer('en', 'greetings.hello', 'Hey there!');
-    //   manager.addAnswer('en', 'greetings.hello', 'Greetings!');
-    //   manager.addAnswer('en', 'greetings.howareyou', 'Feeling wonderful!');
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.howareyou',
-    //     'Wonderful! Thanks for asking'
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetomeetyou',
-    //     "It's nice meeting you, too"
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetomeetyou',
-    //     "Likewise. I'm looking forward to helping you out"
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetomeetyou',
-    //     'Nice meeting you, as well'
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetomeetyou',
-    //     'The pleasure is mine'
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetoseeyou',
-    //     'Same here. I was starting to miss you'
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetoseeyou',
-    //     'So glad we meet again'
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetotalktoyou',
-    //     'It sure was. We can chat again anytime'
-    //   );
-    //   manager.addAnswer(
-    //     'en',
-    //     'greetings.nicetotalktoyou',
-    //     'I enjoy talking to you, too'
-    //   );
-    //   await manager.train();
-    //   let result = await manager.process('goodbye');
-    //   expect(result.actions).toHaveLength(2);
-    //   expect(result.actions[0].action).toEqual('cleanSession');
-    //   expect(result.actions[0].parameters).toEqual(['true']);
-    //   expect(result.actions[1].action).toEqual('beginDialog');
-    //   expect(result.actions[1].parameters).toEqual(['"/"']);
-    //   result = await manager.process('It was nice to meet you');
-    //   expect(result.answer).toMatch(
-    //     new RegExp(
-    //       /(It's nice meeting you, too)|(Likewise. I'm looking forward to helping you out)|(Nice meeting you, as well)|(The pleasure is mine)/g
-    //     )
-    //   );
-    // });
-    // test('If the intent has actions, then apply the actions to the answer', async () => {
-    //   const manager = new NlpManager({
-    //     languages: ['en'],
-    //     action: {
-    //       action1: (input, ...parameters) => {
-    //         return `(${input}#${parameters.join(',')})`;
-    //       },
-    //       action2: (input, ...parameters) => {
-    //         return `[${input}#${parameters.join(',')}]`;
-    //       },
-    //     },
-    //   });
-    //   manager.addDocument('en', 'goodbye for now', 'greetings.bye');
-    //   manager.addDocument('en', 'bye bye take care', 'greetings.bye');
-    //   manager.addDocument('en', 'hello', 'greetings.hello');
-    //   manager.addDocument('en', 'hi', 'greetings.hello');
-    //   manager.addAction('greetings.bye', 'action1', ['a', 'b']);
-    //   manager.addAction('greetings.bye', 'action2', ['c', 'd']);
-    //   manager.addAnswer('en', 'greetings.bye', 'See you soon!');
-    //   manager.addAnswer('en', 'greetings.hello', 'Hey there!');
-    //   await manager.train();
-    //   const result = await manager.process('goodbye');
-    //   expect(result.answer).toEqual('[(See you soon!#a,b)#c,d]');
-    // });
+    test('If the intent has actions, then return also the actions', async () => {
+      const manager = new NlpManager({
+        languages: ['en'],
+        action: {
+          cleanSession: () => 'cleaned',
+          beginDialog: () => 'started',
+        },
+      });
+      manager.addDocument('en', 'goodbye for now', 'greetings.bye');
+      manager.addDocument('en', 'bye bye take care', 'greetings.bye');
+      manager.addDocument('en', 'okay see you later', 'greetings.bye');
+      manager.addDocument('en', 'bye for now', 'greetings.bye');
+      manager.addDocument('en', 'i must go', 'greetings.bye');
+      manager.addDocument('en', 'hello', 'greetings.hello');
+      manager.addDocument('en', 'hi', 'greetings.hello');
+      manager.addDocument('en', 'howdy', 'greetings.hello');
+      manager.addDocument('en', 'how is your day', 'greetings.howareyou');
+      manager.addDocument('en', 'how is your day going', 'greetings.howareyou');
+      manager.addDocument('en', 'how are you', 'greetings.howareyou');
+      manager.addDocument('en', 'how are you doing', 'greetings.howareyou');
+      manager.addDocument('en', 'what about your day', 'greetings.howareyou');
+      manager.addDocument('en', 'are you alright', 'greetings.howareyou');
+      manager.addDocument('en', 'nice to meet you', 'greetings.nicetomeetyou');
+      manager.addDocument(
+        'en',
+        'pleased to meet you',
+        'greetings.nicetomeetyou'
+      );
+      manager.addDocument(
+        'en',
+        'it was very nice to meet you',
+        'greetings.nicetomeetyou'
+      );
+      manager.addDocument('en', 'glad to meet you', 'greetings.nicetomeetyou');
+      manager.addDocument('en', 'nice meeting you', 'greetings.nicetomeetyou');
+      manager.addDocument('en', 'nice to see you', 'greetings.nicetoseeyou');
+      manager.addDocument('en', 'good to see you', 'greetings.nicetoseeyou');
+      manager.addDocument('en', 'great to see you', 'greetings.nicetoseeyou');
+      manager.addDocument('en', 'lovely to see you', 'greetings.nicetoseeyou');
+      manager.addDocument(
+        'en',
+        'nice to talk to you',
+        'greetings.nicetotalktoyou'
+      );
+      manager.addDocument(
+        'en',
+        "it's nice to talk to you",
+        'greetings.nicetotalktoyou'
+      );
+      manager.addDocument(
+        'en',
+        'nice talking to you',
+        'greetings.nicetotalktoyou'
+      );
+      manager.addDocument(
+        'en',
+        "it's been nice talking to you",
+        'greetings.nicetotalktoyou'
+      );
+      manager.addAction('greetings.bye', 'cleanSession', ['true']);
+      manager.addAction('greetings.bye', 'beginDialog', ['"/"']);
+      manager.addAnswer('en', 'greetings.bye', 'Till next time');
+      manager.addAnswer('en', 'greetings.bye', 'See you soon!');
+      manager.addAnswer('en', 'greetings.hello', 'Hey there!');
+      manager.addAnswer('en', 'greetings.hello', 'Greetings!');
+      manager.addAnswer('en', 'greetings.howareyou', 'Feeling wonderful!');
+      manager.addAnswer(
+        'en',
+        'greetings.howareyou',
+        'Wonderful! Thanks for asking'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        "It's nice meeting you, too"
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        "Likewise. I'm looking forward to helping you out"
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        'Nice meeting you, as well'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetomeetyou',
+        'The pleasure is mine'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetoseeyou',
+        'Same here. I was starting to miss you'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetoseeyou',
+        'So glad we meet again'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetotalktoyou',
+        'It sure was. We can chat again anytime'
+      );
+      manager.addAnswer(
+        'en',
+        'greetings.nicetotalktoyou',
+        'I enjoy talking to you, too'
+      );
+      await manager.train();
+      let result = await manager.process('goodbye');
+      expect(result.actions).toHaveLength(2);
+      expect(result.actions[0].action).toEqual('cleanSession');
+      expect(result.actions[0].parameters).toEqual(['true']);
+      expect(result.actions[1].action).toEqual('beginDialog');
+      expect(result.actions[1].parameters).toEqual(['"/"']);
+      result = await manager.process('It was nice to meet you');
+      expect(result.answer).toMatch(
+        new RegExp(
+          /(It's nice meeting you, too)|(Likewise. I'm looking forward to helping you out)|(Nice meeting you, as well)|(The pleasure is mine)/g
+        )
+      );
+    });
+    test('If the intent has actions, then apply the actions to the answer', async () => {
+      const manager = new NlpManager({
+        languages: ['en'],
+        action: {
+          action1: (input, ...parameters) => {
+            return `(${input.answer}#${parameters.join(',')})`;
+          },
+          action2: (input, ...parameters) => {
+            return `[${input.answer}#${parameters.join(',')}]`;
+          },
+        },
+      });
+      manager.addDocument('en', 'goodbye for now', 'greetings.bye');
+      manager.addDocument('en', 'bye bye take care', 'greetings.bye');
+      manager.addDocument('en', 'hello', 'greetings.hello');
+      manager.addDocument('en', 'hi', 'greetings.hello');
+      manager.addAction('greetings.bye', 'action1', ['a', 'b']);
+      manager.addAction('greetings.bye', 'action2', ['c', 'd']);
+      manager.addAnswer('en', 'greetings.bye', 'See you soon!');
+      manager.addAnswer('en', 'greetings.hello', 'Hey there!');
+      await manager.train();
+      const result = await manager.process('goodbye');
+      expect(result.answer).toEqual('[(See you soon!#a,b)#c,d]');
+    });
 
     test('If the NLG is trained, and the answer contains a template, replace with context variables', async () => {
       const manager = new NlpManager({ languages: ['en'] });

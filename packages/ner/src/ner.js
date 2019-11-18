@@ -333,6 +333,51 @@ class Ner extends Clonable {
     );
   }
 
+  nameToEntity(name) {
+    const preffix =
+      this.settings.entityPreffix === undefined
+        ? '@'
+        : this.settings.entityPreffix;
+    const suffix =
+      this.settings.entitySuffix === undefined
+        ? ''
+        : this.settings.entitySuffix;
+    return `${preffix}${name}${suffix}`;
+  }
+
+  entityToName(entity) {
+    if (!entity) {
+      return entity;
+    }
+    let name = entity;
+    const preffix =
+      this.settings.entityPreffix === undefined
+        ? '@'
+        : this.settings.entityPreffix;
+    const suffix =
+      this.settings.entitySuffix === undefined
+        ? ''
+        : this.settings.entitySuffix;
+    if (preffix) {
+      if (!name.startsWith(preffix)) {
+        return entity;
+      }
+      name = name.slice(preffix.length);
+    }
+    if (suffix) {
+      if (!name.endsWith(suffix)) {
+        return entity;
+      }
+      name = name.slice(0, -suffix.length);
+    }
+    return name;
+  }
+
+  isEntity(entity) {
+    const name = this.entityToName(entity);
+    return name !== entity;
+  }
+
   async generateEntityUtterance(locale, utterance) {
     let input = {
       locale,
@@ -340,7 +385,7 @@ class Ner extends Clonable {
     };
     input = await this.process(input);
     const { entities } = input;
-    if (entities.length === 0) {
+    if (!entities || !entities.length) {
       return utterance;
     }
     entities.sort((a, b) => a.start - b.start);
@@ -351,8 +396,7 @@ class Ner extends Clonable {
       const left = utterance.slice(index, entity.start);
       index = entity.end + 1;
       result += left;
-      result += `${this.settings.entityPreffix || '@'}${entity.entity}${this
-        .settings.entitySuffix || ''}`;
+      result += this.nameToEntity(entity.entity);
     }
     const right = utterance.slice(entities[entities.length - 1].end + 1);
     result += right;

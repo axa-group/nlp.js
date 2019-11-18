@@ -291,7 +291,7 @@ class Nlu extends Clonable {
       const token = keys[i];
       if (token === 'nonefeature') {
         tokens[token] = this.nonefeatureValue;
-      } else if (!this.features[token]) {
+      } else if (!this.features || !this.features[token]) {
         unknownTokens += 1;
       } else {
         features[token] = tokens[token];
