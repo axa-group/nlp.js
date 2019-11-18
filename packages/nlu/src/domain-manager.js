@@ -348,6 +348,34 @@ class DomainManager extends Clonable {
         : utterance;
     return this.runPipeline(input, this.pipelineProcess);
   }
+
+  toJSON() {
+    const result = {
+      settings: this.settings,
+      stemDict: this.stemDict,
+      intentDict: this.intentDict,
+      sentences: this.sentences,
+      domains: {},
+    };
+    delete result.settings.container;
+    const keys = Object.keys(this.domains);
+    for (let i = 0; i < keys.length; i += 1) {
+      result.domains[keys[i]] = this.domains[keys[i]].toJSON();
+    }
+    return result;
+  }
+
+  fromJSON(json) {
+    this.applySettings(this.settings, json.settings);
+    this.stemDict = json.stemDict;
+    this.intentDict = json.intentDict;
+    this.sentences = json.sentences;
+    const keys = Object.keys(json.domains);
+    for (let i = 0; i < keys.length; i += 1) {
+      const domain = this.addDomain(keys[i]);
+      domain.fromJSON(json.domains[keys[i]]);
+    }
+  }
 }
 
 module.exports = DomainManager;
