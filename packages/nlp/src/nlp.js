@@ -33,6 +33,7 @@ const {
 } = require('@nlpjs/ner');
 const { ActionManager, NlgManager } = require('@nlpjs/nlg');
 const { SentimentAnalyzer } = require('@nlpjs/sentiment');
+const { SlotManager } = require('@nlpjs/slot');
 
 class Nlp extends Clonable {
   constructor(settings = {}, container) {
@@ -67,6 +68,7 @@ class Nlp extends Clonable {
       'sentiment-analyzer',
       this.settings.sentiment
     );
+    this.slotManager = this.container.get('SlotManager', this.settings.slot);
     this.initialize();
   }
 
@@ -81,6 +83,7 @@ class Nlp extends Clonable {
     this.use(ActionManager);
     this.use(NluNeural);
     this.use(SentimentAnalyzer);
+    this.use(SlotManager);
   }
 
   initialize() {
@@ -149,6 +152,8 @@ class Nlp extends Clonable {
   }
 
   addDocument(locale, utterance, intent) {
+    const entities = this.ner.getEntitiesFromUtterance(utterance);
+    this.slotManager.addBatch(intent, entities);
     return this.nluManager.add(locale, utterance, intent);
   }
 
@@ -321,7 +326,7 @@ class Nlp extends Clonable {
     return output;
   }
 
-  async process(locale, utterance, context, settings) {
+  async process(locale, utterance, context = {}, settings) {
     if (!utterance) {
       utterance = locale;
       locale = undefined;
@@ -365,6 +370,12 @@ class Nlp extends Clonable {
     output = await this.actionManager.run({ ...output });
     const sentiment = await this.getSentiment(locale, utterance);
     output.sentiment = sentiment ? sentiment.sentiment : undefined;
+    if (this.slotManager.process(output, context)) {
+      output.entities.forEach(entity => {
+        context[entity.entity] = entity.option || entity.utteranceText;
+      });
+    }
+    context.slotFill = output.slotFill;
     delete output.context;
     delete output.settings;
     return output;

@@ -378,6 +378,22 @@ class Ner extends Clonable {
     return name !== entity;
   }
 
+  getEntitiesFromUtterance(locale, utterance) {
+    if (!utterance) {
+      utterance = locale;
+      locale = 'es';
+    }
+    const tokens = utterance.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+    const result = [];
+    for (let i = 0; i < tokens.length; i += 1) {
+      const token = tokens[i];
+      if (this.isEntity(token)) {
+        result.push(this.entityToName(token));
+      }
+    }
+    return result;
+  }
+
   async generateEntityUtterance(locale, utterance) {
     let input = {
       locale,

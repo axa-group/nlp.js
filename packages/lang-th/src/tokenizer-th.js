@@ -168,13 +168,15 @@ class TokenizerTh extends Tokenizer {
     for (let i = 0; i < edges.length; i += 1) {
       const current = edges[i];
       if (current.start > index) {
-        result.push(...str.slice(index, current.start).split(/\W+/));
+        result.push(
+          ...str.slice(index, current.start).split(/[\s,.!?;:([\]'"¡¿)/]+/)
+        );
       }
       result.push(current.value);
       index = current.end + 1;
     }
     if (index < str.length) {
-      result.push(...str.slice(index).split(/\W+/));
+      result.push(...str.slice(index).split(/[\s,.!?;:([\]'"¡¿)/]+/));
     }
     return result;
   }

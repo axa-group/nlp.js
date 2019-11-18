@@ -62,7 +62,7 @@ class TokenizerEn extends Tokenizer {
 
   innerTokenize(text) {
     const replaced = this.replace(text);
-    const arr = replaced.split(/\W+/).filter(x => x);
+    const arr = replaced.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
     return this.replaceContractions(arr, text);
   }
 }
