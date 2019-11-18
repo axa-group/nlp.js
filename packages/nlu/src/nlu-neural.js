@@ -46,6 +46,18 @@ class NeuralNlu extends Nlu {
     super.registerDefault();
     this.container.register('NeuralNlu', NeuralNlu, false);
   }
+
+  toJSON() {
+    const result = super.toJSON();
+    result.neuralNetwork = this.neuralNetwork.toJSON();
+    return result;
+  }
+
+  fromJSON(json) {
+    super.fromJSON(json);
+    this.neuralNetwork = new NeuralNetwork();
+    this.neuralNetwork.fromJSON(json.neuralNetwork);
+  }
 }
 
 module.exports = NeuralNlu;

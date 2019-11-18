@@ -57,7 +57,12 @@ class Clonable {
     const keys = Object.keys(this);
     for (let i = 0; i < keys.length; i += 1) {
       const key = keys[i];
-      if (key !== 'jsonExport' && key !== 'jsonImport' && key !== 'container') {
+      if (
+        key !== 'jsonExport' &&
+        key !== 'jsonImport' &&
+        key !== 'container' &&
+        !key.startsWith('pipeline')
+      ) {
         const fn = settings[key] === undefined ? true : settings[key];
         if (typeof fn === 'function') {
           const value = fn.bind(this)(result, this, key, this[key]);
@@ -67,6 +72,9 @@ class Clonable {
         } else if (typeof fn === 'boolean') {
           if (fn) {
             result[key] = this[key];
+            if (key === 'settings') {
+              delete result[key].container;
+            }
           }
         } else if (typeof fn === 'string') {
           result[fn] = this[key];

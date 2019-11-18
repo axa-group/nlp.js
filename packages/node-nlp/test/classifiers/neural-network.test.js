@@ -153,22 +153,11 @@ describe('Neural Network', () => {
   });
 
   describe('To JSON', () => {
-    test('If is not runnable return perceptronSettings and empty array', () => {
+    test('If is not runnable return perceptronSettings', () => {
       const net = new NeuralNetwork();
       const actual = net.toJSON();
       const expected = {
-        sizes: undefined,
-        layers: [],
-        perceptronSettings: {
-          iterations: 20000,
-          errorThresh: 0.00005,
-          deltaErrorThresh: 0.000001,
-          fixedError: false,
-          learningRate: 0.7,
-          momentum: 0.5,
-          alpha: 0.08,
-          log: false,
-        },
+        perceptronSettings: {},
       };
       expect(actual).toEqual(expected);
     });
@@ -183,7 +172,9 @@ describe('Neural Network', () => {
         deltaErrorThresh: 0.0000002,
         learningRate: 0.1,
         momentum: 0.5,
-        leakyReluAlpha: 0.01,
+        alpha: 0.08,
+        fixedError: false,
+        log: false,
       };
       net.fromJSON({
         sizes: undefined,

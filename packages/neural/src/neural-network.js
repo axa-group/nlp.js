@@ -23,9 +23,9 @@
 const { Clonable } = require('@nlpjs/core');
 const {
   LookupTable,
-  toHash,
   lookupToArray,
   lookupToObject,
+  toHash,
   getTypedArrayFn,
 } = require('./helper');
 const defaultSettings = require('./default-settings.json');
@@ -265,65 +265,62 @@ class NeuralNetwork extends Clonable {
   }
 
   toJSON() {
-    const layers = [];
-    if (this.isRunnable) {
-      for (let layer = 0; layer <= 1; layer += 1) {
-        layers[layer] = {};
-        const nodes = Object.keys(
-          layer === 0 ? this.inputLookup : this.outputLookup
-        );
-        for (let j = 0; j < nodes.length; j += 1) {
-          const perceptron = this.perceptrons[j];
-          const node = nodes[j];
-          layers[layer][node] = {};
-          const currentNode = layers[layer][node];
-          if (layer > 0) {
-            currentNode.bias = this.adjust(perceptron.bias);
-            currentNode.weights = {};
-            const keys = Object.keys(layers[layer - 1]);
-            for (let k = 0; k < keys.length; k += 1) {
-              const currentWeight = this.adjust(
-                perceptron.weights[this.inputLookup[keys[k]]]
-              );
-              if (currentWeight !== 0) {
-                currentNode.weights[keys[k]] = currentWeight;
-              }
-            }
-          }
-        }
+    const settings = {};
+    const keys = Object.keys(this.perceptronSettings);
+    for (let i = 0; i < keys.length; i += 1) {
+      const key = keys[i];
+      if (this.perceptronSettings[key] !== defaultSettings[key]) {
+        settings[key] = this.perceptronSettings[key];
       }
     }
+    if (!this.inputLookup) {
+      return {
+        perceptronSettings: settings,
+      };
+    }
+    const features = Object.keys(this.inputLookup);
+    const intents = Object.keys(this.outputLookup);
+    const perceptrons = [];
+    for (let i = 0; i < intents.length; i += 1) {
+      const perceptron = this.perceptrons[i];
+      const weights = [...perceptron.weights, perceptron.bias];
+      perceptrons.push(weights);
+    }
     return {
-      sizes: this.sizes,
-      layers,
-      perceptronSettings: this.perceptronSettings,
+      features,
+      intents,
+      perceptrons,
+      perceptronSettings: settings,
     };
   }
 
   fromJSON(json) {
-    this.sizes = json.sizes;
-    this.perceptronSettings = json.perceptronSettings;
-    if (!this.sizes) return;
-    this.initialize();
-    this.inputLookup = toHash(json.layers[0]);
-    const features = Object.keys(this.inputLookup);
-    const outputLayer = json.layers[1];
-    this.outputLookup = toHash(outputLayer);
-    const nodes = Object.keys(outputLayer);
-    this.sizes[1] = nodes.length;
-    for (let j = 0; j < nodes.length; j += 1) {
-      const node = nodes[j];
-      const perceptron = this.perceptrons[j];
-      perceptron.bias = outputLayer[node].bias;
-      const weights = new Float32Array(this.sizes[0]);
-      for (let k = 0; k < features.length; k += 1) {
-        const feature = features[k];
-        if (outputLayer[node].weights[feature]) {
-          const index = this.inputLookup[feature];
-          weights[index] = outputLayer[node].weights[feature];
+    this.perceptronSettings = this.applySettings({
+      ...defaultSettings,
+      ...json.perceptronSettings,
+    });
+    if (json.features) {
+      this.sizes = [json.features.length, json.intents.length];
+      const layer0 = {};
+      for (let i = 0; i < json.features.length; i += 1) {
+        layer0[json.features[i]] = {};
+      }
+      this.inputLookup = toHash(layer0);
+      const layer1 = {};
+      for (let i = 0; i < json.intents.length; i += 1) {
+        const intent = json.intents[i];
+        layer1[intent] = {};
+      }
+      this.outputLookup = toHash(layer1);
+      this.initialize();
+      for (let i = 0; i < json.intents.length; i += 1) {
+        const perceptron = this.perceptrons[i];
+        const data = json.perceptrons[i];
+        perceptron.bias = data[data.length - 1];
+        for (let j = 0; j < json.features.length; j += 1) {
+          perceptron.weights[j] = data[j];
         }
       }
-      perceptron.weights = weights;
     }
   }
 }

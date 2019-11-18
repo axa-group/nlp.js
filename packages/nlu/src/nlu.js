@@ -349,6 +349,27 @@ class Nlu extends Clonable {
     }
     return output;
   }
+
+  toJSON() {
+    const result = {
+      settings: { ...this.settings },
+      features: this.features,
+      intents: this.intents,
+      intentFeatures: this.intentFeatures,
+    };
+    delete result.settings.container;
+    return result;
+  }
+
+  fromJSON(json) {
+    this.applySettings(this.settings, json.settings);
+    this.features = json.features;
+    this.intents = json.intents;
+    this.intentFeatures = json.intentFeatures;
+    this.spellCheck.setFeatures(this.features);
+    this.numFeatures = Object.keys(this.features).length;
+    this.numIntents = Object.keys(this.intents).length;
+  }
 }
 
 module.exports = Nlu;
