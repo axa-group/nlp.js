@@ -185,9 +185,9 @@ class ActionManager extends Clonable {
 
   toJSON() {
     const result = {
-      settings: this.settings,
+      settings: { ...this.settings },
       actions: this.actions,
-    }
+    };
     delete result.settings.container;
     return result;
   }

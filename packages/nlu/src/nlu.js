@@ -363,9 +363,9 @@ class Nlu extends Clonable {
 
   fromJSON(json) {
     this.applySettings(this.settings, json.settings);
-    this.features = json.features;
-    this.intents = json.intents;
-    this.intentFeatures = json.intentFeatures;
+    this.features = json.features || {};
+    this.intents = json.intents || {};
+    this.intentFeatures = json.intentFeatures || {};
     this.spellCheck.setFeatures(this.features);
     this.numFeatures = Object.keys(this.features).length;
     this.numIntents = Object.keys(this.intents).length;

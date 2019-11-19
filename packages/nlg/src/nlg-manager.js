@@ -209,9 +209,9 @@ class NlgManager extends Clonable {
 
   toJSON() {
     const result = {
-      settings: this.settings,
+      settings: { ...this.settings },
       responses: this.responses,
-    }
+    };
     delete result.settings.container;
     return result;
   }

@@ -421,9 +421,9 @@ class Ner extends Clonable {
 
   toJSON() {
     const result = {
-      settings: this.settings,
+      settings: { ...this.settings },
       rules: this.rules,
-    }
+    };
     delete result.settings.container;
     return result;
   }

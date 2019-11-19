@@ -379,13 +379,13 @@ class Nlp extends Clonable {
 
   toJSON() {
     const result = {
-      settings: this.settings,
+      settings: { ...this.settings },
       nluManager: this.nluManager.toJSON(),
       ner: this.ner.toJSON(),
       nlgManager: this.nlgManager.toJSON(),
       actionManager: this.actionManager.toJSON(),
       slotManager: this.slotManager.save(),
-    }
+    };
     delete result.settings.container;
 
     return result;
