@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/similarity",
-  "version": "1.0.0",
+  "version": "4.0.0-rc.0",
   "description": "Similarity",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -23,7 +23,5 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "dependencies": {
   }
 }
