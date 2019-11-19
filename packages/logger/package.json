@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/logger",
-  "version": "4.0.0-4.0.0-rc.1.0",
+  "version": "4.0.1-rc.0",
   "description": "Logger",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -27,5 +27,6 @@
   "dependencies": {
     "pino": "^5.13.6",
     "pino-pretty": "^3.3.0"
-  }
+  },
+  "gitHead": "596e7c69b8931d6a15370fce33bec7e67c5e4644"
 }
