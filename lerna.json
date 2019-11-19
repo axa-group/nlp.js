@@ -2,8 +2,5 @@
   "packages": [
     "packages/*"
   ],
-  "version": "4.0.1-rc.1",
-  "publishConfig": {
-    "access": "public"
-  }
+  "version": "4.0.0-rc.0"
 }

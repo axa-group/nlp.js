@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/slot",
-  "version": "4.0.1-rc.1",
+  "version": "4.0.0-rc.0",
   "description": "Slot filling manager",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -24,5 +24,5 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "gitHead": "9c0b199aa0bf4bad76266814b917d5ceedf6bf2b"
+  "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
 }
