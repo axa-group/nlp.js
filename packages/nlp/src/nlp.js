@@ -60,10 +60,6 @@ class Nlp extends Clonable {
       'action-manager',
       this.settings.action
     );
-    this.actionManager = this.container.get(
-      'action-manager',
-      this.settings.action
-    );
     this.sentiment = this.container.get(
       'sentiment-analyzer',
       this.settings.sentiment
@@ -379,6 +375,29 @@ class Nlp extends Clonable {
     delete output.context;
     delete output.settings;
     return output;
+  }
+
+  toJSON() {
+    const result = {
+      settings: this.settings,
+      nluManager: this.nluManager.toJSON(),
+      ner: this.ner.toJSON(),
+      nlgManager: this.nlgManager.toJSON(),
+      actionManager: this.actionManager.toJSON(),
+      slotManager: this.slotManager.save(),
+    }
+    delete result.settings.container;
+
+    return result;
+  }
+
+  fromJSON(json) {
+    this.applySettings(this.settings, json.settings);
+    this.nluManager.fromJSON(json.nluManager);
+    this.ner.fromJSON(json.ner);
+    this.nlgManager.fromJSON(json.nlgManager);
+    this.actionManager.fromJSON(json.actionManager);
+    this.slotManager.load(json.slotManager);
   }
 }
 

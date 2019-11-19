@@ -418,6 +418,20 @@ class Ner extends Clonable {
     result += right;
     return result;
   }
+
+  toJSON() {
+    const result = {
+      settings: this.settings,
+      rules: this.rules,
+    }
+    delete result.settings.container;
+    return result;
+  }
+
+  fromJSON(json) {
+    this.applySettings(this.settings, json.settings);
+    this.rules = json.rules;
+  }
 }
 
 module.exports = Ner;

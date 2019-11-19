@@ -349,6 +349,34 @@ describe('NLU Manager', () => {
     });
   });
 
+  describe('toJSON and fromJSON', () => {
+    test('I can export and import and should work', async () => {
+      const manager = new NluManager({
+        container,
+        locales: ['en', 'es'],
+        useNoneFeature: false,
+        trainByDomain: true,
+      });
+      addFoodDomainEn(manager);
+      addPersonalityDomainEn(manager);
+      addFoodDomainEs(manager);
+      addPersonalityDomainEs(manager);
+      await manager.train();
+      const manager2 = new NluManager({ container });
+      manager2.fromJSON(manager.toJSON());
+      const actual = await manager2.process('es', 'dime quién eres tú');
+      expect(actual.domain).toEqual('personality');
+      expect(actual.language).toEqual('Spanish');
+      expect(actual.locale).toEqual('es');
+      expect(actual.localeGuessed).toBeFalsy();
+      expect(actual.localeIso2).toEqual('es');
+      expect(actual.utterance).toEqual('dime quién eres tú');
+      expect(actual.classifications).toHaveLength(2);
+      expect(actual.classifications[0].intent).toEqual('agent.acquaintance');
+      expect(actual.classifications[0].score).toBeGreaterThan(0.8);
+    });
+  });
+
   describe('Is equal classification', () => {
     test('Should return true if the two frist classifications have the same score', () => {
       const manager = new NluManager({ container });

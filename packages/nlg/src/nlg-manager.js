@@ -206,6 +206,20 @@ class NlgManager extends Clonable {
       settings
     );
   }
+
+  toJSON() {
+    const result = {
+      settings: this.settings,
+      responses: this.responses,
+    }
+    delete result.settings.container;
+    return result;
+  }
+
+  fromJSON(json) {
+    this.applySettings(this.settings, json.settings);
+    this.responses = json.responses;
+  }
 }
 
 module.exports = NlgManager;

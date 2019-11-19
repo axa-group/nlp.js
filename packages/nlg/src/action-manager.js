@@ -182,6 +182,20 @@ class ActionManager extends Clonable {
     input.settings = input.settings || settings || this.settings;
     return this.processActions(srcInput.intent, input);
   }
+
+  toJSON() {
+    const result = {
+      settings: this.settings,
+      actions: this.actions,
+    }
+    delete result.settings.container;
+    return result;
+  }
+
+  fromJSON(json) {
+    this.applySettings(this.settings, json.settings);
+    this.actions = json.actions;
+  }
 }
 
 module.exports = ActionManager;

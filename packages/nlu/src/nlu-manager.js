@@ -309,6 +309,43 @@ class NluManager extends Clonable {
           };
     return this.runPipeline(input, this.pipelineProcess);
   }
+
+  toJSON() {
+    const result = {
+      settings: this.settings,
+      locales: this.locales,
+      languageNames: this.languageNames,
+      domainManagers: {},
+      intentDomains: this.intentDomains,
+      extraSentences: this.guesser.extraSentences,
+    };
+    delete result.settings.container;
+    const keys = Object.keys(this.domainManagers);
+    for (let i = 0; i < keys.length; i += 1) {
+      const key = keys[i];
+      result.domainManagers[key] = this.domainManagers[key].toJSON();
+    }
+    return result;
+  }
+
+  fromJSON(json) {
+    this.applySettings(this.settings, json.settings);
+    for (let i = 0; i < json.locales.length; i += 1) {
+      this.addLanguage(json.locales[i]);
+    }
+    this.languageNames = json.languageNames;
+    this.intentDomains = json.intentDomains;
+
+    const keys = Object.keys(json.domainManagers);
+    for (let i = 0; i < keys.length; i += 1) {
+      const key = keys[i];
+      this.domainManagers[key].fromJSON(json.domainManagers[key]);
+    }
+    for (let i = 0; i < json.extraSentences.length; i += 1) {
+      const sentence = json.extraSentences[i];
+      this.guesser.addExtraSentence(sentence[0], sentence[1]);
+    }
+  }
 }
 
 module.exports = NluManager;
