@@ -1,0 +1,357 @@
+/*
+ * Copyright (c) AXA Group Operations Spain S.A.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * 'Software'), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+const { BaseStemmer } = require('@nlpjs/core');
+
+class StemmerGl extends BaseStemmer {
+  constructor(container) {
+    super(container);
+    this.name = 'stemmer-gl';
+  }
+
+  processSuffixes(word, suffixes) {
+    const { length } = word;
+    for (let i = 0; i < suffixes.length; i += 1) {
+      const suffix = suffixes[i][0];
+      const minLength = Math.min(suffixes[i][1], 3);
+      const suffixLength = suffix.length;
+      if (length - minLength - suffixLength >= 0 && word.endsWith(suffix)) {
+        return `${word.slice(0, length - suffixLength)}${suffixes[i][2]}`;
+      }
+    }
+    return word;
+  }
+
+  innerStem() {
+    let word = this.getCurrent();
+    word = this.processSuffixes(word, StemmerGl.pluralSuffixes);
+    word = this.processSuffixes(word, StemmerGl.unifySuffixes);
+    word = this.processSuffixes(word, StemmerGl.adverbSuffixes);
+    word = this.processSuffixes(word, StemmerGl.appreciativeSuffixes);
+    word = this.processSuffixes(word, StemmerGl.notionSuffixes);
+    word = this.processSuffixes(word, StemmerGl.verbSuffixes);
+    this.setCurrent(word);
+  }
+}
+
+StemmerGl.pluralSuffixes = [
+  ['ns', 1, 'n'],
+  ['os', 3, 'on'],
+  ['oes', 3, 'on'],
+  ['aes', 1, 'ao'],
+  ['ais', 2, 'al'],
+  ['eis', 2, 'el'],
+  ['ois', 2, 'ol'],
+  ['is', 2, 'il'],
+  ['les', 2, 'l'],
+  ['res', 3, 'r'],
+  ['ces', 2, 'z'],
+  ['zes', 2, 'z'],
+  ['ises', 3, 'i'],
+  ['ses', 2, 's'],
+  ['s', 2, ''],
+];
+
+StemmerGl.unifySuffixes = [
+  ['issimo', 5, 'isimo'],
+  ['issima', 5, 'isima'],
+  ['aço', 4, 'azo'],
+  ['aça', 4, 'aza'],
+  ['uça', 4, 'uza'],
+  ['lhar', 2, 'llar'],
+  ['lher', 2, 'ller'],
+  ['lhor', 2, 'llor'],
+  ['lho', 1, 'llo'],
+  ['lha', 1, 'lla'],
+  ['nhar', 2, 'ñar'],
+  ['nhor', 2, 'ñor'],
+  ['nho', 1, 'ño'],
+  ['nha', 1, 'ña'],
+  ['able', 2, 'abel'],
+  ['avel', 2, 'abel'],
+  ['ible', 2, 'ibel'],
+  ['ivel', 2, 'ibel'],
+  ['çom', 2, 'cion'],
+  ['agem', 2, 'axe'],
+  ['age', 2, 'axe'],
+  ['ão', 1, 'on'],
+  ['ao', 1, 'an'],
+  ['au', 1, 'an'],
+  ['om', 3, 'on'],
+  ['m', 2, 'n'],
+];
+
+StemmerGl.adverbSuffixes = [['mente', 4, '']];
+
+StemmerGl.appreciativeSuffixes = [
+  ['disimo', 5, ''],
+  ['disima', 5, ''],
+  ['bilisimo', 5, ''],
+  ['bilisima', 5, ''],
+  ['isimo', 3, ''],
+  ['isima', 3, ''],
+  ['esimo', 3, ''],
+  ['esima', 3, ''],
+  ['errimo', 4, ''],
+  ['errima', 4, ''],
+  ['ana', 2, ''],
+  ['an', 3, ''],
+  ['azo', 3, ''],
+  ['aza', 3, ''],
+  ['allo', 4, ''],
+  ['alla', 4, ''],
+  ['arra', 3, ''],
+  ['astro', 3, ''],
+  ['astra', 3, ''],
+  ['azio', 3, ''],
+  ['elo', 4, ''],
+  ['eta', 3, ''],
+  ['ete', 3, ''],
+  ['ica', 3, ''],
+  ['ico', 3, ''],
+  ['exo', 3, ''],
+  ['exa', 3, ''],
+  ['idão', 3, ''],
+  ['iño', 3, ''],
+  ['iña', 3, ''],
+  ['ito', 3, ''],
+  ['ita', 3, ''],
+  ['oide', 3, ''],
+  ['ola', 3, ''],
+  ['olo', 3, ''],
+  ['ote', 3, ''],
+  ['ota', 3, ''],
+  ['ocho', 3, ''],
+  ['cha', 3, ''],
+  ['uco', 4, ''],
+  ['uzo', 3, ''],
+  ['uza', 3, ''],
+  ['uxa', 3, ''],
+  ['uxo', 3, ''],
+  ['ella', 3, ''],
+];
+
+StemmerGl.notionSuffixes = [
+  ['dade', 3, ''],
+  ['ificar', 2, ''],
+  ['eiro', 3, ''],
+  ['eira', 3, ''],
+  ['ario', 3, ''],
+  ['aria', 3, ''],
+  ['istico', 3, ''],
+  ['ista', 3, ''],
+  ['ado', 2, ''],
+  ['ato', 2, ''],
+  ['ido', 3, ''],
+  ['ida', 3, ''],
+  ['udo', 3, ''],
+  ['uda', 3, ''],
+  ['ada', 2, ''],
+  ['dela', 3, ''],
+  ['ela', 3, ''],
+  ['abel', 2, ''],
+  ['ibel', 2, ''],
+  ['nte', 3, ''],
+  ['ncia', 3, ''],
+  ['nza', 3, ''],
+  ['acia', 3, ''],
+  ['icia', 3, ''],
+  ['iza', 3, ''],
+  ['exar', 3, ''],
+  ['acion', 3, ''],
+  ['icion', 3, ''],
+  ['cion', 3, ''],
+  ['sion', 3, ''],
+  ['azon', 2, ''],
+  ['on', 3, ''],
+  ['ona', 3, ''],
+  ['oa', 3, ''],
+  ['aco', 3, ''],
+  ['aca', 3, ''],
+  ['al', 4, ''],
+  ['dor', 2, ''],
+  ['tor', 2, ''],
+  ['or', 3, ''],
+  ['ora', 3, ''],
+  ['aria', 3, ''],
+  ['axe', 3, ''],
+  ['dizo', 3, ''],
+  ['eza', 3, ''],
+  ['ez', 3, ''],
+  ['engo', 3, ''],
+  ['ego', 3, ''],
+  ['oso', 3, ''],
+  ['osa', 3, ''],
+  ['ume', 3, ''],
+  ['ura', 3, ''],
+  ['iñar', 3, ''],
+  ['il', 3, ''],
+  ['esco', 4, ''],
+  ['isco', 4, ''],
+  ['ivo', 3, ''],
+  ['iva', 3, ''],
+  ['es', 3, ''],
+];
+
+StemmerGl.verbSuffixes = [
+  ['aba', 2, ''],
+  ['abade', 2, ''],
+  ['abamo', 2, ''],
+  ['aban', 2, ''],
+  ['ache', 2, ''],
+  ['ade', 2, ''],
+  ['an', 2, ''],
+  ['ando', 2, ''],
+  ['ar', 2, ''],
+  ['arade', 2, ''],
+  ['aran', 2, ''],
+  ['aria', 2, ''],
+  ['ariade', 2, ''],
+  ['arian', 2, ''],
+  ['ariamo', 2, ''],
+  ['aron', 2, ''],
+  ['ase', 2, ''],
+  ['asede', 2, ''],
+  ['asemo', 2, ''],
+  ['asen', 2, ''],
+  ['avan', 2, ''],
+  ['ariamo', 2, ''],
+  ['assen', 2, ''],
+  ['assemo', 2, ''],
+  ['eriamo', 1, ''],
+  ['essemo', 1, ''],
+  ['iriamo', 3, ''],
+  ['issemo', 3, ''],
+  ['aramo', 2, ''],
+  ['arei', 2, ''],
+  ['aren', 2, ''],
+  ['aremo', 2, ''],
+  ['ariei', 2, ''],
+  ['assei', 2, ''],
+  ['avamo', 2, ''],
+  ['eramo', 1, ''],
+  ['eremo', 1, ''],
+  ['eriei', 1, ''],
+  ['êssei', 1, ''],
+  ['essei', 1, ''],
+  ['iramo', 3, ''],
+  ['iremo', 3, ''],
+  ['iriei', 3, ''],
+  ['issei', 3, ''],
+  ['issen', 3, ''],
+  ['endo', 1, ''],
+  ['indo', 3, ''],
+  ['ondo', 3, ''],
+  ['arde', 2, ''],
+  ['arei', 2, ''],
+  ['aria', 2, ''],
+  ['armo', 2, ''],
+  ['asse', 2, ''],
+  ['aste', 2, ''],
+  ['avei', 2, ''],
+  ['erao', 1, ''],
+  ['erde', 1, ''],
+  ['erei', 1, ''],
+  ['eren', 1, ''],
+  ['eria', 1, ''],
+  ['ermo', 1, ''],
+  ['este', 1, ''],
+  ['iamo', 1, ''],
+  ['ian', 1, ''],
+  ['irde', 2, ''],
+  ['irei', 3, ''],
+  ['iren', 3, ''],
+  ['iria', 3, ''],
+  ['irmo', 3, ''],
+  ['isse', 3, ''],
+  ['iste', 4, ''],
+  ['iava', 1, ''],
+  ['amo', 2, ''],
+  ['iona', 3, ''],
+  ['ara', 2, ''],
+  ['are', 2, ''],
+  ['ava', 2, ''],
+  ['emo', 2, ''],
+  ['era', 1, ''],
+  ['ere', 1, ''],
+  ['iei', 1, ''],
+  ['in', 1, ''],
+  ['imo', 3, ''],
+  ['ira', 3, ''],
+  ['ido', 3, ''],
+  ['tizar', 4, ''],
+  ['izar', 3, ''],
+  ['itar', 5, ''],
+  ['ire', 3, ''],
+  ['omo', 3, ''],
+  ['ai', 2, ''],
+  ['ear', 4, ''],
+  ['uei', 3, ''],
+  ['uia', 5, ''],
+  ['ei', 3, ''],
+  ['er', 2, ''],
+  ['eu', 2, ''],
+  ['ia', 2, ''],
+  ['ir', 3, ''],
+  ['iu', 3, ''],
+  ['eou', 5, ''],
+  ['ou', 3, ''],
+  ['i', 1, ''],
+  ['ede', 1, ''],
+  ['ei', 2, ''],
+  ['en', 2, ''],
+  ['erade', 1, ''],
+  ['eran', 1, ''],
+  ['eramo', 1, ''],
+  ['eria', 1, ''],
+  ['eriade', 1, ''],
+  ['eriamo', 1, ''],
+  ['erian', 1, ''],
+  ['eron', 1, ''],
+  ['ese', 1, ''],
+  ['esedes', 1, ''],
+  ['esemo', 1, ''],
+  ['esen', 1, ''],
+  ['essed', 1, ''],
+  ['ia', 1, ''],
+  ['iade', 1, ''],
+  ['iamo', 1, ''],
+  ['ian', 1, ''],
+  ['iche', 1, ''],
+  ['ide', 1, ''],
+  ['irade', 3, ''],
+  ['iramo', 3, ''],
+  ['iran', 3, ''],
+  ['iria', 3, ''],
+  ['iriade', 3, ''],
+  ['iriamo', 3, ''],
+  ['irian', 3, ''],
+  ['iron', 3, ''],
+  ['ise', 3, ''],
+  ['isede', 3, ''],
+  ['isemo', 3, ''],
+  ['isen', 3, ''],
+  ['issede', 3, ''],
+];
+
+module.exports = StemmerGl;

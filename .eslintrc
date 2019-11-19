@@ -2,7 +2,9 @@
   "extends": ["airbnb-base", "plugin:jest/recommended", "prettier"],
   "plugins": ["import", "jest", "prettier"],
   "rules": {
+    "no-param-reassign": 0,
     "class-methods-use-this": 0,
+    "no-misleading-character-class": 0,
     "prettier/prettier": [
       "error",
       {
