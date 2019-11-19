@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/language",
-  "version": "4.0.0-rc.1",
+  "version": "4.0.0-rc.2",
   "description": "Language guesser",
   "author": {
     "email": "jesus.seijas@axa.com",
