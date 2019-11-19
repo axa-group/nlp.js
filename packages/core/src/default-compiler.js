@@ -130,7 +130,7 @@ class DefaultCompiler {
 
   async executeAction(step, context, input, srcObject, depth) {
     let firstToken = step[0];
-    if (firstToken.value.startsWith('->')) {
+    if (firstToken && firstToken.value && firstToken.value.startsWith('->')) {
       if (depth > 0) {
         return input;
       }
