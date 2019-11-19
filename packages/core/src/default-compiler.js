@@ -129,7 +129,14 @@ class DefaultCompiler {
   }
 
   async executeAction(step, context, input, srcObject, depth) {
-    const firstToken = step[0];
+    let firstToken = step[0];
+    if (firstToken.value.startsWith('->')) {
+      if (depth > 0) {
+        return input;
+      }
+      firstToken = { ...firstToken };
+      firstToken.value = firstToken.value.slice(2);
+    }
     switch (firstToken.type) {
       case 'set':
         this.container.setValue(

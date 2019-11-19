@@ -339,7 +339,10 @@ class Container {
         const line = srcPipeline[i];
         if (line.trim() === '$super') {
           for (let j = 0; j < prevPipeline.length; j += 1) {
-            pipeline.push(prevPipeline[j]);
+            const s = prevPipeline[j].trim();
+            if (!s.startsWith('->')) {
+              pipeline.push(prevPipeline[j]);
+            }
           }
         } else {
           pipeline.push(line);
