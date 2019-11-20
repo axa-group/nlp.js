@@ -1,0 +1,23 @@
+{
+  "pathPlugins": "./plugins",
+  "pathPipelines": "./pipelines.md",
+  "settings": {
+    "nlp": {
+      "languages": ["en"],
+      "trainByDomain": false,
+      "threshold": 0.5,
+      "autoLoad": true,
+      "autoSave": true,
+      "modelFileName": "model.nlp",
+      "corpora": [
+        "./corpus.json"
+      ]
+    }
+  },
+  "use": [
+    { "className": "logger", "path": "../../packages/logger/src" },
+    { "className": "ConsoleConnector", "path": "../../packages/console-connector/src" },
+    { "className": "Nlp", "path": "../../packages/nlp/src" },
+    { "className": "LangEn", "path": "../../packages/lang-en/src" }
+  ]
+}

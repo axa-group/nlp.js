@@ -278,7 +278,8 @@ class DomainManager extends Clonable {
 
   async innerClassify(srcInput, domainName) {
     const input = srcInput;
-    if (input.settings.useStemDict) {
+    const settings = this.applySettings({ ...input.settings }, this.settings);
+    if (settings.useStemDict) {
       const result = await this.classifyByStemDict(input.utterance, domainName);
       if (result) {
         input.classification = result;
@@ -294,7 +295,10 @@ class DomainManager extends Clonable {
         };
         return input;
       }
-      const nluAnswer = await nlu.process(input.utterance, input.settings);
+      const nluAnswer = await nlu.process(
+        input.utterance,
+        input.settings || this.settings
+      );
       let classifications;
       if (Array.isArray(nluAnswer)) {
         classifications = nluAnswer;
@@ -313,7 +317,11 @@ class DomainManager extends Clonable {
       return input;
     }
     let domain = defaultDomainName;
-    if (input.settings.trainByDomain) {
+    if (
+      (input.settings.trainByDomain === undefined &&
+        this.settings.trainByDomain) ||
+      input.settings.trainByDomain
+    ) {
       const nlu = this.domains[defaultDomainName];
       let classifications = await nlu.process(input.utterance);
       if (classifications.classifications) {

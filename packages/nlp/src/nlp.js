@@ -69,6 +69,16 @@ class Nlp extends Clonable {
   }
 
   registerDefault() {
+    this.container.registerConfiguration(
+      'nlp',
+      {
+        threshold: 0.5,
+        autoLoad: true,
+        autoSave: true,
+        modelFileName: 'model.nlp',
+      },
+      false
+    );
     this.use(NluManager);
     this.use(Ner);
     this.use(ExtractorEnum);
@@ -105,6 +115,17 @@ class Nlp extends Clonable {
     }
     if (this.settings.corpora) {
       this.addCorpora(this.settings.corpora);
+    }
+  }
+
+  async loadOrTrain() {
+    let loaded = false;
+    if (this.settings.autoLoad && fs.existsSync(this.settings.modelFileName)) {
+      this.load(this.settings.modelFileName);
+      loaded = true;
+    }
+    if (!loaded) {
+      await this.train();
     }
   }
 
@@ -267,9 +288,14 @@ class Nlp extends Clonable {
     const { data } = corpus;
     for (let i = 0; i < data.length; i += 1) {
       const current = data[i];
-      const { intent, utterances } = current;
+      const { intent, utterances, answers } = current;
       for (let j = 0; j < utterances.length; j += 1) {
         this.addDocument(locale, utterances[j], intent);
+      }
+      if (answers) {
+        for (let j = 0; j < answers.length; j += 1) {
+          this.addAnswer(locale, intent, answers[j]);
+        }
       }
     }
   }
@@ -289,9 +315,12 @@ class Nlp extends Clonable {
     this.nluManager.describeLanguage(locale, name);
   }
 
-  train() {
+  async train() {
     this.nluManager.addLanguage(this.settings.languages);
-    return this.nluManager.train();
+    await this.nluManager.train();
+    if (this.settings.autoSave) {
+      this.save(this.settings.modelFileName, true);
+    }
   }
 
   async classify(locale, utterance, settings) {
@@ -323,6 +352,19 @@ class Nlp extends Clonable {
   }
 
   async process(locale, utterance, context = {}, settings) {
+    let sourceInput;
+    if (typeof locale === 'object') {
+      if (typeof utterance === 'object' && utterance.value) {
+        locale = undefined;
+        utterance = utterance.value;
+      } else {
+        sourceInput = locale;
+      }
+    }
+    if (sourceInput) {
+      locale = sourceInput.locale;
+      utterance = sourceInput.utterance;
+    }
     if (!utterance) {
       utterance = locale;
       locale = undefined;
@@ -358,6 +400,10 @@ class Nlp extends Clonable {
         output.optionalUtterance = optionalUtterance;
       }
     }
+    if (output.score < this.settings.threshold) {
+      output.score = 1;
+      output.intent = 'None';
+    }
     output.context = context;
     output = await this.ner.process({ ...output });
     const answers = await this.nlgManager.run({ ...output });
@@ -374,6 +420,10 @@ class Nlp extends Clonable {
     context.slotFill = output.slotFill;
     delete output.context;
     delete output.settings;
+    if (sourceInput) {
+      this.applySettings(sourceInput, output);
+      return sourceInput;
+    }
     return output;
   }
 
@@ -398,6 +448,27 @@ class Nlp extends Clonable {
     this.nlgManager.fromJSON(json.nlgManager);
     this.actionManager.fromJSON(json.actionManager);
     this.slotManager.load(json.slotManager);
+  }
+
+  export(minified = false) {
+    const clone = this.toJSON();
+    return minified ? JSON.stringify(clone) : JSON.stringify(clone, null, 2);
+  }
+
+  import(data) {
+    const clone = typeof data === 'string' ? JSON.parse(data) : data;
+    this.fromJSON(clone);
+  }
+
+  save(srcFileName, minified = false) {
+    const fileName = srcFileName || 'model.nlp';
+    fs.writeFileSync(fileName, this.export(minified), 'utf8');
+  }
+
+  load(srcFileName) {
+    const fileName = srcFileName || 'model.nlp';
+    const data = fs.readFileSync(fileName, 'utf8');
+    this.import(data);
   }
 }
 

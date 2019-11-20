@@ -21,16 +21,26 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { containerBootstrap } = require('../../packages/core/src');
+const { ConsoleConnector } = require('../../packages/console-connector/src');
+const { Nlp } = require('../../packages/nlp/src');
+const { LangEn } = require('../../packages/lang-en/src');
+const trainnlp = require('./train-nlp');
 
-async function main() {
-  // We create a new container. This will load plugins from ./plugins and
-  // pipelines from pipelines.md
-  const container = containerBootstrap();
-  const input = 'GNIHTEMOS';
-  // We call the pipeline.
-  const result = await container.runPipeline('reverse-and-capitalize', input);
-  console.log(result); // It should log "Something"
-}
+const nlp = new Nlp({ languages: ['en'], threshold: 0.5 });
+nlp.use(LangEn);
 
-main();
+const connector = new ConsoleConnector();
+connector.onHear = async (parent, line) => {
+  if (line.toLowerCase() === 'quit') {
+    connector.destroy();
+    process.exit();
+  } else {
+    const result = await nlp.process(line);
+    connector.say(result.answer);
+  }
+};
+
+(async () => {
+  await trainnlp(nlp);
+  connector.say('Say something!');
+})();

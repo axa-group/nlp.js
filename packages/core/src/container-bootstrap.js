@@ -137,6 +137,7 @@ function containerBootstrap(srcSettings = {}, mustLoadEnv = true, container) {
   }
   loadPipelines(instance, settings.pathPipeline || './pipelines.md');
   loadPlugins(instance, settings.pathPlugins || './plugins');
+
   return instance;
 }
 
