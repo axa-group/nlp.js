@@ -78,8 +78,40 @@ class DefaultCompiler {
       const line = pipeline[i];
       const words = line.split(' ');
       const tokens = [];
+      let currentString = '';
+      let currentQuote;
       for (let j = 0; j < words.length; j += 1) {
-        tokens.push(this.getTokenFromWord(words[j]));
+        const word = words[j];
+        let processed = false;
+        if (!currentQuote) {
+          if (word.startsWith('"')) {
+            currentString = word;
+            processed = true;
+            currentQuote = '"';
+            if (word.endsWith('"')) {
+              currentQuote = undefined;
+              tokens.push(this.getTokenFromWord(currentString));
+            }
+          } else if (word.startsWith("'")) {
+            currentString = word;
+            processed = true;
+            currentQuote = "'";
+            if (word.endsWith("'")) {
+              currentQuote = undefined;
+              tokens.push(this.getTokenFromWord(currentString));
+            }
+          }
+        } else {
+          currentString = `${currentString} ${word}`;
+          processed = true;
+          if (word.endsWith(currentQuote)) {
+            currentQuote = undefined;
+            tokens.push(this.getTokenFromWord(currentString));
+          }
+        }
+        if (!processed) {
+          tokens.push(this.getTokenFromWord(word));
+        }
       }
       result.push(tokens);
     }
@@ -117,7 +149,9 @@ class DefaultCompiler {
     }
     const method = currentObject.run || currentObject;
     if (typeof method === 'function') {
-      return method.bind(currentObject)(input, ...args);
+      return typeof currentObject === 'function'
+        ? method(input, ...args)
+        : method.bind(currentObject)(input, ...args);
     }
     return method;
   }

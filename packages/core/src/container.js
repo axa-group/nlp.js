@@ -431,6 +431,10 @@ class Container {
     const str = fs.readFileSync(fileName, 'utf8');
     this.loadPipelinesFromString(str);
   }
+
+  async start(pipelineName = 'main') {
+    this.runPipeline(pipelineName, {}, this);
+  }
 }
 
 const defaultContainer = new Container();
