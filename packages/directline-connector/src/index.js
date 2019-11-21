@@ -21,55 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Among = require('./among');
-const ArrToObj = require('./arr-to-obj');
-const BaseStemmer = require('./base-stemmer');
-const containerBootstrap = require('./container-bootstrap');
-const Clonable = require('./clonable');
-const { Container, defaultContainer } = require('./container');
-const Normalizer = require('./normalizer');
-const ObjToArr = require('./obj-to-arr');
-const Stemmer = require('./stemmer');
-const Stopwords = require('./stopwords');
-const Tokenizer = require('./tokenizer');
-const Timer = require('./timer');
-const logger = require('./logger');
-const {
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  compareWildcars,
-  getAbsolutePath,
-  listFiles,
-  listFilesAbsolute,
-  loadEnv,
-} = require('./helper');
-const MemoryStorage = require('./memory-storage');
+const DirectlineConnector = require('./directline-connector');
 
 module.exports = {
-  Among,
-  ArrToObj,
-  BaseStemmer,
-  containerBootstrap,
-  Clonable,
-  Container,
-  defaultContainer,
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  compareWildcars,
-  getAbsolutePath,
-  listFiles,
-  listFilesAbsolute,
-  loadEnv,
-  Normalizer,
-  ObjToArr,
-  Stemmer,
-  Stopwords,
-  Tokenizer,
-  Timer,
-  logger,
-  MemoryStorage,
+  DirectlineConnector,
 };

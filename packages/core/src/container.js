@@ -314,7 +314,7 @@ class Container {
     );
   }
 
-  use(item, name) {
+  use(item, name, isSingleton) {
     let instance;
     if (typeof item === 'function') {
       const Clazz = item;
@@ -328,7 +328,7 @@ class Container {
     const tag = instance.settings ? instance.settings.tag : undefined;
     const itemName =
       name || instance.name || tag || item.name || instance.constructor.name;
-    this.register(itemName, instance);
+    this.register(itemName, instance, isSingleton);
     return itemName;
   }
 
@@ -433,6 +433,13 @@ class Container {
   }
 
   async start(pipelineName = 'main') {
+    const keys = Object.keys(this.factory);
+    for (let i = 0; i < keys.length; i += 1) {
+      const current = this.factory[keys[i]];
+      if (current.isSingleton && current.instance.start) {
+        await current.instance.start();
+      }
+    }
     this.runPipeline(pipelineName, {}, this);
   }
 }
