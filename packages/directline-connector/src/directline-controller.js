@@ -92,18 +92,15 @@ class DirectlineController {
           headers: {
             'Content-Type': 'application/json',
           },
-        })
-          .then(response => {
-            resolve({
-              status: response.status,
-              body: {
-                conversationId: conversation.conversationId,
-                expiresIn: this.expiresIn,
-              },
-            });
-          })
-          .catch(err => {
+        }).then(response => {
+          resolve({
+            status: response.status,
+            body: {
+              conversationId: conversation.conversationId,
+              expiresIn: this.expiresIn,
+            },
           });
+        });
       } else {
         resolve({
           status: 200,
