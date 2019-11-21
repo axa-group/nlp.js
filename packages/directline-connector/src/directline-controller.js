@@ -103,7 +103,6 @@ class DirectlineController {
             });
           })
           .catch(err => {
-            console.log(err);
           });
       } else {
         resolve({

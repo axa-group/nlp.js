@@ -132,8 +132,14 @@ function containerBootstrap(srcSettings = {}, mustLoadEnv = true, container) {
     if (configuration.use) {
       for (let i = 0; i < configuration.use.length; i += 1) {
         const current = configuration.use[i];
-        /* eslint-disable-next-line */
-        const lib = require(getAbsolutePath(current.path));
+        let lib;
+        try {
+          /* eslint-disable-next-line */
+          lib = require(current.path);
+        } catch (err) {
+          /* eslint-disable-next-line */
+          lib = require(getAbsolutePath(current.path));
+        }
         instance.use(lib[current.className], current.name, current.isSingleton);
       }
     }
