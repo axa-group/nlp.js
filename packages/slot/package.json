@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/slot",
-  "version": "4.0.0-rc.2",
+  "version": "4.0.0-rc.3",
   "description": "Slot filling manager",
   "author": {
     "email": "jesus.seijas@axa.com",
