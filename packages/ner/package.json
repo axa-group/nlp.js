@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/ner",
-  "version": "4.0.0-rc.3",
+  "version": "4.0.0-rc.4",
   "description": "Named Entity Recognition",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,9 +25,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.0.0-rc.3",
-    "@nlpjs/language": "^4.0.0-rc.3",
-    "@nlpjs/similarity": "^4.0.0-rc.3"
+    "@nlpjs/core": "^4.0.0-rc.4",
+    "@nlpjs/language": "^4.0.0-rc.4",
+    "@nlpjs/similarity": "^4.0.0-rc.4"
   },
   "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
 }
