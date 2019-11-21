@@ -9,6 +9,7 @@ const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
 const Timer = require('./timer');
 const logger = require('./logger');
+const MemoryStorage = require('./memory-storage');
 
 const defaultPathConfiguration = './conf.json';
 const defaultPathPipeline = './pipelines.md';
@@ -81,6 +82,7 @@ function containerBootstrap(srcSettings = {}, mustLoadEnv = true, container) {
   instance.use(Tokenizer);
   instance.use(Timer);
   instance.use(logger);
+  instance.use(MemoryStorage);
   let settings = srcSettings;
   if (typeof settings === 'string') {
     settings = {
@@ -129,15 +131,28 @@ function containerBootstrap(srcSettings = {}, mustLoadEnv = true, container) {
     }
     if (configuration.use) {
       for (let i = 0; i < configuration.use.length; i += 1) {
-        /* eslint-disable-next-line */
-        const lib = require(getAbsolutePath(configuration.use[i].path));
-        instance.use(lib[configuration.use[i].className]);
+        const current = configuration.use[i];
+        let lib;
+        try {
+          /* eslint-disable-next-line */
+          lib = require(current.path);
+        } catch (err) {
+          /* eslint-disable-next-line */
+          lib = require(getAbsolutePath(current.path));
+        }
+        instance.use(lib[current.className], current.name, current.isSingleton);
+      }
+    }
+    if (configuration.terraform) {
+      for (let i = 0; i < configuration.terraform.length; i += 1) {
+        const current = configuration.terraform[i];
+        const terra = instance.get(current.className);
+        instance.register(current.name, terra, true);
       }
     }
   }
   loadPipelines(instance, settings.pathPipeline || './pipelines.md');
   loadPlugins(instance, settings.pathPlugins || './plugins');
-
   return instance;
 }
 

@@ -1,0 +1,33 @@
+{
+  "name": "@nlpjs/express-api-server",
+  "version": "4.0.0-rc.3",
+  "description": "Express API Server",
+  "author": {
+    "email": "jesus.seijas@axa.com",
+    "name": "Jesus Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/core": "^4.0.0-rc.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
+}

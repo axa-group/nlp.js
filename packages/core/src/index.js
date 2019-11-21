@@ -45,6 +45,7 @@ const {
   listFilesAbsolute,
   loadEnv,
 } = require('./helper');
+const MemoryStorage = require('./memory-storage');
 
 module.exports = {
   Among,
@@ -70,4 +71,5 @@ module.exports = {
   Tokenizer,
   Timer,
   logger,
+  MemoryStorage,
 };

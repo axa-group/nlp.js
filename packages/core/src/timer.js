@@ -39,9 +39,10 @@ class Timer {
     this.name = 'timer';
   }
 
-  start(srcInput) {
-    const input = srcInput;
-    input.hrstart = performance.now();
+  start(input) {
+    if (input) {
+      input.hrstart = performance.now();
+    }
     return input;
   }
 
