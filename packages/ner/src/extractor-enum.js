@@ -147,6 +147,7 @@ class ExtractorEnum {
       }
       return result;
     }
+    const maxLevenshtein = str2len * (1 - threshold);
     const wordPositions = words1 || this.getWordPositions(str1);
     const wordPositionsLen = wordPositions.length;
     for (let i = 0; i < wordPositionsLen; i += 1) {
@@ -165,6 +166,12 @@ class ExtractorEnum {
             levenshtein,
             accuracy,
           });
+        }
+        if (
+          str3.length - wordPositions[0].len >=
+          str2.length + maxLevenshtein
+        ) {
+          break;
         }
       }
     }

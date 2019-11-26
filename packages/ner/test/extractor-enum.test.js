@@ -129,7 +129,7 @@ describe('Extractor Enum', () => {
   });
 
   describe('Get best substring list', () => {
-    test('If not threshold is defined, then search for exact occurences', () => {
+    test('If not threshold is defined, then search for exact occurrences', () => {
       const instance = new ExtractorEnum({ container });
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
@@ -144,7 +144,7 @@ describe('Extractor Enum', () => {
         accuracy: 1,
       });
     });
-    test('If there are more than 1 occurence search exact, should return all', () => {
+    test('If there are more than 1 occurrence search exact, should return all', () => {
       const instance = new ExtractorEnum({ container });
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
@@ -166,7 +166,7 @@ describe('Extractor Enum', () => {
         accuracy: 1,
       });
     });
-    test('Should get more than 1 occurence when searching with threshold', () => {
+    test('Should get more than 1 occurrence when searching with threshold', () => {
       const instance = new ExtractorEnum({ container });
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
@@ -191,6 +191,33 @@ describe('Extractor Enum', () => {
         len: 8,
         levenshtein: 1,
         accuracy: 0.875,
+      });
+    });
+    test('Should be tolerant to typos with spaces when searching with threshold', () => {
+      const instance = new ExtractorEnum({ container });
+      const text1 =
+        'Morbi inter dum ultricies neque varius condimentum. Donec volutpat turpis in terdum';
+      const text2 = 'internum';
+      const result = instance.getBestSubstringList(
+        text1,
+        text2,
+        undefined,
+        1 - 2 / text2.length
+      );
+      expect(result).toHaveLength(2);
+      expect(result[0]).toEqual({
+        start: 6,
+        end: 14,
+        len: 9,
+        levenshtein: 2,
+        accuracy: 0.75,
+      });
+      expect(result[1]).toEqual({
+        start: 74,
+        end: 82,
+        len: 9,
+        levenshtein: 2,
+        accuracy: 0.75,
       });
     });
     test('Should return 0 to length element in array when the substring is longer than the string and accuracy is at least threshold', () => {
