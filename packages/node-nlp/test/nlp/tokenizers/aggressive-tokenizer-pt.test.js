@@ -68,5 +68,10 @@ describe('Aggressive Tokenizer Pt', () => {
       );
       expect(actual).toEqual(expected);
     });
+    test('It must tokenize at hiphen', () => {
+      const expected = ['disse', 'me'];
+      const actual = tokenizer.tokenize('Disse-me', true);
+      expect(actual).toEqual(expected);
+    });
   });
 });

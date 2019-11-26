@@ -27,6 +27,10 @@ class TokenizerPt extends Tokenizer {
     super(container, shouldTokenize);
     this.name = 'tokenizer-pt';
   }
+
+  innerTokenize(text) {
+    return text.split(/[^a-zA-Zà-úÀ-Ú]/).filter(x => x);
+  }
 }
 
 module.exports = TokenizerPt;
