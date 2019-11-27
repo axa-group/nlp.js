@@ -23,7 +23,7 @@
 
 const { NlpUtil } = require('../../../src/nlp');
 
-const tokenizer = NlpUtil.getTokenizer('fa');
+const tokenizer = NlpUtil.getTokenizer('pt');
 
 describe('Aggressive Tokenizer Pt', () => {
   describe('Constructor', () => {
@@ -66,6 +66,11 @@ describe('Aggressive Tokenizer Pt', () => {
         'Quando a noite chega e a terra está escura',
         true
       );
+      expect(actual).toEqual(expected);
+    });
+    test('It must tokenize at hiphen', () => {
+      const expected = ['disse', 'me'];
+      const actual = tokenizer.tokenize('Disse-me', true);
       expect(actual).toEqual(expected);
     });
   });
