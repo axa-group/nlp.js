@@ -111,6 +111,15 @@ function listFilesAbsolute(folderPath, recursive = true) {
   return files.map(x => getAbsolutePath(x));
 }
 
+function loadEnvFromJson(preffix, json = {}) {
+  const keys = Object.keys(json);
+  preffix = preffix ? `${preffix}_` : '';
+  for (let i = 0; i < keys.length; i += 1) {
+    const key = `${preffix}${keys[i]}`;
+    process.env[key] = json[keys[i]];
+  }
+}
+
 function loadEnv(fileName = '.env') {
   const absolutePath = getAbsolutePath(fileName);
   if (fs.existsSync(absolutePath)) {
@@ -151,4 +160,5 @@ module.exports = {
   listFiles,
   listFilesAbsolute,
   loadEnv,
+  loadEnvFromJson,
 };

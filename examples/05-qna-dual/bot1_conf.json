@@ -1,6 +1,6 @@
 {
   "pathPlugins": "./plugins",
-  "pathPipeline": "./pipelines.md",
+  "pathPipeline": "./bot1_pipelines.md",
   "settings": {
     "nlp": {
       "languages": ["en"],
@@ -8,18 +8,16 @@
       "threshold": 0.5,
       "autoLoad": true,
       "autoSave": true,
-      "modelFileName": "model.nlp",
+      "modelFileName": "bot1_model.nlp",
       "corpora": [
         "./corpus.json"
       ]
-    },
-    "api-server": { "port": 3000, "serveBot": true }
+    }
   },
   "use": [
     { "className": "logger", "path": "../../packages/logger/src" },
+    { "className": "ConsoleConnector", "path": "../../packages/console-connector/src" },
     { "className": "Nlp", "path": "../../packages/nlp/src" },
-    { "className": "LangEn", "path": "../../packages/lang-en/src" },
-    { "className": "ExpressApiServer", "path": "../../packages/express-api-server/src" },
-    { "className": "DirectlineConnector", "path": "../../packages/directline-connector/src" }
+    { "className": "LangEn", "path": "../../packages/lang-en/src" }
   ]
 }

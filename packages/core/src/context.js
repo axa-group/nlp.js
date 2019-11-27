@@ -24,7 +24,7 @@
 const { defaultContainer } = require('./container');
 const Clonable = require('./clonable');
 
-class MemoryStorage extends Clonable {
+class Context extends Clonable {
   constructor(settings = {}, container) {
     super(
       {
@@ -34,9 +34,8 @@ class MemoryStorage extends Clonable {
       container
     );
     this.applySettings(this.settings, settings);
-    this.applySettings(this.settings, { etag: 1, memory: {} });
     if (!this.settings.tag) {
-      this.settings.tag = 'storage';
+      this.settings.tag = 'context';
     }
     this.applySettings(
       this.settings,
@@ -44,55 +43,39 @@ class MemoryStorage extends Clonable {
     );
   }
 
-  read(keys) {
-    return new Promise(resolve => {
-      const data = {};
-      if (!Array.isArray(keys)) {
-        keys = [keys];
-      }
-      keys.forEach(key => {
-        const item = this.settings.memory[key];
-        if (item) {
-          data[key] = JSON.parse(item);
-        }
-      });
-      resolve(data);
-    });
+  getStorage() {
+    const storage = this.container.get(this.settings.storageName || 'storage');
+    if (!storage) {
+      throw new Error('Storage not found');
+    }
   }
 
-  saveItem(key, item) {
-    const clone = { ...item };
-    clone.eTag = this.settings.etag.toString();
-    this.settings.etag += 1;
-    this.settings.memory[key] = JSON.stringify(clone);
-    return clone;
+  getContext(key) {
+    const storage = this.getStorage();
+    return storage.read(`${this.settings.tag}-${key}`);
   }
 
-  write(changes) {
-    return new Promise((resolve, reject) => {
-      Object.keys(changes).forEach(key => {
-        const newItem = changes[key];
-        const oldStr = this.settings.memory[key];
-        if (!oldStr || newItem.eTag === '*') {
-          return resolve(this.saveItem(key, newItem));
-        }
-        const oldItem = JSON.parse(oldStr);
-        if (newItem.eTag !== oldItem.eTag) {
-          return reject(
-            new Error(`Error writing "${key}" due to eTag conflict.`)
-          );
-        }
-        return resolve(this.saveItem(key, newItem));
-      });
-    });
+  setContext(key, value) {
+    const storage = this.getStorage();
+    const change = {
+      [key]: value,
+    };
+    return storage.write(change);
   }
 
-  delete(keys) {
-    return new Promise(resolve => {
-      keys.forEach(key => delete this.settings.memory[key]);
-      resolve();
-    });
+  async getContextValue(key, valueName) {
+    const context = await this.getContext(key);
+    return context ? context[valueName] : undefined;
+  }
+
+  async setContextValue(key, valueName, value) {
+    let context = await this.getContext(key);
+    if (!context) {
+      context = {};
+    }
+    context[valueName] = value;
+    return this.setContext(key, context);
   }
 }
 
-module.exports = MemoryStorage;
+module.exports = Context;

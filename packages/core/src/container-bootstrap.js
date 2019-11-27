@@ -3,7 +3,12 @@ const ArrToObj = require('./arr-to-obj');
 const { Container } = require('./container');
 const Normalizer = require('./normalizer');
 const ObjToArr = require('./obj-to-arr');
-const { listFilesAbsolute, getAbsolutePath, loadEnv } = require('./helper');
+const {
+  listFilesAbsolute,
+  getAbsolutePath,
+  loadEnv,
+  loadEnvFromJson,
+} = require('./helper');
 const Stemmer = require('./stemmer');
 const Stopwords = require('./stopwords');
 const Tokenizer = require('./tokenizer');
@@ -51,28 +56,35 @@ function loadPlugins(instance, fileName) {
   }
 }
 
-function traverse(obj) {
+function traverse(obj, preffix) {
   if (typeof obj === 'string') {
     if (obj.startsWith('$')) {
-      return process.env[obj.slice(1)];
+      return (
+        process.env[`${preffix}${obj.slice(1)}`] || process.env[obj.slice(1)]
+      );
     }
     return obj;
   }
   if (Array.isArray(obj)) {
-    return obj.map(x => traverse(x));
+    return obj.map(x => traverse(x, preffix));
   }
   if (typeof obj === 'object') {
     const keys = Object.keys(obj);
     const result = {};
     for (let i = 0; i < keys.length; i += 1) {
-      result[keys[i]] = traverse(obj[keys[i]]);
+      result[keys[i]] = traverse(obj[keys[i]], preffix);
     }
     return result;
   }
   return obj;
 }
 
-function containerBootstrap(srcSettings = {}, mustLoadEnv = true, container) {
+function containerBootstrap(
+  srcSettings = {},
+  mustLoadEnv = true,
+  container,
+  preffix
+) {
   const instance = container || new Container();
   instance.use(ArrToObj);
   instance.use(Normalizer);
@@ -109,8 +121,17 @@ function containerBootstrap(srcSettings = {}, mustLoadEnv = true, container) {
   }
   settings.pathConfiguration = getAbsolutePath(settings.pathConfiguration);
   if (fs.existsSync(settings.pathConfiguration)) {
+    if (srcSettings.envFileName) {
+      loadEnv(srcSettings.envFileName);
+    }
+    if (srcSettings.env) {
+      loadEnvFromJson(preffix, srcSettings.env);
+    }
     const configuration = traverse(
-      JSON.parse(fs.readFileSync(settings.pathConfiguration, 'utf8'))
+      JSON.parse(
+        fs.readFileSync(settings.pathConfiguration, 'utf8'),
+        preffix ? `${preffix}_` : ''
+      )
     );
 
     if (configuration.pathPipeline) {

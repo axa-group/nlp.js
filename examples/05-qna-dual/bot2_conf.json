@@ -1,6 +1,6 @@
 {
   "pathPlugins": "./plugins",
-  "pathPipeline": "./pipelines.md",
+  "pathPipeline": "./bot2_pipelines.md",
   "settings": {
     "nlp": {
       "languages": ["en"],
@@ -8,7 +8,7 @@
       "threshold": 0.5,
       "autoLoad": true,
       "autoSave": true,
-      "modelFileName": "model.nlp",
+      "modelFileName": "bot2_model.nlp",
       "corpora": [
         "./corpus.json"
       ]

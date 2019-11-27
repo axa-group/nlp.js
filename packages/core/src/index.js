@@ -46,6 +46,9 @@ const {
   loadEnv,
 } = require('./helper');
 const MemoryStorage = require('./memory-storage');
+const uuid = require('./uuid');
+const dock = require('./dock');
+const Context = require('./context');
 
 module.exports = {
   Among,
@@ -72,4 +75,7 @@ module.exports = {
   Timer,
   logger,
   MemoryStorage,
+  uuid,
+  dock,
+  Context,
 };

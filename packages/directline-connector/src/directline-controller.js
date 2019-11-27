@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const uuidv4 = require('uuid/v4');
+const { uuid } = require('@nlpjs/core');
 const fetch = require('isomorphic-fetch');
 
 class DirectlineController {
@@ -39,7 +39,7 @@ class DirectlineController {
   }
 
   getConversation(id, autocreate = false) {
-    const conversationId = id || uuidv4().toString();
+    const conversationId = id || uuid();
     if (!this.conversations[conversationId] && autocreate) {
       this.conversations[conversationId] = {
         conversationId,
@@ -62,7 +62,7 @@ class DirectlineController {
           id: conversationId,
         },
       },
-      id: uuidv4(),
+      id: uuid(),
     };
   }
 
@@ -147,7 +147,7 @@ class DirectlineController {
             recipient: activity.from,
             inputHint: 'acceptingInput',
             replyToId: activity.id,
-            id: uuidv4(),
+            id: uuid(),
             from: {
               id: process.env.BACKEND_ID || 'directline',
               name: process.env.BACKEND_NAME || 'Directline',
@@ -198,7 +198,7 @@ class DirectlineController {
   postActivityV3(conversationId, srcActivity) {
     return new Promise(resolve => {
       const activity = srcActivity;
-      activity.id = uuidv4();
+      activity.id = uuid();
       activity.from = {
         id: process.env.BACKEND_ID || 'directline',
         name: process.env.BACKEND_NAME || 'Directline',
