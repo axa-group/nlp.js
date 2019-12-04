@@ -25,6 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@nlpjs/builtin-microsoft": "^4.0.0-rc.4",
+    "@nlpjs/builtin-duckling": "4.0.0-rc.4",
     "@nlpjs/core": "^4.0.0-rc.4",
     "@nlpjs/emoji": "^4.0.0-rc.4",
     "@nlpjs/evaluator": "^4.0.0-rc.4",

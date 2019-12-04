@@ -33,14 +33,16 @@ class Container {
   /**
    * Constructor of the class.
    */
-  constructor() {
+  constructor(hasPreffix = false) {
     this.classes = {};
     this.factory = {};
     this.pipelines = {};
     this.configurations = {};
     this.compilers = {};
     this.registerCompiler(DefaultCompiler);
-    this.use(logger);
+    if (!hasPreffix) {
+      this.use(logger);
+    }
   }
 
   registerCompiler(Compiler, name) {
@@ -86,10 +88,28 @@ class Container {
     this.factory[name] = item;
   }
 
+  getBestKey(name, keys) {
+    for (let i = 0; i < keys.length; i += 1) {
+      if (compareWildcars(name, keys[i])) {
+        return keys[i];
+      }
+    }
+    return undefined;
+  }
+
   get(name, settings) {
-    const item = this.factory[name];
+    let item = this.factory[name];
     if (!item) {
-      return undefined;
+      if (this.parent) {
+        return this.parent.get(name, settings);
+      }
+      const key = this.getBestKey(name, Object.keys(this.factory));
+      if (key) {
+        item = this.factory[key];
+      }
+      if (!item) {
+        return undefined;
+      }
     }
     if (item.isSingleton) {
       if (item.instance && item.instance.applySettings) {
@@ -314,7 +334,7 @@ class Container {
     );
   }
 
-  use(item, name, isSingleton) {
+  use(item, name, isSingleton, onlyIfNotExists = false) {
     let instance;
     if (typeof item === 'function') {
       const Clazz = item;
@@ -328,7 +348,9 @@ class Container {
     const tag = instance.settings ? instance.settings.tag : undefined;
     const itemName =
       name || instance.name || tag || item.name || instance.constructor.name;
-    this.register(itemName, instance, isSingleton);
+    if (!onlyIfNotExists || !this.get(itemName)) {
+      this.register(itemName, instance, isSingleton);
+    }
     return itemName;
   }
 
@@ -372,6 +394,16 @@ class Container {
     }
   }
 
+  registerPipelineForChilds(childName, tag, pipeline, overwrite = true) {
+    if (!this.childPipelines) {
+      this.childPipelines = {};
+    }
+    if (!this.childPipelines[childName]) {
+      this.childPipelines[childName] = [];
+    }
+    this.childPipelines[childName].push({ tag, pipeline, overwrite });
+  }
+
   getPipeline(tag) {
     if (this.pipelines[tag]) {
       return this.pipelines[tag];
@@ -408,12 +440,42 @@ class Container {
     const lines = str.split(/\n|\r|\r\n/);
     let currentName = '';
     let currentPipeline = [];
+    let currentTitle = '';
     for (let i = 0; i < lines.length; i += 1) {
       const line = lines[i].trim();
       if (line !== '') {
-        if (line.startsWith('##')) {
+        if (line.startsWith('# ')) {
           if (currentName) {
-            this.registerPipeline(currentName, currentPipeline);
+            if (
+              currentTitle &&
+              !['default', 'pipelines'].includes(currentTitle.toLowerCase())
+            ) {
+              this.registerPipelineForChilds(
+                currentTitle,
+                currentName,
+                currentPipeline
+              );
+            } else {
+              this.registerPipeline(currentName, currentPipeline);
+            }
+          }
+          currentTitle = line.slice(1).trim();
+          currentName = '';
+          currentPipeline = [];
+        } else if (line.startsWith('## ')) {
+          if (currentName) {
+            if (
+              currentTitle &&
+              !['default', 'pipelines'].includes(currentTitle.toLowerCase())
+            ) {
+              this.registerPipelineForChilds(
+                currentTitle,
+                currentName,
+                currentPipeline
+              );
+            } else {
+              this.registerPipeline(currentName, currentPipeline);
+            }
           }
           currentName = line.slice(2).trim();
           currentPipeline = [];
@@ -423,7 +485,18 @@ class Container {
       }
     }
     if (currentName) {
-      this.registerPipeline(currentName, currentPipeline);
+      if (
+        currentTitle &&
+        !['default', 'pipelines'].includes(currentTitle.toLowerCase())
+      ) {
+        this.registerPipelineForChilds(
+          currentTitle,
+          currentName,
+          currentPipeline
+        );
+      } else {
+        this.registerPipeline(currentName, currentPipeline);
+      }
     }
   }
 

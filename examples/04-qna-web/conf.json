@@ -1,6 +1,6 @@
 {
   "pathPlugins": "./plugins",
-  "pathPipelines": "./pipelines.md",
+  "pathPipeline": "./pipelines.md",
   "settings": {
     "nlp": {
       "languages": ["en"],

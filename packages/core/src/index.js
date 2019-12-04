@@ -46,6 +46,13 @@ const {
   loadEnv,
 } = require('./helper');
 const MemoryStorage = require('./memory-storage');
+const uuid = require('./uuid');
+const dock = require('./dock');
+const Context = require('./context');
+
+function dockStart(settings, mustLoadEnv) {
+  return dock.start(settings, mustLoadEnv);
+}
 
 module.exports = {
   Among,
@@ -72,4 +79,8 @@ module.exports = {
   Timer,
   logger,
   MemoryStorage,
+  uuid,
+  dock,
+  Context,
+  dockStart,
 };

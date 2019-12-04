@@ -285,7 +285,29 @@ class Nlp extends Clonable {
     const corpus = JSON.parse(fs.readFileSync(fileName, 'utf8'));
     const locale = corpus.locale.slice(0, 2);
     this.addLanguage(locale);
-    const { data } = corpus;
+    const { data, entities } = corpus;
+    if (entities) {
+      const keys = Object.keys(entities);
+      for (let i = 0; i < keys.length; i += 1) {
+        const entityName = keys[i];
+        const entity = entities[entityName];
+        if (!entity.type) {
+          entity.type = 'text';
+        }
+        if (entity.type === 'text') {
+          const options = entity.options || {};
+          const optionNames = Object.keys(options);
+          for (let j = 0; j < optionNames.length; j += 1) {
+            this.addNerRuleOptionTexts(
+              locale,
+              entityName,
+              optionNames[j],
+              options[optionNames[j]]
+            );
+          }
+        }
+      }
+    }
     for (let i = 0; i < data.length; i += 1) {
       const current = data[i];
       const { intent, utterances, answers } = current;

@@ -112,7 +112,10 @@ class ActionManager extends Clonable {
 
     for (const { fn, parameters } of actionList) {
       if (fn) {
-        const newProcessedAnswer = await fn(processedAnswer, ...parameters);
+        const newProcessedAnswer = await fn(
+          processedAnswer,
+          ...(parameters || [])
+        );
         if (newProcessedAnswer) {
           if (typeof processedAnswer === 'object') {
             if (typeof newProcessedAnswer === 'object') {
