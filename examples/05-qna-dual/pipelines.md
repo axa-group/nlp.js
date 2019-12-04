@@ -1,4 +1,9 @@
-# Pipelines
+# default
+
+## main
+nlp.loadOrTrain
+
+# bot1
 
 ## console.hear
 eq input.message "quit"
@@ -9,5 +14,8 @@ nlp.process input.message
 .say input.answer
 
 ## main
-nlp.loadOrTrain
 console.say "Say something!"
+
+# bot2
+
+## main

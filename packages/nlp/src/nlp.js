@@ -304,7 +304,6 @@ class Nlp extends Clonable {
               optionNames[j],
               options[optionNames[j]]
             );
-            console.log('yepa');
           }
         }
       }

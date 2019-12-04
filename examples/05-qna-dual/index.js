@@ -21,9 +21,4 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { dock } = require('../../packages/core/src');
-
-(async () => {
-  await dock.createContainer('bot1');
-  await dock.createContainer('bot2');
-})();
+require('../../packages/core/src').dockStart();

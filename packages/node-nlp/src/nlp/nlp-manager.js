@@ -22,6 +22,8 @@
  */
 
 const fs = require('fs');
+const { BuiltinMicrosoft } = require('@nlpjs/builtin-microsoft');
+const { BuiltinDuckling } = require('@nlpjs/builtin-duckling');
 const { containerBootstrap } = require('@nlpjs/core');
 const { LangAll } = require('@nlpjs/lang-all');
 const { Nlp } = require('@nlpjs/nlp');
@@ -44,6 +46,18 @@ class NlpManager {
     this.container.use(Template);
     this.nlp = new Nlp(this.settings);
     this.sentimentManager = new SentimentManager();
+    if (this.settings.ner) {
+      if (this.settings.ner.ducklingUrl || this.settings.ner.useDuckling) {
+        const builtin = new BuiltinDuckling(this.settings.ner);
+        this.container.register('extract-builtin-??', builtin, true);
+      } else {
+        const builtin = new BuiltinMicrosoft(this.settings.ner);
+        this.container.register('extract-builtin-??', builtin, true);
+      }
+    } else {
+      const builtin = new BuiltinMicrosoft(this.settings.ner);
+      this.container.register('extract-builtin-??', builtin, true);
+    }
   }
 
   addDocument(locale, utterance, intent) {

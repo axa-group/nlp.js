@@ -50,6 +50,10 @@ const uuid = require('./uuid');
 const dock = require('./dock');
 const Context = require('./context');
 
+function dockStart(settings, mustLoadEnv) {
+  return dock.start(settings, mustLoadEnv);
+}
+
 module.exports = {
   Among,
   ArrToObj,
@@ -78,4 +82,5 @@ module.exports = {
   uuid,
   dock,
   Context,
+  dockStart,
 };

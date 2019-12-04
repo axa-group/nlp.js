@@ -83,18 +83,21 @@ function containerBootstrap(
   srcSettings = {},
   mustLoadEnv = true,
   container,
-  preffix
+  preffix,
+  pipelines
 ) {
-  const instance = container || new Container();
-  instance.use(ArrToObj);
-  instance.use(Normalizer);
-  instance.use(ObjToArr);
-  instance.use(Stemmer);
-  instance.use(Stopwords);
-  instance.use(Tokenizer);
-  instance.use(Timer);
-  instance.use(logger);
-  instance.use(MemoryStorage);
+  const instance = container || new Container(preffix);
+  if (!preffix) {
+    instance.use(ArrToObj);
+    instance.use(Normalizer);
+    instance.use(ObjToArr);
+    instance.use(Stemmer);
+    instance.use(Stopwords);
+    instance.use(Tokenizer);
+    instance.use(Timer);
+    instance.use(logger);
+    instance.use(MemoryStorage);
+  }
   let settings = srcSettings;
   if (typeof settings === 'string') {
     settings = {
@@ -120,7 +123,7 @@ function containerBootstrap(
     loadEnv();
   }
   settings.pathConfiguration = getAbsolutePath(settings.pathConfiguration);
-  if (fs.existsSync(settings.pathConfiguration)) {
+  if (settings.isChild || fs.existsSync(settings.pathConfiguration)) {
     if (srcSettings.envFileName) {
       loadEnv(srcSettings.envFileName);
     }
@@ -128,12 +131,13 @@ function containerBootstrap(
       loadEnvFromJson(preffix, srcSettings.env);
     }
     const configuration = traverse(
-      JSON.parse(
-        fs.readFileSync(settings.pathConfiguration, 'utf8'),
-        preffix ? `${preffix}_` : ''
-      )
+      settings.isChild
+        ? settings
+        : JSON.parse(
+            fs.readFileSync(settings.pathConfiguration, 'utf8'),
+            preffix ? `${preffix}_` : ''
+          )
     );
-
     if (configuration.pathPipeline) {
       settings.pathPipeline = configuration.pathPipeline;
     }
@@ -170,6 +174,19 @@ function containerBootstrap(
         const terra = instance.get(current.className);
         instance.register(current.name, terra, true);
       }
+    }
+    if (configuration.childs) {
+      instance.childs = configuration.childs;
+    }
+  }
+  if (pipelines) {
+    for (let i = 0; i < pipelines.length; i += 1) {
+      const pipeline = pipelines[i];
+      instance.registerPipeline(
+        pipeline.tag,
+        pipeline.pipeline,
+        pipeline.overwrite
+      );
     }
   }
   loadPipelines(instance, settings.pathPipeline || './pipelines.md');

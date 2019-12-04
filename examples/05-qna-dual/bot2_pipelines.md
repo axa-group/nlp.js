@@ -1,4 +1,0 @@
-# Pipelines
-
-## main
-nlp.loadOrTrain
