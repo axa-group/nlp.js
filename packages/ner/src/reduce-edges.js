@@ -35,7 +35,7 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
         other.entity === 'number') &&
       other.len <= edge.len
     ) {
-      other.discarded = true;
+      // Do nothing! entities have same priority
     } else if (
       (useMaxLength ||
         other.entity === edge.entity ||

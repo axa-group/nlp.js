@@ -273,7 +273,6 @@ describe('Extractor Enum', () => {
         locale: 'en',
       };
       const actual = await ner.process(input);
-      expect(actual).toBe(input);
       expect(actual.entities).toEqual([
         {
           start: 6,
