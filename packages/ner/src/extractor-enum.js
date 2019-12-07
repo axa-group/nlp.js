@@ -186,33 +186,100 @@ class ExtractorEnum {
     return allRules.filter(x => x.type === 'enum');
   }
 
-  extractFromRule(text, rule, words, threshold) {
-    const edges = [];
+  normalize(str) {
+    return str
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
+
+  buildRuleDict(rule) {
+    const dict = {};
     for (let i = 0; i < rule.rules.length; i += 1) {
       const current = rule.rules[i];
       for (let j = 0; j < current.texts.length; j += 1) {
-        const newEdges = this.getBestSubstringList(
-          text,
-          current.texts[j],
-          words,
-          current.threshold || threshold
+        const key = this.normalize(current.texts[j]);
+        if (!dict[key]) {
+          dict[key] = [];
+        }
+        dict[key].push(current);
+      }
+    }
+    rule.dict = dict;
+  }
+
+  getBestExact(srcText, words, rule) {
+    const text = this.normalize(srcText);
+    const wordPositions = words || this.getWordPositions(text);
+    const wordPositionsLen = wordPositions.length;
+    const result = [];
+    for (let i = 0; i < wordPositionsLen; i += 1) {
+      for (let j = i; j < wordPositionsLen; j += 1) {
+        const str = text.substring(
+          wordPositions[i].start,
+          wordPositions[j].end + 1
         );
-        for (let k = 0; k < newEdges.length; k += 1) {
-          edges.push({
-            ...newEdges[k],
-            entity: rule.name,
-            type: rule.type,
-            option: rule.rules[i].option,
-            sourceText: current.texts[j],
-            utteranceText: text.substring(
-              newEdges[k].start,
-              newEdges[k].end + 1
-            ),
-          });
+        if (rule.dict[str]) {
+          const subrule = rule.dict[str];
+          for (let k = 0; k < subrule.length; k += 1) {
+            result.push({
+              accuracy: 1,
+              start: wordPositions[i].start,
+              end: wordPositions[j].end,
+              len: wordPositions[j].end - wordPositions[i].start + 1,
+              levenshtein: 0,
+              entity: rule.name,
+              type: rule.type,
+              option: subrule[k].option,
+              sourceText: str,
+              utteranceText: srcText.substring(
+                wordPositions[i].start,
+                wordPositions[j].end + 1
+              ),
+            });
+          }
         }
       }
     }
+    return result;
+  }
 
+  extractFromRule(text, rule, words, threshold) {
+    const edges = [];
+    if (threshold >= 1) {
+      if (!rule.dict) {
+        this.buildRuleDict(rule);
+      }
+      const newEdges = this.getBestExact(text, words, rule);
+      for (let i = 0; i < newEdges.length; i += 1) {
+        edges.push(newEdges[i]);
+      }
+    } else {
+      for (let i = 0; i < rule.rules.length; i += 1) {
+        const current = rule.rules[i];
+        for (let j = 0; j < current.texts.length; j += 1) {
+          const newEdges = this.getBestSubstringList(
+            text,
+            current.texts[j],
+            words,
+            current.threshold || threshold
+          );
+          for (let k = 0; k < newEdges.length; k += 1) {
+            edges.push({
+              ...newEdges[k],
+              entity: rule.name,
+              type: rule.type,
+              option: rule.rules[i].option,
+              sourceText: current.texts[j],
+              utteranceText: text.substring(
+                newEdges[k].start,
+                newEdges[k].end + 1
+              ),
+            });
+          }
+        }
+      }
+    }
     return edges;
   }
 
@@ -226,7 +293,7 @@ class ExtractorEnum {
         input.text || input.utterance,
         rules[i],
         wordPositions,
-        0.8
+        input.threshold || 0.8
       );
       for (let j = 0; j < newEdges.length; j += 1) {
         edges.push(newEdges[j]);

@@ -324,13 +324,16 @@ class Ner extends Clonable {
     return input;
   }
 
-  process(input) {
-    return this.runPipeline(
+  async process(srcInput) {
+    const input = { threshold: this.settings.threshold || 0.8, ...srcInput };
+    const result = await this.runPipeline(
       input,
       input.locale
         ? `${this.settings.tag}-${input.locale}-process`
         : this.pipelineProcess
     );
+    delete result.threshold;
+    return result;
   }
 
   nameToEntity(name) {
