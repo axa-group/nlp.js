@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const ArrToObj = require('./arr-to-obj');
 const { Container } = require('./container');
 const Normalizer = require('./normalizer');
@@ -15,10 +16,15 @@ const Tokenizer = require('./tokenizer');
 const Timer = require('./timer');
 const logger = require('./logger');
 const MemoryStorage = require('./memory-storage');
+const pluginInformation = require('./plugin-information.json');
 
 const defaultPathConfiguration = './conf.json';
 const defaultPathPipeline = './pipelines.md';
 const defaultPathPlugins = './plugins';
+
+function loadPipelinesStr(instance, pipelines) {
+  instance.loadPipelinesFromString(pipelines);
+}
 
 function loadPipelines(instance, fileName) {
   if (Array.isArray(fileName)) {
@@ -123,61 +129,87 @@ function containerBootstrap(
     loadEnv();
   }
   settings.pathConfiguration = getAbsolutePath(settings.pathConfiguration);
-  if (settings.isChild || fs.existsSync(settings.pathConfiguration)) {
-    if (srcSettings.envFileName) {
-      loadEnv(srcSettings.envFileName);
-    }
-    if (srcSettings.env) {
-      loadEnvFromJson(preffix, srcSettings.env);
-    }
-    const configuration = traverse(
-      settings.isChild
-        ? settings
-        : JSON.parse(
-            fs.readFileSync(settings.pathConfiguration, 'utf8'),
-            preffix ? `${preffix}_` : ''
-          )
+  if (srcSettings.envFileName) {
+    loadEnv(srcSettings.envFileName);
+  }
+  if (srcSettings.env) {
+    loadEnvFromJson(preffix, srcSettings.env);
+  }
+  let configuration;
+  if (settings.isChild || !fs.existsSync(settings.pathConfiguration)) {
+    configuration = settings;
+  } else {
+    configuration = JSON.parse(
+      fs.readFileSync(settings.pathConfiguration, 'utf8')
     );
-    if (configuration.pathPipeline) {
-      settings.pathPipeline = configuration.pathPipeline;
+  }
+  configuration = traverse(configuration, preffix ? `${preffix}_` : '');
+  if (configuration.pathPipeline) {
+    settings.pathPipeline = configuration.pathPipeline;
+  }
+  if (configuration.pathPlugins) {
+    settings.pathPlugins = configuration.pathPlugins;
+  }
+  if (configuration.settings) {
+    const keys = Object.keys(configuration.settings);
+    for (let i = 0; i < keys.length; i += 1) {
+      instance.registerConfiguration(
+        keys[i],
+        configuration.settings[keys[i]],
+        true
+      );
     }
-    if (configuration.pathPlugins) {
-      settings.pathPlugins = configuration.pathPlugins;
-    }
-    if (configuration.settings) {
-      const keys = Object.keys(configuration.settings);
-      for (let i = 0; i < keys.length; i += 1) {
-        instance.registerConfiguration(
-          keys[i],
-          configuration.settings[keys[i]],
-          true
-        );
-      }
-    }
-    if (configuration.use) {
-      for (let i = 0; i < configuration.use.length; i += 1) {
-        const current = configuration.use[i];
+  }
+  if (configuration.use) {
+    for (let i = 0; i < configuration.use.length; i += 1) {
+      const current = configuration.use[i];
+      if (typeof current === 'string') {
+        const info = pluginInformation[current];
+        if (!info) {
+          throw new Error(
+            `Plugin information not found for plugin "${current}"`
+          );
+        }
         let lib;
         try {
           /* eslint-disable-next-line */
-          lib = require(current.path);
+          lib = require(info.path);
+        } catch (err) {
+          try {
+            /* eslint-disable-next-line */
+            lib = require(getAbsolutePath(
+              path.join('./node_modules', info.path)
+            ));
+          } catch (err2) {
+            console.log(err2);
+            throw new Error(
+              `You have to install library "${info.path}" to use plugin "${current}"`
+            );
+          }
+        }
+        instance.use(lib[info.className], info.name, info.isSingleton);
+      } else {
+        let lib;
+        try {
+          /* eslint-disable-next-line */
+            lib = require(current.path);
         } catch (err) {
           /* eslint-disable-next-line */
-          lib = require(getAbsolutePath(current.path));
+            lib = require(getAbsolutePath(current.path));
         }
         instance.use(lib[current.className], current.name, current.isSingleton);
       }
     }
-    if (configuration.terraform) {
-      for (let i = 0; i < configuration.terraform.length; i += 1) {
-        const current = configuration.terraform[i];
-        const terra = instance.get(current.className);
-        instance.register(current.name, terra, true);
-      }
+  }
+  if (configuration.terraform) {
+    for (let i = 0; i < configuration.terraform.length; i += 1) {
+      const current = configuration.terraform[i];
+      const terra = instance.get(current.className);
+      instance.register(current.name, terra, true);
     }
-    if (configuration.childs) {
-      instance.childs = configuration.childs;
-    }
+  }
+  if (configuration.childs) {
+    instance.childs = configuration.childs;
   }
   if (pipelines) {
     for (let i = 0; i < pipelines.length; i += 1) {
@@ -190,6 +222,9 @@ function containerBootstrap(
     }
   }
   loadPipelines(instance, settings.pathPipeline || './pipelines.md');
+  if (configuration.pipelines) {
+    loadPipelinesStr(instance, configuration.pipelines);
+  }
   loadPlugins(instance, settings.pathPlugins || './plugins');
   return instance;
 }

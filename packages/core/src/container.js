@@ -513,7 +513,7 @@ class Container {
         await current.instance.start();
       }
     }
-    this.runPipeline(pipelineName, {}, this);
+    await this.runPipeline(pipelineName, {}, this);
   }
 }
 

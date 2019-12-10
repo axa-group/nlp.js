@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const fs = require('fs');
+const { fs } = require('@nlpjs/request');
 const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { NluManager, NluNeural } = require('@nlpjs/nlu');
 const {
@@ -120,9 +120,8 @@ class Nlp extends Clonable {
 
   async loadOrTrain() {
     let loaded = false;
-    if (this.settings.autoLoad && fs.existsSync(this.settings.modelFileName)) {
-      this.load(this.settings.modelFileName);
-      loaded = true;
+    if (this.settings.autoLoad) {
+      loaded = await this.load(this.settings.modelFileName);
     }
     if (!loaded) {
       await this.train();
@@ -281,8 +280,13 @@ class Nlp extends Clonable {
     }
   }
 
-  addCorpus(fileName) {
-    const corpus = JSON.parse(fs.readFileSync(fileName, 'utf8'));
+  async addCorpus(fileName) {
+    const fileData = await fs.readFile(fileName);
+    if (!fileData) {
+      throw new Error(`Corpus not found "${fileName}"`);
+    }
+    const corpus =
+      typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
     const locale = corpus.locale.slice(0, 2);
     this.addLanguage(locale);
     const { data, entities } = corpus;
@@ -482,15 +486,17 @@ class Nlp extends Clonable {
     this.fromJSON(clone);
   }
 
-  save(srcFileName, minified = false) {
+  async save(srcFileName, minified = false) {
     const fileName = srcFileName || 'model.nlp';
-    fs.writeFileSync(fileName, this.export(minified), 'utf8');
+    await fs.writeFile(fileName, this.export(minified));
   }
 
-  load(srcFileName) {
+  async load(srcFileName) {
     const fileName = srcFileName || 'model.nlp';
-    const data = fs.readFileSync(fileName, 'utf8');
-    this.import(data);
+    const data = await fs.readFile(fileName);
+    if (data) {
+      this.import(data);
+    }
   }
 }
 
