@@ -35,7 +35,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jest": "^22.19.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "https-proxy-agent": "^3.0.0",
+    "https-proxy-agent": "^4.0.0",
     "jest": "^24.9.0",
     "lerna": "^3.18.3",
     "prettier": "^1.19.1"
