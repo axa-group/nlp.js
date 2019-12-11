@@ -21,7 +21,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { fs } = require('@nlpjs/request');
 const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { NluManager, NluNeural } = require('@nlpjs/nlu');
 const {
@@ -281,6 +280,7 @@ class Nlp extends Clonable {
   }
 
   async addCorpus(fileName) {
+    const fs = this.container.get('fs');
     const fileData = await fs.readFile(fileName);
     if (!fileData) {
       throw new Error(`Corpus not found "${fileName}"`);
@@ -487,11 +487,13 @@ class Nlp extends Clonable {
   }
 
   async save(srcFileName, minified = false) {
+    const fs = this.container.get('fs');
     const fileName = srcFileName || 'model.nlp';
     await fs.writeFile(fileName, this.export(minified));
   }
 
   async load(srcFileName) {
+    const fs = this.container.get('fs');
     const fileName = srcFileName || 'model.nlp';
     const data = await fs.readFile(fileName);
     if (data) {
