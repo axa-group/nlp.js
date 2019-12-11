@@ -1,4 +1,3 @@
-const path = require('path');
 const ArrToObj = require('./arr-to-obj');
 const { Container } = require('./container');
 const Normalizer = require('./normalizer');
@@ -143,17 +142,9 @@ function containerBootstrap(
           /* eslint-disable-next-line */
           lib = require(info.path);
         } catch (err) {
-          try {
-            /* eslint-disable-next-line */
-            lib = require(getAbsolutePath(
-              path.join('./node_modules', info.path)
-            ));
-          } catch (err2) {
-            console.log(err2);
-            throw new Error(
-              `You have to install library "${info.path}" to use plugin "${current}"`
-            );
-          }
+          throw new Error(
+            `You have to install library "${info.path}" to use plugin "${current}"`
+          );
         }
         instance.use(lib[info.className], info.name, info.isSingleton);
       } else {
