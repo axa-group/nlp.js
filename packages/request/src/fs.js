@@ -39,7 +39,22 @@ function writeFile(fileName, data, format = 'utf8') {
   });
 }
 
+function existsSync(fileName) {
+  return fs.existsSync(fileName);
+}
+
+function lstatSync(fileName) {
+  return fs.lstatSync(fileName);
+}
+
+function readFileSync(fileName, encoding = 'utf8') {
+  return fs.readFileSync(fileName, encoding);
+}
+
 module.exports = {
   readFile,
   writeFile,
+  existsSync,
+  lstatSync,
+  readFileSync,
 };

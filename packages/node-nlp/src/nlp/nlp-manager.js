@@ -28,6 +28,7 @@ const { containerBootstrap } = require('@nlpjs/core');
 const { LangAll } = require('@nlpjs/lang-all');
 const { Nlp } = require('@nlpjs/nlp');
 const { Evaluator, Template } = require('@nlpjs/evaluator');
+const { fs: requestfs } = require('@nlpjs/request');
 const { SentimentManager } = require('../sentiment');
 
 class NlpManager {
@@ -41,6 +42,7 @@ class NlpManager {
       entityPreffix: '%',
       entitySuffix: '%',
     });
+    this.container.register('fs', requestfs);
     this.container.use(LangAll);
     this.container.use(Evaluator);
     this.container.use(Template);

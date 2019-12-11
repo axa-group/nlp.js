@@ -36,6 +36,7 @@
     "@nlpjs/nlg": "^4.0.0-rc.5",
     "@nlpjs/nlp": "^4.0.0-rc.5",
     "@nlpjs/nlu": "^4.0.0-rc.5",
+    "@nlpjs/request": "^4.0.0-rc.5",
     "@nlpjs/sentiment": "^4.0.0-rc.5",
     "@nlpjs/similarity": "^4.0.0-rc.4",
     "@nlpjs/xtables": "^4.0.0-rc.4"
