@@ -9,6 +9,7 @@ const Tokenizer = require('./tokenizer');
 const Timer = require('./timer');
 const logger = require('./logger');
 const MemoryStorage = require('./memory-storage');
+const fs = require('./mock-fs');
 
 function loadPipelinesStr(instance, pipelines) {
   instance.loadPipelinesFromString(pipelines);
@@ -46,6 +47,7 @@ function containerBootstrap(
 ) {
   const instance = container || new Container(preffix);
   if (!preffix) {
+    instance.register('fs', fs);
     instance.use(ArrToObj);
     instance.use(Normalizer);
     instance.use(ObjToArr);
