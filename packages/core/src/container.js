@@ -503,7 +503,7 @@ class Container {
     const keys = Object.keys(this.factory);
     for (let i = 0; i < keys.length; i += 1) {
       const current = this.factory[keys[i]];
-      if (current.isSingleton && current.instance.start) {
+      if (current.isSingleton && current.instance && current.instance.start) {
         await current.instance.start();
       }
     }

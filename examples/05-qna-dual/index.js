@@ -21,4 +21,4 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-require('../../packages/core/src').dockStart();
+require('../../packages/core-loader/src').dockStart();

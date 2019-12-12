@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { dock } = require('../../packages/core/src');
+const { dock } = require('../../packages/core-loader/src');
 const airports = require('./airports.json');
 
 (async () => {

@@ -19,6 +19,7 @@ const {
   loadEnv,
   loadEnvFromJson,
 } = require('./helper');
+const { fs: requestfs } = require('@nlpjs/request');
 
 const defaultPathConfiguration = './conf.json';
 const defaultPathPipeline = './pipelines.md';
@@ -101,6 +102,7 @@ function containerBootstrap(
 ) {
   const instance = container || new Container(preffix);
   if (!preffix) {
+    instance.register('fs', requestfs);
     instance.use(ArrToObj);
     instance.use(Normalizer);
     instance.use(ObjToArr);

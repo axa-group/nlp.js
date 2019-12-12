@@ -21,8 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { containerBootstrap } = require('../../packages/core/src');
+const { containerBootstrap } = require('../../packages/core-loader/src');
 
 (async () => {
-  await containerBootstrap().start();
+  const container = containerBootstrap();
+  await container.start();
+  const nlp = container.get('nlp');
+  const result = await nlp.process('who are you');
+  console.log(result);
 })();

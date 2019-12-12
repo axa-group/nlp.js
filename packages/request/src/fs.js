@@ -12,13 +12,12 @@ function readFile(fileName) {
         .then(data => resolve(data))
         .catch(() => resolve(undefined));
     } else {
-      fs.readFile(fileName, 'utf8', (err, data) => {
-        if (err) {
-          resolve(undefined);
-        } else {
-          resolve(data);
-        }
-      });
+      try {
+        const data = fs.readFileSync(fileName, 'utf8');
+        resolve(data);
+      } catch (err) {
+        resolve(undefined);
+      }
     }
   });
 }

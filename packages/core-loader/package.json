@@ -25,7 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.0.0-rc.8"
+    "@nlpjs/core": "^4.0.0-rc.8",
+    "@nlpjs/request": "4.0.0-rc.6"
   },
   "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
 }

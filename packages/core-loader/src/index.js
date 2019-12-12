@@ -2,7 +2,6 @@ const {
   Among,
   ArrToObj,
   BaseStemmer,
-  containerBootstrap,
   Clonable,
   Container,
   defaultContainer,
@@ -16,9 +15,9 @@ const {
   MemoryStorage,
   uuid,
   Context,
-  dockStart,
 } = require('@nlpjs/core');
 
+const containerBootstrap = require('./container-bootstrap');
 const dock = require('./dock');
 
 const {
@@ -32,6 +31,10 @@ const {
   listFilesAbsolute,
   getAbsolutePath,
 } = require('./helper');
+
+function dockStart(settings, mustLoadEnv) {
+  return dock.start(settings, mustLoadEnv);
+}
 
 module.exports = {
   Among,

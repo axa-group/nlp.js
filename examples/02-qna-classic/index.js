@@ -24,9 +24,11 @@
 const { ConsoleConnector } = require('../../packages/console-connector/src');
 const { Nlp } = require('../../packages/nlp/src');
 const { LangEn } = require('../../packages/lang-en/src');
+const { fs } = require('../../packages/request/src');
 const trainnlp = require('./train-nlp');
 
 const nlp = new Nlp({ languages: ['en'], threshold: 0.5 });
+nlp.container.register('fs', fs);
 nlp.use(LangEn);
 
 const connector = new ConsoleConnector();

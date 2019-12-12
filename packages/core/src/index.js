@@ -40,7 +40,6 @@ const {
   asciiToArray,
   stringToArray,
   compareWildcars,
-  listFiles,
   loadEnv,
 } = require('./helper');
 const MemoryStorage = require('./memory-storage');
@@ -65,7 +64,6 @@ module.exports = {
   asciiToArray,
   stringToArray,
   compareWildcars,
-  listFiles,
   loadEnv,
   Normalizer,
   ObjToArr,
