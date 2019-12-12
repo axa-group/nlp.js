@@ -30,16 +30,6 @@ const {
 } = require('./helper');
 const defaultSettings = require('./default-settings.json');
 
-let performance;
-// eslint-disable-next-line
-if (typeof window === 'undefined') {
-  // eslint-disable-next-line
-  performance = require('perf_hooks').performance;
-} else {
-  // eslint-disable-next-line
-  performance = window.performance;
-}
-
 /**
  * Class for a dense neural network, with an input and output layers fully connected,
  * using a leaky-relu activation
@@ -184,7 +174,7 @@ class NeuralNetwork extends Clonable {
       this.status.error > minError &&
       this.status.deltaError > minDelta
     ) {
-      const hrstart = performance.now();
+      const hrstart = new Date();
       this.status.iterations += 1;
       const lastError = this.status.error;
       this.status.error = 0;
@@ -198,9 +188,9 @@ class NeuralNetwork extends Clonable {
       }
       this.status.error /= data.length;
       this.status.deltaError = Math.abs(this.status.error - lastError);
-      const hrend = performance.now();
+      const hrend = new Date();
       if (this.logFn) {
-        this.logFn(this.status, hrend - hrstart);
+        this.logFn(this.status, hrend.getTime() - hrstart.getTime());
       }
     }
     return this.status;
