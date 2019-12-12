@@ -12,6 +12,7 @@ const {
   logger,
   MemoryStorage,
 } = require('@nlpjs/core');
+const { fs: requestfs } = require('@nlpjs/request');
 const pluginInformation = require('./plugin-information.json');
 const {
   listFilesAbsolute,
@@ -19,7 +20,6 @@ const {
   loadEnv,
   loadEnvFromJson,
 } = require('./helper');
-const { fs: requestfs } = require('@nlpjs/request');
 
 const defaultPathConfiguration = './conf.json';
 const defaultPathPipeline = './pipelines.md';

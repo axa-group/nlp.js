@@ -25,6 +25,7 @@ const fs = require('fs');
 const { BuiltinMicrosoft } = require('@nlpjs/builtin-microsoft');
 const { BuiltinDuckling } = require('@nlpjs/builtin-duckling');
 const { containerBootstrap } = require('@nlpjs/core');
+const { Language } = require('@nlpjs/language');
 const { LangAll } = require('@nlpjs/lang-all');
 const { Nlp } = require('@nlpjs/nlp');
 const { Evaluator, Template } = require('@nlpjs/evaluator');
@@ -43,6 +44,7 @@ class NlpManager {
       entitySuffix: '%',
     });
     this.container.register('fs', requestfs);
+    this.container.register('Language', Language, false);
     this.container.use(LangAll);
     this.container.use(Evaluator);
     this.container.use(Template);

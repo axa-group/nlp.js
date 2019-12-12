@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.0.0-rc.8",
-    "@nlpjs/language": "^4.0.0-rc.4",
+    "@nlpjs/language-min": "^4.0.0-rc.8",
     "@nlpjs/neural": "^4.0.0-rc.8",
     "@nlpjs/similarity": "^4.0.0-rc.4"
   },

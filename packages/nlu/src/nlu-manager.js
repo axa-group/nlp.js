@@ -22,7 +22,7 @@
  */
 
 const { Clonable } = require('@nlpjs/core');
-const { Language } = require('@nlpjs/language');
+const { Language } = require('@nlpjs/language-min');
 const DomainManager = require('./domain-manager');
 
 class NluManager extends Clonable {
@@ -43,7 +43,10 @@ class NluManager extends Clonable {
       this.settings,
       this.container.getConfiguration(this.settings.tag)
     );
-    this.guesser = new Language();
+    if (!this.container.get('Language')) {
+      this.container.register('Language', Language, false);
+    }
+    this.guesser = this.container.get('Language');
     this.locales = [];
     this.languageNames = {};
     this.domainManagers = {};
@@ -317,7 +320,7 @@ class NluManager extends Clonable {
       languageNames: this.languageNames,
       domainManagers: {},
       intentDomains: this.intentDomains,
-      extraSentences: this.guesser.extraSentences,
+      extraSentences: this.guesser.extraSentences.slice(0),
     };
     delete result.settings.container;
     const keys = Object.keys(this.domainManagers);

@@ -22,7 +22,7 @@
  */
 
 const { defaultContainer } = require('@nlpjs/core');
-const { Language } = require('@nlpjs/language');
+const { Language } = require('@nlpjs/language-min');
 const { similarity } = require('@nlpjs/similarity');
 const reduceEdges = require('./reduce-edges');
 
