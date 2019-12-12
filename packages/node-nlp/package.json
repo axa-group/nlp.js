@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "4.0.0-rc.6",
+  "version": "4.0.0-rc.8",
   "description": "Sentiment Analysis",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,19 +25,19 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/builtin-duckling": "^4.0.0-rc.5",
-    "@nlpjs/builtin-microsoft": "^4.0.0-rc.5",
-    "@nlpjs/core": "^4.0.0-rc.5",
-    "@nlpjs/emoji": "^4.0.0-rc.5",
+    "@nlpjs/builtin-duckling": "^4.0.0-rc.8",
+    "@nlpjs/builtin-microsoft": "^4.0.0-rc.8",
+    "@nlpjs/core": "^4.0.0-rc.8",
+    "@nlpjs/emoji": "^4.0.0-rc.8",
     "@nlpjs/evaluator": "^4.0.0-rc.4",
-    "@nlpjs/lang-all": "^4.0.0-rc.5",
+    "@nlpjs/lang-all": "^4.0.0-rc.8",
     "@nlpjs/language": "^4.0.0-rc.4",
-    "@nlpjs/neural": "^4.0.0-rc.5",
-    "@nlpjs/nlg": "^4.0.0-rc.5",
-    "@nlpjs/nlp": "^4.0.0-rc.6",
-    "@nlpjs/nlu": "^4.0.0-rc.5",
+    "@nlpjs/neural": "^4.0.0-rc.8",
+    "@nlpjs/nlg": "^4.0.0-rc.8",
+    "@nlpjs/nlp": "^4.0.0-rc.8",
+    "@nlpjs/nlu": "^4.0.0-rc.8",
     "@nlpjs/request": "^4.0.0-rc.6",
-    "@nlpjs/sentiment": "^4.0.0-rc.5",
+    "@nlpjs/sentiment": "^4.0.0-rc.8",
     "@nlpjs/similarity": "^4.0.0-rc.4",
     "@nlpjs/xtables": "^4.0.0-rc.4"
   },
