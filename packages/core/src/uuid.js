@@ -21,31 +21,13 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const crypto = require('crypto');
-
-const byteToHex = [];
-
-for (let i = 0; i < 256; i += 1) {
-  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-}
-
 function uuid() {
-  const rnds = crypto.randomBytes(16);
-  /* eslint-disable no-bitwise */
-  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-  /* eslint-disable no-bitwise */
-  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-  const arr = [];
-  let curr = 0;
-  for (let i = 0; i < 20; i += 1) {
-    if (i === 4 || i === 7 || i === 10 || i === 13) {
-      arr.push('-');
-    } else {
-      arr.push(byteToHex[rnds[curr]]);
-      curr += 1;
-    }
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
   }
-  return arr.join('');
+  return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 }
 
 module.exports = uuid;

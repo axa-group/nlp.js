@@ -21,32 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { defaultContainer } = require('./container');
+const Language = require('./language');
 
-class Timer {
-  constructor(container = defaultContainer) {
-    this.container = container.container || container;
-    this.name = 'timer';
-  }
-
-  start(input) {
-    if (input) {
-      input.hrstart = new Date();
-    }
-    return input;
-  }
-
-  stop(srcInput) {
-    const input = srcInput;
-    const hrend = new Date();
-    input.elapsed = hrend.getTime() - input.hrstart.getTime();
-    delete input.hrstart;
-    return input;
-  }
-
-  run(srcInput) {
-    this.start(srcInput);
-  }
-}
-
-module.exports = Timer;
+module.exports = {
+  Language,
+};

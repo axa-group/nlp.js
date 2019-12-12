@@ -21,7 +21,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const fs = require('fs');
 const { compareWildcars } = require('./helper');
 const DefaultCompiler = require('./default-compiler');
 const logger = require('./logger');
@@ -498,11 +497,6 @@ class Container {
         this.registerPipeline(currentName, currentPipeline);
       }
     }
-  }
-
-  loadPipelinesFromFile(fileName) {
-    const str = fs.readFileSync(fileName, 'utf8');
-    this.loadPipelinesFromString(str);
   }
 
   async start(pipelineName = 'main') {

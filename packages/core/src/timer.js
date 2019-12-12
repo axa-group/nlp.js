@@ -23,16 +23,6 @@
 
 const { defaultContainer } = require('./container');
 
-let performance;
-// eslint-disable-next-line
-if (typeof window === 'undefined') {
-  // eslint-disable-next-line
-  performance = require('perf_hooks').performance;
-} else {
-  // eslint-disable-next-line
-  performance = window.performance;
-}
-
 class Timer {
   constructor(container = defaultContainer) {
     this.container = container.container || container;
@@ -41,15 +31,15 @@ class Timer {
 
   start(input) {
     if (input) {
-      input.hrstart = performance.now();
+      input.hrstart = new Date();
     }
     return input;
   }
 
   stop(srcInput) {
     const input = srcInput;
-    const hrend = performance.now();
-    input.elapsed = hrend - input.hrstart;
+    const hrend = new Date();
+    input.elapsed = hrend.getTime() - input.hrstart.getTime();
     delete input.hrstart;
     return input;
   }

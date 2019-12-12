@@ -21,6 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
+const path = require('path');
 const containerBootstrap = require('./container-bootstrap');
 
 class Dock {
@@ -43,6 +45,16 @@ class Dock {
     if (typeof name !== 'string') {
       settings = name;
       name = '';
+    }
+    if (!settings) {
+      if (name === 'default' || name === '') {
+        settings = 'conf.json';
+      } else {
+        settings = path.join(name, 'conf.json');
+        if (!fs.existsSync(settings)) {
+          settings = `${name}_conf.json`;
+        }
+      }
     }
     if (!this.containers[name]) {
       const container = containerBootstrap(
