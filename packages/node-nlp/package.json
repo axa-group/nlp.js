@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "4.0.0-rc.10",
+  "version": "4.0.0-rc.11",
   "description": "Sentiment Analysis",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -32,12 +32,12 @@
     "@nlpjs/evaluator": "^4.0.0-rc.4",
     "@nlpjs/lang-all": "^4.0.0-rc.10",
     "@nlpjs/language": "^4.0.0-rc.4",
-    "@nlpjs/neural": "^4.0.0-rc.10",
+    "@nlpjs/neural": "^4.0.0-rc.11",
     "@nlpjs/nlg": "^4.0.0-rc.10",
-    "@nlpjs/nlp": "^4.0.0-rc.10",
-    "@nlpjs/nlu": "^4.0.0-rc.10",
+    "@nlpjs/nlp": "^4.0.0-rc.11",
+    "@nlpjs/nlu": "^4.0.0-rc.11",
     "@nlpjs/request": "^4.0.0-rc.9",
-    "@nlpjs/sentiment": "^4.0.0-rc.10",
+    "@nlpjs/sentiment": "^4.0.0-rc.11",
     "@nlpjs/similarity": "^4.0.0-rc.4",
     "@nlpjs/xtables": "^4.0.0-rc.4"
   },
