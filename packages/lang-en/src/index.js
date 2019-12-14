@@ -21,11 +21,14 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const {
+  TokenizerEn,
+  StemmerEn,
+  StopwordsEn,
+  NormalizerEn,
+} = require('@nlpjs/lang-en-min');
+
 const LangEn = require('./lang-en');
-const TokenizerEn = require('./tokenizer-en');
-const StemmerEn = require('./stemmer-en');
-const StopwordsEn = require('./stopwords-en');
-const NormalizerEn = require('./normalizer-en');
 const SentimentEn = require('./sentiment/sentiment_en');
 
 module.exports = {

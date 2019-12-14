@@ -21,8 +21,20 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Nlp = require('./nlp');
+const TokenizerEn = require('./tokenizer-en');
+const StemmerEn = require('./stemmer-en');
+const StopwordsEn = require('./stopwords-en');
+const NormalizerEn = require('./normalizer-en');
+const SentimentEn = require('./sentiment/sentiment_en');
 
-module.exports = {
-  Nlp,
-};
+class LangEn {
+  register(container) {
+    container.use(TokenizerEn);
+    container.use(StemmerEn);
+    container.use(StopwordsEn);
+    container.use(NormalizerEn);
+    container.register('sentiment-en', SentimentEn);
+  }
+}
+
+module.exports = LangEn;

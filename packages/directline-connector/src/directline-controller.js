@@ -32,7 +32,6 @@ class DirectlineController {
       this.settings.serviceUrl ||
       process.env.DIRECTLINE_SERVICE_URL ||
       localhost;
-    // this.botUrl = this.settings.botUrl || process.env.DIRECTLINE_BOT_URL || `http://localhost:4000/api/messages`;
     this.botUrl = this.settings.botUrl || process.env.DIRECTLINE_BOT_URL;
     this.expiresIn = this.settings.expiresIn || 1800;
     this.conversations = {};
@@ -155,15 +154,21 @@ class DirectlineController {
           };
           const nlp = this.settings.container.get('nlp');
           if (nlp) {
-            nlp.process(activity.text).then(nlpresult => {
-              result.text =
-                nlpresult.answer || "Sorry, I didn't understand you";
-              conversation.history.push(result);
-              resolve({
-                status: 200,
-                body: { id: result.id, timestamp: new Date().toUTCString() },
+            nlp
+              .process({
+                message: activity.text,
+                channel: 'directline',
+                app: this.settings.container.name,
+              })
+              .then(nlpresult => {
+                result.text =
+                  nlpresult.answer || "Sorry, I didn't understand you";
+                conversation.history.push(result);
+                resolve({
+                  status: 200,
+                  body: { id: result.id, timestamp: new Date().toUTCString() },
+                });
               });
-            });
           } else {
             conversation.history.push(result);
             resolve({

@@ -88,7 +88,7 @@ class Nlp extends Clonable {
     this.use(ActionManager);
     this.use(NluNeural);
     this.use(SentimentAnalyzer);
-    this.use(SlotManager);
+    this.container.register('SlotManager', SlotManager, false);
   }
 
   initialize() {
@@ -320,7 +320,12 @@ class Nlp extends Clonable {
       }
       if (answers) {
         for (let j = 0; j < answers.length; j += 1) {
-          this.addAnswer(locale, intent, answers[j]);
+          const answer = answers[j];
+          if (typeof answer === 'string') {
+            this.addAnswer(locale, intent, answers[j]);
+          } else {
+            this.addAnswer(locale, intent, answer.answer, answer.opts);
+          }
         }
       }
     }
@@ -389,7 +394,9 @@ class Nlp extends Clonable {
     }
     if (sourceInput) {
       locale = sourceInput.locale;
-      utterance = sourceInput.utterance;
+      utterance = sourceInput.utterance || sourceInput.message;
+      context.channel = sourceInput.channel;
+      context.app = sourceInput.app;
     }
     if (!utterance) {
       utterance = locale;

@@ -21,8 +21,18 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Nlp = require('./nlp');
+const LangEn = require('./lang-en');
+const TokenizerEn = require('./tokenizer-en');
+const StemmerEn = require('./stemmer-en');
+const StopwordsEn = require('./stopwords-en');
+const NormalizerEn = require('./normalizer-en');
+const SentimentEn = require('./sentiment/sentiment_en');
 
 module.exports = {
-  Nlp,
+  LangEn,
+  StemmerEn,
+  StopwordsEn,
+  TokenizerEn,
+  NormalizerEn,
+  SentimentEn,
 };
