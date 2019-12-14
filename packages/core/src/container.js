@@ -336,6 +336,10 @@ class Container {
   use(item, name, isSingleton, onlyIfNotExists = false) {
     let instance;
     if (typeof item === 'function') {
+      if (item.name.endsWith('Compiler')) {
+        this.registerCompiler(item);
+        return item.name;
+      }
       const Clazz = item;
       instance = new Clazz({ container: this });
     } else {
@@ -507,7 +511,9 @@ class Container {
         await current.instance.start();
       }
     }
-    await this.runPipeline(pipelineName, {}, this);
+    if (this.getPipeline(pipelineName)) {
+      await this.runPipeline(pipelineName, {}, this);
+    }
   }
 }
 

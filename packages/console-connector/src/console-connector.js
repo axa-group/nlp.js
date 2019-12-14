@@ -67,16 +67,30 @@ class ConsoleConnector extends Clonable {
     console.log(`${botName}> ${text}`);
   }
 
-  hear(line) {
+  async hear(line) {
     if (this.onHear) {
       this.onHear(this, line);
     } else {
       const name = `${this.settings.tag}.hear`;
       const pipeline = this.container.getPipeline(name);
       if (pipeline) {
-        this.container.runPipeline(pipeline, { message: line }, this);
+        this.container.runPipeline(
+          pipeline,
+          { message: line, channel: 'console', app: this.container.name },
+          this
+        );
       } else {
-        console.error(`There is no pipeline for ${name}`);
+        const nlp = this.container.get('nlp');
+        if (nlp) {
+          const result = await nlp.process({
+            message: line,
+            channel: 'console',
+            app: this.container.name,
+          });
+          this.say(result.answer);
+        } else {
+          console.error(`There is no pipeline for ${name}`);
+        }
       }
     }
   }

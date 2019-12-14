@@ -21,8 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Nlp = require('./nlp');
+const MsbfConnector = require('./msbf-connector');
 
 module.exports = {
-  Nlp,
+  MsbfConnector,
 };

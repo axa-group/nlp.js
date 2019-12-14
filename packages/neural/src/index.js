@@ -21,10 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Perceptron = require('./perceptron');
 const NeuralNetwork = require('./neural-network');
 
 module.exports = {
-  Perceptron,
   NeuralNetwork,
 };

@@ -21,8 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Nlp = require('./nlp');
-
 module.exports = {
-  Nlp,
+  senticon: {},
+  afinn: {},
+  pattern: {},
+  negations: { words: [] },
 };
