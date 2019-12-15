@@ -4,6 +4,8 @@
   "ConsoleConnector": { "className": "ConsoleConnector", "path": "@nlpjs/console-connector" },
   "DirectlineConnector": { "className": "DirectlineConnector", "path": "@nlpjs/directline-connector" },
   "ExpressApiServer": { "className": "ExpressApiServer", "path": "@nlpjs/express-api-server" },
+  "Evaluator": { "className": "Evaluator", "path": "@nlpjs/evaluator" },
+  "JavascriptCompiler": { "className": "JavascriptCompiler", "path": "@nlpjs/evaluator"},
   "LangAll": { "className": "LangAll", "path": "@nlpjs/lang-all" },
   "LangAr": { "className": "LangAll", "path": "@nlpjs/lang-ar" },
   "LangBn": { "className": "LangBn", "path": "@nlpjs/lang-bn" },
@@ -40,5 +42,6 @@
   "LangUk": { "className": "LangUk", "path": "@nlpjs/lang-uk" },
   "LangZh": { "className": "LangZh", "path": "@nlpjs/lang-zh" },
   "logger": { "className": "logger", "path": "@nlpjs/logger" },
+  "MsbfConnector": { "className": "MsbfConnector", "path": "@nlpjs/msbf-connector" },
   "Nlp": { "className": "Nlp", "path": "@nlpjs/nlp" }
 }

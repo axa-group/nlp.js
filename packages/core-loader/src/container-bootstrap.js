@@ -121,9 +121,11 @@ function containerBootstrap(
   mustLoadEnv = true,
   container,
   preffix,
-  pipelines
+  pipelines,
+  parent
 ) {
   const instance = container || new Container(preffix);
+  instance.parent = parent;
   if (!preffix) {
     instance.register('fs', requestfs);
     instance.use(ArrToObj);
@@ -213,7 +215,6 @@ function containerBootstrap(
               path.join('./node_modules', info.path)
             ));
           } catch (err2) {
-            console.log(err2);
             throw new Error(
               `You have to install library "${info.path}" to use plugin "${current}"`
             );

@@ -62,12 +62,12 @@ class Dock {
         mustLoadEnv,
         undefined,
         preffix,
-        pipelines
+        pipelines,
+        parent
       );
       container.name = name;
       this.containers[name] = container;
       container.dock = this;
-      container.parent = parent;
       await container.start();
       if (container.childs) {
         await this.buildChilds(container);
