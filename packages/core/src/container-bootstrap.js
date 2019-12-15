@@ -66,9 +66,11 @@ function containerBootstrap(
   mustLoadEnv,
   container,
   preffix,
-  pipelines
+  pipelines,
+  parent
 ) {
   const instance = container || new Container(preffix);
+  instance.parent = parent;
   if (!preffix) {
     instance.register('fs', fs);
     instance.use(ArrToObj);

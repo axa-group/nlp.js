@@ -357,6 +357,17 @@ class Container {
     return itemName;
   }
 
+  getCompiler(name) {
+    const compiler = this.compilers[name];
+    if (compiler) {
+      return compiler;
+    }
+    if (this.parent) {
+      return this.parent.getCompiler(name);
+    }
+    return this.compilers.default;
+  }
+
   buildPipeline(srcPipeline, prevPipeline = []) {
     const pipeline = [];
     if (srcPipeline && srcPipeline.length > 0) {
@@ -378,7 +389,7 @@ class Container {
       !pipeline.length || !pipeline[0].startsWith('// compiler=')
         ? 'default'
         : pipeline[0].slice(12);
-    const compiler = this.compilers[compilerName] || this.compilers.default;
+    const compiler = this.getCompiler(compilerName);
     const compiled = compiler.compile(pipeline);
     return {
       pipeline,

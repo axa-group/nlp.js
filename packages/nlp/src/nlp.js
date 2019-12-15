@@ -505,7 +505,9 @@ class Nlp extends Clonable {
     const data = await fs.readFile(fileName);
     if (data) {
       this.import(data);
+      return true;
     }
+    return false;
   }
 }
 
