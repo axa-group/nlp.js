@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlu-luis",
-  "version": "4.0.0-rc.12",
+  "version": "4.0.0-rc.13",
   "description": "Natural Language Understanding",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,8 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.0.0-rc.12",
-    "@nlpjs/nlu": "^4.0.0-rc.12",
+    "@nlpjs/core": "^4.0.0-rc.13",
+    "@nlpjs/nlu": "^4.0.0-rc.13",
     "@nlpjs/request": "^4.0.0-rc.12"
   },
   "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
