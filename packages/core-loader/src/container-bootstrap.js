@@ -198,29 +198,35 @@ function containerBootstrap(
     for (let i = 0; i < configuration.use.length; i += 1) {
       const current = configuration.use[i];
       if (typeof current === 'string') {
-        const info = pluginInformation[current];
-        if (!info) {
+        let infoArr = pluginInformation[current];
+        if (!infoArr) {
           throw new Error(
             `Plugin information not found for plugin "${current}"`
           );
         }
-        let lib;
-        try {
-          /* eslint-disable-next-line */
-          lib = require(info.path);
-        } catch (err) {
+        if (!Array.isArray(infoArr)) {
+          infoArr = [infoArr];
+        }
+        for (let j = 0; j < infoArr.length; j += 1) {
+          const info = infoArr[j];
+          let lib;
           try {
             /* eslint-disable-next-line */
-            lib = require(getAbsolutePath(
-              path.join('./node_modules', info.path)
-            ));
-          } catch (err2) {
-            throw new Error(
-              `You have to install library "${info.path}" to use plugin "${current}"`
-            );
+            lib = require(info.path);
+          } catch (err) {
+            try {
+              /* eslint-disable-next-line */
+              lib = require(getAbsolutePath(
+                path.join('./node_modules', info.path)
+              ));
+            } catch (err2) {
+              throw new Error(
+                `You have to install library "${info.path}" to use plugin "${current}"`
+              );
+            }
           }
+          instance.use(lib[info.className], info.name, info.isSingleton);
         }
-        instance.use(lib[info.className], info.name, info.isSingleton);
       } else {
         let lib;
         try {

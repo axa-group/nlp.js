@@ -1,4 +1,11 @@
 {
+  "Basic": [
+    { "className": "logger", "path": "@nlpjs/logger" },
+    { "className": "Evaluator", "path": "@nlpjs/evaluator" },
+    { "className": "JavascriptCompiler", "path": "@nlpjs/evaluator"},
+    { "className": "Nlp", "path": "@nlpjs/nlp" },
+    { "className": "Template", "path": "@nlpjs/evaluator"}
+  ],
   "BuiltinDuckling": { "className": "BuiltinDuckling", "path": "@nlpjs/builtin-duckling" },
   "BuiltinMicrosoft": { "className": "BuiltinMicrosoft", "path": "@nlpjs/builtin-microsoft" },
   "ConsoleConnector": { "className": "ConsoleConnector", "path": "@nlpjs/console-connector" },
@@ -43,5 +50,6 @@
   "LangZh": { "className": "LangZh", "path": "@nlpjs/lang-zh" },
   "logger": { "className": "logger", "path": "@nlpjs/logger" },
   "MsbfConnector": { "className": "MsbfConnector", "path": "@nlpjs/msbf-connector" },
-  "Nlp": { "className": "Nlp", "path": "@nlpjs/nlp" }
+  "Nlp": { "className": "Nlp", "path": "@nlpjs/nlp" },
+  "Template": { "className": "Template", "path": "@nlpjs/evaluator"}
 }
