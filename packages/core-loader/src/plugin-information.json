@@ -11,6 +11,7 @@
   "ConsoleConnector": { "className": "ConsoleConnector", "path": "@nlpjs/console-connector" },
   "DirectlineConnector": { "className": "DirectlineConnector", "path": "@nlpjs/directline-connector" },
   "ExpressApiServer": { "className": "ExpressApiServer", "path": "@nlpjs/express-api-server" },
+  "ExpressApiServerless": { "className": "ExpressApiServerless", "path": "@nlpjs/express-api-serverless" },
   "Evaluator": { "className": "Evaluator", "path": "@nlpjs/evaluator" },
   "JavascriptCompiler": { "className": "JavascriptCompiler", "path": "@nlpjs/evaluator"},
   "LangAll": { "className": "LangAll", "path": "@nlpjs/lang-all" },
