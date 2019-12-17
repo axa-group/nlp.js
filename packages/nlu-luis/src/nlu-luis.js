@@ -32,9 +32,11 @@ class NluLuis extends Nlu {
 
   async innerProcess(srcInput) {
     const input = srcInput;
-    input.nluAnswer = await request(
-      `${this.settings.luisUrl}${input.text || input.utterance}`
-    );
+    const text =
+      this.settings.useStemmer && input.tokens
+        ? Object.keys(input.tokens).join(' ')
+        : input.text || input.utterance;
+    input.nluAnswer = await request(`${this.settings.luisUrl}${text}`);
     return input;
   }
 

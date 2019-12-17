@@ -52,5 +52,6 @@
   "logger": { "className": "logger", "path": "@nlpjs/logger" },
   "MsbfConnector": { "className": "MsbfConnector", "path": "@nlpjs/msbf-connector" },
   "Nlp": { "className": "Nlp", "path": "@nlpjs/nlp" },
+  "NluLuis": { "className": "NluLuis", "path": "@nlpjs/nlu-luis" },
   "Template": { "className": "Template", "path": "@nlpjs/evaluator"}
 }

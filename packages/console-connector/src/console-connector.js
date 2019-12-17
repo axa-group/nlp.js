@@ -60,11 +60,18 @@ class ConsoleConnector extends Clonable {
     } else if (typeof message === 'string') {
       text = message;
     } else {
-      text = message.message;
+      text = message.answer || message.message;
     }
     const botName = this.settings.botName || 'bot';
-    // eslint-disable-next-line no-console
-    console.log(`${botName}> ${text}`);
+    if (this.settings.debug && typeof message === 'object' && !reference) {
+      const intent = message.intent || '';
+      const score = message.score || '';
+      // eslint-disable-next-line no-console
+      console.log(`${botName}> ${text} (${intent} - ${score})`);
+    } else {
+      // eslint-disable-next-line no-console
+      console.log(`${botName}> ${text}`);
+    }
   }
 
   async hear(line) {

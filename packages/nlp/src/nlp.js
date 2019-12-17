@@ -112,8 +112,11 @@ class Nlp extends Clonable {
     if (this.settings.locales) {
       this.addLanguage(this.settings.locales);
     }
+  }
+
+  async start() {
     if (this.settings.corpora) {
-      this.addCorpora(this.settings.corpora);
+      await this.addCorpora(this.settings.corpora);
     }
   }
 
@@ -273,9 +276,9 @@ class Nlp extends Clonable {
     return response.answers;
   }
 
-  addCorpora(names) {
+  async addCorpora(names) {
     for (let i = 0; i < names.length; i += 1) {
-      this.addCorpus(names[i]);
+      await this.addCorpus(names[i]);
     }
   }
 
