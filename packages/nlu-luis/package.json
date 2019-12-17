@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlu-luis",
-  "version": "4.0.0-rc.13",
+  "version": "4.0.0-rc.15",
   "description": "Natural Language Understanding",
   "author": {
     "email": "jesus.seijas@axa.com",

@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "4.0.0-rc.13",
+  "version": "4.0.0-rc.15",
   "description": "Sentiment Analysis",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -34,7 +34,7 @@
     "@nlpjs/language": "^4.0.0-rc.4",
     "@nlpjs/neural": "^4.0.0-rc.13",
     "@nlpjs/nlg": "^4.0.0-rc.13",
-    "@nlpjs/nlp": "^4.0.0-rc.13",
+    "@nlpjs/nlp": "^4.0.0-rc.15",
     "@nlpjs/nlu": "^4.0.0-rc.13",
     "@nlpjs/request": "^4.0.0-rc.12",
     "@nlpjs/sentiment": "^4.0.0-rc.13",
