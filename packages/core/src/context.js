@@ -48,6 +48,7 @@ class Context extends Clonable {
     if (!storage) {
       throw new Error('Storage not found');
     }
+    return storage;
   }
 
   getContext(key) {

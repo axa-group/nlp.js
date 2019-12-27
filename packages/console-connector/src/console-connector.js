@@ -94,7 +94,7 @@ class ConsoleConnector extends Clonable {
             channel: 'console',
             app: this.container.name,
           });
-          this.say(result.answer);
+          this.say(result);
         } else {
           console.error(`There is no pipeline for ${name}`);
         }

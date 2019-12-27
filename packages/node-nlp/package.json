@@ -1,7 +1,7 @@
 {
   "name": "node-nlp",
   "version": "4.0.0-rc.15",
-  "description": "Sentiment Analysis",
+  "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "author": {
     "email": "jesus.seijas@axa.com",
     "name": "Jesus Seijas"
@@ -24,10 +24,27 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
+  "keywords": [
+    "natural language processing",
+    "artifical intelligence",
+    "natural language understanding",
+    "natural language generation",
+    "NLP",
+    "NLU",
+    "NLG",
+    "sentiment analysis",
+    "classifier",
+    "logistic regression",
+    "Natural",
+    "entity extraction",
+    "named entity recognition",
+    "chatbot",
+    "bot"
+  ],
   "dependencies": {
     "@nlpjs/builtin-duckling": "^4.0.0-rc.13",
     "@nlpjs/builtin-microsoft": "^4.0.0-rc.13",
-    "@nlpjs/core": "^4.0.0-rc.13",
+    "@nlpjs/core-loader": "^4.0.0-rc.15",
     "@nlpjs/emoji": "^4.0.0-rc.13",
     "@nlpjs/evaluator": "^4.0.0-rc.12",
     "@nlpjs/lang-all": "^4.0.0-rc.13",

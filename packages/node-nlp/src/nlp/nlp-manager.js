@@ -24,7 +24,7 @@
 const fs = require('fs');
 const { BuiltinMicrosoft } = require('@nlpjs/builtin-microsoft');
 const { BuiltinDuckling } = require('@nlpjs/builtin-duckling');
-const { containerBootstrap } = require('@nlpjs/core');
+const { containerBootstrap } = require('@nlpjs/core-loader');
 const { Language } = require('@nlpjs/language');
 const { LangAll } = require('@nlpjs/lang-all');
 const { Nlp } = require('@nlpjs/nlp');

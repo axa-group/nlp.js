@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const { generate: unparse } = require('escodegen');
 const { parse } = require('esprima');
 
 class JavascriptCompiler {
@@ -145,7 +146,7 @@ class JavascriptCompiler {
     if ({}.hasOwnProperty.call(context, node.name)) {
       return context[node.name];
     }
-    if ((context.input, {}.hasOwnProperty.call(context.input, node.name))) {
+    if (context.input && {}.hasOwnProperty.call(context.input, node.name)) {
       return context.input[node.name];
     }
     if (context.this && context.this.container) {
@@ -166,6 +167,7 @@ class JavascriptCompiler {
   }
 
   async walkCall(node, context) {
+    console.log('walkCall');
     const callee = await this.walk(node.callee, context);
     if (callee === this.failResult || typeof callee !== 'function') {
       return this.failResult;
@@ -179,6 +181,7 @@ class JavascriptCompiler {
     const args = [];
     for (let i = 0, l = node.arguments.length; i < l; i += 1) {
       const x = await this.walk(node.arguments[i], context);
+      console.log(x);
       if (x === this.failResult) {
         return this.failResult;
       }
@@ -233,7 +236,7 @@ class JavascriptCompiler {
 
   async walkFunction(node, context) {
     const newContext = {};
-    const keys = Object.keys(context);
+    const keys = Object.keys(context).filter(x => x !== 'this');
     keys.forEach(element => {
       newContext[element] = context[element];
     });
@@ -248,7 +251,12 @@ class JavascriptCompiler {
         return this.failResult;
       }
     }
-    return undefined;
+    const vals = keys.map(key => context[key]);
+    // eslint-disable-next-line
+    return Function(keys.join(', '), 'return ' + unparse(node)).apply(
+      null,
+      vals
+    );
   }
 
   async walkTemplateLiteral(node, context) {
@@ -267,8 +275,18 @@ class JavascriptCompiler {
   async walkTaggedTemplate(node, context) {
     const tag = await this.walk(node.tag, context);
     const { quasi } = node;
-    const strings = quasi.quasis.map(q => this.walk(q, context));
-    const values = quasi.expressions.map(e => this.walk(e, context));
+    const strings = [];
+    for (let i = 0; i < quasi.quasis.length; i += 1) {
+      const q = quasi.quasis[i];
+      const value = await this.walk(q, context);
+      strings.push(value);
+    }
+    const values = [];
+    for (let i = 0; i < quasi.expressions.length; i += 1) {
+      const q = quasi.expressions[i];
+      const value = await this.walk(q, context);
+      values.push(value);
+    }
     // eslint-disable-next-line
     return tag.apply(null, [strings].concat(values));
   }

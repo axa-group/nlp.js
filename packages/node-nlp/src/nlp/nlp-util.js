@@ -26,7 +26,7 @@ const {
   Tokenizer,
   defaultContainer,
   containerBootstrap,
-} = require('@nlpjs/core');
+} = require('@nlpjs/core-loader');
 const LangAll = require('@nlpjs/lang-all');
 
 const cultures = {

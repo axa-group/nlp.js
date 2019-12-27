@@ -145,6 +145,26 @@ describe('Duckling Integration', () => {
     });
   });
 
+  describe('Get Culture', () => {
+    test('It should get the correct culture', () => {
+      const actual = BuiltinDuckling.getCulture('gl');
+      const expected = 'gl_ES';
+      expect(actual).toEqual(expected);
+    });
+
+    test('If no locale is provided, return american english', () => {
+      const actual = BuiltinDuckling.getCulture();
+      const expected = 'en_US';
+      expect(actual).toEqual(expected);
+    });
+
+    test('If the locale does not exists, return a culture', () => {
+      const actual = BuiltinDuckling.getCulture('kl');
+      const expected = 'kl_KL';
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe('English', () => {
     test('When there is an exception, return empty array', async () => {
       const locale = 'en';
@@ -165,6 +185,30 @@ describe('Duckling Integration', () => {
         locale,
       };
       const actual = await manager.extract(input);
+      const expected = [
+        {
+          entity: 'email',
+          start: 13,
+          end: 25,
+          len: 13,
+          accuracy: 0.95,
+          sourceText: 'user@user.com',
+          utteranceText: 'user@user.com',
+          resolution: {
+            value: 'user@user.com',
+          },
+        },
+      ];
+      expect(actual.edges).toEqual(expected);
+    });
+    test('Duckling English Email with run', async () => {
+      const locale = 'en';
+      const manager = getManager();
+      const input = {
+        utterance: 'The email is user@user.com, check it out',
+        locale,
+      };
+      const actual = await manager.run(input);
       const expected = [
         {
           entity: 'email',
