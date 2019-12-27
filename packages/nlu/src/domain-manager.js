@@ -241,9 +241,11 @@ class DomainManager extends Clonable {
     const status = {};
     for (let i = 0; i < keys.length; i += 1) {
       const nlu = this.addDomain(keys[i]);
-      const result = await nlu.train(corpus[keys[i]], {
-        useNoneFeature: this.settings.useNoneFeature,
-      });
+      const options = { useNoneFeature: this.settings.useNoneFeature };
+      if (srcInput.settings && srcInput.settings.log !== undefined) {
+        options.log = srcInput.settings.log;
+      }
+      const result = await nlu.train(corpus[keys[i]], options);
       status[keys[i]] = result.status;
     }
     input.status = status;

@@ -351,10 +351,11 @@ class Nlp extends Clonable {
 
   async train() {
     this.nluManager.addLanguage(this.settings.languages);
-    await this.nluManager.train();
+    const result = await this.nluManager.train();
     if (this.settings.autoSave) {
-      this.save(this.settings.modelFileName, true);
+      await this.save(this.settings.modelFileName, true);
     }
+    return result;
   }
 
   async classify(locale, utterance, settings) {

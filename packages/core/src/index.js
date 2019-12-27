@@ -47,8 +47,9 @@ const uuid = require('./uuid');
 const dock = require('./dock');
 const Context = require('./context');
 
-function dockStart(settings, mustLoadEnv) {
-  return dock.start(settings, mustLoadEnv);
+async function dockStart(settings, mustLoadEnv) {
+  await dock.start(settings, mustLoadEnv);
+  return dock;
 }
 
 module.exports = {

@@ -27,7 +27,7 @@
   "dependencies": {
     "@nlpjs/builtin-duckling": "^4.0.0-rc.13",
     "@nlpjs/builtin-microsoft": "^4.0.0-rc.13",
-    "@nlpjs/core": "^4.0.0-rc.13",
+    "@nlpjs/core-loader": "^4.0.0-rc.15",
     "@nlpjs/emoji": "^4.0.0-rc.13",
     "@nlpjs/evaluator": "^4.0.0-rc.12",
     "@nlpjs/lang-all": "^4.0.0-rc.13",

@@ -21,72 +21,30 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const {
-  Among,
-  ArrToObj,
-  BaseStemmer,
-  Clonable,
-  Container,
-  defaultContainer,
-  Normalizer,
-  ObjToArr,
-  Stemmer,
-  Stopwords,
-  Tokenizer,
-  Timer,
-  logger,
-  MemoryStorage,
-  uuid,
-  Context,
-} = require('@nlpjs/core');
+const { containerBootstrap } = require('@nlpjs/core');
+const { ConsoleConnector } = require('../src');
 
-const containerBootstrap = require('./container-bootstrap');
-const dock = require('./dock');
+const container = containerBootstrap();
 
-const {
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  compareWildcars,
-  listFiles,
-  loadEnv,
-  listFilesAbsolute,
-  getAbsolutePath,
-} = require('./helper');
-
-async function dockStart(settings, mustLoadEnv) {
-  await dock.start(settings, mustLoadEnv);
-  return dock;
-}
-
-module.exports = {
-  Among,
-  ArrToObj,
-  BaseStemmer,
-  containerBootstrap,
-  Clonable,
-  Container,
-  defaultContainer,
-  hasUnicode,
-  unicodeToArray,
-  asciiToArray,
-  stringToArray,
-  compareWildcars,
-  getAbsolutePath,
-  listFiles,
-  listFilesAbsolute,
-  loadEnv,
-  Normalizer,
-  ObjToArr,
-  Stemmer,
-  Stopwords,
-  Tokenizer,
-  Timer,
-  logger,
-  MemoryStorage,
-  uuid,
-  dock,
-  Context,
-  dockStart,
+global.console = {
+  warn: jest.fn(),
+  log: jest.fn(),
 };
+
+describe('Console Connector', () => {
+  describe('Constructor', () => {
+    test('Constructor', () => {
+      const connector = new ConsoleConnector(container);
+      expect(connector).toBeDefined();
+    });
+  });
+
+  describe('Say', () => {
+    test('It should say an string', () => {
+      console.log = jest.fn();
+      const connector = new ConsoleConnector(container);
+      connector.say('Hello world');
+      expect(console.log).toHaveBeenCalledWith('bot> Hello world');
+    });
+  });
+});

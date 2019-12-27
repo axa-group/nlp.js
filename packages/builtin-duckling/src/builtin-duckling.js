@@ -51,14 +51,6 @@ const cultures = {
   no: 'nb_NO',
 };
 
-function getCulture(locale) {
-  const result = cultures[locale];
-  if (result) {
-    return result;
-  }
-  return locale ? `${locale}_${locale.toUpperCase()}` : 'en_US';
-}
-
 class BuiltinDuckling extends Clonable {
   constructor(settings = {}, container = defaultContainer) {
     super(
@@ -100,7 +92,7 @@ class BuiltinDuckling extends Clonable {
     return new Promise((resolve, reject) => {
       const postData = querystring.stringify({
         text: utterance,
-        locale: getCulture(language),
+        locale: BuiltinDuckling.getCulture(language),
       });
 
       const options = {
@@ -266,6 +258,14 @@ class BuiltinDuckling extends Clonable {
     const locale = input.locale || 'en';
     const extractor = this.container.get(`extract-builtin-${locale}`) || this;
     return extractor.extract(input);
+  }
+
+  static getCulture(locale) {
+    const result = cultures[locale];
+    if (result) {
+      return result;
+    }
+    return locale ? `${locale}_${locale.toUpperCase()}` : 'en_US';
   }
 }
 
