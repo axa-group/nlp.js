@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { PythonParser } = require('../src');
+const PythonParser = require('../src/python-parser');
 
 function normalize(str) {
   return str

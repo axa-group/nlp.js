@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { PythonCompiler } = require('../src');
+const PythonCompiler = require('../src/python-compiler');
 
 const container = {
   get() {
