@@ -32,9 +32,10 @@ class JavascriptCompiler {
   }
 
   compile(pipeline) {
-    // const code = `(async () => {\n${pipeline.join('\n')}})();`;
-    const header = '(function() {';
-    const footer = '\n})();';
+    // const header = '(function() {';
+    // const footer = '\n})();';
+    const header = '';
+    const footer = '';
     const code = pipeline.join('\n');
     const wrapped = header + code + footer;
     return wrapped;
@@ -149,6 +150,11 @@ class JavascriptCompiler {
     if (context.input && {}.hasOwnProperty.call(context.input, node.name)) {
       return context.input[node.name];
     }
+    if (context.globalFuncs && context.globalFuncs[node.name]) {
+      const result = context.globalFuncs[node.name];
+      node.name = `globalFuncs.${node.name}`;
+      return result;
+    }
     if (context.this && context.this.container) {
       const item = context.this.container.get(node.name);
       if (item) {
@@ -173,7 +179,7 @@ class JavascriptCompiler {
     }
     let ctx = node.callee.object
       ? await this.walk(node.callee.object, context)
-      : this.failResult;
+      : {};
     if (ctx === this.failResult) {
       ctx = null;
     }
@@ -251,10 +257,11 @@ class JavascriptCompiler {
     }
     const vals = keys.map(key => context[key]);
     // eslint-disable-next-line
-    return Function(keys.join(', '), 'return ' + unparse(node)).apply(
+    const result = Function(keys.join(', '), 'return ' + unparse(node)).apply(
       null,
       vals
     );
+    return result;
   }
 
   async walkTemplateLiteral(node, context) {
@@ -420,6 +427,14 @@ class JavascriptCompiler {
 
   walkSetIdentifier(node, context, value) {
     const newContext = context;
+    if ({}.hasOwnProperty.call(context, node.name)) {
+      context[node.name] = value;
+      return value;
+    }
+    if (context.input && {}.hasOwnProperty.call(context.input, node.name)) {
+      context.input[node.name] = value;
+      return value;
+    }
     newContext[node.name] = value;
     return value;
   }

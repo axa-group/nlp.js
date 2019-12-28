@@ -22,7 +22,9 @@
  */
 
 const PythonParser = require('./python-parser');
+const PythonCompiler = require('./python-compiler');
 
 module.exports = {
   PythonParser,
+  PythonCompiler,
 };

@@ -21,12 +21,30 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const Expression = require('./expression');
+const { PythonCompiler } = require('../src');
 
-class ExpressionCommand extends Expression {
-  transpile() {
-    return `${this.args[0] ? this.args[0].transpile() : ''};`;
-  }
-}
+const container = {
+  get() {
+    return undefined;
+  },
+};
 
-module.exports = ExpressionCommand;
+describe('Python Compiler', () => {
+  describe('Constructor', () => {
+    test('It should create an instance', () => {
+      const evaluator = new PythonCompiler(container);
+      expect(evaluator).toBeDefined();
+    });
+  });
+
+  describe('Execute', () => {
+    test('It should exeucute a simple code', async () => {
+      const script = 'if n > 3:\n  n += 1';
+      const context = { n: 5 };
+      const evaluator = new PythonCompiler(container);
+      const compiled = evaluator.transpile(script);
+      await evaluator.execute(compiled, context);
+      expect(context.n).toEqual(6);
+    });
+  });
+});
