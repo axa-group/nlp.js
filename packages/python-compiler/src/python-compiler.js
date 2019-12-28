@@ -35,7 +35,12 @@ class PythonCompiler extends JavascriptCompiler {
   }
 
   compile(pipeline) {
-    const code = Array.isArray(pipeline) ? pipeline.join('\n') : pipeline;
+    let code;
+    if (Array.isArray(pipeline) && pipeline[0].startsWith('//')) {
+      code = pipeline.slice(1).join('\n');
+    } else {
+      code = Array.isArray(pipeline) ? pipeline.join('\n') : pipeline;
+    }
     const wrapped = this.transpile(code);
     return wrapped;
   }
