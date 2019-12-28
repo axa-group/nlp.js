@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/lexer",
-  "version": "4.0.0-rc.12",
+  "version": "4.0.0-rc.16",
   "description": "Lexer",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -23,7 +23,5 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "dependencies": {
   }
 }
