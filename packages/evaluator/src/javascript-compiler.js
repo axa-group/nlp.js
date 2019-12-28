@@ -167,7 +167,6 @@ class JavascriptCompiler {
   }
 
   async walkCall(node, context) {
-    console.log('walkCall');
     const callee = await this.walk(node.callee, context);
     if (callee === this.failResult || typeof callee !== 'function') {
       return this.failResult;
@@ -181,7 +180,6 @@ class JavascriptCompiler {
     const args = [];
     for (let i = 0, l = node.arguments.length; i < l; i += 1) {
       const x = await this.walk(node.arguments[i], context);
-      console.log(x);
       if (x === this.failResult) {
         return this.failResult;
       }

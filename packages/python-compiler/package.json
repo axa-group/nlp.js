@@ -1,0 +1,31 @@
+{
+  "name": "@nlpjs/python-compiler",
+  "version": "4.0.0-rc.12",
+  "description": "Python Compiler",
+  "author": {
+    "email": "jesus.seijas@axa.com",
+    "name": "Jesus Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/evaluator": "^4.0.0-rc.12",
+    "@nlpjs/lexer": "^4.0.0-rc.12"
+  }
+}
