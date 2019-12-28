@@ -32,15 +32,9 @@ class JavascriptCompiler {
   }
 
   compile(pipeline) {
-    // const header = '(function() {';
-    // const footer = '\n})();';
-    const header = '';
-    const footer = '';
     const code = pipeline.join('\n');
-    const wrapped = header + code + footer;
-    return wrapped;
+    return code;
   }
-  //   var tree = esprima.parse(wrappedCode, {range: true, loc: true});
 
   walkLiteral(node) {
     return node.value;

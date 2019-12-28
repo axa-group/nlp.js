@@ -35,12 +35,8 @@ class PythonCompiler extends JavascriptCompiler {
   }
 
   compile(pipeline) {
-    // const header = '(function() {';
-    // const footer = '\n})();';
-    const header = '';
-    const footer = '';
     const code = Array.isArray(pipeline) ? pipeline.join('\n') : pipeline;
-    const wrapped = header + this.transpile(code) + footer;
+    const wrapped = this.transpile(code);
     return wrapped;
   }
 
