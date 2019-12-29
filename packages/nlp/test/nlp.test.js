@@ -25,8 +25,10 @@ const { Nlp } = require('../src');
 
 describe('NLP', () => {
   describe('Constructor', () => {
-    const nlp = new Nlp();
-    expect(nlp).toBeDefined();
+    test('Constructor', () => {
+      const nlp = new Nlp();
+      expect(nlp).toBeDefined();
+    });
   });
 
   describe('Guess language', () => {
