@@ -23,6 +23,14 @@
 
 const PythonCompiler = require('../src/python-compiler');
 
+function normalize(str) {
+  return str
+    .split('\n')
+    .map(x => x.trim())
+    .join(' ')
+    .trim();
+}
+
 const container = {
   get() {
     return undefined;
@@ -45,6 +53,16 @@ describe('Python Compiler', () => {
       const compiled = evaluator.transpile(script);
       await evaluator.execute(compiled, context);
       expect(context.n).toEqual(6);
+    });
+  });
+
+  describe('Compile', () => {
+    test('It should remove first comment', () => {
+      const pipeline = ['// compiler=python', 'n = 7'];
+      const evaluator = new PythonCompiler(container);
+      const compiled = evaluator.compile(pipeline);
+      const expected = 'n = 7;';
+      expect(normalize(compiled)).toEqual(normalize(expected));
     });
   });
 });

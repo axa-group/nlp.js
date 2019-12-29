@@ -456,7 +456,7 @@ class Container {
     let currentPipeline = [];
     let currentTitle = '';
     for (let i = 0; i < lines.length; i += 1) {
-      const line = lines[i].trim();
+      const line = lines[i];
       if (line !== '') {
         if (line.startsWith('# ')) {
           if (currentName) {
