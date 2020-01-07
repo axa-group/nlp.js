@@ -460,10 +460,14 @@ class Nlp extends Clonable {
     const result = sourceInput
       ? this.applySettings(sourceInput, output)
       : output;
-    const eventName = `onIntent(${result.intent})`;
-    const pipeline = this.container.getPipeline(eventName);
-    if (pipeline) {
-      await this.container.runPipeline(pipeline, result, this);
+    if (this.onIntent) {
+      await this.onIntent(this, result);
+    } else {
+      const eventName = `onIntent(${result.intent})`;
+      const pipeline = this.container.getPipeline(eventName);
+      if (pipeline) {
+        await this.container.runPipeline(pipeline, result, this);
+      }
     }
     return result;
   }

@@ -347,6 +347,21 @@ class JavascriptCompiler {
     }
   }
 
+  async walkVariableDeclaration(node, context) {
+    let value;
+    for (let i = 0; i < node.declarations.length; i += 1) {
+      const declaration = node.declarations[i];
+      value = declaration.init
+        ? await this.walk(declaration.init, context)
+        : undefined;
+      if (value === this.failResult) {
+        return this.failResult;
+      }
+      await this.walkSet(declaration.id, context, value);
+    }
+    return value;
+  }
+
   async walkAssignmentExpression(node, context) {
     const value = await this.walk(node.right, context);
     if (value === this.failResult) {
@@ -454,6 +469,8 @@ class JavascriptCompiler {
         return this.walkConditional(node, context);
       case 'BlockStatement':
         return this.walkBlock(node, context);
+      case 'VariableDeclaration':
+        return this.walkVariableDeclaration(node, context);
       default:
         return this.failResult;
     }
