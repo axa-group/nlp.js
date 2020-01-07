@@ -61,7 +61,7 @@ describe('Python Compiler', () => {
       const pipeline = ['// compiler=python', 'n = 7'];
       const evaluator = new PythonCompiler(container);
       const compiled = evaluator.compile(pipeline);
-      const expected = 'n = 7;';
+      const expected = '(async () => { n = 7;  })();';
       expect(normalize(compiled)).toEqual(normalize(expected));
     });
   });

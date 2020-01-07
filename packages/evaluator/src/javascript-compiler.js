@@ -32,8 +32,10 @@ class JavascriptCompiler {
   }
 
   compile(pipeline) {
+    const header = '(async () => {\n';
+    const footer = '\n})();';
     const code = pipeline.join('\n');
-    return code;
+    return header + code + footer;
   }
 
   walkLiteral(node) {
@@ -466,9 +468,15 @@ class JavascriptCompiler {
     const newContext = context || this.context;
     const compiled = parse(str);
     for (let i = 0; i < compiled.body.length; i += 1) {
-      const expression = compiled.body[i].expression
+      let expression = compiled.body[i].expression
         ? compiled.body[i].expression
         : compiled.body[i];
+      if (
+        expression.callee &&
+        expression.callee.type === 'ArrowFunctionExpression'
+      ) {
+        expression = expression.callee.body;
+      }
       const value = await this.walk(expression, newContext);
       result.push(value === this.failResult ? undefined : value);
     }
