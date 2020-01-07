@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/directline-connector",
-  "version": "4.0.0-rc.17",
+  "version": "4.0.0-rc.18",
   "description": "Directline Connector",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.0.0-rc.17",
+    "@nlpjs/core": "^4.0.0-rc.18",
     "isomorphic-fetch": "^2.2.1"
   },
   "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
