@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "4.0.0-rc.16",
+  "version": "4.0.0-rc.17",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -42,19 +42,19 @@
     "bot"
   ],
   "dependencies": {
-    "@nlpjs/builtin-duckling": "^4.0.0-rc.16",
-    "@nlpjs/builtin-microsoft": "^4.0.0-rc.16",
-    "@nlpjs/core-loader": "^4.0.0-rc.16",
-    "@nlpjs/emoji": "^4.0.0-rc.16",
-    "@nlpjs/evaluator": "^4.0.0-rc.16",
-    "@nlpjs/lang-all": "^4.0.0-rc.16",
+    "@nlpjs/builtin-duckling": "^4.0.0-rc.17",
+    "@nlpjs/builtin-microsoft": "^4.0.0-rc.17",
+    "@nlpjs/core-loader": "^4.0.0-rc.17",
+    "@nlpjs/emoji": "^4.0.0-rc.17",
+    "@nlpjs/evaluator": "^4.0.0-rc.17",
+    "@nlpjs/lang-all": "^4.0.0-rc.17",
     "@nlpjs/language": "^4.0.0-rc.4",
-    "@nlpjs/neural": "^4.0.0-rc.16",
-    "@nlpjs/nlg": "^4.0.0-rc.16",
-    "@nlpjs/nlp": "^4.0.0-rc.16",
-    "@nlpjs/nlu": "^4.0.0-rc.16",
+    "@nlpjs/neural": "^4.0.0-rc.17",
+    "@nlpjs/nlg": "^4.0.0-rc.17",
+    "@nlpjs/nlp": "^4.0.0-rc.17",
+    "@nlpjs/nlu": "^4.0.0-rc.17",
     "@nlpjs/request": "^4.0.0-rc.12",
-    "@nlpjs/sentiment": "^4.0.0-rc.16",
+    "@nlpjs/sentiment": "^4.0.0-rc.17",
     "@nlpjs/similarity": "^4.0.0-rc.4",
     "@nlpjs/xtables": "^4.0.0-rc.4"
   },
