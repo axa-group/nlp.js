@@ -21,6 +21,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * Class for an Among of a Stemmer
+ */
 class Among {
   constructor(s, sub, result, method, instance) {
     this.s_size = s.length;

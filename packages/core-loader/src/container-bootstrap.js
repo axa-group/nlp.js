@@ -35,7 +35,7 @@ const {
   logger,
   MemoryStorage,
 } = require('@nlpjs/core');
-const { fs: requestfs } = require('@nlpjs/request');
+const { fs: requestfs, request } = require('@nlpjs/request');
 const pluginInformation = require('./plugin-information.json');
 const {
   listFilesAbsolute,
@@ -128,6 +128,7 @@ function containerBootstrap(
   instance.parent = parent;
   if (!preffix) {
     instance.register('fs', requestfs);
+    instance.register('request', { get: request });
     instance.use(ArrToObj);
     instance.use(Normalizer);
     instance.use(ObjToArr);
