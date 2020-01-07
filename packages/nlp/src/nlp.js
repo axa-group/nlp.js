@@ -457,11 +457,15 @@ class Nlp extends Clonable {
     context.slotFill = output.slotFill;
     delete output.context;
     delete output.settings;
-    if (sourceInput) {
-      this.applySettings(sourceInput, output);
-      return sourceInput;
+    const result = sourceInput
+      ? this.applySettings(sourceInput, output)
+      : output;
+    const eventName = `onIntent(${result.intent})`;
+    const pipeline = this.container.getPipeline(eventName);
+    if (pipeline) {
+      await this.container.runPipeline(pipeline, result, this);
     }
-    return output;
+    return result;
   }
 
   toJSON() {

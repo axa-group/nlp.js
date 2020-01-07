@@ -38,6 +38,11 @@ class JavascriptCompiler {
     return header + code + footer;
   }
 
+  log(msg) {
+    const logger = this.container.get('logger') || console;
+    logger.info(msg);
+  }
+
   walkLiteral(node) {
     return node.value;
   }
@@ -54,6 +59,7 @@ class JavascriptCompiler {
       case '!':
         return !(await this.walk(node.argument, context));
       default:
+        this.log('walk unary');
         return this.failResult;
     }
   }
@@ -63,6 +69,7 @@ class JavascriptCompiler {
     for (let i = 0, l = node.elements.length; i < l; i += 1) {
       const x = await this.walk(node.elements[i], context);
       if (x === this.failResult) {
+        this.log('walk array');
         return this.failResult;
       }
       result.push(x);
@@ -76,6 +83,7 @@ class JavascriptCompiler {
       const prop = node.properties[i];
       const value = await this.walk(prop.value, context);
       if (value === this.failResult) {
+        this.log('walk object');
         return this.failResult;
       }
       result[prop.key.value || prop.key.name] = value;
@@ -86,10 +94,12 @@ class JavascriptCompiler {
   async walkBinary(node, context) {
     const left = await this.walk(node.left, context);
     if (left === this.failResult) {
+      this.log('walk binary left');
       return this.failResult;
     }
     const right = await this.walk(node.right, context);
     if (right === this.failResult) {
+      this.log('walk binary right');
       return this.failResult;
     }
     switch (node.operator) {
@@ -135,6 +145,7 @@ class JavascriptCompiler {
       case '&&':
         return left && right;
       default:
+        this.log('walk binary operator');
         return this.failResult;
     }
   }
@@ -169,9 +180,24 @@ class JavascriptCompiler {
   }
 
   async walkCall(node, context) {
-    const callee = await this.walk(node.callee, context);
-    if (callee === this.failResult || typeof callee !== 'function') {
-      return this.failResult;
+    let callee;
+    if (
+      node.callee &&
+      node.callee.type === 'Identifier' &&
+      node.callee.name === 'run'
+    ) {
+      if (context && context.this && context.this.container) {
+        callee = context.this.container.runPipeline.bind(
+          context.this.container
+        );
+      } else {
+        return this.failResult;
+      }
+    } else {
+      callee = await this.walk(node.callee, context);
+      if (callee === this.failResult || typeof callee !== 'function') {
+        return this.failResult;
+      }
     }
     let ctx = node.callee.object
       ? await this.walk(node.callee.object, context)
@@ -189,6 +215,18 @@ class JavascriptCompiler {
     }
     if (args.length === 0) {
       args.push(context.input);
+    }
+    if (
+      node.callee &&
+      node.callee.type === 'Identifier' &&
+      node.callee.name === 'run'
+    ) {
+      if (args.length === 1) {
+        args.push(context.input);
+      }
+      if (args.length === 2) {
+        args.push(context.this);
+      }
     }
     return callee.apply(ctx, args);
   }
