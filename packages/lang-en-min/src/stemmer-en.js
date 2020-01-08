@@ -55,7 +55,7 @@ class StemmerEn extends BaseStemmer {
       // [, line 27
       this.bra = this.cursor;
       // literal, line 27
-      if (!this.eq_s(1, "'")) {
+      if (!this.eq_s("'")) {
         break;
       }
       // ], line 27
@@ -75,7 +75,7 @@ class StemmerEn extends BaseStemmer {
       // [, line 28
       this.bra = this.cursor;
       // literal, line 28
-      if (!this.eq_s(1, 'y')) {
+      if (!this.eq_s('y')) {
         break;
       }
       // ], line 28
@@ -113,7 +113,7 @@ class StemmerEn extends BaseStemmer {
               // [, line 29
               this.bra = this.cursor;
               // literal, line 29
-              if (!this.eq_s(1, 'y')) {
+              if (!this.eq_s('y')) {
                 break;
               }
               // ], line 29
@@ -540,14 +540,14 @@ class StemmerEn extends BaseStemmer {
       while (lab1 == true) {
         lab1 = false;
         // literal, line 94
-        if (!this.eq_s_b(1, 'y')) {
+        if (!this.eq_s_b('y')) {
           break;
         }
         break lab0;
       }
       this.cursor = this.limit - v_1;
       // literal, line 94
-      if (!this.eq_s_b(1, 'Y')) {
+      if (!this.eq_s_b('Y')) {
         return false;
       }
     }
@@ -683,7 +683,7 @@ class StemmerEn extends BaseStemmer {
       case 13:
         // (, line 119
         // literal, line 119
-        if (!this.eq_s_b(1, 'l')) {
+        if (!this.eq_s_b('l')) {
           return false;
         }
         // <-, line 119
@@ -826,14 +826,14 @@ class StemmerEn extends BaseStemmer {
           while (lab1 == true) {
             lab1 = false;
             // literal, line 145
-            if (!this.eq_s_b(1, 's')) {
+            if (!this.eq_s_b('s')) {
               break;
             }
             break lab0;
           }
           this.cursor = this.limit - v_1;
           // literal, line 145
-          if (!this.eq_s_b(1, 't')) {
+          if (!this.eq_s_b('t')) {
             return false;
           }
         }
@@ -912,7 +912,7 @@ class StemmerEn extends BaseStemmer {
           return false;
         }
         // literal, line 152
-        if (!this.eq_s_b(1, 'l')) {
+        if (!this.eq_s_b('l')) {
           return false;
         }
         // delete, line 152
@@ -1066,7 +1066,7 @@ class StemmerEn extends BaseStemmer {
             // [, line 203
             this.bra = this.cursor;
             // literal, line 203
-            if (!this.eq_s(1, 'Y')) {
+            if (!this.eq_s('Y')) {
               break;
             }
             // ], line 203

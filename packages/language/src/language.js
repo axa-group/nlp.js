@@ -295,24 +295,44 @@ class Language {
       this.addTrigrams(item[0], item[1]);
     });
   }
-}
 
-function buildModel() {
-  Object.keys(data).forEach(script => {
+  static lansplit(s) {
+    if (s.includes('|')) {
+      return s.split('|');
+    }
+    const result = [];
+    for (let i = 0; i < s.length; i += 3) {
+      result.push(s.substr(i, 3));
+    }
+    return result;
+  }
+
+  static addModel(script, name, value) {
     const languages = data[script];
-    Object.keys(languages).forEach(name => {
-      const model = languages[name].split('|');
-      let weight = model.length;
-      const trigrams = {};
-      while (weight > 0) {
-        weight -= 1;
-        trigrams[model[weight]] = weight;
-      }
-      languages[name] = trigrams;
+    const model = Language.lansplit(value);
+    let weight = model.length;
+    const trigrams = {};
+    while (weight > 0) {
+      weight -= 1;
+      trigrams[model[weight]] = weight;
+    }
+    languages[name] = trigrams;
+  }
+
+  addModel(script, name, value) {
+    Language.addModel(script, name, value);
+  }
+
+  static buildModel() {
+    Object.keys(data).forEach(script => {
+      const languages = data[script];
+      Object.keys(languages).forEach(name => {
+        Language.addModel(script, name, languages[name]);
+      });
     });
-  });
+  }
 }
 
-buildModel();
+Language.buildModel();
 
 module.exports = Language;

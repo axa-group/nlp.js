@@ -26,6 +26,7 @@ const {
   StemmerEn,
   StopwordsEn,
   NormalizerEn,
+  registerTrigrams,
 } = require('@nlpjs/lang-en-min');
 const SentimentEn = require('./sentiment/sentiment_en');
 
@@ -36,6 +37,7 @@ class LangEn {
     container.use(StopwordsEn);
     container.use(NormalizerEn);
     container.register('sentiment-en', SentimentEn);
+    registerTrigrams(container);
   }
 }
 

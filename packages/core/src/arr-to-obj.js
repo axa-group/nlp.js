@@ -50,13 +50,8 @@ class ArrToObj {
     return result;
   }
 
-  run(srcInput) {
-    const input = srcInput;
-    const result = {};
-    for (let i = 0; i < input.tokens.length; i += 1) {
-      result[input.tokens[i]] = 1;
-    }
-    input.tokens = result;
+  run(input) {
+    input.tokens = ArrToObj.arrToObj(input.tokens);
     return input;
   }
 }

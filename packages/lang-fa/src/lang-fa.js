@@ -26,6 +26,7 @@ const StemmerFa = require('./stemmer-fa');
 const StopwordsFa = require('./stopwords-fa');
 const NormalizerFa = require('./normalizer-fa');
 const SentimentFa = require('./sentiment/sentiment_fa');
+const registerTrigrams = require('./trigrams');
 
 class LangFa {
   register(container) {
@@ -34,6 +35,7 @@ class LangFa {
     container.use(StopwordsFa);
     container.use(NormalizerFa);
     container.register('sentiment-fa', SentimentFa);
+    registerTrigrams(container);
   }
 }
 

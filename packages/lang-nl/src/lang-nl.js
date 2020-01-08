@@ -26,6 +26,7 @@ const StemmerNl = require('./stemmer-nl');
 const StopwordsNl = require('./stopwords-nl');
 const NormalizerNl = require('./normalizer-nl');
 const SentimentNl = require('./sentiment/sentiment_nl');
+const registerTrigrams = require('./trigrams');
 
 class LangNl {
   register(container) {
@@ -34,6 +35,7 @@ class LangNl {
     container.use(StopwordsNl);
     container.use(NormalizerNl);
     container.register('sentiment-nl', SentimentNl);
+    registerTrigrams(container);
   }
 }
 

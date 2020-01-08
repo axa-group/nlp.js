@@ -21,22 +21,15 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const TokenizerEs = require('./tokenizer-es');
-const StemmerEs = require('./stemmer-es');
-const StopwordsEs = require('./stopwords-es');
-const NormalizerEs = require('./normalizer-es');
-const SentimentEs = require('./sentiment/sentiment_es');
-const registerTrigrams = require('./trigrams');
-
-class LangEs {
-  register(container) {
-    container.use(TokenizerEs);
-    container.use(StemmerEs);
-    container.use(StopwordsEs);
-    container.use(NormalizerEs);
-    container.register('sentiment-es', SentimentEs);
-    registerTrigrams(container);
+function registerTrigrams(container) {
+  const language = container.get('Language');
+  if (language) {
+    language.addModel(
+      'Latin',
+      'cat',
+      ' de i es de la  la a  peperió enttat sent retts dreat  ells  drmenacia pcióona coa lal na s dqueen el  tos i qu ene lns totet t aers prt donser  lliona sta a tconelss e l’rsoresalsson unestcio reproitacia inles o ue delllité  téia ameé dsevotanaci l als pa dar a iualnala cantnci leertstartasert ii al d nova ats d’s nre s ae ceva narà  cauescomlibés  soibe esetsberda r ano unal’es ltersenranuredesmani el pt en de de eom  dicciigua as t pai dtras oaqutrevolecta ul iguaides sadaeneialntantrenssocctera ocihumumaclaaliliteràcti aq huicipreeraessuninte fo niblessetesaltemeassicasego soterac ig poans ésa eun us mit mar sse ssis ha mr lnitl tèncó dten teir i ptaletadici ihomt qparegus f asn lria mi aclicint tracteixn es contnseecct tltrambqual’aeliuraan iste tó aonenaminglaro pesprecliga f haiva amllet srotmatliutiuiurn afonotsincndie pseuoluguri cmésderrnainaforigiciebliic mb in artol romninomp'
+    );
   }
 }
 
-module.exports = LangEs;
+module.exports = registerTrigrams;
