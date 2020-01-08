@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/lang-tl",
-  "version": "4.0.0-rc.18",
+  "version": "4.0.0-rc.19",
   "description": "Core",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.0.0-rc.18"
+    "@nlpjs/core": "^4.0.0-rc.19"
   },
   "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
 }
