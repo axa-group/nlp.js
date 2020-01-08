@@ -317,7 +317,7 @@ class StemmerDa extends BaseStemmer {
     }
     this.limit_backward = v_2;
     // name ch, line 77
-    if (!this.eq_v_b(this.S_ch)) {
+    if (!this.eq_s_b(this.S_ch)) {
       return false;
     }
     // delete, line 78

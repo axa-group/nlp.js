@@ -45,12 +45,19 @@ class BaseStemmer {
     return this.current;
   }
 
+  bc(s, ch) {
+    if ((s[ch >>> 3] & (0x1 << (ch & 0x7))) == 0) {
+      return true;
+    }
+    return false;
+  }
+
   in_grouping(s, min, max) {
     if (this.cursor >= this.limit) return false;
     let ch = this.current.charCodeAt(this.cursor);
     if (ch > max || ch < min) return false;
     ch -= min;
-    if ((s[ch >>> 3] & (0x1 << (ch & 0x7))) == 0) return false;
+    if (this.bc(s, ch)) return false;
     this.cursor++;
     return true;
   }
@@ -60,7 +67,7 @@ class BaseStemmer {
     let ch = this.current.charCodeAt(this.cursor - 1);
     if (ch > max || ch < min) return false;
     ch -= min;
-    if ((s[ch >>> 3] & (0x1 << (ch & 0x7))) == 0) return false;
+    if (this.bc(s, ch)) return false;
     this.cursor--;
     return true;
   }
@@ -73,7 +80,7 @@ class BaseStemmer {
       return true;
     }
     ch -= min;
-    if ((s[ch >>> 3] & (0x1 << (ch & 0x7))) == 0) {
+    if (this.bc(s, ch)) {
       this.cursor++;
       return true;
     }
@@ -88,7 +95,7 @@ class BaseStemmer {
       return true;
     }
     ch -= min;
-    if ((s[ch >>> 3] & (0x1 << (ch & 0x7))) == 0) {
+    if (this.bc(s, ch)) {
       this.cursor--;
       return true;
     }
@@ -96,8 +103,11 @@ class BaseStemmer {
   }
 
   eq_s(s_size, s) {
-    if (this.limit - this.cursor < s_size) return false;
-    if (this.current.slice(this.cursor, this.cursor + s_size) != s) {
+    if (typeof s_size === 'string') {
+      s = s_size;
+      s_size = s.length;
+    }
+    if ((this.limit - this.cursor < s_size) || (this.current.slice(this.cursor, this.cursor + s_size) != s)) {
       return false;
     }
     this.cursor += s_size;
@@ -105,20 +115,15 @@ class BaseStemmer {
   }
 
   eq_s_b(s_size, s) {
-    if (this.cursor - this.limit_backward < s_size) return false;
-    if (this.current.slice(this.cursor - s_size, this.cursor) != s) {
+    if (typeof s_size === 'string') {
+      s = s_size;
+      s_size = s.length;
+    }
+    if ((this.cursor - this.limit_backward < s_size) || (this.current.slice(this.cursor - s_size, this.cursor) != s)) {
       return false;
     }
     this.cursor -= s_size;
     return true;
-  }
-
-  eq_v(s) {
-    return this.eq_s(s.length, s);
-  }
-
-  eq_v_b(s) {
-    return this.eq_s_b(s.length, s);
   }
 
   find_among(v, v_size) {
@@ -268,12 +273,11 @@ class BaseStemmer {
   }
 
   slice_from(s) {
-    let result = false;
     if (this.slice_check()) {
       this.replace_s(this.bra, this.ket, s);
-      result = true;
+      return true;
     }
-    return result;
+    return false;
   }
 
   slice_del() {

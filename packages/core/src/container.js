@@ -120,6 +120,17 @@ class Container {
     return new Clazz(settings, this);
   }
 
+  buildLiteral(subtype, step, value, context) {
+    return {
+      type: 'literal',
+      subtype,
+      src: step,
+      value,
+      context,
+      container: this,
+    };
+  }
+
   resolvePathWithType(step, context, input, srcObject) {
     const tokens = step.split('.');
     let token = tokens[0].trim();
@@ -128,54 +139,29 @@ class Container {
     }
     const isnum = /^\d+$/.test(token);
     if (isnum) {
-      return {
-        type: 'literal',
-        subtype: 'number',
-        src: step,
-        value: parseFloat(token),
-        context,
-        container: this,
-      };
+      return this.buildLiteral('number', step, parseFloat(token), context);
     }
     if (token.startsWith('"')) {
-      return {
-        type: 'literal',
-        subtype: 'string',
-        src: step,
-        value: token.replace(/^"(.+(?="$))"$/, '$1'),
-        context,
-        container: this,
-      };
+      return this.buildLiteral(
+        'string',
+        step,
+        token.replace(/^"(.+(?="$))"$/, '$1'),
+        context
+      );
     }
     if (token.startsWith("'")) {
-      return {
-        type: 'literal',
-        subtype: 'string',
-        src: step,
-        value: token.replace(/^'(.+(?='$))'$/, '$1'),
-        context,
-        container: this,
-      };
+      return this.buildLiteral(
+        'string',
+        step,
+        token.replace(/^'(.+(?='$))'$/, '$1'),
+        context
+      );
     }
     if (token === 'true') {
-      return {
-        type: 'literal',
-        subtype: 'boolean',
-        src: step,
-        value: true,
-        context,
-        container: this,
-      };
+      return this.buildLiteral('boolean', step, true, context);
     }
     if (token === 'false') {
-      return {
-        type: 'literal',
-        subtype: 'boolean',
-        src: step,
-        value: false,
-        context,
-        container: this,
-      };
+      return this.buildLiteral('boolean', step, false, context);
     }
     let currentObject = context;
     if (token === 'input' || token === 'output') {

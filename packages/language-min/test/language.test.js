@@ -23,6 +23,18 @@
 
 const { Language } = require('../src');
 const fixtures = require('./fixtures.json');
+const data = require('./testdata.json');
+
+function getLanguage() {
+  const result = new Language();
+  Object.keys(data).forEach(script => {
+    const languages = data[script];
+    Object.keys(languages).forEach(name => {
+      result.addModel(script, name, languages[name]);
+    });
+  });
+  return result;
+}
 
 describe('Language', () => {
   describe('constructor', () => {
@@ -55,12 +67,12 @@ describe('Language', () => {
 
   describe('guess', () => {
     it('Should return so much scores', () => {
-      const language = new Language();
+      const language = getLanguage();
       const guess = language.guess('I want to eat something');
       expect(guess.length).toBeGreaterThan(10);
     });
     it('Should identify the language of an utterance', () => {
-      const language = new Language();
+      const language = getLanguage();
       let guess = language.guess(
         'When the night has come And the land is dark And the moon is the only light we see'
       );
@@ -84,7 +96,7 @@ describe('Language', () => {
       expect(guess[0].score).toEqual(1);
     });
     it('Should allow to indicate a limit of responses', () => {
-      const language = new Language();
+      const language = getLanguage();
       let guess = language.guess(
         'When the night has come And the land is dark And the moon is the only light we see',
         null,
@@ -117,7 +129,7 @@ describe('Language', () => {
       expect(guess[0].score).toEqual(1);
     });
     it('Should allow to pass a whitelist of languages', () => {
-      const language = new Language();
+      const language = getLanguage();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);
       const guess = language.guess(
@@ -133,7 +145,7 @@ describe('Language', () => {
 
   describe('guess best', () => {
     it('Should identify the language of an utterance', () => {
-      const language = new Language();
+      const language = getLanguage();
       let guess = language.guessBest(
         'When the night has come And the land is dark And the moon is the only light we see'
       );
@@ -160,13 +172,13 @@ describe('Language', () => {
       const text = fixtures[code].fixture;
       const expected = fixtures[code].iso6393;
       it(`Should guess ${expected} for text ${text.substr(0, 50)}`, () => {
-        const language = new Language();
+        const language = getLanguage();
         const actual = language.guessBest(text);
         expect(actual.alpha3).toEqual(expected);
       });
     });
     it('Should allow to pass a whitelist of languages', () => {
-      const language = new Language();
+      const language = getLanguage();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);
       const guess = language.guessBest(
@@ -247,7 +259,7 @@ describe('Language', () => {
 
   describe('Add extra sentences', () => {
     it('Should be able to add extra sentences', () => {
-      const language = new Language();
+      const language = getLanguage();
       language.addExtraSentence('kl0', 'nuqneH');
       language.addExtraSentence('kl0', 'maj po');
       language.addExtraSentence('kl0', 'maj choS');
@@ -262,7 +274,7 @@ describe('Language', () => {
 
   describe('Process extra sentences', () => {
     it('If it contains an array of extra sentences, can be processed', () => {
-      const language = new Language();
+      const language = getLanguage();
       language.extraSentences = [
         ['kl0', 'nuqneH'],
         ['kl0', 'maj po'],

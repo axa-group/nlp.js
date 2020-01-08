@@ -59,7 +59,6 @@ class JavascriptCompiler {
       case '!':
         return !(await this.walk(node.argument, context));
       default:
-        this.log('walk unary');
         return this.failResult;
     }
   }
@@ -69,7 +68,6 @@ class JavascriptCompiler {
     for (let i = 0, l = node.elements.length; i < l; i += 1) {
       const x = await this.walk(node.elements[i], context);
       if (x === this.failResult) {
-        this.log('walk array');
         return this.failResult;
       }
       result.push(x);
@@ -83,7 +81,6 @@ class JavascriptCompiler {
       const prop = node.properties[i];
       const value = await this.walk(prop.value, context);
       if (value === this.failResult) {
-        this.log('walk object');
         return this.failResult;
       }
       result[prop.key.value || prop.key.name] = value;
@@ -94,12 +91,10 @@ class JavascriptCompiler {
   async walkBinary(node, context) {
     const left = await this.walk(node.left, context);
     if (left === this.failResult) {
-      this.log('walk binary left');
       return this.failResult;
     }
     const right = await this.walk(node.right, context);
     if (right === this.failResult) {
-      this.log('walk binary right');
       return this.failResult;
     }
     switch (node.operator) {
@@ -145,7 +140,6 @@ class JavascriptCompiler {
       case '&&':
         return left && right;
       default:
-        this.log('walk binary operator');
         return this.failResult;
     }
   }

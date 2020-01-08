@@ -49,7 +49,6 @@ class PythonCompiler extends JavascriptCompiler {
 
   async evaluate(str, context) {
     const transpiled = this.transpile(str);
-    console.log(transpiled);
     if (!context.globalFuncs) {
       context.globalFuncs = { forEach, range, print, getIndex, len };
     }

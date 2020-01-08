@@ -807,7 +807,7 @@ class StemmerFi extends BaseStemmer {
       return false;
     }
     // name x, line 179
-    if (!this.eq_v_b(this.S_x)) {
+    if (!this.eq_s_b(this.S_x)) {
       return false;
     }
     // delete, line 179

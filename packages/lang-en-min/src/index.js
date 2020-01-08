@@ -27,6 +27,7 @@ const StemmerEn = require('./stemmer-en');
 const StopwordsEn = require('./stopwords-en');
 const NormalizerEn = require('./normalizer-en');
 const SentimentEn = require('./sentiment/sentiment_en');
+const registerTrigrams = require('./trigrams');
 
 module.exports = {
   LangEn,
@@ -35,4 +36,5 @@ module.exports = {
   TokenizerEn,
   NormalizerEn,
   SentimentEn,
+  registerTrigrams,
 };
