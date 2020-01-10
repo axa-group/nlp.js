@@ -28,9 +28,15 @@ class ObjToArr {
     this.name = 'objToArr';
   }
 
-  run(srcInput) {
-    const input = srcInput;
-    input.tokens = Object.keys(input.tokens);
+  static objToArr(obj) {
+    return Object.keys(obj);
+  }
+
+  run(input) {
+    if (!input.tokens) {
+      return ObjToArr.objToArr(input);
+    }
+    input.tokens = ObjToArr.objToArr(input.tokens);
     return input;
   }
 }
