@@ -8,6 +8,7 @@ npm i @nlpjs/basic
 ```
 
 ## Create the code
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/01.basic
 Then you can create a file index.js with this content:
 
 ```javascript
@@ -38,7 +39,7 @@ const { dockStart } = require('@nlpjs/basic');
 ```
 
 ## Extracting the corpus into a file
-
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/02.filecorpus
 You can put the corpus as json files. The format of the json is:
 
 ```json
@@ -81,7 +82,7 @@ const { dockStart } = require('@nlpjs/basic');
 ```
 
 ## Extracting the configuration into a file
-
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/03.config
 Now we can remove things that are configuration into a file. Add a _conf.json_ file with this content:
 
 ```json
@@ -113,7 +114,7 @@ const { dockStart } = require('@nlpjs/basic');
 As you can see now we don't need to provide the plugins to dockStart, neither to add the corpus manually.
 
 ## Creating your first pipeline
-
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/04.firstpipeline
 Now create a _pipelines.md_ file with this content:
 ```markdown
 # default
@@ -137,6 +138,7 @@ const { dockStart } = require('@nlpjs/basic');
 We are defining a pipeline called _main_ so it will be executed after loading the configuration and mounting the plugins, so the train process will be executed automatically in the dockStart process.
 
 ## Adding your first connector
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/05.consoleconnector
 Now modify the _conf.json_ to use also the plugin _ConsoleConnector_:
 
 ```json
@@ -165,7 +167,7 @@ const { dockStart } = require('@nlpjs/basic');
 Now when you execute you can talk with your bot in the terminal, read the corpus to know what to ask to your bot
 
 ## Extending your bot with the pipeline
-
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/06.javascriptpipelines
 Now we will do two modifications: 
 First one, we want that when our chatbot starts it should write "Say something!" in console, so we can change the pipeline _main_
 
