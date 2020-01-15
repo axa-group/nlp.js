@@ -283,13 +283,16 @@ class Nlp extends Clonable {
   }
 
   async addCorpus(fileName) {
-    const fs = this.container.get('fs');
-    const fileData = await fs.readFile(fileName);
-    if (!fileData) {
-      throw new Error(`Corpus not found "${fileName}"`);
+    let corpus = fileName;
+    if (typeof fileName === 'string') {
+      const fs = this.container.get('fs');
+      const fileData = await fs.readFile(fileName);
+      if (!fileData) {
+        throw new Error(`Corpus not found "${fileName}"`);
+      }
+      corpus =
+        typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
     }
-    const corpus =
-      typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
     const locale = corpus.locale.slice(0, 2);
     this.addLanguage(locale);
     const { data, entities } = corpus;

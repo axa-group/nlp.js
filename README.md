@@ -28,22 +28,26 @@
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
 </div>
 
-## New in version 3!
+## New in version 4!
 
-The version 3 comes with some important changes, mainly focused on improving performance:
-- NlpClassifier no longer exists, in favor of NluManager as the manager of several NLU classes, and is able to manage several languages and several domains inside each language.
-- Now by default, each domain of a language has it's own neural network classifier. When a language has more than 1 domain, a master neural network is trained that instead of classifying into the intent, classify into de domain. That way the models are faster to train and have a better score.
-- The language guesser is now trained with the trigrams from the utterances used to train. That means that has the best guessing, and also that non-existing languages are guessed (example, klingon).
-- Added Tagalog and Galician languages.
-- The console-bot example training time in version 2.x in my laptop was 108 seconds, in the version 3.x the training time went down to 3 seconds, so the improvement in performance is notable.
-- Also the size of the model.nlp files are decreased, the console-bot example went from 1614KB down to 928KB.
-- The browser version has decreased from 5.08MB down to 2.3MB
+The version 4 is very different from previous versions. Until this version, NLP.js was a monolithic library. The big changes:
+- Now is splitted into small independant packages.
+- So every language has its own package
+- It provides a plugin system, so you can provide your own plugins or replace the existing ones.
+- It provides a container system for the plugins, settings of the plugins and also pipelines
+- A pipeline is code of how the plugins interact. Usually is something linear: there is an input into the plugin, and generates the input for the next one. To put an example about this, now the preparation of a utterance (the process to convert the utterance to a hashmap of stemmed features) is a pipeline like this: normalize -> tokenize -> removeStopwords -> stem -> arrToObj
+- There is simple compiler for the pipelines, but can be also build using a modified version of javascript and python (compilers are also included as plugins, so other languages can be added as a plugin).
+- Now NLP.js includes also connectors, understanding connector as something that has at least 2 methods: hear and say. Example of connectors included: Console Connector, Microsoft Bot Framework Connector and a Direct Line Offline Connector (this one allows to build a web chatbot using the Microsoft Webchat, but without having to deploy anything in Azure).
+- Some plugins can be registered by language so for different languages different plugins will be used. Also some plugins, like NLU, can be registered not only by language but also by domain (functional set of intents that can be trained separately)
+- One example of the previous things is that as a Microsoft LUIS NLU plugin is provided, you can make that your chatbots use the NLU of NLP.js for some languages/domains, and LUIS for other languages/domains.
+- Having plugins and pipelines makes it possible to write chatbots only modifying the configuration and the pipelines file, without modifying the code.
 
 ### TABLE OF CONTENTS
 
 <!--ts-->
 
 - [Installation](#installation)
+- [QuickStart](docs/v4/quickstart.md)
 - [React Native](#react-native)
 - [Example of use](#example-of-use)
 - [False Positives](#false-positives)
