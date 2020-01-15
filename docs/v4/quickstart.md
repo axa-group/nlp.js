@@ -509,3 +509,39 @@ In the last example the ExpressApiServer plugin is at the default container, but
 ```
 
 __Important!__ The plugins are loaded in order. As DirectlineConnector and MsbfConnector needs an api-server, then the ExpressApiServer should be before those.
+
+## Adding logic to an intent
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/12.onintent
+
+Supose that you want to have an intent for telling jokes about Chuck Norris, and you know that a service that returns random Chuck Norris jokes exists: http://api.icndb.com/jokes/random
+
+First you need to add the intent to the corpus:
+```json
+    {
+      "intent": "joke.chucknorris",
+      "utterances": [
+        "tell me a chuck norris fact",
+        "tell me a joke about chuck norris",
+        "say a chuck norris joke",
+        "some chuck norris fact"
+      ]
+    },
+```
+
+Then add this to the _pipelines.md_ at default section:
+
+```markdown
+## onIntent(joke.chucknorris)
+// compiler=javascript
+const something = request.get('http://api.icndb.com/jokes/random');
+if (something && something.value && something.value.joke) {
+  input.answer = something.value.joke;
+}
+```
+
+Explanation: the _onIntent(<intentname>)_ is called when an intent is recognized, so you can react doing things and modifying the input as you want, from classifications, entities and of course the answer.
+We set the compilar to javascript. As we have a plugin _request_ that is for do requests, then we call the API to retrieve an answer, and set it into the input.
+
+<div align="center">
+<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/chucknorris.png" width="auto" height="auto"/>
+</div>
