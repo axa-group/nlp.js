@@ -206,3 +206,79 @@ const { dockStart } = require('@nlpjs/basic');
   await dockStart();
 })();
 ```
+
+## Adding Multilanguage
+You can have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/07.multilanguage
+Now we want to add a corpus in spanish. First at all we must install the spanish language plugin:
+```bash
+npm i @nlpjs/lang-es
+```
+
+Then add the _LangEn_ plugin in the configuration, and of course the corpus to the corpora:
+```json
+{
+  "settings": {
+    "nlp": {
+      "corpora": [
+        "./corpus-en.json",
+        "./corpus-es.json"
+      ]
+    }
+  },
+  "use": ["Basic", "ConsoleConnector"]
+}
+```
+
+And add an spanish corpus. In the example, the spanish corpus does not have answers, and the default behaviour of ConsoleConnector is to do an echo. To show the intent and the score in console, we can add set debug to true in the console settings, modifying the configuration:
+```json
+{
+  "settings": {
+    "nlp": {
+      "corpora": [
+        "./corpus-en.json",
+        "./corpus-es.json"
+      ]
+    },
+    "console": {
+      "debug": true
+    }
+  },
+  "use": ["Basic", "ConsoleConnector"]
+}
+```
+
+Now when you talk with the chatbot you can ask questions from the english corpus or from the spanish corpus. The NLP process automatically will identify the language and send the utterance to the correct trained model.
+
+## Adding API and WebChat
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/08.webchat
+First you will need an Api Server to serve the web. For this you can install the plugin _ExpressApiServer_ that will create an api server using Express.
+```bash
+npm i @nlpjs/express-api-server
+```
+
+The internal name of the plugin is "api-server". 
+Also you will have to configure the plugin to provide the port, and to set that it will serve a bot using webchat (Microsoft Webchat CDN).
+This should be the content of the _conf.json_:
+```json
+{
+  "settings": {
+    "nlp": {
+      "corpora": [
+        "../corpora/corpus50en.json",
+        "../corpora/corpus50es.json"
+      ]
+    },
+    "api-server": { "port": 3000, "serveBot": true }
+  },
+  "use": ["Basic", "LangEn", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector"]
+}
+```
+
+Now if you start the application, and in your browser navigate to http://localhost:3000, you will see an empty chat saying "impossible to connect".
+
+So lets add the Directline Connector, that will create an API like the Microsoft Directline, but in your local exposed with your API server. To do this install the DirectlineConnector plugin:
+```bash
+npm i @nlpjs/directline-connector
+```
+
+Restart your application and navigate again to http://localhost:3000 and you'll be able to chat with your bot.
