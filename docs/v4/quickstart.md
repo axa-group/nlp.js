@@ -282,3 +282,6 @@ npm i @nlpjs/directline-connector
 ```
 
 Restart your application and navigate again to http://localhost:3000 and you'll be able to chat with your bot.
+<div align="center">
+<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/webchat.png" width="auto" height="auto"/>
+</div>
