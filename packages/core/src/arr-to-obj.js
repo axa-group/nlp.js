@@ -51,6 +51,9 @@ class ArrToObj {
   }
 
   run(input) {
+    if (Array.isArray(input)) {
+      return ArrToObj.arrToObj(input);
+    }
     input.tokens = ArrToObj.arrToObj(input.tokens);
     return input;
   }

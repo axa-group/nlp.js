@@ -34,6 +34,14 @@ class Dock {
     return this.containers[name || 'default'];
   }
 
+  get(name) {
+    const container = this.getContainer();
+    if (container) {
+      return container.get(name);
+    }
+    return undefined;
+  }
+
   async createContainer(
     name,
     settings,

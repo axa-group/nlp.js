@@ -89,7 +89,7 @@ function request(options) {
           const obj = JSON.parse(result);
           resolve(obj);
         } catch (err) {
-          reject(err);
+          resolve(result);
         }
       });
       res.on('error', err => reject(err));

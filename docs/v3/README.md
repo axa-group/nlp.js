@@ -9,8 +9,6 @@
 [![NPM version](https://img.shields.io/npm/v/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp)
 [![NPM downloads](https://img.shields.io/npm/dm/node-nlp.svg?style=flat)](https://www.npmjs.com/package/node-nlp) [![Greenkeeper badge](https://badges.greenkeeper.io/axa-group/nlp.js.svg)](https://greenkeeper.io/)
 
-*If you're looking for the version 3 docs, you can find them here* [Version 3](docs/v3/README.md)
-
 "NLP.js" is a general natural language utility for nodejs. Currently supporting:
 
 - Guess the language of a phrase
@@ -28,86 +26,82 @@
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
 </div>
 
-## New in version 4!
+## New in version 3!
 
-The version 4 is very different from previous versions. Until this version, NLP.js was a monolithic library. The big changes:
-- Now is splitted into small independant packages.
-- So every language has its own package
-- It provides a plugin system, so you can provide your own plugins or replace the existing ones.
-- It provides a container system for the plugins, settings of the plugins and also pipelines
-- A pipeline is code of how the plugins interact. Usually is something linear: there is an input into the plugin, and generates the input for the next one. To put an example about this, now the preparation of a utterance (the process to convert the utterance to a hashmap of stemmed features) is a pipeline like this: normalize -> tokenize -> removeStopwords -> stem -> arrToObj
-- There is simple compiler for the pipelines, but can be also build using a modified version of javascript and python (compilers are also included as plugins, so other languages can be added as a plugin).
-- Now NLP.js includes also connectors, understanding connector as something that has at least 2 methods: hear and say. Example of connectors included: Console Connector, Microsoft Bot Framework Connector and a Direct Line Offline Connector (this one allows to build a web chatbot using the Microsoft Webchat, but without having to deploy anything in Azure).
-- Some plugins can be registered by language so for different languages different plugins will be used. Also some plugins, like NLU, can be registered not only by language but also by domain (functional set of intents that can be trained separately)
-- One example of the previous things is that as a Microsoft LUIS NLU plugin is provided, you can make that your chatbots use the NLU of NLP.js for some languages/domains, and LUIS for other languages/domains.
-- Having plugins and pipelines makes it possible to write chatbots only modifying the configuration and the pipelines file, without modifying the code.
+The version 3 comes with some important changes, mainly focused on improving performance:
+- NlpClassifier no longer exists, in favor of NluManager as the manager of several NLU classes, and is able to manage several languages and several domains inside each language.
+- Now by default, each domain of a language has it's own neural network classifier. When a language has more than 1 domain, a master neural network is trained that instead of classifying into the intent, classify into de domain. That way the models are faster to train and have a better score.
+- The language guesser is now trained with the trigrams from the utterances used to train. That means that has the best guessing, and also that non-existing languages are guessed (example, klingon).
+- Added Tagalog and Galician languages.
+- The console-bot example training time in version 2.x in my laptop was 108 seconds, in the version 3.x the training time went down to 3 seconds, so the improvement in performance is notable.
+- Also the size of the model.nlp files are decreased, the console-bot example went from 1614KB down to 928KB.
+- The browser version has decreased from 5.08MB down to 2.3MB
 
 ### TABLE OF CONTENTS
 
 <!--ts-->
 
 - [Installation](#installation)
-- [QuickStart](docs/v4/quickstart.md)
 - [React Native](#react-native)
 - [Example of use](#example-of-use)
 - [False Positives](#false-positives)
 - [Log Training Progress](#log-training-progress)
-- [Benchmarking](docs/benchmarking.md)
-- [Language Support](docs/language-support.md)
-  - [Classification](docs/language-support.md#classification)
-  - [Sentiment Analysis](docs/language-support.md#sentiment-analysis)
-  - [Builtin Entity Extraction](docs/language-support.md#builtin-entity-extraction)
-  - [Example with languages](docs/example-with-languages.md)
-  - [Auto Stemmer](docs/language-support.md#auto-stemmer)
-- [Language Guesser](docs/language-guesser.md)
-- [Similar Search](docs/similar-search.md)
-- [NLU](docs/nlu-manager.md)
-  - [NLU Manager](docs/nlu-manager.md)
-  - [Brain NLU](docs/brain-nlu.md)
-  - [Bayes NLU](docs/bayes-nlu.md)
-  - [Binary Relevance NLU](docs/binary-relevance-nlu.md)
-  - [Logistic Regression NLU](docs/logistic-regression-nlu.md)
-- [NER Manager](docs/ner-manager.md)
-  - [Enum Named Entities](docs/ner-manager.md#enum-named-entities)
-  - [Regular Expression Named Entities](docs/ner-manager.md#regular-expression-named-entities)
-  - [Trim Named Entities](docs/ner-manager.md#trim-named-entities)
-  - [Utterances with duplicated Entities](docs/ner-manager.md#utterances-with-duplicated-entities)
-- [Integration with Duckling](docs/builtin-duckling.md)
-  - [Language support](docs/builtin-duckling.md#language-support)
-  - [How to integrate with duckling](docs/builtin-duckling.md#how-to-integrate-with-duckling)
-  - [Email Extraction](docs/builtin-duckling.md#email-extraction)
-  - [Phone Number Extraction](docs/builtin-duckling.md#phone-number-extraction)
-  - [URL Extraction](docs/builtin-duckling.md#url-extraction)
-  - [Number Extraction](docs/builtin-duckling.md#number-extraction)
-  - [Ordinal Extraction](docs/builtin-duckling.md#ordinal-extraction)
-  - [Dimension Extraction](docs/builtin-duckling.md#dimension-extraction)
-  - [Quantity Extraction](docs/builtin-duckling.md#quantity-extraction)
-  - [Amount of Money Extraction](docs/builtin-duckling.md#amount-of-money-extraction)
-  - [Date Extraction](docs/builtin-duckling.md#date-extraction)
-- [Builtin Entity Extraction](docs/builtin-entity-extraction.md)
-  - [Email Extraction](docs/builtin-entity-extraction.md#email-extraction)
-  - [IP Extraction](docs/builtin-entity-extraction.md#ip-extraction)
-  - [Hashtag Extraction](docs/builtin-entity-extraction.md#hashtag-extraction)
-  - [Phone Number Extraction](docs/builtin-entity-extraction.md#phone-number-extraction)
-  - [URL Extraction](docs/builtin-entity-extraction.md#url-extraction)
-  - [Number Extraction](docs/builtin-entity-extraction.md#number-extraction)
-  - [Ordinal Extraction](docs/builtin-entity-extraction.md#ordinal-extraction)
-  - [Percentage Extraction](docs/builtin-entity-extraction.md#percentage-extraction)
-  - [Age Extraction](docs/builtin-entity-extraction.md#age-extraction)
-  - [Currency Extraction](docs/builtin-entity-extraction.md#currency-extraction)
-  - [Date Extraction](docs/builtin-entity-extraction.md#date-extraction)
-  - [Duration Extraction](docs/builtin-entity-extraction.md#duration-extraction)
-- [Sentiment Analysis](docs/sentiment-analysis.md)
-- [NLP Manager](docs/nlp-manager.md)
-  - [Load/Save](docs/nlp-manager.md#loadsave)
-  - [Import/Export](docs/nlp-manager.md#importexport)
-  - [Context](docs/nlp-manager.md#context)
-- [Slot Filling](docs/slot-filling.md)
-- [Loading from Excel](docs/loading-from-excel.md)
-- [Microsoft Bot Framework](docs/microsoft-bot-framework.md)
-  - [Introduction](docs/microsoft-bot-framework.md#introduction)
-  - [Example of use](docs/microsoft-bot-framework.md#example-of-use)
-  - [Recognizer and Slot filling](docs/microsoft-bot-framework.md#recognizer-and-slot-filling)
+- [Benchmarking](benchmarking.md)
+- [Language Support](language-support.md)
+  - [Classification](language-support.md#classification)
+  - [Sentiment Analysis](language-support.md#sentiment-analysis)
+  - [Builtin Entity Extraction](language-support.md#builtin-entity-extraction)
+  - [Example with languages](example-with-languages.md)
+  - [Auto Stemmer](language-support.md#auto-stemmer)
+- [Language Guesser](language-guesser.md)
+- [Similar Search](similar-search.md)
+- [NLU](nlu-manager.md)
+  - [NLU Manager](nlu-manager.md)
+  - [Brain NLU](brain-nlu.md)
+  - [Bayes NLU](bayes-nlu.md)
+  - [Binary Relevance NLU](binary-relevance-nlu.md)
+  - [Logistic Regression NLU](logistic-regression-nlu.md)
+- [NER Manager](ner-manager.md)
+  - [Enum Named Entities](ner-manager.md#enum-named-entities)
+  - [Regular Expression Named Entities](ner-manager.md#regular-expression-named-entities)
+  - [Trim Named Entities](ner-manager.md#trim-named-entities)
+  - [Utterances with duplicated Entities](ner-manager.md#utterances-with-duplicated-entities)
+- [Integration with Duckling](builtin-duckling.md)
+  - [Language support](builtin-duckling.md#language-support)
+  - [How to integrate with duckling](builtin-duckling.md#how-to-integrate-with-duckling)
+  - [Email Extraction](builtin-duckling.md#email-extraction)
+  - [Phone Number Extraction](builtin-duckling.md#phone-number-extraction)
+  - [URL Extraction](builtin-duckling.md#url-extraction)
+  - [Number Extraction](builtin-duckling.md#number-extraction)
+  - [Ordinal Extraction](builtin-duckling.md#ordinal-extraction)
+  - [Dimension Extraction](builtin-duckling.md#dimension-extraction)
+  - [Quantity Extraction](builtin-duckling.md#quantity-extraction)
+  - [Amount of Money Extraction](builtin-duckling.md#amount-of-money-extraction)
+  - [Date Extraction](builtin-duckling.md#date-extraction)
+- [Builtin Entity Extraction](builtin-entity-extraction.md)
+  - [Email Extraction](builtin-entity-extraction.md#email-extraction)
+  - [IP Extraction](builtin-entity-extraction.md#ip-extraction)
+  - [Hashtag Extraction](builtin-entity-extraction.md#hashtag-extraction)
+  - [Phone Number Extraction](builtin-entity-extraction.md#phone-number-extraction)
+  - [URL Extraction](builtin-entity-extraction.md#url-extraction)
+  - [Number Extraction](builtin-entity-extraction.md#number-extraction)
+  - [Ordinal Extraction](builtin-entity-extraction.md#ordinal-extraction)
+  - [Percentage Extraction](builtin-entity-extraction.md#percentage-extraction)
+  - [Age Extraction](builtin-entity-extraction.md#age-extraction)
+  - [Currency Extraction](builtin-entity-extraction.md#currency-extraction)
+  - [Date Extraction](builtin-entity-extraction.md#date-extraction)
+  - [Duration Extraction](builtin-entity-extraction.md#duration-extraction)
+- [Sentiment Analysis](sentiment-analysis.md)
+- [NLP Manager](nlp-manager.md)
+  - [Load/Save](nlp-manager.md#loadsave)
+  - [Import/Export](nlp-manager.md#importexport)
+  - [Context](nlp-manager.md#context)
+- [Slot Filling](slot-filling.md)
+- [Loading from Excel](loading-from-excel.md)
+- [Microsoft Bot Framework](microsoft-bot-framework.md)
+  - [Introduction](microsoft-bot-framework.md#introduction)
+  - [Example of use](microsoft-bot-framework.md#example-of-use)
+  - [Recognizer and Slot filling](microsoft-bot-framework.md#recognizer-and-slot-filling)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 - [Code of Conduct](#code-of-conduct)
@@ -120,7 +114,7 @@ The version 4 is very different from previous versions. Until this version, NLP.
 If you're looking to use NLP.js in your node application, you can install via NPM like so:
 
 ```bash
-    npm install node-nlp
+  npm i node-nlp@3.10.2
 ```
 
 ## React Native
@@ -139,7 +133,7 @@ Some Limitations:
 
 ## Example of use
 
-You can see a great example of use at the folder [`/examples/console-bot`](https://github.com/axa-group/nlp.js/tree/master/examples/console-bot). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
+You can see a great example of use at the folder [`/examples/console-bot`](https://github.com/axa-group/nlp.js/tree/v3.x/examples/console-bot). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
 
 You can start to build your NLP from scratch with few lines:
 

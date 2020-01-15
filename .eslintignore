@@ -4,5 +4,5 @@ coverage/**
 toto.js
 node_modules
 dist
-docs/static/scripts
+docs/v3/static/scripts
 packages/python-compiler/src/python-executer.js
