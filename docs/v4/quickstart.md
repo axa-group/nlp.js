@@ -214,7 +214,7 @@ Now we want to add a corpus in spanish. First at all we must install the spanish
 npm i @nlpjs/lang-es
 ```
 
-Then add the _LangEn_ plugin in the configuration, and of course the corpus to the corpora:
+Then add the _LangEs_ plugin in the configuration, and of course the corpus to the corpora:
 ```json
 {
   "settings": {
@@ -225,7 +225,7 @@ Then add the _LangEn_ plugin in the configuration, and of course the corpus to t
       ]
     }
   },
-  "use": ["Basic", "ConsoleConnector"]
+  "use": ["Basic", "LangEs", "ConsoleConnector"]
 }
 ```
 
@@ -243,7 +243,7 @@ And add an spanish corpus. In the example, the spanish corpus does not have answ
       "debug": true
     }
   },
-  "use": ["Basic", "ConsoleConnector"]
+  "use": ["Basic", "LangEs", "ConsoleConnector"]
 }
 ```
 
@@ -270,7 +270,7 @@ This should be the content of the _conf.json_:
     },
     "api-server": { "port": 3000, "serveBot": true }
   },
-  "use": ["Basic", "LangEn", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector"]
+  "use": ["Basic", "LangEs", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector"]
 }
 ```
 
@@ -311,7 +311,7 @@ Then use the plugin adding it in your _conf.json_:
       "serveBot": true
     }
   },
-  "use": ["Basic", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector", "MsbfConnector"]
+  "use": ["Basic", "LangEs", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector", "MsbfConnector"]
 }
 ```
 
@@ -345,7 +345,7 @@ If you want the api to be exposed in /api/messages you can set the settings of m
       "messagesPath": "/api/messages"
     }
   },
-  "use": ["Basic", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector", "MsbfConnector"]
+  "use": ["Basic", "LangEs", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector", "MsbfConnector"]
 }
 ```
 
@@ -363,3 +363,71 @@ You have 3 different ways:
 
 2. Define the environment variables MSBF_BOT_APP_ID and MSBF_BOT_APP_PASSWORD and will be loaded if there are no _appId_ and _appPassword_ in the plugin settings
 3. You can define those environment variables in a _.env_ file, the _.env_ file is automatically loaded at the dockStart process if exists without installing dotenv.
+
+## Recognizing the bot name and the channel
+
+With the last code, try this sentence in console, web and Microsoft emulator: "where am I".
+You'll notice that the answer is something like: "you're talking from console, app is default channel is console"
+This happens because the answers to this intents are like that:
+```json
+      "answers": [
+        { "answer": "you're talking from console, app is {{ app }} channel is {{ channel }}", "opts": "channel==='console'" },
+        { "answer": "you're talking from directline, app is {{ app }} channel is {{ channel }}", "opts": "channel==='directline'" },
+        { "answer": "you're talking from microsoft emulator, app is {{ app }} channel is {{ channel }}", "opts": "channel==='msbf-emulator'" }
+      ]
+```
+Here we are mixing two things:
+1. The context variables: _{{ app }}_ and _{{ channel }}_ will be replaced by the context variables app (bot name) and channel (channel name).
+2. Opts: the opts of an answer are the conditions to return this answer, and can be any condition in javascript format.
+
+## One bot per connector
+
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/10.threebots
+
+In the _conf.json_ what you defined until here was the configuration of the default container. But containers can have child containers, with their own configuration and plugins, but they can access the plugins and resources of their parent containers.
+Put this in your _conf.json_
+
+```
+{
+  "settings": {
+    "nlp": {
+      "corpora": [
+        "./corpus-en.json",
+        "./corpus-es.json"
+      ]
+    },
+    "api-server": {
+      "port": 3000,
+      "serveBot": true
+    }
+  },
+  "childs": {
+    "bot1": {
+      "settings": {
+        "console": {
+          "debug": true
+        },
+        "use": ["ConsoleConnector"]
+      }
+    },
+    "bot2": {
+      "use": ["DirectlineConnector"]
+    },
+    "bot3": {
+      "settings": {
+        "msbf": {
+          "apiPath": "",
+          "messagesPath": "/api/messages"
+        }
+      },
+      "use": ["MsbfConnector"]
+    }
+  },
+  "use": ["Basic", "LangEs", "ExpressApiServer"]
+}
+```
+
+This will create 3 child containers where each container represents a bot: bot1 in Console, bot2 in Webchat and Directline and bot3 with the Microsoft Bot Framework Connector.
+As the ExpressApiServer plugin and configuration are in the default container, then bot2 and bot3 use this express configuration.
+Now you can repeat the "where am I" utterance, and you will notice something different: app is no longer default and is replaced with bot1, bot2 or bot3.
+

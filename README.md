@@ -58,6 +58,8 @@ The version 4 is very different from previous versions. Until this version, NLP.
   - [Adding Multilanguage](docs/v4/quickstart.md#adding-multilanguage)
   - [Adding API and WebChat](docs/v4/quickstart.md#adding-api-and-webchat)
   - [Using Microsoft Bot Framework](docs/v4/quickstart.md#using-microsoft-bot-framework)
+  - [Recognizing the bot name and the channel](docs/v4/quickstart.md#recognizing-the-bot-name-and-the-channel)
+  - [One bot per connector](docs/v4/quickstart.md#one-bot-per-connector)
 - [React Native](#react-native)
 - [Example of use](#example-of-use)
 - [False Positives](#false-positives)
