@@ -60,6 +60,7 @@ The version 4 is very different from previous versions. Until this version, NLP.
   - [Using Microsoft Bot Framework](docs/v4/quickstart.md#using-microsoft-bot-framework)
   - [Recognizing the bot name and the channel](docs/v4/quickstart.md#recognizing-the-bot-name-and-the-channel)
   - [One bot per connector](docs/v4/quickstart.md#one-bot-per-connector)
+  - [Different port for Microsoft Bot Framework and Webchat](docs/v4/quickstart.md#different-port-for-microsoft-bot-framework-and-webchat)
 - [React Native](#react-native)
 - [Example of use](#example-of-use)
 - [False Positives](#false-positives)

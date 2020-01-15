@@ -429,5 +429,83 @@ Put this in your _conf.json_
 
 This will create 3 child containers where each container represents a bot: bot1 in Console, bot2 in Webchat and Directline and bot3 with the Microsoft Bot Framework Connector.
 As the ExpressApiServer plugin and configuration are in the default container, then bot2 and bot3 use this express configuration.
+
+The problem now is that when you execute the app it crash because in the pipelines we're trying to use the console plugin from default container, but this plugin is at bot1.
+So replace the _pipelines.md_ with this content:
+
+```markdown
+# default
+
+## main
+nlp.train
+
+# bot1
+
+# main
+console.say "Say something!"
+
+## console.hear
+// compiler=javascript
+if (message === 'quit') {
+  return console.exit();
+}
+nlp.process();
+this.say();
+```
+
+As you can see the main title of the pipelines is the name of the container, that way if you use the same plugin in two different containers, they can behave diferently.
+
 Now you can repeat the "where am I" utterance, and you will notice something different: app is no longer default and is replaced with bot1, bot2 or bot3.
 
+## Different port for Microsoft Bot Framework and Webchat
+
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/11.differentports
+
+In the last example the ExpressApiServer plugin is at the default container, but we can move it into bot2 and bot3 with a different configuration:
+```
+{
+  "settings": {
+    "nlp": {
+      "corpora": [
+        "./corpus-en.json",
+        "./corpus-es.json"
+      ]
+    }
+  },
+  "childs": {
+    "bot1": {
+      "settings": {
+        "console": {
+          "debug": true
+        },
+        "use": ["ConsoleConnector"]
+      }
+    },
+    "bot2": {
+      "settings": {
+        "api-server": {
+          "port": 3000,
+          "serveBot": true
+        }
+      },
+      "use": ["ExpressApiServer", "DirectlineConnector"]
+    },
+    "bot3": {
+      "settings": {
+        "msbf": {
+          "apiPath": "",
+          "messagesPath": "/api/messages"
+        },
+        "api-server": {
+          "port": 4000,
+          "serveBot": false
+        }
+      },
+      "use": ["ExpressApiServer", "MsbfConnector"]
+    }
+  },
+  "use": ["Basic", "LangEs"]
+}
+```
+
+__Important!__ The plugins are loaded in order. As DirectlineConnector and MsbfConnector needs an api-server, then the ExpressApiServer should be before those.
