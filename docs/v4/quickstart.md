@@ -285,3 +285,81 @@ Restart your application and navigate again to http://localhost:3000 and you'll 
 <div align="center">
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/webchat.png" width="auto" height="auto"/>
 </div>
+
+## Using Microsoft Bot Framework
+You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/09.microsoftbot
+There is a Microsoft Bot Framework Connector. First install the library:
+```bash
+npm i @nlpjs/msbf-connector
+```
+Then use the plugin adding it in your _conf.json_:
+
+```json
+{
+  "settings": {
+    "nlp": {
+      "corpora": [
+        "./corpus-en.json",
+        "./corpus-es.json"
+      ]
+    },
+    "console": {
+      "debug": true
+    },
+    "api-server": {
+      "port": 3000,
+      "serveBot": true
+    }
+  },
+  "use": ["Basic", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector", "MsbfConnector"]
+}
+```
+
+Now start you app and use Microsoft Bot Framework Emulator https://aka.ms/botemulator
+The endpoint will be http://localhost:3000/default/api/messages
+<div align="center">
+<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/microsoftemulator.png" width="auto" height="auto"/>
+</div>
+
+Why is added /default to the api path? Because is the name of the container: NLP.js is built so you can have different container with different names running at the same time in the application, allowing you to build a chatbot exposed to the same channel in different ways, i.e., you can have a chatbot sharing corpus, models, etc. but with different behaviour by channel or by country or any other setting.
+
+If you want the api to be exposed in /api/messages you can set the settings of msfb in the _conf.json:
+```json
+{
+  "settings": {
+    "nlp": {
+      "corpora": [
+        "./corpus-en.json",
+        "./corpus-es.json"
+      ]
+    },
+    "console": {
+      "debug": true
+    },
+    "api-server": {
+      "port": 3000,
+      "serveBot": true
+    },
+    "msbf": {
+      "apiPath": "",
+      "messagesPath": "/api/messages"
+    }
+  },
+  "use": ["Basic", "ConsoleConnector", "ExpressApiServer", "DirectlineConnector", "MsbfConnector"]
+}
+```
+
+How to add the Microsoft Application ID and the Microsoft Bot Password? 
+You have 3 different ways:
+1. Providing it at the settings:
+```json
+    "msbf": {
+      "apiPath": "",
+      "messagesPath": "/api/messages",
+      "appId": "<YOUR MICROSOFT BOT APP ID>",
+      "appPassword": "<YOUR MICROSOFT BOT PASSWORD>"
+    }
+```
+
+2. Define the environment variables MSBF_BOT_APP_ID and MSBF_BOT_APP_PASSWORD and will be loaded if there are no _appId_ and _appPassword_ in the plugin settings
+3. You can define those environment variables in a _.env_ file, the _.env_ file is automatically loaded at the dockStart process if exists without installing dotenv.
