@@ -290,8 +290,7 @@ class Nlp extends Clonable {
       if (!fileData) {
         throw new Error(`Corpus not found "${fileName}"`);
       }
-      corpus =
-        typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
+      corpus = typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
     }
     const locale = corpus.locale.slice(0, 2);
     this.addLanguage(locale);
