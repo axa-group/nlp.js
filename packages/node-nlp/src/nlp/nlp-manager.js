@@ -31,6 +31,7 @@ const { Nlp } = require('@nlpjs/nlp');
 const { Evaluator, Template } = require('@nlpjs/evaluator');
 const { fs: requestfs } = require('@nlpjs/request');
 const { SentimentManager } = require('../sentiment');
+const NlpExcelReader = require('./nlp-excel-reader');
 
 class NlpManager {
   constructor(settings = {}) {
@@ -258,6 +259,15 @@ class NlpManager {
     const fileName = srcFileName || 'model.nlp';
     const data = fs.readFileSync(fileName, 'utf8');
     this.import(data);
+  }
+
+  /**
+   * Load the NLP manager information from an excel file.
+   * @param {Sting} srcFileName File name of the excel.
+   */
+  loadExcel(fileName = 'model.xls') {
+    const reader = new NlpExcelReader(this);
+    reader.load(fileName);
   }
 }
 
