@@ -268,6 +268,18 @@ describe('Logistic Regression NLU', () => {
       expect(classifications[0].label).toEqual('keys');
       expect(classifications[0].value).toBeGreaterThan(0.7);
     });
+    it('Should work even for portuguese', async () => {
+      const nlu = new BayesNLU({ language: 'pt' });
+      nlu.add('oi', 'greet');
+      nlu.add('ola', 'greet');
+      nlu.add('quero ser contatado', 'contact');
+      nlu.add('entra em contato', 'contact');
+      await nlu.train();
+      const classifications = nlu.getClassifications('entra em contto');
+      expect(classifications).toHaveLength(2);
+      expect(classifications[0].label).toEqual('contact');
+      expect(classifications[0].value).toBeGreaterThan(0.7);
+    });
   });
 
   describe('Get Best Classification', () => {
