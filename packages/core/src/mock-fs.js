@@ -51,4 +51,5 @@ module.exports = {
   existsSync,
   lstatSync,
   readFileSync,
+  name: 'fs',
 };

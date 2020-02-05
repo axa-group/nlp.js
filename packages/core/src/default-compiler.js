@@ -75,7 +75,7 @@ class DefaultCompiler {
   compile(pipeline) {
     const result = [];
     for (let i = 0; i < pipeline.length; i += 1) {
-      const line = pipeline[i];
+      const line = pipeline[i].trim();
       const words = line.split(' ');
       const tokens = [];
       let currentString = '';
@@ -303,6 +303,7 @@ class DefaultCompiler {
   }
 
   async execute(compiled, srcInput, srcObject, depth) {
+    console.log(compiled);
     let input = srcInput;
     const context = { cursor: 0, labels: {} };
     this.findLabels(compiled, context.labels);

@@ -66,6 +66,7 @@ The version 4 is very different from previous versions. Until this version, NLP.
   - [Preparing to generate a bundle](docs/v4/webandreact.md#preparing-to-generate-a-bundle)
   - [Your fist web NLP](docs/v4/webandreact.md#your-first-web-nlp)
   - [Creating a distributable version](docs/v4/quickstart.md#creating-a-distributable-version)
+  - [Load corpus from URL](docs/v4/quickstart.md#load-corpus-from-url)
 - [React Native](#react-native)
 - [Example of use](#example-of-use)
 - [False Positives](#false-positives)
