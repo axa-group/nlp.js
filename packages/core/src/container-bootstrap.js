@@ -100,6 +100,16 @@ function containerBootstrap(
       );
     }
   }
+  if (configuration.use) {
+    for (let i = 0; i < configuration.use.length; i += 1) {
+      const item = configuration.use[i];
+      if (Array.isArray(item)) {
+        instance.register(item[0], item[1]);
+      } else {
+        instance.use(item);
+      }
+    }
+  }
   if (configuration.terraform) {
     for (let i = 0; i < configuration.terraform.length; i += 1) {
       const current = configuration.terraform[i];

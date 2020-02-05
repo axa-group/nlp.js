@@ -151,3 +151,48 @@ Third, move the logic of your bot to the index.hmtl:
 </body>
 </html>
 ```
+
+## Load corpus from URL
+
+You can download the source code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/02.web/03.filecorpus
+At previous examples, the corpus is manually loaded into the nlp, but what if we want a corpus in json like in backend ant to load it from an URL?
+First at all we need to register a valid file system into our container, in our case a request plugin that uses axios.
+First install the package:
+```bash
+npm i @nlpjs/request-rn
+```
+
+Now we need to expose it in our _index.js_:
+```javascript
+const core = require('@nlpjs/core');
+const nlp = require('@nlpjs/nlp');
+const langenmin = require('@nlpjs/lang-en-min');
+const requestrn = require('@nlpjs/request-rn');
+
+window.nlpjs = { ...core, ...nlp, ...langenmin, ...requestrn };
+```
+
+And compile the bundle:
+```bash
+npm run browserdist
+```
+The new bundle will be 126KB, that is 15KB more than without this plugin.
+
+And at our _index.html_ we change our script:
+
+```javascript
+  const { containerBootstrap, Nlp, LangEn, fs } = window.nlpjs;
+
+  (async () => {
+    const container = await containerBootstrap();
+    container.register('fs', fs);
+    container.use(Nlp);
+    container.use(LangEn);
+    const nlp = container.get('nlp');
+    nlp.settings.autoSave = false;
+    await nlp.addCorpus('https://raw.githubusercontent.com/jesus-seijas-sp/nlpjs-examples/master/01.quickstart/02.filecorpus/corpus-en.json');
+    await nlp.train();
+    const response = await nlp.process('en', 'who are you');
+    console.log(response);
+  })();
+```
