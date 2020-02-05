@@ -22,7 +22,7 @@
  */
 
 const { Tokenizer } = require('@nlpjs/core');
-const Segment = require('novel-segment');
+const dictionary = require('./dictionary');
 
 class TokenizerZh extends Tokenizer {
   constructor(container, shouldTokenize) {
@@ -31,11 +31,7 @@ class TokenizerZh extends Tokenizer {
   }
 
   innerTokenize(text) {
-    if (!this.segment) {
-      this.segment = new Segment();
-      this.segment.useDefault();
-    }
-    return this.segment.doSegment(text);
+    return dictionary.segment(text);
   }
 }
 
