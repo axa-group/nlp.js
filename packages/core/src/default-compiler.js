@@ -303,7 +303,6 @@ class DefaultCompiler {
   }
 
   async execute(compiled, srcInput, srcObject, depth) {
-    console.log(compiled);
     let input = srcInput;
     const context = { cursor: 0, labels: {} };
     this.findLabels(compiled, context.labels);
