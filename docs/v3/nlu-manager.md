@@ -143,7 +143,7 @@ main();
 
 
 
-Currently 33 languages are supported:
+Currently 36 languages are supported:
 
 - Arabic (ar)
 - Armenian (hy)
@@ -167,7 +167,9 @@ Currently 33 languages are supported:
 - Irish (ga)
 - Italian (it)
 - Japanese (ja)
+- Lithuanian (lt)
 - Norwegian (no)
+- Polish (pl)
 - Portuguese (pt)
 - Romanian (ro)
 - Russian (ru)
