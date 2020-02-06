@@ -45,6 +45,7 @@ const cultures = {
   hy: 'hy-am', // Armenian
   ja: 'ja-jp', // Japanese
   pl: 'pl-pl', // Polish
+  lt: 'lt-lt', // Lithuanian
   pt: 'pt-br', // Portuguese
   sv: 'sv-se', // Swedish
   ta: 'ta-in', // Tamil
