@@ -33,6 +33,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Italian (it)    |    X    |    X     |        |
 | Japanese (ja)   |    X    |          |        |
 | Lithuanian (lt) |         |    X     |        |
+| Nepali (ne)     |         |    X     |        |
 | Norwegian (no)  |    X    |    X     |        |
 | Polish (pl)     |         |          |   X    |
 | Portuguese (pt) |    X    |    X     |        |
@@ -74,6 +75,7 @@ Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon a
 | Italian (it)    |       |          |    X    |
 | Japanese (ja)   |       |          |         |
 | Lithuanian (lt) |       |          |         |
+| Nepali (ne)     |       |          |         |
 | Norwegian (no)  |       |          |         |
 | Portuguese (pt) |   X   |          |         |
 | Polish (pl)     |       |          |         |

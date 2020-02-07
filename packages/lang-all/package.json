@@ -47,6 +47,8 @@
     "@nlpjs/lang-id": "^4.0.1",
     "@nlpjs/lang-it": "^4.0.1",
     "@nlpjs/lang-ja": "^4.0.1",
+    "@nlpjs/lang-lt": "^4.0.1",
+    "@nlpjs/lang-ne": "^4.0.1",
     "@nlpjs/lang-nl": "^4.0.1",
     "@nlpjs/lang-no": "^4.0.1",
     "@nlpjs/lang-pl": "^4.0.1",

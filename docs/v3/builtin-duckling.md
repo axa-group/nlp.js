@@ -43,6 +43,7 @@ Those are the languages supported using Duckling or not using it:
 | Irish         |   ga   |                  |       X       |
 | Japanese      |   ja   |         X        |       X       |
 | Lithuanian    |   lt   |                  |               |
+| Nepali        |   ne   |                  |       X       |
 | Norwegian     |   no   |                  |       X       |
 | Polish        |   pl   |                  |       X       |
 | Portuguese    |   pt   |         X        |       X       |

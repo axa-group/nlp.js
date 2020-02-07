@@ -46,6 +46,7 @@ const cultures = {
   ja: 'ja-jp', // Japanese
   pl: 'pl-pl', // Polish
   lt: 'lt-lt', // Lithuanian
+  ne: 'ne-ne', // Nepali
   pt: 'pt-br', // Portuguese
   sv: 'sv-se', // Swedish
   ta: 'ta-in', // Tamil
