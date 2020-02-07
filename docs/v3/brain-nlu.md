@@ -43,7 +43,7 @@ async function main() {
 }
 main();```
 
-Currently 36 languages are supported:
+Currently 37 languages are supported:
 
 - Arabic (ar)
 - Armenian (hy)
@@ -68,6 +68,7 @@ Currently 36 languages are supported:
 - Italian (it)
 - Japanese (ja)
 - Lithuanian (lt)
+- Nepali (ne)
 - Norwegian (no)
 - Polish (pl)
 - Portuguese (pt)
