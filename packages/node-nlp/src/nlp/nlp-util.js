@@ -48,6 +48,7 @@ const cultures = {
   lt: 'lt-lt', // Lithuanian
   ne: 'ne-ne', // Nepali
   pt: 'pt-br', // Portuguese
+  sr: 'sr-rs', // Serbian
   sv: 'sv-se', // Swedish
   ta: 'ta-in', // Tamil
   tl: 'tl-ph', // Tagalog

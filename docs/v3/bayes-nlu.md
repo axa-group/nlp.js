@@ -44,7 +44,7 @@ async function main() {
 main();
 ```
 
-Currently 37 languages are supported:
+Currently 38 languages are supported:
 
 - Arabic (ar)
 - Armenian (hy)
@@ -75,6 +75,7 @@ Currently 37 languages are supported:
 - Portuguese (pt)
 - Romanian (ro)
 - Russian (ru)
+- Serbian (sr)
 - Slovene (sl)
 - Spanish (es)
 - Swedish (sv)
