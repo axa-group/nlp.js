@@ -35,6 +35,7 @@ Those are the languages supported using Duckling or not using it:
 | Portuguese    |   pt   |         X        |       X       |
 | Romanian      |   ro   |                  |       X       |
 | Russian       |   ru   |                  |       X       |
+| Serbian       |   sr   |                  |               |
 | Spanish       |   es   |         X        |       X       |
 | Swedish       |   sv   |                  |       X       |
 | Tamil         |   ta   |                  |       X       |

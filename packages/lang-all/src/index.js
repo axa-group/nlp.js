@@ -262,6 +262,14 @@ const {
   TokenizerSl,
 } = require('@nlpjs/lang-sl');
 const {
+  LangSr,
+  NormalizerSr,
+  SentimentSr,
+  StemmerSr,
+  StopwordsSr,
+  TokenizerSr,
+} = require('@nlpjs/lang-sr');
+const {
   LangSv,
   NormalizerSv,
   SentimentSv,
@@ -531,6 +539,13 @@ module.exports = {
   StemmerSl,
   StopwordsSl,
   TokenizerSl,
+
+  LangSr,
+  NormalizerSr,
+  SentimentSr,
+  StemmerSr,
+  StopwordsSr,
+  TokenizerSr,
 
   LangSv,
   NormalizerSv,
