@@ -43,6 +43,18 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
       other.len > edge.len
     ) {
       edge.discarded = true;
+    } else if (edge.type === 'enum' && other.type === 'enum') {
+      if (
+        edge.len <= other.len &&
+        other.utteranceText.includes(edge.utteranceText)
+      ) {
+        edge.discarded = true;
+      } else if (
+        edge.len > other.len &&
+        edge.utteranceText.includes(other.utteranceText)
+      ) {
+        other.discarded = true;
+      }
     }
   }
 }
