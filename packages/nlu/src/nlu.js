@@ -210,12 +210,18 @@ class Nlu extends Clonable {
     const input = srcInput;
     const { classifications } = input;
     if (classifications) {
-      const keys = Object.keys(classifications);
+      if (!this.intentsArr && this.intents) {
+        this.intentsArr = Object.keys(this.intents);
+        if (!this.intents.None) {
+          this.intentsArr.push('None');
+        }
+      }
+      const keys = this.intentsArr || Object.keys(classifications);
       const result = [];
       for (let i = 0; i < keys.length; i += 1) {
         const intent = keys[i];
         const score = classifications[intent];
-        if (score > 0 || !input.settings.filterZeros) {
+        if (score !== undefined && (score > 0 || !input.settings.filterZeros)) {
           result.push({ intent, score });
         }
       }
