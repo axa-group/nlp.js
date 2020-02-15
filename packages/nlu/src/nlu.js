@@ -183,7 +183,17 @@ class Nlu extends Clonable {
       result.push(item);
     }
     const keys = Object.keys(this.intentFeatures);
+    this.featuresToIntent = {};
     for (let i = 0; i < keys.length; i += 1) {
+      const intent = keys[i];
+      const features = Object.keys(this.intentFeatures[intent]);
+      for (let j = 0; j < features.length; j += 1) {
+        const feature = features[j];
+        if (!this.featuresToIntent[feature]) {
+          this.featuresToIntent[feature] = [];
+        }
+        this.featuresToIntent[feature].push(intent);
+      }
       this.intentFeatures[keys[i]] = Object.keys(this.intentFeatures[keys[i]]);
     }
     this.spellCheck.setFeatures(this.features);
@@ -210,13 +220,17 @@ class Nlu extends Clonable {
     const input = srcInput;
     const { classifications } = input;
     if (classifications) {
-      if (!this.intentsArr && this.intents) {
-        this.intentsArr = Object.keys(this.intents);
-        if (!this.intents.None) {
-          this.intentsArr.push('None');
+      if (!this.intentsArr) {
+        if (this.intents) {
+          this.intentsArr = Object.keys(this.intents);
+          if (!this.intents.None) {
+            this.intentsArr.push('None');
+          }
+        } else {
+          this.intentsArr = Object.keys(classifications);
         }
       }
-      const keys = this.intentsArr || Object.keys(classifications);
+      const keys = this.intentsArr;
       const result = [];
       for (let i = 0; i < keys.length; i += 1) {
         const intent = keys[i];
@@ -241,10 +255,13 @@ class Nlu extends Clonable {
 
   getWhitelist(tokens) {
     const result = {};
-    const intents = Object.keys(this.intentFeatures);
-    for (let i = 0; i < intents.length; i += 1) {
-      if (this.someSimilar(tokens, this.intentFeatures[intents[i]])) {
-        result[intents[i]] = 1;
+    const features = Object.keys(tokens);
+    for (let i = 0; i < features.length; i += 1) {
+      const intents = this.featuresToIntent[features[i]];
+      if (intents) {
+        for (let j = 0; j < intents.length; j += 1) {
+          result[intents[j]] = 1;
+        }
       }
     }
     return result;
@@ -362,6 +379,7 @@ class Nlu extends Clonable {
       features: this.features,
       intents: this.intents,
       intentFeatures: this.intentFeatures,
+      featuresToIntent: this.featuresToIntent,
     };
     delete result.settings.container;
     return result;
@@ -371,6 +389,7 @@ class Nlu extends Clonable {
     this.applySettings(this.settings, json.settings);
     this.features = json.features || {};
     this.intents = json.intents || {};
+    this.featuresToIntent = json.featuresToIntent || {};
     this.intentFeatures = json.intentFeatures || {};
     this.spellCheck.setFeatures(this.features);
     this.numFeatures = Object.keys(this.features).length;
