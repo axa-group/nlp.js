@@ -29,6 +29,7 @@ class StemmerZh {
     this.container = container;
     this.name = 'stemmer-zh';
     this.translate = new TranslateZh();
+    this.dictionary = dictionary;
   }
 
   definitionContains(arr, text) {

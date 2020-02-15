@@ -38,6 +38,10 @@ class Container {
     this.pipelines = {};
     this.configurations = {};
     this.compilers = {};
+    this.cache = {
+      bestKeys: {},
+      pipelines: {},
+    };
     this.registerCompiler(DefaultCompiler);
     if (!hasPreffix) {
       this.use(logger);
@@ -77,6 +81,7 @@ class Container {
   }
 
   register(name, Clazz, isSingleton = true) {
+    this.cache.bestKeys = {};
     const isClass = typeof Clazz === 'function';
     const item = { name, isSingleton };
     if (isSingleton) {
@@ -87,12 +92,18 @@ class Container {
     this.factory[name] = item;
   }
 
-  getBestKey(name, keys) {
+  getBestKey(name) {
+    if (this.cache.bestKeys[name] !== undefined) {
+      return this.cache.bestKeys[name];
+    }
+    const keys = Object.keys(this.factory);
     for (let i = 0; i < keys.length; i += 1) {
       if (compareWildcars(name, keys[i])) {
+        this.cache.bestKeys[name] = keys[i];
         return keys[i];
       }
     }
+    this.cache.bestKeys[name] = null;
     return undefined;
   }
 
@@ -102,7 +113,7 @@ class Container {
       if (this.parent) {
         return this.parent.get(name, settings);
       }
-      const key = this.getBestKey(name, Object.keys(this.factory));
+      const key = this.getBestKey(name);
       if (key) {
         item = this.factory[key];
       }
@@ -386,6 +397,7 @@ class Container {
 
   registerPipeline(tag, pipeline, overwrite = true) {
     if (overwrite || !this.pipelines[tag]) {
+      this.cache.pipelines = {};
       const prev = this.getPipeline(tag);
       this.pipelines[tag] = this.buildPipeline(
         pipeline,
@@ -408,12 +420,17 @@ class Container {
     if (this.pipelines[tag]) {
       return this.pipelines[tag];
     }
+    if (this.cache.pipelines[tag] !== undefined) {
+      return this.cache.pipelines[tag] || undefined;
+    }
     const keys = Object.keys(this.pipelines);
     for (let i = 0; i < keys.length; i += 1) {
       if (compareWildcars(tag, keys[i])) {
+        this.cache.pipelines[tag] = this.pipelines[keys[i]];
         return this.pipelines[keys[i]];
       }
     }
+    this.cache.pipelines[tag] = null;
     return undefined;
   }
 
