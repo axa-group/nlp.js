@@ -82,7 +82,7 @@ class SentimentAnalyzer extends Clonable {
         type = 'senticon';
       } else if (dictionaries.pattern) {
         type = 'pattern';
-      } else if (dictionaries.afinn && Object.keys(dictionaries.afinn).length) {
+      } else if (dictionaries.afinn) {
         type = 'afinn';
       }
     }
