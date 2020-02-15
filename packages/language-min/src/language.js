@@ -57,6 +57,8 @@ const scripts = {
   aii: /[\u0700-\u070D\u070F-\u074A\u074D-\u074F]/g,
 };
 
+const scriptKeys = Object.keys(scripts);
+
 const und = () => [['und', 1]];
 
 class Language {
@@ -121,7 +123,7 @@ class Language {
   static getTopScript(value) {
     let topCount = -1;
     let topScript;
-    Object.keys(scripts).forEach(script => {
+    scriptKeys.forEach(script => {
       const count = Language.getOccurrence(value, scripts[script]);
       if (count > topCount) {
         topCount = count;
