@@ -22,8 +22,8 @@
  */
 
 module.exports = {
-  senticon: {},
-  afinn: {},
-  pattern: {},
+  senticon: undefined,
+  afinn: undefined,
+  pattern: undefined,
   negations: { words: [] },
 };

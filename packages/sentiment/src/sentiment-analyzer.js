@@ -78,21 +78,18 @@ class SentimentAnalyzer extends Clonable {
     const dictionaries = this.container.get(`sentiment-${input.locale}`);
     let type;
     if (dictionaries) {
-      if (dictionaries.senticon && Object.keys(dictionaries.senticon).length) {
+      if (dictionaries.senticon) {
         type = 'senticon';
-      } else if (
-        dictionaries.pattern &&
-        Object.keys(dictionaries.pattern).length
-      ) {
+      } else if (dictionaries.pattern) {
         type = 'pattern';
-      } else if (dictionaries.afinn && Object.keys(dictionaries.afinn).length) {
+      } else if (dictionaries.afinn) {
         type = 'afinn';
       }
     }
     if (!type) {
       input.sentimentDictionary = {
         type,
-        dictionary: {},
+        dictionary: undefined,
         negations: [],
       };
       return input;
@@ -123,7 +120,7 @@ class SentimentAnalyzer extends Clonable {
       const tokens = Array.isArray(input.tokens)
         ? input.tokens
         : Object.keys(input.tokens);
-      if (Object.keys(input.sentimentDictionary.dictionary).length === 0) {
+      if (!input.sentimentDictionary.dictionary) {
         input.sentiment = {
           score: 0,
           numWords: tokens.length,

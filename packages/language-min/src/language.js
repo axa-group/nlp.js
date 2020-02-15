@@ -57,6 +57,8 @@ const scripts = {
   aii: /[\u0700-\u070D\u070F-\u074A\u074D-\u074F]/g,
 };
 
+const scriptKeys = Object.keys(scripts);
+
 const und = () => [['und', 1]];
 
 class Language {
@@ -118,16 +120,38 @@ class Language {
     return (count ? count.length : 0) / value.length || 0;
   }
 
+  static isLatin(value) {
+    let total = 0;
+    const half = value.length / 2;
+    for (let i = 0; i < value.length; i += 1) {
+      const c = value.charCodeAt(i);
+      if (c >= 32 && c <= 126) {
+        total += 1;
+        if (total > half) {
+          return true;
+        }
+      }
+    }
+    return total > half;
+  }
+
   static getTopScript(value) {
+    if (Language.isLatin(value)) {
+      return ['Latin', 1];
+    }
     let topCount = -1;
     let topScript;
-    Object.keys(scripts).forEach(script => {
+    for (let i = 0; i < scriptKeys.length; i += 1) {
+      const script = scriptKeys[i];
       const count = Language.getOccurrence(value, scripts[script]);
       if (count > topCount) {
         topCount = count;
         topScript = script;
+        if (topCount === 1) {
+          return [topScript, topCount];
+        }
       }
-    });
+    }
     return [topScript, topCount];
   }
 
