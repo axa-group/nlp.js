@@ -55,8 +55,10 @@ class NeuralNlu extends Nlu {
 
   fromJSON(json) {
     super.fromJSON(json);
-    this.neuralNetwork = new NeuralNetwork();
-    this.neuralNetwork.fromJSON(json.neuralNetwork);
+    if (json.neuralNetwork) {
+      this.neuralNetwork = new NeuralNetwork();
+      this.neuralNetwork.fromJSON(json.neuralNetwork);
+    }
   }
 }
 
