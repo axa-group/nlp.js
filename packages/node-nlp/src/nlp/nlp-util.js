@@ -44,6 +44,7 @@ const cultures = {
   hi: 'hi-in', // Hindi
   hy: 'hy-am', // Armenian
   ja: 'ja-jp', // Japanese
+  ko: 'ko-kr', // Korean
   pl: 'pl-pl', // Polish
   lt: 'lt-lt', // Lithuanian
   ne: 'ne-ne', // Nepali
