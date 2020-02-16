@@ -49,7 +49,7 @@ class NeuralNlu extends Nlu {
 
   toJSON() {
     const result = super.toJSON();
-    result.neuralNetwork = this.neuralNetwork.toJSON();
+    result.neuralNetwork = this.neuralNetwork ? this.neuralNetwork.toJSON() : undefined;
     return result;
   }
 
