@@ -41,6 +41,7 @@ const { LangHy } = require('@nlpjs/lang-hy');
 const { LangId } = require('@nlpjs/lang-id');
 const { LangIt } = require('@nlpjs/lang-it');
 const { LangJa } = require('@nlpjs/lang-ja');
+const { LangKo } = require('@nlpjs/lang-ko');
 const { LangLt } = require('@nlpjs/lang-lt');
 const { LangNe } = require('@nlpjs/lang-ne');
 const { LangNl } = require('@nlpjs/lang-nl');
@@ -82,6 +83,7 @@ class LangAll {
     container.use(LangId);
     container.use(LangIt);
     container.use(LangJa);
+    container.use(LangKo);
     container.use(LangLt);
     container.use(LangNe);
     container.use(LangNl);

@@ -320,8 +320,12 @@ class BaseStemmer {
   stemWords(words) {
     const results = [];
     for (let i = 0; i < words.length; i++) {
-      results.push(this.stemWord(words[i]));
+      const stemmed = this.stemWord(words[i]).trim();
+      if (stemmed) {
+        results.push(stemmed);
+      }
     }
+    console.log(results);
     return results;
   }
 
