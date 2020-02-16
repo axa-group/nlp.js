@@ -325,7 +325,6 @@ class BaseStemmer {
         results.push(stemmed);
       }
     }
-    console.log(results);
     return results;
   }
 
