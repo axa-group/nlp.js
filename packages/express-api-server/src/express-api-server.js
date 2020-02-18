@@ -67,10 +67,12 @@ class ExpressApiServer extends Clonable {
     this.app.use(cors());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
-    this.app.listen(port, () => {
-      const logger = this.container.get('logger');
-      logger.info(`${this.settings.tag} listening on port ${port}!`);
-    });
+    if (port && port > 0) {
+      this.app.listen(port, () => {
+        const logger = this.container.get('logger');
+        logger.info(`${this.settings.tag} listening on port ${port}!`);
+      });
+    }
   }
 }
 
