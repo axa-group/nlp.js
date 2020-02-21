@@ -30,6 +30,7 @@ Those are the languages supported using Duckling or not using it:
 | Japanese      |   ja   |         X        |       X       |
 | Korean        |   ko   |                  |       X       |
 | Lithuanian    |   lt   |                  |               |
+| Malay         |   ms   |                  |       X       |
 | Nepali        |   ne   |                  |       X       |
 | Norwegian     |   no   |                  |       X       |
 | Polish        |   pl   |                  |       X       |
