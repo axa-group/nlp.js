@@ -55,6 +55,8 @@ const cultures = {
   tl: 'tl-ph', // Tagalog
   uk: 'uk-ua', // Ukraine
   zh: 'zh-cn', // Chinese
+  id: 'id-id', // Indonesian,
+  ms: 'id-id', // Malay
 };
 
 class NlpUtil {
