@@ -46,7 +46,9 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/src/**/**.js",
-      "!./packages/lang-**/**"
+      "!./packages/lang-**/**",
+      "!./packages/python-compiler/src/python-executer.js",
+      "!./packages/express-api-server/src/public/**/**"
     ],
     "coverageDirectory": "coverage",
     "testEnvironment": "node"
