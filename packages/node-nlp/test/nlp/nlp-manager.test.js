@@ -281,7 +281,7 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.7);
     });
     test('Should guess language if not provided', async () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['fr', 'ja']);
       manager.addDocument('fr', 'Bonjour', 'greet');
       manager.addDocument('fr', 'bonne nuit', 'greet');
