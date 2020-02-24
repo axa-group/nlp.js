@@ -1,36 +1,17 @@
-<!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <title>Web Chat: Full-featured bundle</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
-    <style>
-      html,
-      body {
-        height: 100%;
-      }
-      body {
-        margin: 0;
-      }
-      #webchat {
-        height: 100%;
-        width: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="webchat" role="main"></div>
-    <script>
-         window.WebChat.renderWebChat(
-            {
-               directLine: window.WebChat.createDirectLine({
-                 domain: 'http://localhost:3000/directline',
-                 webSocket: false,
-               }),
-               userID: 'Jesús'
-            },
-            document.getElementById('webchat')
-         );
-    </script>
-  </body>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="shortcut icon" href="favicon.ico"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
+  <title>Web Chat: Minimize mode</title>
+  <link href="botchat.css" rel="stylesheet">
+</head>
+<body>
+  <div id="root" role="main"></div>
+  <script>window.directline={domain:"http://localhost:3000/directline",webSocket:!1}</script>
+  <script>!function(l){function e(e){for(var t,r,n=e[0],o=e[1],i=e[2],a=0,u=[];a<n.length;a++)r=n[a],Object.prototype.hasOwnProperty.call(p,r)&&p[r]&&u.push(p[r][0]),p[r]=0;for(t in o)Object.prototype.hasOwnProperty.call(o,t)&&(l[t]=o[t]);for(s&&s(e);u.length;)u.shift()();return f.push.apply(f,i||[]),c()}function c(){for(var e,t=0;t<f.length;t++){for(var r=f[t],n=!0,o=1;o<r.length;o++){var i=r[o];0!==p[i]&&(n=!1)}n&&(f.splice(t--,1),e=a(a.s=r[0]))}return e}var r={},p={1:0},f=[];function a(e){if(r[e])return r[e].exports;var t=r[e]={i:e,l:!1,exports:{}};return l[e].call(t.exports,t,t.exports,a),t.l=!0,t.exports}a.m=l,a.c=r,a.d=function(e,t,r){a.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},a.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},a.t=function(t,e){if(1&e&&(t=a(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(a.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var n in t)a.d(r,n,function(e){return t[e]}.bind(null,n));return r},a.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(t,"a",t),t},a.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},a.p="/BotFramework-WebChat/06.recomposing-ui/a.minimizable-web-chat/";var t=this["webpackJsonpsample-customization-minimizable-web-chat"]=this["webpackJsonpsample-customization-minimizable-web-chat"]||[],n=t.push.bind(t);t.push=e,t=t.slice();for(var o=0;o<t.length;o++)e(t[o]);var s=n;c()}([])</script>
+  <script src="botchat.js"></script>
+  <script src="main.js"></script>
+</body>
 </html>
