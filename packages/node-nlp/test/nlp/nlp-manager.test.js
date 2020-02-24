@@ -280,39 +280,6 @@ describe('NLP Manager', () => {
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.7);
     });
-    test('Should guess language if not provided', async () => {
-      const manager = new NlpManager({ ner: { builtins: [] } });
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument(
-        'fr',
-        'Je ne me souviens pas où sont mes clés',
-        'keys'
-      );
-      manager.addDocument('ja', 'おはようございます', 'greet');
-      manager.addDocument('ja', 'こんにちは', 'greet');
-      manager.addDocument('ja', 'おやすみ', 'greet');
-      manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
-      manager.addDocument(
-        'ja',
-        '私は私の鍵がどこにあるのか覚えていない',
-        'keys'
-      );
-      manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
-      await manager.train();
-      let result = await manager.classify('où sont mes clés');
-      expect(result.classifications).toHaveLength(3);
-      expect(result.intent).toEqual('keys');
-      expect(result.score).toBeGreaterThan(0.7);
-      result = await manager.classify('私の鍵はどこにありますか');
-      expect(result.classifications).toHaveLength(2);
-      expect(result.intent).toEqual('keys');
-      expect(result.score).toBeGreaterThan(0.7);
-    });
     test('Should return a empty classifications if there is not classifier for this language', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['fr', 'ja']);
