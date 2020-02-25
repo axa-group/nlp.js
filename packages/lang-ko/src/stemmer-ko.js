@@ -23,7 +23,7 @@
 
 const { BaseStemmer } = require('@nlpjs/core');
 const { tokenize, stemWord } = require('./korean-tokenizer');
-const { dictionary } = require('./korean-dictionary');
+const { initDicts, dictionary } = require('./korean-dictionary');
 const TokenizerKo = require('./tokenizer-ko');
 const NormalizerKo = require('./normalizer-ko');
 
@@ -146,6 +146,7 @@ class StemmerKo extends BaseStemmer {
   }
 
   innerStem() {
+    initDicts();
     const word = this.getCurrent();
     const token = stemWord(this.prestem(word.trim()));
     const value = dictionary[token];
@@ -153,6 +154,7 @@ class StemmerKo extends BaseStemmer {
   }
 
   async stem(text, input) {
+    initDicts();
     const inputText =
       typeof text === 'string' ? text : input.utterance || input.text;
     const newText = this.tokenizer
@@ -185,6 +187,7 @@ class StemmerKo extends BaseStemmer {
   }
 
   tokenizeAndStem(text) {
+    initDicts();
     const newText = this.tokenize(this.normalize(text)).join(' ');
     const tokens = tokenize(this.normalize(newText))
       .map(x => stemWord(this.prestem(x.trim())))

@@ -22,7 +22,7 @@
  */
 
 const { chunk } = require('./korean-chunker');
-const { dictionary } = require('./korean-dictionary');
+const { initDicts, dictionary } = require('./korean-dictionary');
 
 const {
   isName,
@@ -31,6 +31,7 @@ const {
 } = require('./korean-substantive');
 
 function getTopSlice(word) {
+  initDicts();
   const max = Math.min(word.length, 2);
   for (let i = max; i > 1; i -= 1) {
     const slice = word.slice(0, i);
@@ -82,6 +83,7 @@ function tokenize(text) {
 }
 
 function stemWord(token) {
+  initDicts();
   const value = dictionary[token];
   if (value) {
     return value.root || token;

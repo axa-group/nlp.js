@@ -22,9 +22,10 @@
  */
 
 const { decomposeHangul, codaMap, composeHangul } = require('./hangul');
-const { names } = require('./korean-dictionary');
+const { initDicts, names } = require('./korean-dictionary');
 
 function isName(word) {
+  initDicts();
   if (names.Full[word] || names.Given[word]) {
     return true;
   }
