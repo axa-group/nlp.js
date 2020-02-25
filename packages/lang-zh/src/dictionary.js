@@ -21,13 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const cedict = require('./cedict_ts.u8');
-
 class Dictionary {
-  constructor() {
-    this.start();
-  }
-
   getElement(line) {
     if (!line) {
       return {
@@ -50,43 +44,48 @@ class Dictionary {
   }
 
   start() {
-    console.log('Compiling dictionary');
-    this.cache = {};
-    this.simplified = {};
-    this.traditional = {};
-    const lines = cedict.split(/\r?\n/);
-    for (let i = 0; i < lines.length; i += 1) {
-      const line = lines[i];
-      if (!line.startsWith('#')) {
-        const current = this.getElement(line);
-        const definitions = [current];
-        let nextDefinition = this.getElement(lines[i + 1]);
-        while (
-          nextDefinition.traditional === current.traditional &&
-          nextDefinition.simplified === current.simplified
-        ) {
-          i += 1;
-          definitions.push(nextDefinition);
-          nextDefinition = this.getElement(lines[i + 1]);
-        }
-        if (!this.simplified[current.simplified]) {
-          this.simplified[current.simplified] = [];
-        }
-        for (let j = 0; j < definitions.length; j += 1) {
-          this.simplified[current.simplified].push(definitions[j]);
-        }
-        if (!this.traditional[current.traditional]) {
-          this.traditional[current.traditional] = [];
-        }
-        for (let j = 0; j < definitions.length; j += 1) {
-          this.traditional[current.traditional].push(definitions[j]);
+    if (!this.cedict) {
+      // eslint-disable-next-line global-require
+      this.cedict = require('./cedict_ts.u8');
+      console.log('Compiling dictionary');
+      this.cache = {};
+      this.simplified = {};
+      this.traditional = {};
+      const lines = this.cedict.split(/\r?\n/);
+      for (let i = 0; i < lines.length; i += 1) {
+        const line = lines[i];
+        if (!line.startsWith('#')) {
+          const current = this.getElement(line);
+          const definitions = [current];
+          let nextDefinition = this.getElement(lines[i + 1]);
+          while (
+            nextDefinition.traditional === current.traditional &&
+            nextDefinition.simplified === current.simplified
+          ) {
+            i += 1;
+            definitions.push(nextDefinition);
+            nextDefinition = this.getElement(lines[i + 1]);
+          }
+          if (!this.simplified[current.simplified]) {
+            this.simplified[current.simplified] = [];
+          }
+          for (let j = 0; j < definitions.length; j += 1) {
+            this.simplified[current.simplified].push(definitions[j]);
+          }
+          if (!this.traditional[current.traditional]) {
+            this.traditional[current.traditional] = [];
+          }
+          for (let j = 0; j < definitions.length; j += 1) {
+            this.traditional[current.traditional].push(definitions[j]);
+          }
         }
       }
+      this.cache = undefined;
     }
-    this.cache = undefined;
   }
 
   search(word) {
+    this.start();
     return this.simplified[word] || this.traditional[word];
   }
 
