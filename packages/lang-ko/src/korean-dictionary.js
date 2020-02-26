@@ -27,6 +27,7 @@ const { conjugate } = require('./korean-conjugation');
 
 const dictionary = {};
 const names = {};
+let initialized = false;
 
 function build() {
   const keys = Object.keys(dict);
@@ -59,10 +60,16 @@ function buildNames() {
   }
 }
 
-build();
-buildNames();
+function initDicts() {
+  if (!initialized) {
+    build();
+    buildNames();
+    initialized = true;
+  }
+}
 
 module.exports = {
+  initDicts,
   dictionary,
   names,
 };
