@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/basic",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Basic dependencies for node",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -26,10 +26,10 @@
   },
   "dependencies": {
     "@nlpjs/console-connector": "^4.1.4",
-    "@nlpjs/core-loader": "^4.1.4",
+    "@nlpjs/core-loader": "^4.2.1",
     "@nlpjs/evaluator": "^4.0.0-rc.19",
     "@nlpjs/lang-en": "^4.1.4",
     "@nlpjs/logger": "^4.0.0-rc.12",
-    "@nlpjs/nlp": "^4.2.0"
+    "@nlpjs/nlp": "^4.2.1"
   }
 }
