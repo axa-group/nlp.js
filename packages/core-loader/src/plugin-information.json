@@ -53,5 +53,6 @@
   "MsbfConnector": { "className": "MsbfConnector", "path": "@nlpjs/msbf-connector" },
   "Nlp": { "className": "Nlp", "path": "@nlpjs/nlp" },
   "NluLuis": { "className": "NluLuis", "path": "@nlpjs/nlu-luis" },
+  "Qna": { "className": "QnaImporter", "path": "@nlpjs/qna-importer" },
   "Template": { "className": "Template", "path": "@nlpjs/evaluator"}
 }
