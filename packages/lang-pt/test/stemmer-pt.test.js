@@ -20,17 +20,28 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-const { Tokenizer } = require('@nlpjs/core');
 
-class TokenizerPt extends Tokenizer {
-  constructor(container, shouldTokenize) {
-    super(container, shouldTokenize);
-    this.name = 'tokenizer-pt';
-  }
+const { NormalizerPt, TokenizerPt, StemmerPt } = require('../src');
 
-  innerTokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+|[-'](?=[a-zA-Z])/).filter(x => x);
-  }
-}
+const normalizer = new NormalizerPt();
+const tokenizer = new TokenizerPt();
+const stemmer = new StemmerPt();
 
-module.exports = TokenizerPt;
+describe('Stemmer', () => {
+  describe('Constructor', () => {
+    test('It should create a new instance', () => {
+      const instance = new StemmerPt();
+      expect(instance).toBeDefined();
+    });
+  });
+
+  describe('Stem', () => {
+    test('Should stem "disse-me o que sua empresa desenvolve?"', () => {
+      const input = 'disse-me o que sua empresa desenvolve?';
+      const expected = ['diss', 'me', 'o', 'que', 'sua', 'empres', 'desenvolv'];
+      const tokens = tokenizer.tokenize(normalizer.normalize(input));
+      const actual = stemmer.stem(tokens);
+      expect(actual).toEqual(expected);
+    });
+  });
+});

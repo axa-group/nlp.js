@@ -85,5 +85,12 @@ describe('Stemmer', () => {
       const actual = stemmer.stem(tokens);
       expect(actual).toEqual(expected);
     });
+    test('Should stem "covid-19 covid19"', () => {
+      const input = 'covid-19 covid19';
+      const expected = ['covid-19', 'covid19'];
+      const tokens = tokenizer.tokenize(normalizer.normalize(input));
+      const actual = stemmer.stem(tokens);
+      expect(actual).toEqual(expected);
+    });
   });
 });

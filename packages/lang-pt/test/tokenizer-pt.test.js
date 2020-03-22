@@ -20,17 +20,33 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-const { Tokenizer } = require('@nlpjs/core');
 
-class TokenizerPt extends Tokenizer {
-  constructor(container, shouldTokenize) {
-    super(container, shouldTokenize);
-    this.name = 'tokenizer-pt';
-  }
+const { TokenizerPt } = require('../src');
 
-  innerTokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+|[-'](?=[a-zA-Z])/).filter(x => x);
-  }
-}
+const tokenizer = new TokenizerPt();
 
-module.exports = TokenizerPt;
+describe('Tokenizer', () => {
+  describe('Constructor', () => {
+    test('It should create a new instance', () => {
+      const instance = new TokenizerPt();
+      expect(instance).toBeDefined();
+    });
+  });
+
+  describe('Tokenize', () => {
+    test('Should tokenize "disse-me DISSE-ME covid-19 COVID-19 covid19"', () => {
+      const input = 'disse-me DISSE-ME covid-19 COVID-19 covid19';
+      const expected = [
+        'disse',
+        'me',
+        'DISSE',
+        'ME',
+        'covid-19',
+        'COVID-19',
+        'covid19',
+      ];
+      const actual = tokenizer.tokenize(input);
+      expect(actual).toEqual(expected);
+    });
+  });
+});
