@@ -305,10 +305,16 @@ class DomainManager extends Clonable {
         classifications = nluAnswer.classifications;
         input.nluAnswer = nluAnswer;
       }
-      const finalDomain =
-        domainName === defaultDomainName
-          ? this.intentDict[classifications[0].intent]
-          : domainName;
+      let finalDomain;
+      if (domainName === defaultDomainName) {
+        if (classifications && classifications.length) {
+          finalDomain = this.intentDict[classifications[0].intent];
+        } else {
+          finalDomain = defaultDomainName;
+        }
+      } else {
+        finalDomain = domainName;
+      }
       input.classification = {
         domain: finalDomain,
         classifications,
