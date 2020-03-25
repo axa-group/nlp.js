@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/core-loader",
-  "version": "4.2.1",
+  "version": "4.3.0",
   "description": "Core",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,8 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.1.4",
-    "@nlpjs/request": "^4.1.0"
+    "@nlpjs/core": "^4.3.0",
+    "@nlpjs/request": "^4.3.0"
   },
   "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8"
 }
