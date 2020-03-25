@@ -62,15 +62,26 @@ class SentimentAnalyzer extends Clonable {
   }
 
   prepare(locale, text, settings) {
-    const pipeline =
-      this.getPipeline(`${this.settings.tag}-prepare`) ||
-      this.getPipeline(`nlu-${locale || 'en'}-prepare`);
-    const input = {
-      text,
-      locale,
-      settings: settings || this.settings,
-    };
-    return this.runPipeline(input, pipeline);
+    const pipeline = this.getPipeline(`${this.settings.tag}-prepare`);
+    if (pipeline) {
+      const input = {
+        text,
+        locale,
+        settings: settings || this.settings,
+      };
+      return this.runPipeline(input, pipeline);
+    }
+    const stemmer =
+      this.container.get(`stemmer-${locale}`) ||
+      this.container.get(`stemmer-en`);
+    if (stemmer) {
+      return stemmer.tokenizeAndStem(text);
+    }
+    const normalized = text
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+    return normalized.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
   }
 
   async getDictionary(srcInput) {
