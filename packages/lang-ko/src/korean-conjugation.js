@@ -57,13 +57,13 @@ function build(lastChar, list) {
 }
 
 function buildCommon(onset, vowel) {
-  return ['ㅂ', 'ㅆ', 'ㄹ', 'ㄴ', 'ㅁ'].map(coda =>
+  return ['ㅂ', 'ㅆ', 'ㄹ', 'ㄴ', 'ㅁ'].map((coda) =>
     composeHangul(onset, vowel, coda)
   );
 }
 
 function buildNoPast(onset, vowel) {
-  return ['ㅂ', 'ㄹ', 'ㄴ', 'ㅁ'].map(coda =>
+  return ['ㅂ', 'ㄹ', 'ㄴ', 'ㅁ'].map((coda) =>
     composeHangul(onset, vowel, coda)
   );
 }
@@ -81,7 +81,7 @@ function conjugate(words, isAdjective) {
     if (lastChar === '하') {
       expandedLast = [
         ...build(lastChar, [0, 6, 10, 12]),
-        ...['ㅂ', 'ㅆ', 'ㄹ', 'ㄴ', 'ㅁ'].map(coda =>
+        ...['ㅂ', 'ㅆ', 'ㄹ', 'ㄴ', 'ㅁ'].map((coda) =>
           composeHangul('ㅎ', coda === 'ㅆ' ? 'ㅐ' : 'ㅏ', coda)
         ),
         ...build('하', [13, 5, 10]),
@@ -220,7 +220,7 @@ function conjugate(words, isAdjective) {
     } else if (lastCoda === 'ㅎ' && isAdjective) {
       expandedLast = [].concat(
         buildCommon(lastOnset, lastVowel),
-        ['ㅆ', 'ㄹ', 'ㅁ'].map(coda => composeHangul(lastOnset, 'ㅐ', coda)),
+        ['ㅆ', 'ㄹ', 'ㅁ'].map((coda) => composeHangul(lastOnset, 'ㅐ', coda)),
         [
           composeHangul(lastOnset, 'ㅐ'),
           composeHangul(lastOnset, lastVowel),
@@ -262,9 +262,9 @@ function conjugate(words, isAdjective) {
           lastChar,
         ]
       );
-      irregularExpansion = conjugation.map(s => newInit + s);
+      irregularExpansion = conjugation.map((s) => newInit + s);
     }
-    expanded.push(...expandedLast.map(s => init + s));
+    expanded.push(...expandedLast.map((s) => init + s));
     expanded.push(...irregularExpansion);
   }
 

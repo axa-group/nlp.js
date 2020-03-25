@@ -26,7 +26,7 @@ const PythonParser = require('../src/python-parser');
 function normalize(str) {
   return str
     .split('\n')
-    .map(x => x.trim())
+    .map((x) => x.trim())
     .join(' ')
     .trim();
 }

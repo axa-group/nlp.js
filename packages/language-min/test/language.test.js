@@ -27,9 +27,9 @@ const data = require('./testdata.json');
 
 function getLanguage() {
   const result = new Language();
-  Object.keys(data).forEach(script => {
+  Object.keys(data).forEach((script) => {
     const languages = data[script];
-    Object.keys(languages).forEach(name => {
+    Object.keys(languages).forEach((name) => {
       result.addModel(script, name, languages[name]);
     });
   });
@@ -168,7 +168,7 @@ describe('Language', () => {
       expect(guess.language).toEqual('Catalan');
       expect(guess.score).toEqual(1);
     });
-    Object.keys(fixtures).forEach(code => {
+    Object.keys(fixtures).forEach((code) => {
       const text = fixtures[code].fixture;
       const expected = fixtures[code].iso6393;
       it(`Should guess ${expected} for text ${text.substr(0, 50)}`, () => {

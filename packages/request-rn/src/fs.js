@@ -28,10 +28,10 @@ function isWeb(str) {
 }
 
 function readFile(fileName) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (isWeb(fileName)) {
       request(fileName)
-        .then(data => resolve(data))
+        .then((data) => resolve(data))
         .catch(() => resolve(undefined));
     } else {
       resolve(undefined);

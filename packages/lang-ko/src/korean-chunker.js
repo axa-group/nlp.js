@@ -107,7 +107,9 @@ function splitChunks(text) {
       let m = r.exec(text);
       while (m) {
         const cm = new ChunkMatch(m.index, m.index + m[0].length, m[0], pos);
-        if (chunksMatched.filter(c => cm.disjoint(c) === false).length === 0) {
+        if (
+          chunksMatched.filter((c) => cm.disjoint(c) === false).length === 0
+        ) {
           chunksMatched.push(cm);
           matchedLen += m[0].length;
         }
@@ -122,7 +124,7 @@ function splitChunks(text) {
 function chunk(input) {
   const l = [].concat(...splitBySpace(input).map(splitChunks));
   let segStart = 0;
-  const tokens = l.map(m => {
+  const tokens = l.map((m) => {
     segStart = input.indexOf(m.text, segStart);
     return new KoreanToken(m.text, m.pos, segStart, m.text.length);
   });
@@ -130,11 +132,11 @@ function chunk(input) {
 }
 
 function getChunks(input) {
-  return chunk(input).map(c => c.text);
+  return chunk(input).map((c) => c.text);
 }
 
 function getChunksByPos(input, pos) {
-  return chunk(input).filter(x => x.pos === pos);
+  return chunk(input).filter((x) => x.pos === pos);
 }
 
 module.exports = {

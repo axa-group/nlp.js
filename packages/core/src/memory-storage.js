@@ -45,12 +45,12 @@ class MemoryStorage extends Clonable {
   }
 
   read(keys) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const data = {};
       if (!Array.isArray(keys)) {
         keys = [keys];
       }
-      keys.forEach(key => {
+      keys.forEach((key) => {
         const item = this.settings.memory[key];
         if (item) {
           data[key] = JSON.parse(item);
@@ -70,7 +70,7 @@ class MemoryStorage extends Clonable {
 
   write(changes) {
     return new Promise((resolve, reject) => {
-      Object.keys(changes).forEach(key => {
+      Object.keys(changes).forEach((key) => {
         const newItem = changes[key];
         const oldStr = this.settings.memory[key];
         if (!oldStr || newItem.eTag === '*') {
@@ -88,8 +88,8 @@ class MemoryStorage extends Clonable {
   }
 
   delete(keys) {
-    return new Promise(resolve => {
-      keys.forEach(key => delete this.settings.memory[key]);
+    return new Promise((resolve) => {
+      keys.forEach((key) => delete this.settings.memory[key]);
       resolve();
     });
   }

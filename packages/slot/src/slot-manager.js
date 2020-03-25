@@ -96,7 +96,7 @@ class SlotManager {
   addBatch(intent, entities) {
     const result = [];
     if (entities && entities.length > 0) {
-      entities.forEach(entity => {
+      entities.forEach((entity) => {
         let slot = this.getSlot(intent, entity);
         if (!slot) {
           slot = this.addSlot(intent, entity);
@@ -172,7 +172,7 @@ class SlotManager {
     if (keys.length === 0) {
       return;
     }
-    keys.forEach(key => {
+    keys.forEach((key) => {
       delete context[key];
     });
   }

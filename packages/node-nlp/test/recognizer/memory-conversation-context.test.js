@@ -61,7 +61,7 @@ describe('MemoryConversation Context', () => {
       };
       const context = new MemoryConversationContext();
       expect.assertions(1);
-      return context.getConversationContext(session).catch(e => {
+      return context.getConversationContext(session).catch((e) => {
         expect(e.message).toEqual('No conversation id found');
       });
     });
@@ -143,7 +143,7 @@ describe('MemoryConversation Context', () => {
       const conversationContext = { a: 1 };
       return context
         .getConversationContext(session, conversationContext)
-        .catch(e => {
+        .catch((e) => {
           expect(e.message).toEqual('No conversation id found');
         });
     });

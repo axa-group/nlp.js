@@ -55,7 +55,7 @@ function process(obj, context) {
     return processString(obj, context);
   }
   if (Array.isArray(obj)) {
-    return obj.map(x => process(x, context));
+    return obj.map((x) => process(x, context));
   }
   if (typeof obj === 'object') {
     const keys = Object.keys(obj);

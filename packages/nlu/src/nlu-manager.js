@@ -220,8 +220,8 @@ class NluManager extends Clonable {
       locales = [locales];
     }
     const promises = locales
-      .filter(locale => this.domainManagers[locale])
-      .map(locale => this.domainManagers[locale].train(settings.settings));
+      .filter((locale) => this.domainManagers[locale])
+      .map((locale) => this.domainManagers[locale].train(settings.settings));
     return Promise.all(promises);
   }
 

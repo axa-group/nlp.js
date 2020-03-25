@@ -72,7 +72,7 @@ function reduceEdges(edges, useMaxLength = true) {
       }
     }
   }
-  return edges.filter(x => !x.discarded);
+  return edges.filter((x) => !x.discarded);
 }
 
 module.exports = reduceEdges;

@@ -44,7 +44,7 @@ class Stopwords {
   }
 
   removeStopwords(tokens) {
-    return tokens.filter(x => this.isNotStopword(x));
+    return tokens.filter((x) => this.isNotStopword(x));
   }
 
   run(srcInput) {
@@ -54,7 +54,7 @@ class Stopwords {
       const remover = this.container.get(`stopwords-${locale}`) || this;
       input.tokens = remover
         .removeStopwords(input.tokens, input)
-        .filter(x => x);
+        .filter((x) => x);
       return input;
     }
     return srcInput;

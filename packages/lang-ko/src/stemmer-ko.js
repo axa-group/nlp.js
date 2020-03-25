@@ -90,7 +90,7 @@ class StemmerKo extends BaseStemmer {
   }
 
   tokenize(text) {
-    const tokens = text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+    const tokens = text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
     const result = [];
     for (let i = 0; i < tokens.length; i += 1) {
       const token = tokens[i];
@@ -161,8 +161,8 @@ class StemmerKo extends BaseStemmer {
       .tokenize(this.normalizer.normalize(inputText))
       .join(' ');
     const tokens = tokenize(this.normalizer.normalize(newText))
-      .map(x => stemWord(this.prestem(x.trim())))
-      .filter(x => x);
+      .map((x) => stemWord(this.prestem(x.trim())))
+      .filter((x) => x);
     const result = [];
     for (let i = 0; i < tokens.length; i += 1) {
       const value = dictionary[tokens[i]];
@@ -190,8 +190,8 @@ class StemmerKo extends BaseStemmer {
     initDicts();
     const newText = this.tokenize(this.normalize(text)).join(' ');
     const tokens = tokenize(this.normalize(newText))
-      .map(x => stemWord(this.prestem(x.trim())))
-      .filter(x => x);
+      .map((x) => stemWord(this.prestem(x.trim())))
+      .filter((x) => x);
     const result = [];
     for (let i = 0; i < tokens.length; i += 1) {
       const value = dictionary[tokens[i]];

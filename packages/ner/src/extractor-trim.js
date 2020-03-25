@@ -270,7 +270,7 @@ class ExtractorTrim {
     if (!allRules) {
       return [];
     }
-    return allRules.filter(x => x.type === 'trim');
+    return allRules.filter((x) => x.type === 'trim');
   }
 
   extractFromRule(utterance, rule) {

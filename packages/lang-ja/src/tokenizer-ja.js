@@ -53,13 +53,13 @@ class TokenizerJa extends Tokenizer {
 
   removePuncTokens(tokens) {
     return tokens
-      .map(token =>
+      .map((token) =>
         token.replace(
           /[＿－・，、；：！？．。（）［］｛｝｢｣＠＊＼／＆＃％｀＾＋＜＝＞｜～≪≫─＄＂_\-･,､;:!?.｡()[\]{}「」@*/&#%`^+<=>|~«»$"\s]+/g,
           ''
         )
       )
-      .filter(token => token !== '');
+      .filter((token) => token !== '');
   }
 
   innerTokenize(srcText) {

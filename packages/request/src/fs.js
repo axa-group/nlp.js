@@ -29,10 +29,10 @@ function isWeb(str) {
 }
 
 function readFile(fileName) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (isWeb(fileName)) {
       request(fileName)
-        .then(data => resolve(data))
+        .then((data) => resolve(data))
         .catch(() => resolve(undefined));
     } else {
       try {
@@ -50,7 +50,7 @@ function writeFile(fileName, data, format = 'utf8') {
     if (isWeb(fileName)) {
       reject(new Error('File cannot be written in web'));
     } else {
-      fs.writeFile(fileName, data, format, err => {
+      fs.writeFile(fileName, data, format, (err) => {
         if (err) {
           reject(err);
         } else {

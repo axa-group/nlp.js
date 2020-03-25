@@ -268,11 +268,11 @@ class JavascriptCompiler {
 
   async walkFunction(node, context) {
     const newContext = {};
-    const keys = Object.keys(context).filter(x => x !== 'this');
-    keys.forEach(element => {
+    const keys = Object.keys(context).filter((x) => x !== 'this');
+    keys.forEach((element) => {
       newContext[element] = context[element];
     });
-    node.params.forEach(key => {
+    node.params.forEach((key) => {
       if (key.type === 'Identifier') {
         newContext[key.name] = null;
       }
@@ -283,7 +283,7 @@ class JavascriptCompiler {
         return this.failResult;
       }
     }
-    const vals = keys.map(key => context[key]);
+    const vals = keys.map((key) => context[key]);
     // eslint-disable-next-line
     const result = Function(keys.join(', '), 'return ' + unparse(node)).apply(
       null,

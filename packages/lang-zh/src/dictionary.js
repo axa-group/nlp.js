@@ -91,7 +91,7 @@ class Dictionary {
 
   getPinyin(char) {
     const definitions = this.search(char);
-    return definitions ? definitions.map(x => x.pinyin) : char;
+    return definitions ? definitions.map((x) => x.pinyin) : char;
   }
 
   getLongestMatch(text) {

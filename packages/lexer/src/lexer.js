@@ -153,7 +153,7 @@ class Lexer {
     if (this.isNameCharacter(letter, true)) {
       const name = this.nextByCondition(
         letter,
-        ch => ch && this.isNameCharacter(ch)
+        (ch) => ch && this.isNameCharacter(ch)
       );
       this.goBack();
       return new Token(name, Lexer.TokenType.Identifier);
@@ -163,7 +163,7 @@ class Lexer {
 
   nextString(quote) {
     if (quote === '"' || quote === "'") {
-      const value = this.nextByCondition('', ch => ch && ch !== quote);
+      const value = this.nextByCondition('', (ch) => ch && ch !== quote);
       return new Token(value, Lexer.TokenType.String);
     }
     return undefined;

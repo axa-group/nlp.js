@@ -128,10 +128,7 @@ class DomainManager extends Clonable {
     if (!Array.isArray(tokens)) {
       tokens = Object.keys(tokens);
     }
-    return tokens
-      .slice()
-      .sort()
-      .join();
+    return tokens.slice().sort().join();
   }
 
   add(domain, utterance, intent) {

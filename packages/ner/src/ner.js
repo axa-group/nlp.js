@@ -386,7 +386,7 @@ class Ner extends Clonable {
       utterance = locale;
       locale = 'es';
     }
-    const tokens = utterance.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+    const tokens = utterance.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
     const result = [];
     for (let i = 0; i < tokens.length; i += 1) {
       const token = tokens[i];

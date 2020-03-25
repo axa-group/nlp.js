@@ -87,7 +87,7 @@ class ActionManager extends Clonable {
   findActions(intent) {
     const dehydratedActions = this.actions[intent] || [];
 
-    return dehydratedActions.map(actionBundle => {
+    return dehydratedActions.map((actionBundle) => {
       return {
         ...actionBundle,
         fn: this.actionsMap[actionBundle.action],
@@ -103,7 +103,7 @@ class ActionManager extends Clonable {
   async processActions(intent, input) {
     const actionList = this.findActions(intent);
     if (typeof input === 'object') {
-      input.actions = actionList.map(x => ({
+      input.actions = actionList.map((x) => ({
         action: x.action,
         parameters: x.parameters,
       }));

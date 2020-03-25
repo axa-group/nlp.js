@@ -50,7 +50,7 @@ class ConsoleConnector extends Clonable {
       output: process.stdout,
       terminal: false,
     });
-    this.rl.on('line', async line => this.hear(line));
+    this.rl.on('line', async (line) => this.hear(line));
   }
 
   say(message, reference) {

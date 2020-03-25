@@ -35,10 +35,10 @@ const {
 
 function listFiles(folderPath, recursive = true) {
   if (fs.existsSync(folderPath)) {
-    const all = fs.readdirSync(folderPath).map(x => path.join(folderPath, x));
-    const files = all.filter(x => fs.statSync(x).isFile());
+    const all = fs.readdirSync(folderPath).map((x) => path.join(folderPath, x));
+    const files = all.filter((x) => fs.statSync(x).isFile());
     if (recursive) {
-      const dirs = all.filter(x => !files.includes(x));
+      const dirs = all.filter((x) => !files.includes(x));
       const dirFiles = dirs.reduce(
         (prev, current) => prev.concat(listFiles(current)),
         []
@@ -59,7 +59,7 @@ function getAbsolutePath(relative) {
 
 function listFilesAbsolute(folderPath, recursive = true) {
   const files = listFiles(folderPath, recursive);
-  return files.map(x => getAbsolutePath(x));
+  return files.map((x) => getAbsolutePath(x));
 }
 
 function loadEnv(fileName = '.env') {

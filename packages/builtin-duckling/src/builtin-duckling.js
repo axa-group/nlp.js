@@ -105,9 +105,9 @@ class BuiltinDuckling extends Clonable {
           'Content-Length': postData.length,
         },
       };
-      const req = this.client.request(options, res => {
+      const req = this.client.request(options, (res) => {
         let result = '';
-        res.on('data', chunk => {
+        res.on('data', (chunk) => {
           result += chunk;
         });
         res.on('end', () => {
@@ -118,9 +118,9 @@ class BuiltinDuckling extends Clonable {
             reject(err);
           }
         });
-        res.on('error', err => reject(err));
+        res.on('error', (err) => reject(err));
       });
-      req.on('error', err => reject(err));
+      req.on('error', (err) => reject(err));
       req.write(postData);
       req.end();
     });
@@ -215,7 +215,7 @@ class BuiltinDuckling extends Clonable {
   }
 
   transform(entities) {
-    return entities.map(x => this.transformEntity(x));
+    return entities.map((x) => this.transformEntity(x));
   }
 
   async findBuiltinEntities(utterance, language) {

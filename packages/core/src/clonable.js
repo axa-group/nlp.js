@@ -43,7 +43,7 @@ class Clonable {
    */
   applySettings(srcobj, settings = {}) {
     const obj = srcobj || {};
-    Object.keys(settings).forEach(key => {
+    Object.keys(settings).forEach((key) => {
       if (obj[key] === undefined) {
         obj[key] = settings[key];
       }

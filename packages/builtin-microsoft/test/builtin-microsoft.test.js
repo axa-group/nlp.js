@@ -131,7 +131,7 @@ const languages = [
 ];
 
 describe('NER Manager builtins', () => {
-  languages.forEach(language => {
+  languages.forEach((language) => {
     describe(`Numbers ${language.name}`, () => {
       addTests(numberTests, language.locale);
     });

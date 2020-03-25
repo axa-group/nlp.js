@@ -29,8 +29,9 @@ class AssignmentCommand extends Expression {
       options.names = {};
     }
     let code = this.transpileVars(options.names);
-    code = `${this.args[0].transpile()} ${this.args[2] ||
-      '='} ${this.args[1].transpile()};\n`;
+    code = `${this.args[0].transpile()} ${
+      this.args[2] || '='
+    } ${this.args[1].transpile()};\n`;
     if (options.exports) {
       code = `${code}${this.transpileExports(options.names)}`;
     }

@@ -30,7 +30,7 @@ class TokenizerBn extends Tokenizer {
   }
 
   innerTokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿।-]+/).filter(x => x);
+    return text.split(/[\s,.!?;:([\]'"¡¿।-]+/).filter((x) => x);
   }
 }
 

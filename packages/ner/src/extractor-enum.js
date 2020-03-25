@@ -183,7 +183,7 @@ class ExtractorEnum {
     if (!allRules) {
       return [];
     }
-    return allRules.filter(x => x.type === 'enum');
+    return allRules.filter((x) => x.type === 'enum');
   }
 
   normalize(str) {

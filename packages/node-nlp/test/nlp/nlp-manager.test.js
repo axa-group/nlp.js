@@ -47,7 +47,7 @@ describe('NLP Manager', () => {
     });
 
     test('You can pass transformer function with options', () => {
-      const transformer = x => x;
+      const transformer = (x) => x;
       const manager = new NlpManager({ processTransformer: transformer });
       expect(manager.settings.processTransformer).toEqual(transformer);
     });
@@ -1247,7 +1247,7 @@ describe('NLP Manager', () => {
     });
 
     test('Should call transformer function if it is passed', async () => {
-      const transformer = jest.fn(_ => _);
+      const transformer = jest.fn((_) => _);
       const manager = new NlpManager({
         processTransformer: transformer,
       });

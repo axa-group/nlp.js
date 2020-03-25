@@ -212,10 +212,10 @@ class Evaluator {
   walkFunction(node, context) {
     const newContext = {};
     const keys = Object.keys(context);
-    keys.forEach(element => {
+    keys.forEach((element) => {
       newContext[element] = context[element];
     });
-    node.params.forEach(key => {
+    node.params.forEach((key) => {
       if (key.type === 'Identifier') {
         newContext[key.name] = null;
       }
@@ -226,7 +226,7 @@ class Evaluator {
         return this.failResult;
       }
     }
-    const vals = keys.map(key => context[key]);
+    const vals = keys.map((key) => context[key]);
     // eslint-disable-next-line
     return Function(keys.join(', '), 'return ' + unparse(node)).apply(
       null,
@@ -250,8 +250,8 @@ class Evaluator {
   walkTaggedTemplate(node, context) {
     const tag = this.walk(node.tag, context);
     const { quasi } = node;
-    const strings = quasi.quasis.map(q => this.walk(q, context));
-    const values = quasi.expressions.map(e => this.walk(e, context));
+    const strings = quasi.quasis.map((q) => this.walk(q, context));
+    const values = quasi.expressions.map((e) => this.walk(e, context));
     // eslint-disable-next-line
     return tag.apply(null, [strings].concat(values));
   }

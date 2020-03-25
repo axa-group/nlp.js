@@ -59,7 +59,7 @@ function isKoreanNameVariation(word) {
   if (word.length < 3 || word.length > 5) {
     return false;
   }
-  const decomposed = [...word].map(c => decomposeHangul(c));
+  const decomposed = [...word].map((c) => decomposeHangul(c));
   const lastChar = decomposed[decomposed.length - 1];
   if (!codaMap[lastChar.onset]) {
     return false;

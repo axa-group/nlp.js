@@ -30,7 +30,7 @@ class LookupTable {
   }
 
   buildDatum(datum) {
-    Object.keys(datum[this.prop]).forEach(key => {
+    Object.keys(datum[this.prop]).forEach((key) => {
       if (this.table[key] === undefined) {
         this.table[key] = this.length;
         this.length += 1;
@@ -39,11 +39,11 @@ class LookupTable {
   }
 
   build(data) {
-    data.forEach(datum => this.buildDatum(datum));
+    data.forEach((datum) => this.buildDatum(datum));
   }
 }
 
-const toArray = values => Object.keys(values).map(key => values[key]);
+const toArray = (values) => Object.keys(values).map((key) => values[key]);
 
 function toHash(hash) {
   const currentLookup = {};
@@ -79,9 +79,9 @@ function lookupToObject(currentLookup, array) {
 
 function getTypedArrayFn(table) {
   const { length } = Object.keys(table);
-  return v => {
+  return (v) => {
     const result = new Float32Array(length);
-    Object.keys(v).forEach(word => {
+    Object.keys(v).forEach((word) => {
       const index = table[word];
       if (index !== undefined) {
         result[index] = v[word] || 0;

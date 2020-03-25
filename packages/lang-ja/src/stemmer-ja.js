@@ -181,7 +181,7 @@ class StemmerJa extends BaseStemmer {
    */
   toHiragana(str) {
     return [...str]
-      .map(ch => {
+      .map((ch) => {
         return ch > '\u30a0' && ch < '\u30f7'
           ? String.fromCharCode(ch.charCodeAt(0) + this.shiftToHiragana)
           : ch;
@@ -195,7 +195,7 @@ class StemmerJa extends BaseStemmer {
    */
   toKatakana(str) {
     return [...str]
-      .map(ch => {
+      .map((ch) => {
         return ch > '\u3040' && ch < '\u3097'
           ? String.fromCharCode(ch.charCodeAt(0) - this.shiftToHiragana)
           : ch;
@@ -331,7 +331,7 @@ class StemmerJa extends BaseStemmer {
    */
   convertToKatakana(text) {
     return this.parse(text)
-      .map(token => token.reading)
+      .map((token) => token.reading)
       .join(' ');
   }
 
@@ -342,7 +342,7 @@ class StemmerJa extends BaseStemmer {
   convertToRomaji(text) {
     return this.toRomaji(
       this.parse(text)
-        .map(token => token.reading)
+        .map((token) => token.reading)
         .join(' ')
     );
   }
@@ -369,24 +369,24 @@ class StemmerJa extends BaseStemmer {
     if (normalizeFormality) {
       tokens = this.formalityLevel(text).informalTokens;
     } else {
-      tokens = this.parse(text).map(token => token.reading);
+      tokens = this.parse(text).map((token) => token.reading);
     }
     tokens = tokens
-      .map(token =>
+      .map((token) =>
         token.replace(
           /[＿－・，、；：！？．。（）［］｛｝｢｣＠＊＼／＆＃％｀＾＋＜＝＞｜～≪≫─＄＂_\-･,､;:!?.｡()[\]{}「」@*/&#%`^+<=>|~«»$"\s]+/g,
           ''
         )
       )
-      .filter(token => token !== '');
+      .filter((token) => token !== '');
     const removeNumbers =
       input.removeNumbers === undefined ? true : input.removeNumbers;
     if (removeNumbers) {
-      tokens = tokens.filter(x => !this.isNumber(x));
+      tokens = tokens.filter((x) => !this.isNumber(x));
     }
     const stemMinLength =
       input.stemMinLength === undefined ? 2 : input.stemMinLength;
-    tokens = tokens.filter(x => x.length >= stemMinLength);
+    tokens = tokens.filter((x) => x.length >= stemMinLength);
     return tokens;
   }
 
@@ -430,8 +430,8 @@ class StemmerJa extends BaseStemmer {
   // - Kenjougo (謙譲語) (humble: lower own status)
   formalityLevel(text) {
     const tokens = this.parse(text)
-      .map(x => x.reading)
-      .filter(x => x && x !== ' ');
+      .map((x) => x.reading)
+      .filter((x) => x && x !== ' ');
     const informalTokens = [];
     const counts = {
       keigo: 0,
