@@ -27,6 +27,10 @@ class TokenizerFr extends Tokenizer {
     super(container, shouldTokenize);
     this.name = 'tokenizer-fr';
   }
+
+  innerTokenize(text) {
+    return text.split(/[\s,.!?;:([\]’'"¡¿)/]+/).filter((x) => x);
+  }
 }
 
 module.exports = TokenizerFr;
