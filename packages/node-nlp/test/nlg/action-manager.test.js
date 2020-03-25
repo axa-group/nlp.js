@@ -108,10 +108,10 @@ describe('Action Manager', () => {
     test('Should be able to find actions of an intent', () => {
       const manager = new ActionManager();
       manager.actionsMap = {
-        action1: input => input,
-        action2: input => input,
-        action3: input => input,
-        action4: input => input,
+        action1: (input) => input,
+        action2: (input) => input,
+        action3: (input) => input,
+        action4: (input) => input,
       };
       manager.addAction('intent1', 'action1', ['parameter1', 'parameter2']);
       manager.addAction('intent1', 'action2', ['parameter3', 'parameter4']);
@@ -164,14 +164,14 @@ describe('Action Manager', () => {
       const manager = new ActionManager();
       manager.actionsMap = {
         action1: (input, ...parameters) => {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             setTimeout(() => {
               resolve(`[${input}!${parameters.join(',')}]`);
             }, 0.3);
           });
         },
         action2: (input, ...parameters) => {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             setTimeout(() => {
               resolve(`#${input}!${parameters.join(',')}#`);
             }, 0.1);

@@ -50,7 +50,7 @@ class Tokenizer {
   }
 
   innerTokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+    return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
   }
 
   tokenize(text, normalize) {
@@ -61,7 +61,7 @@ class Tokenizer {
     const input = srcInput;
     const locale = input.locale || 'en';
     const tokenizer = this.container.get(`tokenizer-${locale}`) || this;
-    input.tokens = tokenizer.tokenize(input.text, input).filter(x => x);
+    input.tokens = tokenizer.tokenize(input.text, input).filter((x) => x);
     return input;
   }
 }

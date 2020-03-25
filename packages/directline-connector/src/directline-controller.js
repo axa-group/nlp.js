@@ -81,7 +81,7 @@ class DirectlineController {
   }
 
   createConversation() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const conversation = this.getConversation(undefined, true);
       const activity = this.createConversationUpdateActivity(conversation);
       if (this.botUrl) {
@@ -91,7 +91,7 @@ class DirectlineController {
           headers: {
             'Content-Type': 'application/json',
           },
-        }).then(response => {
+        }).then((response) => {
           resolve({
             status: response.status,
             body: {
@@ -113,7 +113,7 @@ class DirectlineController {
   }
 
   addActivity(conversationId, srcActivity) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (srcActivity.type !== 'typing') {
         const activity = this.createActivity(srcActivity, conversationId);
         const conversation = this.getConversation(conversationId, true);
@@ -125,7 +125,7 @@ class DirectlineController {
             headers: {
               'Content-Type': 'application/json',
             },
-          }).then(response => {
+          }).then((response) => {
             resolve({
               status: response.status,
               body: {
@@ -160,7 +160,7 @@ class DirectlineController {
                 channel: 'directline',
                 app: this.settings.container.name,
               })
-              .then(nlpresult => {
+              .then((nlpresult) => {
                 result.text =
                   nlpresult.answer || "Sorry, I didn't understand you";
                 conversation.history.push(result);
@@ -184,7 +184,7 @@ class DirectlineController {
   }
 
   getActivities(conversationId, watermark) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const conversation = this.getConversation(conversationId, true);
       const activities =
         conversation.history.length > watermark
@@ -201,7 +201,7 @@ class DirectlineController {
   }
 
   postActivityV3(conversationId, srcActivity) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const activity = srcActivity;
       activity.id = uuid();
       activity.from = {

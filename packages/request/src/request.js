@@ -79,9 +79,9 @@ function request(options) {
   }
 
   return new Promise((resolve, reject) => {
-    const req = client.request(options, res => {
+    const req = client.request(options, (res) => {
       let result = '';
-      res.on('data', chunk => {
+      res.on('data', (chunk) => {
         result += chunk;
       });
       res.on('end', () => {
@@ -92,9 +92,9 @@ function request(options) {
           resolve(result);
         }
       });
-      res.on('error', err => reject(err));
+      res.on('error', (err) => reject(err));
     });
-    req.on('error', err => reject(err));
+    req.on('error', (err) => reject(err));
     if (postData) {
       req.write(postData);
     }

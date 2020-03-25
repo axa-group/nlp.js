@@ -29,7 +29,9 @@ class TokenizerPt extends Tokenizer {
   }
 
   innerTokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+|[-'](?=[a-zA-Z])/).filter(x => x);
+    return text
+      .split(/[\s,.!?;:([\]'"¡¿)/]+|[-'](?=[a-zA-Z])/)
+      .filter((x) => x);
   }
 }
 

@@ -148,7 +148,7 @@ class Recognizer {
       const { locale } = session;
       this.conversationContext
         .getConversationContext(session)
-        .then(async srcContext => {
+        .then(async (srcContext) => {
           const context = srcContext;
           context.dialogId = this.getDialogId(session);
           const processResult = await this.process(context, locale, utterance);
@@ -173,7 +173,7 @@ class Recognizer {
       const { locale } = message;
       this.conversationContext
         .getConversationContext(session)
-        .then(async srcContext => {
+        .then(async (srcContext) => {
           const context = srcContext;
           const processResult = await this.process(context, locale, utterance);
           context.lastRecognized = processResult;
@@ -220,7 +220,7 @@ class Recognizer {
   recognizeTwice(session, cb) {
     this.conversationContext
       .getConversationContext(session)
-      .then(async srcContext => {
+      .then(async (srcContext) => {
         const context = srcContext;
         if (context.lastRecognized) {
           const processResult = context.lastRecognized;
@@ -258,7 +258,7 @@ class Recognizer {
   }
 
   executeAction(name, parameters, context) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const params = JSON.parse(`[${parameters}]`);
       if (this.actions[name]) {
         const action = this.actions[name](this, context, ...(params || []));
@@ -278,15 +278,15 @@ class Recognizer {
     }
     this.conversationContext
       .getConversationContext(session)
-      .then(async srcContext => {
+      .then(async (srcContext) => {
         const context = srcContext;
         const { actions } = response;
-        const promises = actions.map(action =>
+        const promises = actions.map((action) =>
           this.executeAction(action.action, action.parameters, context)
         );
         Promise.all(promises)
           .then(() => cb())
-          .catch(err => cb(err));
+          .catch((err) => cb(err));
       })
       .catch(async () => {
         return cb();

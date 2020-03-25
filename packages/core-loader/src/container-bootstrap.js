@@ -64,7 +64,9 @@ function loadPipelines(instance, fileName) {
     }
   } else if (fs.existsSync(fileName)) {
     if (fs.lstatSync(fileName).isDirectory()) {
-      const files = listFilesAbsolute(fileName).filter(x => x.endsWith('.md'));
+      const files = listFilesAbsolute(fileName).filter((x) =>
+        x.endsWith('.md')
+      );
       for (let i = 0; i < files.length; i += 1) {
         loadPipelines(instance, files[i]);
       }
@@ -81,7 +83,9 @@ function loadPlugins(instance, fileName) {
     }
   } else if (fs.existsSync(fileName)) {
     if (fs.lstatSync(fileName).isDirectory()) {
-      const files = listFilesAbsolute(fileName).filter(x => x.endsWith('.js'));
+      const files = listFilesAbsolute(fileName).filter((x) =>
+        x.endsWith('.js')
+      );
       for (let i = 0; i < files.length; i += 1) {
         loadPlugins(instance, files[i]);
       }
@@ -103,7 +107,7 @@ function traverse(obj, preffix) {
     return obj;
   }
   if (Array.isArray(obj)) {
-    return obj.map(x => traverse(x, preffix));
+    return obj.map((x) => traverse(x, preffix));
   }
   if (typeof obj === 'object') {
     const keys = Object.keys(obj);

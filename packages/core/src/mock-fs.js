@@ -22,7 +22,7 @@
  */
 
 function readFile() {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     resolve(undefined);
   });
 }

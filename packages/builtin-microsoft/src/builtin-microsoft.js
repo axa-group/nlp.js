@@ -296,7 +296,7 @@ class BuiltinMicrosoft extends Clonable {
     const result = [];
     const source = [];
     const culture = getCulture(locale);
-    this.settings.builtins.forEach(name => {
+    this.settings.builtins.forEach((name) => {
       try {
         const entities = Recognizers[`recognize${name}`](utterance, culture);
         if (name === 'Number' && locale !== 'en') {

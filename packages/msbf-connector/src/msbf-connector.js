@@ -53,7 +53,7 @@ class MsbfConnector extends Clonable {
       appPassword:
         this.settings.botPassword || process.env.MSBF_BOT_APP_PASSWORD,
     });
-    this.adapter.onTurnError = async context => {
+    this.adapter.onTurnError = async (context) => {
       await context.sendActivity('Oops. Something went wrong!');
     };
     let routePath = this.settings.apiPath;
@@ -69,7 +69,7 @@ class MsbfConnector extends Clonable {
     const logger = this.container.get('logger');
     logger.info(`Microsoft Bot Framework initialized at route ${routePath}`);
     server.post(routePath, (req, res) => {
-      this.adapter.processActivity(req, res, async context => {
+      this.adapter.processActivity(req, res, async (context) => {
         if (context.activity.type === ActivityTypes.Message) {
           try {
             const input = {

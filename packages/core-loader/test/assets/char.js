@@ -30,7 +30,7 @@ class Char {
 
   filter(srcInput) {
     const input = srcInput;
-    input.arr = input.arr.filter(x => !x.includes(input.excludeChars));
+    input.arr = input.arr.filter((x) => !x.includes(input.excludeChars));
     return input;
   }
 

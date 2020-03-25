@@ -48,7 +48,7 @@ function traverse(obj, preffix) {
     return obj;
   }
   if (Array.isArray(obj)) {
-    return obj.map(x => traverse(x, preffix));
+    return obj.map((x) => traverse(x, preffix));
   }
   if (typeof obj === 'object') {
     const keys = Object.keys(obj);

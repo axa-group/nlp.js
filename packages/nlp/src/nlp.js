@@ -482,7 +482,7 @@ class Nlp extends Clonable {
     const sentiment = await this.getSentiment(locale, utterance);
     output.sentiment = sentiment ? sentiment.sentiment : undefined;
     if (this.slotManager.process(output, context)) {
-      output.entities.forEach(entity => {
+      output.entities.forEach((entity) => {
         context[entity.entity] = entity.option || entity.utteranceText;
       });
     }

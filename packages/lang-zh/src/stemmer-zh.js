@@ -33,7 +33,7 @@ class StemmerZh {
   }
 
   definitionContains(arr, text) {
-    return arr.filter(x => x.definition.includes(text)).length > 0;
+    return arr.filter((x) => x.definition.includes(text)).length > 0;
   }
 
   parseDefinition(definitions) {
@@ -109,7 +109,7 @@ class StemmerZh {
     return this.clearText(result.join(' '))
       .toLowerCase()
       .split(' ')
-      .filter(x => x);
+      .filter((x) => x);
   }
 
   async stem(text, input) {

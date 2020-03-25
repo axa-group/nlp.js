@@ -69,7 +69,10 @@ class NlgManager extends NlgManagerBase {
       };
       const found = super.findAllAnswers(input);
       const filtered = super.filterAnswers(found);
-      return filtered.answers.map(x => ({ response: x.answer, opts: x.opts }));
+      return filtered.answers.map((x) => ({
+        response: x.answer,
+        opts: x.opts,
+      }));
     }
     return super.findAllAnswers(locale);
   }

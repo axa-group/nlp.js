@@ -169,7 +169,7 @@ describe('JavascriptCompiler', () => {
       expect(context).toEqual({ a: 7, b: 3 });
     });
     test('Should evaluate more complex expressions with functions provided by context', async () => {
-      const context = { n: 6, foo: x => x * 100, obj: { x: { y: 555 } } };
+      const context = { n: 6, foo: (x) => x * 100, obj: { x: { y: 555 } } };
       const evaluator = new JavascriptCompiler(container);
       const question = '1; 2; 3+4*10+n; foo(3+5); obj[""+"x"].y;';
       const answer = await evaluator.evaluateAll(question, context);
@@ -608,7 +608,7 @@ describe('JavascriptCompiler', () => {
       expect(result).toEqual(14);
     });
     test('It should return undefined when then member expression does not exists', async () => {
-      const context = { a: 12, b: x => x + 1 };
+      const context = { a: 12, b: (x) => x + 1 };
       const evaluator = new JavascriptCompiler(container);
       const question = 'c = [a, b]; d = e[0] + e[1];';
       const result = await evaluator.evaluate(question, context);

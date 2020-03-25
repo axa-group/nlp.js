@@ -97,7 +97,7 @@ class Language {
       {}
     );
     const tuples = [];
-    Object.keys(dictionary).forEach(key => {
+    Object.keys(dictionary).forEach((key) => {
       tuples.push([key, dictionary[key]]);
     });
     tuples.sort((a, b) => a[1] - b[1]);
@@ -106,7 +106,7 @@ class Language {
 
   static getDistance(trigrams, model) {
     let distance = 0;
-    trigrams.forEach(currentTrigram => {
+    trigrams.forEach((currentTrigram) => {
       distance +=
         currentTrigram[0] in model
           ? Math.abs(currentTrigram[1] - model[currentTrigram[0]] - 1)
@@ -160,7 +160,7 @@ class Language {
       return languages;
     }
     const filteredLanguages = {};
-    Object.keys(languages).forEach(language => {
+    Object.keys(languages).forEach((language) => {
       if (
         (whitelist.length === 0 || whitelist.indexOf(language) > -1) &&
         blacklist.indexOf(language) === -1
@@ -183,7 +183,7 @@ class Language {
     if (!languages) {
       return und();
     }
-    Object.keys(languages).forEach(language => {
+    Object.keys(languages).forEach((language) => {
       distances.push([
         language,
         Language.getDistance(trigrams, languages[language]),
@@ -223,7 +223,7 @@ class Language {
       }
       const min = distances[0][1];
       const max = value.length * 300 - min;
-      return distances.map(d => [d[0], 1 - (d[1] - min) / max || 0]);
+      return distances.map((d) => [d[0], 1 - (d[1] - min) / max || 0]);
     }
     return [[script[0], 1]];
   }
@@ -303,7 +303,7 @@ class Language {
       if (!data[script][iso3]) {
         data[script][iso3] = {};
       }
-      trigrams.forEach(trigram => {
+      trigrams.forEach((trigram) => {
         data[script][iso3][trigram] = 1;
       });
     }
@@ -315,7 +315,7 @@ class Language {
   }
 
   processExtraSentences() {
-    this.extraSentences.forEach(item => {
+    this.extraSentences.forEach((item) => {
       this.addTrigrams(item[0], item[1]);
     });
   }
@@ -348,9 +348,9 @@ class Language {
   }
 
   static buildModel() {
-    Object.keys(data).forEach(script => {
+    Object.keys(data).forEach((script) => {
       const languages = data[script];
-      Object.keys(languages).forEach(name => {
+      Object.keys(languages).forEach((name) => {
         Language.addModel(script, name, languages[name]);
       });
     });

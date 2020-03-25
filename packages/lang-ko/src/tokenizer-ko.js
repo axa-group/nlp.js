@@ -36,7 +36,7 @@ class TokenizerKo extends Tokenizer {
   }
 
   clean(text) {
-    const tokens = text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+    const tokens = text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
     const result = [];
     for (let i = 0; i < tokens.length; i += 1) {
       const token = tokens[i];
@@ -60,8 +60,8 @@ class TokenizerKo extends Tokenizer {
 
   innerTokenize(text) {
     const tokens = tokenize(this.clean(text));
-    const trimmed = tokens.map(x => x.trim());
-    const filtered = trimmed.filter(x => x);
+    const trimmed = tokens.map((x) => x.trim());
+    const filtered = trimmed.filter((x) => x);
     return filtered;
   }
 }

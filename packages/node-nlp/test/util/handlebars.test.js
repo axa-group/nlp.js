@@ -48,7 +48,7 @@ describe('Handlebars', () => {
       const context = {
         name: 'Jesus',
         a: 43,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const answer = Handlebars.compile('Hello {{ name }} {{ double(a) }}')(
         context
@@ -60,7 +60,7 @@ describe('Handlebars', () => {
         name: 'Jesus',
         a: 43,
         b: 10,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const answer = Handlebars.compile('Hello {{ name }} {{ double(a + b) }}')(
         context
@@ -72,7 +72,7 @@ describe('Handlebars', () => {
         name: 'Jesus',
         a: 43,
         b: 10,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const answer = Handlebars.compile([
         'Hello {{ name }}',
@@ -85,7 +85,7 @@ describe('Handlebars', () => {
         name: 'Jesus',
         a: 43,
         b: 10,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const obj = {
         name: '{{ name }}',

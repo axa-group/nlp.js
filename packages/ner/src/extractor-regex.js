@@ -35,7 +35,7 @@ class ExtractorRegex {
     if (!allRules) {
       return [];
     }
-    return allRules.filter(x => x.type === 'regex');
+    return allRules.filter((x) => x.type === 'regex');
   }
 
   getMatchs(utterance, regex) {

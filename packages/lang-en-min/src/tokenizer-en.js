@@ -49,7 +49,7 @@ class TokenizerEn extends Tokenizer {
     };
 
     const result = [];
-    arr.forEach(item => {
+    arr.forEach((item) => {
       const lowitem = item.toLowerCase();
       if (contractionsBase[lowitem]) {
         result.push(...contractionsBase[lowitem]);
@@ -62,7 +62,7 @@ class TokenizerEn extends Tokenizer {
 
   innerTokenize(text) {
     const replaced = this.replace(text);
-    const arr = replaced.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter(x => x);
+    const arr = replaced.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
     return this.replaceContractions(arr, text);
   }
 }

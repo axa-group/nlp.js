@@ -126,7 +126,7 @@ class TokenizerTh extends Tokenizer {
             current.isDiscarded = true;
           }
         }
-        tokens = tokens.filter(x => !x.isDiscarded);
+        tokens = tokens.filter((x) => !x.isDiscarded);
       }
     }
     return tokens;
@@ -160,7 +160,7 @@ class TokenizerTh extends Tokenizer {
           });
         }
       }
-      currentChains = currentChains.filter(x => x);
+      currentChains = currentChains.filter((x) => x);
     }
     const edges = this.reduceEdges(potentialTokens);
     let index = 0;

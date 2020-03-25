@@ -62,7 +62,7 @@ describe('Compile', () => {
       const context = {
         name: 'Jesus',
         a: 43,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const answer = compile('Hello {{ name }} {{ double(a) }}')(context);
       expect(answer).toEqual('Hello Jesus 86');
@@ -72,7 +72,7 @@ describe('Compile', () => {
         name: 'Jesus',
         a: 43,
         b: 10,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const answer = compile('Hello {{ name }} {{ double(a + b) }}')(context);
       expect(answer).toEqual('Hello Jesus 106');
@@ -82,7 +82,7 @@ describe('Compile', () => {
         name: 'Jesus',
         a: 43,
         b: 10,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const answer = compile([
         'Hello {{ name }}',
@@ -95,7 +95,7 @@ describe('Compile', () => {
         name: 'Jesus',
         a: 43,
         b: 10,
-        double: x => x * 2,
+        double: (x) => x * 2,
       };
       const obj = {
         name: '{{ name }}',
