@@ -63,10 +63,10 @@ describe('Sentiment Manager', () => {
       const utterance = 'আমি বিড়াল ভালবাসি, খুব সুন্দর';
       const result = await sentiment.process('bn', utterance);
       expect(result).toBeDefined();
-      expect(result.score).toEqual(1.4);
+      expect(result.score).toEqual(5.5);
       expect(result.numWords).toEqual(5);
-      expect(result.numHits).toEqual(1);
-      expect(result.comparative).toEqual(0.27999999999999997);
+      expect(result.numHits).toEqual(2);
+      expect(result.comparative).toEqual(1.1);
       expect(result.type).toEqual('afinn');
       expect(result.language).toEqual('bn');
       expect(result.vote).toEqual('positive');
@@ -102,7 +102,7 @@ describe('Sentiment Manager', () => {
       const result = await sentiment.process('de', utterance);
       expect(result).toBeDefined();
       expect(result.score).toBeLessThan(0);
-      expect(result.numWords).toEqual(6);
+      expect(result.numWords).toEqual(7);
       expect(result.numHits).toEqual(2);
       expect(result.type).toEqual('senticon');
       expect(result.language).toEqual('de');
