@@ -32,12 +32,35 @@ class NeuralNlu extends Nlu {
     return input;
   }
 
+  getBestIntent(classifications) {
+    let best;
+    let bestClassification = 0;
+    const keys = Object.keys(classifications);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (classifications[keys[i]] > bestClassification) {
+        best = keys[i];
+        bestClassification = classifications[keys[i]];
+      }
+    }
+    return best;
+  }
+
   innerProcess(srcInput) {
     const input = srcInput;
     if (!this.neuralNetwork) {
       input.classifications = { None: 1 };
     } else {
       input.classifications = this.neuralNetwork.run(input.tokens);
+    }
+    const intent = this.getBestIntent(input.classifications);
+    if (
+      input.settings &&
+      input.settings.returnExplanation &&
+      intent &&
+      this.neuralNetwork &&
+      intent !== 'None'
+    ) {
+      input.explanation = this.neuralNetwork.explain(input.tokens, intent);
     }
     return input;
   }
