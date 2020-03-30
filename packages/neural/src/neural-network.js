@@ -82,6 +82,26 @@ class NeuralNetwork extends Clonable {
     return undefined;
   }
 
+  explain(input, intent) {
+    const keys = Object.keys(input);
+    const result = {};
+    for (let i = 0; i < keys.length; i += 1) {
+      const key = keys[i];
+      const index = this.inputLookup[key];
+      if (index) {
+        result[key] = this.perceptrons[this.outputLookup[intent]].weights[
+          index
+        ];
+      } else {
+        result[key] = 0;
+      }
+    }
+    return {
+      weights: result,
+      bias: this.perceptrons[this.outputLookup[intent]].bias,
+    };
+  }
+
   runInput(input) {
     this.inputs = input;
     const { alpha } = this.perceptronSettings;

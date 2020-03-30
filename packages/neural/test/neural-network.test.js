@@ -104,4 +104,16 @@ describe('Neural Network', () => {
       expect(actual.birthday).toBeGreaterThan(0.75);
     });
   });
+
+  describe('Explain', () => {
+    test('explain', () => {
+      const net = new NeuralNetwork();
+      net.train(corpus);
+      const explanation = net.explain({ when: 1, birthday: 1 }, 'birthday');
+      expect(explanation.weights).toBeDefined();
+      expect(explanation.weights.when).toEqual(4.578855037689209);
+      expect(explanation.weights.birthday).toEqual(3.949134349822998);
+      expect(explanation.bias).toEqual(1.4713854180518258);
+    });
+  });
 });

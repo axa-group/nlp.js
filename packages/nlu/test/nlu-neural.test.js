@@ -78,5 +78,36 @@ describe('NLU Neural', () => {
       }
       expect(good).toBeGreaterThan(194);
     });
+    test('It can explain the results', async () => {
+      const nlu = new NluNeural(
+        { locale: 'en', returnExplanation: true },
+        bootstrap()
+      );
+      await nlu.train(corpus);
+      const result = await nlu.process('what develop your company');
+      expect(result.explanation).toBeDefined();
+      expect(result.explanation).toEqual([
+        {
+          stem: 'what',
+          token: 'what',
+          weight: 0,
+        },
+        {
+          stem: 'develop',
+          token: 'develop',
+          weight: 2.3145315647125244,
+        },
+        {
+          stem: 'your',
+          token: 'your',
+          weight: 1.1261751651763916,
+        },
+        {
+          stem: 'company',
+          token: 'company',
+          weight: 5.1498212814331055,
+        },
+      ]);
+    });
   });
 });
