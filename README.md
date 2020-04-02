@@ -163,7 +163,7 @@ Some Limitations:
 
 ## Example of use
 
-You can see a great example of use at the folder [`/examples/console-bot`](https://github.com/axa-group/nlp.js/tree/master/examples/console-bot). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
+You can see a great example of use at the folder [`/examples/02-qna-classic`](https://github.com/axa-group/nlp.js/tree/master/examples/02-qna-classic). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
 
 You can start to build your NLP from scratch with few lines:
 
