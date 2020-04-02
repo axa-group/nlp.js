@@ -159,7 +159,7 @@ Some Limitations:
 - No Chinese
 - Japanese stemmer is not the complete one
 - No excel import
-- No load from file neither save to file, but it still has import form json and export to json.
+- No loading from a file neither save to a file, but it still has import form json and export to json.
 
 ## Example of use
 
