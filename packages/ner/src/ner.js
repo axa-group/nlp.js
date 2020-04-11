@@ -423,16 +423,35 @@ class Ner extends Clonable {
   }
 
   toJSON() {
+    // easy RegExp serialization: https://stackoverflow.com/questions/12075927/serialization-of-regexp
+    RegExp.prototype.toJSON = RegExp.prototype.toString;
+
     const result = {
       settings: { ...this.settings },
-      rules: this.rules,
+      rules: { ...this.rules },
     };
+
     delete result.settings.container;
     return result;
   }
 
   fromJSON(json) {
     this.applySettings(this.settings, json.settings);
+
+    const rulesKeys = Object.keys(json.rules);
+
+    rulesKeys.forEach((rKey) => {
+      const entityKeys = Object.keys(json.rules[rKey]);
+
+      entityKeys.forEach((eKey) => {
+        if (json.rules[rKey][eKey].type === 'regex') {
+          json.rules[rKey][eKey].rules = json.rules[rKey][
+            eKey
+          ].rules.map((rule) => Ner.str2regex(rule));
+        }
+      });
+    });
+
     this.rules = json.rules;
   }
 }
