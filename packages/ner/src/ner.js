@@ -424,6 +424,7 @@ class Ner extends Clonable {
 
   toJSON() {
     // easy RegExp serialization: https://stackoverflow.com/questions/12075927/serialization-of-regexp
+    // eslint-disable-next-line no-extend-native
     RegExp.prototype.toJSON = RegExp.prototype.toString;
 
     const result = {
