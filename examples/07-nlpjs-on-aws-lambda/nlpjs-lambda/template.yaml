@@ -27,7 +27,6 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: nlpjs/
-      AutoPublishAlias: poc
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       # MemorySize: 128
