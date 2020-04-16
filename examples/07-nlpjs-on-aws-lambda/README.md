@@ -54,6 +54,24 @@ Now, you can define the alias inside usual files related to profile on your syst
 
 On Windows you must to install the tool or remember all this command and apply it as a substitution each time you read the command "**`aws`**" on this document.
 
+Another valid trick on all platforms is to compose a script and put it on some place available on the PATH:
+
+**`Linux/MacOS`**
+
+```shell
+#!/bin/bash
+
+docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli $*
+```
+
+**`Windows`**
+
+```shell
+@echo off
+
+docker run --rm -ti -v <your home path where the '.aws' directory is>/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli $*
+```
+
 ## CREATE A PROJECT
 
 On this example we will use NodeJs (Javascript) as tech stack and we will follow (more or less) the [published guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html). You can see a lot of [examples published on a "official" repository](https://github.com/aws-samples/serverless-app-examples/tree/master/javascript).
@@ -152,11 +170,6 @@ You will need to create the table inside your local DyanamoDB before you call th
 In fact, the region does not matters because the important point is the endpoint URL where you are specifying that you want "to manage" your local DynamoDB. It is only required because the command will fail if not specified.
 
 Taking a look inside the file **`engine.js`**, on lines 8 and 10, you will see a reference to a environment variable defined by the tool **`sam`** and which allows to detect if we are working locally, on this case, the instance of the DynamoDb client will have the endpoint URL redefined.
-
-Now, the endpoints reflected to test locally will be something like:
-
-- <http://127.0.0.1:3000/talkDyDB>
-- <http://127.0.0.1:3000/talkDyDB?phrase=hello>
 
 ## DEPLOYING
 
