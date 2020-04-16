@@ -93,7 +93,6 @@ class Nlu extends Clonable {
         '.convertToArray',
         '.filterNonActivated',
         '.normalizeClassifications',
-        'output.classifications',
       ],
       false
     );
@@ -354,16 +353,41 @@ class Nlu extends Clonable {
     return this.runPipeline(input, this.pipelineTrain);
   }
 
+  async getExplanation(input, explanation) {
+    if (!explanation) {
+      return undefined;
+    }
+    const normalized = await this.container.get('normalize').run(input);
+    const tokenized = await this.container.get('tokenize').run(normalized);
+    const { tokens } = tokenized;
+    const stemmed = await this.container.get('stem').run(tokenized);
+    const stems = stemmed.tokens;
+    const result = [];
+    for (let i = 0; i < tokens.length; i += 1) {
+      const stem = stems[i];
+      result.push({
+        token: tokens[i],
+        stem,
+        weight: explanation.weights[stem],
+      });
+    }
+    return result;
+  }
+
   async process(utterance, settings) {
     const input = {
       text: utterance,
       settings: this.applySettings(settings || {}, this.settings),
     };
     const output = await this.runPipeline(input, this.pipelineProcess);
-    if (Array.isArray(output)) {
+    if (Array.isArray(output.classifications)) {
+      const explanation = input.settings.returnExplanation
+        ? await this.getExplanation(input, output.explanation)
+        : undefined;
       return {
-        classifications: output,
+        classifications: output.classifications,
         entities: undefined,
+        explanation,
       };
     }
     if (output.intents) {
