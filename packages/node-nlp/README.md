@@ -22,9 +22,8 @@
 - NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance, and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
 - 40 languages with stemmers supported: Arabic (ar), Armenian (hy), Bengali (bn), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), Galician (gl), German (de), Greek (el), Hindi (hi), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Korean (ko), Lithuanian (lt), Malay (ms), Nepali (ne), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Serbian (sr), Slovene (sl), Spanish (es), Swedish (sv), Tagalog (tl), Tamil (ta), Thai (th), Turkish (tr), Ukrainian (uk)
 - Any other language is supported through tokenization, even fantasy languages
-<div align="center">
-<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
-</div>
+
+![hybridbot](../../screenshots/hybridbot.gif)
 
 ## New in version 3!
 
@@ -126,6 +125,7 @@ There is a version of NLP.js that works in React Native, so you can build chatbo
 ```
 
 Some Limitations:
+
 - No Chinese
 - Japanese stemmer is not the complete one
 - No excel import
@@ -220,7 +220,9 @@ You can log the progress into console:
 ```javascript
 const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: true } });
 ```
+
 Or you can provide your own log function:
+
 ```javascript
 const logfn = (status, time) => console.log(status, time);
 const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
@@ -228,19 +230,17 @@ const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
 
 ## Contributing
 
-You can read the guide of how to contribute at [Contributing](https://github.com/axa-group/nlp.js/blob/master/CONTRIBUTING.md).
+You can read the guide of how to contribute at [Contributing](../../CONTRIBUTING.md).
 
 ## Contributors
 
-<a href="https://github.com/axa-group/nlp.js/graphs/contributors">
-  <img src="https://contributors-img.firebaseapp.com/image?repo=axa-group/nlp.js" />
-</a>
+[![Contributors](https://contributors-img.firebaseapp.com/image?repo=axa-group/nlp.js)](https://github.com/axa-group/nlp.js/graphs/contributors)
 
 Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
 ## Code of Conduct
 
-You can read the Code of Conduct at [Code of Conduct](https://github.com/axa-group/nlp.js/blob/master/CODE_OF_CONDUCT.md).
+You can read the Code of Conduct at [Code of Conduct](../../CODE_OF_CONDUCT.md).
 
 ## Who is behind it?
 

@@ -258,7 +258,7 @@ const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
 
 ## Contributing
 
-You can read the guide of how to contribute at [Contributing](https://github.com/axa-group/nlp.js/blob/master/CONTRIBUTING.md).
+You can read the guide of how to contribute at [Contributing](CONTRIBUTING.md).
 
 ## Contributors
 
@@ -270,7 +270,7 @@ Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
 ## Code of Conduct
 
-You can read the Code of Conduct at [Code of Conduct](https://github.com/axa-group/nlp.js/blob/master/CODE_OF_CONDUCT.md).
+You can read the Code of Conduct at [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Who is behind it?
 
