@@ -17,6 +17,7 @@ And also pipelines can be registered. Pipelines are sequences of commands that a
 ## Plugins
 
 At the plugins folder you will find some different classes with atomics tasks:
+
 - *split*: given an object with a property _text_, split this text into an array of characters into the property _splitted_
 - *reverse*: given an object with a property _splitted_ that is an array, reverse this array
 - *join*: given an object with a property _splitted_ that is an array, join this array into an string into the property _text_
@@ -48,6 +49,7 @@ output.text
 ```
 
 *reverse*, *reverse-and-$ast* and *reverse-and-capitalize* are pipelines. Each one contains commands to be executed in sequence. As you can see, the commands are the name of the plugins, except some exceptions:
+
 - *output.text*: this is telling that at this step take a look at the output object (the one that is returned by the previous step) and from it extract the property text before going to the next step
 - *$reverse*: When you start a name with the $ that means not to execute a plugin but to call another pipeline using as input the current output.
 - *$super*: This is to call the parent. You can see that *reverse-and-&ast* have an asterisk at the end, this is a wildchar, so will be the parent of those pipelines that match this pattern, in this case *reverse-and-capitalize* match this name so if a child pipeline.
@@ -56,11 +58,14 @@ output.text
 ## Creating a container
 
 This is the way of creating a bootstrapped container:
+
 ```javascript
 const { containerBootstrap } = require('@nlpjs/core');
 const container = containerBootstrap()
 ```
+
 This automatically will:
+
 - load the .env file if exists as environment variables
 - load the conf.json file if exists as configuration (will be explained in other example).
 - If the conf.json file does not exists or it does not includes a pipelines path, then load the ./pipelines.md by default as pipelines
