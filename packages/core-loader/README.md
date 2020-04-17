@@ -29,10 +29,10 @@
 
 ## Installation
 
-You can install @nlpjs/core:
+You can install @nlpjs/core-loader:
 
 ```bash
-    npm install @nlpjs/core
+    npm install @nlpjs/core-loader
 ```
 
 ## Container
@@ -91,7 +91,7 @@ output.text
 This is the way of creating a bootstrapped container:
 
 ```javascript
-const { containerBootstrap } = require('@nlpjs/core');
+const { containerBootstrap } = require('@nlpjs/core-loader');
 const container = containerBootstrap()
 ```
 
@@ -109,7 +109,7 @@ Important: this input usually travel through each step of the pipeline, so can b
 This is an example of code calling the pipeline *reverse-and-capitalize*, that shows how to do inheritance of pipelines, call other pipelines, and have commands that are only executed if the depth of the call is 0 (belongs to the called pipeline).
 
 ```javascript
-const { containerBootstrap } = require('@nlpjs/core');
+const { containerBootstrap } = require('@nlpjs/core-loader');
 
 async function main() {
   const container = containerBootstrap();
