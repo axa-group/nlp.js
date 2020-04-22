@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
-    "node-nlp": "^4.3.0"
+    "node-nlp": "^4.3.0",
+    "chai": "4.2.0"
   }
 }

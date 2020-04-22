@@ -4,6 +4,7 @@
   "main": "app.js",
   "dependencies": {
     "node-nlp": "^4.3.0",
-    "aws-sdk": "^2.656.0"
+    "aws-sdk": "^2.656.0",
+    "chai": "4.2.0"
   }
 }
