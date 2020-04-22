@@ -13,7 +13,8 @@ if (NOT_PROD_ENV) console.info('>>>>>>>>>>>>>>>>>>> DynamoDb:', dynamoDB);
 
 const documentClient = new aws.DynamoDB.DocumentClient();
 
-const { NlpManager } = require('node-nlp');
+// const { NlpManager } = require('node-nlp');
+const { NlpManager } = require('../../../../packages/node-nlp/src');
 
 const DEFAULT_LANGUAGE = 'en';
 

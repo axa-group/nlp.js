@@ -3,7 +3,8 @@
 
 const fs = require('fs');
 
-const { NlpManager } = require('node-nlp');
+// const { NlpManager } = require('node-nlp');
+const { NlpManager } = require('../../../../packages/node-nlp/src');
 
 const DEFAULT_PHRASE = 'Hi';
 

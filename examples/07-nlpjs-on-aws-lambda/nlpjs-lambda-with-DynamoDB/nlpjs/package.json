@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
-    "node-nlp": "^4.3.0"
-  },
-  "devDependencies": {
+    "node-nlp": "^4.3.0",
     "aws-sdk": "^2.656.0"
   }
 }
