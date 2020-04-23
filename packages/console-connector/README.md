@@ -1,6 +1,4 @@
-<div align="center">
-<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlplogo.gif" width="925" height="auto"/>
-</div>
+![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/console-connector
 
@@ -20,7 +18,8 @@
 - [Code of Conduct](#code-of-conduct)
 - [Who is behind it](#who-is-behind-it)
 - [License](#license.md)
-  <!--te-->
+
+<!--te-->
 
 ## Installation
 
@@ -29,6 +28,10 @@ You can install @nlpjs/console-connector:
 ```bash
     npm install @nlpjs/console-connector
 ```
+
+## Example of use
+
+This is a little bit special component. It allows to manage scenarios where the main interface way is the console. You can find an example of use on **`examples/02-qna-classic`**.
 
 ## Contributing
 
@@ -44,7 +47,7 @@ Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
 You can read the Code of Conduct at [Code of Conduct](../../CODE_OF_CONDUCT.md).
 
-## Who is behind it?
+## Who is behind it`?`
 
 This project is developed by AXA Group Operations Spain S.A.
 
