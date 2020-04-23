@@ -1,6 +1,4 @@
-<div align="center">
-<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlplogo.gif" width="925" height="auto"/>
-</div>
+![NLPjs logo](screenshots/nlplogo.gif)
 
 # NLP.js
 
@@ -24,13 +22,13 @@
 - NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance, and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
 - 40 languages with stemmers supported: Arabic (ar), Armenian (hy), Bengali (bn), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), Galician (gl), German (de), Greek (el), Hindi (hi), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Korean (ko), Lithuanian (lt), Malay (ms), Nepali (ne), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Serbian (sr), Slovene (sl), Spanish (es), Swedish (sv), Tagalog (tl), Tamil (ta), Thai (th), Turkish (tr), Ukrainian (uk)
 - Any other language is supported through tokenization, even fantasy languages
-<div align="center">
-<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/hybridbot.gif" width="auto" height="auto"/>
-</div>
 
-## New in version 4!
+![Hibridbot](screenshots/hybridbot.gif)
+
+## New in version 4`!`
 
 The version 4 is very different from previous versions. Until this version, NLP.js was a monolithic library. The big changes:
+
 - Now is splitted into small independant packages.
 - So every language has its own package
 - It provides a plugin system, so you can provide your own plugins or replace the existing ones.
@@ -251,7 +249,9 @@ You can log the progress into console:
 ```javascript
 const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: true } });
 ```
+
 Or you can provide your own log function:
+
 ```javascript
 const logfn = (status, time) => console.log(status, time);
 const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
@@ -263,9 +263,7 @@ You can read the guide of how to contribute at [Contributing](CONTRIBUTING.md).
 
 ## Contributors
 
-<a href="https://github.com/axa-group/nlp.js/graphs/contributors">
-  <img src="https://contributors-img.firebaseapp.com/image?repo=axa-group/nlp.js" />
-</a>
+[![Contributors](https://contributors-img.firebaseapp.com/image?repo=axa-group/nlp.js)](https://github.com/axa-group/nlp.js/graphs/contributors)
 
 Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
@@ -273,7 +271,7 @@ Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
 You can read the Code of Conduct at [Code of Conduct](CODE_OF_CONDUCT.md).
 
-## Who is behind it?
+## Who is behind it`?`
 
 This project is developed by AXA Group Operations Spain S.A.
 
