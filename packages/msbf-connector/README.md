@@ -42,7 +42,7 @@ Made with [contributors-img](https://contributors-img.firebaseapp.com).
 
 You can read the Code of Conduct at [Code of Conduct](../../CODE_OF_CONDUCT.md).
 
-## Who is behind it?
+## Who is behind it`?`
 
 This project is developed by AXA Group Operations Spain S.A.
 
