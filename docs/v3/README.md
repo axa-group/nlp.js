@@ -1,6 +1,4 @@
-<div align="center">
-<img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/nlplogo.gif" width="925" height="auto"/>
-</div>
+![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # NLP.js
 
