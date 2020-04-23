@@ -156,6 +156,7 @@ There is a version of NLP.js that works in React Native, so you can build chatbo
 ```
 
 Some Limitations:
+
 - No Chinese
 - Japanese stemmer is not the complete one
 - No excel import
