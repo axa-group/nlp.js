@@ -36,6 +36,16 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
       other.len <= edge.len
     ) {
       // Do nothing! entities have same priority
+      if (
+        other.start === edge.start &&
+        other.end === edge.end &&
+        other.type === 'enum' &&
+        edge.type === 'enum' &&
+        other.entity === edge.entity &&
+        other.option === edge.option
+      ) {
+        other.discarded = true;
+      }
     } else if (
       (useMaxLength ||
         other.entity === edge.entity ||

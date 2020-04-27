@@ -268,7 +268,9 @@ class DomainManager extends Clonable {
       });
       const intents = Object.keys(this.intentDict);
       for (let i = 0; i < intents.length; i += 1) {
-        classifications.push({ intent: intents[i], score: 0 });
+        if (intents[i] !== resolved.intent) {
+          classifications.push({ intent: intents[i], score: 0 });
+        }
       }
       return { domain: resolved.domain, classifications };
     }
