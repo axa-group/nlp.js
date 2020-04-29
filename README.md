@@ -64,7 +64,7 @@ The version 4 is very different from previous versions. Until this version, NLP.
   - [Adding logic to an intent](docs/v4/quickstart.md#adding-logic-to-an-intent)
 - [Web and React Native](docs/v4/webandreact.md)
   - [Preparing to generate a bundle](docs/v4/webandreact.md#preparing-to-generate-a-bundle)
-  - [Your fist web NLP](docs/v4/webandreact.md#your-first-web-nlp)
+  - [Your first web NLP](docs/v4/webandreact.md#your-first-web-nlp)
   - [Creating a distributable version](docs/v4/quickstart.md#creating-a-distributable-version)
   - [Load corpus from URL](docs/v4/quickstart.md#load-corpus-from-url)
 - [QnA](docs/v4/qna.md)
@@ -159,11 +159,11 @@ Some Limitations:
 - No Chinese
 - Japanese stemmer is not the complete one
 - No excel import
-- No load from file neither save to file, but it still has import form json and export to json.
+- No loading from a file neither save to a file, but it still has import form json and export to json.
 
 ## Example of use
 
-You can see a great example of use at the folder [`/examples/console-bot`](https://github.com/axa-group/nlp.js/tree/master/examples/console-bot). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
+You can see a great example of use at the folder [`/examples/02-qna-classic`](https://github.com/axa-group/nlp.js/tree/master/examples/02-qna-classic). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
 
 You can start to build your NLP from scratch with few lines:
 
