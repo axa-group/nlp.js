@@ -53,7 +53,7 @@ manager.save();
 // English and Korean can be automatically detected
 manager.process('I have to go').then(console.log);
 manager.process('상대가 없어 남는 편').then(console.log);
-// For Klingon, as it cannot be automatically deteced, 
+// For Klingon, as it cannot be automatically detected, 
 // you must provide the locale
 manager.process('kl', `ngaQHa'moHwI'mey nIH vay'`).then(console.log);
 ```
