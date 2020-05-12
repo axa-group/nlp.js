@@ -239,12 +239,6 @@ class NeuralNetwork extends Clonable {
           weights[k] += change;
         }
         perceptron.bias += delta;
-      } else {
-        for (let k; k < incoming.length; k += 1) {
-          const change = momentum * changes[k];
-          changes[k] = change;
-          weights[k] += change;
-        }
       }
     }
     return error / numOutputs;
