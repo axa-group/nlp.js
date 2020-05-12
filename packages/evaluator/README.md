@@ -1,6 +1,6 @@
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
-# @nlpjs/logger
+# @nlpjs/evaluator
 
 [![Build Status](https://travis-ci.com/axa-group/nlp.js.svg?branch=master)](https://travis-ci.com/axa-group/nlp.js)
 [![Coverage Status](https://coveralls.io/repos/github/axa-group/nlp.js/badge.svg?branch=master)](https://coveralls.io/github/axa-group/nlp.js?branch=master)
@@ -22,21 +22,24 @@
 
 ## Installation
 
-You can install @nlpjs/logger:
+You can install @nlpjs/evaluator:
 
 ```bash
-    npm install @nlpjs/logger
+    npm install @nlpjs/evaluator
 ```
 
 ## Example of Usage
 
 ```javascript
-const { Logger } = require('@nlpjs/logger');
+const { Evaluator } = require('@nlpjs/evaluator');
 
-const logger = new Logger();
-
-logger.info('Hello world!!!')
+const context = { a: 1, b: 2 };
+const evaluator = new Evaluator();
+const question = 'a = b;';
+const answer = evaluator.evaluateAll(question, context);
 ```
+
+The value of the variable "`answer`" will be `[2]`.
 
 ## Contributing
 

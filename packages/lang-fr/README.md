@@ -1,6 +1,6 @@
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
-# @nlpjs/logger
+# @nlpjs/lang-fr
 
 [![Build Status](https://travis-ci.com/axa-group/nlp.js.svg?branch=master)](https://travis-ci.com/axa-group/nlp.js)
 [![Coverage Status](https://coveralls.io/repos/github/axa-group/nlp.js/badge.svg?branch=master)](https://coveralls.io/github/axa-group/nlp.js?branch=master)
@@ -22,20 +22,42 @@
 
 ## Installation
 
-You can install @nlpjs/logger:
+You can install @nlpjs/lang-fr:
 
 ```bash
-    npm install @nlpjs/logger
+    npm install @nlpjs/lang-fr
 ```
 
 ## Example of Usage
 
 ```javascript
-const { Logger } = require('@nlpjs/logger');
+const { containerBootstrap } = require('@nlpjs/core');
+const { Nlp } = require('@nlpjs/nlp');
+const { LangFr } = require('@nlpjs/lang-fr');
 
-const logger = new Logger();
-
-logger.info('Hello world!!!')
+(async () => {
+  const container = await containerBootstrap();
+  container.use(Nlp);
+  container.use(LangFr);
+  const nlp = container.get('nlp');
+  nlp.settings.autoSave = false;
+  nlp.addLanguage('fr');
+  // Adds the utterances and intents for the NLP
+  nlp.addDocument('fr', "au revoir pour l'instant", 'greetings.bye');
+  nlp.addDocument('fr', 'au revoir et soyez prudent', 'greetings.bye');
+  nlp.addDocument('fr', 'très bien à plus tard', 'greetings.bye');
+  nlp.addDocument('fr', 'je dois partir', 'greetings.bye');
+  nlp.addDocument('fr', 'Salut', 'greetings.hello');
+  
+  // Train also the NLG
+  nlp.addAnswer('fr', 'greetings.bye', 'à la prochaine');
+  nlp.addAnswer('fr', 'greetings.bye', 'à bientôt!');
+  nlp.addAnswer('fr', 'greetings.hello', 'salut comment ca va!');
+  nlp.addAnswer('fr', 'greetings.hello', 'salutations!');
+  await nlp.train();
+  const response = await nlp.process('fr', 'je dois partir');
+  console.log(response);
+})();
 ```
 
 ## Contributing
