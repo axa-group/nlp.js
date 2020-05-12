@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  nlpjs-lambda
+
+  Sample SAM Template for nlpjs-lambda
+  
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 60
+
+Resources:
+  NLPjsDyDBFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: nlpjs/
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName:
+              Ref: NLPjsModelTable
+      Environment:
+        Variables:
+          MODEL_TABLENAME:
+            Ref: NLPjsModelTable
+      Events:
+        NLPjs:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /talkDyDB
+            Method: any
+  NLPjsModelTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: "id"
+        Type: "String"
+
+Outputs:
+  NLPjsDyDBApi:
+    Description: "API Gateway endpoint URL for Prod stage for NLPjs-DyDB function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/talkDyDB/"
+  NLPjsDyDBFunction:
+    Description: "NLPjs-DyDB Lambda Function ARN"
+    Value: !GetAtt NLPjsDyDBFunction.Arn
+  NLPjsDyDBFunctionIamRole:
+    Description: "Implicit IAM Role created for NLPjs-DyDB function"
+    Value: !GetAtt NLPjsDyDBFunctionRole.Arn

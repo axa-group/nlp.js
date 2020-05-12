@@ -1,0 +1,26 @@
+{
+  "name": "nlpjs_lambda_function",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "node-nlp": "^4.3.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "plugins": [
+      "import", "prettier"
+    ],
+    "rules": {
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          "devDependencies": true,
+          "packageDir": "./"
+        }
+      ]
+    }
+  }
+}
