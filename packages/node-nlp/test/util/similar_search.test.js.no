@@ -747,7 +747,7 @@ describe('Similar Search', () => {
       expect(bestEntity[0].entity).toEqual('food');
       expect(bestEntity[0].utteranceText).toEqual('spaghetti');
     });
-    test('If whitelist of entities is provided, check only those entities', () => {
+    test('If allow list of entities is provided, check only those entities', () => {
       const similar = new SimilarSearch({ normalize: true });
       const text1 = 'I saw spederman eating spaghetti in the city';
       const entities = {

@@ -385,10 +385,10 @@ class NlpManager {
    * Process to extract entities from an utterance.
    * @param {string} srcLocale Locale of the utterance, optional.
    * @param {string} srcUtterance Text of the utterance.
-   * @param {string[]} whitelist Optional whitelist of entity names.
+   * @param {string[]} allowList Optional allow list of entity names.
    * @returns {Object[]} Array of entities.
    */
-  async extractEntities(srcLocale, srcUtterance, whitelist) {
+  async extractEntities(srcLocale, srcUtterance, allowList) {
     let utterance = srcUtterance;
     let locale = srcLocale;
     if (!utterance) {
@@ -402,7 +402,7 @@ class NlpManager {
     const result = await this.nerManager.findEntities(
       utterance,
       truncated,
-      whitelist
+      allowList
     );
     return result;
   }

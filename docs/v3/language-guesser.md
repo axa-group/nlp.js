@@ -40,7 +40,7 @@ In console you'll see:
 { alpha3: 'cat', alpha2: 'ca', language: 'Catalan', score: 1 }
 ```
 
-You can also provide a whitelist of accepted language to find the one that fits better
+You can also provide an allow list of accepted language to find the one that fits better
 
 ```javascript
 const { Language } = require('node-nlp');

@@ -96,7 +96,7 @@ class NerManager {
       'Hashtag',
       'URL',
     ];
-    let list = this.settings.builtinWhitelist || [
+    let list = this.settings.builtinAllowList || [
       'age',
       'currency',
       'dimension',
@@ -122,13 +122,13 @@ class NerManager {
       'boolean',
       'duration',
     ];
-    this.builtinWhitelist = {};
+    this.builtinAllowList = {};
     for (let i = 0; i &lt; list.length; i += 1) {
-      this.builtinWhitelist[list[i]] = true;
+      this.builtinAllowList[list[i]] = true;
     }
-    list = this.settings.builtinBlacklist || [];
+    list = this.settings.builtinDenyList || [];
     for (let i = 0; i &lt; list.length; i += 1) {
-      delete this.builtinWhitelist[list[i]];
+      delete this.builtinAllowList[list[i]];
     }
   }
 
@@ -465,7 +465,7 @@ class NerManager {
           if (index !== -1) {
             entityName = entityName.slice(index + 1);
           }
-          if (this.builtinWhitelist[entityName]) {
+          if (this.builtinAllowList[entityName]) {
             const text = utterance.slice(entity.start, entity.end + 1);
             const accuracy = 0.95;
             const edge = {
@@ -497,11 +497,11 @@ class NerManager {
    * Find entities inside an utterance.
    * @param {String} utterance Utterance for searching entities.
    * @param {String} locale Locale of the language.
-   * @param {String[]} whitelist Whitelist of entity names.
+   * @param {String[]} allowList Allow list of entity names.
    * @returns {Promise.Object[]} Promise edges of entities found.
    */
-  async findEntities(utterance, language, whitelist) {
-    const entityNames = whitelist || Object.keys(this.namedEntities);
+  async findEntities(utterance, language, allowList) {
+    const entityNames = allowList || Object.keys(this.namedEntities);
     const wordPositions = this.similar.getWordPositions(utterance);
     const edges = this.findBuiltinEntities(utterance, language);
     entityNames.forEach(entityName => {
