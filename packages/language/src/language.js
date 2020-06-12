@@ -283,7 +283,7 @@ class Language {
   }
 
   /**
-   * Given an utterance, a allowList of iso codes and the limit of results,
+   * Given an utterance, an allow list of iso codes and the limit of results,
    * return the language with the best score.
    * The allowList is optional.
    * @param {String} utterance Utterance wich we want to guess the language.
