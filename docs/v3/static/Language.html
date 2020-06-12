@@ -238,7 +238,7 @@ an utterance, but it also manage a list of languages indexed by both ISOs.</div>
     
 
     
-    <h4 class="name" id="guess"><span class="type-signature"></span>guess<span class="signature">(utterance, whitelist, limit)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
+    <h4 class="name" id="guess"><span class="type-signature"></span>guess<span class="signature">(utterance, allowList, limit)</span><span class="type-signature"> &rarr; {Array.&lt;Object>}</span></h4>
     
 
     
@@ -246,9 +246,9 @@ an utterance, but it also manage a list of languages indexed by both ISOs.</div>
 
 
 <div class="description">
-    Given an utterance, a whitelist of iso codes and the limit of results,
+    Given an utterance, an allow list of iso codes and the limit of results,
 build an array of languages scored.
-The whitelist and the limit are optional.
+The allow list and the limit are optional.
 </div>
 
 
@@ -307,7 +307,7 @@ The whitelist and the limit are optional.
 
         <tr>
             
-                <td class="name"><code>whitelist</code></td>
+                <td class="name"><code>Allow list</code></td>
             
 
             <td class="type">
@@ -323,7 +323,7 @@ The whitelist and the limit are optional.
 
             
 
-            <td class="description last">Whitelist of accepted languages.</td>
+            <td class="description last">Allow list of accepted languages.</td>
         </tr>
 
     
@@ -443,7 +443,7 @@ The whitelist and the limit are optional.
     
 
     
-    <h4 class="name" id="guessBest"><span class="type-signature"></span>guessBest<span class="signature">(utterance, whitelist)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id="guessBest"><span class="type-signature"></span>guessBest<span class="signature">(utterance, allowList)</span><span class="type-signature"> &rarr; {Object}</span></h4>
     
 
     
@@ -451,9 +451,9 @@ The whitelist and the limit are optional.
 
 
 <div class="description">
-    Given an utterance, a whitelist of iso codes and the limit of results,
+    Given an utterance, an allow list of iso codes and the limit of results,
 return the language with the best score.
-The whitelist is optional.
+The allow list is optional.
 </div>
 
 
@@ -512,7 +512,7 @@ The whitelist is optional.
 
         <tr>
             
-                <td class="name"><code>whitelist</code></td>
+                <td class="name"><code>Allow list</code></td>
             
 
             <td class="type">
@@ -528,7 +528,7 @@ The whitelist is optional.
 
             
 
-            <td class="description last">Whitelist of accepted languages.</td>
+            <td class="description last">Allow list of accepted languages.</td>
         </tr>
 
     
@@ -625,7 +625,7 @@ The whitelist is optional.
     
 
     
-    <h4 class="name" id="transformWhitelist"><span class="type-signature"></span>transformWhitelist<span class="signature">(whitelist)</span><span class="type-signature"> &rarr; {Array.&lt;String>}</span></h4>
+    <h4 class="name" id="transformAllowList"><span class="type-signature"></span>transformAllowList<span class="signature">(allowList)</span><span class="type-signature"> &rarr; {Array.&lt;String>}</span></h4>
     
 
     
@@ -633,7 +633,7 @@ The whitelist is optional.
 
 
 <div class="description">
-    Given a whitelist, iterates each language to transform
+    Given an allow list, iterates each language to transform
 from iso2 to iso3 each code.
 </div>
 
@@ -670,7 +670,7 @@ from iso2 to iso3 each code.
 
         <tr>
             
-                <td class="name"><code>whitelist</code></td>
+                <td class="name"><code>Allow list</code></td>
             
 
             <td class="type">
@@ -754,7 +754,7 @@ from iso2 to iso3 each code.
 
         
 <div class="param-desc">
-    Whitelist forced to iso3.
+    Allow list forced to iso3.
 </div>
 
 

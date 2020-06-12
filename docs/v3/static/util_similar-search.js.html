@@ -382,15 +382,15 @@ class SimilarSearch {
    * @param {String} str Utterance to retrieve entities.
    * @param {Object[]} entities Entities Array.
    * @param {String} locale Locale for the search.
-   * @param {String[]} whitelist Whitelist of entity names for the search.
+   * @param {String[]} allowList Allow list of entity names for the search.
    */
-  getEdgesFromEntities(str, entities, language, whitelist, threshold = 1) {
+  getEdgesFromEntities(str, entities, language, allowList, threshold = 1) {
     const result = [];
     const wordPositions = this.getWordPositions(str);
     const entityKeys = Object.keys(entities);
     for (let i = 0, l = entityKeys.length; i &lt; l; i += 1) {
       const entityName = entityKeys[i];
-      if (!whitelist || whitelist.indexOf(entityName) !== -1) {
+      if (!allowList || allowList.indexOf(entityName) !== -1) {
         const edges = this.getEdgesFromEntity(
           str,
           entities[entityName],

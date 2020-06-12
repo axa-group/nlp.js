@@ -155,7 +155,7 @@ manager.findEntities(
 
 ## Utterances with duplicated Entities
 
-Utterances with more than one entity with the same name are supported, providing a "whitelist" with numbered entity names.
+Utterances with more than one entity with the same name are supported, providing an "allow list" with numbered entity names.
 
 The "numbered entity" format must be in the form `${entityName}_${integer}`. E.g. "hero\_1", "food\_2", etc.
 

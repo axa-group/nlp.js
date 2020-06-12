@@ -75,9 +75,9 @@ class BuiltinMicrosoft extends Clonable {
       this.settings,
       this.container.getConfiguration(this.settings.tag)
     );
-    this.settings.builtinWhitelist = {};
-    for (let i = 0; i < this.settings.whitelist.length; i += 1) {
-      this.settings.builtinWhitelist[this.settings.whitelist[i]] = 1;
+    this.settings.builtinAllowList = {};
+    for (let i = 0; i < this.settings.allowList.length; i += 1) {
+      this.settings.builtinAllowList[this.settings.allowList[i]] = 1;
     }
   }
 
@@ -101,7 +101,7 @@ class BuiltinMicrosoft extends Clonable {
           'Hashtag',
           'URL',
         ],
-        whitelist: [
+        allowList: [
           'age',
           'currency',
           'dimension',
@@ -312,7 +312,7 @@ class BuiltinMicrosoft extends Clonable {
           if (index !== -1) {
             entityName = entityName.slice(index + 1);
           }
-          if (this.settings.builtinWhitelist[entityName]) {
+          if (this.settings.builtinAllowList[entityName]) {
             const text = utterance.slice(entity.start, entity.end + 1);
             const accuracy = 0.95;
             const edge = {

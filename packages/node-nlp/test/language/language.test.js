@@ -31,23 +31,23 @@ describe('Language', () => {
     });
   });
 
-  describe('Transform whitelist', () => {
+  describe('Transform allow list', () => {
     test('It should translate ISO2 to ISO3', () => {
       const language = new Language();
       const list = ['en', 'es'];
-      const result = language.transformWhitelist(list);
+      const result = language.transformAllowList(list);
       expect(result).toEqual(['eng', 'spa']);
     });
     test('It should not transform entries already in ISO3', () => {
       const language = new Language();
       const list = ['en', 'spa'];
-      const result = language.transformWhitelist(list);
+      const result = language.transformAllowList(list);
       expect(result).toEqual(['eng', 'spa']);
     });
     test('It should not add invalid languages', () => {
       const language = new Language();
       const list = ['en', 'es', 'me'];
-      const result = language.transformWhitelist(list);
+      const result = language.transformAllowList(list);
       expect(result).toEqual(['eng', 'spa']);
     });
   });
@@ -115,7 +115,7 @@ describe('Language', () => {
       expect(guess[0].language).toEqual('Catalan');
       expect(guess[0].score).toEqual(1);
     });
-    it('Should allow to pass a whitelist of languages', () => {
+    it('Should allow to pass an allow list of languages', () => {
       const language = new Language();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);
@@ -155,7 +155,7 @@ describe('Language', () => {
       expect(guess.language).toEqual('Catalan');
       expect(guess.score).toEqual(1);
     });
-    it('Should allow to pass a whitelist of languages', () => {
+    it('Should allow to pass an allow list of languages', () => {
       const language = new Language();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);

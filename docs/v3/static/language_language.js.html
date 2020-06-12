@@ -78,18 +78,18 @@ class Language {
   }
 
   /**
-   * Given a whitelist, iterates each language to transform
+   * Given an allow list, iterates each language to transform
    * from iso2 to iso3 each code.
-   * @param {String[]} whitelist Array of language codes in iso3 or iso2
-   * @returns {String[]} Whitelist forced to iso3.
+   * @param {String[]} allowList Array of language codes in iso3 or iso2
+   * @returns {String[]} Allow list forced to iso3.
    */
-  transformWhitelist(whitelist) {
+  transformAllowList(allowList) {
     const result = [];
-    for (let i = 0; i &lt; whitelist.length; i += 1) {
-      if (whitelist[i].length === 3) {
-        result.push(whitelist[i]);
+    for (let i = 0; i &lt; allowList.length; i += 1) {
+      if (allowList[i].length === 3) {
+        result.push(allowList[i]);
       } else {
-        const language = this.languagesAlpha2[whitelist[i]];
+        const language = this.languagesAlpha2[allowList[i]];
         if (language) {
           result.push(language.alpha3);
         }
@@ -99,21 +99,21 @@ class Language {
   }
 
   /**
-   * Given an utterance, a whitelist of iso codes and the limit of results,
+   * Given an utterance, an allow list of iso codes and the limit of results,
    * build an array of languages scored.
-   * The whitelist and the limit are optional.
+   * The allow list and the limit are optional.
    * @param {String} utterance Utterance wich we want to guess the language.
-   * @param {String[]} whitelist Whitelist of accepted languages.
+   * @param {String[]} allowList Allow list of accepted languages.
    * @param {Number} limit Limit of results.
    * @returns {Object[]} Array of guesses.
    */
-  guess(utterance, whitelist, limit) {
+  guess(utterance, allowList, limit) {
     const options = {};
     if (utterance.length &lt; 10) {
       options.minLength = utterance.length;
     }
-    if (whitelist &amp;&amp; whitelist.length &amp;&amp; whitelist.length > 0) {
-      options.whitelist = this.transformWhitelist(whitelist);
+    if (allowList &amp;&amp; allowList.length &amp;&amp; allowList.length > 0) {
+      options.allowList = this.transformAllowList(allowList);
     }
     const scores = franc.all(utterance, options);
     const result = [];
@@ -135,15 +135,15 @@ class Language {
   }
 
   /**
-   * Given an utterance, a whitelist of iso codes and the limit of results,
+   * Given an utterance, an allow list of iso codes and the limit of results,
    * return the language with the best score.
-   * The whitelist is optional.
+   * The allow list is optional.
    * @param {String} utterance Utterance wich we want to guess the language.
-   * @param {String[]} whitelist Whitelist of accepted languages.
+   * @param {String[]} allowList Allow list of accepted languages.
    * @return {Object} Best guess.
    */
-  guessBest(utterance, whitelist) {
-    return this.guess(utterance, whitelist, 1)[0];
+  guessBest(utterance, allowList) {
+    return this.guess(utterance, allowList, 1)[0];
   }
 }
 

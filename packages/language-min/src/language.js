@@ -155,15 +155,15 @@ class Language {
     return [topScript, topCount];
   }
 
-  static filterLanguages(languages, whitelist, blacklist) {
-    if (whitelist.length === 0 && blacklist.length === 0) {
+  static filterLanguages(languages, allowList, denyList) {
+    if (allowList.length === 0 && denyList.length === 0) {
       return languages;
     }
     const filteredLanguages = {};
     Object.keys(languages).forEach((language) => {
       if (
-        (whitelist.length === 0 || whitelist.indexOf(language) > -1) &&
-        blacklist.indexOf(language) === -1
+        (allowList.length === 0 || allowList.indexOf(language) > -1) &&
+        denyList.indexOf(language) === -1
       ) {
         filteredLanguages[language] = languages[language];
       }
@@ -173,12 +173,12 @@ class Language {
 
   static getDistances(trigrams, srcLanguages, options) {
     const distances = [];
-    const whitelist = options.whitelist || [];
-    const blacklist = options.blacklist || [];
+    const allowList = options.allowList || [];
+    const denyList = options.denyList || [];
     const languages = Language.filterLanguages(
       srcLanguages,
-      whitelist,
-      blacklist
+      allowList,
+      denyList
     );
     if (!languages) {
       return und();
@@ -200,11 +200,11 @@ class Language {
     const value = srcValue.substr(0, 2048);
     const script = Language.getTopScript(value);
     if (!(script[0] in data) && script[1] > 0.5) {
-      if (settings.whitelist) {
-        if (settings.whitelist.includes(script[0])) {
+      if (settings.allowList) {
+        if (settings.allowList.includes(script[0])) {
           return [[script[0], 1]];
         }
-        if (script[0] === 'cmn' && settings.whitelist.includes('jpn')) {
+        if (script[0] === 'cmn' && settings.allowList.includes('jpn')) {
           return [['jpn', 1]];
         }
       } else {
@@ -240,13 +240,13 @@ class Language {
     }
   }
 
-  transformWhitelist(whitelist) {
+  transformAllowList(allowList) {
     const result = [];
-    for (let i = 0; i < whitelist.length; i += 1) {
-      if (whitelist[i].length === 3) {
-        result.push(whitelist[i]);
+    for (let i = 0; i < allowList.length; i += 1) {
+      if (allowList[i].length === 3) {
+        result.push(allowList[i]);
       } else {
-        const language = this.languagesAlpha2[whitelist[i]];
+        const language = this.languagesAlpha2[allowList[i]];
         if (language) {
           result.push(language.alpha3);
         }
@@ -255,13 +255,13 @@ class Language {
     return result;
   }
 
-  guess(utterance, whitelist, limit) {
+  guess(utterance, allowList, limit) {
     const options = {};
     if (utterance.length < 10) {
       options.minLength = utterance.length;
     }
-    if (whitelist && whitelist.length && whitelist.length > 0) {
-      options.whitelist = this.transformWhitelist(whitelist);
+    if (allowList && allowList.length && allowList.length > 0) {
+      options.allowList = this.transformAllowList(allowList);
     }
     const scores = Language.detectAll(utterance, options);
     const result = [];
@@ -283,15 +283,15 @@ class Language {
   }
 
   /**
-   * Given an utterance, a whitelist of iso codes and the limit of results,
+   * Given an utterance, an allow list of iso codes and the limit of results,
    * return the language with the best score.
-   * The whitelist is optional.
+   * The allowList is optional.
    * @param {String} utterance Utterance wich we want to guess the language.
-   * @param {String[]} whitelist Whitelist of accepted languages.
+   * @param {String[]} allowList allowList of accepted languages.
    * @return {Object} Best guess.
    */
-  guessBest(utterance, whitelist) {
-    return this.guess(utterance, whitelist, 1)[0];
+  guessBest(utterance, allowList) {
+    return this.guess(utterance, allowList, 1)[0];
   }
 
   addTrigrams(locale, sentence) {

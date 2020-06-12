@@ -252,7 +252,7 @@ class Nlu extends Clonable {
     return false;
   }
 
-  getWhitelist(tokens) {
+  getAllowList(tokens) {
     const result = {};
     const features = Object.keys(tokens);
     for (let i = 0; i < features.length; i += 1) {
@@ -270,12 +270,12 @@ class Nlu extends Clonable {
     if (!this.intentFeatures || !srcInput.classifications) {
       return srcInput;
     }
-    const whitelist = this.getWhitelist(srcInput.tokens);
-    whitelist.None = 1;
+    const allowList = this.getAllowList(srcInput.tokens);
+    allowList.None = 1;
     const { classifications } = srcInput;
     for (let i = 0; i < classifications.length; i += 1) {
       const classification = classifications[i];
-      if (!whitelist[classification.intent]) {
+      if (!allowList[classification.intent]) {
         classification.score = 0;
       }
     }

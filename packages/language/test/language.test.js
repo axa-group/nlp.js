@@ -32,23 +32,23 @@ describe('Language', () => {
     });
   });
 
-  describe('Transform whitelist', () => {
+  describe('Transform allowlist', () => {
     test('It should translate ISO2 to ISO3', () => {
       const language = new Language();
       const list = ['en', 'es'];
-      const result = language.transformWhitelist(list);
+      const result = language.transformAllowList(list);
       expect(result).toEqual(['eng', 'spa']);
     });
     test('It should not transform entries already in ISO3', () => {
       const language = new Language();
       const list = ['en', 'spa'];
-      const result = language.transformWhitelist(list);
+      const result = language.transformAllowList(list);
       expect(result).toEqual(['eng', 'spa']);
     });
     test('It should not add invalid languages', () => {
       const language = new Language();
       const list = ['en', 'es', 'me'];
-      const result = language.transformWhitelist(list);
+      const result = language.transformAllowList(list);
       expect(result).toEqual(['eng', 'spa']);
     });
   });
@@ -116,7 +116,7 @@ describe('Language', () => {
       expect(guess[0].language).toEqual('Catalan');
       expect(guess[0].score).toEqual(1);
     });
-    it('Should allow to pass a whitelist of languages', () => {
+    it('Should allow to pass a allow list of languages', () => {
       const language = new Language();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);
@@ -165,7 +165,7 @@ describe('Language', () => {
         expect(actual.alpha3).toEqual(expected);
       });
     });
-    it('Should allow to pass a whitelist of languages', () => {
+    it('Should allow to pass a allow list of languages', () => {
       const language = new Language();
       const keys = Object.keys(language.languagesAlpha2);
       keys.splice(keys.indexOf('en'), 1);
@@ -216,16 +216,16 @@ describe('Language', () => {
       const actual = Language.detectAll();
       expect(actual[0][0]).toEqual('und');
     });
-    it('Chinese must be identified if in whitelist', () => {
+    it('Chinese must be identified if its on the allow list', () => {
       const actual = Language.detectAll(
         '鉴于对人类家庭所有成员的固有尊严及其平等的和不移的权利的承认,乃是世界自由、正义与和平的基础,\n鉴于对人权的无视和侮蔑已发展为野蛮暴行,这些暴行玷污了人类的良心,而一',
-        { whitelist: ['eng', 'cmn'] }
+        { allowList: ['eng', 'cmn'] }
       );
       expect(actual[0][0]).toEqual('cmn');
     });
-    it('Japanes must be identified if in whitelist and only kanjis detected', () => {
+    it('Japanes must be identified if its on the allow list and only kanjis detected', () => {
       const actual = Language.detectAll('人類社会構成員固有尊厳', {
-        whitelist: ['eng', 'jpn'],
+        allowList: ['eng', 'jpn'],
       });
       expect(actual[0][0]).toEqual('jpn');
     });
