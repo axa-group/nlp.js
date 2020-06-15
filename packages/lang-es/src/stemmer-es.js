@@ -1112,6 +1112,11 @@ class StemmerEs extends BaseStemmer {
         this.setCurrent(`${a.slice(0, -1)}`);
       }
     }
+    if (a.length <= 4) {
+      if (a.endsWith('z')) {
+        this.setCurrent(`${a.slice(0, -1)}c`);
+      }      
+    }
   }
 }
 
