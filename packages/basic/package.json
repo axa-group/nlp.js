@@ -31,5 +31,6 @@
     "@nlpjs/lang-en": "^4.5.0",
     "@nlpjs/logger": "^4.4.0",
     "@nlpjs/nlp": "^4.5.0"
-  }
+  },
+  "gitHead": "15f64fccdf3da6cda03ecace5f8bd334f5364bec"
 }
