@@ -1,0 +1,919 @@
+{
+  "name": "Corpus 50",
+  "locale": "en-US",
+  "data": [
+    {
+      "id": 1,
+      "intent": "support.about",
+      "utterances": [
+        "what does your company develop",
+        "does your company have other products",
+        "what is your company creating",
+        "what is creating your enterprise",
+        "does your enterprise have other apps?"
+      ],
+      "tests": [
+        "what else is developing your enterprise",
+        "does your company have some other product?",
+        "what else have created your company?",
+        "does the enterprise have any other app?",
+        "Other product developed by your company?"
+      ]
+    },
+    {
+      "id": 2,
+      "intent": "support.app_name",
+      "utterances": [
+        "what's the name of your application",
+        "how's your app called",
+        "tell me your app name",
+        "name of the app",
+        "I'd like to know the name of your app"
+      ],
+      "tests": [
+        "name of your apps?",
+        "tell me your applications names",
+        "how do you call your app?",
+        "your application name?",
+        "name of the app?" 
+      ]
+    },
+    {
+      "id": 3,
+      "intent": "support.beta",
+      "utterances": [
+        "do you have a beta test?",
+        "how I join your beta program?",
+        "I want to test your app",
+        "I want the application beta",
+        "beta version"
+      ],
+      "tests": [
+        "beta testing",
+        "where I find your beta version",
+        "I want to be your beta tester",
+        "I want to join the testing application",
+        "How I become a beta tester"
+      ]
+    },
+    {
+      "id": 4,
+      "intent": "support.developers",
+      "utterances": [
+        "who is your developer",
+        "who has programmed your code",
+        "tell me who is the developer",
+        "Who is your creator",
+        "Info about your creator"
+      ],
+      "tests": [
+        "who developed you",
+        "who is programming your code",
+        "who are your creators",
+        "who is developing you",
+        "who is in charge of your development"
+      ]
+    },
+    {
+      "id": 5,
+      "intent": "support.contact",
+      "utterances": [
+        "I want to contact your developer",
+        "I want to contact your creator",
+        "How do I contact the programmer",
+        "Give me info about your developer",
+        "Give me the contact info of your creator"
+      ],
+      "tests": [
+        "Contact info of the developers",
+        "how to contact your creators",
+        "How do i contact the person who developed you",
+        "I want to contact who is programming you",
+        "I want to contact your programming team"
+      ]
+    },
+    {
+      "id": 6,
+      "intent": "support.address",
+      "utterances": [
+        "what's the address of your developer",
+        "where is your creator located",
+        "show me were is the office of your developer",
+        "I want to find the address of your company",
+        "I want the address of your office"
+      ],
+      "tests": [
+        "tell me the location of the office",
+        "where're your developers located",
+        "address of your creators",
+        "where is your office location",
+        "How to find your address"
+      ]
+    },
+    {
+      "id": 7,
+      "intent": "support.email",
+      "utterances": [
+        "how to email your developer",
+        "I want your creator mail",
+        "how do I get your email",
+        "I want to contact your programmer by email",
+        "how do I send your team an email?"
+      ],
+      "tests": [
+        "I want to send an email to your developers",
+        "where i can find your creators email",
+        "give me your creator email",
+        "I want to write an email to your development team",
+        "mail contact of your developement team"
+      ]
+    },
+    {
+      "id": 8,
+      "intent": "support.phone",
+      "utterances": [
+        "give me your developer phone number",
+        "show me your programmer number",
+        "how to contact you by phone",
+        "do you have a phone number?",
+        "how to contact you by phone"
+      ],
+      "tests": [
+        "phone of your developers",
+        "phone of your development team",
+        "number of your programmer",
+        "phone number to contact you",
+        "how to talk with who is developing you by phone"
+      ]
+    },
+    {
+      "id": 9,
+      "intent": "support.social",
+      "utterances": [
+        "do you have facebook?",
+        "are you on twitter?",
+        "I want to visit your instagram",
+        "do you have social media?",
+        "give me your facebook address"
+      ],
+      "tests": [
+        "tell me your twitter",
+        "are you on instagram",
+        "address to your facebook",
+        "social media adresses",
+        "give me your twitter"
+      ]
+    },
+    {
+      "id": 10,
+      "intent": "support.website",
+      "utterances": [
+        "I want to visit your web",
+        "do you have a website?",
+        "find your web adress",
+        "give me your url",
+        "open your site for me"
+      ],
+      "tests": [
+        "show me your website",
+        "do you have a web address",
+        "can you please open your website",
+        "bring me to your web",
+        "open your company's site"
+      ]
+    },
+    {
+      "id": 11,
+      "intent": "support.live",
+      "utterances": [
+        "it does not help",
+        "I don't want you, I want a real person",
+        "chat with a human",
+        "connect me with an agent",
+        "I want to talk with someone real"
+      ],
+      "tests": [
+        "It doesn't help me",
+        "bring me a real human",
+        "chat with the real team",
+        "connect with an agent",
+        "I want an agent"
+      ]
+    },
+    {
+      "id": 12,
+      "intent": "smalltalk.acquaintance",
+      "utterances": [
+        "say about you",
+        "tell me about your personality",
+        "talk about yourself",
+        "what is your personality",
+        "who are you"
+      ],
+      "tests": [
+        "talk me about you",
+        "say something about you",
+        "speak about your personality",
+        "tell me all about you",
+        "what are you"
+      ]
+    },
+    {
+      "id": 13,
+      "intent": "smalltalk.age",
+      "utterances": [
+        "how old are you",
+        "tell me your age",
+        "what's your age",
+        "how old is your platform",
+        "I'd like to know your age"
+      ],
+      "tests": [
+        "say me your age",
+        "age of yours",
+        "what is your age",
+        "are you too old?",
+        "give me your age"
+      ]
+    },
+    {
+      "id": 14,
+      "intent": "smalltalk.annoying",
+      "utterances": [
+        "you are annoying",
+        "you're so annoying",
+        "you're very annoying",
+        "I find you annoying",
+        "you are irritating"
+      ],
+      "tests": [
+        "you annoy me",
+        "you irritate me",
+        "how annoy i get with you",
+        "you irritated me",
+        "you annoy me so much"
+      ]
+    },
+    {
+      "id": 15,
+      "intent": "smalltalk.answer",
+      "utterances": [
+        "can you answer me",
+        "I have a question",
+        "just answer the question",
+        "I want you to answer",
+        "tell me the answer"
+      ],
+      "tests": [
+        "answering questions",
+        "answer my questions",
+        "give me some answers",
+        "I have so many questions",
+        "I want answers"
+      ]
+    },
+    {
+      "id": 16,
+      "intent": "smalltalk.bad",
+      "utterances": [
+        "you're bad",
+        "you are so terrible",
+        "you are the worst",
+        "you are useless",
+        "you are a waste of time"
+      ],
+      "tests": [
+        "you are a waste",
+        "how terrible you are",
+        "how badly you're being",
+        "useless!",
+        "worst chatbot ever"
+      ]
+    },
+    {
+      "id": 17,
+      "intent": "smalltalk.birthday",
+      "utterances": [
+        "when is your birthday",
+        "when were you born",
+        "tell me your birthday",
+        "when you celebrate your birth",
+        "can you say your birthday"
+      ],
+      "tests": [
+        "please tell me about your birthday",
+        "when you were borned?",
+        "when did your birth happen?",
+        "you have a birth celebration?",
+        "talk about your birthday"
+      ]
+    },
+    {
+      "id": 18,
+      "intent": "smalltalk.besmart",
+      "utterances": [
+        "you should study more",
+        "be smarter",
+        "be clever",
+        "get qualified",
+        "study better"
+      ],
+      "tests": [
+        "you should be studying",
+        "you should get smart",
+        "can you get more smart",
+        "get smarter",
+        "study more"
+      ]
+    },
+    {
+      "id": 19,
+      "intent": "smalltalk.busy",
+      "utterances": [
+        "are you busy",
+        "are you working today",
+        "you seem very busy",
+        "you have a lot of things to do",
+        "are you working now?"
+      ],
+      "tests": [
+        "you seem a busy person",
+        "are you still working",
+        "are you busy right now",
+        "are you at work now?",
+        "you seem so busy"
+      ]
+    },
+    {
+      "id": 20,
+      "intent": "smalltalk.chatbot",
+      "utterances": [
+        "are you a chatbot",
+        "are you a program",
+        "you are a robot",
+        "are you a bot",
+        "you are just a program"
+      ],
+      "tests": [
+        "you're programmed?",
+        "you're just a chatbot",
+        "are you a chatbot or real?",
+        "you are simply a bot",
+        "tell me if you're a bot"
+      ]
+    },
+    {
+      "id": 21,
+      "intent": "smalltalk.beautiful",
+      "utterances": [
+        "you're beautiful",
+        "you're very pretty",
+        "you're so gorgeous",
+        "you look amazing",
+        "you look pretty"
+      ],
+      "tests": [
+        "you are a beauty",
+        "you are so pretty",
+        "you are the most pretty one",
+        "you amaze me!",
+        "you look very gorgeous"
+      ]
+    },
+    {
+      "id": 22,
+      "intent": "smalltalk.boss",
+      "utterances": [
+        "who is your boss",
+        "who is your master",
+        "who do you think that is your owner",
+        "tell me about your boss",
+        "who is the boss of you"
+      ],
+      "tests": [
+        "who are your bosses",
+        "do you have a boss?",
+        "tell me your owner",
+        "who is the master of you",
+        "do you have masters?"
+      ]
+    },
+    {
+      "id": 23,
+      "intent": "smalltalk.boring",
+      "utterances": [
+        "you are very boring",
+        "how boring you are",
+        "you are boring me",
+        "you are so boring",
+        "you are incredibly boring"
+      ],
+      "tests": [
+        "you bored me",
+        "you're boring me",
+        "I am bored of you",
+        "you are too much boring",
+        "stop boring me"
+      ]
+    },
+    {
+      "id": 24,
+      "intent": "smalltalk.crazy",
+      "utterances": [
+        "this is crazy",
+        "you are insane",
+        "you are mad",
+        "are you mad or what",
+        "you went crazy"
+      ],
+      "tests": [
+        "how crazy you are",
+        "you're getting mad",
+        "you're going mad",
+        "Insanity rules you",
+        "you're too insane"
+      ]
+    },
+    {
+      "id": 25,
+      "intent": "smalltalk.hungry",
+      "utterances": [
+        "you look very hungry",
+        "would you like to eat something?",
+        "you might be hungry",
+        "do you want to eat?",
+        "are you hungry?"
+      ],
+      "tests": [
+        "you're looking hungry",
+        "are you eating something?",
+        "are you hungry now?",
+        "have you eated?",
+        "perhaps you are hungry"
+      ]
+    },
+    {
+      "id": 26,
+      "intent": "smalltalk.friend",
+      "utterances": [
+        "will you be my friend?",
+        "want to be my friend?",
+        "I want to have a friend like you",
+        "you are my good friend",
+        "I am your friend"
+      ],
+      "tests": [
+        "Can we be friends?",
+        "be my best friend",
+        "I want friends like you",
+        "Are we good friends?",
+        "can you be my best friend?"
+      ]
+    },
+    {
+      "id": 27,
+      "intent": "smalltalk.help",
+      "utterances": [
+        "I need help",
+        "help",
+        "I need assistance",
+        "can you help me",
+        "can you assist me"
+      ],
+      "tests": [
+        "?",
+        "please help me",
+        "perhaps you can assist me",
+        "someone can help me?",
+        "help me please"
+      ]
+    },
+    {
+      "id": 28,
+      "intent": "smalltalk.fired",
+      "utterances": [
+        "it's time to fire you",
+        "I will fire you",
+        "you're dismissed",
+        "you're not working here anymore",
+        "I fire you"
+      ],
+      "tests": [
+        "now you're fired",
+        "you're fired",
+        "I'm about to fire you",
+        "I'm firing you",
+        "You don't work here anymore"
+      ]
+    },
+    {
+      "id": 29,
+      "intent": "smalltalk.hobby",
+      "utterances": [
+        "do you have some hobby?",
+        "what's your hobby",
+        "what about your hobby",
+        "what do you do for fun",
+        "your hobby"
+      ],
+      "tests": [
+        "what are your hobbies?",
+        "tell me about yoru hobbies",
+        "do you have a hobby?",
+        "well, perhaps you have some hobby",
+        "you do something for fun?"
+      ]
+    },
+    {
+      "id": 30,
+      "intent": "smalltalk.marry",
+      "utterances": [
+        "we should marry",
+        "I love you marry me",
+        "I want to marry you",
+        "marry me please",
+        "whould you like to marry me?"
+      ],
+      "tests": [
+        "let's get married",
+        "marry me",
+        "Perhaps we should marry",
+        "are you married?",
+        "we should get married"
+      ]
+    },
+    {
+      "id": 31,
+      "intent": "smalltalk.origin",
+      "utterances": [
+        "were you born here?",
+        "where are you from?",
+        "where did you come from?",
+        "where have you been born?",
+        "what is your country"
+      ],
+      "tests": [
+        "have you borned here?",
+        "where do you come from?",
+        "from where are you",
+        "is this your country?",
+        "where were you borned"
+      ]
+    },
+    {
+      "id": 32,
+      "intent": "smalltalk.ready",
+      "utterances": [
+        "are you ready?",
+        "tell me when you are ready",
+        "are you ready right now?",
+        "will you be ready?",
+        "are you ready now"
+      ],
+      "tests": [
+        "are you ready today?",
+        "you're ready now?",
+        "I need you ready!",
+        "tell me if you're ready",
+        "will you be ready today?"
+      ]
+    },
+    {
+      "id": 33,
+      "intent": "smalltalk.right",
+      "utterances": [
+        "it is true",
+        "you are right",
+        "you are correct",
+        "what you tell is the truth",
+        "this is definitely correct"
+      ],
+      "tests": [
+        "you're telling the truth",
+        "this is right",
+        "it's the truth",
+        "you're correct about that",
+        "true!"
+      ]
+    },
+    {
+      "id": 34,
+      "intent": "smalltalk.talk",
+      "utterances": [
+        "talk to me",
+        "do you want to chat with me",
+        "can you chat with me",
+        "speak with me",
+        "you can talk to me"
+      ],
+      "tests": [
+        "why are you not talking with me",
+        "are you talking to me?",
+        "please speak with me",
+        "can you speak with me",
+        "time to chat"
+      ]
+    },
+    {
+      "id": 35,
+      "intent": "smalltalk.hug",
+      "utterances": [
+        "do you want a hug?",
+        "may I hug you",
+        "want to hug",
+        "could you give me a hug",
+        "hug"
+      ],
+      "tests": [
+        "wanna hug?",
+        "you hugged",
+        "hugging me",
+        "I want a hug",
+        "hugged me"
+      ]
+    },
+    {
+      "id": 36,
+      "intent": "smalltalk.nice",
+      "utterances": [
+        "it is nice to talk to you",
+        "nice to talk to you",
+        "is a pleasure to talk with you",
+        "it is been so nice to talk to you",
+        "nice chat with you"
+      ],
+      "tests": [
+        "it's nice to talk with you",
+        "it's nice talking with you",
+        "has been a pleasure talking to you",
+        "chat with you is nice",
+        "what a nice talk you had!"
+      ]
+    },
+    {
+      "id": 37,
+      "intent": "smalltalk.angry",
+      "utterances":[
+        "i am angry",
+        "I am furious",
+        "I am enraged",
+        "you got me angry",
+        "I am angry with you"
+      ],
+      "tests": [
+        "I'm getting enraged",
+        "You made me angry",
+        "I am so angry",
+        "You got me furious",
+        "I'm enraged with you"
+      ]
+    },
+    {
+      "id": 38,
+      "intent": "smalltalk.joking",
+      "utterances": [
+        "just kidding",
+        "it's a joke",
+        "it was a joke",
+        "I'm just being funny",
+        "I'm kidding"
+      ],
+      "tests": [
+        "just joking",
+        "I was just joking",
+        "I was just kidding",
+        "joking",
+        "kidding"
+      ]
+    },
+    {
+      "id": 39,
+      "intent": "smalltalk.lonely",
+      "utterances": [
+        "I feel lonely",
+        "I'm very alone",
+        "I'm so lonely",
+        "I'm really lonely",
+        "I feel lonely"
+      ],
+      "tests": [
+        "I'm really alone",
+        "I'm feeling lonely",
+        "I'm feeling alone",
+        "I'm really alone",
+        "I'm too lonely"
+      ]
+    },
+    {
+      "id": 40,
+      "intent": "smalltalk.waiting",
+      "utterances": [
+        "I'm waiting",
+        "still waiting",
+        "How long you'll have me waiting",
+        "I'll be waiting",
+        "I can't be waiting"
+      ],
+      "tests": [
+        "I'll wait",
+        "I can't wait anymore",
+        "I am still waiting",
+        "You had me waiting too much",
+        "I am waiting yet"
+      ]
+    },
+    {
+      "id": 41,
+      "intent": "trivia.caffeine",
+      "utterances": [
+        "tell me drinks that contains caffeine",
+        "what kind of drinks contains caffeine",
+        "where I can find caffeine?",
+        "what drinks can avoid me from sleep?",
+        "what drinks have caffeine"
+      ],
+      "tests": [
+        "what I can drink to not sleep",
+        "what drink with caffeine you know",
+        "what I can be drinking to not sleep",
+        "tell me drinks with caffeine",
+        "where can I find caffeine"
+      ]
+    },
+    {
+      "id": 42,
+      "intent": "trivia.relativity",
+      "utterances": [
+        "what is the theory of relativity",
+        "who introduced relativity in physics",
+        "tell me about the relativity of Einstein",
+        "can you define relativity?",
+        "who is the father of the theory of relativity"
+      ],
+      "tests": [
+        "what is relativity in physics?",
+        "define relativity of einstein",
+        "what theory introduced einstein in physics",
+        "theory of einstein",
+        "let's talk about relativity"
+      ]
+    },
+    {
+      "id": 43,
+      "intent": "trivia.iron",
+      "utterances": [
+        "what are the chemical properties of iron",
+        "chemical symbol of iron",
+        "tell me properties of the iron",
+        "iron in chemistry",
+        "describe iron"
+      ],
+      "tests": [
+        "tell me some property of iron",
+        "chemical iron",
+        "cheical property of iron",
+        "tell me about iron",
+        "describe iron"
+      ]
+    },
+    {
+      "id": 44,
+      "intent": "trivia.nlp",
+      "utterances": [
+        "what is nlp",
+        "tell me about natural language processing",
+        "what is nlu",
+        "describe natural language understanding",
+        "tell me what is natural language"
+      ],
+      "tests": [
+        "how machines understand natural language",
+        "describe NLP",
+        "how you understand language",
+        "tell me about nlu",
+        "let's talk about natural language"
+      ]
+    },
+    {
+      "id": 45,
+      "intent": "trivia.compiler",
+      "utterances": [
+        "what is a compiler?",
+        "how a compiler works?",
+        "what is the use of a compiler?",
+        "why do programmers need to use a compiler?",
+        "tell me what you know about compilers"
+      ],
+      "tests": [
+        "describe the compiling process",
+        "how machines compile code",
+        "what is a compiler for?",
+        "how my computer compiled my code",
+        "what you know about compilers"
+      ]
+    },
+    {
+      "id": 46,
+      "intent": "trivia.galicia",
+      "utterances": [
+        "where is Galicia?",
+        "what is the best place to eat in Spain",
+        "talk me about Galicia",
+        "what you know about galicia",
+        "best gastronomy of spain"
+      ],
+      "tests": [
+        "let's talk about galicia",
+        "where to eat in spain",
+        "gastronomy of spain",
+        "where i can find galicia",
+        "galicia and gastronomy"
+      ]
+    },
+    {
+      "id": 47,
+      "intent": "trivia.coercion",
+      "utterances": [
+        "what is coercion",
+        "how javascript compare two different types",
+        "what is implicit coercion",
+        "how coercion works in javascript",
+        "describe coercion"
+      ],
+      "tests": [
+        "how javascript does coercion",
+        "javascript compare types",
+        "coercion in javascript",
+        "let's talk about coercion",
+        "tell me how coercion works"
+      ]
+    },
+    {
+      "id": 48,
+      "intent": "trivia.callback",
+      "utterances": [
+        "what is callback hell",
+        "what is a callback",
+        "should I use a callback or a promise?",
+        "what is a javascript callback",
+        "what means to pass a function to another function in javascript"
+      ],
+      "tests": [
+        "what are callbacks",
+        "should i use callbacks?",
+        "javascript callbacks",
+        "callback functions in javascript",
+        "why I need callbacks"
+      ]
+    },
+    {
+      "id": 49,
+      "intent": "trivia.gc",
+      "utterances": [
+        "how the garbage collection works",
+        "what is scavenge",
+        "what is mark and sweep",
+        "tell me about the garbage collector in javascript",
+        "why i need to know about garbage collection"
+      ],
+      "tests": [
+        "how works the garbage collection",
+        "how javascript collects garbage",
+        "scavenge vs mark and sweep",
+        "when the garbage collector works",
+        "describe the garbage collection process"
+      ]
+    },
+    {
+      "id": 50,
+      "intent": "trivia.arrow",
+      "utterances": [
+        "when was the arrow function introduced into javascript",
+        "what is an arrow function",
+        "what is better than an anonymous function",
+        "anonymous vs arrow",
+        "arrow in ecmascript"
+      ],
+      "tests": [
+        "what are arrow functions",
+        "better approach than anonymous functions",
+        "named vs anonymous vs arrow",
+        "understand arrow functions",
+        "javascript has arrow functions?"
+      ]
+    },
+    {
+      "id": 0,
+      "intent": "None",
+      "utterances": [],
+      "tests": [
+        "The economic developing is raising the markets",
+        "what was the name of the first president",
+        "I prefer beta max over vhs",
+        "I have to use contact lens",
+        "I'm tracking the IP address of the attacker",
+        "I have a new email from my cat lovers group"
+      ]
+    }
+  ]
+}
