@@ -57,11 +57,20 @@ class Tokenizer {
     return this.innerTokenize(this.normalize(text, normalize));
   }
 
-  run(srcInput) {
+  async run(srcInput) {
     const input = srcInput;
     const locale = input.locale || 'en';
-    const tokenizer = this.container.get(`tokenizer-${locale}`) || this;
-    input.tokens = tokenizer.tokenize(input.text, input).filter((x) => x);
+    let tokenizer = this.container.get(`tokenizer-${locale}`);
+    if (!tokenizer) {
+      const tokenizerBert = this.container.get(`tokenizer-bert`);
+      if (tokenizerBert && tokenizerBert.activeFor(locale)) {
+        tokenizer = tokenizerBert;
+      } else {
+        tokenizer = this;
+      }
+    }
+    const tokens = await tokenizer.tokenize(input.text, input);
+    input.tokens = tokens.filter((x) => x);
     return input;
   }
 }

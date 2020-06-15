@@ -57,8 +57,12 @@ function request(options) {
     if (!options.headers) {
       options.headers = {};
     }
-    options.headers['Content-Type'] = 'application/x-wwww-form-urlencoded';
-    options.headers['Content-Length'] = postData.length;
+    if (!options.headers['Content-Type']) {
+      options.headers['Content-Type'] = 'application/x-wwww-form-urlencoded';
+    }
+    if (!options.headers['Content-Length']) {
+      options.headers['Content-Length'] = postData.length;
+    }
   }
   if (!options.method) {
     options.method = 'GET';
