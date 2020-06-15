@@ -22,8 +22,18 @@
  */
 
 function runDiscard(srcEdge, srcOther, useMaxLength) {
-  const edge = srcEdge;
-  const other = srcOther;
+  let edge;
+  let other;
+  if (
+    srcEdge.accuracy > srcOther.accuracy ||
+    (srcEdge.accuracy === srcOther.accuracy && srcEdge.length > srcOther.length)
+  ) {
+    edge = srcEdge;
+    other = srcOther;
+  } else {
+    edge = srcOther;
+    other = srcEdge;
+  }
   if (other.start <= edge.end && other.end >= edge.start) {
     if (other.accuracy < edge.accuracy) {
       other.discarded = true;
