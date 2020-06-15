@@ -36,7 +36,16 @@ class Stemmer {
     const input = srcInput;
     const locale =
       input.locale || input.settings ? input.settings.locale || 'en' : 'en';
-    return this.container.get(`stemmer-${locale}`) || this;
+    let stemmer = this.container.get(`stemmer-${locale}`);
+    if (!stemmer) {
+      const stemmerBert = this.container.get(`stemmer-bert`);
+      if (stemmerBert && stemmerBert.activeFor(locale)) {
+        stemmer = stemmerBert;
+      } else {
+        stemmer = this;
+      }
+    }
+    return stemmer;
   }
 
   async addForTraining(srcInput) {
