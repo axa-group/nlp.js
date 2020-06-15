@@ -20,7 +20,7 @@
 - Natural Language Processing Classifier, to classify utterance into intents.
 - Natural Language Generation Manager, so from intents and conditions it can generate an answer.
 - NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterance, and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
-- 40 languages with stemmers supported: Arabic (ar), Armenian (hy), Bengali (bn), Basque (eu), Catala (ca), Chinese (zh), Czech (cs), Danish (da), Dutch (nl), English (en), Farsi (fa), Finnish (fi), French (fr), Galician (gl), German (de), Greek (el), Hindi (hi), Hungarian (hu), Indonesian (id), Irish (ga), Italian (it), Japanese (ja), Korean (ko), Lithuanian (lt), Malay (ms), Nepali (ne), Norwegian (no), Polish (pl), Portuguese (pt), Romanian (ro), Russian (ru), Serbian (sr), Slovene (sl), Spanish (es), Swedish (sv), Tagalog (tl), Tamil (ta), Thai (th), Turkish (tr), Ukrainian (uk)
+- 40 languages natively supported, 104 languages supported with BERT integration
 - Any other language is supported through tokenization, even fantasy languages
 
 ![Hibridbot](screenshots/hybridbot.gif)
@@ -75,12 +75,11 @@ The version 4 is very different from previous versions. Until this version, NLP.
 - [False Positives](#false-positives)
 - [Log Training Progress](#log-training-progress)
 - [Benchmarking](docs/v3/benchmarking.md)
-- [Language Support](docs/v3/language-support.md)
-  - [Classification](docs/v3/language-support.md#classification)
-  - [Sentiment Analysis](docs/v3/language-support.md#sentiment-analysis)
-  - [Builtin Entity Extraction](docs/v3/language-support.md#builtin-entity-extraction)
-  - [Example with languages](docs/v3/example-with-languages.md)
-  - [Auto Stemmer](docs/v3/language-support.md#auto-stemmer)
+- [Language Support](docs/v4/language-support.md)
+  - [Supported languages](docs/v4/language-support.md#supported-languages)
+  - [Sentiment Analysis](docs/v4/language-support.md#sentiment-analysis)
+  - [Comparision with other NLP products](docs/v4/language-support.md#comparision-with-other-nlp-products)
+  - [Example with several languages](docs/v4/language-support.md#example-with-several-languages)
 - [Language Guesser](docs/v3/language-guesser.md)
 - [Similar Search](docs/v3/similar-search.md)
 - [NLU](docs/v3/nlu-manager.md)
