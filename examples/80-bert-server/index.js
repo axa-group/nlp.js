@@ -62,7 +62,7 @@ async function measure() {
   const manager = new NlpManager(options);
   manager.container.registerConfiguration('bert', {
     url: 'http://localhost:8000/tokenize',
-    languages: ['en', 'es']
+    languages: ['en', 'es'],
   });
   manager.container.use(LangBert);
   await manager.nlp.addCorpora(['corpus-en.json', 'corpus-es.json']);
@@ -78,12 +78,8 @@ async function measure() {
   const elapsed = hrend[0] * 1000 + hrend[1] / 1000000;
   const timePerUtterance = elapsed / total;
   const utterancesPerSecond = 1000 / timePerUtterance;
-  console.log(
-    `\nMilliseconds per utterance: ${timePerUtterance}`
-  );
-  console.log(
-    `Utterances per second: ${utterancesPerSecond}`
-  );
+  console.log(`\nMilliseconds per utterance: ${timePerUtterance}`);
+  console.log(`Utterances per second: ${utterancesPerSecond}`);
 }
 
 (async () => {
