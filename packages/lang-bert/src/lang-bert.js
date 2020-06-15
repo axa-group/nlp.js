@@ -37,6 +37,9 @@ function registerBertForLanguage(container, locale) {
   container.use(normalizer);
 }
 
+/**
+ * Class for LangBert
+ */
 class LangBert {
   register(container) {
     container.use(new TokenizerBert(container));
