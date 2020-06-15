@@ -11,110 +11,110 @@ Languages not included in this list can be still supported, but without stemming
 
 | Locale | Language              | Native Support | BERT Support | Microsoft Builtins | Duckling Builtins |
 |--------|-----------------------|----------------|--------------|--------------------|-------------------|
-| af     | Afrikaans             |       No       |      Yes     |         No         |        Yes        |
-| sq     | Albanian              |       No       |      Yes     |         No         |         No        |
-| ar     | Arabic                |       Yes      |      Yes     |         No         |        Yes        |
-| an     | Aragonese             |       No       |      Yes     |         No         |         No        |
-| hy     | Armenian              |       Yes      |      Yes     |         No         |         No        |
-| ast    | Asturian              |       No       |      Yes     |         No         |         No        |
-| az     | Azerbaijani           |       No       |      Yes     |         No         |         No        |
-| ba     | Bashkir               |       No       |      Yes     |         No         |         No        |
-| eu     | Basque                |       Yes      |      Yes     |         No         |         No        |
-| bar    | Bavarian              |       No       |      Yes     |         No         |         No        |
-| be     | Belarusian            |       No       |      Yes     |         No         |         No        |
-| bn     | Bengali               |       Yes      |      Yes     |         No         |        Yes        |
-| bpy    | Bishnupriya Manipuri  |       No       |      Yes     |         No         |         No        |
-| bs     | Bosnian               |       No       |      Yes     |         No         |         No        |
-| br     | Breton                |       No       |      Yes     |         No         |         No        |
-| bg     | Bulgarian             |       No       |      Yes     |         No         |        Yes        |
-| my     | Burmese               |       No       |      Yes     |         No         |        Yes        |
-| ca     | Catalan               |       Yes      |      Yes     |         No         |         No        |
-| ceb    | Cebuano               |       No       |      Yes     |         No         |         No        |
-| ce     | Chechen               |       No       |      Yes     |         No         |         No        |
-| zh     | Chinese (Simplified)  |       Yes      |      Yes     |         Yes        |        Yes        |
-| zh     | Chinese (Traditional) |       Yes      |      Yes     |         Yes        |        Yes        |
-| cv     | Chuvash               |       No       |      Yes     |         No         |         No        |
-| hr     | Croatian              |       No       |      Yes     |         No         |        Yes        |
-| cs     | Czech                 |       Yes      |      Yes     |         No         |         No        |
-| da     | Danish                |       Yes      |      Yes     |         No         |        Yes        |
-| nl     | Dutch                 |       Yes      |      Yes     |         No         |        Yes        |
-| en     | English               |       Yes      |      Yes     |         Yes        |        Yes        |
-| et     | Estonian              |       No       |      Yes     |         No         |        Yes        |
-| fi     | Finnish               |       Yes      |      Yes     |         No         |        Yes        |
-| fr     | French                |       Yes      |      Yes     |         Yes        |        Yes        |
-| gl     | Galician              |       Yes      |      Yes     |         No         |         No        |
-| ka     | Georgian              |       No       |      Yes     |         No         |        Yes        |
-| de     | German                |       Yes      |      Yes     |         No         |        Yes        |
-| el     | Greek                 |       Yes      |      Yes     |         No         |        Yes        |
-| gu     | Gujarati              |       No       |      Yes     |         No         |         No        |
-| ht     | Haitian               |       No       |      Yes     |         No         |         No        |
-| he     | Hebrew                |       No       |      Yes     |         No         |        Yes        |
-| hi     | Hindi                 |       Yes      |      Yes     |         No         |        Yes        |
-| hu     | Hungarian             |       Yes      |      Yes     |         No         |        Yes        |
-| is     | Icelandic             |       No       |      Yes     |         No         |        Yes        |
-| io     | Ido                   |       No       |      Yes     |         No         |         No        |
-| id     | Indonesian            |       Yes      |      Yes     |         No         |        Yes        |
-| ga     | Irish                 |       Yes      |      Yes     |         No         |        Yes        |
-| it     | Italian               |       Yes      |      Yes     |         No         |        Yes        |
-| ja     | Japanese              |       Yes      |      Yes     |         Yes        |        Yes        |
-| jv     | Javanese              |       No       |      Yes     |         No         |         No        |
-| kn     | Kannada               |       No       |      Yes     |         No         |        Yes        |
-| kk     | Kazakh                |       No       |      Yes     |         No         |         No        |
-| ky     | Kirghiz               |       No       |      Yes     |         No         |         No        |
-| ko     | Korean                |       Yes      |      Yes     |         No         |        Yes        |
-| la     | Latin                 |       No       |      Yes     |         No         |         No        |
-| lv     | Latvian               |       No       |      Yes     |         No         |         No        |
-| lt     | Lithuanian            |       Yes      |      Yes     |         No         |         No        |
-| lmo    | Lombard               |       No       |      Yes     |         No         |         No        |
-| nds    | Low Saxon             |       No       |      Yes     |         No         |         No        |
-| lb     | Luxembourgish         |       No       |      Yes     |         No         |         No        |
-| mk     | Macedonian            |       No       |      Yes     |         No         |         No        |
-| mg     | Malagasy              |       No       |      Yes     |         No         |         No        |
-| ms     | Malay                 |       Yes      |      Yes     |         No         |         No        |
-| ml     | Malayalam             |       No       |      Yes     |         No         |        Yes        |
-| mr     | Marathi               |       No       |      Yes     |         No         |         No        |
-| min    | Minangkabau           |       No       |      Yes     |         No         |         No        |
-| mn     | Mongolian             |       No       |      Yes     |         No         |        Yes        |
-| ne     | Nepali                |       Yes      |      Yes     |         No         |        Yes        |
-| new    | Newar                 |       No       |      Yes     |         No         |         No        |
-| nb     | Norwegian (Bokmål)    |       Yes      |      Yes     |         No         |        Yes        |
-| nn     | Norwegian (Nynorsk)   |       No       |      Yes     |         No         |         No        |
-| oc     | Occitan               |       No       |      Yes     |         No         |         No        |
-| fa     | Persian (Farsi)       |       Yes      |      Yes     |         No         |         No        |
-| pms    | Piedmontese           |       No       |      Yes     |         No         |         No        |
-| pl     | Polish                |       Yes      |      Yes     |         No         |        Yes        |
-| pt     | Portuguese            |       Yes      |      Yes     |         Yes        |        Yes        |
-| pa     | Punjabi               |       No       |      Yes     |         No         |         No        |
-| ro     | Romanian              |       Yes      |      Yes     |         No         |        Yes        |
-| ru     | Russian               |       Yes      |      Yes     |         No         |        Yes        |
-| sco    | Scots                 |       No       |      Yes     |         No         |         No        |
-| sr     | Serbian               |       Yes      |      Yes     |         No         |         No        |
-| hbs    | Serbo-Croatian        |       No       |      Yes     |         No         |         No        |
-| scn    | Sicilian              |       No       |      Yes     |         No         |         No        |
-| sk     | Slovak                |       No       |      Yes     |         No         |        Yes        |
-| sl     | Slovenian             |       Yes      |      Yes     |         No         |         No        |
-| az     | South Azerbaijani     |       No       |      Yes     |         No         |         No        |
-| es     | Spanish               |       Yes      |      Yes     |         Yes        |        Yes        |
-| su     | Sundanese             |       No       |      Yes     |         No         |         No        |
-| sw     | Swahili               |       No       |      Yes     |         No         |        Yes        |
-| sv     | Swedish               |       Yes      |      Yes     |         No         |        Yes        |
-| tl     | Tagalog               |       Yes      |      Yes     |         No         |         No        |
-| tg     | Tajik                 |       No       |      Yes     |         No         |         No        |
-| ta     | Tamil                 |       Yes      |      Yes     |         No         |        Yes        |
-| tt     | Tatar                 |       No       |      Yes     |         No         |         No        |
-| te     | Telugu                |       No       |      Yes     |         No         |         No        |
-| th     | Thai                  |       Yes      |      Yes     |         No         |        Yes        |
-| tr     | Turkish               |       Yes      |      Yes     |         No         |        Yes        |
-| uk     | Ukrainian             |       Yes      |      Yes     |         No         |        Yes        |
-| ur     | Urdu                  |       No       |      Yes     |         No         |         No        |
-| uz     | Uzbek                 |       No       |      Yes     |         No         |         No        |
-| vi     | Vietnamese            |       No       |      Yes     |         No         |        Yes        |
-| vo     | Volapük               |       No       |      Yes     |         No         |         No        |
-| war    | Waray-Waray           |       No       |      Yes     |         No         |         No        |
-| cy     | Welsh                 |       No       |      Yes     |         No         |         No        |
-| fy     | West Frisian          |       No       |      Yes     |         No         |         No        |
-| pa     | Western Punjabi       |       No       |      Yes     |         No         |         No        |
-| yo     | Yoruba                |       No       |      Yes     |         No         |         No        |
+| af     | Afrikaans             |                |       X      |                    |         X         |
+| sq     | Albanian              |                |       X      |                    |                   |
+| ar     | Arabic                |        X       |       X      |                    |         X         |
+| an     | Aragonese             |                |       X      |                    |                   |
+| hy     | Armenian              |        X       |       X      |                    |                   |
+| ast    | Asturian              |                |       X      |                    |                   |
+| az     | Azerbaijani           |                |       X      |                    |                   |
+| ba     | Bashkir               |                |       X      |                    |                   |
+| eu     | Basque                |        X       |       X      |                    |                   |
+| bar    | Bavarian              |                |       X      |                    |                   |
+| be     | Belarusian            |                |       X      |                    |                   |
+| bn     | Bengali               |        X       |       X      |                    |         X         |
+| bpy    | Bishnupriya Manipuri  |                |       X      |                    |                   |
+| bs     | Bosnian               |                |       X      |                    |                   |
+| br     | Breton                |                |       X      |                    |                   |
+| bg     | Bulgarian             |                |       X      |                    |         X         |
+| my     | Burmese               |                |       X      |                    |         X         |
+| ca     | Catalan               |        X       |       X      |                    |                   |
+| ceb    | Cebuano               |                |       X      |                    |                   |
+| ce     | Chechen               |                |       X      |                    |                   |
+| zh     | Chinese (Simplified)  |        X       |       X      |          X         |         X         |
+| zh     | Chinese (Traditional) |        X       |       X      |          X         |         X         |
+| cv     | Chuvash               |                |       X      |                    |                   |
+| hr     | Croatian              |                |       X      |                    |         X         |
+| cs     | Czech                 |        X       |       X      |                    |                   |
+| da     | Danish                |        X       |       X      |                    |         X         |
+| nl     | Dutch                 |        X       |       X      |                    |         X         |
+| en     | English               |        X       |       X      |          X         |         X         |
+| et     | Estonian              |                |       X      |                    |         X         |
+| fi     | Finnish               |        X       |       X      |                    |         X         |
+| fr     | French                |        X       |       X      |          X         |         X         |
+| gl     | Galician              |        X       |       X      |                    |                   |
+| ka     | Georgian              |                |       X      |                    |         X         |
+| de     | German                |        X       |       X      |                    |         X         |
+| el     | Greek                 |        X       |       X      |                    |         X         |
+| gu     | Gujarati              |                |       X      |                    |                   |
+| ht     | Haitian               |                |       X      |                    |                   |
+| he     | Hebrew                |                |       X      |                    |         X         |
+| hi     | Hindi                 |        X       |       X      |                    |         X         |
+| hu     | Hungarian             |        X       |       X      |                    |         X         |
+| is     | Icelandic             |                |       X      |                    |         X         |
+| io     | Ido                   |                |       X      |                    |                   |
+| id     | Indonesian            |        X       |       X      |                    |         X         |
+| ga     | Irish                 |        X       |       X      |                    |         X         |
+| it     | Italian               |        X       |       X      |                    |         X         |
+| ja     | Japanese              |        X       |       X      |          X         |         X         |
+| jv     | Javanese              |                |       X      |                    |                   |
+| kn     | Kannada               |                |       X      |                    |         X         |
+| kk     | Kazakh                |                |       X      |                    |                   |
+| ky     | Kirghiz               |                |       X      |                    |                   |
+| ko     | Korean                |        X       |       X      |                    |         X         |
+| la     | Latin                 |                |       X      |                    |                   |
+| lv     | Latvian               |                |       X      |                    |                   |
+| lt     | Lithuanian            |        X       |       X      |                    |                   |
+| lmo    | Lombard               |                |       X      |                    |                   |
+| nds    | Low Saxon             |                |       X      |                    |                   |
+| lb     | Luxembourgish         |                |       X      |                    |                   |
+| mk     | Macedonian            |                |       X      |                    |                   |
+| mg     | Malagasy              |                |       X      |                    |                   |
+| ms     | Malay                 |        X       |       X      |                    |                   |
+| ml     | Malayalam             |                |       X      |                    |         X         |
+| mr     | Marathi               |                |       X      |                    |                   |
+| min    | Minangkabau           |                |       X      |                    |                   |
+| mn     | Mongolian             |                |       X      |                    |         X         |
+| ne     | Nepali                |        X       |       X      |                    |         X         |
+| new    | Newar                 |                |       X      |                    |                   |
+| nb     | Norwegian (Bokmål)    |        X       |       X      |                    |         X         |
+| nn     | Norwegian (Nynorsk)   |                |       X      |                    |                   |
+| oc     | Occitan               |                |       X      |                    |                   |
+| fa     | Persian (Farsi)       |        X       |       X      |                    |                   |
+| pms    | Piedmontese           |                |       X      |                    |                   |
+| pl     | Polish                |        X       |       X      |                    |         X         |
+| pt     | Portuguese            |        X       |       X      |          X         |         X         |
+| pa     | Punjabi               |                |       X      |                    |                   |
+| ro     | Romanian              |        X       |       X      |                    |         X         |
+| ru     | Russian               |        X       |       X      |                    |         X         |
+| sco    | Scots                 |                |       X      |                    |                   |
+| sr     | Serbian               |        X       |       X      |                    |                   |
+| hbs    | Serbo-Croatian        |                |       X      |                    |                   |
+| scn    | Sicilian              |                |       X      |                    |                   |
+| sk     | Slovak                |                |       X      |                    |         X         |
+| sl     | Slovenian             |        X       |       X      |                    |                   |
+| az     | South Azerbaijani     |                |       X      |                    |                   |
+| es     | Spanish               |        X       |       X      |          X         |         X         |
+| su     | Sundanese             |                |       X      |                    |                   |
+| sw     | Swahili               |                |       X      |                    |         X         |
+| sv     | Swedish               |        X       |       X      |                    |         X         |
+| tl     | Tagalog               |        X       |       X      |                    |                   |
+| tg     | Tajik                 |                |       X      |                    |                   |
+| ta     | Tamil                 |        X       |       X      |                    |         X         |
+| tt     | Tatar                 |                |       X      |                    |                   |
+| te     | Telugu                |                |       X      |                    |                   |
+| th     | Thai                  |        X       |       X      |                    |         X         |
+| tr     | Turkish               |        X       |       X      |                    |         X         |
+| uk     | Ukrainian             |        X       |       X      |                    |         X         |
+| ur     | Urdu                  |                |       X      |                    |                   |
+| uz     | Uzbek                 |                |       X      |                    |                   |
+| vi     | Vietnamese            |                |       X      |                    |         X         |
+| vo     | Volapük               |                |       X      |                    |                   |
+| war    | Waray-Waray           |                |       X      |                    |                   |
+| cy     | Welsh                 |                |       X      |                    |                   |
+| fy     | West Frisian          |                |       X      |                    |                   |
+| pa     | Western Punjabi       |                |       X      |                    |                   |
+| yo     | Yoruba                |                |       X      |                    |                   |
 
 ## Sentiment Analysis
 
@@ -139,113 +139,115 @@ Languages not included in this list can be still supported, but without stemming
 
 | Locale | Language              | Microsoft LUIS | Google Dialogflow | SAP Conversational AI | Amazon LEX | IBM Watson | NLP.js |
 |--------|-----------------------|----------------|-------------------|-----------------------|------------|------------|:------:|
-| af     | Afrikaans             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| sq     | Albanian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ar     | Arabic                |       Yes      |         No        |          Yes          |     No     |     Yes    |   Yes  |
-| an     | Aragonese             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| hy     | Armenian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ast    | Asturian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| az     | Azerbaijani           |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ba     | Bashkir               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| eu     | Basque                |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| bar    | Bavarian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| be     | Belarusian            |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| bn     | Bengali               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| bpy    | Bishnupriya Manipuri  |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| bs     | Bosnian               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| br     | Breton                |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| bg     | Bulgarian             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| my     | Burmese               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ca     | Catalan               |       No       |         No        |          Yes          |     No     |     No     |   Yes  |
-| ceb    | Cebuano               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ce     | Chechen               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| zh     | Chinese (Simplified)  |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| zh     | Chinese (Traditional) |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| cv     | Chuvash               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| hr     | Croatian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| cs     | Czech                 |       No       |         No        |           No          |     No     |     Yes    |   Yes  |
-| da     | Danish                |       No       |        Yes        |          Yes          |     No     |     No     |   Yes  |
-| nl     | Dutch                 |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| en     | English               |       Yes      |        Yes        |          Yes          |     Yes    |     Yes    |   Yes  |
-| et     | Estonian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| fi     | Finnish               |       No       |         No        |          Yes          |     No     |     No     |   Yes  |
-| fr     | French                |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| gl     | Galician              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ka     | Georgian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| de     | German                |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| el     | Greek                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| gu     | Gujarati              |       Yes      |         No        |           No          |     No     |     No     |   Yes  |
-| ht     | Haitian               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| he     | Hebrew                |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| hi     | Hindi                 |       Yes      |        Yes        |          Yes          |     No     |     No     |   Yes  |
-| hu     | Hungarian             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| is     | Icelandic             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| io     | Ido                   |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| id     | Indonesian            |       No       |        Yes        |           No          |     No     |     No     |   Yes  |
-| ga     | Irish                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| it     | Italian               |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| ja     | Japanese              |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| jv     | Javanese              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| kn     | Kannada               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| kk     | Kazakh                |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ky     | Kirghiz               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ko     | Korean                |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| la     | Latin                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| lv     | Latvian               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| lt     | Lithuanian            |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| lmo    | Lombard               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| nds    | Low Saxon             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| lb     | Luxembourgish         |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| mk     | Macedonian            |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| mg     | Malagasy              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ms     | Malay                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ml     | Malayalam             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| mr     | Marathi               |       Yes      |         No        |           No          |     No     |     No     |   Yes  |
-| min    | Minangkabau           |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| mn     | Mongolian             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ne     | Nepali                |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| new    | Newar                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| nb     | Norwegian (Bokmål)    |       No       |        Yes        |          Yes          |     No     |     No     |   Yes  |
-| nn     | Norwegian (Nynorsk)   |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| oc     | Occitan               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| fa     | Persian (Farsi)       |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| pms    | Piedmontese           |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| pl     | Polish                |       No       |        Yes        |          Yes          |     No     |     No     |   Yes  |
-| pt     | Portuguese            |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| pa     | Punjabi               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ro     | Romanian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ru     | Russian               |       No       |        Yes        |          Yes          |     No     |     No     |   Yes  |
-| sco    | Scots                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| sr     | Serbian               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| hbs    | Serbo-Croatian        |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| scn    | Sicilian              |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| sk     | Slovak                |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| sl     | Slovenian             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| az     | South Azerbaijani     |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| es     | Spanish               |       Yes      |        Yes        |          Yes          |     No     |     Yes    |   Yes  |
-| su     | Sundanese             |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| sw     | Swahili               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| sv     | Swedish               |       No       |        Yes        |          Yes          |     No     |     No     |   Yes  |
-| tl     | Tagalog               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| tg     | Tajik                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| ta     | Tamil                 |       Yes      |         No        |           No          |     No     |     No     |   Yes  |
-| tt     | Tatar                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| te     | Telugu                |       Yes      |         No        |           No          |     No     |     No     |   Yes  |
-| th     | Thai                  |       No       |        Yes        |           No          |     No     |     No     |   Yes  |
-| tr     | Turkish               |       Yes      |        Yes        |           No          |     No     |     No     |   Yes  |
-| uk     | Ukrainian             |       No       |        Yes        |           No          |     No     |     No     |   Yes  |
-| ur     | Urdu                  |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| uz     | Uzbek                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| vi     | Vietnamese            |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| vo     | Volapük               |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| war    | Waray-Waray           |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| cy     | Welsh                 |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| fy     | West Frisian          |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| pa     | Western Punjabi       |       No       |         No        |           No          |     No     |     No     |   Yes  |
-| yo     | Yoruba                |       No       |         No        |           No          |     No     |     No     |   Yes  |
+| af     | Afrikaans             |                |                   |                       |            |            |    X   |
+| sq     | Albanian              |                |                   |                       |            |            |    X   |
+| ar     | Arabic                |        X       |                   |           X           |            |      X     |    X   |
+| an     | Aragonese             |                |                   |                       |            |            |    X   |
+| hy     | Armenian              |                |                   |                       |            |            |    X   |
+| ast    | Asturian              |                |                   |                       |            |            |    X   |
+| az     | Azerbaijani           |                |                   |                       |            |            |    X   |
+| ba     | Bashkir               |                |                   |                       |            |            |    X   |
+| eu     | Basque                |                |                   |                       |            |            |    X   |
+| bar    | Bavarian              |                |                   |                       |            |            |    X   |
+| be     | Belarusian            |                |                   |                       |            |            |    X   |
+| bn     | Bengali               |                |                   |                       |            |            |    X   |
+| bpy    | Bishnupriya Manipuri  |                |                   |                       |            |            |    X   |
+| bs     | Bosnian               |                |                   |                       |            |            |    X   |
+| br     | Breton                |                |                   |                       |            |            |    X   |
+| bg     | Bulgarian             |                |                   |                       |            |            |    X   |
+| my     | Burmese               |                |                   |                       |            |            |    X   |
+| ca     | Catalan               |                |                   |           X           |            |            |    X   |
+| ceb    | Cebuano               |                |                   |                       |            |            |    X   |
+| ce     | Chechen               |                |                   |                       |            |            |    X   |
+| zh     | Chinese (Simplified)  |        X       |         X         |           X           |            |      X     |    X   |
+| zh     | Chinese (Traditional) |        X       |         X         |           X           |            |      X     |    X   |
+| cv     | Chuvash               |                |                   |                       |            |            |    X   |
+| hr     | Croatian              |                |                   |                       |            |            |    X   |
+| cs     | Czech                 |                |                   |                       |            |      X     |    X   |
+| da     | Danish                |                |         X         |           X           |            |            |    X   |
+| nl     | Dutch                 |        X       |         X         |           X           |            |      X     |    X   |
+| en     | English               |        X       |         X         |           X           |      X     |      X     |    X   |
+| et     | Estonian              |                |                   |                       |            |            |    X   |
+| fi     | Finnish               |                |                   |           X           |            |            |    X   |
+| fr     | French                |        X       |         X         |           X           |            |      X     |    X   |
+| gl     | Galician              |                |                   |                       |            |            |    X   |
+| ka     | Georgian              |                |                   |                       |            |            |    X   |
+| de     | German                |        X       |         X         |           X           |            |      X     |    X   |
+| el     | Greek                 |                |                   |                       |            |            |    X   |
+| gu     | Gujarati              |        X       |                   |                       |            |            |    X   |
+| ht     | Haitian               |                |                   |                       |            |            |    X   |
+| he     | Hebrew                |                |                   |                       |            |            |    X   |
+| hi     | Hindi                 |        X       |         X         |           X           |            |            |    X   |
+| hu     | Hungarian             |                |                   |                       |            |            |    X   |
+| is     | Icelandic             |                |                   |                       |            |            |    X   |
+| io     | Ido                   |                |                   |                       |            |            |    X   |
+| id     | Indonesian            |                |         X         |                       |            |            |    X   |
+| ga     | Irish                 |                |                   |                       |            |            |    X   |
+| it     | Italian               |        X       |         X         |           X           |            |      X     |    X   |
+| ja     | Japanese              |        X       |         X         |           X           |            |      X     |    X   |
+| jv     | Javanese              |                |                   |                       |            |            |    X   |
+| kn     | Kannada               |                |                   |                       |            |            |    X   |
+| kk     | Kazakh                |                |                   |                       |            |            |    X   |
+| ky     | Kirghiz               |                |                   |                       |            |            |    X   |
+| ko     | Korean                |        X       |         X         |           X           |            |      X     |    X   |
+| la     | Latin                 |                |                   |                       |            |            |    X   |
+| lv     | Latvian               |                |                   |                       |            |            |    X   |
+| lt     | Lithuanian            |                |                   |                       |            |            |    X   |
+| lmo    | Lombard               |                |                   |                       |            |            |    X   |
+| nds    | Low Saxon             |                |                   |                       |            |            |    X   |
+| lb     | Luxembourgish         |                |                   |                       |            |            |    X   |
+| mk     | Macedonian            |                |                   |                       |            |            |    X   |
+| mg     | Malagasy              |                |                   |                       |            |            |    X   |
+| ms     | Malay                 |                |                   |                       |            |            |    X   |
+| ml     | Malayalam             |                |                   |                       |            |            |    X   |
+| mr     | Marathi               |        X       |                   |                       |            |            |    X   |
+| min    | Minangkabau           |                |                   |                       |            |            |    X   |
+| mn     | Mongolian             |                |                   |                       |            |            |    X   |
+| ne     | Nepali                |                |                   |                       |            |            |    X   |
+| new    | Newar                 |                |                   |                       |            |            |    X   |
+| nb     | Norwegian (Bokmål)    |                |         X         |           X           |            |            |    X   |
+| nn     | Norwegian (Nynorsk)   |                |                   |                       |            |            |    X   |
+| oc     | Occitan               |                |                   |                       |            |            |    X   |
+| fa     | Persian (Farsi)       |                |                   |                       |            |            |    X   |
+| pms    | Piedmontese           |                |                   |                       |            |            |    X   |
+| pl     | Polish                |                |         X         |           X           |            |            |    X   |
+| pt     | Portuguese            |        X       |         X         |           X           |            |      X     |    X   |
+| pa     | Punjabi               |                |                   |                       |            |            |    X   |
+| ro     | Romanian              |                |                   |                       |            |            |    X   |
+| ru     | Russian               |                |         X         |           X           |            |            |    X   |
+| sco    | Scots                 |                |                   |                       |            |            |    X   |
+| sr     | Serbian               |                |                   |                       |            |            |    X   |
+| hbs    | Serbo-Croatian        |                |                   |                       |            |            |    X   |
+| scn    | Sicilian              |                |                   |                       |            |            |    X   |
+| sk     | Slovak                |                |                   |                       |            |            |    X   |
+| sl     | Slovenian             |                |                   |                       |            |            |    X   |
+| az     | South Azerbaijani     |                |                   |                       |            |            |    X   |
+| es     | Spanish               |        X       |         X         |           X           |            |      X     |    X   |
+| su     | Sundanese             |                |                   |                       |            |            |    X   |
+| sw     | Swahili               |                |                   |                       |            |            |    X   |
+| sv     | Swedish               |                |         X         |           X           |            |            |    X   |
+| tl     | Tagalog               |                |                   |                       |            |            |    X   |
+| tg     | Tajik                 |                |                   |                       |            |            |    X   |
+| ta     | Tamil                 |        X       |                   |                       |            |            |    X   |
+| tt     | Tatar                 |                |                   |                       |            |            |    X   |
+| te     | Telugu                |        X       |                   |                       |            |            |    X   |
+| th     | Thai                  |                |         X         |                       |            |            |    X   |
+| tr     | Turkish               |        X       |         X         |                       |            |            |    X   |
+| uk     | Ukrainian             |                |         X         |                       |            |            |    X   |
+| ur     | Urdu                  |                |                   |                       |            |            |    X   |
+| uz     | Uzbek                 |                |                   |                       |            |            |    X   |
+| vi     | Vietnamese            |                |                   |                       |            |            |    X   |
+| vo     | Volapük               |                |                   |                       |            |            |    X   |
+| war    | Waray-Waray           |                |                   |                       |            |            |    X   |
+| cy     | Welsh                 |                |                   |                       |            |            |    X   |
+| fy     | West Frisian          |                |                   |                       |            |            |    X   |
+| pa     | Western Punjabi       |                |                   |                       |            |            |    X   |
+| yo     | Yoruba                |                |                   |                       |            |            |    X   |
 
 
-## Example with several languages including klingon
+## Example with several languages
+
+Example with three languages, where one of the language is klingon, to show that NLP will work even with    support of the language, because it will use tokenizer but not stemmers.
 
 ```javascript
 const { NlpManager } = require('../packages/node-nlp/src');
