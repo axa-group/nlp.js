@@ -29,7 +29,9 @@ class TokenizerFr extends Tokenizer {
   }
 
   innerTokenize(text) {
-    return text.split(/[\s,.!?;:([\]’'"¡¿)/]+/).filter((x) => x);
+    const replaced = text.replace(/’/gi, "'");
+    const slices = replaced.split(/[\s,.!?;:([\]’'"¡¿)/]+/).filter((x) => x);
+    return slices;
   }
 }
 
