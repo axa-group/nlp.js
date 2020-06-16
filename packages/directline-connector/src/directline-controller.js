@@ -163,6 +163,18 @@ class DirectlineController {
               .then((nlpresult) => {
                 result.text =
                   nlpresult.answer || "Sorry, I didn't understand you";
+                if (activity.channelId === 'emulator') {
+                  result.nlp = {
+                    intent: nlpresult.intent,
+                    score: nlpresult.score,
+                    classifications: nlpresult.classifications,
+                    domain: nlpresult.domain,
+                    entities: nlpresult.entities,
+                    language: nlpresult.language,
+                    languageGuessed: nlpresult.languageGuessed,
+                    locale: nlpresult.locale,
+                  };
+                }
                 conversation.history.push(result);
                 resolve({
                   status: 200,
