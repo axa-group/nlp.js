@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlp",
-  "version": "4.6.3",
+  "version": "4.7.0",
   "description": "Natural Language Processing",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -28,7 +28,7 @@
     "@nlpjs/core": "^4.6.0",
     "@nlpjs/ner": "^4.6.0",
     "@nlpjs/nlg": "^4.6.0",
-    "@nlpjs/nlu": "^4.6.0",
+    "@nlpjs/nlu": "^4.7.0",
     "@nlpjs/sentiment": "^4.6.0",
     "@nlpjs/slot": "^4.3.0"
   },
