@@ -1,0 +1,38 @@
+[
+  {
+    "input": { "who": 1, "are": 1, "you": 1 },
+    "output": { "who": 1 }
+  },
+  {
+    "input": { "say": 1, "about": 1, "you": 1 },
+    "output": { "who": 1 }
+  },
+  {
+    "input": { "why": 1, "are": 1, "you": 1, "here": 1 },
+    "output": { "who": 1 }
+  },
+  {
+    "input": { "who": 1, "developed": 1, "you": 1 },
+    "output": { "developer": 1 }
+  },
+  {
+    "input": { "who": 1, "is": 1, "your": 1, "developer": 1 },
+    "output": { "developer": 1 }
+  },
+  {
+    "input": { "who": 1, "do": 1, "you": 1, "work": 1, "for": 1 },
+    "output": { "developer": 1 }
+  },
+  {
+    "input": { "when": 1, "is": 1, "your": 1, "birthday": 1 },
+    "output": { "birthday": 1 }
+  },
+  {
+    "input": { "when": 1, "were": 1, "you": 1, "borned": 1 },
+    "output": { "birthday": 1 }
+  },
+  {
+    "input": { "date": 1, "of": 1, "your": 1, "birthday": 1 },
+    "output": { "birthday": 1 }
+  }
+]
