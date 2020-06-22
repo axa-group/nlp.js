@@ -159,7 +159,6 @@ class NeuralNetwork extends Clonable {
           workerData: { settings: this.perceptronSettings, data: srcData },
         });
         worker.on('message', (data) => {
-          console.log(data);
           this.fromJSON(data.json);
           return resolve(data.status);
         });
@@ -171,7 +170,6 @@ class NeuralNetwork extends Clonable {
         });
       });
     }
-    console.log('other thread');
     const useNoneFeature =
       srcData[srcData.length - 1].input.nonefeature !== undefined;
     if (useNoneFeature) {
