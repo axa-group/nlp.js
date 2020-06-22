@@ -277,8 +277,14 @@ class Nlp extends Clonable {
   }
 
   async addCorpora(names) {
-    for (let i = 0; i < names.length; i += 1) {
-      await this.addCorpus(names[i]);
+    if (names) {
+      if (Array.isArray(names)) {
+        for (let i = 0; i < names.length; i += 1) {
+          await this.addCorpus(names[i]);
+        }
+      } else {
+        await this.addCorpus(names);
+      }
     }
   }
 
@@ -321,44 +327,66 @@ class Nlp extends Clonable {
         }
         corpus = typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
       }
-      const locale = corpus.locale.slice(0, 2);
-      this.addLanguage(locale);
-      const { data, entities } = corpus;
-      if (entities) {
-        const keys = Object.keys(entities);
-        for (let i = 0; i < keys.length; i += 1) {
-          const entityName = keys[i];
-          const entity = entities[entityName];
-          if (!entity.type) {
-            entity.type = 'text';
-          }
-          if (entity.type === 'text') {
-            const options = entity.options || {};
-            const optionNames = Object.keys(options);
-            for (let j = 0; j < optionNames.length; j += 1) {
-              this.addNerRuleOptionTexts(
-                locale,
-                entityName,
-                optionNames[j],
-                options[optionNames[j]]
-              );
+      if (corpus.domains) {
+        for (let i = 0; i < corpus.domains.length; i += 1) {
+          const domain = corpus.domains[i];
+          const { data } = domain;
+          const { locale } = domain;
+          this.addLanguage(locale);
+          for (let j = 0; j < data.length; j += 1) {
+            const intent = data[j];
+            const { utterances, answers } = intent;
+            for (let k = 0; k < utterances.length; k += 1) {
+              this.addDocument(locale, utterances[k], intent.name);
+              this.assignDomain(locale, intent.name, domain.name);
+            }
+            if (answers) {
+              for (let k = 0; k < answers.length; k += 1) {
+                this.addAnswer(locale, intent.name, answers[k]);
+              }
             }
           }
         }
-      }
-      for (let i = 0; i < data.length; i += 1) {
-        const current = data[i];
-        const { intent, utterances, answers } = current;
-        for (let j = 0; j < utterances.length; j += 1) {
-          this.addDocument(locale, utterances[j], intent);
+      } else {
+        const locale = corpus.locale.slice(0, 2);
+        this.addLanguage(locale);
+        const { data, entities } = corpus;
+        if (entities) {
+          const keys = Object.keys(entities);
+          for (let i = 0; i < keys.length; i += 1) {
+            const entityName = keys[i];
+            const entity = entities[entityName];
+            if (!entity.type) {
+              entity.type = 'text';
+            }
+            if (entity.type === 'text') {
+              const options = entity.options || {};
+              const optionNames = Object.keys(options);
+              for (let j = 0; j < optionNames.length; j += 1) {
+                this.addNerRuleOptionTexts(
+                  locale,
+                  entityName,
+                  optionNames[j],
+                  options[optionNames[j]]
+                );
+              }
+            }
+          }
         }
-        if (answers) {
-          for (let j = 0; j < answers.length; j += 1) {
-            const answer = answers[j];
-            if (typeof answer === 'string') {
-              this.addAnswer(locale, intent, answers[j]);
-            } else {
-              this.addAnswer(locale, intent, answer.answer, answer.opts);
+        for (let i = 0; i < data.length; i += 1) {
+          const current = data[i];
+          const { intent, utterances, answers } = current;
+          for (let j = 0; j < utterances.length; j += 1) {
+            this.addDocument(locale, utterances[j], intent);
+          }
+          if (answers) {
+            for (let j = 0; j < answers.length; j += 1) {
+              const answer = answers[j];
+              if (typeof answer === 'string') {
+                this.addAnswer(locale, intent, answers[j]);
+              } else {
+                this.addAnswer(locale, intent, answer.answer, answer.opts);
+              }
             }
           }
         }
