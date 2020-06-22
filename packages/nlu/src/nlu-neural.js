@@ -21,7 +21,14 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NeuralNetwork } = require('@nlpjs/neural');
+let NeuralNetwork;
+try {
+  // eslint-disable-next-line
+  NeuralNetwork = require('@nlpjs/neural-worker').NeuralNetwork;
+} catch (err) {
+  // eslint-disable-next-line
+  NeuralNetwork = require('@nlpjs/neural').NeuralNetwork;
+}
 const Nlu = require('./nlu');
 
 class NeuralNlu extends Nlu {
