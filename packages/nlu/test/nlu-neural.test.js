@@ -78,6 +78,7 @@ describe('NLU Neural', () => {
       }
       expect(good).toBeGreaterThan(194);
     });
+
     test('It can explain the results', async () => {
       const nlu = new NluNeural(
         { locale: 'en', returnExplanation: true },
@@ -88,9 +89,14 @@ describe('NLU Neural', () => {
       expect(result.explanation).toBeDefined();
       expect(result.explanation).toEqual([
         {
+          stem: '##bias',
+          token: '',
+          weight: -1.312396567047904,
+        },
+        {
           stem: 'what',
           token: 'what',
-          weight: 0,
+          weight: 1.571290135383606,
         },
         {
           stem: 'develop',

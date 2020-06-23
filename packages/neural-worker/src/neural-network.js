@@ -101,7 +101,7 @@ class NeuralNetwork extends Clonable {
     for (let i = 0; i < keys.length; i += 1) {
       const key = keys[i];
       const index = this.inputLookup[key];
-      if (index) {
+      if (index !== undefined) {
         result[key] = this.perceptrons[this.outputLookup[intent]].weights[
           index
         ];

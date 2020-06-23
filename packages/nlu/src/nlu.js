@@ -363,6 +363,11 @@ class Nlu extends Clonable {
     const stemmed = await this.container.get('stem').run(tokenized);
     const stems = stemmed.tokens;
     const result = [];
+    result.push({
+      token: '',
+      stem: '##bias',
+      weight: explanation.bias,
+    });
     for (let i = 0; i < tokens.length; i += 1) {
       const stem = stems[i];
       result.push({

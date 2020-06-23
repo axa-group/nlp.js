@@ -284,6 +284,13 @@ class DomainManager extends Clonable {
       const result = await this.classifyByStemDict(input.utterance, domainName);
       if (result) {
         input.classification = result;
+        input.explanation = [
+          {
+            token: '',
+            stem: '##exact',
+            weight: 1,
+          },
+        ];
         return input;
       }
     }
