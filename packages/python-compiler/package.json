@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/python-compiler",
-  "version": "4.4.0",
+  "version": "4.7.3",
   "description": "Python Compiler",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/evaluator": "^4.4.0",
+    "@nlpjs/evaluator": "^4.7.3",
     "@nlpjs/lexer": "^4.4.0"
   }
 }
