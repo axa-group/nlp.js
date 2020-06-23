@@ -57,7 +57,7 @@ function process(obj, context) {
   if (Array.isArray(obj)) {
     return obj.map((x) => process(x, context));
   }
-  if (typeof obj === 'object') {
+  if (obj !== null && typeof obj === 'object') {
     const keys = Object.keys(obj);
     const result = {};
     for (let i = 0; i < keys.length; i += 1) {
