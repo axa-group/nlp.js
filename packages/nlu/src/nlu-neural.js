@@ -32,10 +32,10 @@ try {
 const Nlu = require('./nlu');
 
 class NeuralNlu extends Nlu {
-  innerTrain(srcInput) {
+  async innerTrain(srcInput) {
     const input = srcInput;
     this.neuralNetwork = new NeuralNetwork(input.settings, this.container);
-    input.status = this.neuralNetwork.train(input.corpus);
+    input.status = await this.neuralNetwork.train(input.corpus);
     return input;
   }
 
