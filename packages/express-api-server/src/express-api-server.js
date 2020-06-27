@@ -44,6 +44,11 @@ class ExpressApiServer extends Clonable {
       this.settings,
       this.container.getConfiguration(this.settings.tag)
     );
+    if (!this.settings.apiRoot) {
+      this.settings.apiRoot = '/api';
+    }
+    this.plugins = [];
+    this.routers = [];
   }
 
   registerDefault() {
@@ -58,15 +63,25 @@ class ExpressApiServer extends Clonable {
     return this.app !== undefined;
   }
 
+  newRouter() {
+    return express.Router();
+  }
+
   start(input = {}) {
     const port = input.port || this.settings.port;
     this.app = express();
-    if (this.settings.serveBot) {
-      this.app.use(express.static(path.join(__dirname, './public')));
-    }
     this.app.use(cors());
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
+    for (let i = 0; i < this.plugins.length; i += 1) {
+      this.app.use(this.plugins[i]);
+    }
+    if (this.settings.serveBot) {
+      this.app.use(express.static(path.join(__dirname, './public')));
+    }
+    for (let i = 0; i < this.routers.length; i += 1) {
+      this.app.use(this.settings.apiRoot, this.routers[i]);
+    }
     if (port && port > 0) {
       this.app.listen(port, () => {
         const logger = this.container.get('logger');

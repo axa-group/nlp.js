@@ -1,4 +1,5 @@
 {
+  "ApiAuthJwt": { "className": "ApiAuthJwt", "path": "@nlpjs/api-auth-jwt" },
   "Basic": [
     { "className": "logger", "path": "@nlpjs/logger" },
     { "className": "Evaluator", "path": "@nlpjs/evaluator" },
