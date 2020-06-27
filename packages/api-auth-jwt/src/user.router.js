@@ -115,7 +115,7 @@ function register(req, res, next) {
 }
 
 function testProtected(req, res) {
-  res.send(`Ok ${req.user.email}, access granted`)
+  res.send(`Ok ${req.user.email}, access granted`);
 }
 
 function testUnprotected(req, res) {
@@ -126,7 +126,11 @@ function mountUser(router, container) {
   router.post('/auth/local/login', login.bind(container));
   router.post('/auth/local/refresh', refresh.bind(container));
   router.post('/auth/local/register', register.bind(container));
-  router.get('/testprotected', ensureAuthenticated, testProtected.bind(container));
+  router.get(
+    '/testprotected',
+    ensureAuthenticated,
+    testProtected.bind(container)
+  );
   router.get('/testunprotected', testUnprotected.bind(container));
 }
 

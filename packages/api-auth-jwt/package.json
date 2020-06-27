@@ -32,6 +32,9 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0"
   },
+  "devDependencies": {
+    "@nlpjs/database": "^4.7.4"
+  },
   "publishConfig": {
     "access": "public"
   },

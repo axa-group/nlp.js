@@ -24,7 +24,7 @@
 const passport = require('passport');
 
 function ensureAuthenticated(req, res, next) {
-  passport.authenticate('jwt', { session: false}, (err, user, info) => {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
     if (info) {
       return res.status(401).send(info.message);
     }

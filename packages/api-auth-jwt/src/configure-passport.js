@@ -31,25 +31,27 @@ function getLocalStrategy(db, settings) {
     usernameField: settings.usernameField || 'email',
     passwordField: settings.passwordField || 'password',
     session: false,
-  }
+  };
   const localStrategy = new LocalStrategy(
     localOptions,
     (email, password, done) => {
       db.findOne(settings.usersTable || 'users', { email })
         .then((user) => {
           if (!user) {
-            return done(null, false, { message: 'This email is not registered' });
+            return done(null, false, {
+              message: 'This email is not registered',
+            });
           }
           return bcrypt.compare(password, user.password, (err, isMatch) => {
             if (err || !isMatch) {
-              return done(null, false,{ message: 'Incorrect credentials' });
+              return done(null, false, { message: 'Incorrect credentials' });
             }
             return done(null, user);
           });
         })
         .catch((err) => {
-          done(err, null, { message: 'Error connecting to database' })
-        })
+          done(err, null, { message: 'Error connecting to database' });
+        });
     }
   );
   return localStrategy;
@@ -69,7 +71,7 @@ function getJwtStrategy(db, settings) {
         return done(null, user);
       })
       .catch((err) => {
-        done(err, null, { message: 'Error connecting to database'});
+        done(err, null, { message: 'Error connecting to database' });
       });
   });
   return jwtStrategy;

@@ -21,33 +21,34 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-function getSettings(container) {
-  const settings = container.getConfiguration('api-auth-jwt') || {};
-  if (!settings.usernameField) {
-    settings.usernameField = process.env.JWT_USERNAME_FIELD || 'email';
+class RouterMock {
+  constructor() {
+    this.optionsRoutes = {};
+    this.getRoutes = {};
+    this.postRoutes = {};
+    this.putRoutes = {};
+    this.deleteRoutes = {};
   }
-  if (!settings.passwordField) {
-    settings.passwordField = process.env.JWT_PASSWORD_FIELD || 'password';
+
+  options(path, route) {
+    this.optionsRoutes[path] = [route];
   }
-  if (!settings.usersTable) {
-    settings.usersTable = process.env.JWT_USERS_TABLE || 'users';
+
+  get(path, route) {
+    this.getRoutes[path] = route;
   }
-  if (!settings.jwtSecret) {
-    settings.jwtSecret = process.env.JWT_SECRET || 'Ch4nG3 Th15';
+
+  post(path, route) {
+    this.postRoutes[path] = route;
   }
-  if (!settings.jwtAlgorithm) {
-    settings.jwtAlgorithm = process.env.JWT_ALGORITHM || 'HS256';
+
+  put(path, route) {
+    this.putRoutes[path] = route;
   }
-  if (!settings.jwtExpiration) {
-    settings.jwtExpiration = process.env.JWT_LIFETIME || '15m';
+
+  delete(path, route) {
+    this.deleteRoutes[path] = route;
   }
-  if (!settings.jwtExpirationSeconds) {
-    settings.jwtExpirationSeconds = parseInt(
-      process.env.JWT_LIFETIME_SECONDS || '900',
-      10
-    );
-  }
-  return settings;
 }
 
-module.exports = getSettings;
+module.exports = RouterMock;

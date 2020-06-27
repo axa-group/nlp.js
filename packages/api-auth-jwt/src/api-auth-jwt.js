@@ -31,7 +31,7 @@ class ApiAuthJwt {
   register(container) {
     const settings = getSettings(container);
     const database = container.get('database');
-    const apiServer =container.get('api-server');
+    const apiServer = container.get('api-server');
     configurePassport(database, settings);
     const plugin = passport.initialize();
     apiServer.plugins.push(plugin);
@@ -39,8 +39,8 @@ class ApiAuthJwt {
     container.register('auth', { ensureAuthenticated });
     const router = apiServer.newRouter();
     mountUser(router, container);
-    apiServer.routers.push(router); 
-    logger.info('API Auth JWT plugin mounted');    
+    apiServer.routers.push(router);
+    logger.info('API Auth JWT plugin mounted');
   }
 }
 
