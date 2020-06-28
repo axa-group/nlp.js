@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/database",
-  "version": "4.7.4",
+  "version": "4.8.0",
   "description": "Base Database for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",

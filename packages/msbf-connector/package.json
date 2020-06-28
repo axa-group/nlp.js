@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/msbf-connector",
-  "version": "4.6.0",
+  "version": "4.8.0",
   "description": "Microsoft Bot Framework Connector",
   "author": {
     "email": "jesus.seijas@axa.com",
