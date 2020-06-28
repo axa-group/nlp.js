@@ -3,13 +3,11 @@
     "utteranceEn": "420 million finnish markka",
     "utteranceEs": "420 millones de marcos finlandeses",
     "utteranceFr": "420 millions de mark finlandais",
-    "utterancePt": "420 milhoes de marcos finlandeses",
     "utteranceZh": "4.2亿芬兰马克卡",
     "result": { "strValue": "420000000", "value": 420000000, "unit": "Finnish markka" },
     "resultEn": { "localeUnit": "Finnish markka" },
     "resultEs": { "localeUnit": "Marco finlandés" },
     "resultFr": { "localeUnit": "Mark Finlandais" },
-    "resultPt": { "localeUnit": "Marco finlandês" },
     "resultZh": { "localeUnit": "芬兰马克" }
   },
   {
@@ -24,7 +22,6 @@
     "resultEn": { "localeUnit": "Dollar" },
     "resultEs": { "localeUnit": "Dólar" },
     "resultFr": { "localeUnit": "Dollar" },
-    "resultPt": { "localeUnit": "Dólar" },
     "resultZh": { "localeUnit": "美元" },
     "resultJa": { "localeUnit": "ドル" }
   }

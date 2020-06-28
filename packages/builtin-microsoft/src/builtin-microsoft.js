@@ -235,7 +235,7 @@ class BuiltinMicrosoft extends Clonable {
       return {
         strValue: resolution.value,
         value: Number.parseFloat(resolution.value),
-        unit: resolution.unit,
+        unit: resolution.unit || resolution.srcUnit,
         localeUnit: resolution.srcUnit,
       };
     }
@@ -298,7 +298,10 @@ class BuiltinMicrosoft extends Clonable {
     const culture = getCulture(locale);
     this.settings.builtins.forEach((name) => {
       try {
-        const entities = Recognizers[`recognize${name}`](utterance, culture);
+        const entities =
+          name === 'Currency' && locale === 'pt'
+            ? Recognizers[`recognize${name}`](utterance, getCulture('en'))
+            : Recognizers[`recognize${name}`](utterance, culture);
         if (name === 'Number' && locale !== 'en') {
           entities.push(
             ...Recognizers.recognizeNumber(utterance, getCulture('en'))
