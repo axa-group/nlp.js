@@ -1,7 +1,7 @@
 language: node_js
 node_js:
-  - "10"
   - "12"
   - "13"
+  - "14"
 after_script:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
