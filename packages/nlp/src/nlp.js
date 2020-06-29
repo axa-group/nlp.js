@@ -520,6 +520,21 @@ class Nlp extends Clonable {
     const result = sourceInput
       ? this.applySettings(sourceInput, output)
       : output;
+    if (result.intent === 'None' && !result.answer) {
+      const openQuestion = this.container.get('open-question');
+      if (openQuestion) {
+        const qnaAnswer = await openQuestion.getAnswer(
+          result.locale,
+          result.utterance
+        );
+        if (qnaAnswer && qnaAnswer.answer && qnaAnswer.answer.length > 0) {
+          result.answer = qnaAnswer.answer;
+          result.isOpenQuestionAnswer = true;
+          result.openQuestionFirstCharacter = qnaAnswer.position;
+          result.openQuestionScore = qnaAnswer.score;
+        }
+      }
+    }
     if (this.onIntent) {
       await this.onIntent(this, result);
     } else {
