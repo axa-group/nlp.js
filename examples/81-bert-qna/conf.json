@@ -1,0 +1,24 @@
+{
+  "pathPlugins": "./plugins",
+  "pathPipeline": "./pipelines.md",
+  "settings": {
+    "nlp": {
+      "languages": ["en", "es"]
+    },
+    "open-question": {
+      "url": "http://localhost:8000/qna",
+      "context-en": "The first book title is the philosopher stone. The second book title is the chamber of secrets. The third book is the prisioner of Azkaban",
+      "context-es": "El título del primer libro es la piedra filosofal. El título del segundo libro es la cámara de los secretos. El tercer libro es el prisionero de Azkaban"
+
+    },
+    "api-server": { "port": 3000, "serveBot": true }
+  },
+  "use": [
+    { "className": "logger", "path": "../../packages/logger/src" },
+    { "className": "Nlp", "path": "../../packages/nlp/src" },
+    { "className": "LangEn", "path": "../../packages/lang-en/src" },
+    { "className": "ExpressApiServer", "path": "../../packages/express-api-server/src" },
+    { "className": "DirectlineConnector", "path": "../../packages/directline-connector/src" },
+    { "className": "BertOpenQuestion", "path": "../../packages/bert-open-question/src" }
+  ]
+}
