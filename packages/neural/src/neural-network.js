@@ -312,13 +312,11 @@ class NeuralNetwork extends Clonable {
     });
     if (json.features) {
       this.sizes = [json.features.length, json.intents.length];
-
       const inputLookup = {};
       for (let i = 0; i < json.features.length; i += 1) {
         inputLookup[json.features[i]] = i;
       }
       this.inputLookup = inputLookup;
-
       const layer1 = {};
       for (let i = 0; i < json.intents.length; i += 1) {
         const intent = json.intents[i];
