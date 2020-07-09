@@ -282,7 +282,15 @@ class NeuralNetwork extends Clonable {
         perceptronSettings: settings,
       };
     }
-    const features = Object.keys(this.inputLookup);
+
+    // sort features by value
+    const features = Object.entries(this.inputLookup)
+      .sort((a, b) => {
+        return a[1] - b[1];
+      })
+      .map((entry) => {
+        return entry[0];
+      });
     const intents = Object.keys(this.outputLookup);
     const perceptrons = [];
     for (let i = 0; i < intents.length; i += 1) {
@@ -305,11 +313,13 @@ class NeuralNetwork extends Clonable {
     });
     if (json.features) {
       this.sizes = [json.features.length, json.intents.length];
-      const layer0 = {};
+
+      const inputLookup = {};
       for (let i = 0; i < json.features.length; i += 1) {
-        layer0[json.features[i]] = {};
+        inputLookup[json.features[i]] = i;
       }
-      this.inputLookup = toHash(layer0);
+      this.inputLookup = inputLookup;
+
       const layer1 = {};
       for (let i = 0; i < json.intents.length; i += 1) {
         const intent = json.intents[i];
