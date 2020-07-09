@@ -283,7 +283,6 @@ class NeuralNetwork extends Clonable {
       };
     }
 
-    // sort features by value
     const features = Object.entries(this.inputLookup)
       .sort((a, b) => {
         return a[1] - b[1];
