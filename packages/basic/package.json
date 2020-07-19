@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/basic",
-  "version": "4.8.0",
+  "version": "4.8.1",
   "description": "Basic dependencies for node",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -27,10 +27,10 @@
   "dependencies": {
     "@nlpjs/console-connector": "^4.6.0",
     "@nlpjs/core-loader": "^4.8.0",
-    "@nlpjs/evaluator": "^4.7.3",
+    "@nlpjs/evaluator": "^4.8.1",
     "@nlpjs/lang-en": "^4.6.0",
-    "@nlpjs/logger": "^4.4.0",
-    "@nlpjs/nlp": "^4.7.4"
+    "@nlpjs/logger": "^4.8.1",
+    "@nlpjs/nlp": "^4.8.1"
   },
   "gitHead": "0940a8c5fee7da099d44174136fa76914933b819"
 }

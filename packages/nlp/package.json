@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlp",
-  "version": "4.7.4",
+  "version": "4.8.1",
   "description": "Natural Language Processing",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -28,8 +28,8 @@
     "@nlpjs/core": "^4.6.0",
     "@nlpjs/ner": "^4.6.0",
     "@nlpjs/nlg": "^4.6.0",
-    "@nlpjs/nlu": "^4.7.4",
-    "@nlpjs/sentiment": "^4.7.4",
+    "@nlpjs/nlu": "^4.8.1",
+    "@nlpjs/sentiment": "^4.8.1",
     "@nlpjs/slot": "^4.3.0"
   },
   "gitHead": "0940a8c5fee7da099d44174136fa76914933b819"
