@@ -21,10 +21,30 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
+function tokenize(text, tokenizer) {
+  if (tokenizer) {
+    if (tokenizer.tokenize) {
+      return tokenizer.tokenize(text);
+    }
+    return tokenizer(text);
+  }
+  return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
+}
+
+function normalize(text, normalizer) {
+  if (normalizer) {
+    if (normalizer.normalize) {
+      return normalizer.normalize(text);
+    }
+    return normalizer(text);
+  }
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}
 
 module.exports = {
-  NGrams,
-  TfIdf,
+  tokenize,
+  normalize,
 };

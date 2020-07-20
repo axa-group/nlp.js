@@ -21,6 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const { normalize, tokenize } = require('./base-fn');
+
 class NGrams {
   constructor(settings = {}) {
     this.normalizer = settings.normalizer;
@@ -38,41 +40,18 @@ class NGrams {
     this.endToken = settings.endToken;
   }
 
-  tokenize(text) {
-    return text.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
-  }
-
   split(text) {
     if (this.byChar) {
       return text.split('');
     }
-    if (this.tokenizer) {
-      if (this.tokenizer.tokenize) {
-        return this.tokenizer.tokenize(text);
-      }
-      return this.tokenizer(text);
-    }
-    return this.tokenize(text);
-  }
-
-  normalize(text) {
-    if (this.normalizer) {
-      if (this.normalizer.normalize) {
-        return this.normalizer.normalize(text);
-      }
-      return this.normalizer(text);
-    }
-    return text
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .toLowerCase();
+    return tokenize(text, this.tokenizer);
   }
 
   getNGrams(text, n = 3) {
     if (Array.isArray(text)) {
       return this.getNGrams(text.join(' '), n);
     }
-    const normalized = this.normalize(text);
+    const normalized = normalize(text, this.normalizer);
     const tokens = this.split(normalized);
     if (this.startToken !== undefined) {
       for (let i = 0; i < n - 1; i += 1) {
@@ -95,16 +74,20 @@ class NGrams {
     return result;
   }
 
-  getFreqs(ngrams) {
+  getFreqs(ngrams, weighted = false) {
     const dict = {};
+    let delta = 1;
+    if (weighted) {
+      delta = typeof weighted === 'number' ? weighted : 1 / ngrams.length;
+    }
     for (let i = 0; i < ngrams.length; i += 1) {
-      dict[ngrams[i]] = (dict[ngrams[i]] || 0) + 1;
+      dict[ngrams[i]] = (dict[ngrams[i]] || 0) + delta;
     }
     return dict;
   }
 
-  getNGramsFreqs(text, n = 3) {
-    return this.getFreqs(this.getNGrams(text, n));
+  getNGramsFreqs(text, n = 3, weighted = false) {
+    return this.getFreqs(this.getNGrams(text, n), weighted);
   }
 }
 
