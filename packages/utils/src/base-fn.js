@@ -44,7 +44,19 @@ function normalize(text, normalizer) {
     .toLowerCase();
 }
 
+function wordPunctTokenize(text) {
+  return text
+    .split(/([A-zÀ-ÿ-]+|[0-9._]+|.|!|\?|'|"|:|;|,|-)/i)
+    .filter((x) => x.trim());
+}
+
+function lowerNormalize(text) {
+  return text.toLowerCase();
+}
+
 module.exports = {
   tokenize,
   normalize,
+  wordPunctTokenize,
+  lowerNormalize,
 };
