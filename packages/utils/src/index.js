@@ -23,8 +23,10 @@
 
 const NGrams = require('./ngrams');
 const TfIdf = require('./tfidf');
+const MarkovChain = require('./markov');
 
 module.exports = {
   NGrams,
   TfIdf,
+  MarkovChain,
 };
