@@ -21,14 +21,52 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
+const { NlpAnalyzer } = require('../src');
 
-module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
+const corpus = {
+  name: 'test',
+  locale: 'en-US',
+  data: [
+    {
+      intent: 'intent1',
+      utterances: ['utterance1-1'],
+      tests: ['test1-1', 'test1-2'],
+    },
+    {
+      intent: 'intent2',
+      utterances: ['utterance2-1'],
+      tests: ['test2-1', 'test2-2', 'test2-3'],
+    },
+  ],
 };
+
+function train() {
+  return {};
+}
+
+function process(test) {
+  return {
+    classifications: [
+      { intent: test === 'test2-1' ? 'intent2' : 'intent1', score: 0.9 },
+      { intent: test === 'test2-1' ? 'intent1' : 'intent2', score: 0.2 },
+    ],
+  };
+}
+
+describe('NLP Analyzer', () => {
+  describe('constructor', () => {
+    it('Should create a new instance', () => {
+      const analyzer = new NlpAnalyzer({ threshold: 0.2 });
+      expect(analyzer).toBeDefined();
+      expect(analyzer.threshold).toEqual(0.2);
+    });
+  });
+
+  describe('analyze', () => {
+    it('Should return an analysis', async () => {
+      const analyzer = new NlpAnalyzer();
+      const analysis = await analyzer.analyze(corpus, train, process);
+      expect(analysis).toBeDefined();
+    });
+  });
+});

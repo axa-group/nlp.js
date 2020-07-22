@@ -27,5 +27,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "0940a8c5fee7da099d44174136fa76914933b819"
+  "gitHead": "0940a8c5fee7da099d44174136fa76914933b819",
+  "dependencies": {
+    "@nlpjs/xtables": "^4.8.1",
+    "exceljs": "^4.1.1"
+  }
 }
