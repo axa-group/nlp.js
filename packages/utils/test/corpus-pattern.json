@@ -1,0 +1,29 @@
+{
+  "name": "Corpus Pattern",
+  "locale": "en-US",
+  "data": [
+    {
+      "intent": "test1",
+      "utterances": [
+        "this is [great|nice|perfect]",
+        "this is a test"
+      ],
+      "tests": [
+        "this should be [great|nice|perfect]"
+      ]
+    },
+    {
+      "intent": "test2",
+      "utterances": [
+        "I [am having|have] a [problem|question] that have to [solve|investigate]",
+        "We should investigate"
+      ],
+      "tests": [
+        "Investigate this"
+      ],
+      "answers": [
+        
+      ]
+    }
+  ]
+}

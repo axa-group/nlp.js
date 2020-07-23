@@ -25,10 +25,20 @@ const NGrams = require('./ngrams');
 const TfIdf = require('./tfidf');
 const MarkovChain = require('./markov');
 const NlpAnalyzer = require('./nlp-analyzer');
+const {
+  cartesian,
+  splitPattern,
+  composeFromPattern,
+  composeCorpus,
+} = require('./pattern');
 
 module.exports = {
   NGrams,
   TfIdf,
   MarkovChain,
   NlpAnalyzer,
+  cartesian,
+  splitPattern,
+  composeFromPattern,
+  composeCorpus,
 };

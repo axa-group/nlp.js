@@ -1,0 +1,38 @@
+{
+  "name": "Corpus Pattern",
+  "locale": "en-US",
+  "data": [
+    {
+      "intent": "test1",
+      "utterances": [
+        "this is great",
+        "this is nice",
+        "this is perfect",
+        "this is a test"
+      ],
+      "tests": [
+        "this should be great",
+        "this should be nice",
+        "this should be perfect"
+      ]
+    },
+    {
+      "intent": "test2",
+      "utterances": [
+        "I am having a problem that have to solve",
+        "I am having a problem that have to investigate",
+        "I am having a question that have to solve",
+        "I am having a question that have to investigate",
+        "I have a problem that have to solve",
+        "I have a problem that have to investigate",
+        "I have a question that have to solve",
+        "I have a question that have to investigate",
+        "We should investigate"
+      ],
+      "tests": [
+        "Investigate this"
+      ],
+      "answers": []
+    }
+  ]
+}
