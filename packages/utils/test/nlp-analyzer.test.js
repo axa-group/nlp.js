@@ -21,6 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const path = require('path');
+const fs = require('fs');
 const { NlpAnalyzer } = require('../src');
 
 const corpus = {
@@ -67,6 +69,20 @@ describe('NLP Analyzer', () => {
       const analyzer = new NlpAnalyzer();
       const analysis = await analyzer.analyze(corpus, train, process);
       expect(analysis).toBeDefined();
+    });
+  });
+
+  describe('generate excel', () => {
+    it('Should generate an excel file', async () => {
+      const analyzer = new NlpAnalyzer();
+      const analysis = await analyzer.analyze(corpus, train, process);
+      const fileName = path.join(__dirname, './test-excel.xlsx');
+      await analyzer.generateExcel(fileName, analysis);
+      const exists = fs.existsSync(fileName);
+      expect(exists).toBeTruthy();
+      if (exists) {
+        fs.unlinkSync(fileName);
+      }
     });
   });
 });
