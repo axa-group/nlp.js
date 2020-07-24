@@ -90,7 +90,6 @@ class Nlu extends Clonable {
         '.doSpellCheck',
         '.textToFeatures',
         '.innerProcess',
-        '.convertToArray',
         '.filterNonActivated',
         '.normalizeClassifications',
       ],
