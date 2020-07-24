@@ -21,14 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-let NeuralNetwork;
-try {
-  // eslint-disable-next-line
-  NeuralNetwork = require('@nlpjs/neural-worker').NeuralNetwork;
-} catch (err) {
-  // eslint-disable-next-line
-  NeuralNetwork = require('@nlpjs/neural').NeuralNetwork;
-}
+const { NeuralNetwork } = require('@nlpjs/neural');
 const Nlu = require('./nlu');
 
 class NeuralNlu extends Nlu {
@@ -39,27 +32,13 @@ class NeuralNlu extends Nlu {
     return input;
   }
 
-  getBestIntent(classifications) {
-    let best;
-    let bestClassification = 0;
-    const keys = Object.keys(classifications);
-    for (let i = 0; i < keys.length; i += 1) {
-      if (classifications[keys[i]] > bestClassification) {
-        best = keys[i];
-        bestClassification = classifications[keys[i]];
-      }
-    }
-    return best;
-  }
-
   innerProcess(srcInput) {
     const input = srcInput;
-    if (!this.neuralNetwork) {
-      input.classifications = { None: 1 };
-    } else {
-      input.classifications = this.neuralNetwork.run(input.tokens);
-    }
-    const intent = this.getBestIntent(input.classifications);
+    input.classifications = this.neuralNetwork
+      ? this.neuralNetwork.run(input.tokens)
+      : { None: 1 };
+    this.convertToArray(input);
+    const { intent } = input.classifications[0];
     if (
       input.settings &&
       input.settings.returnExplanation &&

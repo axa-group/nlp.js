@@ -70,13 +70,13 @@ describe('Neural Network', () => {
     });
     test('It should fill default parameters', () => {
       const net = new NeuralNetwork();
-      expect(net.perceptronSettings).toBeDefined();
-      expect(net.perceptronSettings.iterations).toEqual(20000);
-      expect(net.perceptronSettings.errorThresh).toEqual(0.00005);
-      expect(net.perceptronSettings.deltaErrorThresh).toEqual(0.000001);
-      expect(net.perceptronSettings.learningRate).toEqual(0.7);
-      expect(net.perceptronSettings.momentum).toEqual(0.5);
-      expect(net.perceptronSettings.alpha).toEqual(0.08);
+      expect(net.settings).toBeDefined();
+      expect(net.settings.iterations).toEqual(20000);
+      expect(net.settings.errorThresh).toEqual(0.00005);
+      expect(net.settings.deltaErrorThresh).toEqual(0.000001);
+      expect(net.settings.learningRate).toEqual(0.6);
+      expect(net.settings.momentum).toEqual(0.5);
+      expect(net.settings.alpha).toEqual(0.07);
     });
 
     test('Parameters can be provided', () => {
@@ -89,26 +89,23 @@ describe('Neural Network', () => {
         alpha: 0.01,
       };
       const net = new NeuralNetwork(options);
-      expect(net.perceptronSettings).toBeDefined();
-      expect(net.perceptronSettings.iterations).toEqual(options.iterations);
-      expect(net.perceptronSettings.errorThresh).toEqual(options.errorThresh);
-      expect(net.perceptronSettings.deltaErrorThresh).toEqual(
-        options.deltaErrorThresh
-      );
-      expect(net.perceptronSettings.learningRate).toEqual(options.learningRate);
-      expect(net.perceptronSettings.momentum).toEqual(options.momentum);
-      expect(net.perceptronSettings.alpha).toEqual(options.alpha);
+      expect(net.settings).toBeDefined();
+      expect(net.settings.iterations).toEqual(options.iterations);
+      expect(net.settings.errorThresh).toEqual(options.errorThresh);
+      expect(net.settings.deltaErrorThresh).toEqual(options.deltaErrorThresh);
+      expect(net.settings.learningRate).toEqual(options.learningRate);
+      expect(net.settings.momentum).toEqual(options.momentum);
+      expect(net.settings.alpha).toEqual(options.alpha);
     });
   });
 
   describe('Initialize', () => {
-    test('It should initialize based on the sizes provided', () => {
+    test('It should initialize based on num of features and the intent names', () => {
       const net = new NeuralNetwork();
       net.sizes = [2, 4];
-      net.initialize();
+      net.initialize(2, ['a', 'b', 'c', 'd']);
       expect(net.perceptrons).toHaveLength(4);
-      expect(net.inputs).toEqual([]);
-      expect(net.outputs).toEqual([]);
+      expect(net.outputs).toEqual({ a: 0, b: 0, c: 0, d: 0 });
     });
   });
 
@@ -118,9 +115,9 @@ describe('Neural Network', () => {
       const actual = net.isRunnable;
       expect(actual).toBeFalsy();
     });
-    test('A net with sizes must be runnable', () => {
+    test('A net with perceptrons must be runnable', () => {
       const net = new NeuralNetwork();
-      net.sizes = [2, 4];
+      net.numPerceptrons = 2;
       const actual = net.isRunnable;
       expect(actual).toBeTruthy();
     });
@@ -144,20 +141,12 @@ describe('Neural Network', () => {
     });
   });
 
-  describe('Adjust', () => {
-    test('It should adjust numbers to the number of decimals', () => {
-      const net = new NeuralNetwork({ maxDecimals: 4 });
-      const actual = net.adjust(0.123456789);
-      expect(actual).toEqual(0.1235);
-    });
-  });
-
   describe('To JSON', () => {
-    test('If is not runnable return perceptronSettings', () => {
+    test('If is not runnable return settings', () => {
       const net = new NeuralNetwork();
       const actual = net.toJSON();
       const expected = {
-        perceptronSettings: {},
+        settings: {},
       };
       expect(actual).toEqual(expected);
     });
@@ -166,7 +155,7 @@ describe('Neural Network', () => {
   describe('From JSON', () => {
     test('If the JSON does not contains training, recover only training ops', () => {
       const net = new NeuralNetwork();
-      const perceptronSettings = {
+      const settings = {
         iterations: 10000,
         errorThresh: 0.001,
         deltaErrorThresh: 0.0000002,
@@ -179,9 +168,9 @@ describe('Neural Network', () => {
       net.fromJSON({
         sizes: undefined,
         layers: [],
-        perceptronSettings,
+        settings,
       });
-      expect(net.perceptronSettings).toEqual(perceptronSettings);
+      expect(net.settings).toEqual(settings);
     });
   });
 });

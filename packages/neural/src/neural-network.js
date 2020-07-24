@@ -20,193 +20,182 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-const { Clonable } = require('@nlpjs/core');
-const {
-  LookupTable,
-  lookupToArray,
-  lookupToObject,
-  toHash,
-  getTypedArrayFn,
-} = require('./helper');
-const defaultSettings = require('./default-settings.json');
 
-/**
- * Class for a dense neural network, with an input and output layers fully connected,
- * using a leaky-relu activation
- */
-class NeuralNetwork extends Clonable {
-  constructor(settings = {}, container) {
-    super({}, container);
-    this.perceptronSettings = {};
-    this.applySettings(this.perceptronSettings, settings);
-    this.applySettings(this.perceptronSettings, defaultSettings);
-    if (this.perceptronSettings.log === true) {
+const CorpusLookup = require('./corpus-lookup');
+
+const defaultSettings = {
+  iterations: 20000,
+  errorThresh: 0.00005,
+  fixedError: false,
+  deltaErrorThresh: 0.000001,
+  learningRate: 0.6,
+  momentum: 0.5,
+  alpha: 0.07,
+  log: false,
+};
+
+class NeuralNetwork {
+  constructor(settings = {}) {
+    console.log(settings);
+    this.settings = settings;
+    this.applySettings(this.settings, defaultSettings);
+    if (this.settings.log === true) {
       this.logFn = (status, time) =>
-        this.logger.info(
+        console.log(
           `Epoch ${status.iterations} loss ${status.error} time ${time}ms`
         );
-    } else if (typeof this.perceptronSettings.log === 'function') {
-      this.logFn = this.perceptronSettings.log;
+    } else if (typeof this.settings.log === 'function') {
+      this.logFn = this.settings.log;
     }
-    this.jsonExport = {
-      perceptrons: this.exportPerceptrons,
-    };
-    this.jsonImport = {
-      perceptrons: this.importPerceptrons,
-    };
   }
 
-  initialize() {
-    const size = this.sizes[1];
-    this.inputs = [];
-    this.outputs = [];
+  applySettings(obj = {}, settings = {}) {
+    Object.keys(settings).forEach((key) => {
+      if (obj[key] === undefined) {
+        obj[key] = settings[key];
+      }
+    });
+    return obj;
+  }
+
+  initialize(numInputs, outputNames) {
+    this.perceptronsByName = {};
     this.perceptrons = [];
-    for (let node = 0; node < size; node += 1) {
-      this.perceptrons.push({
-        weights: new Float32Array(this.sizes[0]),
-        changes: new Float32Array(this.sizes[0]),
+    this.outputs = {};
+    this.numPerceptrons = outputNames.length;
+    for (let i = 0; i < outputNames.length; i += 1) {
+      const name = outputNames[i];
+      this.outputs[name] = 0;
+      const perceptron = {
+        name,
+        id: i,
+        weights: new Float32Array(numInputs),
+        changes: new Float32Array(numInputs),
         bias: 0,
-      });
+      };
+      this.perceptrons.push(perceptron);
+      this.perceptronsByName[name] = perceptron;
     }
   }
 
-  get isRunnable() {
-    return !!this.sizes;
-  }
-
-  run(srcInput) {
-    if (this.isRunnable) {
-      const input = lookupToArray(this.inputLookup, srcInput);
-      return lookupToObject(this.outputLookup, this.runInput(input).slice(0));
-    }
-    return undefined;
-  }
-
-  explain(input, intent) {
-    const keys = Object.keys(input);
-    const result = {};
-    for (let i = 0; i < keys.length; i += 1) {
-      const key = keys[i];
-      const index = this.inputLookup[key];
-      if (index !== undefined) {
-        result[key] = this.perceptrons[this.outputLookup[intent]].weights[
-          index
-        ];
-      } else {
-        result[key] = 0;
+  runInputPerceptron(perceptron, input) {
+    const { weights, bias } = perceptron;
+    let sum = bias;
+    for (let i = 0; i < input.keys.length; i += 1) {
+      const key = input.keys[i];
+      if (weights[key]) {
+        if (input.data[key] === 1) {
+          sum += weights[key];
+        } else {
+          sum += input.data[key] * weights[key];
+        }
       }
     }
-    return {
-      weights: result,
-      bias: this.perceptrons[this.outputLookup[intent]].bias,
-    };
+    return sum < 0 ? 0 : this.settings.alpha * sum;
   }
 
   runInput(input) {
-    this.inputs = input;
-    const { alpha } = this.perceptronSettings;
-    const keys = Object.keys(input);
-    for (let node = 0; node < this.sizes[1]; node += 1) {
-      const perceptron = this.perceptrons[node];
-      const { weights, bias } = perceptron;
-      let sum = bias;
-      for (let i = 0; i < keys.length; i += 1) {
-        const key = keys[i];
-        if (weights[key]) {
-          if (input[key] === 1) {
-            sum += weights[key];
-          } else {
-            sum += input[key] * weights[key];
-          }
-        }
-      }
-      this.outputs[node] = sum < 0 ? 0 : alpha * sum;
+    for (let i = 0; i < this.numPerceptrons; i += 1) {
+      this.outputs[this.perceptrons[i].name] = this.runInputPerceptron(
+        this.perceptrons[i],
+        input
+      );
     }
     return this.outputs;
   }
 
-  /**
-   * If the model is not initilized, then initialize it.
-   * @param {Object} data Data for the initialization.
-   */
-  verifyIsInitialized(data) {
-    if (!this.sizes) {
-      this.sizes = [data[0].input.length, data[0].output.length];
-      this.initialize();
+  get isRunnable() {
+    return !!this.numPerceptrons;
+  }
+
+  run(input) {
+    return this.numPerceptrons
+      ? this.runInput(this.lookup.transformInput(input))
+      : undefined;
+  }
+
+  prepareCorpus(corpus) {
+    this.lookup = new CorpusLookup();
+    return this.lookup.build(corpus);
+  }
+
+  verifyIsInitialized() {
+    if (!this.perceptrons) {
+      this.initialize(this.lookup.numInputs, this.lookup.outputLookup.items);
     }
   }
 
-  train(srcData) {
-    if (!srcData || !srcData.length) {
+  trainPerceptron(perceptron, data) {
+    const { alpha, momentum } = this.settings;
+    const { changes, weights } = perceptron;
+    let error = 0;
+    for (let i = 0; i < data.length; i += 1) {
+      const { input, output } = data[i];
+      const actualOutput = this.runInputPerceptron(perceptron, input);
+      const expectedOutput = output.data[perceptron.id] || 0;
+      const currentError = expectedOutput - actualOutput;
+      if (currentError) {
+        error += currentError ** 2;
+        const delta =
+          (actualOutput > 0 ? 1 : alpha) *
+          currentError *
+          this.decayLearningRate;
+        for (let j = 0; j < input.keys.length; j += 1) {
+          const key = input.keys[j];
+          const change = delta * input.data[key] + momentum * changes[key];
+          changes[key] = change;
+          weights[key] += change;
+        }
+        perceptron.bias += delta;
+      }
+    }
+    return error;
+  }
+
+  train(corpus) {
+    if (!corpus || !corpus.length) {
       return {};
     }
     const useNoneFeature =
-      srcData[srcData.length - 1].input.nonefeature !== undefined;
+      corpus[corpus.length - 1].input.nonefeature !== undefined;
     if (useNoneFeature) {
       const intents = {};
-      for (let i = 0; i < srcData.length - 1; i += 1) {
-        const tokens = Object.keys(srcData[i].output);
+      for (let i = 0; i < corpus.length - 1; i += 1) {
+        const tokens = Object.keys(corpus[i].output);
         for (let j = 0; j < tokens.length; j += 1) {
           if (!intents[tokens[j]]) {
             intents[tokens[j]] = 1;
           }
         }
       }
-      const current = srcData[srcData.length - 1];
+      const current = corpus[corpus.length - 1];
       const keys = Object.keys(intents);
       for (let i = 0; i < keys.length; i += 1) {
         current.output[keys[i]] = 0.0000001;
       }
     }
-    const data = this.formatData(srcData);
-    const dataDict = [];
-    for (let i = 0; i < data.length; i += 1) {
-      const current = data[i].input;
-      const currentObj = {};
-      for (let j = 0; j < current.length; j += 1) {
-        if (current[j]) {
-          currentObj[j] = current[j];
-        }
-      }
-      dataDict.push(currentObj);
-    }
+    const data = this.prepareCorpus(corpus);
     if (!this.status) {
       this.status = { error: Infinity, deltaError: Infinity, iterations: 0 };
     }
-    this.verifyIsInitialized(data);
-    let minError;
-    let minDelta;
-    if (!this.perceptronSettings.fixedError) {
-      minError =
-        this.sizes[1] > 50
-          ? (this.perceptronSettings.errorThresh * 50) / this.sizes[1]
-          : this.perceptronSettings.errorThresh;
-      minDelta =
-        this.sizes[1] > 50
-          ? (this.perceptronSettings.deltaErrorThresh * 50) / this.sizes[1]
-          : this.perceptronSettings.deltaErrorThresh;
-    } else {
-      minError = this.perceptronSettings.errorThresh;
-      minDelta = this.perceptronSettings.deltaErrorThresh;
-    }
+    this.verifyIsInitialized();
+    const minError = this.settings.errorThresh;
+    const minDelta = this.settings.deltaErrorThresh;
     while (
-      this.status.iterations < this.perceptronSettings.iterations &&
+      this.status.iterations < this.settings.iterations &&
       this.status.error > minError &&
       this.status.deltaError > minDelta
     ) {
       const hrstart = new Date();
       this.status.iterations += 1;
+      this.decayLearningRate =
+        this.settings.learningRate / (1 + 0.001 * this.status.iterations);
       const lastError = this.status.error;
       this.status.error = 0;
-      for (let i = 0; i < data.length; i += 1) {
-        const current = data[i];
-        this.status.error += this.calculateDeltas(
-          current.input,
-          current.output,
-          this.runInput(dataDict[i])
-        );
+      for (let i = 0; i < this.numPerceptrons; i += 1) {
+        this.status.error += this.trainPerceptron(this.perceptrons[i], data);
       }
-      this.status.error /= data.length;
+      this.status.error /= this.numPerceptrons * data.length;
       this.status.deltaError = Math.abs(this.status.error - lastError);
       const hrend = new Date();
       if (this.logFn) {
@@ -216,115 +205,64 @@ class NeuralNetwork extends Clonable {
     return this.status;
   }
 
-  calculateDeltas(incoming, target, outputs, marknode) {
-    const { learningRate, alpha, momentum } = this.perceptronSettings;
-    const numOutputs = this.sizes[1];
-    let error = 0;
-    const decayLearningRate =
-      learningRate / (1 + 0.001 * this.status.iterations);
-    const startNode = marknode === undefined ? 0 : marknode;
-    const endNode = marknode === undefined ? numOutputs : marknode + 1;
-    for (let node = startNode; node < endNode; node += 1) {
-      const perceptron = this.perceptrons[node];
-      const { changes, weights } = perceptron;
-      const output = outputs[node];
-      const currentError = target[node] - output;
-      if (currentError) {
-        error += currentError ** 2;
-        const delta =
-          (output > 0 ? 1 : alpha) * currentError * decayLearningRate;
-        for (let k = 0; k < incoming.length; k += 1) {
-          const change = delta * incoming[k] + momentum * changes[k];
-          changes[k] = change;
-          weights[k] += change;
-        }
-        perceptron.bias += delta;
-      }
+  explain(input, intent) {
+    const transformedInput = this.lookup.transformInput(input);
+    const result = {};
+    const intentIndex = this.lookup.outputLookup.dict[intent];
+    if (intentIndex === undefined) {
+      return {};
     }
-    return error / numOutputs;
-  }
-
-  formatData(data) {
-    if (!this.inputLookup) {
-      this.inputLookup = new LookupTable(data, 'input').table;
-      this.outputLookup = new LookupTable(data, 'output').table;
+    for (let i = 0; i < transformedInput.keys.length; i += 1) {
+      const key = transformedInput.keys[i];
+      result[this.lookup.inputLookup.items[key]] = this.perceptrons[
+        intentIndex
+      ].weights[key];
     }
-    const formatInput = getTypedArrayFn(this.inputLookup);
-    const formatOutput = getTypedArrayFn(this.outputLookup);
-    const result = [];
-    for (let i = 0; i < data.length; i += 1) {
-      result.push({
-        input: formatInput(data[i].input),
-        output: formatOutput(data[i].output),
-      });
-    }
-    return result;
-  }
-
-  adjust(n) {
-    return this.perceptronSettings.maxDecimals &&
-      this.perceptronSettings.maxDecimals < 17
-      ? parseFloat(n.toFixed(this.perceptronSettings.maxDecimals))
-      : n;
+    return {
+      weights: result,
+      bias: this.perceptrons[intentIndex].bias,
+    };
   }
 
   toJSON() {
     const settings = {};
-    const keys = Object.keys(this.perceptronSettings);
+    const keys = Object.keys(this.settings);
     for (let i = 0; i < keys.length; i += 1) {
       const key = keys[i];
-      if (this.perceptronSettings[key] !== defaultSettings[key]) {
-        settings[key] = this.perceptronSettings[key];
+      if (this.settings[key] !== defaultSettings[key]) {
+        settings[key] = this.settings[key];
       }
     }
-    if (!this.inputLookup) {
+    if (!this.lookup) {
       return {
-        perceptronSettings: settings,
+        settings,
       };
     }
-
-    const features = Object.entries(this.inputLookup)
-      .sort((a, b) => {
-        return a[1] - b[1];
-      })
-      .map((entry) => {
-        return entry[0];
-      });
-    const intents = Object.keys(this.outputLookup);
+    const features = this.lookup.inputLookup.items;
+    const intents = this.lookup.outputLookup.items;
     const perceptrons = [];
-    for (let i = 0; i < intents.length; i += 1) {
+    for (let i = 0; i < this.perceptrons.length; i += 1) {
       const perceptron = this.perceptrons[i];
       const weights = [...perceptron.weights, perceptron.bias];
       perceptrons.push(weights);
     }
     return {
+      settings,
       features,
       intents,
       perceptrons,
-      perceptronSettings: settings,
     };
   }
 
   fromJSON(json) {
-    this.perceptronSettings = this.applySettings({
+    this.settings = this.applySettings({
       ...defaultSettings,
-      ...json.perceptronSettings,
+      ...json.settings,
     });
     if (json.features) {
-      this.sizes = [json.features.length, json.intents.length];
-      const inputLookup = {};
-      for (let i = 0; i < json.features.length; i += 1) {
-        inputLookup[json.features[i]] = i;
-      }
-      this.inputLookup = inputLookup;
-      const layer1 = {};
-      for (let i = 0; i < json.intents.length; i += 1) {
-        const intent = json.intents[i];
-        layer1[intent] = {};
-      }
-      this.outputLookup = toHash(layer1);
-      this.initialize();
-      for (let i = 0; i < json.intents.length; i += 1) {
+      this.lookup = new CorpusLookup(json.features, json.intents);
+      this.initialize(json.features.length, json.intents);
+      for (let i = 0; i < this.perceptrons.length; i += 1) {
         const perceptron = this.perceptrons[i];
         const data = json.perceptrons[i];
         perceptron.bias = data[data.length - 1];
