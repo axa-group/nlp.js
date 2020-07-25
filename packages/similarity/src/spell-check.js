@@ -72,7 +72,7 @@ class SpellCheck {
             if (similar < distanceBest) {
               best = feature;
               distanceBest = similar;
-            } else if (similar === distanceBest) {
+            } else if (similar === distanceBest && best) {
               if (
                 Math.abs(best.length - token.length) >
                 Math.abs(feature.length - token.length)

@@ -228,7 +228,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Phone Number', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: 'The phone number is +1 (650) 123-4567',
         locale,
@@ -253,7 +253,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English URL', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: 'The url is https://subdomain.domain.com/something',
         locale,
@@ -279,7 +279,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Number', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: 'The number is one hundred and twelve',
         locale,
@@ -306,7 +306,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Number Float', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: 'The number is one hundred and twelve dot 5',
         locale,
@@ -333,7 +333,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Distance', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: 'There are 347kms',
         locale,
@@ -361,7 +361,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Quantity', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: 'Three cups of sugar',
         locale,
@@ -389,7 +389,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Temperature', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: '80F',
         locale,
@@ -416,7 +416,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Volume', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: '4 gallons',
         locale,
@@ -444,7 +444,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Currency', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: '42€',
         locale,
@@ -471,7 +471,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Duration', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: '3 mins',
         locale,
@@ -498,7 +498,7 @@ describe('Duckling Integration', () => {
 
     test('Duckling English Time', async () => {
       const locale = 'en';
-      const manager = getManager(locale);
+      const manager = getManager();
       const input = {
         utterance: '12/12/2019 at 9am',
         locale,
