@@ -49,16 +49,6 @@ class SentimentAnalyzer extends Clonable {
 
   registerDefault() {
     this.container.registerConfiguration('sentiment-analyzer', {}, false);
-    this.container.registerPipeline(
-      'sentiment-analyzer-process',
-      [
-        '.getDictionary',
-        '.getTokens',
-        '.calculate',
-        'delete output.sentimentDictionary',
-      ],
-      false
-    );
   }
 
   prepare(locale, text, settings) {
@@ -185,10 +175,21 @@ class SentimentAnalyzer extends Clonable {
     return input;
   }
 
+  async defaultPipelineProcess(input) {
+    let output = await this.getDictionary(input);
+    output = await this.getTokens(output);
+    output = await this.calculate(output);
+    delete output.sentimentDictionary;
+    return output;
+  }
+
   process(srcInput, settings) {
     const input = srcInput;
     input.settings = input.settings || settings || this.settings;
-    return this.runPipeline(input, this.pipelineProcess);
+    if (this.pipelineProcess) {
+      return this.runPipeline(input, this.pipelineProcess);
+    }
+    return this.defaultPipelineProcess(input);
   }
 }
 

@@ -49,31 +49,7 @@ class Ner extends Clonable {
     });
   }
 
-  registerDefault() {
-    this.container.registerPipeline(
-      'ner-process',
-      [
-        '.decideRules',
-        'extract-enum',
-        'extract-regex',
-        'extract-trim',
-        'extract-builtin',
-      ],
-      false
-    );
-    this.container.registerPipeline(
-      'ner-??-process',
-      [
-        '.decideRules',
-        'extract-enum',
-        'extract-regex',
-        'extract-trim',
-        'extract-builtin',
-        '.reduceEdges',
-      ],
-      false
-    );
-  }
+  registerDefault() {}
 
   getRulesByName(locale = '*', name, force = false) {
     if (!this.rules[locale]) {
@@ -324,14 +300,40 @@ class Ner extends Clonable {
     return input;
   }
 
+  async defaultPipelineProcess(input) {
+    if (!this.cache) {
+      this.cache = {
+        extractEnum: this.container.get('extract-enum'),
+        extractRegex: this.container.get('extract-regex'),
+        extractTrim: this.container.get('extract-trim'),
+        extractBuiltin: this.container.get('extract-builtin'),
+      };
+    }
+    let output = await this.decideRules(input);
+    output = await this.cache.extractEnum.run(output);
+    output = await this.cache.extractRegex.run(output);
+    output = await this.cache.extractTrim.run(output);
+    output = await this.cache.extractBuiltin.run(output);
+    output = await this.reduceEdges(output);
+    return output;
+  }
+
   async process(srcInput) {
     const input = { threshold: this.settings.threshold || 0.8, ...srcInput };
-    const result = await this.runPipeline(
-      input,
-      input.locale
-        ? `${this.settings.tag}-${input.locale}-process`
-        : this.pipelineProcess
-    );
+    let result;
+    if (input.locale) {
+      const pipeline = this.container.getPipeline(
+        `${this.settings.tag}-${input.locale}-process`
+      );
+      if (pipeline) {
+        result = await this.runPipeline(input, pipeline);
+      }
+    } else if (this.pipelineProcess) {
+      result = await this.runPipeline(input, this.pipelineProcess);
+    }
+    if (!result) {
+      result = await this.defaultPipelineProcess(input);
+    }
     delete result.threshold;
     return result;
   }

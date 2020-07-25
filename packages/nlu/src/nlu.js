@@ -67,34 +67,39 @@ class Nlu extends Clonable {
       false
     );
     this.container.registerPipeline(
-      'nlu-??-prepare',
-      [
-        'normalize',
-        'tokenize',
-        'removeStopwords',
-        'stem',
-        'arrToObj',
-        'output.tokens',
-      ],
-      false
-    );
-    this.container.registerPipeline(
       'nlu-??-train',
       ['.prepareCorpus', '.addNoneFeature', '.innerTrain'],
       false
     );
-    this.container.registerPipeline(
-      'nlu-??-process',
-      [
-        '.prepare',
-        '.doSpellCheck',
-        '.textToFeatures',
-        '.innerProcess',
-        '.filterNonActivated',
-        '.normalizeClassifications',
-      ],
-      false
-    );
+  }
+
+  async defaultPipelinePrepare(input) {
+    if (!this.cache) {
+      this.cache = {
+        normalize: this.container.get('normalize'),
+        tokenize: this.container.get('tokenize'),
+        removeStopwords: this.container.get('removeStopwords'),
+        stem: this.container.get('stem'),
+        arrToObj: this.container.get('arrToObj'),
+      };
+    }
+    let output = input;
+    output = this.cache.normalize.run(output);
+    output = await this.cache.tokenize.run(output);
+    output = this.cache.removeStopwords.run(output);
+    output = await this.cache.stem.run(output);
+    output = this.cache.arrToObj.run(output);
+    return output.tokens;
+  }
+
+  async defaultPipelineProcess(input) {
+    let output = await this.prepare(input);
+    output = await this.doSpellCheck(output);
+    output = await this.textToFeatures(output);
+    output = await this.innerProcess(output);
+    output = await this.filterNonActivated(output);
+    output = await this.normalizeClassifications(output);
+    return output;
   }
 
   async prepare(text, srcSettings) {
@@ -105,7 +110,10 @@ class Nlu extends Clonable {
         text,
         settings,
       };
-      return this.runPipeline(input, this.pipelinePrepare);
+      if (this.pipelinePrepare) {
+        return this.runPipeline(input, this.pipelinePrepare);
+      }
+      return this.defaultPipelinePrepare(input);
     }
     if (typeof text === 'object') {
       if (Array.isArray(text)) {
@@ -192,7 +200,6 @@ class Nlu extends Clonable {
         }
         this.featuresToIntent[feature].push(intent);
       }
-      this.intentFeatures[keys[i]] = Object.keys(this.intentFeatures[keys[i]]);
     }
     this.spellCheck.setFeatures(this.features);
     this.numFeatures = Object.keys(this.features).length;
@@ -251,29 +258,29 @@ class Nlu extends Clonable {
     return false;
   }
 
-  getAllowList(tokens) {
-    const result = {};
-    const features = Object.keys(tokens);
-    for (let i = 0; i < features.length; i += 1) {
-      const intents = this.featuresToIntent[features[i]];
-      if (intents) {
-        for (let j = 0; j < intents.length; j += 1) {
-          result[intents[j]] = 1;
-        }
+  intentIsActivated(intent, tokens) {
+    const features = this.intentFeatures[intent];
+    if (!features) {
+      return false;
+    }
+    const keys = Object.keys(tokens);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (features[keys[i]]) {
+        return true;
       }
     }
-    return result;
+    return false;
   }
 
   filterNonActivated(srcInput) {
     if (this.intentFeatures && srcInput.classifications) {
-      const allowList = this.getAllowList(srcInput.tokens);
-      allowList.None = 1;
-      const { classifications } = srcInput;
-      for (let i = 0; i < classifications.length; i += 1) {
-        const classification = classifications[i];
-        if (!allowList[classification.intent]) {
-          classification.score = 0;
+      const intents = srcInput.classifications.map((x) => x.intent);
+      for (let i = 0; i < intents.length; i += 1) {
+        const intent = intents[i];
+        if (intent !== 'None') {
+          if (!this.intentIsActivated(intent, srcInput.tokens)) {
+            srcInput.classifications[i].score = 0;
+          }
         }
       }
     }
@@ -382,7 +389,12 @@ class Nlu extends Clonable {
       text: utterance,
       settings: this.applySettings(settings || {}, this.settings),
     };
-    const output = await this.runPipeline(input, this.pipelineProcess);
+    let output;
+    if (this.pipelineProcess) {
+      output = await this.runPipeline(input, this.pipelineProcess);
+    } else {
+      output = await this.defaultPipelineProcess(input);
+    }
     if (Array.isArray(output.classifications)) {
       const explanation = input.settings.returnExplanation
         ? await this.getExplanation(input, output.explanation)
