@@ -120,8 +120,8 @@ function extract(locale, utterance) {
   const manager = getManager();
   const input = {
     utterance,
-    locale
-  }
+    locale,
+  };
   return manager.extract(input);
 }
 
@@ -176,12 +176,15 @@ describe('Duckling Integration', () => {
 
   describe('English', () => {
     test('When there is an exception, return empty array', async () => {
-      const actual = extract('en', 'raise exception');
+      const actual = await extract('en', 'raise exception');
       const expected = [];
       expect(actual.edges).toEqual(expected);
     });
     test('Duckling English Email', async () => {
-      const actual = await extract('en', 'The email is user@user.com, check it out');
+      const actual = await extract(
+        'en',
+        'The email is user@user.com, check it out'
+      );
       const expected = [
         {
           entity: 'email',
@@ -199,7 +202,10 @@ describe('Duckling Integration', () => {
       expect(actual.edges).toEqual(expected);
     });
     test('Duckling English Email with run', async () => {
-      const actual = await extract('en', 'The email is user@user.com, check it out');
+      const actual = await extract(
+        'en',
+        'The email is user@user.com, check it out'
+      );
       const expected = [
         {
           entity: 'email',
@@ -218,7 +224,10 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Phone Number', async () => {
-      const actual = await extract('en', 'The phone number is +1 (650) 123-4567');
+      const actual = await extract(
+        'en',
+        'The phone number is +1 (650) 123-4567'
+      );
       const expected = [
         {
           entity: 'phonenumber',
@@ -237,7 +246,10 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English URL', async () => {
-      const actual = await extract('en', 'The url is https://subdomain.domain.com/something');
+      const actual = await extract(
+        'en',
+        'The url is https://subdomain.domain.com/something'
+      );
       const expected = [
         {
           entity: 'url',
@@ -257,7 +269,10 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Number', async () => {
-      const actual = await extract('en', 'The number is one hundred and twelve');
+      const actual = await extract(
+        'en',
+        'The number is one hundred and twelve'
+      );
       const expected = [
         {
           entity: 'number',
@@ -278,7 +293,10 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Number Float', async () => {
-      const actual = await extract('en', 'The number is one hundred and twelve dot 5');
+      const actual = await extract(
+        'en',
+        'The number is one hundred and twelve dot 5'
+      );
       const expected = [
         {
           entity: 'number',
@@ -407,7 +425,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Duration', async () => {
-      const actual = await manager.extract('en', '3 mins');
+      const actual = await extract('en', '3 mins');
       const expected = [
         {
           entity: 'duration',

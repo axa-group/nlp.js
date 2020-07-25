@@ -474,7 +474,10 @@ class JavascriptCompiler {
     const newContext = context;
     if ({}.hasOwnProperty.call(context, node.name)) {
       context[node.name] = value;
-    } else if (context.input && {}.hasOwnProperty.call(context.input, node.name)) {
+    } else if (
+      context.input &&
+      {}.hasOwnProperty.call(context.input, node.name)
+    ) {
       context.input[node.name] = value;
     } else {
       newContext[node.name] = value;
