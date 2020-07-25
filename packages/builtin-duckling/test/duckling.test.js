@@ -116,6 +116,15 @@ function getManager() {
   return manager;
 }
 
+function extract(locale, utterance) {
+  const manager = getManager();
+  const input = {
+    utterance,
+    locale
+  }
+  return manager.extract(input);
+}
+
 describe('Duckling Integration', () => {
   describe('Constructor', () => {
     test('Should put the port if is https', () => {
@@ -167,24 +176,12 @@ describe('Duckling Integration', () => {
 
   describe('English', () => {
     test('When there is an exception, return empty array', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'raise exception',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = extract('en', 'raise exception');
       const expected = [];
       expect(actual.edges).toEqual(expected);
     });
     test('Duckling English Email', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'The email is user@user.com, check it out',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', 'The email is user@user.com, check it out');
       const expected = [
         {
           entity: 'email',
@@ -202,13 +199,7 @@ describe('Duckling Integration', () => {
       expect(actual.edges).toEqual(expected);
     });
     test('Duckling English Email with run', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'The email is user@user.com, check it out',
-        locale,
-      };
-      const actual = await manager.run(input);
+      const actual = await extract('en', 'The email is user@user.com, check it out');
       const expected = [
         {
           entity: 'email',
@@ -227,13 +218,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Phone Number', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'The phone number is +1 (650) 123-4567',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', 'The phone number is +1 (650) 123-4567');
       const expected = [
         {
           entity: 'phonenumber',
@@ -252,13 +237,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English URL', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'The url is https://subdomain.domain.com/something',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', 'The url is https://subdomain.domain.com/something');
       const expected = [
         {
           entity: 'url',
@@ -278,13 +257,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Number', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'The number is one hundred and twelve',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', 'The number is one hundred and twelve');
       const expected = [
         {
           entity: 'number',
@@ -305,13 +278,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Number Float', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'The number is one hundred and twelve dot 5',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', 'The number is one hundred and twelve dot 5');
       const expected = [
         {
           entity: 'number',
@@ -332,13 +299,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Distance', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'There are 347kms',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', 'There are 347kms');
       const expected = [
         {
           entity: 'dimension',
@@ -360,13 +321,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Quantity', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: 'Three cups of sugar',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', 'Three cups of sugar');
       const expected = [
         {
           entity: 'quantity',
@@ -388,13 +343,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Temperature', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: '80F',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', '80F');
       const expected = [
         {
           entity: 'temperature',
@@ -415,13 +364,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Volume', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: '4 gallons',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', '4 gallons');
       const expected = [
         {
           entity: 'dimension',
@@ -443,13 +386,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Currency', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: '42€',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', '42€');
       const expected = [
         {
           entity: 'currency',
@@ -470,13 +407,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Duration', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: '3 mins',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await manager.extract('en', '3 mins');
       const expected = [
         {
           entity: 'duration',
@@ -497,13 +428,7 @@ describe('Duckling Integration', () => {
     });
 
     test('Duckling English Time', async () => {
-      const locale = 'en';
-      const manager = getManager();
-      const input = {
-        utterance: '12/12/2019 at 9am',
-        locale,
-      };
-      const actual = await manager.extract(input);
+      const actual = await extract('en', '12/12/2019 at 9am');
       const expected = [
         {
           entity: 'date',
