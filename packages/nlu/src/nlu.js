@@ -266,16 +266,15 @@ class Nlu extends Clonable {
   }
 
   filterNonActivated(srcInput) {
-    if (!this.intentFeatures || !srcInput.classifications) {
-      return srcInput;
-    }
-    const allowList = this.getAllowList(srcInput.tokens);
-    allowList.None = 1;
-    const { classifications } = srcInput;
-    for (let i = 0; i < classifications.length; i += 1) {
-      const classification = classifications[i];
-      if (!allowList[classification.intent]) {
-        classification.score = 0;
+    if (this.intentFeatures && srcInput.classifications) {
+      const allowList = this.getAllowList(srcInput.tokens);
+      allowList.None = 1;
+      const { classifications } = srcInput;
+      for (let i = 0; i < classifications.length; i += 1) {
+        const classification = classifications[i];
+        if (!allowList[classification.intent]) {
+          classification.score = 0;
+        }
       }
     }
     return srcInput;

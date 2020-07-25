@@ -27,6 +27,8 @@ const { ApiAuthJwt } = require('../src');
 const ApiServerMock = require('./api-server-mock');
 const ResMock = require('./res-mock');
 
+const unicorn = 'unicorn123';
+
 function bootstrap() {
   const container = new Container();
   container.register('database', Database);
@@ -61,7 +63,7 @@ describe('API Auth JWT', () => {
       const req = {
         body: {
           email: 'anna@email.com',
-          password: 'unicorn123',
+          password: unicorn,
           name: 'Anna',
         },
       };
@@ -81,7 +83,7 @@ describe('API Auth JWT', () => {
       const req = {
         body: {
           email: 'anna@email.com',
-          password: 'unicorn123',
+          password: unicorn,
           name: 'Anna',
         },
       };
@@ -89,7 +91,7 @@ describe('API Auth JWT', () => {
       const req2 = {
         body: {
           email: 'anna@email.com',
-          password: 'unicorn123',
+          password: unicorn,
         },
       };
       const actual = await callWithReq(
@@ -109,7 +111,7 @@ describe('API Auth JWT', () => {
       const req = {
         body: {
           email: 'anna@email.com',
-          password: 'unicorn123',
+          password: unicorn,
           name: 'Anna',
         },
       };
@@ -117,7 +119,7 @@ describe('API Auth JWT', () => {
       const req2 = {
         body: {
           email: 'anna@email.com',
-          password: 'unicorn123',
+          password: unicorn,
         },
       };
       const res2 = await callWithReq(
