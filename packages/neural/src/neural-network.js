@@ -36,7 +36,6 @@ const defaultSettings = {
 
 class NeuralNetwork {
   constructor(settings = {}) {
-    console.log(settings);
     this.settings = settings;
     this.applySettings(this.settings, defaultSettings);
     if (this.settings.log === true) {
