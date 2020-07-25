@@ -81,11 +81,6 @@ class DomainManager extends Clonable {
       ],
       false
     );
-    this.container.registerPipeline(
-      'domain-manager-??-process',
-      ['.innerClassify', 'output.classification'],
-      false
-    );
   }
 
   getDomainInstance(domainName) {
@@ -163,12 +158,17 @@ class DomainManager extends Clonable {
 
   async trainStemmer(srcInput) {
     const input = srcInput;
+    if (!this.cache) {
+      this.cache = {
+        stem: this.container.get('stem'),
+      };
+    }
     for (let i = 0; i < this.sentences.length; i += 1) {
       const current = this.sentences[i];
       const subInput = { ...current, ...input };
-      await this.runPipeline(subInput, ['stem.addForTraining']);
+      await this.cache.stem.addForTraining(subInput);
     }
-    await this.runPipeline(input, ['stem.train']);
+    await this.cache.stem.train(input);
     return input;
   }
 
@@ -360,6 +360,11 @@ class DomainManager extends Clonable {
     return this.innerClassify(input, domain);
   }
 
+  async defaultPipelineProcess(input) {
+    const output = await this.innerClassify(input);
+    return output.classification;
+  }
+
   async process(utterance, settings) {
     const input =
       typeof utterance === 'string'
@@ -368,7 +373,10 @@ class DomainManager extends Clonable {
             settings: settings || this.settings,
           }
         : utterance;
-    return this.runPipeline(input, this.pipelineProcess);
+    if (this.pipelineProcess) {
+      return this.runPipeline(input, this.pipelineProcess);
+    }
+    return this.defaultPipelineProcess(input);
   }
 
   toJSON() {
