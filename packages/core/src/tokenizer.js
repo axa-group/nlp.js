@@ -54,7 +54,37 @@ class Tokenizer {
   }
 
   tokenize(text, normalize) {
-    return this.innerTokenize(this.normalize(text, normalize));
+    let result;
+    if (this.cache) {
+      const now = new Date();
+      const diff = Math.abs(now.getTime() - this.cache.created) / 3600000;
+      if (diff > 1) {
+        this.cache = undefined;
+      }
+    }
+    if (!this.cache) {
+      this.cache = {
+        created: new Date().getTime(),
+        normalized: {},
+        nonNormalized: {},
+      };
+    } else {
+      if (normalize) {
+        result = this.cache.normalized[text];
+      } else {
+        result = this.cache.nonNormalized[text];
+      }
+      if (result) {
+        return result;
+      }
+    }
+    result = this.innerTokenize(this.normalize(text, normalize));
+    if (normalize) {
+      this.cache.normalized[text] = result;
+    } else {
+      this.cache.nonNormalized[text] = result;
+    }
+    return result;
   }
 
   async run(srcInput) {
