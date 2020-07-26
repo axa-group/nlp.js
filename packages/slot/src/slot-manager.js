@@ -30,6 +30,7 @@ class SlotManager {
    */
   constructor() {
     this.intents = {};
+    this.isEmpty = true;
   }
 
   /**
@@ -64,6 +65,7 @@ class SlotManager {
    * @returns {Object} New slot instance.
    */
   addSlot(intent, entity, mandatory = false, questions) {
+    this.isEmpty = false;
     if (!this.intents[intent]) {
       this.intents[intent] = {};
     }

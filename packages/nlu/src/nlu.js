@@ -74,14 +74,32 @@ class Nlu extends Clonable {
   }
 
   async defaultPipelinePrepare(input) {
+    let result;
+    if (this.cache) {
+      const now = new Date();
+      const diff = Math.abs(now.getTime() - this.cache.created) / 3600000;
+      if (diff > 1) {
+        this.cache.results = undefined;
+        this.cache.created = new Date().getTime();
+      }
+    }
     if (!this.cache) {
       this.cache = {
+        created: new Date().getTime(),
+        results: {},
         normalize: this.container.get('normalize'),
         tokenize: this.container.get('tokenize'),
         removeStopwords: this.container.get('removeStopwords'),
         stem: this.container.get('stem'),
         arrToObj: this.container.get('arrToObj'),
       };
+    } else if (this.cache.results[input.settings.locale]) {
+      result = this.cache.results[input.settings.locale][
+        input.text || input.utterance
+      ];
+      if (result) {
+        return result;
+      }
     }
     let output = input;
     output = this.cache.normalize.run(output);
@@ -89,7 +107,14 @@ class Nlu extends Clonable {
     output = this.cache.removeStopwords.run(output);
     output = await this.cache.stem.run(output);
     output = this.cache.arrToObj.run(output);
-    return output.tokens;
+    result = output.tokens;
+    if (!this.cache.results[input.settings.locale]) {
+      this.cache.results[input.settings.locale] = {};
+    }
+    this.cache.results[input.settings.locale][
+      input.text || input.utterance
+    ] = result;
+    return result;
   }
 
   async defaultPipelineProcess(input) {

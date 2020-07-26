@@ -112,6 +112,9 @@ class Nlp extends Clonable {
     if (this.settings.locales) {
       this.addLanguage(this.settings.locales);
     }
+    if (this.settings.calculateSentiment === undefined) {
+      this.settings.calculateSentiment = true;
+    }
   }
 
   async start() {
@@ -476,25 +479,27 @@ class Nlp extends Clonable {
       settings: this.applySettings(settings, this.settings.nlu),
     };
     let output = await this.nluManager.process(input);
-    const optionalUtterance = await this.ner.generateEntityUtterance(
-      locale,
-      utterance
-    );
-    if (optionalUtterance && optionalUtterance !== utterance) {
-      const optionalInput = {
+    if (!this.slotManager.isEmpty) {
+      const optionalUtterance = await this.ner.generateEntityUtterance(
         locale,
-        utterance: optionalUtterance,
-        context,
-        settings: this.applySettings(settings, this.settings.nlu),
-      };
-      const optionalOutput = await this.nluManager.process(optionalInput);
-      if (
-        optionalOutput &&
-        (optionalOutput.score > output.score || output.intent === 'None')
-      ) {
-        output = optionalOutput;
-        output.utterance = utterance;
-        output.optionalUtterance = optionalUtterance;
+        utterance
+      );
+      if (optionalUtterance && optionalUtterance !== utterance) {
+        const optionalInput = {
+          locale,
+          utterance: optionalUtterance,
+          context,
+          settings: this.applySettings(settings, this.settings.nlu),
+        };
+        const optionalOutput = await this.nluManager.process(optionalInput);
+        if (
+          optionalOutput &&
+          (optionalOutput.score > output.score || output.intent === 'None')
+        ) {
+          output = optionalOutput;
+          output.utterance = utterance;
+          output.optionalUtterance = optionalUtterance;
+        }
       }
     }
     if (output.score < this.settings.threshold) {
@@ -502,19 +507,28 @@ class Nlp extends Clonable {
       output.intent = 'None';
     }
     output.context = context;
-    output = await this.ner.process({ ...output });
+    if (!this.slotManager.isEmpty) {
+      output = await this.ner.process({ ...output });
+    } else {
+      output.entities = [];
+      output.sourceEntities = [];
+    }
     const answers = await this.nlgManager.run({ ...output });
     output.answers = answers.answers;
     output.answer = answers.answer;
     output = await this.actionManager.run({ ...output });
-    const sentiment = await this.getSentiment(locale, utterance);
-    output.sentiment = sentiment ? sentiment.sentiment : undefined;
-    if (this.slotManager.process(output, context)) {
-      output.entities.forEach((entity) => {
-        context[entity.entity] = entity.option || entity.utteranceText;
-      });
+    if (this.settings.calculateSentiment) {
+      const sentiment = await this.getSentiment(locale, utterance);
+      output.sentiment = sentiment ? sentiment.sentiment : undefined;
     }
-    context.slotFill = output.slotFill;
+    if (!this.slotManager.isEmpty) {
+      if (this.slotManager.process(output, context)) {
+        output.entities.forEach((entity) => {
+          context[entity.entity] = entity.option || entity.utteranceText;
+        });
+      }
+      context.slotFill = output.slotFill;
+    }
     delete output.context;
     delete output.settings;
     const result = sourceInput
