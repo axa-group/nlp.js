@@ -21,10 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { defaultContainer } = require('./container');
-
 class DefaultCompiler {
-  constructor(container = defaultContainer) {
+  constructor(container) {
     this.container = container.container || container;
     this.name = 'default';
   }

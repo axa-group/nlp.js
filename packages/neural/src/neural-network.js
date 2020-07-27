@@ -78,19 +78,11 @@ class NeuralNetwork {
   }
 
   runInputPerceptron(perceptron, input) {
-    const { weights, bias } = perceptron;
-    let sum = bias;
-    for (let i = 0; i < input.keys.length; i += 1) {
-      const key = input.keys[i];
-      if (weights[key]) {
-        if (input.data[key] === 1) {
-          sum += weights[key];
-        } else {
-          sum += input.data[key] * weights[key];
-        }
-      }
-    }
-    return sum < 0 ? 0 : this.settings.alpha * sum;
+    const sum = input.keys.reduce(
+      (prev, key) => prev + input.data[key] * perceptron.weights[key],
+      perceptron.bias
+    );
+    return sum <= 0 ? 0 : this.settings.alpha * sum;
   }
 
   runInput(input) {
