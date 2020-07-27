@@ -310,10 +310,18 @@ class Ner extends Clonable {
       };
     }
     let output = await this.decideRules(input);
-    output = await this.cache.extractEnum.run(output);
-    output = await this.cache.extractRegex.run(output);
-    output = await this.cache.extractTrim.run(output);
-    output = await this.cache.extractBuiltin.run(output);
+    if (this.cache.extractEnum) {
+      output = await this.cache.extractEnum.run(output);
+    }
+    if (this.cache.extractRegex) {
+      output = await this.cache.extractRegex.run(output);
+    }
+    if (this.cache.extractTrim) {
+      output = await this.cache.extractTrim.run(output);
+    }
+    if (this.cache.extractBuiltin) {
+      output = await this.cache.extractBuiltin.run(output);
+    }
     output = await this.reduceEdges(output);
     return output;
   }
