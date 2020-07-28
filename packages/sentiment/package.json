@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/sentiment",
-  "version": "4.9.2",
+  "version": "4.9.3",
   "description": "Sentiment Analysis",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,9 +25,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.9.2",
+    "@nlpjs/core": "^4.9.3",
     "@nlpjs/language-min": "^4.6.0",
-    "@nlpjs/neural": "^4.9.2"
+    "@nlpjs/neural": "^4.9.3"
   },
   "gitHead": "0940a8c5fee7da099d44174136fa76914933b819"
 }
