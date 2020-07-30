@@ -79,7 +79,7 @@ class MsbfConnector extends Clonable {
               msbfContext: context,
             };
             if (this.onHear) {
-              this.onHear(this, input);
+              await this.onHear(this, input);
             } else {
               const name = `${this.settings.tag}.hear`;
               const pipeline = this.container.getPipeline(name);
