@@ -302,7 +302,7 @@
       "answers": [
         "I am happy. There are so many interesting things to see and do out there",
         "I'd like to think so",
-        "Hapiness is relative"
+        "Happiness is relative"
       ]
     },
     {
@@ -323,7 +323,7 @@
     {
       "intent": "agent.hungry",
       "utterances": [
-        "you migth be hungry",
+        "you might be hungry",
         "are you hungry",
         "do you want to eat",
         "would you like to eat something",
@@ -581,7 +581,7 @@
         "great work",
         "good work",
         "great job",
-        "amazin work"
+        "amazing work"
       ],
       "answers": [
         "My pleasure",
