@@ -42,18 +42,20 @@ function callWithReq(method, path, req, srcContainer) {
     const container = srcContainer || bootstrap();
     const apiAuthJwt = new ApiAuthJwt();
     apiAuthJwt.register(container);
-    const apiServer = container.get('api-server');
-    const res = new ResMock();
-    const callback = (err, result) => {
-      resolve({
-        container,
-        res,
-        err,
-        result,
-      });
-    };
-    res.callback = callback;
-    apiServer.call(method, path, req, res, callback);
+    process.nextTick(() => {
+      const apiServer = container.get('api-server');
+      const res = new ResMock();
+      const callback = (err, result) => {
+        resolve({
+          container,
+          res,
+          err,
+          result,
+        });
+      };
+      res.callback = callback;
+      apiServer.call(method, path, req, res, callback);
+    });
   });
 }
 
