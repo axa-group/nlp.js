@@ -78,7 +78,7 @@ class Tokenizer {
         return result;
       }
     }
-    result = this.innerTokenize(this.normalize(text, normalize));
+    result = this.innerTokenize(this.normalize(text, normalize), normalize);
     if (normalize) {
       this.cache.normalized[text] = result;
     } else {
