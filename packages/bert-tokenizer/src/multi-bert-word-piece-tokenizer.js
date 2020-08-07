@@ -21,15 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
 const BertWordPieceTokenizer = require('./bert-word-piece-tokenizer');
 
 class MultiBertWordPieceTokenizer {
   constructor(settings = {}) {
-    this.container = settings.container;
-    this.fs = settings.fs;
-    if (!this.fs && this.container) {
-      this.fs = this.container.get('fs');
-    }
+    this.fs = settings.fs || fs;
     this.tokenizers = {};
   }
 
@@ -44,11 +41,11 @@ class MultiBertWordPieceTokenizer {
     }
   }
 
-  async loadTokenizersFromFile(locales, fileName, settings) {
+  loadTokenizersFromFile(locales, fileName, settings) {
     if (!this.fs) {
       throw new Error('No fs defined');
     }
-    const vocabContent = await this.fs.readFile(fileName);
+    const vocabContent = this.fs.readFileSync(fileName, 'utf-8');
     this.loadTokenizers(locales, vocabContent, settings);
   }
 

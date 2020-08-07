@@ -25,7 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.9.3"
+    "@nlpjs/core": "^4.9.3",
+    "@nlpjs/bert-tokenizer": "^4.9.3"
   },
   "publishConfig": {
     "access": "public"

@@ -27,10 +27,6 @@ const { MultiBertWordPieceTokenizer } = require('../src');
 const fileNameEn = './packages/bert-tokenizer/dicts/vocab-en.txt';
 const fileNameMulti = './packages/bert-tokenizer/dicts/vocab-multi.txt';
 
-const fsInstance = {
-  readFile: (fileName) => fs.readFileSync(fileName, 'utf-8'),
-};
-
 describe('Multi BERT word piece tokenizer', () => {
   describe('Constructor', () => {
     test('It should create a new instance', () => {
@@ -40,10 +36,10 @@ describe('Multi BERT word piece tokenizer', () => {
   });
 
   describe('Define tokenizers', () => {
-    test('Can be defined as array of locales', async () => {
-      const multi = new MultiBertWordPieceTokenizer({ fs: fsInstance });
-      await multi.loadTokenizersFromFile(['en', 'aa'], fileNameEn);
-      await multi.loadTokenizersFromFile('*', fileNameMulti);
+    test('Can be defined as array of locales', () => {
+      const multi = new MultiBertWordPieceTokenizer({ fs });
+      multi.loadTokenizersFromFile(['en', 'aa'], fileNameEn);
+      multi.loadTokenizersFromFile('*', fileNameMulti);
       const tokenizerEn = multi.getTokenizer('en');
       const tokenizerAa = multi.getTokenizer('aa');
       const tokenizerEs = multi.getTokenizer('es');

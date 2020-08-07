@@ -61,6 +61,20 @@ async function measure() {
   const options = { nlu: { log: true }, ner: { builtins: [] } };
   const manager = new NlpManager(options);
   manager.container.registerConfiguration('bert', {
+    vocabs: [
+      {
+        locales: 'en',
+        fileName: './vocab-en.txt',
+      },
+      {
+        locales: '*',
+        fileName: './vocab-multi.txt',
+        settings: {
+          lowercase: true,
+        },
+      },
+    ],
+    useRemote: false,
     url: 'http://localhost:8000/tokenize',
     languages: ['en', 'es'],
   });
