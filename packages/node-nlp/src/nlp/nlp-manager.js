@@ -77,6 +77,10 @@ class NlpManager {
     return this.nlp.addLanguage(locale);
   }
 
+  removeLanguage(locale) {
+    return this.nlp.removeLanguage(locale);
+  }
+
   assignDomain(locale, intent, domain) {
     return this.nlp.assignDomain(locale, intent, domain);
   }
