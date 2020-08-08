@@ -27,5 +27,6 @@
   "dependencies": {
     "@nlpjs/evaluator": "^4.10.0",
     "@nlpjs/lexer": "^4.4.0"
-  }
+  },
+  "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }
