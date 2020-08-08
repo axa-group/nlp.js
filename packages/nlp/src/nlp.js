@@ -172,6 +172,10 @@ class Nlp extends Clonable {
     return this.nluManager.addLanguage(locales);
   }
 
+  removeLanguage(locales) {
+    return this.nluManager.removeLanguage(locales);
+  }
+
   addDocument(locale, utterance, intent) {
     const entities = this.ner.getEntitiesFromUtterance(utterance);
     this.slotManager.addBatch(intent, entities);

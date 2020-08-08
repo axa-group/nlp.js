@@ -95,6 +95,18 @@ class NluManager extends Clonable {
     }
   }
 
+  removeLanguage(locales) {
+    if (Array.isArray(locales)) {
+      locales.forEach((locale) => this.removeLanguage(locale));
+    } else {
+      delete this.domainManagers[locales];
+      const index = this.locales.indexOf(locales);
+      if (index !== -1) {
+        this.locales.splice(index, 1);
+      }
+    }
+  }
+
   guessLanguage(srcInput) {
     const input = srcInput;
     const isString = typeof input === 'string';

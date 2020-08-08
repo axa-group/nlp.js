@@ -84,6 +84,32 @@ describe('NLP Manager', () => {
     });
   });
 
+  describe('Remove language', () => {
+    test('Should remove languages', () => {
+      const manager = new NlpManager();
+      manager.addLanguage(['en', 'es', 'it', 'fr']);
+      expect(manager.nlp.nluManager.locales).toHaveLength(4);
+      expect(manager.nlp.nluManager.locales).toContain('en');
+      expect(manager.nlp.nluManager.locales).toContain('es');
+      expect(manager.nlp.nluManager.locales).toContain('it');
+      expect(manager.nlp.nluManager.locales).toContain('fr');
+      expect(manager.nlp.nluManager.domainManagers.en).toBeDefined();
+      expect(manager.nlp.nluManager.domainManagers.es).toBeDefined();
+      expect(manager.nlp.nluManager.domainManagers.it).toBeDefined();
+      expect(manager.nlp.nluManager.domainManagers.fr).toBeDefined();
+      manager.removeLanguage(['en', 'fr']);
+      expect(manager.nlp.nluManager.locales).toHaveLength(2);
+      expect(manager.nlp.nluManager.locales).not.toContain('en');
+      expect(manager.nlp.nluManager.locales).toContain('es');
+      expect(manager.nlp.nluManager.locales).toContain('it');
+      expect(manager.nlp.nluManager.locales).not.toContain('fr');
+      expect(manager.nlp.nluManager.domainManagers.en).not.toBeDefined();
+      expect(manager.nlp.nluManager.domainManagers.es).toBeDefined();
+      expect(manager.nlp.nluManager.domainManagers.it).toBeDefined();
+      expect(manager.nlp.nluManager.domainManagers.fr).not.toBeDefined();
+    });
+  });
+
   describe('Guess language', () => {
     test('Should guess the language of an utterance', () => {
       const manager = new NlpManager();
