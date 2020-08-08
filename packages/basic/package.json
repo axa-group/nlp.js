@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/basic",
-  "version": "4.9.3",
+  "version": "4.10.0",
   "description": "Basic dependencies for node",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,12 +25,12 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/console-connector": "^4.9.3",
-    "@nlpjs/core-loader": "^4.9.3",
-    "@nlpjs/evaluator": "^4.9.1",
-    "@nlpjs/lang-en": "^4.9.3",
-    "@nlpjs/logger": "^4.8.4",
-    "@nlpjs/nlp": "^4.9.3"
+    "@nlpjs/console-connector": "^4.10.0",
+    "@nlpjs/core-loader": "^4.10.0",
+    "@nlpjs/evaluator": "^4.10.0",
+    "@nlpjs/lang-en": "^4.10.0",
+    "@nlpjs/logger": "^4.10.0",
+    "@nlpjs/nlp": "^4.10.0"
   },
   "gitHead": "0940a8c5fee7da099d44174136fa76914933b819"
 }
