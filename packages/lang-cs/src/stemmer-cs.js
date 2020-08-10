@@ -402,6 +402,9 @@ class StemmerCs extends BaseStemmer {
     return true;
   }
   innerStem() {
+    if (this.current.length <= 4) {
+      return true;
+    }
     let v_1;
     v_1 = this.cursor;
     lab0: do {
