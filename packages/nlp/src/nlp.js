@@ -64,8 +64,10 @@ class Nlp extends Clonable {
       this.settings.sentiment
     );
     this.slotManager = this.container.get('SlotManager', this.settings.slot);
-    this.forceNER =
-      this.settings.forceNER === undefined ? false : this.settings.forceNER;
+    this.forceNER = this.settings.forceNER;
+    if (this.forceNER === undefined) {
+      this.forceNER = false;
+    }
     this.initialize();
   }
 
