@@ -354,6 +354,7 @@ class BertWordPieceTokenizer extends Clonable {
             wordIndex
           );
         } else {
+          padding = true;
           this.insertEncoding(
             currentSlice,
             this.tokenPositions.padToken,

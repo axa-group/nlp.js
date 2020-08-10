@@ -8,6 +8,7 @@
       "threshold": 0.5,
       "autoLoad": true,
       "autoSave": true,
+      "forceNER": true,
       "modelFileName": "model.nlp",
       "corpora": [
         "./corpus.json"

@@ -41,11 +41,19 @@ class MultiBertWordPieceTokenizer {
     }
   }
 
-  loadTokenizersFromFile(locales, fileName, settings) {
+  loadTokenizersFromFile(locales, fileName, settings = {}) {
     if (!this.fs) {
       throw new Error('No fs defined');
     }
     const vocabContent = this.fs.readFileSync(fileName, 'utf-8');
+    if (settings.lowercase === undefined) {
+      const lowerName = fileName.toLowerCase();
+      if (lowerName.includes('uncased')) {
+        settings.lowercase = true;
+      } else if (lowerName.includes('cased')) {
+        settings.lowercase = false;
+      }
+    }
     this.loadTokenizers(locales, vocabContent, settings);
   }
 
