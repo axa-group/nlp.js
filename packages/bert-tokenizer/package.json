@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/bert-tokenizer",
-  "version": "4.10.1",
+  "version": "4.10.2",
   "description": "BERT tokenizer",
   "author": {
     "email": "jesus.seijas@axa.com",
