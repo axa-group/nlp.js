@@ -38,7 +38,9 @@ const airports = require('./airports.json');
   answer = await nlp.process('I want to flight from Madrid to Las Vegas');
   console.log(answer.entities);
   console.time('algo');
-  const entities = await nlp.extractEntities('I want to flight from Barcelona to Paris');
+  const entities = await nlp.extractEntities(
+    'I want to flight from Barcelona to Paris'
+  );
   console.timeEnd('algo');
   console.log(entities);
 })();

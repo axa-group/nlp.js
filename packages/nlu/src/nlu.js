@@ -79,7 +79,7 @@ class Nlu extends Clonable {
       const now = new Date();
       const diff = Math.abs(now.getTime() - this.cache.created) / 3600000;
       if (diff > 1) {
-        this.cache.results = undefined;
+        this.cache.results = {};
         this.cache.created = new Date().getTime();
       }
     }
