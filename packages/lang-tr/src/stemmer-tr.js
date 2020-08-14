@@ -3049,7 +3049,7 @@ class StemmerTr extends BaseStemmer {
     return true;
   }
 
-  stem() {
+  innerStem() {
     let v_1;
     let v_2;
     // (, line 464
