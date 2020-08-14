@@ -31,6 +31,10 @@ const {
   composeFromPattern,
   composeCorpus,
 } = require('./pattern');
+const ProgressBar = require('./progress-bar');
+const softMax = require('./softmax');
+const Downloader = require('./downloader');
+const { getAbsolutePath } = require('./fs-extra');
 
 module.exports = {
   NGrams,
@@ -41,4 +45,8 @@ module.exports = {
   splitPattern,
   composeFromPattern,
   composeCorpus,
+  ProgressBar,
+  softMax,
+  Downloader,
+  getAbsolutePath,
 };

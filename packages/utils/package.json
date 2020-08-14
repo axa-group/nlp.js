@@ -30,6 +30,8 @@
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519",
   "dependencies": {
     "@nlpjs/xtables": "^4.10.1",
-    "exceljs": "^4.1.1"
+    "exceljs": "^4.1.1",
+    "https-proxy-agent": "^5.0.0",
+    "tar": "^6.0.2"
   }
 }
