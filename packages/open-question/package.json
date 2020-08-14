@@ -1,0 +1,37 @@
+{
+  "name": "@nlpjs/open-question",
+  "version": "4.10.1",
+  "description": "BERT open question",
+  "author": {
+    "email": "jesus.seijas@axa.com",
+    "name": "Jesus Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/bert-tokenizer": "^4.10.3",
+    "@nlpjs/core": "^4.10.1",
+    "@nlpjs/utils": "^4.10.1",
+    "@tensorflow/tfjs-node": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
+}
