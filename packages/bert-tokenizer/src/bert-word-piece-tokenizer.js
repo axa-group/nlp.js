@@ -52,6 +52,7 @@ class BertWordPieceTokenizer extends Clonable {
       vocabContent = vocabContent.split(/\r?\n/);
     }
     this.words = {};
+    this.extra = {};
     this.affixes = {};
     this.affixMaxLength = 0;
     for (let i = 0; i < vocabContent.length; i += 1) {
@@ -65,6 +66,8 @@ class BertWordPieceTokenizer extends Clonable {
         this.affixes[affix] = i;
       }
     }
+    this.numWords = Object.keys(this.words).length;
+    this.numExtra = 0;
     Object.keys(this.configuration).forEach((tokenName) => {
       this.tokenPositions[tokenName] = this.words[
         this.configuration[tokenName]
@@ -127,7 +130,7 @@ class BertWordPieceTokenizer extends Clonable {
     return undefined;
   }
 
-  tokenizeWord(srcWord) {
+  tokenizeWord(srcWord, useExtra = false) {
     const word = this.lowercase ? srcWord.toLowerCase() : srcWord;
     const result = {
       tokens: [],
@@ -141,12 +144,20 @@ class BertWordPieceTokenizer extends Clonable {
     }
     const bestAffix = this.getBestAffix(word);
     if (!bestAffix) {
-      result.tokens.push(this.configuration.unkToken);
-      result.tokens.push(this.tokenPositions.unkToken);
+      if (useExtra) {
+        const index = this.numWords + this.numExtra;
+        this.extra[word] = index;
+        this.numExtra += 1;
+        result.tokens.push(word);
+        result.ids.push(index);
+      } else {
+        result.tokens.push(this.configuration.unkToken);
+        result.ids.push(this.tokenPositions.unkToken);
+      }
       return result;
     }
     const newWord = word.slice(0, -bestAffix.length);
-    const newWordTokens = this.tokenizeWord(newWord);
+    const newWordTokens = this.tokenizeWord(newWord, useExtra);
     for (let i = 0; i < newWordTokens.tokens.length; i += 1) {
       result.tokens.push(newWordTokens.tokens[i]);
       result.ids.push(newWordTokens.ids[i]);
@@ -157,7 +168,7 @@ class BertWordPieceTokenizer extends Clonable {
     return result;
   }
 
-  tokenizeSentence(sentence) {
+  tokenizeSentence(sentence, useExtra = false) {
     const result = {
       ids: [],
       offsets: [],
@@ -171,7 +182,7 @@ class BertWordPieceTokenizer extends Clonable {
       const currentToken = sentenceTokens[i];
       if (currentToken.type !== 'space') {
         let { start } = currentToken;
-        const wordTokens = this.tokenizeWord(currentToken.token);
+        const wordTokens = this.tokenizeWord(currentToken.token, useExtra);
         for (let j = 0; j < wordTokens.tokens.length; j += 1) {
           const currentValue = wordTokens.tokens[j];
           const currentValueLength = currentValue.startsWith('##')
@@ -206,7 +217,7 @@ class BertWordPieceTokenizer extends Clonable {
     encodings.attentionMask.push(isFilling ? 0 : 1);
   }
 
-  encodeQuestion(question) {
+  encodeQuestion(question, useExtra = false) {
     const result = {
       attentionMask: [],
       ids: [],
@@ -224,7 +235,7 @@ class BertWordPieceTokenizer extends Clonable {
       undefined,
       false
     );
-    const questionTokens = this.tokenizeSentence(question);
+    const questionTokens = this.tokenizeSentence(question, useExtra);
     let wordIndex = 0;
     for (let i = 0; i < questionTokens.tokens.length; i += 1) {
       this.insertEncoding(
@@ -257,8 +268,14 @@ class BertWordPieceTokenizer extends Clonable {
     return null;
   }
 
-  encode(question, context, expectedMinLength, expectedMaxLength) {
-    const result = this.encodeQuestion(question);
+  encode(
+    question,
+    context,
+    expectedMinLength,
+    expectedMaxLength,
+    useExtra = false
+  ) {
+    const result = this.encodeQuestion(question, useExtra);
     let wordIndex = this.getLastWordIndex(result);
     if (wordIndex === null) {
       wordIndex = 0;
@@ -266,7 +283,7 @@ class BertWordPieceTokenizer extends Clonable {
       wordIndex += 1;
     }
     if (context) {
-      const contextTokens = this.tokenizeSentence(context);
+      const contextTokens = this.tokenizeSentence(context, useExtra);
       for (let i = 0; i < contextTokens.tokens.length; i += 1) {
         this.insertEncoding(
           result,
@@ -322,11 +339,17 @@ class BertWordPieceTokenizer extends Clonable {
     return result;
   }
 
-  encodeSliced(question, context, sliceSize = 384, padding = 0.5) {
+  encodeSliced(
+    question,
+    context,
+    sliceSize = 384,
+    padding = 0.5,
+    useExtra = false
+  ) {
     const result = [];
-    const encodedQuestion = this.encodeQuestion(question);
+    const encodedQuestion = this.encodeQuestion(question, useExtra);
     const questionLastWordIndex = this.getLastWordIndex(encodedQuestion);
-    const contextTokens = this.tokenizeSentence(context);
+    const contextTokens = this.tokenizeSentence(context, useExtra);
     const questionLength = encodedQuestion.ids.length;
     const paddingLength = Math.floor((sliceSize - questionLength) * padding);
     if (paddingLength <= 0) {

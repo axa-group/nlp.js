@@ -21,32 +21,42 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
-const {
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-} = require('./pattern');
-const ProgressBar = require('./progress-bar');
-const softMax = require('./softmax');
-const Downloader = require('./downloader');
-const { getAbsolutePath } = require('./fs-extra');
+const ModelDownloader = require('./model-downloader');
+const { ModelInput } = require('./constants');
+const Runtime = require('./runtime');
 
-module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-  ProgressBar,
-  softMax,
-  Downloader,
-  getAbsolutePath,
-};
+class Model {
+  constructor(name, dir, proxy) {
+    this.downloader = new ModelDownloader({ dir, proxy });
+    this.name = name;
+  }
+
+  async start() {
+    this.path = await this.downloader.download(this.name);
+    const runtimeOptions = {
+      inputs: [
+        ModelInput.AttentionMask,
+        ModelInput.Ids,
+        ModelInput.TokenTypeIds,
+      ],
+      path: this.path,
+    };
+    this.runtime = new Runtime(runtimeOptions);
+    await this.runtime.start();
+    [, this.inputLength] = this.runtime.params.shape;
+  }
+
+  runInference(encodings) {
+    return this.runtime.runInference(
+      encodings.map((e) => e.ids),
+      encodings.map((e) => e.attentionMask),
+      encodings.map((e) => e.typeIds)
+    );
+  }
+
+  stop() {
+    this.runtime.stop();
+  }
+}
+
+module.exports = Model;

@@ -1,7 +1,7 @@
 {
-  "name": "@nlpjs/utils",
+  "name": "@nlpjs/open-question",
   "version": "4.10.1",
-  "description": "NLP utils",
+  "description": "BERT open question",
   "author": {
     "email": "jesus.seijas@axa.com",
     "name": "Jesus Seijas"
@@ -24,14 +24,14 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
+  "dependencies": {
+    "@nlpjs/bert-tokenizer": "^4.10.3",
+    "@nlpjs/core": "^4.10.1",
+    "@nlpjs/utils": "^4.10.1",
+    "@tensorflow/tfjs-node": "^2.3.0"
+  },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519",
-  "dependencies": {
-    "@nlpjs/xtables": "^4.10.1",
-    "exceljs": "^4.1.1",
-    "https-proxy-agent": "^5.0.0",
-    "tar": "^6.0.2"
-  }
+  "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }

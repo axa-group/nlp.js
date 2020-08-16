@@ -21,32 +21,29 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
-const {
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-} = require('./pattern');
-const ProgressBar = require('./progress-bar');
-const softMax = require('./softmax');
-const Downloader = require('./downloader');
-const { getAbsolutePath } = require('./fs-extra');
+const path = require('path');
+const { ModelDownloader } = require('../src');
 
-module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-  ProgressBar,
-  softMax,
-  Downloader,
-  getAbsolutePath,
-};
+describe('Model Downloader', () => {
+  describe('constructor', () => {
+    test('It should create an instance', () => {
+      const downloader = new ModelDownloader();
+      expect(downloader).toBeDefined();
+      expect(downloader.baseUrl).toEqual('https://cdn.huggingface.co');
+      expect(downloader.downloader).toBeDefined();
+    });
+  });
+
+  describe('download', () => {
+    test('It should return the path of the model', async () => {
+      const name = 'henryk/bert-base-multilingual-cased-finetuned-dutch-squad2';
+      const downloader = new ModelDownloader({
+        dir: path.join(__filename, '../.models'),
+      });
+      const actual = await downloader.download(name);
+      expect(
+        actual.endsWith('bert-base-multilingual-cased-finetuned-dutch-squad2')
+      ).toEqual(true);
+    });
+  });
+});

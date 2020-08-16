@@ -21,32 +21,16 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
-const {
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-} = require('./pattern');
-const ProgressBar = require('./progress-bar');
-const softMax = require('./softmax');
-const Downloader = require('./downloader');
-const { getAbsolutePath } = require('./fs-extra');
+const BertTokenizer = require('./bert-tokenizer');
+const ModelDownloader = require('./model-downloader');
+const Model = require('./model');
+const Runtime = require('./runtime');
+const QAClient = require('./qa-client');
 
 module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-  ProgressBar,
-  softMax,
-  Downloader,
-  getAbsolutePath,
+  BertTokenizer,
+  ModelDownloader,
+  Model,
+  Runtime,
+  QAClient,
 };

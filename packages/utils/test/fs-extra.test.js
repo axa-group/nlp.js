@@ -21,32 +21,22 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
-const {
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-} = require('./pattern');
-const ProgressBar = require('./progress-bar');
-const softMax = require('./softmax');
-const Downloader = require('./downloader');
-const { getAbsolutePath } = require('./fs-extra');
+const { getAbsolutePath } = require('../src/fs-extra');
 
-module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-  ProgressBar,
-  softMax,
-  Downloader,
-  getAbsolutePath,
-};
+describe('FS extra', () => {
+  describe('getAbsolutePath', () => {
+    test('It should calculate absolute path', () => {
+      const actual = getAbsolutePath('test');
+      expect(actual.startsWith(process.cwd())).toBeTruthy();
+      expect(actual.endsWith('test')).toBeTruthy();
+    });
+    test('if its already absolute, return it', () => {
+      const actual = getAbsolutePath('/test');
+      expect(actual).toEqual('/test');
+    });
+    test('if not path is added, then return root', () => {
+      const actual = getAbsolutePath();
+      expect(actual.startsWith(process.cwd())).toBeTruthy();
+    });
+  });
+});

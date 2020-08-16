@@ -21,32 +21,17 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
-const {
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-} = require('./pattern');
-const ProgressBar = require('./progress-bar');
-const softMax = require('./softmax');
-const Downloader = require('./downloader');
-const { getAbsolutePath } = require('./fs-extra');
+function softMax(values) {
+  const max = Math.max(...values);
+  const exps = [];
+  let expsSum = 0;
+  for (let i = 0; i < values.length; i += 1) {
+    const value = values[i];
+    const current = Math.exp(value - max);
+    exps.push(current);
+    expsSum += current;
+  }
+  return exps.map((e) => e / expsSum);
+}
 
-module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-  ProgressBar,
-  softMax,
-  Downloader,
-  getAbsolutePath,
-};
+module.exports = softMax;

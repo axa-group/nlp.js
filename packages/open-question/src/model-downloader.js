@@ -21,32 +21,31 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
-const {
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-} = require('./pattern');
-const ProgressBar = require('./progress-bar');
-const softMax = require('./softmax');
-const Downloader = require('./downloader');
-const { getAbsolutePath } = require('./fs-extra');
+const path = require('path');
+const { Downloader, getAbsolutePath } = require('@nlpjs/utils');
+const { DEFAULT_ASSETS_DIR } = require('./constants');
 
-module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-  ProgressBar,
-  softMax,
-  Downloader,
-  getAbsolutePath,
-};
+class ModelDownloader {
+  constructor(settings = {}) {
+    this.baseUrl = settings.baseUrl || 'https://cdn.huggingface.co';
+    this.dir = getAbsolutePath(settings.dir || DEFAULT_ASSETS_DIR);
+    this.downloader = new Downloader({
+      proxy: settings.proxy,
+      dir: this.dir,
+      replicateAllFolders: true,
+      replaceIfExists: false,
+    });
+  }
+
+  async download(name) {
+    const url = `${this.baseUrl}/${name}`;
+    const separator = name.endsWith('-') ? '' : '/';
+    await this.downloader.download(`${url}${separator}saved_model.tar.gz`);
+    await this.downloader.download(`${url}${separator}vocab.txt`);
+    await this.downloader.download(`${url}${separator}tokenizer_config.json`);
+    await this.downloader.download(`${url}${separator}special_tokens_map.json`);
+    return path.join(this.dir, name);
+  }
+}
+
+module.exports = ModelDownloader;

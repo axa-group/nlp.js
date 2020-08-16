@@ -21,32 +21,17 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const NGrams = require('./ngrams');
-const TfIdf = require('./tfidf');
-const MarkovChain = require('./markov');
-const NlpAnalyzer = require('./nlp-analyzer');
-const {
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-} = require('./pattern');
-const ProgressBar = require('./progress-bar');
-const softMax = require('./softmax');
-const Downloader = require('./downloader');
-const { getAbsolutePath } = require('./fs-extra');
+const path = require('path');
+const { Model } = require('../src');
 
-module.exports = {
-  NGrams,
-  TfIdf,
-  MarkovChain,
-  NlpAnalyzer,
-  cartesian,
-  splitPattern,
-  composeFromPattern,
-  composeCorpus,
-  ProgressBar,
-  softMax,
-  Downloader,
-  getAbsolutePath,
-};
+const modelName = 'henryk/bert-base-multilingual-cased-finetuned-dutch-squad2';
+const modelDir = path.join(__filename, '../.models');
+
+describe('Model', () => {
+  describe('constructor', () => {
+    test('It should create a new instance', () => {
+      const model = new Model(modelName, modelDir);
+      expect(model).toBeDefined();
+    });
+  });
+});
