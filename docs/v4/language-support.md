@@ -5,7 +5,7 @@
 Native Support means that the tokenizer and stemmer are included in javascript in NLP.js.
 BERT Support means that the tokenizer and stemmer are supported through a BERT API made in python. You can see how to create this API here: https://github.com/axa-group/nlp.js/tree/master/examples/80-bert-server
 
-Microsoft Builtins mean that the Builtin Entity extraction is supported directly in javascript, while the ones supported by Duckling requires the deployment of a Duckling instance. Read more about builtin entities here: https://github.com/axa-group/nlp.js/blob/master/docs/v3/builtin-entity-extraction.md
+Microsoft Builtins mean that the Builtin Entity extraction is supported directly in javascript, while the ones supported by Duckling requires the deployment of a Duckling instance.
 
 Languages not included in this list can be still supported, but without stemming, only tokenizing. That means less precission, but most of the times can be good enough, as an example you can use it for fantasy languages (at unit tests you'll find tests in klingon from Star Trek).
 
