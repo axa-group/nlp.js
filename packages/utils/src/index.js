@@ -35,6 +35,8 @@ const ProgressBar = require('./progress-bar');
 const softMax = require('./softmax');
 const Downloader = require('./downloader');
 const { getAbsolutePath } = require('./fs-extra');
+const Lookup = require('./lookup');
+const CorpusLookup = require('./corpus-lookup');
 
 module.exports = {
   NGrams,
@@ -49,4 +51,6 @@ module.exports = {
   softMax,
   Downloader,
   getAbsolutePath,
+  Lookup,
+  CorpusLookup,
 };
