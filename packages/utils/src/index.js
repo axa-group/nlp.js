@@ -37,6 +37,7 @@ const Downloader = require('./downloader');
 const { getAbsolutePath } = require('./fs-extra');
 const Lookup = require('./lookup');
 const CorpusLookup = require('./corpus-lookup');
+const Bench = require('./bench');
 
 module.exports = {
   NGrams,
@@ -53,4 +54,5 @@ module.exports = {
   getAbsolutePath,
   Lookup,
   CorpusLookup,
+  Bench,
 };
