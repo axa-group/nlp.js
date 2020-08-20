@@ -104,6 +104,9 @@ describe('Bench', () => {
       expect(result[0].runs).toBeGreaterThan(1);
       expect(result[0].transactions).toEqual(result[0].runs);
       expect(result[0].elapsed).toBeGreaterThanOrEqual(50);
+      expect(result[1].runs).toBeGreaterThan(1);
+      expect(result[1].transactions).toEqual(result[1].runs);
+      expect(result[1].elapsed).toBeGreaterThanOrEqual(50);
     });
   });
 });
