@@ -172,7 +172,7 @@ You can start to build your NLP from scratch with few lines:
 ```javascript
 const { NlpManager } = require('node-nlp');
 
-const manager = new NlpManager({ languages: ['en'] });
+const manager = new NlpManager({ languages: ['en'], forceNER: true });
 // Adds the utterances and intents for the NLP
 manager.addDocument('en', 'goodbye for now', 'greetings.bye');
 manager.addDocument('en', 'bye bye take care', 'greetings.bye');
