@@ -82,13 +82,38 @@ describe('Similar Search', () => {
       const spellCheck = new SpellCheck({
         features: {
           wording: 1,
+          working: 3,
           workin: 1,
           workingo: 1,
           other: 2,
         },
       });
-      const actual = spellCheck.check(['this', 'is', 'working', 'otler'], 1);
-      expect(actual).toEqual(['this', 'is', 'wording', 'other']);
+      const actual = spellCheck.check(['this', 'is', 'worling', 'otler'], 1);
+      expect(actual).toEqual(['this', 'is', 'working', 'other']);
+    });
+    test('By default, distance should be 1', () => {
+      const spellCheck = new SpellCheck({
+        features: {
+          wording: 1,
+          working: 3,
+          workin: 1,
+          workingo: 1,
+          other: 2,
+        },
+      });
+      const actual = spellCheck.check(['this', 'is', 'worling', 'otler']);
+      expect(actual).toEqual(['this', 'is', 'working', 'other']);
+    });
+    test('It should choose the word with bigger frequency', () => {
+      const spellCheck = new SpellCheck({
+        features: {
+          wording: 1,
+          worming: 4,
+          working: 3,
+        },
+      });
+      const actual = spellCheck.check(['worling'], 1);
+      expect(actual).toEqual(['worming']);
     });
   });
 });

@@ -103,31 +103,31 @@ describe('Corpus Lookup', () => {
       const expected = [
         {
           input: {
-            data: { '0': 1, '1': 1, '2': 1 },
+            data: { 0: 1, 1: 1, 2: 1 },
             keys: ['0', '1', '2'],
           },
-          output: { '0': 1 },
+          output: { 0: 1 },
         },
         {
           input: {
-            data: { '2': 1, '3': 1, '4': 1 },
+            data: { 2: 1, 3: 1, 4: 1 },
             keys: ['2', '3', '4'],
           },
-          output: { '0': 1 },
+          output: { 0: 1 },
         },
         {
           input: {
-            data: { '1': 1, '5': 1, '6': 1 },
+            data: { 1: 1, 5: 1, 6: 1 },
             keys: ['1', '5', '6'],
           },
-          output: { '1': 1 },
+          output: { 1: 1 },
         },
         {
           input: {
-            data: { '0': 1, '5': 1, '6': 1 },
+            data: { 0: 1, 5: 1, 6: 1 },
             keys: ['0', '5', '6'],
           },
-          output: { '1': 1 },
+          output: { 1: 1 },
         },
       ];
       expect(lookup).toBeDefined();
@@ -152,7 +152,7 @@ describe('Corpus Lookup', () => {
       const lookup = new CorpusLookup(corpus, stemmer);
       const actual = lookup.inputToObj('a c e h');
       const expected = {
-        data: { '0': 1, '2': 1, '4': 1 },
+        data: { 0: 1, 2: 1, 4: 1 },
         keys: ['0', '2', '4'],
       };
       expect(actual).toEqual(expected);
