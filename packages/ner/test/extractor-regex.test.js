@@ -21,32 +21,19 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { containerBootstrap } = require('@nlpjs/core');
-const {
-  Ner,
-  ExtractorEnum,
-  ExtractorRegex,
-  ExtractorTrim,
-  ExtractorBuiltin,
-} = require('../src');
-
-const container = containerBootstrap();
-container.use(ExtractorEnum);
-container.use(ExtractorRegex);
-container.use(ExtractorTrim);
-container.use(ExtractorBuiltin);
+const { Ner, ExtractorRegex } = require('../src');
 
 describe('Extractor Regex', () => {
   describe('Constructor', () => {
     test('It should create an instance', () => {
-      const instance = new ExtractorRegex({ container });
+      const instance = new ExtractorRegex();
       expect(instance).toBeDefined();
     });
   });
 
   describe('Extract', () => {
     test('It should extract by regex from an utterance', async () => {
-      const ner = new Ner({ container });
+      const ner = new Ner();
       ner.addRegexRule(
         'en',
         'mail',
@@ -71,7 +58,7 @@ describe('Extractor Regex', () => {
       ]);
     });
     test('It can extract several occurences of the regex', async () => {
-      const ner = new Ner({ container });
+      const ner = new Ner();
       ner.addRegexRule(
         'en',
         'mail',

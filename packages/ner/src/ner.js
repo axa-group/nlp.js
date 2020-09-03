@@ -22,6 +22,11 @@
  */
 
 const { Clonable } = require('@nlpjs/core');
+const ExtractorEnum = require('./extractor-enum');
+const ExtractorRegex = require('./extractor-regex');
+const ExtractorTrim = require('./extractor-trim');
+const ExtractorBuiltin = require('./extractor-builtin');
+
 const { TrimType } = require('./trim-types');
 
 class Ner extends Clonable {
@@ -308,6 +313,22 @@ class Ner extends Clonable {
         extractTrim: this.container.get('extract-trim'),
         extractBuiltin: this.container.get('extract-builtin'),
       };
+      if (!this.cache.extractEnum) {
+        this.container.use(ExtractorEnum);
+        this.cache.extractEnum = this.container.get('extract-enum');
+      }
+      if (!this.cache.extractRegex) {
+        this.container.use(ExtractorRegex);
+        this.cache.extractRegex = this.container.get('extract-regex');
+      }
+      if (!this.cache.extractTrim) {
+        this.container.use(ExtractorTrim);
+        this.cache.extractTrim = this.container.get('extract-trim');
+      }
+      if (!this.cache.extractBuiltin) {
+        this.container.use(ExtractorBuiltin);
+        this.cache.extractBuiltin = this.container.get('extract-builtin');
+      }
     }
     let output = await this.decideRules(input);
     if (this.cache.extractEnum) {
