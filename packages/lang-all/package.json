@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/lang-all",
-  "version": "4.10.5",
+  "version": "4.10.6",
   "description": "Core",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -46,7 +46,7 @@
     "@nlpjs/lang-hy": "^4.10.1",
     "@nlpjs/lang-id": "^4.10.1",
     "@nlpjs/lang-it": "^4.10.1",
-    "@nlpjs/lang-ja": "^4.10.1",
+    "@nlpjs/lang-ja": "^4.10.6",
     "@nlpjs/lang-ko": "^4.10.1",
     "@nlpjs/lang-lt": "^4.10.1",
     "@nlpjs/lang-ms": "^4.10.1",

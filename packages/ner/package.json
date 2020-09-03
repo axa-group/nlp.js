@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/ner",
-  "version": "4.10.1",
+  "version": "4.10.6",
   "description": "Named Entity Recognition",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@nlpjs/core": "^4.10.1",
     "@nlpjs/language-min": "^4.6.0",
-    "@nlpjs/similarity": "^4.9.1"
+    "@nlpjs/similarity": "^4.10.6"
   },
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }
