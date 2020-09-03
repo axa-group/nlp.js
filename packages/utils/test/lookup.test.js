@@ -55,7 +55,7 @@ describe('Lookup', () => {
     test('It should return data and keys', () => {
       const lookup = new Lookup(data);
       const actual = lookup.prepare({ a: 7, b: 3, g: 1 });
-      const expected = { keys: [0, 1], data: { '0': 7, '1': 3 } };
+      const expected = { keys: [0, 1], data: { 0: 7, 1: 3 } };
       expect(actual).toEqual(expected);
     });
   });
@@ -73,7 +73,7 @@ describe('Lookup', () => {
     test('It should return an object representing the item', () => {
       const lookup = new Lookup(data);
       const actual = lookup.toObj({ a: 7, b: 3, g: 1 });
-      const expected = { '0': 1, '1': 1 };
+      const expected = { 0: 1, 1: 1 };
       expect(actual).toEqual(expected);
     });
   });
@@ -88,12 +88,12 @@ describe('Lookup', () => {
     test('An indexed object can be provided', () => {
       const lookup = new Lookup(data);
       const actual = lookup.vectorToObj({
-        '0': 0,
-        '1': 1,
-        '2': 2,
-        '3': 3,
-        '4': 4,
-        '5': 5,
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 5,
       });
       const expected = { a: 0, b: 1, c: 2, d: 3, e: 4, f: 5 };
       expect(actual).toEqual(expected);
