@@ -21,32 +21,19 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { containerBootstrap } = require('@nlpjs/core');
-const {
-  Ner,
-  ExtractorEnum,
-  ExtractorRegex,
-  ExtractorTrim,
-  ExtractorBuiltin,
-} = require('../src');
-
-const container = containerBootstrap();
-container.use(ExtractorEnum);
-container.use(ExtractorRegex);
-container.use(ExtractorTrim);
-container.use(ExtractorBuiltin);
+const { Ner, ExtractorEnum } = require('../src');
 
 describe('Extractor Enum', () => {
   describe('Constructor', () => {
     test('It should create an instance', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       expect(instance).toBeDefined();
     });
   });
 
   describe('Get word positions', () => {
     test('Should get position of only one word', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 = 'Morbi';
       const result = instance.getWordPositions(text1);
       expect(result).toBeDefined();
@@ -54,7 +41,7 @@ describe('Extractor Enum', () => {
       expect(result[0]).toEqual({ start: 0, end: 4, len: 5 });
     });
     test('Should get position of only one word even if surrounded by non alphanumeric chars', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 = '; . -Morbi. - ;..,^*';
       const result = instance.getWordPositions(text1);
       expect(result).toBeDefined();
@@ -62,7 +49,7 @@ describe('Extractor Enum', () => {
       expect(result[0]).toEqual({ start: 5, end: 9, len: 5 });
     });
     test('Should get position of several words', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 = ';:Morbi..- interdum,   ultricies  ';
       const result = instance.getWordPositions(text1);
       expect(result).toHaveLength(3);
@@ -71,7 +58,7 @@ describe('Extractor Enum', () => {
       expect(result[2]).toEqual({ start: 23, end: 31, len: 9 });
     });
     test('Should get position of words on long texts', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const result = instance.getWordPositions(text1);
@@ -83,7 +70,7 @@ describe('Extractor Enum', () => {
 
   describe('Get best substring', () => {
     test('Should get position of best when exact', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdum ultricies';
@@ -98,7 +85,7 @@ describe('Extractor Enum', () => {
       });
     });
     test('Should get position of best when several words are similar to search string', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdumaultriciesbneque';
@@ -113,7 +100,7 @@ describe('Extractor Enum', () => {
       });
     });
     test('Should return 0 to length result when the substring is longer than the string', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 = 'dumaultriciesbne';
       const text2 = 'interdumaultriciesbneque';
       const result = instance.getBestSubstring(text1, text2);
@@ -130,7 +117,7 @@ describe('Extractor Enum', () => {
 
   describe('Get best substring list', () => {
     test('If not threshold is defined, then search for exact occurrences', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdum ultricies';
@@ -145,7 +132,7 @@ describe('Extractor Enum', () => {
       });
     });
     test('If there are more than 1 occurrence search exact, should return all', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'interdum';
@@ -167,7 +154,7 @@ describe('Extractor Enum', () => {
       });
     });
     test('Should get more than 1 occurrence when searching with threshold', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 =
         'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
       const text2 = 'internum';
@@ -194,7 +181,7 @@ describe('Extractor Enum', () => {
       });
     });
     test('Should be tolerant to typos with spaces when searching with threshold', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 =
         'Morbi inter dum ultricies neque varius condimentum. Donec volutpat turpis in terdum';
       const text2 = 'internum';
@@ -221,7 +208,7 @@ describe('Extractor Enum', () => {
       });
     });
     test('Should return 0 to length element in array when the substring is longer than the string and accuracy is at least threshold', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 = 'dumaultriciesbne';
       const text2 = 'interdumaultriciesbneque';
       const result = instance.getBestSubstringList(
@@ -242,7 +229,7 @@ describe('Extractor Enum', () => {
       ]);
     });
     test('Should return empty array when the substring is longer than the string and accuracy is lower than threshold', () => {
-      const instance = new ExtractorEnum({ container });
+      const instance = new ExtractorEnum();
       const text1 = 'dumaultriciesbne';
       const text2 = 'interdumaultriciesbneque';
       const result = instance.getBestSubstringList(
@@ -258,7 +245,7 @@ describe('Extractor Enum', () => {
 
   describe('Extract', () => {
     test('It should extract enum entities', async () => {
-      const ner = new Ner({ container });
+      const ner = new Ner();
       ner.addRuleOptionTexts('en', 'hero', 'spiderman', [
         'Spiderman',
         'spider-man',
