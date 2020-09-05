@@ -23,10 +23,12 @@
 
 const leven = require('./leven');
 const similarity = require('./similarity');
+const cosineSimilarity = require('./cosine-similarity');
 const SpellCheck = require('./spell-check');
 
 module.exports = {
   leven,
+  cosineSimilarity: cosineSimilarity.similarity,
   similarity,
   SpellCheck,
 };
