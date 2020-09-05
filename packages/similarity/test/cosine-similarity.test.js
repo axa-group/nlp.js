@@ -41,6 +41,15 @@ describe('Cosine similarity', () => {
     expect(similarity('123', '')).toEqual(0);
   });
 
+  test('Should give max similarity although two sentences are not strictly equal', () => {
+    expect(similarity('hello', 'hello hello')).toEqual(1);
+    expect(similarity('hello bye', 'bye hello')).toBeCloseTo(1, 3);
+  });
+
+  test('Should get low similarity receiving two similar words with different ending as stemmer is not used', () => {
+    expect(similarity('developer', 'development')).toEqual(0);
+  });
+
   test('Should return correct cosine similarity score (without stemmers)', () => {
     expect(similarity('potatoe', 'potatoe')).toEqual(1);
     expect(similarity('a', 'b')).toEqual(0);
