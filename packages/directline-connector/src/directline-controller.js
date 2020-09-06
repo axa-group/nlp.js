@@ -159,6 +159,7 @@ class DirectlineController {
                 message: activity.text,
                 channel: 'directline',
                 app: this.settings.container.name,
+                from: activity.from || null,
               })
               .then((nlpresult) => {
                 result.text =

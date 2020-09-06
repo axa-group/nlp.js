@@ -472,6 +472,7 @@ class Nlp extends Clonable {
       utterance = sourceInput.utterance || sourceInput.message;
       context.channel = sourceInput.channel;
       context.app = sourceInput.app;
+      context.from = sourceInput.from || null;
     }
     if (!utterance) {
       utterance = locale;
