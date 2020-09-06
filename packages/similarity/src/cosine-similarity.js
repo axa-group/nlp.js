@@ -21,101 +21,98 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { NlpUtil } = require('../../node-nlp/src/nlp');
-
-function getTokens(text, locale = 'en') {
-  if (typeof text === 'string') {
-    const tokenizer = NlpUtil.getTokenizer(locale);
-
-    return tokenizer.tokenize(text, true);
+class CosineSimilarity {
+  constructor(container) {
+    this.container = container;
   }
-  return text;
-}
 
-function termFreqMap(str, locale) {
-  const words = getTokens(str, locale);
-  const termFreq = {};
-  words.forEach((w) => {
-    termFreq[w] = (termFreq[w] || 0) + 1;
-  });
-  return termFreq;
-}
-
-function addKeysToDict(map, dict) {
-  Object.keys(map).forEach((key) => {
-    dict[key] = true;
-  });
-}
-
-function termFreqMapToVector(map, dict) {
-  const termFreqVector = [];
-  Object.keys(dict).forEach((term) => {
-    termFreqVector.push(map[term] || 0);
-  });
-  return termFreqVector;
-}
-
-function vecDotProduct(vecA, vecB) {
-  let product = 0;
-  for (let i = 0; i < vecA.length; i += 1) {
-    product += vecA[i] * vecB[i];
+  getTokens(text, locale = 'en') {
+    if (typeof text === 'string') {
+      const tokenizer =
+        this.container && this.container.get(`tokenizer-${locale}`);
+      return tokenizer ? tokenizer.tokenize(text, true) : text.split(' ');
+    }
+    return text;
   }
-  return product;
-}
 
-function vecMagnitude(vec) {
-  let sum = 0;
-  for (let i = 0; i < vec.length; i += 1) {
-    sum += vec[i] * vec[i];
+  termFreqMap(str, locale) {
+    const words = this.getTokens(str, locale);
+    const termFreq = {};
+    words.forEach((w) => {
+      termFreq[w] = (termFreq[w] || 0) + 1;
+    });
+    return termFreq;
   }
-  return Math.sqrt(sum);
-}
 
-/**
- * Calculates cosine-similarity from two vectors
- * @param {number[]} left Left vector
- * @param {number[]} right Right vector
- * @returns {number} cosine between two vectors
- * {@link https://en.wikipedia.org/wiki/Cosine_similarity Cosine Similarity}
- * @see
- */
-function cosineSimilarity(vecA, vecB) {
-  return vecDotProduct(vecA, vecB) / (vecMagnitude(vecA) * vecMagnitude(vecB));
-}
-
-/**
- * Calculates cosine-similarity from two sentences
- * @param {string} left Left string
- * @param {string} right Right string
- * @returns {number} cosine between two sentences representend in VSM
- */
-function similarity(strA, strB, locale) {
-  if (strA === strB) {
-    return 1;
+  addKeysToDict(map, dict) {
+    Object.keys(map).forEach((key) => {
+      dict[key] = true;
+    });
   }
-  const termFreqA = termFreqMap(strA, locale);
-  const termFreqB = termFreqMap(strB, locale);
 
-  if (!Object.keys(termFreqA).length || !Object.keys(termFreqB).length) {
-    return 0;
+  termFreqMapToVector(map, dict) {
+    const termFreqVector = [];
+    Object.keys(dict).forEach((term) => {
+      termFreqVector.push(map[term] || 0);
+    });
+    return termFreqVector;
   }
-  const dict = {};
-  addKeysToDict(termFreqA, dict);
-  addKeysToDict(termFreqB, dict);
 
-  const termFreqVecA = termFreqMapToVector(termFreqA, dict);
-  const termFreqVecB = termFreqMapToVector(termFreqB, dict);
+  vecDotProduct(vecA, vecB) {
+    let product = 0;
+    for (let i = 0; i < vecA.length; i += 1) {
+      product += vecA[i] * vecB[i];
+    }
+    return product;
+  }
 
-  return cosineSimilarity(termFreqVecA, termFreqVecB);
+  vecMagnitude(vec) {
+    let sum = 0;
+    for (let i = 0; i < vec.length; i += 1) {
+      sum += vec[i] * vec[i];
+    }
+    return Math.sqrt(sum);
+  }
+
+  /**
+   * Calculates cosine-similarity from two vectors
+   * @param {number[]} left Left vector
+   * @param {number[]} right Right vector
+   * @returns {number} cosine between two vectors
+   * {@link https://en.wikipedia.org/wiki/Cosine_similarity Cosine Similarity}
+   */
+  cosineSimilarity(vecA, vecB) {
+    return (
+      this.vecDotProduct(vecA, vecB) /
+      (this.vecMagnitude(vecA) * this.vecMagnitude(vecB))
+    );
+  }
+
+  /**
+   * Calculates cosine-similarity from two sentences
+   * @param {string} left Left string
+   * @param {string} right Right string
+   * @returns {number} cosine between two sentences representend in VSM
+   */
+  similarity(strA, strB, locale) {
+    if (strA === strB) {
+      return 1;
+    }
+    const termFreqA = this.termFreqMap(strA, locale);
+    const termFreqB = this.termFreqMap(strB, locale);
+
+    if (!Object.keys(termFreqA).length || !Object.keys(termFreqB).length) {
+      return 0;
+    }
+    const dict = {};
+    this.addKeysToDict(termFreqA, dict);
+    this.addKeysToDict(termFreqB, dict);
+
+    const termFreqVecA = this.termFreqMapToVector(termFreqA, dict);
+    const termFreqVecB = this.termFreqMapToVector(termFreqB, dict);
+
+    return this.cosineSimilarity(termFreqVecA, termFreqVecB);
+  }
 }
 
-module.exports = {
-  getTokens,
-  termFreqMap,
-  addKeysToDict,
-  termFreqMapToVector,
-  vecDotProduct,
-  vecMagnitude,
-  cosineSimilarity,
-  similarity,
-};
+module.exports = CosineSimilarity;
