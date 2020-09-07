@@ -121,7 +121,7 @@ function traverse(obj, preffix) {
 }
 
 function containerBootstrap(
-  srcSettings,
+  inputSettings,
   srcMustLoadEnv,
   container,
   preffix,
@@ -144,7 +144,8 @@ function containerBootstrap(
     instance.use(logger);
     instance.use(MemoryStorage);
   }
-  let settings = srcSettings || {};
+  const srcSettings = inputSettings || {};
+  let settings = srcSettings;
   if (typeof settings === 'string') {
     settings = {
       pathConfiguration: srcSettings,
