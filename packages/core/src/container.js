@@ -179,8 +179,6 @@ class Container {
       currentObject = input;
     } else if (token && token !== 'context' && token !== 'this') {
       currentObject = this.get(token) || currentObject[token];
-    } else if (token && token === 'context') {
-      currentObject = context;
     } else if (token === 'this') {
       currentObject = srcObject;
     }
