@@ -102,6 +102,7 @@ function addTests(base, locale) {
       const utterance = testCase[utteranceName] || testCase.utterance;
       const resultName = `result${upperLocale}`;
       if (utterance) {
+        // eslint-disable-next-line jest/valid-title
         test(utterance, async () => {
           const expected = Object.assign(testCase.result, testCase[resultName]);
           const input = {
