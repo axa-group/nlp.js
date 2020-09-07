@@ -24,7 +24,7 @@
 const { Clonable } = require('@nlpjs/core');
 
 class BertOpenQuestion extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

@@ -25,7 +25,7 @@ const readline = require('readline');
 const { Clonable, containerBootstrap } = require('@nlpjs/core');
 
 class ConsoleConnector extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

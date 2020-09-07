@@ -493,7 +493,7 @@ describe('NLP', () => {
       const input = {
         locale: 'en',
         utterance: 'Who am i?',
-        from: { id: 'jo.bloggs@example.org', name: 'Jo', role: 'user' }
+        from: { id: 'jo.bloggs@example.org', name: 'Jo', role: 'user' },
       };
       const output = await nlp.process(input);
       expect(output.utterance).toEqual(input.utterance);

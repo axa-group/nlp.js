@@ -121,13 +121,14 @@ function traverse(obj, preffix) {
 }
 
 function containerBootstrap(
-  srcSettings = {},
-  mustLoadEnv = true,
+  inputSettings,
+  srcMustLoadEnv,
   container,
   preffix,
   pipelines,
   parent
 ) {
+  const mustLoadEnv = srcMustLoadEnv === undefined ? true : srcMustLoadEnv;
   const instance = container || new Container(preffix);
   instance.parent = parent;
   if (!preffix) {
@@ -143,6 +144,7 @@ function containerBootstrap(
     instance.use(logger);
     instance.use(MemoryStorage);
   }
+  const srcSettings = inputSettings || {};
   let settings = srcSettings;
   if (typeof settings === 'string') {
     settings = {
