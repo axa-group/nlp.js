@@ -206,13 +206,16 @@ class TranslateZh {
               undefined
             )
           );
-        } else if (this.isChineseChar(char)) {
-          tokens.push(
-            this.createToken(char, processedPositions, i, 1, 'both', undefined)
-          );
         } else {
           tokens.push(
-            this.createToken(char, processedPositions, i, 1, 'none', undefined)
+            this.createToken(
+              char,
+              processedPositions,
+              i,
+              1,
+              this.isChineseChar(char) ? 'both' : 'none',
+              undefined
+            )
           );
         }
       }

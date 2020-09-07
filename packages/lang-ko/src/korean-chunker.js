@@ -117,8 +117,8 @@ function splitChunks(text) {
       }
     }
   }
-  const chunks = chunksMatched.sort((a, b) => a.start - b.start);
-  return fillInUnmatched(text, chunks);
+  chunksMatched.sort((a, b) => a.start - b.start);
+  return fillInUnmatched(text, chunksMatched);
 }
 
 function chunk(input) {

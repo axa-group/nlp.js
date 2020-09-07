@@ -25,7 +25,7 @@ const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { BotFrameworkAdapter, ActivityTypes } = require('botbuilder');
 
 class MsbfConnector extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

@@ -25,7 +25,7 @@ const { defaultContainer, Clonable } = require('@nlpjs/core');
 const express = require('serverless-express/express');
 
 class ExpressApiServerless extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

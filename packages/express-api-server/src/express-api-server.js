@@ -27,7 +27,7 @@ const cors = require('cors');
 const path = require('path');
 
 class ExpressApiServer extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

@@ -62,7 +62,6 @@ class ExtractorEnum {
               len: 1,
             });
             lastIndex = currentIndex;
-            atWhiteSpace = true;
           } else {
             lastIndex = currentIndex;
             atWhiteSpace = false;

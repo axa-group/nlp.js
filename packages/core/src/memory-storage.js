@@ -25,7 +25,7 @@ const { defaultContainer } = require('./container');
 const Clonable = require('./clonable');
 
 class MemoryStorage extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

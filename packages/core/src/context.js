@@ -25,7 +25,7 @@ const { defaultContainer } = require('./container');
 const Clonable = require('./clonable');
 
 class Context extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},
