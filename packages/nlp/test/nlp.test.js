@@ -486,4 +486,20 @@ describe('NLP', () => {
       });
     });
   });
+
+  describe('Process an utterance', () => {
+    test('When the input contains `from.id` do not crash', async () => {
+      const nlp = new Nlp();
+      const input = {
+        locale: 'en',
+        utterance: 'Who am i?',
+        from: { id: 'jo.bloggs@example.org', name: 'Jo', role: 'user' }
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('None');
+      expect(output.answer).toBeUndefined();
+      expect(output.from.id).toEqual(input.from.id);
+    });
+  });
 });
