@@ -25,7 +25,7 @@ const { defaultContainer, Clonable } = require('@nlpjs/core');
 const DirectlineController = require('./directline-controller');
 
 class DirectlineConnector extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

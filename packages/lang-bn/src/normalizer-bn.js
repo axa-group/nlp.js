@@ -34,7 +34,7 @@ class NormalizerBn extends Normalizer {
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase();
-    result = text.replace('\u200D', '');
+    result = result.replace('\u200D', '');
     result = result.replace('\u09CD', '');
     result = result.replace('\u09BC', '');
     result = result.replace('\u09DC', '\u09A1');

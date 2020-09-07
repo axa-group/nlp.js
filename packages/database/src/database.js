@@ -26,7 +26,7 @@ const Collection = require('./collection');
 const MemorydbAdapter = require('./memory-adapter');
 
 class Database extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},

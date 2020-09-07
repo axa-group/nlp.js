@@ -179,8 +179,6 @@ class Container {
       currentObject = input;
     } else if (token && token !== 'context' && token !== 'this') {
       currentObject = this.get(token) || currentObject[token];
-    } else if (token && token === 'context') {
-      currentObject = context;
     } else if (token === 'this') {
       currentObject = srcObject;
     }
@@ -296,7 +294,8 @@ class Container {
     delete currentObject[tokens[tokens.length - 1]];
   }
 
-  getValue(path = 'floating', context, input, srcObject) {
+  getValue(srcPath, context, input, srcObject) {
+    const path = srcPath || 'floating';
     const tokens = path.split('.');
     const newPath = tokens.slice(0, -1).join('.');
     const currentObject = this.resolvePath(newPath, context, input, srcObject);

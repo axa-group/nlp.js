@@ -30,7 +30,7 @@ const ExtractorBuiltin = require('./extractor-builtin');
 const { TrimType } = require('./trim-types');
 
 class Ner extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},
@@ -56,7 +56,7 @@ class Ner extends Clonable {
 
   registerDefault() {}
 
-  getRulesByName(locale = '*', name, force = false) {
+  getRulesByName(locale = '*', name = '', force = false) {
     if (!this.rules[locale]) {
       if (!force) {
         return undefined;
@@ -250,7 +250,7 @@ class Ner extends Clonable {
       }
     }
     let regex = `/${conditions.join('|')}/g`;
-    if (!(options.caseSensitive === true)) {
+    if (options.caseSensitive !== true) {
       regex += 'i';
     }
     const rule = {

@@ -4,7 +4,7 @@ const PythonParser = require('./python-parser');
 function evalInScope(js, contextAsScope) {
   with(contextAsScope) {
     return eval(js);
-  };
+  }
 }
 
 function executePython(str, context) {

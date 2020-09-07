@@ -62,13 +62,14 @@ function traverse(obj, preffix) {
 }
 
 function containerBootstrap(
-  srcSettings = {},
+  inputSettings,
   mustLoadEnv,
   container,
   preffix,
   pipelines,
   parent
 ) {
+  const srcSettings = inputSettings || {};
   const instance = container || new Container(preffix);
   instance.parent = parent;
   if (!preffix) {

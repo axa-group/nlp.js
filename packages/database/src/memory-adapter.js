@@ -25,7 +25,7 @@ const { Clonable, uuid } = require('@nlpjs/core');
 const path = require('path');
 
 class MemorydbAdapter extends Clonable {
-  constructor(settings = {}, container) {
+  constructor(settings = {}, container = undefined) {
     super(
       {
         settings: {},
@@ -133,17 +133,17 @@ class MemorydbAdapter extends Clonable {
     return true;
   }
 
-  async find(name, condition = {}, limit, offset) {
+  async find(name, condition, limit, offset) {
     const collection = await this.getCollection(name);
     const keys = Object.keys(collection);
-    const conditionKeys = Object.keys(condition);
+    const conditionKeys = Object.keys(condition || {});
     let pendingOffset = offset || 0;
     const result = [];
     for (let i = 0; i < keys.length; i += 1) {
       const item = collection[keys[i]];
       if (
         conditionKeys === 0 ||
-        MemorydbAdapter.match(item, condition, conditionKeys)
+        MemorydbAdapter.match(item, condition || {}, conditionKeys)
       ) {
         if (pendingOffset > 0) {
           pendingOffset -= 1;

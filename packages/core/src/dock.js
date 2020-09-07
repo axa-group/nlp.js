@@ -35,11 +35,12 @@ class Dock {
   async createContainer(
     name,
     settings,
-    mustLoadEnv = true,
+    srcMustLoadEnv,
     preffix,
     parent,
     pipelines
   ) {
+    const mustLoadEnv = srcMustLoadEnv === undefined ? true : srcMustLoadEnv;
     if (typeof name !== 'string') {
       settings = name;
       name = '';
