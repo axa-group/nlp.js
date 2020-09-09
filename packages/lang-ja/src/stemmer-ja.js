@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
 const path = require('path');
 const { BaseStemmer } = require('@nlpjs/core');
 
@@ -49,7 +50,16 @@ class StemmerJa extends BaseStemmer {
       if (StemmerJa.tokenizer) {
         resolve();
       } else {
-        const dicPath = path.join(__dirname, '../node_modules/kuromoji/dict');
+        let dicPath = path.join(__dirname, '../node_modules/kuromoji/dict');
+        if (!fs.existsSync(dicPath)) {
+          dicPath = path.join(
+            __dirname,
+            '../../../../node_modules/kuromoji/dict'
+          );
+          if (!fs.existsSync(dicPath)) {
+            dicPath = './node_modules/kuromoji/dict';
+          }
+        }
         kuromoji.builder({ dicPath }).build((err, tokenizer) => {
           if (err) {
             reject(err);

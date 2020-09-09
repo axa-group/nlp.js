@@ -522,6 +522,11 @@ class Nlp extends Clonable {
       output.entities = [];
       output.sourceEntities = [];
     }
+    const stemmer = this.container.get(`stemmer-${output.locale}`);
+    if (stemmer && stemmer.lastFill) {
+      stemmer.lastFill(output);
+      console.log(output);
+    }
     const answers = await this.nlgManager.run({ ...output });
     output.answers = answers.answers;
     output.answer = answers.answer;
