@@ -58,10 +58,12 @@ describe('ExpressApiServer', () => {
       expect(server.newRouter()).toBeTruthy();
     });
 
-    test('start exists', () => {
+    test('start', () => {
       const server = new ExpressApiServer();
+      server.settings.port = null;
       expect(server.start).toBeDefined();
       expect(typeof server.start).toBe('function');
+      expect(server.start()).toBeFalsy();
     });
   });
 });
