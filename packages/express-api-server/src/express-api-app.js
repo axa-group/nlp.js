@@ -21,10 +21,37 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const ExpressApiApp = require('./express-api-app');
-const ExpressApiServer = require('./express-api-server');
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
 
-module.exports = {
-  ExpressApiApp,
-  ExpressApiServer,
-};
+class ExpressApiApp {
+  constructor(settings, plugins, routers) {
+    this.settings = settings || {};
+    this.plugins = plugins || [];
+    this.routers = routers || [];
+  }
+
+  static newRouter() {
+    return express.Router();
+  }
+
+  initialize(input = {}) {
+    this.app = express();
+    this.app.use(cors());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(express.json());
+    for (let i = 0; i < this.plugins.length; i += 1) {
+      this.app.use(this.plugins[i]);
+    }
+    if (this.settings.serveBot) {
+      this.app.use(express.static(path.join(__dirname, './public')));
+    }
+    for (let i = 0; i < this.routers.length; i += 1) {
+      this.app.use(this.settings.apiRoot, this.routers[i]);
+    }
+    return this.app;
+  }
+}
+
+module.exports = ExpressApiApp;
