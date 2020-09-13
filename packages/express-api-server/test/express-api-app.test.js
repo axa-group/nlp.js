@@ -83,7 +83,7 @@ describe('ExpressApiApp', () => {
         .expect('Content-Type', /html/);
 
       expect(resp.statusCode).toBe(404);
-      expect(resp.text).toMatch(/^<!DOCTYPE html>.+Error.+/msi);
+      expect(resp.text).toMatch(/^<!DOCTYPE html>.+Error.+/ims);
     });
   });
 
@@ -95,7 +95,7 @@ describe('ExpressApiApp', () => {
         res.send(req.params);
         next();
       });
-      const expressApp = new ExpressApiApp({ apiRoot: '/api' }, null, [ testRouter ]);
+      const expressApp = new ExpressApiApp({ apiRoot: '/api' }, null, [testRouter]);
       const app = expressApp.initialize();
       const resp = await request(app).get(`/api/testId/${TEST_ID}`)
         .expect(200)
@@ -105,6 +105,22 @@ describe('ExpressApiApp', () => {
       expect(resp.statusCode).toBe(200);
       expect(resp.text).toMatch(/^\{.+\}$/);
       expect(resp.body.testId).toBe(TEST_ID);
+    });
+  });
+
+  describe('A plugin test', () => {
+    test('Any valid route returns content', async () => {
+      const testPlugin = (req, res, next) => {
+        res.set('x-plugin-test', '1');
+        next();
+      };
+      const expressApp = new ExpressApiApp({ serveBot: true }, [testPlugin]);
+      const app = expressApp.initialize();
+      const resp = await request(app).get('/')
+        .expect(200)
+        .expect('x-plugin-test', '1');
+
+      expect(resp.statusCode).toBe(200);
     });
   });
 });

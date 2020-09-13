@@ -29,5 +29,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1"
   },
+  "devDependencies": {
+    "supertest": "^4.0.2"
+  },
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }

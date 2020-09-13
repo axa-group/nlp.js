@@ -36,7 +36,7 @@ class ExpressApiApp {
     return express.Router();
   }
 
-  initialize(input = {}) {
+  initialize() {
     this.app = express();
     this.app.use(cors());
     this.app.use(express.urlencoded({ extended: false }));
