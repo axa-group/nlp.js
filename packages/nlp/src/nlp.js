@@ -457,6 +457,34 @@ class Nlp extends Clonable {
     return output;
   }
 
+  organizeEntities(entities) {
+    const dict = {};
+    for (let i = 0; i < entities.length; i += 1) {
+      const entity = entities[i];
+      if (!dict[entity.entity]) {
+        dict[entity.entity] = [];
+      }
+      dict[entity.entity].push(entity);
+    }
+    const result = [];
+    Object.keys(dict).forEach((key) => {
+      const arr = dict[key];
+      if (arr.length === 1) {
+        result.push(arr[0]);
+      } else {
+        for (let i = 0; i < arr.length; i += 1) {
+          arr[i].alias = `${key}_${i}`;
+        }
+        result.push({
+          entity: key,
+          isList: true,
+          items: arr,
+        });
+      }
+    });
+    return result;
+  }
+
   async process(locale, utterance, context = {}, settings) {
     let sourceInput;
     if (typeof locale === 'object') {
@@ -525,7 +553,17 @@ class Nlp extends Clonable {
     const stemmer = this.container.get(`stemmer-${output.locale}`);
     if (stemmer && stemmer.lastFill) {
       stemmer.lastFill(output);
-      console.log(output);
+    }
+    const organizedEntities = this.organizeEntities(output.entities);
+    if (!output.context.entities) {
+      output.context.entities = {};
+    }
+    for (let i = 0; i < organizedEntities.length; i += 1) {
+      const entity = organizedEntities[i];
+      output.context.entities[entity.entity] = entity;
+      output.context[entity.entity] = entity.isList
+        ? entity.items[0].sourceText
+        : entity.sourceText;
     }
     const answers = await this.nlgManager.run({ ...output });
     output.answers = answers.answers;
