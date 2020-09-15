@@ -561,6 +561,11 @@ class Nlp extends Clonable {
     for (let i = 0; i < organizedEntities.length; i += 1) {
       const entity = organizedEntities[i];
       output.context.entities[entity.entity] = entity;
+      if (entity.isList) {
+        for (let j = 0; j < entity.items.length; j += 1) {
+          output.context[entity.items[j].alias] = entity.items[j].sourceText;
+        }
+      }
       output.context[entity.entity] = entity.isList
         ? entity.items[0].sourceText
         : entity.sourceText;
