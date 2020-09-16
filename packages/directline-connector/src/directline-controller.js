@@ -22,7 +22,7 @@
  */
 
 const { uuid } = require('@nlpjs/core');
-const fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 
 class DirectlineController {
   constructor(settings) {
