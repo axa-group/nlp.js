@@ -106,7 +106,7 @@ class NlgManager extends Clonable {
     if (!srcText) {
       return srcText;
     }
-    let text = srcText;
+    let text = srcText.answer || srcText;
     let matchFound;
     do {
       const match = /\((?:[^()]+)\|(?:[^()]+)\)/g.exec(text);
@@ -127,6 +127,10 @@ class NlgManager extends Clonable {
     const template = this.container.get('Template');
     if (template && context) {
       return template.compile(srcText, context);
+    }
+    if (srcText.answer) {
+      srcText.answer = text;
+      return srcText;
     }
     return text;
   }

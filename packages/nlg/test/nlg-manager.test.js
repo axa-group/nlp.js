@@ -221,4 +221,13 @@ describe('NLG Manager', () => {
       expect(input.answers).toHaveLength(1);
     });
   });
+
+  describe('Render patterns', () => {
+    test('It should render patterns in answer', async () => {
+      const manager = new NlgManager();
+      manager.add('en', 'intent', '(Hi|Hello) user');
+      const actual = await manager.run({ locale: 'en', intent: 'intent' });
+      expect(['Hi user', 'Hello user'].includes(actual.answer)).toBeTruthy();
+    });
+  });
 });
