@@ -40,7 +40,9 @@ function processString(str, context) {
   const matches = dictionary[str];
   return matches.reduce((p, c) => {
     const solution = evaluator.evaluate(c.substr(2, c.length - 4), context);
-    return solution ? p.replace(c, solution) : p;
+    return solution !== null && solution !== undefined
+      ? p.replace(c, solution)
+      : p;
   }, str);
 }
 
