@@ -55,16 +55,6 @@ describe('Neural Network', () => {
       expect(actual.developer).toEqual(0);
       expect(actual.birthday).toBeGreaterThan(0.75);
     });
-    test('Train and run with fixed error', () => {
-      const net = new NeuralNetwork({
-        fixedError: true,
-      });
-      net.train(corpus);
-      const actual = net.run({ when: 1, birthday: 1 });
-      expect(actual.who).toEqual(0);
-      expect(actual.developer).toEqual(0);
-      expect(actual.birthday).toBeGreaterThan(0.75);
-    });
     test('Train process can be logged', () => {
       const net = new NeuralNetwork({ log: true });
       net.train(corpus);
