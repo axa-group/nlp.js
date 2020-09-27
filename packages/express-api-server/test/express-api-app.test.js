@@ -32,8 +32,8 @@ describe('ExpressApiApp', () => {
     });
   });
 
-  describe('Static files should be served', () => {
-    test('The route "/" returns a static HTML page', async () => {
+  describe('Static files', () => {
+    test('The `/` URI should return a HTML page', async () => {
       const expressApp = new ExpressApiApp({ serveBot: true });
       const app = expressApp.initialize();
       const resp = await request(app).get('/')
@@ -43,12 +43,14 @@ describe('ExpressApiApp', () => {
         .expect('x-powered-by', 'Express');
 
       expect(resp.statusCode).toBe(200);
-      expect(resp.text).toMatch(/^<!doctype html>\s*<html lang="\w+">.+<title>/ms);
+      expect(resp.text).toMatch(
+        /^<!doctype html>\s*<html lang="\w+">.+<title>/ms
+      );
       expect(resp.text).toMatch(/<div id="root" role="main">/);
       expect(resp.text).toMatch(/<script src="main.js">/);
     });
 
-    test('The route "/main.js" returns Javascript', async () => {
+    test('The `/main.js` URI should return Javascript', async () => {
       const expressApp = new ExpressApiApp({ serveBot: true });
       const app = expressApp.initialize();
       const resp = await request(app).get('/main.js')
@@ -61,7 +63,7 @@ describe('ExpressApiApp', () => {
       expect(resp.text).toMatch(/function\(/);
     });
 
-    test('The route "/botchat.css" returns a CSS stylesheet', async () => {
+    test('The `/botchat.css` URI should return a stylesheet', async () => {
       const expressApp = new ExpressApiApp({ serveBot: true });
       const app = expressApp.initialize();
       const resp = await request(app).get('/botchat.css')
@@ -74,8 +76,8 @@ describe('ExpressApiApp', () => {
     });
   });
 
-  describe('An API with NO routers gives an error', () => {
-    test('In isolation, the route "/api" returns a "404 Not Found" error', async () => {
+  describe('API with NO routers', () => {
+    test('In isolation, the `/api` path should give a "404 Not Found" error', async () => {
       const expressApp = new ExpressApiApp({ apiRoot: '/api' });
       const app = expressApp.initialize();
       const resp = await request(app).get('/api')
@@ -87,8 +89,8 @@ describe('ExpressApiApp', () => {
     });
   });
 
-  describe('An API with a router is OK', () => {
-    test('The route "/api/testId/{N}" returns data', async () => {
+  describe('API with a router', () => {
+    test('The path `/api/testId/{N}` should return JSON data', async () => {
       const TEST_ID = '999';
       const testRouter = ExpressApiApp.newRouter();
       testRouter.get('/testId/:testId', (req, res, next) => {
@@ -108,8 +110,8 @@ describe('ExpressApiApp', () => {
     });
   });
 
-  describe('A plugin test', () => {
-    test('Any valid route returns content', async () => {
+  describe('A plugin', () => {
+    test('A valid URI should return content', async () => {
       const testPlugin = (req, res, next) => {
         res.set('x-plugin-test', '1');
         next();

@@ -30,7 +30,7 @@ describe('ExpressApiServer', () => {
       expect(server).toBeDefined();
     });
 
-    test('Default settings', () => {
+    test('There should be default settings', () => {
       const server = new ExpressApiServer();
       expect(server.settings).toEqual({
         apiRoot: '/api',
@@ -40,7 +40,7 @@ describe('ExpressApiServer', () => {
       });
     });
 
-    test('Plugins, routers', () => {
+    test('By default, there should be NO plugins or routers', () => {
       const server = new ExpressApiServer();
       expect(server.plugins).toHaveLength(0);
       expect(server.routers).toHaveLength(0);
@@ -48,22 +48,23 @@ describe('ExpressApiServer', () => {
   });
 
   describe('Methods', () => {
-    test('isStarted', () => {
+    test('`isStarted` should be false', () => {
       const server = new ExpressApiServer();
       expect(server.isStarted()).toBeFalsy();
     });
 
-    test('newRouter', () => {
+    test('`newRouter` should return a router', () => {
       const server = new ExpressApiServer();
       expect(server.newRouter()).toBeTruthy();
     });
 
-    test('start', () => {
+    test('With NO port set, `start` should return immediately', () => {
       const server = new ExpressApiServer();
       server.settings.port = null;
       expect(server.start).toBeDefined();
       expect(typeof server.start).toBe('function');
       expect(server.start()).toBeFalsy();
+      expect(server.settings.port).toBeNull();
     });
   });
 });
