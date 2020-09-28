@@ -26,7 +26,6 @@ const CorpusLookup = require('./corpus-lookup');
 const defaultSettings = {
   iterations: 20000,
   errorThresh: 0.00005,
-  fixedError: false,
   deltaErrorThresh: 0.000001,
   learningRate: 0.6,
   momentum: 0.5,
