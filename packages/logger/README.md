@@ -13,6 +13,9 @@
 
 - [Installation](#installation)
 - [Example of use](#example-of-use)
+- [Default logger in @nlpjs/core](#default-logger-in-nlpjscore)
+- [Default logger in @nlpjs/basic](#default-logger-in-nlpjsbasic)
+- [Adding your own logger to the container](#adding-your-own-logger-to-the-container)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 - [Code of Conduct](#code-of-conduct)
