@@ -1,0 +1,68 @@
+![NLPjs logo](screenshots/nlplogo.gif)
+
+# @nlpjs/emoji
+
+## Introduction
+
+Emoji is a plugin for NLP.js suite able to replace emojis by their word equivalents.
+
+## Installing
+
+You can install via NPM:
+
+```bash
+  npm install @nlpjs/emoji
+```
+
+## Example of use
+
+```javascript
+const { removeEmojis } = require('@nlpjs/emoji');
+
+const actual = removeEmojis('I ❤️  ☕️! -  😯⭐️😍  ::: test : : 👍+');
+console.log(actual);
+// I :heart:  :coffee:! -  :hushed::star::heart_eyes:  ::: test : : :thumbsup:+
+```
+
+## Contributing
+
+You can read the guide of how to contribute at [Contributing](CONTRIBUTING.md).
+
+## Contributors
+
+[![Contributors](https://contributors-img.firebaseapp.com/image?repo=axa-group/nlp.js)](https://github.com/axa-group/nlp.js/graphs/contributors)
+
+Made with [contributors-img](https://contributors-img.firebaseapp.com).
+
+## Code of Conduct
+
+You can read the Code of Conduct at [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Who is behind it`?`
+
+This project is developed by AXA Group Operations Spain S.A.
+
+If you need to contact us, you can do it at the email jesus.seijas@axa.com
+
+## License
+
+Copyright (c) AXA Group Operations Spain S.A.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
