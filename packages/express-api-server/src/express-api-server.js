@@ -22,9 +22,7 @@
  */
 
 const { defaultContainer, Clonable } = require('@nlpjs/core');
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+const ExpressApiApp = require('./express-api-app');
 
 class ExpressApiServer extends Clonable {
   constructor(settings = {}, container = undefined) {
@@ -64,30 +62,22 @@ class ExpressApiServer extends Clonable {
   }
 
   newRouter() {
-    return express.Router();
+    return ExpressApiApp.newRouter();
   }
 
   start(input = {}) {
+    let result = null;
     const port = input.port || this.settings.port;
-    this.app = express();
-    this.app.use(cors());
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(express.json());
-    for (let i = 0; i < this.plugins.length; i += 1) {
-      this.app.use(this.plugins[i]);
-    }
-    if (this.settings.serveBot) {
-      this.app.use(express.static(path.join(__dirname, './public')));
-    }
-    for (let i = 0; i < this.routers.length; i += 1) {
-      this.app.use(this.settings.apiRoot, this.routers[i]);
-    }
+    const expressApp = new ExpressApiApp(this.settings, this.plugins, this.routers);
+    this.app = expressApp.initialize();
+
     if (port && port > 0) {
-      this.app.listen(port, () => {
+      result = this.app.listen(port, () => {
         const logger = this.container.get('logger');
         logger.info(`${this.settings.tag} listening on port ${port}!`);
       });
     }
+    return result !== null;
   }
 }
 
