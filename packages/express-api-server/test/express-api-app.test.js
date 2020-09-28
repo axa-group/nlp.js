@@ -36,7 +36,8 @@ describe('ExpressApiApp', () => {
     test('The `/` URI should return a HTML page', async () => {
       const expressApp = new ExpressApiApp({ serveBot: true });
       const app = expressApp.initialize();
-      const resp = await request(app).get('/')
+      const resp = await request(app)
+        .get('/')
         .expect(200)
         .expect('Content-Type', /\/html/)
         .expect('access-control-allow-origin', '*')
@@ -53,7 +54,8 @@ describe('ExpressApiApp', () => {
     test('The `/main.js` URI should return Javascript', async () => {
       const expressApp = new ExpressApiApp({ serveBot: true });
       const app = expressApp.initialize();
-      const resp = await request(app).get('/main.js')
+      const resp = await request(app)
+        .get('/main.js')
         .expect(200)
         .expect('Content-Type', /\/javascript/);
 
@@ -66,7 +68,8 @@ describe('ExpressApiApp', () => {
     test('The `/botchat.css` URI should return a stylesheet', async () => {
       const expressApp = new ExpressApiApp({ serveBot: true });
       const app = expressApp.initialize();
-      const resp = await request(app).get('/botchat.css')
+      const resp = await request(app)
+        .get('/botchat.css')
         .expect(200)
         .expect('Content-Type', /\/css/);
 
@@ -80,7 +83,8 @@ describe('ExpressApiApp', () => {
     test('In isolation, the `/api` path should give a "404 Not Found" error', async () => {
       const expressApp = new ExpressApiApp({ apiRoot: '/api' });
       const app = expressApp.initialize();
-      const resp = await request(app).get('/api')
+      const resp = await request(app)
+        .get('/api')
         .expect(404)
         .expect('Content-Type', /html/);
 
@@ -97,9 +101,12 @@ describe('ExpressApiApp', () => {
         res.send(req.params);
         next();
       });
-      const expressApp = new ExpressApiApp({ apiRoot: '/api' }, null, [testRouter]);
+      const expressApp = new ExpressApiApp({ apiRoot: '/api' }, null, [
+        testRouter,
+      ]);
       const app = expressApp.initialize();
-      const resp = await request(app).get(`/api/testId/${TEST_ID}`)
+      const resp = await request(app)
+        .get(`/api/testId/${TEST_ID}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
         .expect('access-control-allow-origin', '*');
@@ -118,7 +125,8 @@ describe('ExpressApiApp', () => {
       };
       const expressApp = new ExpressApiApp({ serveBot: true }, [testPlugin]);
       const app = expressApp.initialize();
-      const resp = await request(app).get('/')
+      const resp = await request(app)
+        .get('/')
         .expect(200)
         .expect('x-plugin-test', '1');
 

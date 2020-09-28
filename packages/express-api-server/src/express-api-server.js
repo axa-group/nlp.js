@@ -68,7 +68,11 @@ class ExpressApiServer extends Clonable {
   start(input = {}) {
     let result = null;
     const port = input.port || this.settings.port;
-    const expressApp = new ExpressApiApp(this.settings, this.plugins, this.routers);
+    const expressApp = new ExpressApiApp(
+      this.settings,
+      this.plugins,
+      this.routers
+    );
     this.app = expressApp.initialize();
 
     if (port && port > 0) {
