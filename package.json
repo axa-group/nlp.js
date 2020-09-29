@@ -41,7 +41,7 @@
     "jest": "^26.0.1",
     "lerna": "^3.22.1",
     "prettier": "^2.0.5",
-    "supertest": "^4.0.2"
+    "supertest": "^5.0.0"
   },
   "jest": {
     "verbose": true,
