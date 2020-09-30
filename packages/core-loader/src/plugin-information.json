@@ -47,7 +47,7 @@
   "LangSv": { "className": "LangSv", "path": "@nlpjs/lang-sv" },
   "LangTa": { "className": "LangTa", "path": "@nlpjs/lang-ta" },
   "LangTh": { "className": "LangTh", "path": "@nlpjs/lang-th" },
-  "LangTl": { "className": "LangTl", "path": "@nlpjs/lang-gtl" },
+  "LangTl": { "className": "LangTl", "path": "@nlpjs/lang-tl" },
   "LangTr": { "className": "LangTr", "path": "@nlpjs/lang-tr" },
   "LangUk": { "className": "LangUk", "path": "@nlpjs/lang-uk" },
   "LangZh": { "className": "LangZh", "path": "@nlpjs/lang-zh" },
