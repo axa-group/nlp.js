@@ -502,4 +502,123 @@ describe('NLP', () => {
       expect(output.from.id).toEqual(input.from.id);
     });
   });
+
+  describe('addCorpus', () => {
+    test('A corpus can be added as a json', async () => {
+      const corpus = {
+        name: 'corpus',
+        locale: 'en-US',
+        data: [
+          {
+            intent: 'greet',
+            utterances: ['hello', 'hi', 'good morning', 'good night'],
+            answers: ['Hello user!'],
+          },
+          {
+            intent: 'bye',
+            utterances: ['see you later', 'bye', 'goodbye'],
+            answers: ['Bye user!'],
+          },
+        ],
+      };
+      const nlp = new Nlp();
+      await nlp.addCorpus(corpus);
+      expect(nlp.nluManager.domainManagers.en.sentences).toHaveLength(7);
+    });
+    test('A corpus with domains can be added as a json', async () => {
+      const corpus = {
+        name: 'corpus',
+        locale: 'en-US',
+        domains: [
+          {
+            name: 'domain1',
+            locale: 'en-US',
+            data: [
+              {
+                intent: 'greet',
+                utterances: ['hello', 'hi', 'good morning', 'good night'],
+                answers: ['Hello user!'],
+              },
+            ],
+          },
+          {
+            name: 'domain2',
+            locale: 'en-US',
+            data: [
+              {
+                intent: 'bye',
+                utterances: ['see you later', 'bye', 'goodbye'],
+                answers: ['Bye user!'],
+              },
+            ],
+          },
+        ],
+      };
+      const nlp = new Nlp();
+      await nlp.addCorpus(corpus);
+      expect(nlp.nluManager.domainManagers.en.sentences[0].domain).toEqual(
+        'domain1'
+      );
+      expect(nlp.nluManager.domainManagers.en.sentences[1].domain).toEqual(
+        'domain1'
+      );
+      expect(nlp.nluManager.domainManagers.en.sentences[2].domain).toEqual(
+        'domain1'
+      );
+      expect(nlp.nluManager.domainManagers.en.sentences[3].domain).toEqual(
+        'domain1'
+      );
+      expect(nlp.nluManager.domainManagers.en.sentences[4].domain).toEqual(
+        'domain2'
+      );
+      expect(nlp.nluManager.domainManagers.en.sentences[5].domain).toEqual(
+        'domain2'
+      );
+      expect(nlp.nluManager.domainManagers.en.sentences[6].domain).toEqual(
+        'domain2'
+      );
+    });
+
+    test('The corpus can contain entities', async () => {
+      const corpus = {
+        name: 'corpus',
+        locale: 'en-US',
+        data: [
+          {
+            intent: 'greet',
+            utterances: ['hello', 'hi', 'good morning', 'good night'],
+            answers: ['Hello user!'],
+          },
+          {
+            intent: 'bye',
+            utterances: ['see you later', 'bye', 'goodbye'],
+            answers: ['Bye user!'],
+          },
+        ],
+        entities: {
+          hero: {
+            locale: ['en', 'es'],
+            type: 'text',
+            options: {
+              spiderman: ['spiderman', 'spider-man'],
+              ironman: ['ironman', 'iron-man'],
+              thor: ['thor'],
+            },
+          },
+          email: {
+            locale: ['en', 'es'],
+            regex: '/\\b(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3})\\b/gi',
+          },
+        },
+      };
+      const nlp = new Nlp();
+      await nlp.addCorpus(corpus);
+      expect(nlp.ner.rules.en).toBeDefined();
+      expect(nlp.ner.rules.es).toBeDefined();
+      expect(nlp.ner.rules.en.hero).toBeDefined();
+      expect(nlp.ner.rules.en.email).toBeDefined();
+      expect(nlp.ner.rules.es.hero).toBeDefined();
+      expect(nlp.ner.rules.es.email).toBeDefined();
+    });
+  });
 });
