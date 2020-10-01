@@ -77,17 +77,23 @@ class Ner extends Clonable {
   }
 
   addRule(locale = '*', name, type, rule) {
-    if (!this.rules[locale]) {
-      this.rules[locale] = {};
+    if (Array.isArray(locale)) {
+      for (let i = 0; i < locale.length; i += 1) {
+        this.addRule(locale[i], name, type, rule);
+      }
+    } else {
+      if (!this.rules[locale]) {
+        this.rules[locale] = {};
+      }
+      if (!this.rules[locale][name]) {
+        this.rules[locale][name] = {
+          name,
+          type,
+          rules: [],
+        };
+      }
+      this.rules[locale][name].rules.push(rule);
     }
-    if (!this.rules[locale][name]) {
-      this.rules[locale][name] = {
-        name,
-        type,
-        rules: [],
-      };
-    }
-    this.rules[locale][name].rules.push(rule);
   }
 
   asString(item) {

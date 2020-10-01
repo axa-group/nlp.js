@@ -325,6 +325,64 @@ class Nlp extends Clonable {
     }
   }
 
+  addEntities(entities, locale) {
+    const keys = Object.keys(entities);
+    for (let i = 0; i < keys.length; i += 1) {
+      const entityName = keys[i];
+      let entity = entities[entityName];
+      if (typeof entity === 'string') {
+        entity = { regex: entity };
+      }
+      if (!entity.type) {
+        entity.type = entity.regex ? 'regex' : 'text';
+      }
+      let finalLocale = entity.locale;
+      if (!finalLocale) {
+        finalLocale = locale || 'en';
+      }
+      if (typeof finalLocale === 'string') {
+        finalLocale = finalLocale.slice(0, 2);
+      }
+      if (entity.type === 'text') {
+        const options = entity.options || {};
+        const optionNames = Object.keys(options);
+        for (let j = 0; j < optionNames.length; j += 1) {
+          this.addNerRuleOptionTexts(
+            finalLocale,
+            entityName,
+            optionNames[j],
+            options[optionNames[j]]
+          );
+        }
+      } else if (entity.type === 'regex') {
+        this.addNerRegexRule(finalLocale, entityName, entity.regex);
+      }
+    }
+  }
+
+  addData(data, locale, domain) {
+    for (let i = 0; i < data.length; i += 1) {
+      const current = data[i];
+      const { intent, utterances, answers } = current;
+      for (let j = 0; j < utterances.length; j += 1) {
+        if (domain) {
+          this.assignDomain(locale, intent, domain.name);
+        }
+        this.addDocument(locale, utterances[j], intent);
+      }
+      if (answers) {
+        for (let j = 0; j < answers.length; j += 1) {
+          const answer = answers[j];
+          if (typeof answer === 'string') {
+            this.addAnswer(locale, intent, answer);
+          } else {
+            this.addAnswer(locale, intent, answer.answer, answer.opts);
+          }
+        }
+      }
+    }
+  }
+
   async addCorpus(fileName) {
     if (fileName.importer) {
       await this.addImported(fileName);
@@ -339,68 +397,27 @@ class Nlp extends Clonable {
         corpus = typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
       }
       if (corpus.domains) {
+        if (corpus.entities) {
+          this.addEntities(corpus.entities);
+        }
         for (let i = 0; i < corpus.domains.length; i += 1) {
           const domain = corpus.domains[i];
-          const { data } = domain;
-          const { locale } = domain;
+          const { data, entities } = domain;
+          const locale = domain.locale.slice(0, 2);
           this.addLanguage(locale);
-          for (let j = 0; j < data.length; j += 1) {
-            const intent = data[j];
-            const { utterances, answers } = intent;
-            for (let k = 0; k < utterances.length; k += 1) {
-              this.addDocument(locale, utterances[k], intent.name);
-              this.assignDomain(locale, intent.name, domain.name);
-            }
-            if (answers) {
-              for (let k = 0; k < answers.length; k += 1) {
-                this.addAnswer(locale, intent.name, answers[k]);
-              }
-            }
+          if (entities) {
+            this.addEntities(entities, locale);
           }
+          this.addData(data, locale, domain);
         }
       } else {
         const locale = corpus.locale.slice(0, 2);
         this.addLanguage(locale);
         const { data, entities } = corpus;
         if (entities) {
-          const keys = Object.keys(entities);
-          for (let i = 0; i < keys.length; i += 1) {
-            const entityName = keys[i];
-            const entity = entities[entityName];
-            if (!entity.type) {
-              entity.type = 'text';
-            }
-            if (entity.type === 'text') {
-              const options = entity.options || {};
-              const optionNames = Object.keys(options);
-              for (let j = 0; j < optionNames.length; j += 1) {
-                this.addNerRuleOptionTexts(
-                  locale,
-                  entityName,
-                  optionNames[j],
-                  options[optionNames[j]]
-                );
-              }
-            }
-          }
+          this.addEntities(entities, locale);
         }
-        for (let i = 0; i < data.length; i += 1) {
-          const current = data[i];
-          const { intent, utterances, answers } = current;
-          for (let j = 0; j < utterances.length; j += 1) {
-            this.addDocument(locale, utterances[j], intent);
-          }
-          if (answers) {
-            for (let j = 0; j < answers.length; j += 1) {
-              const answer = answers[j];
-              if (typeof answer === 'string') {
-                this.addAnswer(locale, intent, answers[j]);
-              } else {
-                this.addAnswer(locale, intent, answer.answer, answer.opts);
-              }
-            }
-          }
-        }
+        this.addData(data, locale);
       }
     }
   }
