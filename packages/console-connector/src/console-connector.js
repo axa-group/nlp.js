@@ -41,6 +41,7 @@ class ConsoleConnector extends Clonable {
       this.settings,
       this.container.getConfiguration(this.settings.tag)
     );
+    this.context = {};
     this.initialize();
   }
 
@@ -89,11 +90,15 @@ class ConsoleConnector extends Clonable {
       } else {
         const nlp = this.container.get('nlp');
         if (nlp) {
-          const result = await nlp.process({
-            message: line,
-            channel: 'console',
-            app: this.container.name,
-          });
+          const result = await nlp.process(
+            {
+              message: line,
+              channel: 'console',
+              app: this.container.name,
+            },
+            undefined,
+            context
+          );
           this.say(result);
         } else {
           console.error(`There is no pipeline for ${name}`);
