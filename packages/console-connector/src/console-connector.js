@@ -97,7 +97,7 @@ class ConsoleConnector extends Clonable {
               app: this.container.name,
             },
             undefined,
-            context
+            this.context
           );
           this.say(result);
         } else {
