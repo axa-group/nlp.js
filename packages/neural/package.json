@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/neural",
-  "version": "4.11.0",
+  "version": "4.12.0",
   "description": "Neural Network",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -23,8 +23,6 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "dependencies": {
   },
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }
