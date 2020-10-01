@@ -23,6 +23,23 @@
 
 const { Nlp } = require('../src');
 
+const defaultCorpus = {
+  name: 'corpus',
+  locale: 'en-US',
+  data: [
+    {
+      intent: 'greet',
+      utterances: ['hello', 'hi', 'good morning', 'good night'],
+      answers: ['Hello user!'],
+    },
+    {
+      intent: 'bye',
+      utterances: ['see you later', 'bye', 'goodbye'],
+      answers: ['Bye user!'],
+    },
+  ],
+};
+
 describe('NLP', () => {
   describe('Constructor', () => {
     test('Constructor', () => {
@@ -505,24 +522,8 @@ describe('NLP', () => {
 
   describe('addCorpus', () => {
     test('A corpus can be added as a json', async () => {
-      const corpus = {
-        name: 'corpus',
-        locale: 'en-US',
-        data: [
-          {
-            intent: 'greet',
-            utterances: ['hello', 'hi', 'good morning', 'good night'],
-            answers: ['Hello user!'],
-          },
-          {
-            intent: 'bye',
-            utterances: ['see you later', 'bye', 'goodbye'],
-            answers: ['Bye user!'],
-          },
-        ],
-      };
       const nlp = new Nlp();
-      await nlp.addCorpus(corpus);
+      await nlp.addCorpus(defaultCorpus);
       expect(nlp.nluManager.domainManagers.en.sentences).toHaveLength(7);
     });
     test('A corpus with domains can be added as a json', async () => {
@@ -619,6 +620,24 @@ describe('NLP', () => {
       expect(nlp.ner.rules.en.email).toBeDefined();
       expect(nlp.ner.rules.es.hero).toBeDefined();
       expect(nlp.ner.rules.es.email).toBeDefined();
+    });
+  });
+
+  describe('addCorpora', () => {
+    test('A corpora can be added as a json', async () => {
+      const nlp = new Nlp();
+      await nlp.addCorpora([defaultCorpus]);
+      expect(nlp.nluManager.domainManagers.en.sentences).toHaveLength(7);
+    });
+    test('A corpora can be added as a json but not an array', async () => {
+      const nlp = new Nlp();
+      await nlp.addCorpora(defaultCorpus);
+      expect(nlp.nluManager.domainManagers.en.sentences).toHaveLength(7);
+    });
+    test('If corpora is not defined, it should not crash', async () => {
+      const nlp = new Nlp();
+      await nlp.addCorpora();
+      expect(nlp.nluManager).toBeDefined();
     });
   });
 });
