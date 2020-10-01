@@ -44,7 +44,7 @@ describe('Lexer', () => {
       const script = `
       n = 0
       while n < 10:
-        n += 1
+        n += 1.2
       print("hola")
       `;
       const lexer = new Lexer();
@@ -77,7 +77,7 @@ describe('Lexer', () => {
       expect(tokens[10].type).toEqual(Lexer.TokenType.Identifier);
       expect(tokens[11].value).toEqual('+=');
       expect(tokens[11].type).toEqual(Lexer.TokenType.Assignment);
-      expect(tokens[12].value).toEqual('1');
+      expect(tokens[12].value).toEqual('1.2');
       expect(tokens[12].type).toEqual(Lexer.TokenType.Number);
       expect(tokens[13].value).toEqual('\n');
       expect(tokens[13].type).toEqual(Lexer.TokenType.EndOfLine);
