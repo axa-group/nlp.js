@@ -33,6 +33,7 @@ const {
 const { ActionManager, NlgManager } = require('@nlpjs/nlg');
 const { SentimentAnalyzer } = require('@nlpjs/sentiment');
 const { SlotManager } = require('@nlpjs/slot');
+const ContextManager = require('./context-manager');
 
 class Nlp extends Clonable {
   constructor(settings = {}, container) {
@@ -64,6 +65,10 @@ class Nlp extends Clonable {
       this.settings.sentiment
     );
     this.slotManager = this.container.get('SlotManager', this.settings.slot);
+    this.contextManager = this.container.get(
+      'context-manager',
+      this.settings.context
+    );
     this.forceNER = this.settings.forceNER;
     if (this.forceNER === undefined) {
       this.forceNER = false;
@@ -92,6 +97,7 @@ class Nlp extends Clonable {
     this.use(ActionManager);
     this.use(NluNeural);
     this.use(SentimentAnalyzer);
+    this.use(ContextManager);
     this.container.register('SlotManager', SlotManager, false);
   }
 
@@ -502,8 +508,9 @@ class Nlp extends Clonable {
     return result;
   }
 
-  async process(locale, utterance, context = {}, settings) {
+  async process(locale, utterance, srcContext, settings) {
     let sourceInput;
+    let context = srcContext;
     if (typeof locale === 'object') {
       if (typeof utterance === 'object' && utterance.value) {
         locale = undefined;
@@ -515,9 +522,15 @@ class Nlp extends Clonable {
     if (sourceInput) {
       locale = sourceInput.locale;
       utterance = sourceInput.utterance || sourceInput.message;
+      if (!context) {
+        context = await this.contextManager.getContext(sourceInput);
+      }
       context.channel = sourceInput.channel;
       context.app = sourceInput.app;
       context.from = sourceInput.from || null;
+    }
+    if (!context) {
+      context = {};
     }
     if (!utterance) {
       utterance = locale;
@@ -603,6 +616,7 @@ class Nlp extends Clonable {
       }
       context.slotFill = output.slotFill;
     }
+    await this.contextManager.setContext(sourceInput, context);
     delete output.context;
     delete output.settings;
     const result = sourceInput

@@ -57,6 +57,7 @@ class ContextManager extends Clonable {
     }
     if (
       !result &&
+      input &&
       input.activity &&
       input.activity.address &&
       input.activity.address.conversation
