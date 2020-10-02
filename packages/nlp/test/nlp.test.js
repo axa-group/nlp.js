@@ -42,9 +42,19 @@ const defaultCorpus = {
 
 describe('NLP', () => {
   describe('Constructor', () => {
-    test('Constructor', () => {
+    test('It should create a new instance', () => {
       const nlp = new Nlp();
       expect(nlp).toBeDefined();
+    });
+    test('It should create default object structure', () => {
+      const nlp = new Nlp();
+      expect(nlp.contextManager).toBeDefined();
+      expect(nlp.slotManager).toBeDefined();
+      expect(nlp.sentiment).toBeDefined();
+      expect(nlp.actionManager).toBeDefined();
+      expect(nlp.nlgManager).toBeDefined();
+      expect(nlp.ner).toBeDefined();
+      expect(nlp.nluManager).toBeDefined();
     });
   });
 
