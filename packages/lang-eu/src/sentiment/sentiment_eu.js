@@ -29,4 +29,5 @@ module.exports = {
   pattern: undefined,
   senticon,
   negations,
+  stemmed: true,
 };

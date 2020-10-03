@@ -27,4 +27,5 @@ const negations = require('./negations_en.json');
 module.exports = {
   senticon,
   negations,
+  stemmed: true,
 };
