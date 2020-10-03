@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) AXA Group Operations UK Ltd.
+Copyright (c) AXA Group Operations Spain S.A.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
