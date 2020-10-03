@@ -120,6 +120,7 @@ Languages not included in this list can be still supported, but without stemming
 
 | Language        | AFINN | Senticon | Pattern |
 | :-------------- | :---: | :------: | :-----: |
+| Arabic (ar)     |   X   |          |         |
 | Basque (eu)     |       |    X     |         |
 | Bengali (bn)    |   X   |          |         |
 | Catalan (ca)    |       |    X     |         |
