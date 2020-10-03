@@ -17,15 +17,10 @@ const importObject = {
   },
 };
 
-let webAssemblyObj;
-const source = fs.readFileSync(path.resolve(__dirname, './leven.wasm'));
-const typedArray = new Uint8Array(source);
-
 /* eslint-disable */
-WebAssembly.instantiate(typedArray, importObject).then((obj) => {
-  webAssemblyObj = obj;
-  console.log(`webassembly obj initialized ${webAssemblyObj}`);
-});
+const source = fs.readFileSync(path.resolve(__dirname, './leven.wasm'));
+const mod = new WebAssembly.Module(new Uint8Array(source));
+const webAssemblyObj = new WebAssembly.Instance(mod, importObject);
 /* eslint-enable */
 
 function leven(left, right) {
@@ -41,7 +36,7 @@ function leven(left, right) {
     idx += 1;
   }
 
-  return webAssemblyObj.instance.exports.levenshtein(left.length, right.length);
+  return webAssemblyObj.exports.leven(left.length, right.length);
 }
 
 module.exports = leven;
