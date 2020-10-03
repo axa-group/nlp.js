@@ -72,10 +72,12 @@ class SpellCheck {
             if (similar < distanceBest) {
               best = feature;
               distanceBest = similar;
-            } else if (similar === distanceBest) {
+            } else if (similar === distanceBest && best) {
+              const la = Math.abs(best.length - token.length);
+              const lb = Math.abs(feature.length - token.length);
               if (
-                Math.abs(best.length - token.length) >
-                Math.abs(feature.length - token.length)
+                la > lb ||
+                (la === lb && this.features[feature] > this.features[best])
               ) {
                 best = feature;
                 distanceBest = similar;
@@ -88,7 +90,7 @@ class SpellCheck {
     return best || token;
   }
 
-  check(tokens, distance) {
+  check(tokens, distance = 1) {
     if (!Array.isArray(tokens)) {
       const keys = Object.keys(tokens);
       const processed = this.check(keys, distance);
