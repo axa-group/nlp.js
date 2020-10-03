@@ -51,7 +51,7 @@ class SentimentAnalyzer extends Clonable {
     this.container.registerConfiguration('sentiment-analyzer', {}, false);
   }
 
-  prepare(locale, text, settings) {
+  prepare(locale, text, settings, stemmed) {
     const pipeline = this.getPipeline(`${this.settings.tag}-prepare`);
     if (pipeline) {
       const input = {
@@ -61,11 +61,19 @@ class SentimentAnalyzer extends Clonable {
       };
       return this.runPipeline(input, pipeline);
     }
-    const stemmer =
-      this.container.get(`stemmer-${locale}`) ||
-      this.container.get(`stemmer-en`);
-    if (stemmer) {
-      return stemmer.tokenizeAndStem(text);
+    if (stemmed) {
+      const stemmer =
+        this.container.get(`stemmer-${locale}`) ||
+        this.container.get(`stemmer-en`);
+      if (stemmer) {
+        return stemmer.tokenizeAndStem(text);
+      }
+    }
+    const tokenizer =
+      this.container.get(`tokenizer-${locale}`) ||
+      this.container.get(`tokenizer-en`);
+    if (tokenizer) {
+      return tokenizer.tokenize(text, true);
     }
     const normalized = text
       .normalize('NFD')
@@ -92,6 +100,7 @@ class SentimentAnalyzer extends Clonable {
         type,
         dictionary: undefined,
         negations: [],
+        stemmed: false,
       };
       return input;
     }
@@ -99,6 +108,7 @@ class SentimentAnalyzer extends Clonable {
       type,
       dictionary: dictionaries[type],
       negations: dictionaries.negations.words,
+      stemmed: dictionaries.stemmed === undefined ? true : dictionaries.stemmed,
     };
     return input;
   }
@@ -109,7 +119,8 @@ class SentimentAnalyzer extends Clonable {
       input.tokens = await this.prepare(
         input.locale,
         input.utterance || input.text,
-        input.settings
+        input.settings,
+        input.sentimentDictionary.stemmed
       );
     }
     return input;
