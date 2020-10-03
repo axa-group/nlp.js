@@ -2,7 +2,6 @@
     (memory (import "js" "mem") 1)
     (import "console" "log" (func $log (param i32) (param i32)))
 
-
     (func $levenshtein (param $len0 i32) (param $len1 i32) (result i32)
         (local $prevRow i32)
         (local $curCol i32)
