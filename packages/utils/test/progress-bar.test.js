@@ -78,14 +78,14 @@ describe('Progress Bar', () => {
       const progress = new ProgressBar(undefined, { stream, total: 10 });
       progress.tick(1);
       expect(stream.lines).toHaveLength(2);
-      expect(stream.lines[0]).toEqual('▓░░░░░░░░░ 0.0s');
+      expect(stream.lines[0].slice(0, -2)).toEqual('▓░░░░░░░░░ 0.');
     });
     test('If tick is 0 should not crash', () => {
       const stream = new StreamMock();
       const progress = new ProgressBar(undefined, { stream, total: 10 });
       progress.tick(0);
       expect(stream.lines).toHaveLength(2);
-      expect(stream.lines[0]).toEqual('░░░░░░░░░░ 0.0s');
+      expect(stream.lines[0].slice(0, -2)).toEqual('░░░░░░░░░░ 0.');
     });
     test('It should add progress to already existing', () => {
       const stream = new StreamMock();
@@ -93,7 +93,7 @@ describe('Progress Bar', () => {
       progress.tick(1);
       progress.tick(2);
       expect(stream.lines).toHaveLength(2);
-      expect(stream.lines[0]).toEqual('▓▓▓░░░░░░░ 0.0s');
+      expect(stream.lines[0].slice(0, -2)).toEqual('▓▓▓░░░░░░░ 0.');
     });
     test('If tick is 0, then do not add progress', () => {
       const stream = new StreamMock();
@@ -101,7 +101,7 @@ describe('Progress Bar', () => {
       progress.tick(3);
       progress.tick(0);
       expect(stream.lines).toHaveLength(2);
-      expect(stream.lines[0]).toEqual('▓▓▓░░░░░░░ 0.0s');
+      expect(stream.lines[0].slice(0, -2)).toEqual('▓▓▓░░░░░░░ 0.');
     });
     test('If current progress is greater or equal than total, then is complete', () => {
       const stream = new StreamMock();
@@ -110,7 +110,7 @@ describe('Progress Bar', () => {
       expect(progress.complete).toBeFalsy();
       progress.tick(9);
       expect(stream.lines).toHaveLength(2);
-      expect(stream.lines[0]).toEqual('▓▓▓▓▓▓▓▓▓▓ 0.0s');
+      expect(stream.lines[0].slice(0, -2)).toEqual('▓▓▓▓▓▓▓▓▓▓ 0.');
       expect(progress.complete).toBeTruthy();
     });
   });
