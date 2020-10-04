@@ -118,25 +118,26 @@ Languages not included in this list can be still supported, but without stemming
 
 ## Sentiment Analysis
 
-| Language        | AFINN | Senticon | Pattern |
-| :-------------- | :---: | :------: | :-----: |
-| Arabic (ar)     |   X   |          |         |
-| Basque (eu)     |       |    X     |         |
-| Bengali (bn)    |   X   |          |         |
-| Catalan (ca)    |       |    X     |         |
-| Czech (cs)      |   X   |          |         |
-| Danish (da)     |   X   |          |         |
-| Dutch (nl)      |       |          |    X    |
-| English (en)    |   X   |    X     |    X    |
-| Finnish (fi)    |   X   |          |         |
-| French (fr)     |       |          |    X    |
-| Galician (gl)   |       |    X     |         |
-| German (de)     |       |    X     |         |
-| Greek (el)      |   X   |          |         |
-| Italian (it)    |       |          |    X    |
-| Portuguese (pt) |   X   |          |         |
-| Russian (ru)    |   X   |          |         |
-| Spanish (es)    |   X   |    X     |         |
+| Language             | AFINN | Senticon | Pattern |
+| :------------------- | :---: | :------: | :-----: |
+| Arabic (ar)          |   X   |          |         |
+| Basque (eu)          |       |    X     |         |
+| Bengali (bn)         |   X   |          |         |
+| Catalan (ca)         |       |    X     |         |
+| Czech (cs)           |   X   |          |         |
+| Danish (da)          |   X   |          |         |
+| Dutch (nl)           |       |          |    X    |
+| English (en)         |   X   |    X     |    X    |
+| Finnish (fi)         |   X   |          |         |
+| French (fr)          |       |          |    X    |
+| Galician (gl)        |       |    X     |         |
+| German (de)          |       |    X     |         |
+| Greek (el)           |   X   |          |         |
+| Italian (it)         |       |          |    X    |
+| Persian (Farsi) (fa) |   X   |          |         |
+| Portuguese (pt)      |   X   |          |         |
+| Russian (ru)         |   X   |          |         |
+| Spanish (es)         |   X   |    X     |         |
 
 ## Comparision with other NLP products
 
