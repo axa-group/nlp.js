@@ -124,6 +124,7 @@ Languages not included in this list can be still supported, but without stemming
 | Basque (eu)     |       |    X     |         |
 | Bengali (bn)    |   X   |          |         |
 | Catalan (ca)    |       |    X     |         |
+| Czech (cs)      |   X   |          |         |
 | Danish (da)     |   X   |          |         |
 | Dutch (nl)      |       |          |    X    |
 | English (en)    |   X   |    X     |    X    |
