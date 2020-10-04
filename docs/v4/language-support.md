@@ -132,6 +132,7 @@ Languages not included in this list can be still supported, but without stemming
 | French (fr)     |       |          |    X    |
 | Galician (gl)   |       |    X     |         |
 | German (de)     |       |    X     |         |
+| Greek (el)      |   X   |          |         |
 | Italian (it)    |       |          |    X    |
 | Portuguese (pt) |   X   |          |         |
 | Russian (ru)    |   X   |          |         |
