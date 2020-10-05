@@ -20,7 +20,6 @@
 - Search the best substring of a string with less _Levenshtein_ distance to a given pattern.
 - Get stemmers and tokenizers for several languages.
 - Sentiment Analysis for phrases (with negation support).
-- Named Entity Recognition and management, multilanguage, and accepting similar strings, so the introduced text does not need to be exact.
 - Named Entity Recognition and management, multi-language support, and acceptance of similar strings, so the introduced text does not need to be exact.
 - Natural Language Processing Classifier, to classify an utterance into intents.
 - NLP Manager: a tool able to manage several languages, the Named Entities for each language, the utterances, and intents for the training of the classifier, and for a given utterance return the entity extraction, the intent classification and the sentiment analysis. Also, it is able to maintain a Natural Language Generation Manager for the answers.
@@ -38,9 +37,9 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
 - It provides a plugin system, so you can provide your own plugins or replace the existing ones.
 - It provides a container system for the plugins, settings for the plugins and also pipelines
 - A pipeline is code defining how the plugins interact. Usually it is linear: there is an input into the plugin, and this generates the input for the next one. As an example, the preparation of a utterance (the process to convert the utterance to a hashmap of stemmed features) is now a pipeline like this: `normalize -> tokenize -> removeStopwords -> stem -> arrToObj`
-- There is a simple compiler for the pipelines, but can be also build using a modified version of javascript and python (compilers are also included as plugins, so other languages can be added as a plugin).
-- Now NLP.js also includes connectors, understanding connector as something that has at least 2 methods: hear and say. Example of connectors included: Console Connector, Microsoft Bot Framework Connector and a Direct Line Offline Connector (this one allows you to build a web chatbot using the Microsoft Webchat, but without having to deploy anything in Azure).
-- Some plugins can be registered by language so for different languages different plugins will be used. Also some plugins, like NLU, can be registered not only by language but also by domain (a functional set of intents that can be trained separately)
+- There is a simple compiler for the pipelines, but they can also be built using a modified version of javascript and python (compilers are also included as plugins, so other languages can be added as a plugin).
+- NLP.js now includes connectors, a connector is understood to be something that has at least 2 methods: `hear` and `say`. Examples of connectors included: Console Connector, Microsoft Bot Framework Connector and a Direct Line Offline Connector (this one allows you to build a web chatbot using the Microsoft Webchat, but without having to deploy anything in Azure).
+- Some plugins can be registered by language, so for different languages different plugins will be used. Also some plugins, like NLU, can be registered not only by language but also by domain (a functional set of intents that can be trained separately)
 - As an example of per-language/domain plugins, a Microsoft LUIS NLU plugin is provided. You can configure your chatbot to use the NLU from NLP.js for some languages/domains, and LUIS for other languages/domains.
 - Having plugins and pipelines makes it possible to write chatbots by only modifying the configuration and the pipelines file, without modifying the code.
 
@@ -158,7 +157,7 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
 
 ## Installation
 
-If you're looking to use NLP.js in your node application, you can install via NPM like so:
+If you're looking to use NLP.js in your Node application, you can install via NPM like so:
 
 ```bash
     npm install node-nlp
@@ -166,24 +165,24 @@ If you're looking to use NLP.js in your node application, you can install via NP
 
 ## React Native
 
-There is a version of NLP.js that works in React Native, so you can build chatbots that can be trained and executed on the mobile even without internet. You can install it via NPM:
+There is a version of NLP.js that works in React Native, so you can build chatbots that can be trained and executed on the mobile even without the internet. You can install it via NPM:
 
 ```bash
     npm install node-nlp-rn
 ```
 
-Some Limitations:
+Some limitations:
 
 - No Chinese
-- Japanese stemmer is not the complete one
-- No excel import
-- No loading from a file neither save to a file, but it still has import form json and export to json.
+- The Japanese stemmer is not the complete one
+- No Excel import
+- No loading from a file, or saving to a file, but it can still import from JSON and export to JSON.
 
 ## Example of use
 
-You can see a great example of use at the folder [`/examples/02-qna-classic`](https://github.com/axa-group/nlp.js/tree/master/examples/02-qna-classic). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of trained again.
+You can see a great example of use in the folder [`/examples/02-qna-classic`](https://github.com/axa-group/nlp.js/tree/master/examples/02-qna-classic). This example is able to train the bot and save the model to a file, so when the bot is started again, the model is loaded instead of being trained again.
 
-You can start to build your NLP from scratch with few lines:
+You can start to build your NLP from scratch with a few lines:
 
 ```javascript
 const { NlpManager } = require('node-nlp');
@@ -214,7 +213,7 @@ manager.addAnswer('en', 'greetings.hello', 'Greetings!');
 })();
 ```
 
-This will show this result in console:
+This produces the following result in a console:
 
 ```bash
 { utterance: 'I should go now',
@@ -253,8 +252,8 @@ This will show this result in console:
 
 ## False Positives
 
-By default, the neural network tries to avoid false positives. To achieve that, one of the internal processes is that words never seen by the network, are represented as a feature that gives some weight into the None intent. So if you try the previous example with "I have to go" it will return the None intent because 2 of the 4 words have been never seen while training.
-If you don't want to avoid those false positives, and you feel more comfortable with classifications into the intents that you declare, then you can disable this behavior with the useNoneFeature setting to false:
+By default, the neural network tries to avoid false positives. To achieve that, one of the internal processes is that words never seen by the network are represented as a feature that gives some weight to the `None` intent. So, if you try the previous example with "_I have to go_" it will return the `None` intent because 2 of the 4 words have never been seen while training.
+If you don't want to avoid those false positives, and you feel more comfortable with classifications into the intents that you declare, then you can disable this behavior by setting the `useNoneFeature` to false:
 
 ```javascript
 const manager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
@@ -263,7 +262,7 @@ const manager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false
 ## Log Training Progress
 
 You can also add a log progress, so you can trace what is happening during the training.
-You can log the progress into console:
+You can log the progress to the console:
 
 ```javascript
 const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: true } });
@@ -278,7 +277,7 @@ const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
 
 ## Contributing
 
-You can read the guide of how to contribute at [Contributing](CONTRIBUTING.md).
+You can read the guide for how to contribute at [Contributing](CONTRIBUTING.md).
 
 ## Contributors
 
