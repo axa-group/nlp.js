@@ -76,13 +76,15 @@ class ContextManager extends Clonable {
           ? this.container.get('database')
           : undefined;
         if (database) {
-          result = (await database.findById(this.settings.tableName, id)) || {
+          result = (await database.findOne(this.settings.tableName, {
+            conversationId: id,
+          })) || {
             id,
           };
         }
       }
       if (!result) {
-        result = this.contextDictionary[id] || { id };
+        result = this.contextDictionary[id] || { conversationId: id };
       }
     } else {
       result = {};
@@ -95,7 +97,7 @@ class ContextManager extends Clonable {
     const id = await this.getInputContextId(input);
     if (id) {
       const keys = Object.keys(context);
-      const clone = {};
+      const clone = { conversationId: id };
       for (let i = 0; i < keys.length; i += 1) {
         const key = keys[i];
         if (!key.startsWith('_')) {

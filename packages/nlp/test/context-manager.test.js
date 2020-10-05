@@ -72,7 +72,7 @@ describe('ContextManager', () => {
         activity: { address: { conversation: { id: 7 } } },
       });
       expect(actual).toBeDefined();
-      expect(actual).toEqual({ id: 7, [dataName]: {} });
+      expect(actual).toEqual({ conversationId: 7, [dataName]: {} });
     });
   });
 
@@ -91,7 +91,10 @@ describe('ContextManager', () => {
         context
       );
       expect(contextManager.contextDictionary[7]).toBeDefined();
-      expect(contextManager.contextDictionary[7]).toEqual(context);
+      expect(contextManager.contextDictionary[7]).toEqual({
+        ...context,
+        conversationId: 7,
+      });
     });
   });
 });
