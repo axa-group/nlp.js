@@ -394,13 +394,24 @@ class Nlp extends Clonable {
       await this.addImported(fileName);
     } else {
       let corpus = fileName;
+      const fs = this.container.get('fs');
       if (typeof fileName === 'string') {
-        const fs = this.container.get('fs');
         const fileData = await fs.readFile(fileName);
         if (!fileData) {
           throw new Error(`Corpus not found "${fileName}"`);
         }
         corpus = typeof fileData === 'string' ? JSON.parse(fileData) : fileData;
+      }
+      if (corpus.contextData) {
+        let { contextData } = corpus;
+        if (typeof corpus.contextData === 'string') {
+          contextData = JSON.parse(await fs.readFile(corpus.contextData));
+        }
+        const contextManager = this.container.get('context-manager');
+        const keys = Object.keys(contextData);
+        for (let i = 0; i < keys.length; i += 1) {
+          contextManager.defaultData[keys[i]] = contextData[keys[i]];
+        }
       }
       if (corpus.domains) {
         if (corpus.entities) {
