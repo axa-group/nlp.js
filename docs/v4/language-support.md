@@ -133,6 +133,7 @@ Languages not included in this list can be still supported, but without stemming
 | Galician (gl)        |       |    X     |         |
 | German (de)          |       |    X     |         |
 | Greek (el)           |   X   |          |         |
+| Irish (ga)           |   X   |          |         |
 | Italian (it)         |       |          |    X    |
 | Persian (Farsi) (fa) |   X   |          |         |
 | Portuguese (pt)      |   X   |          |         |
