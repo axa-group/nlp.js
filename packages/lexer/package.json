@@ -23,5 +23,6 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  }
+  },
+  "gitHead": "926fe345330eca1a13eaaf04d0bba3631a5bba8b"
 }
