@@ -24,6 +24,7 @@
 const http = require('http');
 const https = require('https');
 const HttpsProxyAgent = require('https-proxy-agent');
+const HttpProxyAgent = require('http-proxy-agent');
 const querystring = require('querystring');
 const url = require('url');
 
@@ -75,7 +76,11 @@ function request(options) {
     process.env.HTTP_PROXY;
   if (proxyServer) {
     delete options.proxy;
-    options.agent = new HttpsProxyAgent(proxyServer);
+    if (client === https) {
+      options.agent = new HttpsProxyAgent(proxyServer);
+    } else {
+      options.agent = new HttpProxyAgent(proxyServer);
+    }
     if (!options.headers) {
       options.headers = {};
     }
