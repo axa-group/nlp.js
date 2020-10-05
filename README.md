@@ -56,7 +56,7 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
   - [Creating your first pipeline](docs/v4/quickstart.md#creating-your-first-pipeline)
   - [Console Connector](docs/v4/quickstart.md#adding-your-first-connector)
   - [Extending your bot with the pipeline](docs/v4/quickstart.md#extending-your-bot-with-the-pipeline)
-  - [Adding Multilanguage](docs/v4/quickstart.md#adding-multilanguage)
+  - [Adding multiple languages](docs/v4/quickstart.md#adding-multilanguage)
   - [Adding API and WebChat](docs/v4/quickstart.md#adding-api-and-webchat)
   - [Using Microsoft Bot Framework](docs/v4/quickstart.md#using-microsoft-bot-framework)
   - [Recognizing the bot name and the channel](docs/v4/quickstart.md#recognizing-the-bot-name-and-the-channel)
@@ -66,8 +66,8 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
 - [Web and React Native](docs/v4/webandreact.md)
   - [Preparing to generate a bundle](docs/v4/webandreact.md#preparing-to-generate-a-bundle)
   - [Your first web NLP](docs/v4/webandreact.md#your-first-web-nlp)
-  - [Creating a distributable version](docs/v4/quickstart.md#creating-a-distributable-version)
-  - [Load corpus from URL](docs/v4/quickstart.md#load-corpus-from-url)
+  - [Creating a distributable version](docs/v4/webandreact.md#creating-a-distributable-version)
+  - [Load corpus from URL](docs/v4/webandreact.md#load-corpus-from-url)
 - [QnA](docs/v4/qna.md)
   - [Install the library and the qna plugin](docs/v4/qna.md#install-the-library-and-the-qna-plugin)
   - [Train and test a QnA file](docs/v4/qna.md#train-and-test-a-qna-file)
@@ -85,7 +85,7 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
   - [Default logger in @nlpjs/core](docs/v4/logger.md#default-logger-in-nlpjscore)
   - [Default logger in @nlpjs/basic](docs/v4/logger.md#default-logger-in-nlpjsbasic)
   - [Adding your own logger to the container](docs/v4/logger.md#adding-your-own-logger-to-the-container)
-- [@nlpjs/emoji](docs/v4/emoji)
+- [@nlpjs/emoji](docs/v4/emoji.md)
   - [Introduction](docs/v4/emoji.md#introduction)
   - [Installing](docs/v4/emoji.md#installing)
   - [Example of use](docs/v4/emoji.md#example-of-use)
@@ -152,7 +152,7 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
 - [Contributors](#contributors)
 - [Code of Conduct](#code-of-conduct)
 - [Who is behind it](#who-is-behind-it)
-- [License](#license.md)
+- [License](#license)
   <!--te-->
 
 ## Installation
