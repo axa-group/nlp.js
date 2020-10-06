@@ -51,6 +51,17 @@ class MongodbAdapter extends Clonable {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+    this.registerDefault();
+  }
+
+  registerDefault() {
+    const database = this.container
+      ? this.container.get('database')
+      : undefined;
+    if (database) {
+      database.registerAdapter('mongodb', this);
+      database.defaultAdapter = 'mongodb';
+    }
   }
 
   connect() {
