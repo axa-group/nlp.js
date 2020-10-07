@@ -88,7 +88,7 @@ Languages not included in this list can be still supported, but without stemming
 | ro     | Romanian              |        X       |       X      |                    |         X         |     X     |
 | ru     | Russian               |        X       |       X      |                    |         X         |     X     |
 | sco    | Scots                 |                |       X      |                    |                   |           |
-| sr     | Serbian               |        X       |       X      |                    |                   |           |
+| sr     | Serbian               |        X       |       X      |                    |                   |     X     |
 | hbs    | Serbo-Croatian        |                |       X      |                    |                   |           |
 | scn    | Sicilian              |                |       X      |                    |                   |           |
 | sk     | Slovak                |                |       X      |                    |         X         |           |
@@ -147,6 +147,7 @@ Languages not included in this list can be still supported, but without stemming
 | Portuguese (pt)      |   X   |          |         |
 | Romanian (ro)        |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
+| Serbian (sr)         |   X   |          |         |
 | Slovenian (sl)       |   X   |          |         |
 | Spanish (es)         |   X   |    X     |         |
 
