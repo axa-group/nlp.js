@@ -53,7 +53,7 @@ Languages not included in this list can be still supported, but without stemming
 | hu     | Hungarian             |        X       |       X      |                    |         X         |     X     |
 | is     | Icelandic             |                |       X      |                    |         X         |           |
 | io     | Ido                   |                |       X      |                    |                   |           |
-| id     | Indonesian            |        X       |       X      |                    |         X         |           |
+| id     | Indonesian            |        X       |       X      |                    |         X         |     X     |
 | ga     | Irish                 |        X       |       X      |                    |         X         |     X     |
 | it     | Italian               |        X       |       X      |                    |         X         |     X     |
 | ja     | Japanese              |        X       |       X      |          X         |         X         |           |
@@ -136,6 +136,7 @@ Languages not included in this list can be still supported, but without stemming
 | Greek (el)           |   X   |          |         |
 | Hindi (hi)           |   X   |          |         |
 | Hungarian (hu)       |   X   |          |         |
+| Indonesian (id)      |   X   |          |         |
 | Irish (ga)           |   X   |          |         |
 | Italian (it)         |       |          |    X    |
 | Persian (Farsi) (fa) |   X   |          |         |
