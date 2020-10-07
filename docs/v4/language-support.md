@@ -82,7 +82,7 @@ Languages not included in this list can be still supported, but without stemming
 | oc     | Occitan               |                |       X      |                    |                   |           |
 | fa     | Persian (Farsi)       |        X       |       X      |                    |                   |     X     |
 | pms    | Piedmontese           |                |       X      |                    |                   |           |
-| pl     | Polish                |        X       |       X      |                    |         X         |           |
+| pl     | Polish                |        X       |       X      |                    |         X         |     X     |
 | pt     | Portuguese            |        X       |       X      |          X         |         X         |     X     |
 | pa     | Punjabi               |                |       X      |                    |                   |           |
 | ro     | Romanian              |        X       |       X      |                    |         X         |           |
@@ -143,6 +143,7 @@ Languages not included in this list can be still supported, but without stemming
 | Nepali (ne)          |   X   |          |         |
 | Norwegian (no)       |   X   |          |         |
 | Persian (Farsi) (fa) |   X   |          |         |
+| Polish (pl)          |   X   |          |         |
 | Portuguese (pt)      |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
 | Spanish (es)         |   X   |    X     |         |
