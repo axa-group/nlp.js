@@ -52,6 +52,8 @@
   "LangUk": { "className": "LangUk", "path": "@nlpjs/lang-uk" },
   "LangZh": { "className": "LangZh", "path": "@nlpjs/lang-zh" },
   "logger": { "className": "logger", "path": "@nlpjs/logger" },
+  "Mongodb": { "className": "MongodbAdapter", "path": "@nlpjs/mongodb-adapter" },
+  "MongodbAdapter": { "className": "MongodbAdapter", "path": "@nlpjs/mongodb-adapter" },
   "MsbfConnector": { "className": "MsbfConnector", "path": "@nlpjs/msbf-connector" },
   "Nlp": { "className": "Nlp", "path": "@nlpjs/nlp" },
   "NluLuis": { "className": "NluLuis", "path": "@nlpjs/nlu-luis" },

@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/directline-connector",
-  "version": "4.11.2",
+  "version": "4.13.1",
   "description": "Directline Connector",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
+  "gitHead": "926fe345330eca1a13eaaf04d0bba3631a5bba8b"
 }

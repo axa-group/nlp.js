@@ -21,10 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const afinn = require('./afinn_hu.json');
 const negations = require('./negations_hu.json');
 
 module.exports = {
-  afinn: undefined,
+  afinn,
   pattern: undefined,
   senticon: undefined,
   negations,

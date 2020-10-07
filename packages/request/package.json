@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/request",
-  "version": "4.6.0",
+  "version": "4.13.2",
   "description": "Request",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,6 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "http-proxy-agent": "^4.0.1",
     "https-proxy-agent": "^5.0.0"
   },
   "gitHead": "0940a8c5fee7da099d44174136fa76914933b819"

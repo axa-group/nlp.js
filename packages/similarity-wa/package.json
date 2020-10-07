@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/similarity-wa",
-  "version": "4.0.0-rc.4",
+  "version": "4.13.1",
   "description": "Similarity WebAssembly Implementation",
   "author": {
     "email": "raimon.rafols@axa.com",
@@ -28,6 +28,8 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "gitHead": "9769b29f1973d20a64d6a0f5e369e9c05c5526a8",
-  "dependencies": {}
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "926fe345330eca1a13eaaf04d0bba3631a5bba8b"
 }
