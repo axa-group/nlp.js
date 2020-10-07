@@ -61,7 +61,7 @@ Languages not included in this list can be still supported, but without stemming
 | kn     | Kannada               |                |       X      |                    |         X         |           |
 | kk     | Kazakh                |                |       X      |                    |                   |           |
 | ky     | Kirghiz               |                |       X      |                    |                   |           |
-| ko     | Korean                |        X       |       X      |                    |         X         |           |
+| ko     | Korean                |        X       |       X      |                    |         X         |     X     |
 | la     | Latin                 |                |       X      |                    |                   |           |
 | lv     | Latvian               |                |       X      |                    |                   |           |
 | lt     | Lithuanian            |        X       |       X      |                    |                   |     X     |
@@ -139,6 +139,7 @@ Languages not included in this list can be still supported, but without stemming
 | Indonesian (id)      |   X   |          |         |
 | Irish (ga)           |   X   |          |         |
 | Italian (it)         |       |          |    X    |
+| Korean (ko)          |   X   |          |         |
 | Lithuanian (lt)      |   X   |          |         |
 | Nepali (ne)          |   X   |          |         |
 | Norwegian (no)       |   X   |          |         |
