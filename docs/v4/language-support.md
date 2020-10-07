@@ -103,7 +103,7 @@ Languages not included in this list can be still supported, but without stemming
 | ta     | Tamil                 |        X       |       X      |                    |         X         |     X     |
 | tt     | Tatar                 |                |       X      |                    |                   |           |
 | te     | Telugu                |                |       X      |                    |                   |           |
-| th     | Thai                  |        X       |       X      |                    |         X         |           |
+| th     | Thai                  |        X       |       X      |                    |         X         |     X     |
 | tr     | Turkish               |        X       |       X      |                    |         X         |           |
 | uk     | Ukrainian             |        X       |       X      |                    |         X         |           |
 | ur     | Urdu                  |                |       X      |                    |                   |           |
@@ -152,6 +152,7 @@ Languages not included in this list can be still supported, but without stemming
 | Spanish (es)         |   X   |    X     |         |
 | Swedish (sv)         |   X   |          |         |
 | Tamil (ta)           |   X   |          |         |
+| Thai (th)            |   X   |          |         |
 
 ## Comparision with other NLP products
 
