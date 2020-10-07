@@ -15,7 +15,7 @@ Languages not included in this list can be still supported, but without stemming
 | sq     | Albanian              |                |       X      |                    |                   |           |
 | ar     | Arabic                |        X       |       X      |                    |         X         |     X     |
 | an     | Aragonese             |                |       X      |                    |                   |           |
-| hy     | Armenian              |        X       |       X      |                    |                   |           |
+| hy     | Armenian              |        X       |       X      |                    |                   |     X     |
 | ast    | Asturian              |                |       X      |                    |                   |           |
 | az     | Azerbaijani           |                |       X      |                    |                   |           |
 | ba     | Bashkir               |                |       X      |                    |                   |           |
@@ -121,6 +121,7 @@ Languages not included in this list can be still supported, but without stemming
 | Language             | AFINN | Senticon | Pattern |
 | :------------------- | :---: | :------: | :-----: |
 | Arabic (ar)          |   X   |          |         |
+| Armenian (hy)        |   X   |          |         |
 | Basque (eu)          |       |    X     |         |
 | Bengali (bn)         |   X   |          |         |
 | Catalan (ca)         |       |    X     |         |
