@@ -77,7 +77,7 @@ Languages not included in this list can be still supported, but without stemming
 | mn     | Mongolian             |                |       X      |                    |         X         |           |
 | ne     | Nepali                |        X       |       X      |                    |         X         |     X     |
 | new    | Newar                 |                |       X      |                    |                   |           |
-| nb     | Norwegian (Bokmål)    |        X       |       X      |                    |         X         |           |
+| nb     | Norwegian (Bokmål)    |        X       |       X      |                    |         X         |     X     |
 | nn     | Norwegian (Nynorsk)   |                |       X      |                    |                   |           |
 | oc     | Occitan               |                |       X      |                    |                   |           |
 | fa     | Persian (Farsi)       |        X       |       X      |                    |                   |     X     |
@@ -141,6 +141,7 @@ Languages not included in this list can be still supported, but without stemming
 | Italian (it)         |       |          |    X    |
 | Lithuanian (lt)      |   X   |          |         |
 | Nepali (ne)          |   X   |          |         |
+| Norwegian (no)       |   X   |          |         |
 | Persian (Farsi) (fa) |   X   |          |         |
 | Portuguese (pt)      |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
