@@ -64,7 +64,7 @@ Languages not included in this list can be still supported, but without stemming
 | ko     | Korean                |        X       |       X      |                    |         X         |           |
 | la     | Latin                 |                |       X      |                    |                   |           |
 | lv     | Latvian               |                |       X      |                    |                   |           |
-| lt     | Lithuanian            |        X       |       X      |                    |                   |           |
+| lt     | Lithuanian            |        X       |       X      |                    |                   |     X     |
 | lmo    | Lombard               |                |       X      |                    |                   |           |
 | nds    | Low Saxon             |                |       X      |                    |                   |           |
 | lb     | Luxembourgish         |                |       X      |                    |                   |           |
@@ -139,6 +139,7 @@ Languages not included in this list can be still supported, but without stemming
 | Indonesian (id)      |   X   |          |         |
 | Irish (ga)           |   X   |          |         |
 | Italian (it)         |       |          |    X    |
+| Lithuanian (lt)      |   X   |          |         |
 | Persian (Farsi) (fa) |   X   |          |         |
 | Portuguese (pt)      |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
