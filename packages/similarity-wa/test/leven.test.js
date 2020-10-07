@@ -25,7 +25,12 @@ const levenwa = require('../src/leven.js');
 const levenjs = require('../../similarity/src/leven.js');
 
 const levenAlgs = [levenjs, levenwa];
-const levenLabels = ['JavaScript', 'WebAssembly'];
+const execTimeWord = [];
+const execTimeLong = [];
+
+function getTime(hrTime) {
+  return hrTime[0] * 1000000000 + hrTime[1];
+}
 
 describe('levenshtein', () => {
   for (let i = 0; i < levenAlgs.length; i += 1) {
@@ -56,15 +61,7 @@ describe('levenshtein', () => {
       expect(leven('mikailovitch', 'Mikhaïlovitch')).toEqual(3);
 
       const tEllapsed = process.hrtime(t0);
-
-      /* eslint-disable no-console */
-      console.warn(
-        `%s performance on words %d, %d`,
-        levenLabels[i],
-        tEllapsed[0],
-        tEllapsed[1]
-      );
-      /* eslint-enable */
+      execTimeWord[i] = getTime(tEllapsed);
     });
 
     test('Should return correct levenshtein distance for long texts', () => {
@@ -77,13 +74,17 @@ describe('levenshtein', () => {
       expect(leven(text1, text2)).toEqual(143);
 
       const tEllapsed = process.hrtime(t0);
-
-      const logStr = `%s performance on long text (160-200 chars) %d, %d`;
-      /* eslint-disable */
-      console.warn(logStr, levenLabels[i], tEllapsed[0], tEllapsed[1]);
-      /* eslint-enable */
+      execTimeLong[i] = getTime(tEllapsed);
     });
   }
+
+  test('Web Assembly implementation should be faster than javascript on words', () => {
+    expect(execTimeWord[0]).toBeGreaterThan(execTimeWord[1]);
+  });
+
+  test('Web Assembly implementation should be faster than javascript on long texts', () => {
+    expect(execTimeLong[0]).toBeGreaterThan(execTimeLong[1]);
+  });
 
   test('Should return the length of first string if the second is empty', () => {
     expect(levenwa('mikailovitch', '')).toEqual(12);
