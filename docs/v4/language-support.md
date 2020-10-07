@@ -98,7 +98,7 @@ Languages not included in this list can be still supported, but without stemming
 | su     | Sundanese             |                |       X      |                    |                   |           |
 | sw     | Swahili               |                |       X      |                    |         X         |           |
 | sv     | Swedish               |        X       |       X      |                    |         X         |     X     |
-| tl     | Tagalog               |        X       |       X      |                    |                   |           |
+| tl     | Tagalog               |        X       |       X      |                    |                   |     X     |
 | tg     | Tajik                 |                |       X      |                    |                   |           |
 | ta     | Tamil                 |        X       |       X      |                    |         X         |     X     |
 | tt     | Tatar                 |                |       X      |                    |                   |           |
@@ -151,6 +151,7 @@ Languages not included in this list can be still supported, but without stemming
 | Slovenian (sl)       |   X   |          |         |
 | Spanish (es)         |   X   |    X     |         |
 | Swedish (sv)         |   X   |          |         |
+| Tagalog (tl)         |   X   |          |         |
 | Tamil (ta)           |   X   |          |         |
 | Thai (th)            |   X   |          |         |
 
