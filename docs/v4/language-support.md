@@ -75,7 +75,7 @@ Languages not included in this list can be still supported, but without stemming
 | mr     | Marathi               |                |       X      |                    |                   |           |
 | min    | Minangkabau           |                |       X      |                    |                   |           |
 | mn     | Mongolian             |                |       X      |                    |         X         |           |
-| ne     | Nepali                |        X       |       X      |                    |         X         |           |
+| ne     | Nepali                |        X       |       X      |                    |         X         |     X     |
 | new    | Newar                 |                |       X      |                    |                   |           |
 | nb     | Norwegian (Bokmål)    |        X       |       X      |                    |         X         |           |
 | nn     | Norwegian (Nynorsk)   |                |       X      |                    |                   |           |
@@ -140,6 +140,7 @@ Languages not included in this list can be still supported, but without stemming
 | Irish (ga)           |   X   |          |         |
 | Italian (it)         |       |          |    X    |
 | Lithuanian (lt)      |   X   |          |         |
+| Nepali (ne)          |   X   |          |         |
 | Persian (Farsi) (fa) |   X   |          |         |
 | Portuguese (pt)      |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
