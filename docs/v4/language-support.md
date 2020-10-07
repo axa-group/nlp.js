@@ -100,7 +100,7 @@ Languages not included in this list can be still supported, but without stemming
 | sv     | Swedish               |        X       |       X      |                    |         X         |     X     |
 | tl     | Tagalog               |        X       |       X      |                    |                   |           |
 | tg     | Tajik                 |                |       X      |                    |                   |           |
-| ta     | Tamil                 |        X       |       X      |                    |         X         |           |
+| ta     | Tamil                 |        X       |       X      |                    |         X         |     X     |
 | tt     | Tatar                 |                |       X      |                    |                   |           |
 | te     | Telugu                |                |       X      |                    |                   |           |
 | th     | Thai                  |        X       |       X      |                    |         X         |           |
@@ -151,6 +151,7 @@ Languages not included in this list can be still supported, but without stemming
 | Slovenian (sl)       |   X   |          |         |
 | Spanish (es)         |   X   |    X     |         |
 | Swedish (sv)         |   X   |          |         |
+| Tamil (ta)           |   X   |          |         |
 
 ## Comparision with other NLP products
 
