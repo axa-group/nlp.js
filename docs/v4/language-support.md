@@ -85,7 +85,7 @@ Languages not included in this list can be still supported, but without stemming
 | pl     | Polish                |        X       |       X      |                    |         X         |     X     |
 | pt     | Portuguese            |        X       |       X      |          X         |         X         |     X     |
 | pa     | Punjabi               |                |       X      |                    |                   |           |
-| ro     | Romanian              |        X       |       X      |                    |         X         |           |
+| ro     | Romanian              |        X       |       X      |                    |         X         |     X     |
 | ru     | Russian               |        X       |       X      |                    |         X         |     X     |
 | sco    | Scots                 |                |       X      |                    |                   |           |
 | sr     | Serbian               |        X       |       X      |                    |                   |           |
@@ -145,6 +145,7 @@ Languages not included in this list can be still supported, but without stemming
 | Persian (Farsi) (fa) |   X   |          |         |
 | Polish (pl)          |   X   |          |         |
 | Portuguese (pt)      |   X   |          |         |
+| Romanian (ro)        |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
 | Spanish (es)         |   X   |    X     |         |
 
