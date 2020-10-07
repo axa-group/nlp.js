@@ -92,7 +92,7 @@ Languages not included in this list can be still supported, but without stemming
 | hbs    | Serbo-Croatian        |                |       X      |                    |                   |           |
 | scn    | Sicilian              |                |       X      |                    |                   |           |
 | sk     | Slovak                |                |       X      |                    |         X         |           |
-| sl     | Slovenian             |        X       |       X      |                    |                   |           |
+| sl     | Slovenian             |        X       |       X      |                    |                   |     X     |
 | az     | South Azerbaijani     |                |       X      |                    |                   |           |
 | es     | Spanish               |        X       |       X      |          X         |         X         |     X     |
 | su     | Sundanese             |                |       X      |                    |                   |           |
@@ -147,6 +147,7 @@ Languages not included in this list can be still supported, but without stemming
 | Portuguese (pt)      |   X   |          |         |
 | Romanian (ro)        |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
+| Slovenian (sl)       |   X   |          |         |
 | Spanish (es)         |   X   |    X     |         |
 
 ## Comparision with other NLP products
