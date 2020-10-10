@@ -341,11 +341,21 @@ class BaseStemmer {
     return this.tokenizer;
   }
 
+  getStopwords() {
+    if (!this.stopwords) {
+      this.stopwords = this.container.get(`tokenizer-${this.name.slice(-2)}`);
+    }
+    return this.stopwords;
+  }
+
   tokenizeAndStem(text, keepStops = true) {
     const tokenizer = this.getTokenizer();
     let tokens = tokenizer.tokenize(text, true);
-    if (!keepStops && this.stopwords) {
-      tokens = this.stopwords.removeStopwords(tokens);
+    if (!keepStops) {
+      const stopwords = this.getStopwords();
+      if (stopwords) {
+        tokens = stopwords.removeStopwords(tokens);
+      }
     }
     return this.stemWords(tokens);
   }
