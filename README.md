@@ -160,7 +160,7 @@ The version 4 is very different from previous versions. Until this version, NLP.
   - [Introduction](docs/v3/microsoft-bot-framework.md#introduction)
   - [Example of use](docs/v3/microsoft-bot-framework.md#example-of-use)
   - [Recognizer and Slot filling](docs/v3/microsoft-bot-framework.md#recognizer-and-slot-filling)
-- [Languages]
+- Languages
   - [English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)
 - [Contributing](#contributing)
 - [Contributors](#contributors)

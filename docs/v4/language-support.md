@@ -38,7 +38,7 @@ Languages not included in this list can be still supported, but without stemming
 | cs     | Czech                 |        X       |       X      |                    |                   |     X     |
 | da     | Danish                |        X       |       X      |                    |         X         |     X     |
 | nl     | Dutch                 |        X       |       X      |                    |         X         |     X     |
-| en     | ![English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)               |        X       |       X      |          X         |         X         |     X     |
+| en     | [English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)               |        X       |       X      |          X         |         X         |     X     |
 | et     | Estonian              |                |       X      |                    |         X         |           |
 | fi     | Finnish               |        X       |       X      |                    |         X         |     X     |
 | fr     | French                |        X       |       X      |          X         |         X         |     X     |
