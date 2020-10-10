@@ -21,8 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { removeEmojis } = require('../../packages/emoji/src');
-// const { removeEmojis } = require('@nlpjs/emoji');
+const { StopwordsEn } = require('../../../packages/lang-en/src');
+// const { StopwordsEn } = require('@nlpjs/lang-en');
 
-const actual = removeEmojis('I ❤️  ☕️! -  😯⭐️😍  ::: test : : 👍+');
-console.log(actual);
+const stopwords = new StopwordsEn();
+stopwords.dictionary = {};
+stopwords.build(['is', 'your']);
+console.log(stopwords.removeStopwords(['who', 'is', 'your', 'develop']));
+// output: ['who', 'develop']

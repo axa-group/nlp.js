@@ -21,8 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { removeEmojis } = require('../../packages/emoji/src');
-// const { removeEmojis } = require('@nlpjs/emoji');
+const { StemmerEn, StopwordsEn } = require('../../../packages/lang-en/src');
+// const { StemmerEn, StopwordsEn } = require('@nlpjs/lang-en');
 
-const actual = removeEmojis('I ❤️  ☕️! -  😯⭐️😍  ::: test : : 👍+');
-console.log(actual);
+const stemmer = new StemmerEn();
+stemmer.stopwords = new StopwordsEn();
+const input = 'who is your developer';
+console.log(stemmer.tokenizeAndStem(input, false));
+// output: ['develop']

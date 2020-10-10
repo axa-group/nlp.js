@@ -21,8 +21,27 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { removeEmojis } = require('../../packages/emoji/src');
-// const { removeEmojis } = require('@nlpjs/emoji');
+const { Container } = require('../../../packages/core/src');
+const { SentimentAnalyzer } = require('../../../packages/sentiment/src');
+const { LangEn } = require('../../../packages/lang-en/src');
+// const { Container } = require('@nlpjs/core');
+// const { SentimentAnalyzer } = require('@nlpjs/sentiment');
+// const { LangEn } = require('@nlpjs/lang-en');
 
-const actual = removeEmojis('I ❤️  ☕️! -  😯⭐️😍  ::: test : : 👍+');
-console.log(actual);
+(async () => {
+  const container = new Container();
+  container.use(LangEn);
+  const sentiment = new SentimentAnalyzer({ container });
+  const result = await sentiment.process({ locale: 'en', text: 'I love cats' });
+  console.log(result.sentiment);
+})();
+// output:
+// {
+//   score: 0.5,
+//   numWords: 3,
+//   numHits: 1,
+//   average: 0.16666666666666666,
+//   type: 'senticon',
+//   locale: 'en',
+//   vote: 'positive'
+// }

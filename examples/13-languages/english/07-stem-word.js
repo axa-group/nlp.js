@@ -21,8 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { removeEmojis } = require('../../packages/emoji/src');
-// const { removeEmojis } = require('@nlpjs/emoji');
+const { StemmerEn } = require('../../../packages/lang-en/src');
+// const { StemmerEn } = require('@nlpjs/lang-en');
 
-const actual = removeEmojis('I ❤️  ☕️! -  😯⭐️😍  ::: test : : 👍+');
-console.log(actual);
+const stemmer = new StemmerEn();
+const input = 'developer';
+console.log(stemmer.stemWord(input));
+// output: develop

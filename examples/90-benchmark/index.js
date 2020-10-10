@@ -5,14 +5,19 @@ const corpusEs = require('./corpus-es.json');
 async function doTests(manager, corpus) {
   const { data } = corpus;
   let total = 0;
+  let good = 0;
   for (let i = 0; i < data.length; i += 1) {
     const intentData = data[i];
     const { tests } = intentData;
     for (let j = 0; j < tests.length; j += 1) {
-      await manager.process(corpus.locale.slice(0, 2), tests[j]);
+      const result = await manager.process(corpus.locale.slice(0, 2), tests[j]);
       total += 1;
+      if (result.intent === intentData.intent) {
+        good += 1;
+      }
     }
   }
+  console.log(good);
   return total;
 }
 
