@@ -49,7 +49,7 @@ const normalizer = new NormalizerEn();
 const input = 'This shóuld be normalized';
 const result = normalizer.normalize(input);
 console.log(result);
-// output: this should be normalize
+// output: this should be normalized
 ```
 
 ## Tokenization

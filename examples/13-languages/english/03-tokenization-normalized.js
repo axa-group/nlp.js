@@ -21,8 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { removeEmojis } = require('../../packages/emoji/src');
-// const { removeEmojis } = require('@nlpjs/emoji');
+const { TokenizerEn } = require('../../../packages/lang-en/src');
+// const { TokenizerEn } = require('@nlpjs/lang-en');
 
-const actual = removeEmojis('I ❤️  ☕️! -  😯⭐️😍  ::: test : : 👍+');
-console.log(actual);
+const tokenizer = new TokenizerEn();
+const input = "This isn't tokenized yet";
+const result = tokenizer.tokenize(input, true);
+console.log(result);
+// output: [ 'this', 'is', 'not', 'tokenized', 'yet' ]

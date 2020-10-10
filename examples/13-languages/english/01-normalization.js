@@ -21,8 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { removeEmojis } = require('../../packages/emoji/src');
-// const { removeEmojis } = require('@nlpjs/emoji');
+const { NormalizerEn } = require('../../../packages/lang-en/src');
+// const { NormalizerEn } = require('@nlpjs/lang-en');
 
-const actual = removeEmojis('I ❤️  ☕️! -  😯⭐️😍  ::: test : : 👍+');
-console.log(actual);
+const normalizer = new NormalizerEn();
+const input = 'This shóuld be normalized';
+const result = normalizer.normalize(input);
+console.log(result);
+// output: this should be normalized
