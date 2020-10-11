@@ -94,7 +94,7 @@ Languages not included in this list can be still supported, but without stemming
 | sk     | Slovak                |                |       X      |                    |         X         |           |
 | sl     | Slovenian             |        X       |       X      |                    |                   |     X     |
 | az     | South Azerbaijani     |                |       X      |                    |                   |           |
-| es     | Spanish               |        X       |       X      |          X         |         X         |     X     |
+| es     | [Spanish](https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)               |        X       |       X      |          X         |         X         |     X     |
 | su     | Sundanese             |                |       X      |                    |                   |           |
 | sw     | Swahili               |                |       X      |                    |         X         |           |
 | sv     | Swedish               |        X       |       X      |                    |         X         |     X     |

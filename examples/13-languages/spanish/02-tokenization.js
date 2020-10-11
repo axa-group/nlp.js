@@ -21,11 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const measureCorpus = require('../measure-corpus');
-const { LangEn } = require('../../../packages/lang-en/src');
-// const { LangEn } = require('@nlpjs/lang-en');
-const corpus = require('../corpora/corpus-en.json');
+const { TokenizerEs } = require('../../../packages/lang-es/src');
+// const { TokenizerEs } = require('@nlpjs/lang-es');
 
-(async () => {
-  await measureCorpus(corpus, [LangEn]);
-})();
+const tokenizer = new TokenizerEs();
+const input = 'Esto debería ser tokenizado';
+const result = tokenizer.tokenize(input);
+console.log(result);
+// output: [ 'Esto', 'debería', 'ser', 'tokenizado' ]

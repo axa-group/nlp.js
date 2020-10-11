@@ -22,10 +22,10 @@
  */
 
 const measureCorpus = require('../measure-corpus');
-const { LangEn } = require('../../../packages/lang-en/src');
-// const { LangEn } = require('@nlpjs/lang-en');
-const corpus = require('../corpora/corpus-en.json');
+const { LangEs } = require('../../../packages/lang-es/src');
+// const { LangEs } = require('@nlpjs/lang-es');
+const corpus = require('../corpora/corpus-es.json');
 
 (async () => {
-  await measureCorpus(corpus, [LangEn]);
+  await measureCorpus(corpus, [LangEs]);
 })();
