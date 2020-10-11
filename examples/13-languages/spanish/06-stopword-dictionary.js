@@ -21,11 +21,13 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const measureCorpus = require('../measure-corpus');
-const { LangEn } = require('../../../packages/lang-en/src');
-// const { LangEn } = require('@nlpjs/lang-en');
-const corpus = require('../corpora/corpus-en.json');
+const { StopwordsEs } = require('../../../packages/lang-es/src');
+// const { StopwordsEs } = require('@nlpjs/lang-es');
 
-(async () => {
-  await measureCorpus(corpus, [LangEn]);
-})();
+const stopwords = new StopwordsEs();
+stopwords.dictionary = {};
+stopwords.build(['he', 'visto']);
+console.log(
+  stopwords.removeStopwords(['he', 'visto', 'a', 'un', 'programador'])
+);
+// output: ['a', 'un', 'programador']

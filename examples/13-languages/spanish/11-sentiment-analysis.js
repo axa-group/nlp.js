@@ -21,11 +21,30 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const measureCorpus = require('../measure-corpus');
-const { LangEn } = require('../../../packages/lang-en/src');
-// const { LangEn } = require('@nlpjs/lang-en');
-const corpus = require('../corpora/corpus-en.json');
+const { Container } = require('../../../packages/core/src');
+const { SentimentAnalyzer } = require('../../../packages/sentiment/src');
+const { LangEs } = require('../../../packages/lang-es/src');
+// const { Container } = require('@nlpjs/core');
+// const { SentimentAnalyzer } = require('@nlpjs/sentiment');
+// const { LangEs } = require('@nlpjs/lang-es');
 
 (async () => {
-  await measureCorpus(corpus, [LangEn]);
+  const container = new Container();
+  container.use(LangEs);
+  const sentiment = new SentimentAnalyzer({ container });
+  const result = await sentiment.process({
+    locale: 'es',
+    text: 'me gustan los gatos',
+  });
+  console.log(result.sentiment);
 })();
+// output:
+// {
+//   score: 0.266,
+//   numWords: 4,
+//   numHits: 1,
+//   average: 0.0665,
+//   type: 'senticon',
+//   locale: 'es',
+//   vote: 'positive'
+// }

@@ -21,11 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const measureCorpus = require('../measure-corpus');
-const { LangEn } = require('../../../packages/lang-en/src');
-// const { LangEn } = require('@nlpjs/lang-en');
-const corpus = require('../corpora/corpus-en.json');
+const { NormalizerEs } = require('../../../packages/lang-es/src');
+// const { NormalizerEs } = require('@nlpjs/lang-es');
 
-(async () => {
-  await measureCorpus(corpus, [LangEn]);
-})();
+const normalizer = new NormalizerEs();
+const input = 'Esto debería ser normalizado';
+const result = normalizer.normalize(input);
+console.log(result);
+// output: esto deberia ser normalizado
