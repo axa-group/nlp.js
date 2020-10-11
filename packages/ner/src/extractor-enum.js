@@ -230,7 +230,7 @@ class ExtractorEnum {
               entity: rule.name,
               type: rule.type,
               option: subrule[k].option,
-              sourceText: str,
+              sourceText: srcText,
               utteranceText: srcText.substring(
                 wordPositions[i].start,
                 wordPositions[j].end + 1
