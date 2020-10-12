@@ -53,7 +53,7 @@ Languages not included in this list can be still supported, but without stemming
 | hu     | Hungarian             |        X       |       X      |                    |         X         |     X     |
 | is     | Icelandic             |                |       X      |                    |         X         |           |
 | io     | Ido                   |                |       X      |                    |                   |           |
-| id     | Indonesian            |        X       |       X      |                    |         X         |     X     |
+| id     | [Indonesian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)            |        X       |       X      |                    |         X         |     X     |
 | ga     | Irish                 |        X       |       X      |                    |         X         |     X     |
 | it     | Italian               |        X       |       X      |                    |         X         |     X     |
 | ja     | Japanese              |        X       |       X      |          X         |         X         |           |

@@ -161,6 +161,7 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
   - [Recognizer and Slot filling](docs/v3/microsoft-bot-framework.md#recognizer-and-slot-filling)
 - Languages
   - [English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)
+  - [Indonesian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)
   - [Spanish](https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
