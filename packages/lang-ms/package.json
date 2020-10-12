@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/lang-ms",
-  "version": "4.14.0",
+  "version": "4.14.1",
   "description": "Core",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.14.0",
-    "@nlpjs/lang-id": "^4.14.0"
+    "@nlpjs/lang-id": "^4.14.1"
   },
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }
