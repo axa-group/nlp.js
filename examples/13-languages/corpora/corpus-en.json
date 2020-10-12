@@ -481,7 +481,7 @@
         "can you assist me"
       ],
       "tests": [
-        "?",
+        "assist me",
         "please help me",
         "perhaps you can assist me",
         "someone can help me?",

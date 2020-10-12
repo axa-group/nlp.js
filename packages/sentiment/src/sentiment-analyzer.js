@@ -108,7 +108,8 @@ class SentimentAnalyzer extends Clonable {
       type,
       dictionary: dictionaries[type],
       negations: dictionaries.negations.words,
-      stemmed: dictionaries.stemmed === undefined ? true : dictionaries.stemmed,
+      stemmed:
+        dictionaries.stemmed === undefined ? false : dictionaries.stemmed,
     };
     return input;
   }
