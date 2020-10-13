@@ -51,6 +51,8 @@ async function measureCorpus(corpus, plugins) {
       let result = await nlp.process(test);
       if (result.intent === item.intent) {
         goodNoThreshold += 1;
+      } else {
+        console.log(`${result.intent} ${item.intent} ${test}`);
       }
       nlp.settings.threshold = 0.5;
       result = await nlp.process(test);
