@@ -252,6 +252,12 @@ class ExtractorTrim {
         ? condition.words[i]
         : ` ${condition.words[i]}`;
       const wordPositions = this.findWord(utterance, word);
+      if (!condition.options.noSpaces) {
+        const wordPositions2 = this.findWord(utterance, condition.words[i]);
+        if (wordPositions2.length > 0 && wordPositions2[0].start === 0) {
+          wordPositions.unshift(wordPositions2[0]);
+        }
+      }
       if (wordPositions.length > 0) {
         result.push(...this.getResults(utterance, wordPositions, type, name));
       }
