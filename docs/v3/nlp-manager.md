@@ -95,12 +95,21 @@ There are two approaches to saving and loading models: [using files](#saveload-u
 
 `NlpManager.save` writes a model file to disk, and `NlpManager.load` reads a model file from disk.
 
-Saving a model file:
+By default, models are saved into `modelFileName` after training:
 
 ```javascript
 const { NlpManager } = require('node-nlp');
 
-const manager = new NlpManager({ languages: ['en'] });
+const manager = new NlpManager({ languages: ['en'], modelFileName: filename });
+await manager.train();
+```
+
+Saving can also be done manually with `manager.save()`:
+
+```javascript
+const { NlpManager } = require('node-nlp');
+
+const manager = new NlpManager({ languages: ['en'], autoSave: false });
 await manager.train();
 manager.save(filename);
 ```
