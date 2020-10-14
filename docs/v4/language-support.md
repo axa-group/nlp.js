@@ -15,7 +15,7 @@ Languages not included in this list can be still supported, but without stemming
 | sq     | Albanian              |                |       X      |                    |                   |           |
 | ar     | Arabic                |        X       |       X      |                    |         X         |     X     |
 | an     | Aragonese             |                |       X      |                    |                   |           |
-| hy     | Armenian              |        X       |       X      |                    |                   |           |
+| hy     | Armenian              |        X       |       X      |                    |                   |     X     |
 | ast    | Asturian              |                |       X      |                    |                   |           |
 | az     | Azerbaijani           |                |       X      |                    |                   |           |
 | ba     | Bashkir               |                |       X      |                    |                   |           |
@@ -38,7 +38,7 @@ Languages not included in this list can be still supported, but without stemming
 | cs     | Czech                 |        X       |       X      |                    |                   |     X     |
 | da     | Danish                |        X       |       X      |                    |         X         |     X     |
 | nl     | Dutch                 |        X       |       X      |                    |         X         |     X     |
-| en     | English               |        X       |       X      |          X         |         X         |     X     |
+| en     | [English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)               |        X       |       X      |          X         |         X         |     X     |
 | et     | Estonian              |                |       X      |                    |         X         |           |
 | fi     | Finnish               |        X       |       X      |                    |         X         |     X     |
 | fr     | French                |        X       |       X      |          X         |         X         |     X     |
@@ -53,7 +53,7 @@ Languages not included in this list can be still supported, but without stemming
 | hu     | Hungarian             |        X       |       X      |                    |         X         |     X     |
 | is     | Icelandic             |                |       X      |                    |         X         |           |
 | io     | Ido                   |                |       X      |                    |                   |           |
-| id     | Indonesian            |        X       |       X      |                    |         X         |           |
+| id     | [Indonesian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)            |        X       |       X      |                    |         X         |     X     |
 | ga     | Irish                 |        X       |       X      |                    |         X         |     X     |
 | it     | Italian               |        X       |       X      |                    |         X         |     X     |
 | ja     | Japanese              |        X       |       X      |          X         |         X         |           |
@@ -61,10 +61,10 @@ Languages not included in this list can be still supported, but without stemming
 | kn     | Kannada               |                |       X      |                    |         X         |           |
 | kk     | Kazakh                |                |       X      |                    |                   |           |
 | ky     | Kirghiz               |                |       X      |                    |                   |           |
-| ko     | Korean                |        X       |       X      |                    |         X         |           |
+| ko     | Korean                |        X       |       X      |                    |         X         |     X     |
 | la     | Latin                 |                |       X      |                    |                   |           |
 | lv     | Latvian               |                |       X      |                    |                   |           |
-| lt     | Lithuanian            |        X       |       X      |                    |                   |           |
+| lt     | Lithuanian            |        X       |       X      |                    |                   |     X     |
 | lmo    | Lombard               |                |       X      |                    |                   |           |
 | nds    | Low Saxon             |                |       X      |                    |                   |           |
 | lb     | Luxembourgish         |                |       X      |                    |                   |           |
@@ -75,37 +75,37 @@ Languages not included in this list can be still supported, but without stemming
 | mr     | Marathi               |                |       X      |                    |                   |           |
 | min    | Minangkabau           |                |       X      |                    |                   |           |
 | mn     | Mongolian             |                |       X      |                    |         X         |           |
-| ne     | Nepali                |        X       |       X      |                    |         X         |           |
+| ne     | Nepali                |        X       |       X      |                    |         X         |     X     |
 | new    | Newar                 |                |       X      |                    |                   |           |
-| nb     | Norwegian (Bokmål)    |        X       |       X      |                    |         X         |           |
+| nb     | Norwegian (Bokmål)    |        X       |       X      |                    |         X         |     X     |
 | nn     | Norwegian (Nynorsk)   |                |       X      |                    |                   |           |
 | oc     | Occitan               |                |       X      |                    |                   |           |
 | fa     | Persian (Farsi)       |        X       |       X      |                    |                   |     X     |
 | pms    | Piedmontese           |                |       X      |                    |                   |           |
-| pl     | Polish                |        X       |       X      |                    |         X         |           |
+| pl     | Polish                |        X       |       X      |                    |         X         |     X     |
 | pt     | Portuguese            |        X       |       X      |          X         |         X         |     X     |
 | pa     | Punjabi               |                |       X      |                    |                   |           |
-| ro     | Romanian              |        X       |       X      |                    |         X         |           |
+| ro     | Romanian              |        X       |       X      |                    |         X         |     X     |
 | ru     | Russian               |        X       |       X      |                    |         X         |     X     |
 | sco    | Scots                 |                |       X      |                    |                   |           |
-| sr     | Serbian               |        X       |       X      |                    |                   |           |
+| sr     | Serbian               |        X       |       X      |                    |                   |     X     |
 | hbs    | Serbo-Croatian        |                |       X      |                    |                   |           |
 | scn    | Sicilian              |                |       X      |                    |                   |           |
 | sk     | Slovak                |                |       X      |                    |         X         |           |
-| sl     | Slovenian             |        X       |       X      |                    |                   |           |
+| sl     | Slovenian             |        X       |       X      |                    |                   |     X     |
 | az     | South Azerbaijani     |                |       X      |                    |                   |           |
-| es     | Spanish               |        X       |       X      |          X         |         X         |     X     |
+| es     | [Spanish](https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)               |        X       |       X      |          X         |         X         |     X     |
 | su     | Sundanese             |                |       X      |                    |                   |           |
 | sw     | Swahili               |                |       X      |                    |         X         |           |
-| sv     | Swedish               |        X       |       X      |                    |         X         |           |
-| tl     | Tagalog               |        X       |       X      |                    |                   |           |
+| sv     | Swedish               |        X       |       X      |                    |         X         |     X     |
+| tl     | Tagalog               |        X       |       X      |                    |                   |     X     |
 | tg     | Tajik                 |                |       X      |                    |                   |           |
-| ta     | Tamil                 |        X       |       X      |                    |         X         |           |
+| ta     | Tamil                 |        X       |       X      |                    |         X         |     X     |
 | tt     | Tatar                 |                |       X      |                    |                   |           |
 | te     | Telugu                |                |       X      |                    |                   |           |
-| th     | Thai                  |        X       |       X      |                    |         X         |           |
-| tr     | Turkish               |        X       |       X      |                    |         X         |           |
-| uk     | Ukrainian             |        X       |       X      |                    |         X         |           |
+| th     | Thai                  |        X       |       X      |                    |         X         |     X     |
+| tr     | Turkish               |        X       |       X      |                    |         X         |     X     |
+| uk     | Ukrainian             |        X       |       X      |                    |         X         |     X     |
 | ur     | Urdu                  |                |       X      |                    |                   |           |
 | uz     | Uzbek                 |                |       X      |                    |                   |           |
 | vi     | Vietnamese            |                |       X      |                    |         X         |           |
@@ -121,6 +121,7 @@ Languages not included in this list can be still supported, but without stemming
 | Language             | AFINN | Senticon | Pattern |
 | :------------------- | :---: | :------: | :-----: |
 | Arabic (ar)          |   X   |          |         |
+| Armenian (hy)        |   X   |          |         |
 | Basque (eu)          |       |    X     |         |
 | Bengali (bn)         |   X   |          |         |
 | Catalan (ca)         |       |    X     |         |
@@ -135,12 +136,27 @@ Languages not included in this list can be still supported, but without stemming
 | Greek (el)           |   X   |          |         |
 | Hindi (hi)           |   X   |          |         |
 | Hungarian (hu)       |   X   |          |         |
+| Indonesian (id)      |   X   |          |         |
 | Irish (ga)           |   X   |          |         |
 | Italian (it)         |       |          |    X    |
+| Korean (ko)          |   X   |          |         |
+| Lithuanian (lt)      |   X   |          |         |
+| Nepali (ne)          |   X   |          |         |
+| Norwegian (no)       |   X   |          |         |
 | Persian (Farsi) (fa) |   X   |          |         |
+| Polish (pl)          |   X   |          |         |
 | Portuguese (pt)      |   X   |          |         |
+| Romanian (ro)        |   X   |          |         |
 | Russian (ru)         |   X   |          |         |
+| Serbian (sr)         |   X   |          |         |
+| Slovenian (sl)       |   X   |          |         |
 | Spanish (es)         |   X   |    X     |         |
+| Swedish (sv)         |   X   |          |         |
+| Tagalog (tl)         |   X   |          |         |
+| Tamil (ta)           |   X   |          |         |
+| Thai (th)            |   X   |          |         |
+| Turkish (tr)         |   X   |          |         |
+| Ukrainian (uk)       |   X   |          |         |
 
 ## Comparision with other NLP products
 

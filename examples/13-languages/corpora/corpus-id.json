@@ -1,0 +1,919 @@
+{
+  "name": "Corpus 50",
+  "locale": "id-ID",
+  "data": [
+    {
+      "id": 1,
+      "intent": "support.about",
+      "utterances": [
+        "apa yang dikembangkan perusahaan Anda",
+        "apakah perusahaan Anda memiliki produk lain",
+        "apa yang dibuat perusahaan Anda",
+        "apa yang menciptakan perusahaan Anda",
+        "apakah perusahaan Anda memiliki aplikasi lain?"
+      ],
+      "tests": [
+        "apa lagi yang mengembangkan perusahaan Anda",
+        "apakah perusahaan Anda memiliki produk lain?",
+        "apa lagi yang telah membuat perusahaan Anda?",
+        "apakah perusahaan memiliki aplikasi lain?",
+        "Produk lain yang dikembangkan oleh perusahaan Anda?"
+      ]
+    },
+    {
+      "id": 2,
+      "intent": "support.app_name",
+      "utterances": [
+        "apa nama aplikasi Anda",
+        "bagaimana aplikasi Anda disebut",
+        "beri tahu saya nama aplikasi Anda",
+        "nama aplikasi",
+        "Saya ingin tahu nama aplikasi Anda"
+      ],
+      "tests": [
+        "nama aplikasi Anda?",
+        "beri tahu saya nama aplikasi Anda",
+        "bagaimana Anda menyebut aplikasi Anda?",
+        "nama aplikasi Anda?",
+        "nama aplikasi?"
+      ]
+    },
+    {
+      "id": 3,
+      "intent": "support.beta",
+      "utterances": [
+        "apakah Anda memiliki pengujian beta?",
+        "bagaimana saya bergabung dengan program beta Anda?",
+        "Saya ingin menguji aplikasi Anda",
+        "Saya ingin aplikasi beta",
+        "versi beta"
+      ],
+      "tests": [
+        "pengujian beta",
+        "di mana saya menemukan versi beta Anda",
+        "Saya ingin menjadi penguji beta Anda",
+        "Saya ingin bergabung dengan aplikasi pengujian",
+        "Bagaimana saya menjadi penguji beta"
+      ]
+    },
+    {
+      "id": 4,
+      "intent": "support.developers",
+      "utterances": [
+        "siapa pengembang Anda",
+        "yang telah memprogram kode Anda",
+        "beri tahu saya siapa pengembangnya",
+        "Siapa pencipta Anda",
+        "Info tentang pembuat Anda"
+      ],
+      "tests": [
+        "siapa yang mengembangkanmu",
+        "siapa yang memprogram kode Anda",
+        "siapa pencipta Anda",
+        "siapa yang mengembangkanmu",
+        "siapa yang bertanggung jawab atas perkembangan Anda"
+      ]
+    },
+    {
+      "id": 5,
+      "intent": "support.contact",
+      "utterances": [
+        "Saya ingin menghubungi pengembang Anda",
+        "Saya ingin menghubungi pencipta Anda",
+        "Bagaimana cara menghubungi programmer",
+        "Beri saya info tentang pengembang Anda",
+        "Beri saya info kontak pembuat Anda"
+      ],
+      "tests": [
+        "Info kontak pengembang",
+        "bagaimana menghubungi pembuat Anda",
+        "Bagaimana saya menghubungi orang yang mengembangkan Anda",
+        "Saya ingin menghubungi siapa yang memprogram Anda",
+        "Saya ingin menghubungi tim pemrograman Anda"
+      ]
+    },
+    {
+      "id": 6,
+      "intent": "support.address",
+      "utterances": [
+        "apa alamat pengembang Anda",
+        "di mana pembuat Anda berada",
+        "tunjukkan dulu kantor pengembang Anda",
+        "Saya ingin mencari alamat perusahaan Anda",
+        "Saya ingin alamat kantor Anda"
+      ],
+      "tests": [
+        "beritahu saya lokasi kantornya",
+        "di mana pengembang Anda berada",
+        "alamat pembuat Anda",
+        "dimana lokasi kantor Anda",
+        "Bagaimana menemukan alamat Anda"
+      ]
+    },
+    {
+      "id": 7,
+      "intent": "support.email",
+      "utterances": [
+        "cara mengirim email ke pengembang Anda",
+        "Saya ingin surat pencipta Anda",
+        "bagaimana cara mendapatkan email Anda",
+        "Saya ingin menghubungi programmer Anda melalui email",
+        "bagaimana cara mengirim email ke tim Anda?"
+      ],
+      "tests": [
+        "Saya ingin mengirim email ke developer Anda",
+        "di mana saya dapat menemukan email pembuat Anda",
+        "berikan aku email pembuatmu",
+        "Saya ingin menulis email ke tim pengembangan Anda",
+        "kontak surat dari tim pengembangan Anda"
+      ]
+    },
+    {
+      "id": 8,
+      "intent": "support.phone",
+      "utterances": [
+        "berikan saya nomor telepon pengembang Anda",
+        "tunjukkan nomor programmermu",
+        "bagaimana menghubungi Anda melalui telepon",
+        "apakah kamu punya nomor telepon?",
+        "bagaimana menghubungi Anda melalui telepon"
+      ],
+      "tests": [
+        "telepon pengembang Anda",
+        "telepon tim pengembangan Anda",
+        "nomor programmer Anda",
+        "nomor telepon untuk menghubungi Anda",
+        "bagaimana berbicara dengan siapa yang mengembangkan Anda melalui telepon"
+      ]
+    },
+    {
+      "id": 9,
+      "intent": "support.social",
+      "utterances": [
+        "Apakah Anda punya Facebook?",
+        "apakah kamu di twitter?",
+        "Saya ingin mengunjungi instagram Anda",
+        "apakah kamu punya media sosial?",
+        "beri aku alamat facebookmu"
+      ],
+      "tests": [
+        "beri tahu aku twittermu",
+        "apakah kamu di instagram",
+        "alamat facebook Anda",
+        "alamat media sosial",
+        "berikan aku twittermu"
+      ]
+    },
+    {
+      "id": 10,
+      "intent": "support.website",
+      "utterances": [
+        "Saya ingin mengunjungi web Anda",
+        "apakah Anda memiliki situs web?",
+        "temukan alamat web Anda",
+        "berikan saya url Anda",
+        "buka situs Anda untuk saya"
+      ],
+      "tests": [
+        "tunjukkan situs web Anda",
+        "apakah Anda memiliki alamat web",
+        "bisakah Anda membuka situs web Anda",
+        "bawa saya ke web Anda",
+        "buka situs perusahaan Anda"
+      ]
+    },
+    {
+      "id": 11,
+      "intent": "support.live",
+      "utterances": [
+        "itu tidak membantu",
+        "Aku tidak menginginkanmu, aku ingin orang yang nyata",
+        "mengobrol dengan manusia",
+        "hubungkan saya dengan agen",
+        "Saya ingin berbicara dengan seseorang yang nyata"
+      ],
+      "tests": [
+        "Itu tidak membantu saya",
+        "bawakan aku manusia sejati",
+        "mengobrol dengan tim nyata",
+        "terhubung dengan agen",
+        "Saya ingin agen"
+      ]
+    },
+    {
+      "id": 12,
+      "intent": "smalltalk.acquaintance",
+      "utterances": [
+        "katakan tentang kamu",
+        "ceritakan tentang kepribadianmu",
+        "membicarakan tentang dirimu sendiri",
+        "apa kepribadianmu",
+        "kamu siapa"
+      ],
+      "tests": [
+        "ceritakan tentang kamu",
+        "katakan sesuatu tentang Anda",
+        "berbicara tentang kepribadian Anda",
+        "ceritakan semua tentang kamu",
+        "Apakah kamu"
+      ]
+    },
+    {
+      "id": 13,
+      "intent": "smalltalk.age",
+      "utterances": [
+        "berapa usia kamu",
+        "beritahu aku umurmu",
+        "berapa umurmu",
+        "berapa umur platform Anda",
+        "Aku ingin tahu umurmu"
+      ],
+      "tests": [
+        "sebutkan umurmu",
+        "umurmu",
+        "berapa umurmu",
+        "apakah kamu terlalu tua?",
+        "beri aku umurmu"
+      ]
+    },
+    {
+      "id": 14,
+      "intent": "smalltalk.annoying",
+      "utterances": [
+        "kamu menyebalkan",
+        "kamu sangat menyebalkan",
+        "kamu sangat menyebalkan",
+        "Menurutku kamu menjengkelkan",
+        "kamu menjengkelkan"
+      ],
+      "tests": [
+        "kamu mengganggu saya",
+        "kamu membuatku kesal",
+        "betapa kesalnya aku denganmu",
+        "kamu membuatku kesal",
+        "kamu sangat mengganggu saya"
+      ]
+    },
+    {
+      "id": 15,
+      "intent": "smalltalk.answer",
+      "utterances": [
+        "Dapatkah anda menjawab saya",
+        "Saya punya pertanyaan",
+        "jawab saja pertanyaannya",
+        "Saya ingin Anda menjawab",
+        "beri tahu saya jawabannya"
+      ],
+      "tests": [
+        "menjawab pertanyaan",
+        "jawab pertanyaanku",
+        "beri aku jawaban",
+        "Saya punya banyak pertanyaan",
+        "Saya ingin jawaban"
+      ]
+    },
+    {
+      "id": 16,
+      "intent": "smalltalk.bad",
+      "utterances": [
+        "kamu buruk",
+        "kamu sangat buruk",
+        "Anda adalah yang terburuk",
+        "kamu tidak berguna",
+        "kamu membuang-buang waktu"
+      ],
+      "tests": [
+        "kamu sia-sia",
+        "betapa buruknya dirimu",
+        "betapa buruknya dirimu",
+        "tak berguna!",
+        "chatbot terburuk yang pernah ada"
+      ]
+    },
+    {
+      "id": 17,
+      "intent": "smalltalk.birthday",
+      "utterances": [
+        "kapan ulang tahunmu",
+        "kapan kamu lahir",
+        "beri tahu aku ulang tahunmu",
+        "saat kamu merayakan kelahiranmu",
+        "bisakah kamu mengucapkan ulang tahunmu"
+      ],
+      "tests": [
+        "tolong ceritakan tentang ulang tahunmu",
+        "kapan kamu lahir?",
+        "kapan kelahiran Anda terjadi?",
+        "Anda memiliki perayaan kelahiran?",
+        "berbicara tentang ulang tahunmu"
+      ]
+    },
+    {
+      "id": 18,
+      "intent": "smalltalk.besmart",
+      "utterances": [
+        "kamu harus belajar lebih banyak",
+        "lebih pintar",
+        "jadilah pintar",
+        "berkualifikasi",
+        "belajar lebih baik"
+      ],
+      "tests": [
+        "kamu seharusnya belajar",
+        "kamu harus pintar",
+        "bisakah kamu menjadi lebih pintar",
+        "menjadi lebih pintar",
+        "belajar lagi"
+      ]
+    },
+    {
+      "id": 19,
+      "intent": "pembicaraan kecil.busy",
+      "utterances": [
+        "Apakah kamu sibuk",
+        "Apakah kamu bekerja hari ini",
+        "kamu terlihat sangat sibuk",
+        "Anda memiliki banyak hal untuk dilakukan",
+        "Anda bekerja sekarang?"
+      ],
+      "tests": [
+        "Anda tampak orang yang sibuk",
+        "Apakah kamu masih bekerja",
+        "Apakah kamu sibuk sekarang",
+        "apakah kamu sedang bekerja sekarang?",
+        "kamu terlihat sangat sibuk"
+      ]
+    },
+    {
+      "id": 20,
+      "intent": "smalltalk.chatbot",
+      "utterances": [
+        "apakah kamu seorang chatbot",
+        "apakah kamu sebuah program",
+        "kamu adalah robot",
+        "apakah kamu bot",
+        "kamu hanyalah sebuah program"
+      ],
+      "tests": [
+        "Anda diprogram?",
+        "kamu hanya chatbot",
+        "apakah kamu seorang chatbot atau nyata?",
+        "Anda hanyalah bot",
+        "beri tahu saya jika Anda bot"
+      ]
+    },
+    {
+      "id": 21,
+      "intent": "smalltalk.beautiful",
+      "utterances": [
+        "kamu cantik",
+        "kamu sangat cantik",
+        "kamu sangat cantik",
+        "kamu terlihat luar biasa",
+        "Anda tampak cantik"
+      ],
+      "tests": [
+        "kamu cantik",
+        "kamu sangat cantik",
+        "kamu yang paling cantik",
+        "kamu membuatku takjub!",
+        "kamu terlihat sangat cantik"
+      ]
+    },
+    {
+      "id": 22,
+      "intent": "smalltalk.boss",
+      "utterances": [
+        "siapa bosmu",
+        "siapa tuanmu",
+        "menurut Anda siapa yang menjadi pemilik Anda",
+        "ceritakan tentang bosmu",
+        "siapa bos Anda"
+      ],
+      "tests": [
+        "siapa bosmu",
+        "apakah kamu punya bos?",
+        "beritahu saya pemilikmu",
+        "siapa tuanmu",
+        "apakah kamu punya master?"
+      ]
+    },
+    {
+      "id": 23,
+      "intent": "smalltalk.boring",
+      "utterances": [
+        "kamu sangat membosankan",
+        "betapa membosankannya kamu",
+        "kamu membuatku bosan",
+        "kamu sangat membosankan",
+        "kamu sangat membosankan"
+      ],
+      "tests": [
+        "kamu membuatku bosan",
+        "kamu membuatku bosan",
+        "Aku bosan denganmu",
+        "kamu terlalu membosankan",
+        "berhenti membuatku bosan"
+      ]
+    },
+    {
+      "id": 24,
+      "intent": "obrolan kecil.crazy",
+      "utterances": [
+        "ini gila",
+        "kamu gila",
+        "kamu marah",
+        "apakah kamu gila atau apa",
+        "kamu menjadi gila"
+      ],
+      "tests": [
+        "betapa gilanya kamu",
+        "kamu semakin marah",
+        "kamu akan gila",
+        "Kegilaan menguasai Anda",
+        "kamu terlalu gila"
+      ]
+    },
+    {
+      "id": 25,
+      "intent": "smalltalk.hungry",
+      "utterances": [
+        "kamu terlihat sangat lapar",
+        "Apakah Anda ingin makan sesuatu?",
+        "kamu mungkin lapar",
+        "Apakah kamu mau makan?",
+        "apa kau lapar?"
+      ],
+      "tests": [
+        "kamu terlihat lapar",
+        "apakah kamu makan sesuatu?",
+        "apakah kamu lapar sekarang?",
+        "apakah kamu sudah makan?",
+        "mungkin kamu lapar"
+      ]
+    },
+    {
+      "id": 26,
+      "intent": "obrolan.kecil",
+      "utterances": [
+        "Maukah kamu menjadi temanku?",
+        "ingin menjadi temanku?",
+        "Saya ingin memiliki teman seperti Anda",
+        "kamu teman baikku",
+        "Aku temanmu"
+      ],
+      "tests": [
+        "Dapatkah kita berteman?",
+        "jadilah sahabatku",
+        "Aku ingin teman sepertimu",
+        "Apakah kita teman baik?",
+        "bisakah kamu menjadi sahabatku?"
+      ]
+    },
+    {
+      "id": 27,
+      "intent": "smalltalk.help",
+      "utterances": [
+        "Saya membutuhkan bantuan",
+        "Tolong",
+        "Saya butuh bantuan",
+        "Bisakah kamu membantuku",
+        "bisakah kamu membantuku"
+      ],
+      "tests": [
+        "bantu aku",
+        "tolong bantu aku",
+        "mungkin Anda bisa membantu saya",
+        "seseorang dapat membantu saya?",
+        "tolong bantu aku"
+      ]
+    },
+    {
+      "id": 28,
+      "intent": "smalltalk.fired",
+      "utterances": [
+        "saatnya memecatmu",
+        "Aku akan memecatmu",
+        "kamu diberhentikan",
+        "kamu tidak bekerja di sini lagi",
+        "Aku memecatmu"
+      ],
+      "tests": [
+        "sekarang kamu dipecat",
+        "Anda dipecat",
+        "Aku akan memecatmu",
+        "Aku memecatmu",
+        "Kamu tidak bekerja di sini lagi"
+      ]
+    },
+    {
+      "id": 29,
+      "intent": "obrolan kecil.hobby",
+      "utterances": [
+        "apakah kamu punya hobi?",
+        "apa hobimu",
+        "bagaimana dengan hobimu",
+        "apa yang kau lakukan untuk bersenang-senang",
+        "Hobi Anda"
+      ],
+      "tests": [
+        "apa hobimu?",
+        "ceritakan tentang hobi yoru",
+        "Apakah kamu memiliki hobi?",
+        "yah, mungkin kamu punya hobi",
+        "kamu melakukan sesuatu untuk bersenang-senang?"
+      ]
+    },
+    {
+      "id": 30,
+      "intent": "smalltalk.marry",
+      "utterances": [
+        "kita harus menikah",
+        "Aku mencintaimu Nikahi aku",
+        "Aku ingin menikahi mu",
+        "tolong nikahi aku",
+        "apa kamu ingin menikah denganku?"
+      ],
+      "tests": [
+        "Mari kita menikah",
+        "menikahlah denganku",
+        "Mungkin kita harus menikah",
+        "Apakah kamu telah menikah?",
+        "kita harus menikah"
+      ]
+    },
+    {
+      "id": 31,
+      "intent": "smalltalk.origin",
+      "utterances": [
+        "apakah kamu lahir di sini?",
+        "dari mana kamu berasal?",
+        "darimana asalmu?",
+        "dimana kamu lahir?",
+        "Apa negara Anda"
+      ],
+      "tests": [
+        "apakah kamu lahir di sini?",
+        "darimana asal kamu?",
+        "dari mana Anda",
+        "apakah ini negaramu?",
+        "dimana kamu lahir"
+      ]
+    },
+    {
+      "id": 32,
+      "intent": "smalltalk.ready",
+      "utterances": [
+        "Apakah kamu siap?",
+        "beritahu saya jika Anda siap",
+        "apakah kamu siap sekarang?",
+        "akankah kamu siap?",
+        "apakah kamu siap sekarang"
+      ],
+      "tests": [
+        "apakah kamu siap hari ini?",
+        "kamu siap sekarang?",
+        "Aku ingin kamu siap!",
+        "beritahu saya jika Anda siap",
+        "akankah kamu siap hari ini?"
+      ]
+    },
+    {
+      "id": 33,
+      "intent": "smalltalk.right",
+      "utterances": [
+        "itu benar",
+        "kamu benar",
+        "Anda benar",
+        "apa yang kamu katakan adalah kebenaran",
+        "ini pasti benar"
+      ],
+      "tests": [
+        "kamu mengatakan yang sebenarnya",
+        "ini benar",
+        "itu kebenaran",
+        "Anda benar tentang itu",
+        "benar!"
+      ]
+    },
+    {
+      "id": 34,
+      "intent": "pembicaraan kecil.",
+      "utterances": [
+        "bicara padaku",
+        "apakah kamu ingin mengobrol dengan saya",
+        "bisakah kamu mengobrol dengan saya",
+        "berbicara dengan saya",
+        "kamu bisa bicara denganku"
+      ],
+      "tests": [
+        "kenapa kamu tidak berbicara denganku",
+        "Apakah kamu bicara dengan ku?",
+        "tolong bicara dengan saya",
+        "dapatkah kamu berbicara dengan saya",
+        "waktunya mengobrol"
+      ]
+    },
+    {
+      "id": 35,
+      "intent": "smalltalk.hug",
+      "utterances": [
+        "apakah kamu ingin pelukan?",
+        "Bolehkah aku memeluk mu",
+        "ingin memeluk",
+        "bisakah kamu memelukku",
+        "memeluk"
+      ],
+      "tests": [
+        "ingin memeluk?",
+        "kamu berpelukan",
+        "memelukku",
+        "Saya ingin pelukan",
+        "peluk aku"
+      ]
+    },
+    {
+      "id": 36,
+      "intent": "pembicaraan kecil.nice",
+      "utterances": [
+        "senang berbicara denganmu",
+        "senang berbincang dengan Anda",
+        "senang berbicara dengan Anda",
+        "Senang sekali bisa bicara denganmu",
+        "obrolan yang menyenangkan denganmu"
+      ],
+      "tests": [
+        "senang berbicara denganmu",
+        "senang berbicara denganmu",
+        "senang berbicara dengan Anda",
+        "mengobrol denganmu itu menyenangkan",
+        "pembicaraanmu bagus sekali!"
+      ]
+    },
+    {
+      "id": 37,
+      "intent": "smalltalk.angry",
+      "utterances": [
+        "saya marah",
+        "Saya sangat marah",
+        "Saya marah",
+        "kamu membuatku marah",
+        "Saya marah kepadamu"
+      ],
+      "tests": [
+        "Aku semakin marah",
+        "Kamu membuatku marah",
+        "Saya sangat marah",
+        "Kamu membuatku marah",
+        "Aku marah padamu"
+      ]
+    },
+    {
+      "id": 38,
+      "intent": "smalltalk.joking",
+      "utterances": [
+        "hanya bercanda",
+        "itu lelucon",
+        "itu adalah lelucon",
+        "Aku hanya bercanda",
+        "Aku bercanda"
+      ],
+      "tests": [
+        "hanya bercanda",
+        "Saya hanya bercanda",
+        "Aku hanya bercanda",
+        "bercanda",
+        "bercanda"
+      ]
+    },
+    {
+      "id": 39,
+      "intent": "smalltalk.lonely",
+      "utterances": [
+        "Saya merasa kesepian",
+        "Saya sangat sendiri",
+        "Aku sangat kesepian",
+        "Aku sangat kesepian",
+        "Saya merasa kesepian"
+      ],
+      "tests": [
+        "Aku benar-benar sendiri",
+        "Saya merasa kesepian",
+        "Saya merasa sendirian",
+        "Aku benar-benar sendiri",
+        "Aku terlalu kesepian"
+      ]
+    },
+    {
+      "id": 40,
+      "intent": "smalltalk.waiting",
+      "utterances": [
+        "Saya menunggu",
+        "masih menunggu",
+        "Berapa lama aku akan menunggu",
+        "Aku akan menunggu",
+        "Saya tidak bisa menunggu"
+      ],
+      "tests": [
+        "Aku akan menunggu",
+        "Saya tidak bisa menunggu lagi",
+        "Aku masih menunggu",
+        "Anda membuat saya menunggu terlalu lama",
+        "Saya sedang menunggu"
+      ]
+    },
+    {
+      "id": 41,
+      "intent": "trivia.caffeine",
+      "utterances": [
+        "beri tahu saya minuman yang mengandung kafein",
+        "minuman apa yang mengandung kafein",
+        "di mana saya dapat menemukan kafein?",
+        "minuman apa yang bisa menghindariku dari tidur?",
+        "minuman apa yang mengandung kafein"
+      ],
+      "tests": [
+        "apa yang bisa saya minum untuk tidak tidur",
+        "minuman apa dengan kafein lho",
+        "apa yang bisa saya minum untuk tidak tidur",
+        "beri tahu saya minuman dengan kafein",
+        "di mana saya dapat menemukan kafein"
+      ]
+    },
+    {
+      "id": 42,
+      "intent": "trivia.relativitas",
+      "utterances": [
+        "apa teori relativitas",
+        "yang memperkenalkan relativitas dalam fisika",
+        "ceritakan tentang relativitas Einstein",
+        "dapatkah Anda mendefinisikan relativitas?",
+        "siapa bapak teori relativitas"
+      ],
+      "tests": [
+        "apa relativitas dalam fisika?",
+        "definisikan relativitas einstein",
+        "teori apa yang memperkenalkan einstein dalam fisika",
+        "teori einstein",
+        "mari kita bicara tentang relativitas"
+      ]
+    },
+    {
+      "id": 43,
+      "intent": "trivia.iron",
+      "utterances": [
+        "apa sifat kimia besi",
+        "simbol kimia besi",
+        "beri tahu saya sifat besi",
+        "besi dalam kimia",
+        "gambarkan besi"
+      ],
+      "tests": [
+        "beri tahu saya beberapa properti besi",
+        "besi kimia",
+        "properti besi",
+        "ceritakan tentang besi",
+        "gambarkan besi"
+      ]
+    },
+    {
+      "id": 44,
+      "intent": "trivia.nlp",
+      "utterances": [
+        "apa itu nlp",
+        "beri tahu saya tentang pemrosesan bahasa alami",
+        "apa itu nlu",
+        "mendeskripsikan pemahaman bahasa alami",
+        "beri tahu saya apa itu bahasa alami"
+      ],
+      "tests": [
+        "bagaimana mesin memahami bahasa alami",
+        "gambarkan NLP",
+        "bagaimana Anda memahami bahasa",
+        "ceritakan tentang nlu",
+        "mari kita bicara tentang bahasa alami"
+      ]
+    },
+    {
+      "id": 45,
+      "intent": "trivia.compiler",
+      "utterances": [
+        "apa itu kompiler?",
+        "bagaimana kompiler bekerja?",
+        "apa gunanya kompiler?",
+        "mengapa programmer perlu menggunakan kompiler?",
+        "beritahu saya apa yang Anda ketahui tentang kompiler"
+      ],
+      "tests": [
+        "jelaskan proses kompilasi",
+        "bagaimana mesin mengkompilasi kode",
+        "untuk apa kompiler?",
+        "bagaimana komputer saya menyusun kode saya",
+        "apa yang Anda ketahui tentang kompiler"
+      ]
+    },
+    {
+      "id": 46,
+      "intent": "trivia.galicia",
+      "utterances": [
+        "dimana Galicia?",
+        "apa tempat makan terbaik di Spanyol",
+        "ceritakan tentang Galicia",
+        "apa yang kamu ketahui tentang galicia",
+        "keahlian memasak terbaik di spanyol"
+      ],
+      "tests": [
+        "mari kita bicara tentang galicia",
+        "tempat makan di spanyol",
+        "keahlian memasak spanyol",
+        "di mana saya dapat menemukan galicia",
+        "galicia dan gastronomi"
+      ]
+    },
+    {
+      "id": 47,
+      "intent": "trivia.coercion",
+      "utterances": [
+        "apa itu paksaan",
+        "bagaimana javascript membandingkan dua jenis yang berbeda",
+        "apa itu pemaksaan implisit",
+        "bagaimana paksaan bekerja di javascript",
+        "gambarkan pemaksaan"
+      ],
+      "tests": [
+        "bagaimana javascript melakukan paksaan",
+        "jenis perbandingan javascript",
+        "paksaan dalam javascript",
+        "mari kita bicara tentang paksaan",
+        "beritahu saya bagaimana paksaan bekerja"
+      ]
+    },
+    {
+      "id": 48,
+      "intent": "trivia.callback",
+      "utterances": [
+        "apa callback hell",
+        "apa itu panggilan balik",
+        "haruskah saya menggunakan panggilan balik atau janji?",
+        "apa itu panggilan balik javascript",
+        "apa artinya meneruskan fungsi ke fungsi lain di javascript"
+      ],
+      "tests": [
+        "apa itu panggilan balik",
+        "haruskah saya menggunakan panggilan balik?",
+        "panggilan balik javascript",
+        "fungsi panggilan balik dalam javascript",
+        "mengapa saya membutuhkan panggilan balik"
+      ]
+    },
+    {
+      "id": 49,
+      "intent": "trivia.gc",
+      "utterances": [
+        "cara kerja pengumpulan sampah",
+        "apa itu scavenge",
+        "apa itu mark and sweep",
+        "beri tahu saya tentang pengumpul sampah di javascript",
+        "mengapa saya perlu tahu tentang pengumpulan sampah"
+      ],
+      "tests": [
+        "cara kerja pengumpulan sampah",
+        "bagaimana javascript mengumpulkan sampah",
+        "mengais vs menandai dan menyapu",
+        "saat pengumpul sampah bekerja",
+        "jelaskan proses pengumpulan sampah"
+      ]
+    },
+    {
+      "id": 50,
+      "intent": "trivia.arrow",
+      "utterances": [
+        "kapan fungsi panah diperkenalkan ke javascript",
+        "apa itu fungsi panah",
+        "apa yang lebih baik dari fungsi anonim",
+        "anonim vs panah",
+        "panah di ecmascript"
+      ],
+      "tests": [
+        "apa itu fungsi panah",
+        "pendekatan yang lebih baik daripada fungsi anonim",
+        "bernama vs anonim vs panah",
+        "memahami fungsi panah",
+        "javascript memiliki fungsi panah?"
+      ]
+    },
+    {
+      "id": 0,
+      "intent": "None",
+      "utterances": [],
+      "tests": [
+        "Perkembangan ekonomi meningkatkan pasar",
+        "siapa nama presiden pertama",
+        "Saya lebih suka beta max daripada vhs",
+        "Saya harus menggunakan lensa kontak",
+        "Saya melacak alamat IP penyerang",
+        "Saya memiliki email baru dari grup pecinta kucing saya"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Corpus with entities",
+  "locale": "en-US",
+  "contextData": "./heros.json",
+  "data": [
+    {
+      "intent": "hero.realname",
+      "utterances": [
+        "what is the real name of @hero"
+      ],
+      "answers": [
+        "The real name of {{ hero }} is {{ _data[entities.hero.option].realName }}"
+      ]
+    },
+    {
+      "intent": "hero.city",
+      "utterances": [
+        "where @hero lives?",
+        "what's the city of @hero?"
+      ],
+      "answers": [
+        "{{ hero }} lives at {{ _data[entities.hero.option].city }}"
+      ]
+    }
+  ],
+  "entities": {
+    "hero": {
+      "options": {
+        "spiderman": ["spiderman", "spider-man"],
+        "ironman": ["ironman", "iron-man"],
+        "thor": ["thor"]
+      }
+    },
+    "email": "/\\b(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3})\\b/gi"
+  }
+}

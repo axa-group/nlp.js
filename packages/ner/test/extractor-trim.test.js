@@ -208,5 +208,28 @@ describe('Extractor Trim', () => {
         },
       ]);
     });
+
+    test('It should be able to retrieve at start of utterance', async () => {
+      const ner = new Ner();
+      ner.addAfterLastCondition('en', 'entity', 'from');
+      const input = {
+        text: 'from Barcelona to Madrid',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'afterLast',
+          start: 5,
+          end: 23,
+          len: 19,
+          accuracy: 0.99,
+          sourceText: 'Barcelona to Madrid',
+          utteranceText: 'Barcelona to Madrid',
+          entity: 'entity',
+        },
+      ]);
+    });
   });
 });
