@@ -1,0 +1,22 @@
+{
+  "settings": {
+    "nlp": {
+      "corpora": ["./corpus.json"],
+      "nlu": { "log": true }
+    },
+    "api-server": {
+      "port": 3000,
+      "serveBot": true      
+    }
+  },
+  "use": [
+    { "className": "logger", "path": "../../packages/logger/src" },
+    { "className": "Evaluator", "path": "../../packages/evaluator/src" },
+    { "className": "JavascriptCompiler", "path": "../../packages/evaluator/src" },
+    { "className": "Template", "path": "../../packages/evaluator/src" },
+    { "className": "Nlp", "path": "../../packages/nlp/src" },
+    { "className": "LangEn", "path": "../../packages/lang-en/src" },
+    { "className": "ExpressApiServer", "path": "../../packages/express-api-server/src" },
+    { "className": "DirectlineConnector", "path": "../../packages/directline-connector/src" }
+  ]
+}
