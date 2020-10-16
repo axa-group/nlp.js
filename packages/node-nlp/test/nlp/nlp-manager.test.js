@@ -1547,4 +1547,205 @@ describe('NLP Manager', () => {
       expect(manager.nlp.nlgManager.responses.es.realname).toBeDefined();
     });
   });
+
+  describe('addBetweenCondition', () => {
+    test('It should extract a between rule', async () => {
+      const nlp = new NlpManager({ forceNER: true });
+      nlp.addBetweenCondition('en', 'entity', 'from', 'to');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid to Barcelona',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          start: 18,
+          end: 23,
+          accuracy: 1,
+          sourceText: 'Madrid',
+          entity: 'entity',
+          type: 'trim',
+          subtype: 'between',
+          utteranceText: 'Madrid',
+          len: 6,
+        },
+      ]);
+    });
+  });
+
+  describe('addBeforeCondition', () => {
+    test('It should extract a before rule', async () => {
+      const nlp = new NlpManager({ forceNER: true });
+      nlp.addBeforeCondition('en', 'entity', 'from');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid from Barcelona',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'before',
+          start: 0,
+          end: 11,
+          len: 12,
+          accuracy: 0.99,
+          sourceText: 'I have to go',
+          utteranceText: 'I have to go',
+          entity: 'entity',
+          alias: 'entity_0',
+        },
+        {
+          type: 'trim',
+          subtype: 'before',
+          start: 18,
+          end: 23,
+          len: 6,
+          accuracy: 0.99,
+          sourceText: 'Madrid',
+          utteranceText: 'Madrid',
+          entity: 'entity',
+          alias: 'entity_1',
+        },
+      ]);
+    });
+  });
+
+  describe('addBeforeLastCondition', () => {
+    test('It should extract a before last rule', async () => {
+      const nlp = new NlpManager({ forceNER: true });
+      nlp.addBeforeLastCondition('en', 'entity', 'from');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid from Barcelona',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'beforeLast',
+          start: 0,
+          end: 23,
+          len: 24,
+          accuracy: 0.99,
+          sourceText: 'I have to go from Madrid',
+          utteranceText: 'I have to go from Madrid',
+          entity: 'entity',
+        },
+      ]);
+    });
+  });
+
+  describe('addBeforeFirstCondition', () => {
+    test('It should extract a before first rule', async () => {
+      const nlp = new NlpManager({ forceNER: true });
+      nlp.addBeforeFirstCondition('en', 'entity', 'from');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid from Barcelona',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'beforeFirst',
+          start: 0,
+          end: 11,
+          len: 12,
+          accuracy: 0.99,
+          sourceText: 'I have to go',
+          utteranceText: 'I have to go',
+          entity: 'entity',
+        },
+      ]);
+    });
+  });
+
+  describe('addAfterCondition', () => {
+    test('It should extract a get after rule', async () => {
+      const nlp = new NlpManager({ forceNER: true });
+      nlp.addAfterCondition('en', 'entity', 'from');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid from Barcelona',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'after',
+          start: 18,
+          end: 23,
+          len: 6,
+          accuracy: 0.99,
+          sourceText: 'Madrid',
+          utteranceText: 'Madrid',
+          entity: 'entity',
+          alias: 'entity_0',
+        },
+        {
+          type: 'trim',
+          subtype: 'after',
+          start: 30,
+          end: 38,
+          len: 9,
+          accuracy: 0.99,
+          sourceText: 'Barcelona',
+          utteranceText: 'Barcelona',
+          entity: 'entity',
+          alias: 'entity_1',
+        },
+      ]);
+    });
+  });
+
+  describe('addAfterFirstCondition', () => {
+    test('It should extract a get after first rule', async () => {
+      const nlp = new NlpManager({ forceNER: true });
+      nlp.addAfterFirstCondition('en', 'entity', 'from');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid from Barcelona',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'afterFirst',
+          start: 18,
+          end: 38,
+          len: 21,
+          accuracy: 0.99,
+          sourceText: 'Madrid from Barcelona',
+          utteranceText: 'Madrid from Barcelona',
+          entity: 'entity',
+        },
+      ]);
+    });
+  });
+
+  describe('addAfterLastCondition', () => {
+    test('It should extract a get after last rule', async () => {
+      const nlp = new NlpManager({ forceNER: true });
+      nlp.addAfterLastCondition('en', 'entity', 'from');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid from Barcelona',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'afterLast',
+          start: 30,
+          end: 38,
+          len: 9,
+          accuracy: 0.99,
+          sourceText: 'Barcelona',
+          utteranceText: 'Barcelona',
+          entity: 'entity',
+        },
+      ]);
+    });
+  });
 });

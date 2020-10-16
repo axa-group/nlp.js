@@ -190,7 +190,7 @@ class NlpManager {
   }
 
   addBeforeLastCondition(locale, name, words, opts) {
-    return this.ner.addNerBeforeLastCondition(locale, name, words, opts);
+    return this.nlp.addNerBeforeLastCondition(locale, name, words, opts);
   }
 
   describeLanguage(locale, name) {
