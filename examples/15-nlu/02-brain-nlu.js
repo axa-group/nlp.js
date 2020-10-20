@@ -21,39 +21,30 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Language } = require('./language');
-const { NlpUtil, NlpManager, NlpExcelReader } = require('./nlp');
-const { XTableUtils, XTable, XDoc } = require('./xtables');
-const { removeEmojis, Evaluator, SpellCheck, Handlebars } = require('./util');
-const { ActionManager, NlgManager } = require('./nlg');
-const { NeuralNetwork } = require('./classifiers');
-const { SentimentAnalyzer, SentimentManager } = require('./sentiment');
-const {
-  Recognizer,
-  ConversationContext,
-  MemoryConversationContext,
-} = require('./recognizer');
-const { BrainNLU } = require('./nlu');
+const { BrainNLU } = require('../../packages/node-nlp/src');
+// const { BrainNLU } = require('node-nlp');
+const corpus = require('./corpus50.json');
 
-module.exports = {
-  Language,
-  NlpUtil,
-  NlpManager,
-  NlpExcelReader,
-  XTableUtils,
-  XTable,
-  XDoc,
-  removeEmojis,
-  Evaluator,
-  SpellCheck,
-  Handlebars,
-  ActionManager,
-  NlgManager,
-  NeuralNetwork,
-  SentimentAnalyzer,
-  SentimentManager,
-  Recognizer,
-  ConversationContext,
-  MemoryConversationContext,
-  BrainNLU,
-};
+(async () => {
+  const nlu = new BrainNLU({ language: 'en' });
+  for (let i = 0; i < corpus.data.length; i += 1) {
+    const { utterances, intent } = corpus.data[i];
+    for (let j = 0; j < utterances.length; j += 1) {
+      nlu.add(utterances[j], intent);
+    }
+  }
+  await nlu.train();
+  let total = 0;
+  let good = 0;
+  for (let i = 0; i < corpus.data.length; i += 1) {
+    const { tests, intent } = corpus.data[i];
+    for (let j = 0; j < tests.length; j += 1) {
+      const classification = await nlu.getBestClassification(tests[j]);
+      total += 1;
+      if (classification.intent === intent) {
+        good += 1;
+      }
+    }
+  }
+  console.log(`Good: ${good} Total: ${total} Precision: ${good / total}`);
+})();

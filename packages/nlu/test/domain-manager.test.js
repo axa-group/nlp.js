@@ -27,6 +27,10 @@ const { addFoodDomain, addPersonalityDomain } = require('./domains');
 
 describe('Domain Manager', () => {
   describe('Constructor', () => {
+    test('It should create a new instance without settings', () => {
+      const manager = new DomainManager();
+      expect(manager).toBeDefined();
+    });
     test('It should create a new instance', () => {
       const manager = new DomainManager({ container });
       expect(manager).toBeDefined();
@@ -80,6 +84,17 @@ describe('Domain Manager', () => {
       const instance2 = manager.getDomainInstance('domain2');
       expect(instance2.constructor.name).toEqual('OtherNlu');
     });
+    test('If className is undefined, NeuralNlu is used', () => {
+      const manager = new DomainManager({ container });
+      manager.settings.nluByDomain.domain2 = {
+        className: undefined,
+        settings: undefined,
+      };
+      const instance = manager.getDomainInstance('domain');
+      expect(instance.constructor.name).toEqual('NeuralNlu');
+      const instance2 = manager.getDomainInstance('domain2');
+      expect(instance2.constructor.name).toEqual('NeuralNlu');
+    });
   });
 
   describe('Add domain', () => {
@@ -106,6 +121,14 @@ describe('Domain Manager', () => {
       const instance2 = manager.addDomain('domain');
       expect(instance2).toBeDefined();
       expect(instance2).not.toBe(instance);
+    });
+  });
+
+  describe('Prepare', () => {
+    test('it can prepare an string', async () => {
+      const manager = new DomainManager({ container });
+      const tokens = await manager.prepare('There is a developer');
+      expect(tokens).toEqual({ a: 1, developer: 1, is: 1, there: 1 });
     });
   });
 
@@ -210,6 +233,17 @@ describe('Domain Manager', () => {
       const manager = new DomainManager({ container });
       addFoodDomain(manager);
       addPersonalityDomain(manager);
+      await manager.train();
+      const actual = await manager.process('tell me what is in my basket');
+      expect(actual.domain).toEqual('food');
+      expect(actual.classifications[0].intent).toEqual('order.check');
+      expect(actual.classifications[0].score).toBeGreaterThan(0.5);
+    });
+    test('Can be trained twice', async () => {
+      const manager = new DomainManager({ container });
+      addFoodDomain(manager);
+      addPersonalityDomain(manager);
+      await manager.train();
       await manager.train();
       const actual = await manager.process('tell me what is in my basket');
       expect(actual.domain).toEqual('food');

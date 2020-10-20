@@ -87,6 +87,7 @@ class NluManager extends Clonable {
               locale,
               ...this.settings.domain,
               useNoneFeature: this.settings.useNoneFeature,
+              trainByDomain: this.settings.trainByDomain,
             },
             this.container
           );
