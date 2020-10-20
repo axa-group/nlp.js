@@ -46,5 +46,5 @@ const corpus = require('./corpus50.json');
       }
     }
   }
-  console.log(`Good: ${good} Total: ${total} Precision: ${good/total}`);
+  console.log(`Good: ${good} Total: ${total} Precision: ${good / total}`);
 })();
