@@ -34,3 +34,6 @@ Shows how to use _StemmerEs_ class to normalize, tokenize, remove stopwords and 
 
 ## 11 sentiment analysis
 Shows how to analyze sentiment from a spanish sentence.
+
+## 12 benchmark
+Benchmark with a corpus
