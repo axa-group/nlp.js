@@ -175,6 +175,7 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
 - Languages
   - [English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)
   - [Indonesian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)
+  - [Italian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-it/README.md)
   - [Spanish](https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
