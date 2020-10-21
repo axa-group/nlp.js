@@ -55,7 +55,7 @@ Languages not included in this list can be still supported, but without stemming
 | io     | Ido                   |                |       X      |                    |                   |           |
 | id     | [Indonesian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)            |        X       |       X      |                    |         X         |     X     |
 | ga     | Irish                 |        X       |       X      |                    |         X         |     X     |
-| it     | Italian               |        X       |       X      |                    |         X         |     X     |
+| it     | [Italian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-it/README.md)               |        X       |       X      |                    |         X         |     X     |
 | ja     | Japanese              |        X       |       X      |          X         |         X         |           |
 | jv     | Javanese              |                |       X      |                    |                   |           |
 | kn     | Kannada               |                |       X      |                    |         X         |           |

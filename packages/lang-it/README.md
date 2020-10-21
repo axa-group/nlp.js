@@ -41,15 +41,15 @@ You can install @nlpjs/lang-it:
 ## Normalization
 
 Normalization of a text converts it to lowercase and remove decorations of characters.
-
+ 
 ```javascript
 const { NormalizerIt } = require('@nlpjs/lang-it');
 
-const normalizer = new NormalizerEs();
-const input = 'questo dovrebbe essere normalizzato';
+const normalizer = new NormalizerIt();
+const input = 'Questo dòvrebbe essere normalizzato';
 const result = normalizer.normalize(input);
 console.log(result);
-// output: esto deberia ser normalizado
+// output: questo dovrebbe essere normalizzato
 ```
 
 ## Tokenization
@@ -57,64 +57,64 @@ console.log(result);
 Tokenization splits a sentence into words.
 
 ```javascript
-const { TokenizerEs } = require('@nlpjs/lang-es');
+const { TokenizerIt } = require('@nlpjs/lang-it');
 
-const tokenizer = new TokenizerEs();
-const input = "Esto debería ser tokenizado";
+const tokenizer = new TokenizerIt();
+const input = 'Questo dovrebbe essere tokenizzato';
 const result = tokenizer.tokenize(input);
 console.log(result);
-// output: [ 'Esto', 'debería', 'ser', 'tokenizado' ]
+// output: [ 'Questo', 'dovrebbe', 'essere', 'tokenizzato' ]
 ```
 
 Tokenizer can also normalize the sentence before tokenizing, to do that provide a _true_ as second argument to the method _tokenize_
 
 ```javascript
-const { TokenizerEs } = require('@nlpjs/lang-es');
+const { TokenizerIt } = require('@nlpjs/lang-it');
 
-const tokenizer = new TokenizerEs();
-const input = "Esto debería ser tokenizado";
+const tokenizer = new TokenizerIt();
+const input = 'Questo dovrebbe essere tokenizzato';
 const result = tokenizer.tokenize(input, true);
 console.log(result);
-// output: [ 'esto', 'deberia', 'ser', 'tokenizado' ]
+// output: [ 'questo', 'dovrebbe', 'essere', 'tokenizzato' ]
 ```
 
 ## Identify if a word is an italian stopword
 
-Using the class _StopwordsEs_ you can identify if a word is an stopword:
+Using the class _StopwordsIt_ you can identify if a word is an stopword:
 
 ```javascript
-const { StopwordsEs } = require('@nlpjs/lang-es');
+const { StopwordsIt } = require('@nlpjs/lang-it');
 
-const stopwords = new StopwordsEs();
-console.log(stopwords.isStopword('un'));
+const stopwords = new StopwordsIt();
+console.log(stopwords.isStopword('uno'));
 // output: true
-console.log(stopwords.isStopword('desarrollador'));
+console.log(stopwords.isStopword('sviluppatore'));
 // output: false
 ```
 
 ## Remove stopwords from an array of words
 
-Using the class _StopwordsEs_ you can remove stopwords form an array of words:
+Using the class _StopwordsIt_ you can remove stopwords form an array of words:
 
 ```javascript
-const { StopwordsEs } = require('@nlpjs/lang-es');
+const { StopwordsIt } = require('@nlpjs/lang-it');
 
-const stopwords = new StopwordsEs();
-console.log(stopwords.removeStopwords(['he', 'visto', 'a', 'un', 'programador']));
-// output: ['he', 'visto', 'programador']
+const stopwords = new StopwordsIt();
+console.log(stopwords.removeStopwords(['ho', 'visto', 'uno', 'sviluppatore']));
+// output: [ 'visto', 'sviluppatore' ]
 ```
 
 ## Change the stopwords dictionary
-Using the class _StopwordsEs_ you can restart it dictionary and build it from another set of words:
+Using the class _StopwordsIt_ you can restart it dictionary and build it from another set of words:
 
 ```javascript
-const { StopwordsEs } = require('@nlpjs/lang-es');
+const { StopwordsIt } = require('@nlpjs/lang-it');
 
-const stopwords = new StopwordsEs();
+const stopwords = new StopwordsIt();
 stopwords.dictionary = {};
-stopwords.build(['he', 'visto']);
-console.log(stopwords.removeStopwords(['he', 'visto', 'a', 'un', 'programador']));
-// output: ['a', 'un', 'programador']
+stopwords.build(['ho', 'visto']);
+console.log(stopwords.removeStopwords(['ho', 'visto', 'uno', 'sviluppatore']));
+// output: [ 'uno', 'sviluppatore' ]
 ```
 
 ## Stemming word by word
@@ -124,10 +124,10 @@ An stemmer is an algorithm to calculate the _stem_ (root) of a word, removing af
 You can stem one word using method _stemWord_:
 
 ```javascript
-const { StemmerEs } = require('@nlpjs/lang-es');
+const { StemmerIt } = require('@nlpjs/lang-it');
 
-const stemmer = new StemmerEs();
-const input = 'programador';
+const stemmer = new StemmerIt();
+const input = 'svilupp';
 console.log(stemmer.stemWord(input));
 // output: program
 ```
@@ -137,68 +137,71 @@ console.log(stemmer.stemWord(input));
 You can stem an array of words using method _stem_:
 
 ```javascript
-const { StemmerEs } = require('@nlpjs/lang-es');
+const { StemmerIt } = require('@nlpjs/lang-it');
 
-const stemmer = new StemmerEs();
-const input = ['he', 'visto', 'a', 'un', 'programador'];
+const stemmer = new StemmerIt();
+const input = ['ho', 'visto', 'uno', 'sviluppatore'];
 console.log(stemmer.stem(input));
-// outuput: [ 'hab', 'vist', 'a', 'un', 'program' ]
+// outuput: [ 'ho', 'vist', 'uno', 'svilupp' ]
 ```
 
 ## Normalizing, Tokenizing and Stemming a sentence
 
 As you can see, stemmer does not do internal normalization, so words with uppercases will remain uppercased. 
-Also, stemmer works with lowercased affixes, so _programador_ will be stemmed as _program_ but _PROGRAMADOR_ will not be changed.
+Also, stemmer works with lowercased affixes, so _sviluppatore_ will be stemmed as _svilupp_ but _SVILUPPATORE_ will not be changed.
 
 You can tokenize and stem a sentence, including normalization, with the method _tokenizeAndStem_:
 
 ```javascript
-const { StemmerEs } = require('@nlpjs/lang-es');
+const { StemmerIt } = require('@nlpjs/lang-it');
 
-const stemmer = new StemmerEs();
-const input = 'He visto a un PROGRAMADOR';
+const stemmer = new StemmerIt();
+const input = 'Ho visto uno SVILUPPATORE';
 console.log(stemmer.tokenizeAndStem(input));
-// output: [ 'hab', 'vist', 'a', 'un', 'program' ]
+// output: [ 'ho', 'vist', 'uno', 'svilupp' ]
 ```
 
 ## Remove stopwords when stemming a sentence
 
-When calling _tokenizeAndStem_ method from the class _StemmerES_, the second parameter is a boolean to set if the stemmer must keep the stopwords (true) or remove them (false). Before using it, the stopwords instance must be set into the stemmer:
+When calling _tokenizeAndStem_ method from the class _StemmerIt_, the second parameter is a boolean to set if the stemmer must keep the stopwords (true) or remove them (false). Before using it, the stopwords instance must be set into the stemmer:
 
 ```javascript
-const { StemmerEs, StopwordsEs } = require('@nlpjs/lang-es');
+const { StemmerIt, StopwordsIt } = require('@nlpjs/lang-it');
 
-const stemmer = new StemmerEs();
-stemmer.stopwords = new StopwordsEs();
-const input = 'he visto a un programador';
+const stemmer = new StemmerIt();
+stemmer.stopwords = new StopwordsIt();
+const input = 'Ho visto uno sviluppatore';
 console.log(stemmer.tokenizeAndStem(input, false));
-// output: ['hab', 'vist', 'program']
+// output: [ 'vist', 'svilupp' ]
 ```
 
 ## Sentiment Analysis
 
-To use sentiment analysis you'll need to create a new _Container_ and use the plugin _LangES_, because internally the _SentimentAnalyzer_ class try to retrieve the normalizer, tokenizer, stemmmer and sentiment dictionaries from the container.
+To use sentiment analysis you'll need to create a new _Container_ and use the plugin _LangIt_, because internally the _SentimentAnalyzer_ class try to retrieve the normalizer, tokenizer, stemmmer and sentiment dictionaries from the container.
 
 ```javascript
 const { Container } = require('@nlpjs/core');
 const { SentimentAnalyzer } = require('@nlpjs/sentiment');
-const { LangEs } = require('@nlpjs/lang-es');
+const { LangIt } = require('@nlpjs/lang-it');
 
 (async () => {
   const container = new Container();
-  container.use(LangEs);
+  container.use(LangIt);
   const sentiment = new SentimentAnalyzer({ container });
-  const result = await sentiment.process({ locale: 'es', text: 'me gustan los gatos' });
+  const result = await sentiment.process({
+    locale: 'it',
+    text: 'amore per i gatti',
+  });
   console.log(result.sentiment);
 })();
 // output:
 // {
-//   score: 0.266,
+//   score: 0.25,
 //   numWords: 4,
-//   numHits: 1,
-//   average: 0.0665,
-//   type: 'senticon',
-//   locale: 'es',
+//   numHits: 2,
+//   average: 0.0625,
+//   type: 'pattern',
+//   locale: 'it',
 //   vote: 'positive'
 // }
 ```
@@ -217,29 +220,29 @@ The output of the sentiment analysis includes:
 ```javascript
 const { containerBootstrap } = require('@nlpjs/core');
 const { Nlp } = require('@nlpjs/nlp');
-const { LangEs } = require('@nlpjs/lang-es');
+const { LangIt } = require('@nlpjs/lang-it');
 
 (async () => {
   const container = await containerBootstrap();
   container.use(Nlp);
-  container.use(LangEs);
+  container.use(LangIt);
   const nlp = container.get('nlp');
   nlp.settings.autoSave = false;
-  nlp.addLanguage('es');
+  nlp.addLanguage('it');
   // Adds the utterances and intents for the NLP
-  nlp.addDocument('es', 'adios por ahora', 'greetings.bye');
-  nlp.addDocument('es', 'adios y ten cuidado', 'greetings.bye');
-  nlp.addDocument('es', 'muy bien nos vemos luego', 'greetings.bye');
-  nlp.addDocument('es', 'debo irme', 'greetings.bye');
-  nlp.addDocument('es', 'hola', 'greetings.hello');
+  nlp.addDocument('it', 'Addio per ora', 'greetings.bye');
+  nlp.addDocument('it', 'arrivederci e stai attento', 'greetings.bye');
+  nlp.addDocument('it', 'molto bene a dopo', 'greetings.bye');
+  nlp.addDocument('it', 'devo andare', 'greetings.bye');
+  nlp.addDocument('it', 'ciao', 'greetings.hello');
   
   // Train also the NLG
-  nlp.addAnswer('es', 'greetings.bye', 'hasta la proxima');
-  nlp.addAnswer('es', 'greetings.bye', '¡te veo pronto!');
-  nlp.addAnswer('es', 'greetings.hello', '¡hola que tal!');
-  nlp.addAnswer('es', 'greetings.hello', '¡salludos!');
+  nlp.addAnswer('it', 'greetings.bye', 'fino alla prossima volta');
+  nlp.addAnswer('it', 'greetings.bye', 'A presto!');
+  nlp.addAnswer('it', 'greetings.hello', 'Ciao, come stai');
+  nlp.addAnswer('it', 'greetings.hello', 'Saluti!');
   await nlp.train();
-  const response = await nlp.process('es', 'debo irme');
+  const response = await nlp.process('it', 'devo andare');
   console.log(response);
 })();
 ```
