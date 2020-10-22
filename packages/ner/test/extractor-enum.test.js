@@ -275,5 +275,37 @@ describe('Extractor Enum', () => {
         },
       ]);
     });
+
+    test('It should extract enum entities when exact is marked', async () => {
+      const ner = new Ner({ threshold: 1 });
+      ner.addRuleOptionTexts('en', 'hero', 'spiderman', [
+        'Spiderman',
+        'spider-man',
+      ]);
+      ner.addRuleOptionTexts('en', 'hero', 'iron man', [
+        'iron man',
+        'iron-man',
+      ]);
+      ner.addRuleOptionTexts('en', 'hero', 'thor', ['Thor']);
+      const input = {
+        text: 'I saw spiderman eating spaghetti in the city',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([
+        {
+          start: 6,
+          end: 14,
+          len: 9,
+          levenshtein: 0,
+          accuracy: 1,
+          entity: 'hero',
+          type: 'enum',
+          option: 'spiderman',
+          sourceText: 'Spiderman',
+          utteranceText: 'spiderman',
+        },
+      ]);
+    });
   });
 });
