@@ -142,7 +142,7 @@ class MemorydbAdapter extends Clonable {
     for (let i = 0; i < keys.length; i += 1) {
       const item = collection[keys[i]];
       if (
-        conditionKeys === 0 ||
+        conditionKeys.lenght === 0 ||
         MemorydbAdapter.match(item, condition || {}, conditionKeys)
       ) {
         if (pendingOffset > 0) {
