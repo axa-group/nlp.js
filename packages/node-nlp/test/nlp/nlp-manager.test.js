@@ -23,6 +23,30 @@
 
 const { NlpManager } = require('../../src');
 
+function addEntities(manager) {
+  manager.addNamedEntityText(
+    'hero',
+    'spiderman',
+    ['en'],
+    ['Spiderman', 'Spider-man']
+  );
+  manager.addNamedEntityText(
+    'hero',
+    'iron man',
+    ['en'],
+    ['iron man', 'iron-man']
+  );
+  manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
+  manager.addNamedEntityText(
+    'food',
+    'burguer',
+    ['en'],
+    ['Burguer', 'Hamburguer']
+  );
+  manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
+  manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
+}
+
 describe('NLP Manager', () => {
   describe('constructor', () => {
     test('Should create a new instance', () => {
@@ -161,71 +185,13 @@ describe('NLP Manager', () => {
         1
       );
     });
-    //   test('Should extract managed named entities', () => {
-    //     const manager = new NlpManager();
-    //     manager.addLanguage(['en', 'es']);
-    //     manager.addNamedEntityText(
-    //       'hero',
-    //       'spiderman',
-    //       ['en'],
-    //       ['Spiderman', 'Spider-man']
-    //     );
-    //     manager.addNamedEntityText(
-    //       'hero',
-    //       'iron man',
-    //       ['en'],
-    //       ['iron man', 'iron-man']
-    //     );
-    //     manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-    //     manager.addNamedEntityText(
-    //       'food',
-    //       'burguer',
-    //       ['en'],
-    //       ['Burguer', 'Hamburguer']
-    //     );
-    //     manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-    //     manager.addNamedEntityText(
-    //       'food',
-    //       'pasta',
-    //       ['en'],
-    //       ['Pasta', 'spaghetti']
-    //     );
-    //     manager.addDocument('en', 'I saw %hero%', 'sawhero');
-    //     expect(manager.slotManager.intents.sawhero).toBeDefined();
-    //     expect(manager.slotManager.intents.sawhero.hero).toBeDefined();
-    //   });
   });
 
   describe('Remove named entity text', () => {
     test('Should remove texts of named entity', () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'es']);
-      manager.addNamedEntityText(
-        'hero',
-        'spiderman',
-        ['en'],
-        ['Spiderman', 'Spider-man']
-      );
-      manager.addNamedEntityText(
-        'hero',
-        'iron man',
-        ['en'],
-        ['iron man', 'iron-man']
-      );
-      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      manager.addNamedEntityText(
-        'food',
-        'burguer',
-        ['en'],
-        ['Burguer', 'Hamburguer']
-      );
-      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-      manager.addNamedEntityText(
-        'food',
-        'pasta',
-        ['en'],
-        ['Pasta', 'spaghetti']
-      );
+      addEntities(manager);
       manager.removeNamedEntityText('hero', 'iron man', 'en', 'iron-man');
       const ironman = manager.nlp.getRulesByName('en', 'hero');
       expect(ironman.rules[1].texts).toEqual(['iron man']);
@@ -433,32 +399,7 @@ describe('NLP Manager', () => {
     test('Should search for entities', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
-      manager.addNamedEntityText(
-        'hero',
-        'spiderman',
-        ['en'],
-        ['Spiderman', 'Spider-man']
-      );
-      manager.addNamedEntityText(
-        'hero',
-        'iron man',
-        ['en'],
-        ['iron man', 'iron-man']
-      );
-      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      manager.addNamedEntityText(
-        'food',
-        'burguer',
-        ['en'],
-        ['Burguer', 'Hamburguer']
-      );
-      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-      manager.addNamedEntityText(
-        'food',
-        'pasta',
-        ['en'],
-        ['Pasta', 'spaghetti']
-      );
+      addEntities(manager);
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument(
         'en',
@@ -476,32 +417,7 @@ describe('NLP Manager', () => {
     test('Should search for entities if the language is specified', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
-      manager.addNamedEntityText(
-        'hero',
-        'spiderman',
-        ['en'],
-        ['Spiderman', 'Spider-man']
-      );
-      manager.addNamedEntityText(
-        'hero',
-        'iron man',
-        ['en'],
-        ['iron man', 'iron-man']
-      );
-      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      manager.addNamedEntityText(
-        'food',
-        'burguer',
-        ['en'],
-        ['Burguer', 'Hamburguer']
-      );
-      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-      manager.addNamedEntityText(
-        'food',
-        'pasta',
-        ['en'],
-        ['Pasta', 'spaghetti']
-      );
+      addEntities(manager);
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument(
         'en',
@@ -520,32 +436,7 @@ describe('NLP Manager', () => {
     test('If the locale is not provided, then guess language', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
-      manager.addNamedEntityText(
-        'hero',
-        'spiderman',
-        ['en'],
-        ['Spiderman', 'Spider-man']
-      );
-      manager.addNamedEntityText(
-        'hero',
-        'iron man',
-        ['en'],
-        ['iron man', 'iron-man']
-      );
-      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      manager.addNamedEntityText(
-        'food',
-        'burguer',
-        ['en'],
-        ['Burguer', 'Hamburguer']
-      );
-      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-      manager.addNamedEntityText(
-        'food',
-        'pasta',
-        ['en'],
-        ['Pasta', 'spaghetti']
-      );
+      addEntities(manager);
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument(
         'en',
@@ -714,32 +605,7 @@ describe('NLP Manager', () => {
     test('Should search for entities', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
-      manager.addNamedEntityText(
-        'hero',
-        'spiderman',
-        ['en'],
-        ['Spiderman', 'Spider-man']
-      );
-      manager.addNamedEntityText(
-        'hero',
-        'iron man',
-        ['en'],
-        ['iron man', 'iron-man']
-      );
-      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      manager.addNamedEntityText(
-        'food',
-        'burguer',
-        ['en'],
-        ['Burguer', 'Hamburguer']
-      );
-      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-      manager.addNamedEntityText(
-        'food',
-        'pasta',
-        ['en'],
-        ['Pasta', 'spaghetti']
-      );
+      addEntities(manager);
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument(
         'en',
@@ -760,32 +626,7 @@ describe('NLP Manager', () => {
     test('Should search for entities if the language is specified', async () => {
       const manager = new NlpManager({ ner: { builtins: [] } });
       manager.addLanguage(['en']);
-      manager.addNamedEntityText(
-        'hero',
-        'spiderman',
-        ['en'],
-        ['Spiderman', 'Spider-man']
-      );
-      manager.addNamedEntityText(
-        'hero',
-        'iron man',
-        ['en'],
-        ['iron man', 'iron-man']
-      );
-      manager.addNamedEntityText('hero', 'thor', ['en'], ['Thor']);
-      manager.addNamedEntityText(
-        'food',
-        'burguer',
-        ['en'],
-        ['Burguer', 'Hamburguer']
-      );
-      manager.addNamedEntityText('food', 'pizza', ['en'], ['pizza']);
-      manager.addNamedEntityText(
-        'food',
-        'pasta',
-        ['en'],
-        ['Pasta', 'spaghetti']
-      );
+      addEntities(manager);
       manager.addDocument('en', 'I saw %hero% eating %food%', 'sawhero');
       manager.addDocument(
         'en',
