@@ -54,21 +54,22 @@ function addFrJp(manager) {
   manager.addDocument('fr', 'Bonsoir', 'greet');
   manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
   manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-  manager.addDocument(
-    'fr',
-    'Je ne me souviens pas où sont mes clés',
-    'keys'
-  );
+  manager.addDocument('fr', 'Je ne me souviens pas où sont mes clés', 'keys');
   manager.addDocument('ja', 'おはようございます', 'greet');
   manager.addDocument('ja', 'こんにちは', 'greet');
   manager.addDocument('ja', 'おやすみ', 'greet');
   manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
-  manager.addDocument(
-    'ja',
-    '私は私の鍵がどこにあるのか覚えていない',
-    'keys'
-  );
+  manager.addDocument('ja', '私は私の鍵がどこにあるのか覚えていない', 'keys');
   manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+}
+
+function addEn(manager) {
+  manager.addDocument('en', 'Hello', 'greet');
+  manager.addDocument('en', 'Good evening', 'greet');
+  manager.addDocument('en', 'Good morning', 'greet');
+  manager.addDocument('en', "I've lost my keys", 'keys');
+  manager.addDocument('en', "I don't find my keys", 'keys');
+  manager.addDocument('en', "I don't know where are my keys", 'keys');
 }
 
 describe('NLP Manager', () => {
@@ -401,12 +402,7 @@ describe('NLP Manager', () => {
     test('Should classify an utterance without None feature', async () => {
       const manager = new NlpManager({ nlu: { useNoneFeature: false } });
       manager.addLanguage(['en', 'ja']);
-      manager.addDocument('en', 'Hello', 'greet');
-      manager.addDocument('en', 'Good evening', 'greet');
-      manager.addDocument('en', 'Good morning', 'greet');
-      manager.addDocument('en', "I've lost my keys", 'keys');
-      manager.addDocument('en', "I don't find my keys", 'keys');
-      manager.addDocument('en', "I don't know where are my keys", 'keys');
+      addEn(manager);
       await manager.train();
       const result = await manager.process('Where are my keys');
       expect(result).toBeDefined();
@@ -421,12 +417,7 @@ describe('NLP Manager', () => {
     test('Should classify an utterance', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'ja']);
-      manager.addDocument('en', 'Hello', 'greet');
-      manager.addDocument('en', 'Good evening', 'greet');
-      manager.addDocument('en', 'Good morning', 'greet');
-      manager.addDocument('en', "I've lost my keys", 'keys');
-      manager.addDocument('en', "I don't find my keys", 'keys');
-      manager.addDocument('en', "I don't know where are my keys", 'keys');
+      addEn(manager);
       await manager.train();
       const result = await manager.process('Where are my keys');
       expect(result).toBeDefined();
@@ -441,12 +432,7 @@ describe('NLP Manager', () => {
     test('Language can be specified', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'ja']);
-      manager.addDocument('en', 'Hello', 'greet');
-      manager.addDocument('en', 'Good evening', 'greet');
-      manager.addDocument('en', 'Good morning', 'greet');
-      manager.addDocument('en', "I've lost my keys", 'keys');
-      manager.addDocument('en', "I don't find my keys", 'keys');
-      manager.addDocument('en', "I don't know where are my keys", 'keys');
+      addEn(manager);
       await manager.train();
       const result = await manager.process('en', 'where are my keys');
       expect(result).toBeDefined();
@@ -461,12 +447,7 @@ describe('NLP Manager', () => {
     test('If a language not in the manager is passed, then return None classification', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en', 'ja']);
-      manager.addDocument('en', 'Hello', 'greet');
-      manager.addDocument('en', 'Good evening', 'greet');
-      manager.addDocument('en', 'Good morning', 'greet');
-      manager.addDocument('en', "I've lost my keys", 'keys');
-      manager.addDocument('en', "I don't find my keys", 'keys');
-      manager.addDocument('en', "I don't know where are my keys", 'keys');
+      addEn(manager);
       await manager.train();
       const result = await manager.process('es', 'andestán mis llaves');
       expect(result).toBeDefined();
@@ -599,12 +580,7 @@ describe('NLP Manager', () => {
     test('Should return None with score 1 if the utterance cannot be classified', async () => {
       const manager = new NlpManager();
       manager.addLanguage(['en']);
-      manager.addDocument('en', 'Hello', 'greet');
-      manager.addDocument('en', 'Good morning', 'greet');
-      manager.addDocument('en', 'Good evening', 'greet');
-      manager.addDocument('en', 'Where are my keys?', 'keys');
-      manager.addDocument('en', "I don't know where my keys are", 'keys');
-      manager.addDocument('en', "I've lost my keys", 'keys');
+      addEn(manager);
       await manager.train();
       const result = await manager.process('This should return none');
       expect(result.intent).toEqual('None');
@@ -1063,12 +1039,7 @@ describe('NLP Manager', () => {
         processTransformer: transformer,
       });
       manager.addLanguage(['en', 'ja']);
-      manager.addDocument('en', 'Hello', 'greet');
-      manager.addDocument('en', 'Good evening', 'greet');
-      manager.addDocument('en', 'Good morning', 'greet');
-      manager.addDocument('en', "I've lost my keys", 'keys');
-      manager.addDocument('en', "I don't find my keys", 'keys');
-      manager.addDocument('en', "I don't know where are my keys", 'keys');
+      addEn(manager);
       await manager.train();
 
       expect(transformer).not.toHaveBeenCalled();
@@ -1207,12 +1178,7 @@ describe('NLP Manager', () => {
       manager.addLanguage(['en', 'ja']);
       manager.assignDomain('greet', 'domain');
       manager.assignDomain('keys', 'domain');
-      manager.addDocument('en', 'Hello', 'greet');
-      manager.addDocument('en', 'Good evening', 'greet');
-      manager.addDocument('en', 'Good morning', 'greet');
-      manager.addDocument('en', "I've lost my keys", 'keys');
-      manager.addDocument('en', "I don't find my keys", 'keys');
-      manager.addDocument('en', "I don't know where are my keys", 'keys');
+      addEn(manager);
       await manager.train();
       const result = await manager.process('where are my keys');
       expect(result.domain).toEqual('domain');
