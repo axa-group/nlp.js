@@ -47,6 +47,30 @@ function addEntities(manager) {
   manager.addNamedEntityText('food', 'pasta', ['en'], ['Pasta', 'spaghetti']);
 }
 
+function addFrJp(manager) {
+  manager.addLanguage(['fr', 'ja']);
+  manager.addDocument('fr', 'Bonjour', 'greet');
+  manager.addDocument('fr', 'bonne nuit', 'greet');
+  manager.addDocument('fr', 'Bonsoir', 'greet');
+  manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
+  manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
+  manager.addDocument(
+    'fr',
+    'Je ne me souviens pas où sont mes clés',
+    'keys'
+  );
+  manager.addDocument('ja', 'おはようございます', 'greet');
+  manager.addDocument('ja', 'こんにちは', 'greet');
+  manager.addDocument('ja', 'おやすみ', 'greet');
+  manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
+  manager.addDocument(
+    'ja',
+    '私は私の鍵がどこにあるのか覚えていない',
+    'keys'
+  );
+  manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+}
+
 describe('NLP Manager', () => {
   describe('constructor', () => {
     test('Should create a new instance', () => {
@@ -236,17 +260,7 @@ describe('NLP Manager', () => {
   describe('Classify', () => {
     test('Should classify an utterance without None feature', async () => {
       const manager = new NlpManager({ nlu: { useNoneFeature: false } });
-      manager.addLanguage(['fr', 'jp']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument(
-        'fr',
-        'Je ne me souviens pas où sont mes clés',
-        'keys'
-      );
+      addFrJp(manager);
       await manager.train();
       const result = await manager.classify('fr', 'où sont mes clés');
       expect(result.classifications).toHaveLength(2);
@@ -255,17 +269,7 @@ describe('NLP Manager', () => {
     });
     test('Should classify an utterance', async () => {
       const manager = new NlpManager();
-      manager.addLanguage(['fr', 'jp']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument(
-        'fr',
-        'Je ne me souviens pas où sont mes clés',
-        'keys'
-      );
+      addFrJp(manager);
       await manager.train();
       const result = await manager.classify('fr', 'où sont mes clés');
       expect(result.classifications).toHaveLength(3);
@@ -274,27 +278,7 @@ describe('NLP Manager', () => {
     });
     test('Should return a empty classifications if there is not classifier for this language', async () => {
       const manager = new NlpManager();
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument(
-        'fr',
-        'Je ne me souviens pas où sont mes clés',
-        'keys'
-      );
-      manager.addDocument('ja', 'おはようございます', 'greet');
-      manager.addDocument('ja', 'こんにちは', 'greet');
-      manager.addDocument('ja', 'おやすみ', 'greet');
-      manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
-      manager.addDocument(
-        'ja',
-        '私は私の鍵がどこにあるのか覚えていない',
-        'keys'
-      );
-      manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+      addFrJp(manager);
       await manager.train();
       const result = await manager.process('en', 'where are my keys?');
       const expected = {
@@ -329,27 +313,7 @@ describe('NLP Manager', () => {
   describe('Train', () => {
     test('You can train only a language', async () => {
       const manager = new NlpManager({ nlu: { trainByDomain: true } });
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument(
-        'fr',
-        'Je ne me souviens pas où sont mes clés',
-        'keys'
-      );
-      manager.addDocument('ja', 'おはようございます', 'greet');
-      manager.addDocument('ja', 'こんにちは', 'greet');
-      manager.addDocument('ja', 'おやすみ', 'greet');
-      manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
-      manager.addDocument(
-        'ja',
-        '私は私の鍵がどこにあるのか覚えていない',
-        'keys'
-      );
-      manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+      addFrJp(manager);
       await manager.train('fr');
       let result = await manager.classify('où sont mes clés');
       expect(result.classifications).toHaveLength(3);
@@ -362,27 +326,7 @@ describe('NLP Manager', () => {
     });
     test('You can train a set of languages', async () => {
       const manager = new NlpManager();
-      manager.addLanguage(['fr', 'ja']);
-      manager.addDocument('fr', 'Bonjour', 'greet');
-      manager.addDocument('fr', 'bonne nuit', 'greet');
-      manager.addDocument('fr', 'Bonsoir', 'greet');
-      manager.addDocument('fr', "J'ai perdu mes clés", 'keys');
-      manager.addDocument('fr', 'Je ne trouve pas mes clés', 'keys');
-      manager.addDocument(
-        'fr',
-        'Je ne me souviens pas où sont mes clés',
-        'keys'
-      );
-      manager.addDocument('ja', 'おはようございます', 'greet');
-      manager.addDocument('ja', 'こんにちは', 'greet');
-      manager.addDocument('ja', 'おやすみ', 'greet');
-      manager.addDocument('ja', '私は私の鍵を紛失した', 'keys');
-      manager.addDocument(
-        'ja',
-        '私は私の鍵がどこにあるのか覚えていない',
-        'keys'
-      );
-      manager.addDocument('ja', '私は私の鍵が見つからない', 'keys');
+      addFrJp(manager);
       await manager.train(['fr', 'ja', 'es']);
       let result = await manager.classify('où sont mes clés');
       expect(result.classifications).toHaveLength(3);
