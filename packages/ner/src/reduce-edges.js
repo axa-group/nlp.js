@@ -47,8 +47,7 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
       if (
         other.start === edge.start &&
         other.end === edge.end &&
-        other.type === 'enum' &&
-        edge.type === 'enum' &&
+        other.type === edge.type &&
         other.entity === edge.entity &&
         other.option === edge.option
       ) {

@@ -253,6 +253,15 @@ class BuiltinMicrosoft extends Clonable {
               if (other.entity === 'number' && edge.entiy === 'ordinal') {
                 other.discarded = true;
               } else if (
+                other.entity === edge.entity &&
+                other.accuracy === edge.accuracy &&
+                ((!edge.resolution && !other.resolution) ||
+                  (edge.resolution &&
+                    other.resolution &&
+                    edge.resolution.subtype === other.resolution.subtype))
+              ) {
+                other.discarded = true;
+              } else if (
                 other.entity === 'ordinal' &&
                 edge.entity === 'number'
               ) {
