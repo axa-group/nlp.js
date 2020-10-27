@@ -194,17 +194,21 @@ class ExtractorEnum {
 
   buildRuleDict(rule) {
     const dict = {};
+    const inverse = {};
     for (let i = 0; i < rule.rules.length; i += 1) {
       const current = rule.rules[i];
       for (let j = 0; j < current.texts.length; j += 1) {
+        const source = current.texts[j];
         const key = this.normalize(current.texts[j]);
         if (!dict[key]) {
           dict[key] = [];
         }
         dict[key].push(current);
+        inverse[key] = source;
       }
     }
     rule.dict = dict;
+    rule.inverseDict = inverse;
   }
 
   getBestExact(srcText, words, rule) {
@@ -230,7 +234,7 @@ class ExtractorEnum {
               entity: rule.name,
               type: rule.type,
               option: subrule[k].option,
-              sourceText: str,
+              sourceText: rule.inverseDict[str],
               utteranceText: srcText.substring(
                 wordPositions[i].start,
                 wordPositions[j].end + 1
