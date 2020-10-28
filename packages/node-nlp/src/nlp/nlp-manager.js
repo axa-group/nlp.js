@@ -304,6 +304,14 @@ class NlpManager {
     return result;
   }
 
+  addCorpora(corpora) {
+    this.nlp.addCorpora(corpora);
+  }
+
+  addCorpus(corpus) {
+    this.nlp.addCorpus(corpus);
+  }
+
   async trainAndEvaluate(fileName) {
     let corpus = fileName;
     if (typeof fileName === 'string') {

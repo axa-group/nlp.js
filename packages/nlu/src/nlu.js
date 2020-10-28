@@ -283,7 +283,16 @@ class Nlu extends Clonable {
     return false;
   }
 
-  intentIsActivated(intent, tokens) {
+  intentIsActivated(intent, tokens, allowList) {
+    if (allowList) {
+      if (Array.isArray(allowList)) {
+        if (!allowList.includes(intent)) {
+          return false;
+        }
+      } else if (!allowList[intent]) {
+        return false;
+      }
+    }
     const features = this.intentFeatures[intent];
     if (!features) {
       return false;
@@ -300,13 +309,24 @@ class Nlu extends Clonable {
   filterNonActivated(srcInput) {
     if (this.intentFeatures && srcInput.classifications) {
       const intents = srcInput.classifications.map((x) => x.intent);
+      let someModified = false;
       for (let i = 0; i < intents.length; i += 1) {
         const intent = intents[i];
         if (intent !== 'None') {
-          if (!this.intentIsActivated(intent, srcInput.tokens)) {
+          if (
+            !this.intentIsActivated(
+              intent,
+              srcInput.tokens,
+              srcInput.settings.allowList
+            )
+          ) {
             srcInput.classifications[i].score = 0;
+            someModified = true;
           }
         }
+      }
+      if (someModified) {
+        srcInput.classifications.sort((a, b) => b.score - a.score);
       }
     }
     return srcInput;

@@ -278,12 +278,30 @@ class DomainManager extends Clonable {
     return undefined;
   }
 
+  isAllowed(intent, allowList) {
+    if (!allowList) {
+      return true;
+    }
+    if (Array.isArray(allowList)) {
+      return allowList.includes(intent);
+    }
+    return !!allowList[intent];
+  }
+
   async innerClassify(srcInput, domainName) {
     const input = srcInput;
     const settings = this.applySettings({ ...input.settings }, this.settings);
     if (settings.useStemDict) {
       const result = await this.classifyByStemDict(input.utterance, domainName);
-      if (result) {
+      if (
+        result &&
+        this.isAllowed(
+          result.classifications[0]
+            ? result.classifications[0].intent
+            : undefined,
+          settings.allowList
+        )
+      ) {
         input.classification = result;
         input.explanation = [
           {

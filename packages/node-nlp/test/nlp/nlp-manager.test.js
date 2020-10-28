@@ -22,6 +22,7 @@
  */
 
 const { NlpManager } = require('../../src');
+const corpus = require('./corpus-en.json');
 
 function addEntities(manager) {
   manager.addNamedEntityText(
@@ -264,6 +265,17 @@ describe('NLP Manager', () => {
       addFrJp(manager);
       await manager.train();
       const result = await manager.classify('fr', 'où sont mes clés');
+      expect(result.classifications).toHaveLength(2);
+      expect(result.intent).toEqual('keys');
+      expect(result.score).toBeGreaterThan(0.7);
+    });
+    test('Should classify using allow list', async () => {
+      const manager = new NlpManager({ nlu: { useNoneFeature: false } });
+      addFrJp(manager);
+      await manager.train();
+      const result = await manager.classify('fr', 'où sont mes clés', {
+        allowList: ['greet'],
+      });
       expect(result.classifications).toHaveLength(2);
       expect(result.intent).toEqual('keys');
       expect(result.score).toBeGreaterThan(0.7);
@@ -1497,6 +1509,29 @@ describe('NLP Manager', () => {
           entity: 'entity',
         },
       ]);
+    });
+  });
+
+  describe('Process corpus', () => {
+    test('A corpus can be loaded and processed', async () => {
+      const nlp = new NlpManager();
+      nlp.addCorpus(corpus);
+      await nlp.train();
+      const actual = await nlp.process('who are you?');
+      expect(actual.intent).toEqual('smalltalk.acquaintance');
+    });
+    test('An allow list can be provided', async () => {
+      const nlp = new NlpManager();
+      nlp.addCorpus(corpus);
+      await nlp.train();
+      let actual = await nlp.process('who are your?', undefined, undefined, {
+        allowList: ['smalltalk.boss', 'smalltalk.boring'],
+      });
+      expect(actual.intent).toEqual('smalltalk.boss');
+      actual = await nlp.process('who are your?', undefined, undefined, {
+        allowList: ['support.developers', 'smalltalk.boring'],
+      });
+      expect(actual.intent).toEqual('support.developers');
     });
   });
 });
