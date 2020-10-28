@@ -239,6 +239,29 @@ describe('Domain Manager', () => {
       expect(actual.classifications[0].intent).toEqual('order.check');
       expect(actual.classifications[0].score).toBeGreaterThan(0.5);
     });
+    test('An allow list can be provided', async () => {
+      const manager = new DomainManager({ container });
+      addFoodDomain(manager);
+      addPersonalityDomain(manager);
+      await manager.train();
+      const actual = await manager.process('who are you', {
+        allowList: ['agent.age', 'agent.birthday'],
+      });
+      expect(actual.classifications).toEqual([
+        {
+          intent: 'agent.age',
+          score: 1,
+        },
+        {
+          intent: 'agent.acquaintance',
+          score: 0,
+        },
+        {
+          intent: 'agent.annoying',
+          score: 0,
+        },
+      ]);
+    });
     test('Can be trained twice', async () => {
       const manager = new DomainManager({ container });
       addFoodDomain(manager);

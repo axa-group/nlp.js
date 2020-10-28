@@ -115,5 +115,33 @@ describe('NLU Neural', () => {
         },
       ]);
     });
+
+    test('An allow list can be added', async () => {
+      const nlu = new NluNeural({ locale: 'en' }, bootstrap());
+      await nlu.train(corpus);
+      const result = await nlu.process('who are you', {
+        allowList: ['smalltalk.annoying', 'smalltalk.hungry'],
+      });
+      expect(result.classifications).toEqual([
+        { intent: 'smalltalk.annoying', score: 0.9818832383975855 },
+        { intent: 'smalltalk.hungry', score: 0.018116761602414464 },
+        { intent: 'smalltalk.acquaintance', score: 0 },
+        { intent: 'smalltalk.bad', score: 0 },
+      ]);
+    });
+
+    test('Allow list can be an object', async () => {
+      const nlu = new NluNeural({ locale: 'en' }, bootstrap());
+      await nlu.train(corpus);
+      const result = await nlu.process('who are you', {
+        allowList: { 'smalltalk.annoying': 1, 'smalltalk.hungry': 1 },
+      });
+      expect(result.classifications).toEqual([
+        { intent: 'smalltalk.annoying', score: 0.9818832383975855 },
+        { intent: 'smalltalk.hungry', score: 0.018116761602414464 },
+        { intent: 'smalltalk.acquaintance', score: 0 },
+        { intent: 'smalltalk.bad', score: 0 },
+      ]);
+    });
   });
 });

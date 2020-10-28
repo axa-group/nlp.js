@@ -336,6 +336,30 @@ describe('NLU Manager', () => {
       expect(actual.classifications[0].intent).toEqual('agent.acquaintance');
       expect(actual.classifications[0].score).toBeGreaterThan(0.8);
     });
+    test('Can classify if I provide an allow list of intents', async () => {
+      const manager = new NluManager({
+        container,
+        locales: ['en', 'es'],
+        trainByDomain: false,
+      });
+      addFoodDomainEn(manager);
+      addPersonalityDomainEn(manager);
+      addFoodDomainEs(manager);
+      addPersonalityDomainEs(manager);
+      await manager.train();
+      const actual = await manager.process(
+        'es',
+        'dime quién eres tú',
+        undefined,
+        {
+          allowList: ['agent.age', 'order.check'],
+        }
+      );
+      expect(actual.classifications).toEqual([
+        { intent: 'agent.age', score: 1 },
+        { intent: 'agent.acquaintance', score: 0 },
+      ]);
+    });
     test('Can classify if I provide locale', async () => {
       const manager = new NluManager({
         container,
