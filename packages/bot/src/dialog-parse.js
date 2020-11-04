@@ -55,7 +55,7 @@ function dialogParse(text) {
     .map((x) => x.trim())
     .filter((x) => x);
   const result = [];
-  let currentDialog;
+  let currentDialog = { name: '', actions: [] };
   for (let i = 0; i < lines.length; i += 1) {
     let line = lines[i];
     if (!line.startsWith('#')) {
