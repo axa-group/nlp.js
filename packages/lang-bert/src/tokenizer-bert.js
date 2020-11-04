@@ -107,7 +107,6 @@ class TokenizerBert extends Tokenizer {
       }
     }
     if (!result.tokens || !result.tokens.filter) {
-      console.log(text);
       return [];
     }
     const tokens = result.tokens.filter((x) => !this.removals[x]);

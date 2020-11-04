@@ -7,6 +7,7 @@
     { "className": "Nlp", "path": "@nlpjs/nlp" },
     { "className": "Template", "path": "@nlpjs/evaluator"}
   ],
+  "Bot": { "className": "Bot", "path": "@nlpjs/bot" },
   "BuiltinDuckling": { "className": "BuiltinDuckling", "path": "@nlpjs/builtin-duckling" },
   "BuiltinMicrosoft": { "className": "BuiltinMicrosoft", "path": "@nlpjs/builtin-microsoft" },
   "ConsoleConnector": { "className": "ConsoleConnector", "path": "@nlpjs/console-connector" },

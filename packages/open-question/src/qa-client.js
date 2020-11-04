@@ -72,7 +72,6 @@ class QAClient {
       const maxContextMap = this.getMaxContextMap(spans, i, contextStartIndex);
       result.push({ contextStartIndex, encoding: encodings[i], maxContextMap });
     }
-    console.log(result);
     return result;
   }
 
@@ -109,12 +108,9 @@ class QAClient {
 
   async predict(question, context, maxAnswerLength = 15) {
     const features = this.getFeatures(question, context);
-    console.log(features[0].encoding.tokens.slice(0, 25));
     const [startLogits, endLogits] = await this.model.runInference(
       features.map((f) => f.encoding)
     );
-    console.log(startLogits[0].slice(0, 25));
-    console.log(endLogits[0].slice(0, 25));
     const result = this.getAnswer(
       context,
       features,

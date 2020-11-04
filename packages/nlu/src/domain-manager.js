@@ -34,7 +34,6 @@ class DomainManager extends Clonable {
       },
       container
     );
-    console.log(settings);
     this.applySettings(this.settings, settings);
     this.applySettings(this.settings, { locale: 'en' });
     if (!this.settings.tag) {

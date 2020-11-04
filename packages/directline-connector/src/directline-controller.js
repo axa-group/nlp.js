@@ -25,9 +25,10 @@ const { uuid } = require('@nlpjs/core');
 const fetch = require('node-fetch');
 
 class DirectlineController {
-  constructor(settings) {
+  constructor(settings, parent) {
     const localhost = 'http://localhost:3000';
     this.settings = settings;
+    this.parent = parent;
     this.serviceUrl =
       this.settings.serviceUrl ||
       process.env.DIRECTLINE_SERVICE_URL ||
@@ -65,6 +66,25 @@ class DirectlineController {
     };
   }
 
+  createAnswer(srcActivity) {
+    return {
+      type: 'message',
+      serviceUrl: srcActivity.serviceUrl || this.serviceUrl,
+      channelId: srcActivity.channelId || 'emulator',
+      conversation: {
+        id: srcActivity.conversation.id,
+      },
+      recipient: srcActivity.from,
+      inputHint: 'acceptingInput',
+      replyToId: srcActivity.id,
+      id: uuid(),
+      from: {
+        id: process.env.BACKEND_ID || 'directline',
+        name: process.env.BACKEND_NAME || 'Directline',
+      },
+    };
+  }
+
   createConversationUpdateActivity(conversation) {
     return this.createActivity(
       {
@@ -84,6 +104,15 @@ class DirectlineController {
     return new Promise((resolve) => {
       const conversation = this.getConversation(undefined, true);
       const activity = this.createConversationUpdateActivity(conversation);
+      const result = {
+        conversationId: conversation.conversationId,
+        expiresIn: this.expiresIn,
+      };
+      if (this.onCreateConversation) {
+        this.onCreateConversation(this.parent || this, result);
+      } else if (this.parent && this.parent.onCreateConversation) {
+        this.parent.onCreateConversation(this.parent || this, result);
+      }
       if (this.botUrl) {
         fetch(this.botUrl, {
           method: 'POST',
@@ -94,19 +123,13 @@ class DirectlineController {
         }).then((response) => {
           resolve({
             status: response.status,
-            body: {
-              conversationId: conversation.conversationId,
-              expiresIn: this.expiresIn,
-            },
+            body: result,
           });
         });
       } else {
         resolve({
           status: 200,
-          body: {
-            conversationId: conversation.conversationId,
-            expiresIn: this.expiresIn,
-          },
+          body: result,
         });
       }
     });
@@ -134,67 +157,81 @@ class DirectlineController {
               },
             });
           });
-        } else {
-          const result = {
-            type: 'message',
-            serviceUrl: activity.serviceUrl,
-            channelId: activity.channelId,
-            conversation: {
-              id: activity.conversation.id,
-            },
-            text: activity.text,
-            recipient: activity.from,
-            inputHint: 'acceptingInput',
-            replyToId: activity.id,
-            id: uuid(),
-            from: {
-              id: process.env.BACKEND_ID || 'directline',
-              name: process.env.BACKEND_NAME || 'Directline',
-            },
-          };
-          const nlp = this.settings.container.get('nlp');
-          if (nlp) {
-            nlp
-              .process({
-                message: activity.text,
-                channel: 'directline',
-                app: this.settings.container.name,
-                from: activity.from || null,
-                activity,
-              })
-              .then((nlpresult) => {
-                result.text =
-                  nlpresult.answer || "Sorry, I didn't understand you";
-                if (activity.channelId === 'emulator') {
-                  result.nlp = {
-                    intent: nlpresult.intent,
-                    score: nlpresult.score,
-                    classifications: nlpresult.classifications,
-                    domain: nlpresult.domain,
-                    entities: nlpresult.entities,
-                    language: nlpresult.language,
-                    languageGuessed: nlpresult.languageGuessed,
-                    locale: nlpresult.locale,
-                  };
-                }
-                conversation.history.push(result);
-                resolve({
-                  status: 200,
-                  body: { id: result.id, timestamp: new Date().toUTCString() },
-                });
-              });
-          } else {
-            conversation.history.push(result);
+        } else if (this.onHear || (this.parent && this.parent.onHear)) {
+          const onHear = this.onHear || this.parent.onHear;
+          onHear(this.parent || this, {
+            message: activity.text,
+            channel: 'directline',
+            app: this.settings.container.name,
+            from: activity.from || null,
+            activity,
+          }).then(() => {
             resolve({
               status: 200,
-              body: { id: result.id, timestamp: new Date().toUTCString() },
+              body: { id: activity.id, timestamp: new Date().toUTCString() },
             });
+          });
+        } else {
+          const bot = this.settings.container.get('bot');
+          if (bot) {
+            bot.process(this.parent.createSession(activity));
+          } else {
+            const nlp = this.settings.container.get('nlp');
+            const result = this.createAnswer(activity);
+            result.text = activity.text;
+            if (nlp) {
+              nlp
+                .process({
+                  message: activity.text,
+                  channel: 'directline',
+                  app: this.settings.container.name,
+                  from: activity.from || null,
+                  activity,
+                })
+                .then((nlpresult) => {
+                  result.text =
+                    nlpresult.answer || "Sorry, I didn't understand you";
+                  if (activity.channelId === 'emulator') {
+                    result.nlp = {
+                      intent: nlpresult.intent,
+                      score: nlpresult.score,
+                      classifications: nlpresult.classifications,
+                      domain: nlpresult.domain,
+                      entities: nlpresult.entities,
+                      language: nlpresult.language,
+                      languageGuessed: nlpresult.languageGuessed,
+                      locale: nlpresult.locale,
+                    };
+                  }
+                  conversation.history.push(result);
+                  resolve({
+                    status: 200,
+                    body: {
+                      id: result.id,
+                      timestamp: new Date().toUTCString(),
+                    },
+                  });
+                });
+            } else {
+              conversation.history.push(result);
+              resolve({
+                status: 200,
+                body: { id: result.id, timestamp: new Date().toUTCString() },
+              });
+            }
           }
         }
       } else {
         resolve({ status: 200, body: {} });
       }
     });
+  }
+
+  say(activity) {
+    const conversation = this.getConversation(activity.conversation.id, false);
+    if (conversation) {
+      conversation.history.push(activity);
+    }
   }
 
   getActivities(conversationId, watermark) {

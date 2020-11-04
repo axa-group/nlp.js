@@ -22,30 +22,11 @@
  */
 
 const readline = require('readline');
-const { Clonable, containerBootstrap } = require('@nlpjs/core');
+const { Connector } = require('@nlpjs/connector');
 
-class ConsoleConnector extends Clonable {
-  constructor(settings = {}, container = undefined) {
-    super(
-      {
-        settings: {},
-        container: settings.container || container || containerBootstrap(),
-      },
-      container
-    );
-    this.applySettings(this.settings, settings);
-    if (!this.settings.tag) {
-      this.settings.tag = 'console';
-    }
-    this.applySettings(
-      this.settings,
-      this.container.getConfiguration(this.settings.tag)
-    );
-    this.context = {};
-    this.initialize();
-  }
-
+class ConsoleConnector extends Connector {
   initialize() {
+    this.context = {};
     this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -61,7 +42,7 @@ class ConsoleConnector extends Clonable {
     } else if (typeof message === 'string') {
       text = message;
     } else {
-      text = message.answer || message.message;
+      text = message.answer || message.message || reference;
     }
     const botName = this.settings.botName || 'bot';
     if (this.settings.debug && typeof message === 'object' && !reference) {
@@ -88,20 +69,30 @@ class ConsoleConnector extends Clonable {
           this
         );
       } else {
-        const nlp = this.container.get('nlp');
-        if (nlp) {
-          const result = await nlp.process(
-            {
-              message: line,
-              channel: 'console',
-              app: this.container.name,
-            },
-            undefined,
-            this.context
-          );
-          this.say(result);
+        const bot = this.container.get('bot');
+        if (bot) {
+          const session = this.createSession({
+            channelId: 'console',
+            text: line,
+            address: { conversation: { id: 'console000' } },
+          });
+          await bot.process(session);
         } else {
-          console.error(`There is no pipeline for ${name}`);
+          const nlp = this.container.get('nlp');
+          if (nlp) {
+            const result = await nlp.process(
+              {
+                message: line,
+                channel: 'console',
+                app: this.container.name,
+              },
+              undefined,
+              this.context
+            );
+            this.say(result);
+          } else {
+            console.error(`There is no pipeline for ${name}`);
+          }
         }
       }
     }
@@ -109,10 +100,6 @@ class ConsoleConnector extends Clonable {
 
   close() {
     this.rl.close();
-  }
-
-  destroy() {
-    this.close();
   }
 
   exit() {
