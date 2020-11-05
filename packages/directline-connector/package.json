@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.14.0",
+    "@nlpjs/connector": "^4.14.0",
     "node-fetch": "^2.6.1"
   },
   "publishConfig": {

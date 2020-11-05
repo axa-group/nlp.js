@@ -1,10 +1,10 @@
 {
-  "name": "@nlpjs/console-connector",
+  "name": "@nlpjs/bot",
   "version": "4.14.0",
-  "description": "Console Connector",
+  "description": "Bot plugin for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
-    "name": "Jesus Seijas"
+    "name": "Jesús Seijas"
   },
   "repository": {
     "type": "git",
@@ -14,6 +14,10 @@
     "url": "https://github.com/axa-group/nlp.js/issues"
   },
   "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesús Seijas"
+    },
     {
       "email": "jesus.seijas@axa.com",
       "name": "Jesus Seijas"
@@ -26,7 +30,10 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.14.0",
-    "@nlpjs/connector": "^4.14.0"
+    "@nlpjs/nlp": "^4.14.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "gitHead": "926fe345330eca1a13eaaf04d0bba3631a5bba8b"
 }

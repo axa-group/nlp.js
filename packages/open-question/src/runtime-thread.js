@@ -62,7 +62,6 @@ async function predict(modelPath, ids, attentionMask, tokenTypeIds) {
     result[params.outputsNames.startLogits].squeeze().array(),
     result[params.outputsNames.endLogits].squeeze().array(),
   ]);
-  console.log(results);
   const [startLogits, endLogits] = results;
   tf.dispose(result);
   return [

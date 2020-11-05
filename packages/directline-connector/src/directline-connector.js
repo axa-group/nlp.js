@@ -21,29 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { defaultContainer, Clonable } = require('@nlpjs/core');
+const { Connector } = require('@nlpjs/connector');
 const DirectlineController = require('./directline-controller');
 
-class DirectlineConnector extends Clonable {
-  constructor(settings = {}, container = undefined) {
-    super(
-      {
-        settings: {},
-        container: settings.container || container || defaultContainer,
-      },
-      container
-    );
-    this.applySettings(this.settings, settings);
-    this.registerDefault();
-    if (!this.settings.tag) {
-      this.settings.tag = 'directline';
-    }
-    this.applySettings(
-      this.settings,
-      this.container.getConfiguration(this.settings.tag)
-    );
-  }
-
+class DirectlineConnector extends Connector {
   registerDefault() {
     this.container.registerConfiguration(
       'directline',
@@ -63,7 +44,13 @@ class DirectlineConnector extends Clonable {
     if (!server) {
       throw new Error('No api-server found');
     }
-    this.controller = new DirectlineController(this.settings);
+    this.controller = new DirectlineController(this.settings, this);
+    if (this.onCreateConversation) {
+      this.controller.onCreateConversation = this.onCreateConversation;
+    }
+    if (this.onHear) {
+      this.controller.onHear = this.onHear;
+    }
 
     server.options('/directline', (req, res) => {
       this.log('debug', `OPTIONS /directline`);
@@ -230,6 +217,16 @@ class DirectlineConnector extends Clonable {
       this.log('debug', 'DELETE /v3/botstate/:channelId/users/:userId');
       res.status(200).end();
     });
+  }
+
+  createAnswer(srcActivity) {
+    return this.controller.createAnswer(srcActivity);
+  }
+
+  say(srcActivity, text) {
+    const answer = this.createAnswer(srcActivity.activity || srcActivity);
+    answer.text = text || srcActivity.text;
+    this.controller.say(answer);
   }
 }
 
