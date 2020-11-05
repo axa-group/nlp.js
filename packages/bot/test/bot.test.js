@@ -24,11 +24,13 @@
 const fs = require('fs');
 const { containerBootstrap } = require('@nlpjs/core');
 const { Bot, TestConnector } = require('../src');
+const MockTemplate = require('./mock-template');
 
 const container = containerBootstrap();
 container.register('fs', {
   readFileSync: (file) => fs.readFileSync(file, 'utf-8'),
 });
+container.register('Template', new MockTemplate(), true);
 
 describe('Bot', () => {
   describe('Constructor', () => {
@@ -59,18 +61,8 @@ describe('Bot', () => {
         './packages/bot/test/script2.dlg',
       ]);
       const connector = new TestConnector({ container });
-      await connector.hear('hello');
-      await connector.hear('John');
-      const expected = [
-        'user> hello',
-        "bot> What's your name?",
-        'user> John',
-        'bot> Hello {{ user_name }}',
-        'bot> This is the help',
-        'bot> This is the second help',
-        'bot> Bye user',
-      ];
-      expect(connector.messages).toEqual(expected);
+      await connector.runScript('./packages/bot/test/scenario01.dlt');
+      expect(connector.messages).toEqual(connector.expected);
     });
   });
 });
