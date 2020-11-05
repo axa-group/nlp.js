@@ -1,0 +1,14 @@
+dialog main
+  run greet
+  run help
+  run bye
+dialog qna
+  nlp
+dialog greet
+  run ask name
+  say Hello {{ user_name }}
+dialog help
+  say This is the help
+  say This is the second help
+dialog bye
+  say Bye user

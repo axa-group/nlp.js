@@ -32,9 +32,9 @@ class Bot extends Clonable {
       {
         settings: {},
         container:
-          settings.container || container || settings.dock
-            ? settings.dock.getContainer()
-            : containerBootstrap(),
+          settings.container ||
+          container ||
+          (settings.dock ? settings.dock.getContainer() : containerBootstrap()),
       },
       container
     );
@@ -55,7 +55,9 @@ class Bot extends Clonable {
   }
 
   async start() {
-    await this.nlp.train();
+    if (this.nlp) {
+      await this.nlp.train();
+    }
     if (!this.contextManager) {
       this.contextManager = this.container.get('context-manager');
       if (!this.contextManager) {
@@ -80,12 +82,16 @@ class Bot extends Clonable {
       if (action.startsWith('/_endDialog')) {
         session.endDialog(context);
       } else if (action.startsWith('/_nlp')) {
-        const result = await this.nlp.process(session);
-        if (result.answer) {
-          if (result.answer.startsWith('/')) {
-            session.beginDialog(context, result.answer);
+        if (this.nlp) {
+          const result = await this.nlp.process(session);
+          if (result.answer) {
+            if (result.answer.startsWith('/')) {
+              session.beginDialog(context, result.answer);
+            } else {
+              session.say(result.answer);
+            }
           } else {
-            session.say(result.answer);
+            session.say("Sorry, I don't understand");
           }
         } else {
           session.say("Sorry, I don't understand");

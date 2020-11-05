@@ -29,6 +29,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@nlpjs/connector": "^4.14.0",
     "@nlpjs/core": "^4.14.0",
     "@nlpjs/nlp": "^4.14.0"
   },

@@ -65,17 +65,6 @@ class DialogManager extends Clonable {
     return this.dialogs[name];
   }
 
-  isEndOfDialog(dialogName, position) {
-    const dialog = this.getDialog(dialogName);
-    if (!dialog) {
-      return true;
-    }
-    if (position >= dialog.pipeline.length) {
-      return true;
-    }
-    return false;
-  }
-
   getNextActionDialog(stack) {
     if (stack.length === 0) {
       this.beginDialog(stack, '/');
