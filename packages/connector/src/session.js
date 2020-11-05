@@ -27,6 +27,7 @@ class Session {
   constructor(connector = {}, activity = {}) {
     this.activity = activity;
     this.connector = connector;
+    this.bot = this.connector.container.get('bot');
     if (!this.connector.settings) {
       this.connector.settings = {};
     }
@@ -47,6 +48,27 @@ class Session {
       name:
         process.env.BACKEND_NAME || this.connector.settings.tag || 'emulator',
     };
+  }
+
+  say(message, context) {
+    let outputMessage = message;
+    if (context) {
+      const template = this.bot
+        ? this.bot.container.get('Template')
+        : undefined;
+      if (template) {
+        outputMessage = template.compile(message, context);
+      }
+    }
+    this.connector.say(this.activity, outputMessage);
+  }
+
+  beginDialog(context, name) {
+    this.bot.dialogManager.beginDialog(context.dialogStack, name);
+  }
+
+  endDialog(context) {
+    this.bot.dialogManager.endDialog(context.dialogStack);
   }
 }
 

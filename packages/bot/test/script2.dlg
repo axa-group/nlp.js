@@ -1,0 +1,3 @@
+dialog ask name
+  say What's your name?
+  ask user name
