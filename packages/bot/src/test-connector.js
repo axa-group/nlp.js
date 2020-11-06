@@ -21,6 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
 const { Connector } = require('@nlpjs/connector');
 
 class TestConnector extends Connector {
@@ -87,6 +88,21 @@ class TestConnector extends Connector {
             console.error(`There is no pipeline for ${name}`);
           }
         }
+      }
+    }
+  }
+
+  async runScript(fileName) {
+    this.expected = fs
+      .readFileSync(fileName, 'utf-8')
+      .split(/\r?\n/)
+      .filter((x) => x);
+    this.messages = [];
+    const userName = this.settings.userName || 'user';
+    for (let i = 0; i < this.expected.length; i += 1) {
+      const line = this.expected[i];
+      if (line.startsWith(`${userName}>`)) {
+        await this.hear(line.slice(userName.length + 2));
       }
     }
   }
