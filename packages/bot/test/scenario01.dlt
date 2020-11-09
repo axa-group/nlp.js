@@ -1,7 +1,8 @@
 user> hello
 bot> What's your name?
 user> John
-bot> Hello John
+bot> (Converting name to uppercases...)
+bot> Hello JOHN
 bot> This is the help
 bot> This is the second help
 bot> Bye user
