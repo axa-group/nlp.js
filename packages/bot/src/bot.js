@@ -48,6 +48,7 @@ class Bot extends Clonable {
       this.container.getConfiguration(this.settings.tag)
     );
     this.nlp = this.container.get('nlp');
+    this.actions = {};
   }
 
   registerDefault() {
@@ -77,6 +78,10 @@ class Bot extends Clonable {
     }
   }
 
+  registerAction(name, fn) {
+    this.actions[name] = fn;
+  }
+
   async executeAction(session, context, action) {
     if (typeof action === 'string') {
       if (action.startsWith('/_endDialog')) {
@@ -103,6 +108,12 @@ class Bot extends Clonable {
         const text = action.slice(1);
         if (text) {
           context.variableName = text;
+        }
+      } else if (action.startsWith('->')) {
+        const tokens = action.slice(2).split(' ');
+        const fn = this.actions[tokens[0]];
+        if (fn) {
+          await fn(session, context, tokens.slice(1));
         }
       } else {
         session.say(action, context);

@@ -86,6 +86,10 @@ function dialogParse(text) {
           currentDialog.actions.push('/_nlp');
           break;
         }
+        case 'call': {
+          currentDialog.actions.push(`->${tokens.slice(1).join(' ')}`);
+          break;
+        }
         default: {
           console.log(`Unknown command ${lowTokens[0]}`);
         }

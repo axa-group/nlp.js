@@ -54,6 +54,10 @@ describe('Bot', () => {
   describe('process', () => {
     test('It should be able to process a conversation', async () => {
       const bot = new Bot({ container });
+      bot.registerAction('uppers', (session, context, params) => {
+        context[params[0]] = (context[params[0]] || '').toUpperCase();
+        session.say('(Converting name to uppercases...)');
+      });
       container.register('bot', bot, true);
       await bot.start();
       bot.loadScript([
