@@ -408,7 +408,7 @@ class StemmerSr extends BaseStemmer {
     lab10: {
       var v_8 = this.cursor;
       lab11: {
-        if (!(this.I_p1 == this.I_p2)) {
+        if (this.I_p1 !== this.I_p2) {
           break lab11;
         }
         golab12: while (true) {
@@ -468,7 +468,7 @@ class StemmerSr extends BaseStemmer {
     }
     this.I_p1 = this.cursor;
     return true;
-  };
+  }
 
   r_R1() {
     if (!(this.I_p1 <= this.cursor)) {
@@ -478,11 +478,11 @@ class StemmerSr extends BaseStemmer {
   };
 
   r_R2() {
-    if (!(this.I_p3 == 0)) {
+    if (this.I_p3 !== 0) {
       return false;
     }
     return true;
-  };
+  }
 
   r_Step_1() {
     var among_var;
