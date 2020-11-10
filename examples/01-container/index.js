@@ -31,6 +31,6 @@ async function main() {
   // We call the pipeline.
   const result = await container.runPipeline('reverse-and-capitalize', input);
   console.log(result); // It should log "Something"
-}
+}//E
 
 main();
