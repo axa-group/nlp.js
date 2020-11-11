@@ -173,11 +173,11 @@ class Bot extends Clonable {
     const intents = {};
     const entities = {};
     let locale = 'en';
-    let currentIntent;
-    let currentEntity;
+    let currentIntent = {};
+    let currentEntity = {};
     let state;
     const dialogs = [];
-    let currentDialog;
+    let currentDialog = {};
     for (let i = 0; i < script.length; i += 1) {
       const current = script[i];
       switch (current.type) {
