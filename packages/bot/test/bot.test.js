@@ -23,12 +23,15 @@
 
 const fs = require('fs');
 const { containerBootstrap } = require('@nlpjs/core');
+const { Nlp } = require('@nlpjs/nlp');
 const { Bot, TestConnector } = require('../src');
 const MockTemplate = require('./mock-template');
 
 const container = containerBootstrap();
+container.use(Nlp);
 container.register('fs', {
-  readFileSync: (file) => fs.readFileSync(file, 'utf-8'),
+  readFile: (file) => fs.readFileSync(file, 'utf-8'),
+  writeFile: () => {},
 });
 container.register('Template', new MockTemplate(), true);
 
@@ -44,7 +47,7 @@ describe('Bot', () => {
     test('It should be able to load several scripts', async () => {
       const bot = new Bot({ container });
       await bot.start();
-      bot.loadScript([
+      await bot.loadScript([
         './packages/bot/test/script1.dlg',
         './packages/bot/test/script2.dlg',
       ]);
@@ -60,13 +63,17 @@ describe('Bot', () => {
       });
       container.register('bot', bot, true);
       await bot.start();
-      bot.loadScript([
+      await bot.loadScript([
         './packages/bot/test/script1.dlg',
         './packages/bot/test/script2.dlg',
+        './packages/bot/test/script3.dlg',
       ]);
       const connector = new TestConnector({ container });
       await connector.runScript('./packages/bot/test/scenario01.dlt');
       expect(connector.messages).toEqual(connector.expected);
+      const nlp = container.get('nlp');
+      const result = await nlp.process('who are you');
+      expect(result.answer).toEqual('Think of me as a virtual agent');
     });
   });
 });
