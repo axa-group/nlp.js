@@ -22,7 +22,7 @@
  */
 
 function getName(tokens) {
-  return tokens.join('_');
+  return (typeof tokens === 'string' ? tokens.split(' ') : tokens).join('_');
 }
 
 function getDialogName(tokens) {
@@ -34,18 +34,31 @@ function getDialogName(tokens) {
   return result;
 }
 
-function trimSettings(line) {
-  const indexOpen = line.indexOf('(');
-  const indexClose = line.indexOf(')');
-  if (indexOpen !== -1 && indexClose !== -1 && indexClose > indexOpen) {
-    return {
-      line: line.slice(0, indexOpen),
-      settings: line.slice(indexOpen + 1, indexClose),
-    };
+function trimBetween(line, left, right) {
+  const indexLeft = line.indexOf(left);
+  if (indexLeft !== -1) {
+    const indexRight = line.indexOf(right);
+    if (indexRight !== -1 && indexRight > indexLeft) {
+      return {
+        line:
+          line.slice(0, indexLeft) + line.slice(indexRight + 1, line.length),
+        trimmed: line.slice(indexLeft + 1, indexRight),
+      };
+    }
   }
   return {
     line,
-    settings: '',
+    trimmed: '',
+  };
+}
+
+function trimLine(line) {
+  const trimmedCondition = trimBetween(line, '[', ']');
+  const trimmedSettings = trimBetween(trimmedCondition.line, '(', ')');
+  return {
+    line: trimmedSettings.line.trim(),
+    condition: trimmedCondition.trimmed.trim(),
+    settings: trimmedSettings.trimmed.trim(),
   };
 }
 
@@ -55,48 +68,53 @@ function dialogParse(text) {
     .map((x) => x.trim())
     .filter((x) => x);
   const result = [];
-  let currentDialog = { name: '', actions: [] };
   for (let i = 0; i < lines.length; i += 1) {
     let line = lines[i];
-    if (!line.startsWith('#')) {
-      const trimmed = trimSettings(line);
+    if (line.startsWith('#')) {
+      result.push({ type: 'comment', text: line.slice(1).trim() });
+    } else {
+      const srcLine = line;
+      const trimmed = trimLine(line);
       line = trimmed.line;
       const lowLine = line.toLowerCase();
-      const tokens = line.split(' ');
       const lowTokens = lowLine.split(' ');
-      switch (lowTokens[0]) {
-        case 'dialog': {
-          currentDialog = { name: getDialogName(tokens.slice(1)), actions: [] };
-          result.push(currentDialog);
-          break;
-        }
-        case 'run': {
-          currentDialog.actions.push(`${getDialogName(tokens.slice(1))}`);
-          break;
-        }
-        case 'say': {
-          currentDialog.actions.push(line.slice(4));
-          break;
-        }
-        case 'ask': {
-          currentDialog.actions.push(`?${getName(tokens.slice(1))}`);
-          break;
-        }
-        case 'nlp': {
-          currentDialog.actions.push('/_nlp');
-          break;
-        }
-        case 'call': {
-          currentDialog.actions.push(`->${tokens.slice(1).join(' ')}`);
-          break;
-        }
-        default: {
-          console.log(`Unknown command ${lowTokens[0]}`);
-        }
-      }
+      const command = lowTokens[0];
+      result.push({
+        type: command,
+        srcLine,
+        line: line.slice(command.length + 1),
+        condition: trimmed.condition,
+        settings: trimmed.settings,
+      });
     }
   }
   return result;
 }
 
-module.exports = dialogParse;
+async function loadScript(fileName, fs, alreadyLoaded = [], script = []) {
+  if (Array.isArray(fileName)) {
+    for (let i = 0; i < fileName.length; i += 1) {
+      await loadScript(fileName[i], fs, alreadyLoaded, script);
+    }
+  } else if (!alreadyLoaded.includes(fileName)) {
+    alreadyLoaded.push(fileName);
+    const text = await fs.readFile(fileName);
+    const parsed = dialogParse(text);
+    for (let i = 0; i < parsed.length; i += 1) {
+      const current = parsed[i];
+      if (current.type === 'import') {
+        await loadScript(current.line.split(' '), fs, alreadyLoaded, script);
+      } else {
+        script.push(current);
+      }
+    }
+  }
+  return script;
+}
+
+module.exports = {
+  dialogParse,
+  loadScript,
+  getDialogName,
+  getName,
+};

@@ -24,7 +24,7 @@
 const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { ContextManager } = require('@nlpjs/nlp');
 const DialogManager = require('./dialog-manager');
-const dialogParse = require('./dialog-parse');
+const { loadScript, getDialogName, getName } = require('./dialog-parse');
 
 class Bot extends Clonable {
   constructor(settings = {}, container) {
@@ -74,7 +74,7 @@ class Bot extends Clonable {
       }
     }
     if (this.settings.scripts) {
-      this.loadScript(this.settings.scripts);
+      await this.loadScript(this.settings.scripts);
     }
   }
 
@@ -153,19 +153,152 @@ class Bot extends Clonable {
     this.dialogManager.addDialog(name, pipeline, settings);
   }
 
-  loadScript(fileName) {
-    if (Array.isArray(fileName)) {
-      for (let i = 0; i < fileName.length; i += 1) {
-        this.loadScript(fileName[i]);
+  getEntityOption(line) {
+    const tokens = line
+      .split(':')
+      .map((x) => x.trim())
+      .filter((x) => x);
+    return {
+      option: tokens[0],
+      texts: tokens[1]
+        .split(',')
+        .map((x) => x.trim())
+        .filter((x) => x),
+    };
+  }
+
+  async loadScript(fileName) {
+    const fs = this.container.get('fs');
+    const script = await loadScript(fileName, fs);
+    const intents = {};
+    const entities = {};
+    let locale = 'en';
+    let currentIntent;
+    let currentEntity;
+    let state;
+    const dialogs = [];
+    let currentDialog;
+    for (let i = 0; i < script.length; i += 1) {
+      const current = script[i];
+      switch (current.type) {
+        case 'language':
+          locale = current.line;
+          break;
+        case 'comment':
+          break;
+        case 'intent':
+          currentIntent = {
+            intent: current.line,
+            utterances: [],
+            tests: [],
+            answers: [],
+          };
+          if (!intents[locale]) {
+            intents[locale] = [];
+          }
+          intents[locale].push(currentIntent);
+          break;
+        case 'entity':
+          currentEntity = {
+            name: current.line,
+          };
+          if (!entities[locale]) {
+            entities[locale] = [];
+          }
+          entities[locale].push(currentEntity);
+          state = 'entity';
+          break;
+        case 'utterances':
+          state = 'utterances';
+          break;
+        case 'answers':
+          state = 'answers';
+          break;
+        case 'tests':
+          state = 'tests';
+          break;
+        case 'regex':
+          currentEntity.regex = current.srcLine;
+          break;
+        case '-':
+          if (state) {
+            switch (state) {
+              case 'utterances':
+                currentIntent.utterances.push(current.line);
+                break;
+              case 'answers':
+                currentIntent.answers.push(current.line);
+                break;
+              case 'tests':
+                currentIntent.tests.push(current.line);
+                break;
+              case 'entity':
+                if (!currentEntity.options) {
+                  currentEntity.options = [];
+                }
+                currentEntity.options.push(this.getEntityOption(current.line));
+                break;
+              default:
+                console.log(`Unknown state "${state}"`);
+                break;
+            }
+          }
+          break;
+        case 'dialog':
+          currentDialog = { name: getDialogName(current.line), actions: [] };
+          dialogs.push(currentDialog);
+          break;
+        case 'run':
+          currentDialog.actions.push(getDialogName(current.line));
+          break;
+        case 'say':
+          currentDialog.actions.push(current.line);
+          break;
+        case 'ask':
+          currentDialog.actions.push(`?${getName(current.line)}`);
+          break;
+        case 'nlp':
+          currentDialog.actions.push('/_nlp');
+          break;
+        case 'call':
+          currentDialog.actions.push(`->${current.line}`);
+          break;
+        default:
+          break;
       }
-    } else {
-      const fs = this.container.get('fs');
-      const text = fs.readFileSync(fileName);
-      const parsed = dialogParse(text);
-      for (let i = 0; i < parsed.length; i += 1) {
-        const current = parsed[i];
-        this.addDialog(current.name, current.actions);
+    }
+    const intentKeys = Object.keys(intents);
+    const nlp = this.container.get('nlp');
+    if (nlp) {
+      for (let i = 0; i < intentKeys.length; i += 1) {
+        const currentLocale = intentKeys[i];
+        const corpus = {
+          locale,
+          data: intents[currentLocale],
+        };
+        const currentEntities = entities[currentLocale];
+        if (currentEntities.length > 0) {
+          corpus.entities = {};
+          for (let j = 0; j < currentEntities.length; j += 1) {
+            const entity = currentEntities[j];
+            if (entity.regex) {
+              corpus.entities[entity.name] = entity.regex;
+            } else {
+              const options = {};
+              corpus.entities[entity.name] = { options };
+              for (let k = 0; k < entity.options.length; k += 1) {
+                const option = entity.options[k];
+                options[option.option] = option.texts;
+              }
+            }
+          }
+        }
+        nlp.addCorpus(corpus);
       }
+      await nlp.train();
+    }
+    for (let i = 0; i < dialogs.length; i += 1) {
+      this.addDialog(dialogs[i].name, dialogs[i].actions);
     }
   }
 }
