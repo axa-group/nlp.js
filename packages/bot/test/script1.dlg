@@ -5,7 +5,7 @@ dialog main
 dialog qna
   nlp
 dialog greet
-  run ask name
+  run ask_name
   call uppers user_name
   say Hello {{ user_name }}
 dialog help

@@ -98,12 +98,12 @@ describe('JavascriptCompiler', () => {
       const result = await evaluator.walkThis(node, context);
       expect(result).toBe(context.this);
     });
-    test('If context does not contain this, then return fail result', async () => {
+    test('If context does not contain this, then return undefined', async () => {
       const context = {};
       const evaluator = new JavascriptCompiler(container);
       const node = {};
       const result = await evaluator.walkThis(node, context);
-      expect(result).toBe(evaluator.failResult);
+      expect(result).toBe(undefined);
     });
     test('Evaluate this from evaluator', async () => {
       const context = { this: { a: 17 } };
@@ -122,12 +122,12 @@ describe('JavascriptCompiler', () => {
       const result = await evaluator.walkIdentifier(node, context);
       expect(result).toEqual(context.a);
     });
-    test('If context does not contain the identifier, return fail result', async () => {
+    test('If context does not contain the identifier, return undefined', async () => {
       const context = { a: 17 };
       const evaluator = new JavascriptCompiler(container);
       const node = { name: 'b' };
       const result = await evaluator.walkIdentifier(node, context);
-      expect(result).toEqual(evaluator.failResult);
+      expect(result).toEqual(undefined);
     });
   });
 
@@ -366,19 +366,19 @@ describe('JavascriptCompiler', () => {
       const answer = await evaluator.evaluate(question, context);
       expect(answer).toEqual(false);
     });
-    test('Should return undefined if left term is undefined', async () => {
+    test('Should return NaN if left term is undefined', async () => {
       const context = { a: 1, b: 2 };
       const evaluator = new JavascriptCompiler(container);
       const question = 'c + a';
       const result = await evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
-    test('Should return undefined if right term is undefined', async () => {
+    test('Should return NaN if right term is undefined', async () => {
       const context = { a: 1, b: 2 };
       const evaluator = new JavascriptCompiler(container);
       const question = 'a + c';
       const result = await evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
     test('Should return undefined if the operator is not recognized', async () => {
       const context = { a: 1, b: 2 };
@@ -467,12 +467,12 @@ describe('JavascriptCompiler', () => {
       await evaluator.evaluate(questionFalse, context);
       expect(context.a).toEqual(13);
     });
-    test('Should return undefined if some term is not defined', async () => {
+    test('Should return correct ternary if some term is not defined', async () => {
       const context = { a: 12, b: 2 };
       const evaluator = new JavascriptCompiler(container);
       const questionTrue = 'c === 2 ? a-- : a++;';
       const result = await evaluator.evaluate(questionTrue, context);
-      expect(result).toBeUndefined();
+      expect(result).toEqual(13);
     });
   });
 
@@ -510,12 +510,12 @@ describe('JavascriptCompiler', () => {
       const result = await evaluator.evaluate(question, context);
       expect(result).toEqual([12, 2, 14, 10]);
     });
-    test('Should return undefined if a term cannot be resolved', async () => {
+    test('Should return undefined for a term if the term cannot be resolved', async () => {
       const context = { a: 12, b: 2 };
       const evaluator = new JavascriptCompiler(container);
       const question = '[a, b, a+b, a-b, c]';
       const result = await evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toEqual([12, 2, 14, 10, undefined]);
     });
   });
 
@@ -527,12 +527,12 @@ describe('JavascriptCompiler', () => {
       const result = await evaluator.evaluate(question, context);
       expect(result).toEqual({ a: 12, b: 2, c: 14 });
     });
-    test('If some member is incorrect return undefined', async () => {
+    test('If some member is incorrect return undefined for this member', async () => {
       const context = { a: 12, b: 2 };
       const evaluator = new JavascriptCompiler(container);
       const question = 'd = { a: a, b: b, c: c}';
       const result = await evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toEqual({ a: 12, b: 2, c: undefined });
     });
   });
 
@@ -590,12 +590,12 @@ describe('JavascriptCompiler', () => {
       const result = await evaluator.evaluate(question, context);
       expect(result).toBeUndefined();
     });
-    test('If some argument of the function does not exists, should return undefined', async () => {
+    test('If some argument of the function does not exists, should return NaN', async () => {
       const context = { a: 12, b: 2, sum: (a, b) => a + b };
       const evaluator = new JavascriptCompiler(container);
       const question = 'sum(a, c)';
       const result = await evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
   });
 
@@ -607,19 +607,19 @@ describe('JavascriptCompiler', () => {
       const result = await evaluator.evaluate(question, context);
       expect(result).toEqual(14);
     });
-    test('It should return undefined when then member expression does not exists', async () => {
+    test('It should return NaN when then member expression does not exists', async () => {
       const context = { a: 12, b: (x) => x + 1 };
       const evaluator = new JavascriptCompiler(container);
       const question = 'c = [a, b]; d = e[0] + e[1];';
       const result = await evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
-    test('It should return undefined when then member cannot be resolved', async () => {
+    test('It should return NaN when then member cannot be resolved', async () => {
       const context = { a: 12, b: 2 };
       const evaluator = new JavascriptCompiler(container);
       const question = 'c = [a, b, d]; e = c[0] + c[1] + c[2];';
       const result = await evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
   });
 

@@ -89,12 +89,16 @@ class DialogManager extends Clonable {
         while (stack.pop()) {
           // do nothing
         }
-        return { dialog: '/', lastExecuted: undefined, action: '?' };
+        return {
+          dialog: '/',
+          lastExecuted: undefined,
+          action: { command: 'ask' },
+        };
       }
       return {
         dialog: actionDialog.dialog,
         lastExecuted: actionDialog.lastExecuted,
-        action: '/_endDialog',
+        action: { command: 'endDialog' },
       };
     }
     actionDialog.lastExecuted = position;

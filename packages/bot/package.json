@@ -31,6 +31,7 @@
   "dependencies": {
     "@nlpjs/connector": "^4.15.0",
     "@nlpjs/core": "^4.14.0",
+    "@nlpjs/evaluator": "^4.11.3",
     "@nlpjs/nlp": "^4.15.0"
   },
   "publishConfig": {

@@ -104,12 +104,12 @@ describe('Evaluator', () => {
       const result = evaluator.walkThis(node, context);
       expect(result).toBe(context.this);
     });
-    test('If context does not contain this, then return fail result', () => {
+    test('If context does not contain this, then return undefined', () => {
       const context = {};
       const evaluator = new Evaluator();
       const node = {};
       const result = evaluator.walkThis(node, context);
-      expect(result).toBe(evaluator.failResult);
+      expect(result).toBe(undefined);
     });
     test('Evaluate this from evaluator', () => {
       const context = { this: { a: 17 } };
@@ -128,12 +128,12 @@ describe('Evaluator', () => {
       const result = evaluator.walkIdentifier(node, context);
       expect(result).toEqual(context.a);
     });
-    test('If context does not contain the identifier, return fail result', () => {
+    test('If context does not contain the identifier, return undefined', () => {
       const context = { a: 17 };
       const evaluator = new Evaluator(context);
       const node = { name: 'b' };
       const result = evaluator.walkIdentifier(node, context);
-      expect(result).toEqual(evaluator.failResult);
+      expect(result).toEqual(undefined);
     });
   });
 
@@ -380,19 +380,19 @@ describe('Evaluator', () => {
         'Line 1: Unexpected token ^'
       );
     });
-    test('Should return undefined if left term is undefined', () => {
+    test('Should return NaN if left term is undefined', () => {
       const context = { a: 1, b: 2 };
       const evaluator = new Evaluator();
       const question = 'c + a';
       const result = evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
-    test('Should return undefined if right term is undefined', () => {
+    test('Should return NaN if right term is undefined', () => {
       const context = { a: 1, b: 2 };
       const evaluator = new Evaluator();
       const question = 'a + c';
       const result = evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
     test('Should return undefined if the operator is not recognized', () => {
       const context = { a: 1, b: 2 };
@@ -481,12 +481,12 @@ describe('Evaluator', () => {
       evaluator.evaluate(questionFalse, context);
       expect(context.a).toEqual(13);
     });
-    test('Should return undefined if some term is not defined', () => {
+    test('Should return correct ternary if some term is not defined', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
       const questionTrue = 'c === 2 ? a-- : a++;';
       const result = evaluator.evaluate(questionTrue, context);
-      expect(result).toBeUndefined();
+      expect(result).toEqual(13);
     });
   });
 
@@ -524,12 +524,12 @@ describe('Evaluator', () => {
       const result = evaluator.evaluate(question, context);
       expect(result).toEqual([12, 2, 14, 10]);
     });
-    test('Should return undefined if a term cannot be resolved', () => {
+    test('Should return undefined for a term if the term cannot be resolved', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
       const question = '[a, b, a+b, a-b, c]';
       const result = evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toEqual([12, 2, 14, 10, undefined]);
     });
   });
 
@@ -541,12 +541,12 @@ describe('Evaluator', () => {
       const result = evaluator.evaluate(question, context);
       expect(result).toEqual({ a: 12, b: 2, c: 14 });
     });
-    test('If some member is incorrect return undefined', () => {
+    test('If some member is incorrect return undefined for this member', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
       const question = 'd = { a: a, b: b, c: c}';
       const result = evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toEqual({ a: 12, b: 2, c: undefined });
     });
   });
 
@@ -604,12 +604,12 @@ describe('Evaluator', () => {
       const result = evaluator.evaluate(question, context);
       expect(result).toBeUndefined();
     });
-    test('If some argument of the function does not exists, should return undefined', () => {
+    test('If some argument of the function does not exists, should NaN', () => {
       const context = { a: 12, b: 2, sum: (a, b) => a + b };
       const evaluator = new Evaluator();
       const question = 'sum(a, c)';
       const result = evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
   });
 
@@ -626,14 +626,14 @@ describe('Evaluator', () => {
       const evaluator = new Evaluator();
       const question = 'c = [a, b]; d = e[0] + e[1];';
       const result = evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(undefined);
     });
-    test('It should return undefined when then member cannot be resolved', () => {
+    test('It should NaN when then member cannot be resolved inside an operation', () => {
       const context = { a: 12, b: 2 };
       const evaluator = new Evaluator();
       const question = 'c = [a, b, d]; e = c[0] + c[1] + c[2];';
       const result = evaluator.evaluate(question, context);
-      expect(result).toBeUndefined();
+      expect(result).toBe(NaN);
     });
   });
 
