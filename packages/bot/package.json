@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/bot",
-  "version": "4.15.1",
+  "version": "4.16.0",
   "description": "Bot plugin for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -29,9 +29,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/connector": "^4.15.0",
+    "@nlpjs/connector": "^4.16.0",
     "@nlpjs/core": "^4.14.0",
-    "@nlpjs/evaluator": "^4.11.3",
+    "@nlpjs/evaluator": "^4.16.0",
     "@nlpjs/nlp": "^4.15.0"
   },
   "publishConfig": {
