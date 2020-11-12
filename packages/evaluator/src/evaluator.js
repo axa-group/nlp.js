@@ -135,7 +135,7 @@ class Evaluator {
     if ({}.hasOwnProperty.call(context, node.name)) {
       return context[node.name];
     }
-    return this.failResult;
+    return undefined;
   }
 
   walkThis(node, context) {
@@ -143,7 +143,7 @@ class Evaluator {
       // eslint-disable-next-line
       return context["this"];
     }
-    return this.failResult;
+    return undefined;
   }
 
   walkCall(node, context) {
@@ -180,7 +180,7 @@ class Evaluator {
     if (prop === this.failResult) {
       return this.failResult;
     }
-    return obj[prop];
+    return obj ? obj[prop] : this.failResult;
   }
 
   walkConditional(node, context) {
@@ -402,6 +402,9 @@ class Evaluator {
     }
     const prop = this.walk(node.property, context);
     if (prop === this.failResult) {
+      return this.failResult;
+    }
+    if (!obj) {
       return this.failResult;
     }
     obj[prop] = value;

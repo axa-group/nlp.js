@@ -5,9 +5,11 @@ dialog main
 dialog qna
   nlp
 dialog greet
-  run ask name
+  inc count 2
+  run ask_name
   call uppers user_name
-  say Hello {{ user_name }}
+  [user_name !== 'ADMIN'] say Hello {{ user_name }} {{ count }}
+  [user_name === 'ADMIN'] say Admin rights granted
 dialog help
   say This is the help
   say This is the second help

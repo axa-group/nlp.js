@@ -2,7 +2,15 @@ user> hello
 bot> What's your name?
 user> John
 bot> (Converting name to uppercases...)
-bot> Hello JOHN
+bot> Hello JOHN 2
+bot> This is the help
+bot> This is the second help
+bot> Bye user
+user> hello
+bot> What's your name?
+user> admin
+bot> (Converting name to uppercases...)
+bot> Admin rights granted
 bot> This is the help
 bot> This is the second help
 bot> Bye user

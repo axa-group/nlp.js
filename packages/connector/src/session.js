@@ -48,16 +48,15 @@ class Session {
       name:
         process.env.BACKEND_NAME || this.connector.settings.tag || 'emulator',
     };
+
+    this.template = this.bot ? this.bot.container.get('Template') : undefined;
   }
 
   say(message, context) {
     let outputMessage = message;
     if (context) {
-      const template = this.bot
-        ? this.bot.container.get('Template')
-        : undefined;
-      if (template) {
-        outputMessage = template.compile(message, context);
+      if (this.template) {
+        outputMessage = this.template.compile(message, context);
       }
     }
     this.connector.say(this.activity, outputMessage);

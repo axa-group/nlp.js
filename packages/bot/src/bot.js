@@ -23,8 +23,9 @@
 
 const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { ContextManager } = require('@nlpjs/nlp');
+const { JavascriptCompiler } = require('@nlpjs/evaluator');
 const DialogManager = require('./dialog-manager');
-const { loadScript, getDialogName, getName } = require('./dialog-parse');
+const { loadScript, getDialogName } = require('./dialog-parse');
 
 class Bot extends Clonable {
   constructor(settings = {}, container) {
@@ -59,6 +60,9 @@ class Bot extends Clonable {
     if (this.nlp) {
       await this.nlp.train();
     }
+    if (!this.evaluator) {
+      this.evaluator = new JavascriptCompiler({ container: this.container });
+    }
     if (!this.contextManager) {
       this.contextManager = this.container.get('context-manager');
       if (!this.contextManager) {
@@ -84,39 +88,90 @@ class Bot extends Clonable {
 
   async executeAction(session, context, action) {
     if (typeof action === 'string') {
-      if (action.startsWith('/_endDialog')) {
-        session.endDialog(context);
-      } else if (action.startsWith('/_nlp')) {
-        if (this.nlp) {
-          const result = await this.nlp.process(session);
-          if (result.answer) {
-            if (result.answer.startsWith('/')) {
-              session.beginDialog(context, result.answer);
-            } else {
-              session.say(result.answer);
-            }
-          } else {
-            session.say("Sorry, I don't understand");
-          }
-        } else {
-          session.say("Sorry, I don't understand");
-        }
-      } else if (action.startsWith('/')) {
+      if (action.startsWith('/')) {
         session.beginDialog(context, action);
-      } else if (action.startsWith('?')) {
-        context.isWaitingInput = true;
-        const text = action.slice(1);
-        if (text) {
-          context.variableName = text;
-        }
-      } else if (action.startsWith('->')) {
-        const tokens = action.slice(2).split(' ');
-        const fn = this.actions[tokens[0]];
-        if (fn) {
-          await fn(session, context, tokens.slice(1));
-        }
       } else {
         session.say(action, context);
+      }
+    } else {
+      let shouldContinue = true;
+      if (action.condition) {
+        shouldContinue = await this.evaluator.evaluate(
+          action.condition,
+          context
+        );
+      }
+      if (shouldContinue) {
+        let fn;
+        switch (action.command) {
+          case 'say':
+            session.say(action.text, context);
+            break;
+          case 'endDialog':
+            session.endDialog(context);
+            break;
+          case 'beginDialog':
+            session.beginDialog(
+              context,
+              action.dialog.startsWith('/')
+                ? action.dialog
+                : `/${action.dialog}`
+            );
+            break;
+          case 'ask':
+            context.isWaitingInput = true;
+            context.variableName = action.variableName;
+            break;
+          case 'nlp':
+            if (this.nlp) {
+              const result = await this.nlp.process(session);
+              if (result.answer) {
+                if (result.answer.startsWith('/')) {
+                  session.beginDialog(context, result.answer);
+                } else {
+                  session.say(result.answer);
+                }
+              } else {
+                session.say("Sorry, I don't understand");
+              }
+            } else {
+              session.say("Sorry, I don't understand");
+            }
+            break;
+          case 'call':
+            fn = this.actions[action.functionName];
+            if (fn) {
+              await fn(session, context, action.parameters);
+            } else {
+              console.log(`Unknown function "${action.functionName}"`);
+            }
+            break;
+          case 'inc':
+            if (!context[action.variableName]) {
+              context[action.variableName] = 0;
+            }
+            context[action.variableName] += action.increment;
+            break;
+          case 'dec':
+            if (!context[action.variableName]) {
+              context[action.variableName] = 0;
+            }
+            context[action.variableName] -= action.increment;
+            break;
+          case 'set':
+            if (this.evaluator) {
+              context[action.variableName] = await this.evaluator.evaluate(
+                action.value,
+                context
+              );
+            } else {
+              context[action.variableName] = action.value;
+            }
+            break;
+          default:
+            console.log(`Unknown command executing action "${action.command}"`);
+            break;
+        }
       }
     }
   }
@@ -139,7 +194,7 @@ class Bot extends Clonable {
         current.dialog === lastDialog &&
         current.lastExecuted === lastPosition
       ) {
-        await this.executeAction(session, context, '?');
+        await this.executeAction(session, context, { command: 'ask' });
       } else {
         lastDialog = current.dialog;
         lastPosition = current.lastExecuted;
@@ -167,6 +222,14 @@ class Bot extends Clonable {
     };
   }
 
+  buildAction(command, current) {
+    return {
+      command,
+      condition: current.condition,
+      settings: current.settings,
+    };
+  }
+
   async loadScript(fileName) {
     const fs = this.container.get('fs');
     const script = await loadScript(fileName, fs);
@@ -178,6 +241,8 @@ class Bot extends Clonable {
     let state;
     const dialogs = [];
     let currentDialog = {};
+    let action;
+    let tokens;
     for (let i = 0; i < script.length; i += 1) {
       const current = script[i];
       switch (current.type) {
@@ -249,21 +314,55 @@ class Bot extends Clonable {
           dialogs.push(currentDialog);
           break;
         case 'run':
-          currentDialog.actions.push(getDialogName(current.line));
+          action = this.buildAction('beginDialog', current);
+          action.dialog = current.line;
+          currentDialog.actions.push(action);
           break;
         case 'say':
-          currentDialog.actions.push(current.line);
+          action = this.buildAction('say', current);
+          action.text = current.line;
+          currentDialog.actions.push(action);
           break;
         case 'ask':
-          currentDialog.actions.push(`?${getName(current.line)}`);
+          action = this.buildAction('ask', current);
+          action.variableName = current.line;
+          currentDialog.actions.push(action);
           break;
         case 'nlp':
-          currentDialog.actions.push('/_nlp');
+          action = this.buildAction('nlp', current);
+          currentDialog.actions.push(action);
           break;
         case 'call':
-          currentDialog.actions.push(`->${current.line}`);
+          action = this.buildAction('call', current);
+          tokens = current.line.split(' ');
+          [action.functionName] = tokens;
+          action.parameters = tokens.slice(1);
+          currentDialog.actions.push(action);
+          break;
+        case 'inc':
+          action = this.buildAction('inc', current);
+          tokens = current.line.split(' ');
+          [action.variableName] = tokens;
+          action.increment = parseInt(tokens[1] || '1', 10);
+          currentDialog.actions.push(action);
+          break;
+        case 'dec':
+          action = this.buildAction('dec', current);
+          tokens = current.line.split(' ');
+          [action.variableName] = tokens;
+          action.increment = parseInt(tokens[1] || '1', 10);
+          currentDialog.actions.push(action);
+          break;
+        case 'set':
+          action = this.buildAction('set', current);
+          tokens = current.line.split(' ');
+          [action.variableName] = tokens;
+          action.value = current.line.slice(tokens[0].length + 1);
+          currentDialog.actions.push(action);
           break;
         default:
+          console.log('UNKNOWN COMMAND');
+          console.log(current);
           break;
       }
     }
