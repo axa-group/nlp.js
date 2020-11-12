@@ -152,6 +152,12 @@ class Bot extends Clonable {
             }
             context[action.variableName] += action.increment;
             break;
+          case 'dec':
+            if (!context[action.variableName]) {
+              context[action.variableName] = 0;
+            }
+            context[action.variableName] -= action.increment;
+            break;
           case 'set':
             if (this.evaluator) {
               context[action.variableName] = await this.evaluator.evaluate(
@@ -335,6 +341,13 @@ class Bot extends Clonable {
           break;
         case 'inc':
           action = this.buildAction('inc', current);
+          tokens = current.line.split(' ');
+          [action.variableName] = tokens;
+          action.increment = parseInt(tokens[1] || '1', 10);
+          currentDialog.actions.push(action);
+          break;
+        case 'dec':
+          action = this.buildAction('dec', current);
           tokens = current.line.split(' ');
           [action.variableName] = tokens;
           action.increment = parseInt(tokens[1] || '1', 10);
