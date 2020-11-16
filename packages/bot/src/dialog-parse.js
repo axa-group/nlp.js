@@ -34,9 +34,12 @@ function getDialogName(tokens) {
   return result;
 }
 
-function trimBetween(line, left, right) {
+function trimBetween(line, left, right, shouldBeFirst = false) {
   const indexLeft = line.indexOf(left);
-  if (indexLeft !== -1) {
+  if (
+    indexLeft !== -1 &&
+    (!shouldBeFirst || (shouldBeFirst && indexLeft === 0))
+  ) {
     const indexRight = line.indexOf(right);
     if (indexRight !== -1 && indexRight > indexLeft) {
       return {
@@ -53,7 +56,7 @@ function trimBetween(line, left, right) {
 }
 
 function trimLine(line) {
-  const trimmedCondition = trimBetween(line, '[', ']');
+  const trimmedCondition = trimBetween(line.trim(), '[', ']', true);
   const trimmedSettings = trimBetween(trimmedCondition.line, '(', ')');
   return {
     line: trimmedSettings.line.trim(),
