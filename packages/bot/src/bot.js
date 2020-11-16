@@ -243,6 +243,7 @@ class Bot extends Clonable {
     let currentDialog = {};
     let action;
     let tokens;
+    let contextData;
     for (let i = 0; i < script.length; i += 1) {
       const current = script[i];
       switch (current.type) {
@@ -262,6 +263,9 @@ class Bot extends Clonable {
             intents[locale] = [];
           }
           intents[locale].push(currentIntent);
+          break;
+        case 'contextdata':
+          contextData = current.line;
           break;
         case 'entity':
           currentEntity = {
@@ -375,6 +379,9 @@ class Bot extends Clonable {
           locale,
           data: intents[currentLocale],
         };
+        if (contextData) {
+          corpus.contextData = contextData;
+        }
         const currentEntities = entities[currentLocale];
         if (currentEntities.length > 0) {
           corpus.entities = {};
