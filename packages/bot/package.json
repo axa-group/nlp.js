@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/bot",
-  "version": "4.16.1",
+  "version": "4.16.2",
   "description": "Bot plugin for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
