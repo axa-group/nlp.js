@@ -124,7 +124,7 @@ class Bot extends Clonable {
             break;
           case 'nlp':
             if (this.nlp) {
-              const result = await this.nlp.process(session);
+              const result = await this.nlp.process(session, undefined, context);
               if (result.answer) {
                 if (result.answer.startsWith('/')) {
                   session.beginDialog(context, result.answer);
