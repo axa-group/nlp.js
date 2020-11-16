@@ -57,9 +57,6 @@ class Bot extends Clonable {
   }
 
   async start() {
-    if (this.nlp) {
-      await this.nlp.train();
-    }
     if (!this.evaluator) {
       this.evaluator = new JavascriptCompiler({ container: this.container });
     }
@@ -79,6 +76,9 @@ class Bot extends Clonable {
     }
     if (this.settings.scripts) {
       await this.loadScript(this.settings.scripts);
+    }
+    if (this.nlp) {
+      await this.nlp.train();
     }
   }
 
@@ -405,6 +405,12 @@ class Bot extends Clonable {
     }
     for (let i = 0; i < dialogs.length; i += 1) {
       this.addDialog(dialogs[i].name, dialogs[i].actions);
+    }
+  }
+
+  loadCorpus(corpus) {
+    if (this.nlp) {
+      this.nlp.addCorpus(corpus);
     }
   }
 }
