@@ -112,6 +112,21 @@ class Session {
     }
     this.connector.say(message);
   }
+
+  sendCard(card, context) {
+    let message = this.createMessage();
+    const keys = Object.keys(card);
+    for (let i = 0; i < keys.length; i += 1) {
+      const key = keys[i];
+      if (!message[key]) {
+        message[key] = card[key];
+      }
+    }
+    if (context && this.template) {
+      message = this.template.compile(message, context);
+    }
+    this.connector.say(message);
+  }
 }
 
 module.exports = Session;
