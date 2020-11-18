@@ -224,9 +224,13 @@ class DirectlineConnector extends Connector {
   }
 
   say(srcActivity, text) {
-    const answer = this.createAnswer(srcActivity.activity || srcActivity);
-    answer.text = text || srcActivity.text;
-    this.controller.say(answer);
+    if (typeof text === 'string') {
+      const answer = this.createAnswer(srcActivity.activity || srcActivity);
+      answer.text = text || srcActivity.text;
+      this.controller.say(answer);
+    } else {
+      this.controller.say(srcActivity);
+    }
   }
 }
 

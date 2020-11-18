@@ -36,7 +36,7 @@ class TestConnector extends Connector {
     } else if (typeof message === 'string') {
       text = message;
     } else {
-      text = message.answer || message.message || reference;
+      text = message.answer || message.message || message.text || reference;
     }
     const botName = this.settings.botName || 'bot';
     if (this.settings.debug && typeof message === 'object' && !reference) {

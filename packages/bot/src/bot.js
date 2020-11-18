@@ -107,6 +107,9 @@ class Bot extends Clonable {
           case 'say':
             session.say(action.text, context);
             break;
+          case 'suggest':
+            session.addSuggestedActions(action.text);
+            break;
           case 'endDialog':
             session.endDialog(context);
             break;
@@ -124,7 +127,11 @@ class Bot extends Clonable {
             break;
           case 'nlp':
             if (this.nlp) {
-              const result = await this.nlp.process(session, undefined, context);
+              const result = await this.nlp.process(
+                session,
+                undefined,
+                context
+              );
               if (result.answer) {
                 if (result.answer.startsWith('/')) {
                   session.beginDialog(context, result.answer);
@@ -324,6 +331,11 @@ class Bot extends Clonable {
           break;
         case 'say':
           action = this.buildAction('say', current);
+          action.text = current.line;
+          currentDialog.actions.push(action);
+          break;
+        case 'suggest':
+          action = this.buildAction('suggest', current);
           action.text = current.line;
           currentDialog.actions.push(action);
           break;

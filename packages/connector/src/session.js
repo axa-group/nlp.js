@@ -50,16 +50,7 @@ class Session {
     };
 
     this.template = this.bot ? this.bot.container.get('Template') : undefined;
-  }
-
-  say(message, context) {
-    let outputMessage = message;
-    if (context) {
-      if (this.template) {
-        outputMessage = this.template.compile(message, context);
-      }
-    }
-    this.connector.say(this.activity, outputMessage);
+    this.suggestedActions = undefined;
   }
 
   beginDialog(context, name) {
@@ -68,6 +59,58 @@ class Session {
 
   endDialog(context) {
     this.bot.dialogManager.endDialog(context.dialogStack);
+  }
+
+  createMessage() {
+    return {
+      type: 'message',
+      serviceUrl: this.serviceUrl,
+      channelId: this.channelId,
+      conversation: this.conversation,
+      recipient: this.recipient,
+      inputHint: this.inputHint,
+      replyToId: this.replyToId,
+      id: uuid(),
+      from: this.from,
+    };
+  }
+
+  addSuggestedActions(actions) {
+    if (typeof actions === 'string') {
+      const objActions = [];
+      const tokens = actions.split('|');
+      for (let i = 0; i < tokens.length; i += 1) {
+        const obj = {
+          type: 'imBack',
+          title: tokens[i],
+          value: tokens[i],
+        };
+        objActions.push(obj);
+      }
+      this.addSuggestedActions(objActions);
+    } else {
+      this.suggestedActions = actions;
+    }
+  }
+
+  say(srcMessage, context) {
+    let message;
+    if (typeof srcMessage === 'string') {
+      message = this.createMessage();
+      message.text = srcMessage;
+    } else {
+      message = srcMessage;
+    }
+    if (this.suggestedActions) {
+      message.suggestedActions = { actions: this.suggestedActions };
+      this.suggestedActions = undefined;
+    }
+    if (context) {
+      if (this.template) {
+        message = this.template.compile(message, context);
+      }
+    }
+    this.connector.say(message);
   }
 }
 
