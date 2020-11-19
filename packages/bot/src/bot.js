@@ -208,6 +208,12 @@ class Bot extends Clonable {
     if (!context.dialogStack) {
       context.dialogStack = [];
     }
+    if (session.activity.value) {
+      const keys = Object.keys(session.activity.value);
+      for (let i = 0; i < keys.length; i += 1) {
+        context[keys[i]] = session.activity.value[keys[i]];
+      }
+    }
     if (context.isWaitingInput && context.variableName) {
       context[context.variableName] = session.text;
     }
