@@ -102,13 +102,21 @@ async function loadScript(fileName, fs, alreadyLoaded = [], script = []) {
   } else if (!alreadyLoaded.includes(fileName)) {
     alreadyLoaded.push(fileName);
     const text = await fs.readFile(fileName);
-    const parsed = dialogParse(text);
-    for (let i = 0; i < parsed.length; i += 1) {
-      const current = parsed[i];
-      if (current.type === 'import') {
-        await loadScript(current.line.split(' '), fs, alreadyLoaded, script);
-      } else {
-        script.push(current);
+    if (fileName.toLowerCase().endsWith('.json')) {
+      script.push({
+        type: 'import',
+        fileName,
+        content: JSON.parse(text),
+      });
+    } else {
+      const parsed = dialogParse(text);
+      for (let i = 0; i < parsed.length; i += 1) {
+        const current = parsed[i];
+        if (current.type === 'import') {
+          await loadScript(current.line.split(' '), fs, alreadyLoaded, script);
+        } else {
+          script.push(current);
+        }
       }
     }
   }

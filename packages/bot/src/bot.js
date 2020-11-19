@@ -50,6 +50,7 @@ class Bot extends Clonable {
     );
     this.nlp = this.container.get('nlp');
     this.actions = {};
+    this.cards = {};
   }
 
   registerDefault() {
@@ -86,6 +87,18 @@ class Bot extends Clonable {
     this.actions[name] = fn;
   }
 
+  registerCard(name, card) {
+    if (typeof name === 'string' && card) {
+      this.cards[name] = card;
+    } else if (Array.isArray(name)) {
+      for (let i = 0; i < name.length; i += 1) {
+        this.registerCard(name[i]);
+      }
+    } else {
+      this.registerCard(name.name, name.card || name);
+    }
+  }
+
   async executeAction(session, context, action) {
     if (typeof action === 'string') {
       if (action.startsWith('/')) {
@@ -107,6 +120,9 @@ class Bot extends Clonable {
           case 'say':
             session.say(action.text, context);
             break;
+          case 'suggest':
+            session.addSuggestedActions(action.text);
+            break;
           case 'endDialog':
             session.endDialog(context);
             break;
@@ -124,7 +140,11 @@ class Bot extends Clonable {
             break;
           case 'nlp':
             if (this.nlp) {
-              const result = await this.nlp.process(session, undefined, context);
+              const result = await this.nlp.process(
+                session,
+                undefined,
+                context
+              );
               if (result.answer) {
                 if (result.answer.startsWith('/')) {
                   session.beginDialog(context, result.answer);
@@ -151,6 +171,13 @@ class Bot extends Clonable {
               context[action.variableName] = 0;
             }
             context[action.variableName] += action.increment;
+            break;
+          case 'card':
+            if (this.cards[action.cardName]) {
+              session.sendCard(this.cards[action.cardName], context);
+            } else {
+              console.log(`Unknown card ${action.cardName}`);
+            }
             break;
           case 'dec':
             if (!context[action.variableName]) {
@@ -244,6 +271,7 @@ class Bot extends Clonable {
     let action;
     let tokens;
     let contextData;
+    const imports = [];
     for (let i = 0; i < script.length; i += 1) {
       const current = script[i];
       switch (current.type) {
@@ -327,6 +355,16 @@ class Bot extends Clonable {
           action.text = current.line;
           currentDialog.actions.push(action);
           break;
+        case 'card':
+          action = this.buildAction('card', current);
+          action.cardName = current.line;
+          currentDialog.actions.push(action);
+          break;
+        case 'suggest':
+          action = this.buildAction('suggest', current);
+          action.text = current.line;
+          currentDialog.actions.push(action);
+          break;
         case 'ask':
           action = this.buildAction('ask', current);
           action.variableName = current.line;
@@ -364,6 +402,9 @@ class Bot extends Clonable {
           action.value = current.line.slice(tokens[0].length + 1);
           currentDialog.actions.push(action);
           break;
+        case 'import':
+          imports.push(current.content);
+          break;
         default:
           console.log('UNKNOWN COMMAND');
           console.log(current);
@@ -371,8 +412,20 @@ class Bot extends Clonable {
       }
     }
     const intentKeys = Object.keys(intents);
+    for (let i = 0; i < imports.length; i += 1) {
+      const currentImport = imports[i];
+      if (currentImport && !currentImport.data) {
+        this.registerCard(currentImport);
+      }
+    }
     const nlp = this.container.get('nlp');
     if (nlp) {
+      for (let i = 0; i < imports.length; i += 1) {
+        const currentImport = imports[i];
+        if (currentImport && currentImport.locale && currentImport.data) {
+          nlp.addCorpus(currentImport);
+        }
+      }
       for (let i = 0; i < intentKeys.length; i += 1) {
         const currentLocale = intentKeys[i];
         const corpus = {
