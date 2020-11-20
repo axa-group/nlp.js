@@ -116,6 +116,13 @@ class DialogManager extends Clonable {
   endDialog(stack) {
     stack.pop();
   }
+
+  restartDialog(stack) {
+    while (stack.length > 0) {
+      this.endDialog(stack);
+    }
+    this.beginDialog(stack, '/#');
+  }
 }
 
 module.exports = DialogManager;
