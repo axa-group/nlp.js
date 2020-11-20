@@ -50,6 +50,7 @@ class Bot extends Clonable {
     );
     this.nlp = this.container.get('nlp');
     this.actions = {};
+    this.validators = {};
     this.cards = {};
   }
 
@@ -87,6 +88,14 @@ class Bot extends Clonable {
     this.actions[name] = fn;
   }
 
+  registerValidator(name, fn) {
+    this.validators[name.toLowerCase()] = fn;
+  }
+
+  getValidator(name) {
+    return this.validators[name.toLowerCase()];
+  }
+
   registerCard(name, card) {
     if (typeof name === 'string' && card) {
       this.cards[name] = card;
@@ -97,6 +106,24 @@ class Bot extends Clonable {
     } else {
       this.registerCard(name.name, name.card || name);
     }
+  }
+
+  async setVariable(context, variableName, variableValue) {
+    if (this.evaluator) {
+      await this.evaluator.evaluate(
+        `${variableName} = "${variableValue}"`,
+        context
+      );
+    } else {
+      context[variableName] = variableValue;
+    }
+  }
+
+  getVariable(context, variableName) {
+    if (this.evaluator) {
+      return this.evaluator.evaluate(variableName, context);
+    }
+    return context[variableName];
   }
 
   async executeAction(session, context, action) {
@@ -126,6 +153,9 @@ class Bot extends Clonable {
           case 'endDialog':
             session.endDialog(context);
             break;
+          case 'restartDialog':
+            session.restartDialog(context);
+            break;
           case 'beginDialog':
             session.beginDialog(
               context,
@@ -137,6 +167,7 @@ class Bot extends Clonable {
           case 'ask':
             context.isWaitingInput = true;
             context.variableName = action.variableName;
+            context.validatorName = action.validatorName;
             break;
           case 'nlp':
             if (this.nlp) {
@@ -186,14 +217,7 @@ class Bot extends Clonable {
             context[action.variableName] -= action.increment;
             break;
           case 'set':
-            if (this.evaluator) {
-              context[action.variableName] = await this.evaluator.evaluate(
-                action.value,
-                context
-              );
-            } else {
-              context[action.variableName] = action.value;
-            }
+            await this.setVariable(context, action.variableName, action.value);
             break;
           default:
             console.log(`Unknown command executing action "${action.command}"`);
@@ -203,10 +227,53 @@ class Bot extends Clonable {
     }
   }
 
+  async runValidation(session, context) {
+    const validator = this.getValidator(context.validatorName);
+    if (!validator) {
+      console.log(`Unknown validator ${context.validatorName}`);
+    } else {
+      const validation = await validator(session, context, [
+        context.variableName,
+      ]);
+      if (validation.isValid) {
+        context.validation.currentRetry = 0;
+        if (validation.changes) {
+          for (let i = 0; i < validation.changes.length; i += 1) {
+            const change = validation.changes[i];
+            context[change.name] = change.value;
+          }
+        }
+      } else {
+        context.validation.currentRetry =
+          (context.validation.currentRetry || 0) + 1;
+        if (
+          context.validation.currentRetry > (context.validation.retries || 2)
+        ) {
+          if (context.validation.failDialog) {
+            let { failDialog } = context.validation;
+            if (!failDialog.startsWith('/')) {
+              failDialog = `/${failDialog}`;
+            }
+            session.beginDialog(context, failDialog);
+          } else {
+            session.restartDialog(context);
+          }
+        } else {
+          session.say(context.validation.message || 'Invalid value');
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   async process(session) {
     const context = await this.contextManager.getContext(session);
     if (!context.dialogStack) {
       context.dialogStack = [];
+    }
+    if (!context.validation) {
+      context.validation = {};
     }
     if (session.activity.value) {
       const keys = Object.keys(session.activity.value);
@@ -214,24 +281,31 @@ class Bot extends Clonable {
         context[keys[i]] = session.activity.value[keys[i]];
       }
     }
-    if (context.isWaitingInput && context.variableName) {
-      context[context.variableName] = session.text;
+    let shouldContinue = true;
+    if (context.isWaitingInput) {
+      if (context.validatorName) {
+        shouldContinue = await this.runValidation(session, context);
+      } else if (context.variableName) {
+        await this.setVariable(context, context.variableName, session.text);
+      }
     }
-    context.isWaitingInput = false;
-    context.variableName = undefined;
-    let lastDialog;
-    let lastPosition;
-    while (!context.isWaitingInput) {
-      const current = this.dialogManager.getNextAction(context.dialogStack);
-      if (
-        current.dialog === lastDialog &&
-        current.lastExecuted === lastPosition
-      ) {
-        await this.executeAction(session, context, { command: 'ask' });
-      } else {
-        lastDialog = current.dialog;
-        lastPosition = current.lastExecuted;
-        await this.executeAction(session, context, current.action);
+    if (shouldContinue) {
+      context.isWaitingInput = false;
+      context.variableName = undefined;
+      let lastDialog;
+      let lastPosition;
+      while (!context.isWaitingInput) {
+        const current = this.dialogManager.getNextAction(context.dialogStack);
+        if (
+          current.dialog === lastDialog &&
+          current.lastExecuted === lastPosition
+        ) {
+          await this.executeAction(session, context, { command: 'ask' });
+        } else {
+          lastDialog = current.dialog;
+          lastPosition = current.lastExecuted;
+          await this.executeAction(session, context, current.action);
+        }
       }
     }
     await this.contextManager.setContext(session, context);
@@ -280,6 +354,10 @@ class Bot extends Clonable {
     const imports = [];
     for (let i = 0; i < script.length; i += 1) {
       const current = script[i];
+      if (current.type.length > 3 && current.type.startsWith('ask')) {
+        current.line += ` ${current.type.slice(3)}`;
+        current.type = 'ask';
+      }
       switch (current.type) {
         case 'language':
           locale = current.line;
@@ -356,6 +434,10 @@ class Bot extends Clonable {
           action.dialog = current.line;
           currentDialog.actions.push(action);
           break;
+        case 'restart':
+          action = this.buildAction('restartDialog', current);
+          currentDialog.actions.push(action);
+          break;
         case 'say':
           action = this.buildAction('say', current);
           action.text = current.line;
@@ -373,7 +455,8 @@ class Bot extends Clonable {
           break;
         case 'ask':
           action = this.buildAction('ask', current);
-          action.variableName = current.line;
+          tokens = current.line.split(' ');
+          [action.variableName, action.validatorName] = tokens;
           currentDialog.actions.push(action);
           break;
         case 'nlp':
@@ -462,6 +545,10 @@ class Bot extends Clonable {
       }
       await nlp.train();
     }
+    this.addDialog('/#', [
+      { command: 'ask' },
+      { command: 'beginDialog', dialog: '/' },
+    ]);
     for (let i = 0; i < dialogs.length; i += 1) {
       this.addDialog(dialogs[i].name, dialogs[i].actions);
     }

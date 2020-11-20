@@ -61,6 +61,10 @@ class Session {
     this.bot.dialogManager.endDialog(context.dialogStack);
   }
 
+  restartDialog(context) {
+    this.bot.dialogManager.restartDialog(context.dialogStack);
+  }
+
   createMessage() {
     return {
       type: 'message',
