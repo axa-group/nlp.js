@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1606194228527" clover="3.2.0">
+  <project timestamp="1606194228527" name="All files">
+    <metrics statements="79" coveredstatements="71" conditionals="58" coveredconditionals="42" methods="14" coveredmethods="13" elements="151" coveredelements="126" complexity="0" loc="79" ncloc="79" packages="1" files="2" classes="2"/>
+    <file name="builtin-compromise.js" path="/var/lib/docker/projectshome/nlp.js/packages/builtin-compromise/src/builtin-compromise.js">
+      <metrics statements="77" coveredstatements="69" conditionals="58" coveredconditionals="42" methods="14" coveredmethods="13"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="29" count="1" type="stmt"/>
+      <line num="30" count="1" type="cond" truecount="3" falsecount="1"/>
+      <line num="31" count="1" type="cond" truecount="3" falsecount="1"/>
+      <line num="32" count="1" type="cond" truecount="3" falsecount="1"/>
+      <line num="33" count="1" type="stmt"/>
+      <line num="34" count="1" type="stmt"/>
+      <line num="37" count="1" type="stmt"/>
+      <line num="63" count="10" type="stmt"/>
+      <line num="70" count="10" type="stmt"/>
+      <line num="71" count="10" type="cond" truecount="1" falsecount="1"/>
+      <line num="72" count="10" type="stmt"/>
+      <line num="74" count="10" type="stmt"/>
+      <line num="75" count="10" type="stmt"/>
+      <line num="82" count="10" type="stmt"/>
+      <line num="88" count="1" type="stmt"/>
+      <line num="89" count="1" type="cond" truecount="2" falsecount="0"/>
+      <line num="93" count="10" type="stmt"/>
+      <line num="94" count="10" type="stmt"/>
+      <line num="95" count="10" type="stmt"/>
+      <line num="96" count="10" type="stmt"/>
+      <line num="105" count="1" type="stmt"/>
+      <line num="106" count="1" type="stmt"/>
+      <line num="112" count="1" type="stmt"/>
+      <line num="113" count="1" type="stmt"/>
+      <line num="119" count="2" type="stmt"/>
+      <line num="121" count="2" type="stmt"/>
+      <line num="127" count="1" type="stmt"/>
+      <line num="128" count="1" type="stmt"/>
+      <line num="135" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="136" count="2" type="stmt"/>
+      <line num="140" count="2" type="stmt"/>
+      <line num="142" count="2" type="stmt"/>
+      <line num="147" count="2" type="stmt"/>
+      <line num="149" count="4" type="stmt"/>
+      <line num="154" count="10" type="stmt"/>
+      <line num="155" count="90" type="stmt"/>
+      <line num="157" count="90" type="stmt"/>
+      <line num="158" count="13" type="cond" truecount="4" falsecount="1"/>
+      <line num="159" count="13" type="stmt"/>
+      <line num="160" count="13" type="stmt"/>
+      <line num="168" count="13" type="cond" truecount="2" falsecount="0"/>
+      <line num="169" count="2" type="stmt"/>
+      <line num="171" count="11" type="stmt"/>
+      <line num="173" count="13" type="stmt"/>
+      <line num="176" count="13" type="cond" truecount="2" falsecount="0"/>
+      <line num="180" count="9" type="stmt"/>
+      <line num="182" count="13" type="stmt"/>
+      <line num="184" count="13" type="stmt"/>
+      <line num="186" count="90" type="stmt"/>
+      <line num="188" count="10" type="stmt"/>
+      <line num="190" count="0" type="stmt"/>
+      <line num="191" count="0" type="stmt"/>
+      <line num="196" count="10" type="stmt"/>
+      <line num="197" count="10" type="stmt"/>
+      <line num="201" count="10" type="cond" truecount="1" falsecount="1"/>
+      <line num="202" count="10" type="stmt"/>
+      <line num="204" count="10" type="cond" truecount="1" falsecount="1"/>
+      <line num="205" count="10" type="stmt"/>
+      <line num="207" count="10" type="cond" truecount="1" falsecount="1"/>
+      <line num="208" count="10" type="stmt"/>
+      <line num="209" count="13" type="stmt"/>
+      <line num="212" count="10" type="cond" truecount="1" falsecount="1"/>
+      <line num="213" count="0" type="stmt"/>
+      <line num="214" count="0" type="stmt"/>
+      <line num="217" count="10" type="stmt"/>
+      <line num="221" count="0" type="stmt"/>
+      <line num="222" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="223" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="224" count="0" type="stmt"/>
+      <line num="228" count="3" type="stmt"/>
+      <line num="229" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="230" count="1" type="stmt"/>
+      <line num="232" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="236" count="1" type="stmt"/>
+    </file>
+    <file name="index.js" path="/var/lib/docker/projectshome/nlp.js/packages/builtin-compromise/src/index.js">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
