@@ -1,0 +1,36 @@
+{
+  "name": "@nlpjs/builtin-compromise",
+  "version": "0.0.1",
+  "description": "Builtin Named Entity Recognition with Compromise",
+  "author": {
+    "email": "syntithenai@gmail.com",
+    "name": "Steve Ryan"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "syntithenai@gmail.com",
+      "name": "Steve Ryan"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest --coverage --maxWorkers=4 ."
+  },
+  "dependencies": {
+    "@nlpjs/core": "^4.14.0",
+    "compromise": "^13.7.0",
+    "compromise-dates": "^1.2.0",
+    "compromise-numbers": "^1.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
