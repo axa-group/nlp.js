@@ -44,11 +44,15 @@ function buildExpected(value, start, entityName, typeName) {
   return result;
 }
 
-function buildInput(text, locale = 'en') {
-  return {
+function buildInput(text, builtins, locale = 'en') {
+  const result = {
     text,
     locale,
   };
+  if (builtins) {
+    result.builtins = Array.isArray(builtins) ? builtins : [builtins];
+  }
+  return result;
 }
 
 describe('Builtin Default', () => {
@@ -62,17 +66,18 @@ describe('Builtin Default', () => {
   describe('Email', () => {
     test('It should extract one email', () => {
       const input = 'My email is something@mail.com';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'Email'));
       const expected = {
         edges: [buildExpected('something@mail.com', 12, 'email')],
         locale: 'en',
         text: input,
+        builtins: ['Email'],
       };
       expect(actual).toEqual(expected);
     });
     test('It should extract several emails', () => {
       const input = 'My email is something@mail.com but also other@mail.com';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'Email'));
       const expected = {
         edges: [
           buildExpected('something@mail.com', 12, 'email'),
@@ -80,6 +85,7 @@ describe('Builtin Default', () => {
         ],
         locale: 'en',
         text: input,
+        builtins: ['Email'],
       };
       expect(actual).toEqual(expected);
     });
@@ -88,17 +94,18 @@ describe('Builtin Default', () => {
   describe('IpAddress', () => {
     test('It should extract IPv4', () => {
       const input = 'My ip is 8.8.8.8';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'IpAddress'));
       const expected = {
         edges: [buildExpected('8.8.8.8', 9, 'ip', 'ipv4')],
         locale: 'en',
         text: input,
+        builtins: ['IpAddress'],
       };
       expect(actual).toEqual(expected);
     });
     test('It should extract several IPv4', () => {
       const input = 'My ip is 8.8.8.8 and yours is 192.168.0.1';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'IpAddress'));
       const expected = {
         edges: [
           buildExpected('8.8.8.8', 9, 'ip', 'ipv4'),
@@ -106,22 +113,24 @@ describe('Builtin Default', () => {
         ],
         locale: 'en',
         text: input,
+        builtins: ['IpAddress'],
       };
       expect(actual).toEqual(expected);
     });
     test('It should extract IPv6', () => {
       const input = 'My ip is ABEF:452::FE10';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'IpAddress'));
       const expected = {
         edges: [buildExpected('ABEF:452::FE10', 9, 'ip', 'ipv6')],
         locale: 'en',
         text: input,
+        builtins: ['IpAddress'],
       };
       expect(actual).toEqual(expected);
     });
     test('It should extract several IPv6', () => {
       const input = 'My ip is ABEF:452::FE10 and other is ABEF:452::AE10';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'IpAddress'));
       const expected = {
         edges: [
           buildExpected('ABEF:452::FE10', 9, 'ip', 'ipv6'),
@@ -129,6 +138,7 @@ describe('Builtin Default', () => {
         ],
         locale: 'en',
         text: input,
+        builtins: ['IpAddress'],
       };
       expect(actual).toEqual(expected);
     });
@@ -137,18 +147,19 @@ describe('Builtin Default', () => {
   describe('URL', () => {
     test('It should extract one URL', () => {
       const input = 'My url is https://www.uri.com';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'URL'));
       const expected = {
         edges: [buildExpected('https://www.uri.com', 10, 'url')],
         locale: 'en',
         text: input,
+        builtins: ['URL'],
       };
       expect(actual).toEqual(expected);
     });
     test('It should extract several URLs', () => {
       const input =
         'My url is https://www.uri.com but also http://me.com/more/things?a=7&b=test';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'URL'));
       const expected = {
         edges: [
           buildExpected('https://www.uri.com', 10, 'url'),
@@ -156,6 +167,7 @@ describe('Builtin Default', () => {
         ],
         locale: 'en',
         text: input,
+        builtins: ['URL'],
       };
       expect(actual).toEqual(expected);
     });
@@ -164,17 +176,18 @@ describe('Builtin Default', () => {
   describe('Phone Number', () => {
     test('It should extract a phone number', () => {
       const input = 'My phone number is +1 541-754-3010';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'PhoneNumber'));
       const expected = {
         edges: [buildExpected('541-754-3010', 22, 'phonenumber')],
         locale: 'en',
         text: input,
+        builtins: ['PhoneNumber'],
       };
       expect(actual).toEqual(expected);
     });
     test('It should extract several phone numbers', () => {
       const input = 'My phone number is 541-754-3010 but also 555-911-7340';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'PhoneNumber'));
       const expected = {
         edges: [
           buildExpected('541-754-3010', 19, 'phonenumber'),
@@ -182,6 +195,7 @@ describe('Builtin Default', () => {
         ],
         locale: 'en',
         text: input,
+        builtins: ['PhoneNumber'],
       };
       expect(actual).toEqual(expected);
     });
@@ -190,17 +204,18 @@ describe('Builtin Default', () => {
   describe('Hashtag', () => {
     test('It should extract a hashtag', () => {
       const input = 'Look at #hashtag';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'Hashtag'));
       const expected = {
         edges: [buildExpected('#hashtag', 8, 'hashtag')],
         locale: 'en',
         text: input,
+        builtins: ['Hashtag'],
       };
       expect(actual).toEqual(expected);
     });
     test('It should extract several hashtags', () => {
       const input = 'Look at #hashtag and #party';
-      const actual = builtin.extract(buildInput(input));
+      const actual = builtin.extract(buildInput(input, 'Hashtag'));
       const expected = {
         edges: [
           buildExpected('#hashtag', 8, 'hashtag'),
@@ -208,7 +223,27 @@ describe('Builtin Default', () => {
         ],
         locale: 'en',
         text: input,
+        builtins: ['Hashtag'],
       };
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('Number', () => {
+    test('It should be able to extract integers', () => {
+      const input = 'A is 12 and B is -7';
+      const actual = builtin.extract(buildInput(input, 'Number'));
+      const expected = {
+        edges: [
+          buildExpected('12', 5, 'number', 'integer'),
+          buildExpected('-7', 17, 'number', 'integer'),
+        ],
+        locale: 'en',
+        text: input,
+        builtins: ['Number'],
+      };
+      expected.edges[0].resolution.value = 12;
+      expected.edges[1].resolution.value = -7;
       expect(actual).toEqual(expected);
     });
   });

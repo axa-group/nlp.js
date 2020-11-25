@@ -78,11 +78,13 @@ const recognizeNumber = (text) => {
   for (let i = 0; i < numbers.length; i += 1) {
     const number = numbers[i];
     number.resolution.value = parseFloat(number.resolution.value);
-    number.resolution.type = Number.isInteger(number.resolution.value) ? 'integer' : 'float';
+    number.resolution.type = Number.isInteger(number.resolution.value)
+      ? 'integer'
+      : 'float';
     console.log(numbers[i]);
   }
   return numbers;
-}
+};
 
 module.exports = {
   recognize,
