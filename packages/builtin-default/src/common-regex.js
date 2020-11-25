@@ -6,6 +6,7 @@ const regexHexColor = /#(?:[0-9a-fA-F]{3}){1,2}\b/gi;
 const regexTime = /\b((0?[0-9]|1[0-2])(:[0-5][0-9])?(am|pm)|([01]?[0-9]|2[0-3]):[0-5][0-9])/gi;
 const regexPhone = /(\d?[^\s\w]*(?:\(?\d{3}\)?\W*)?\d{3}\W*\d{4})/gi;
 const regexHashtag = /(#[a-zA-Z0-9]+,? *)*#[a-zA-Z0-9_/-]+/gi;
+const regexNumber = /[+-]?([0-9]*[.])?[0-9]+/g;
 
 module.exports = {
   regexEmail,
@@ -16,4 +17,5 @@ module.exports = {
   regexTime,
   regexPhone,
   regexHashtag,
+  regexNumber,
 };
