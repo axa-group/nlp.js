@@ -46,7 +46,14 @@ class BuiltinDefault extends Clonable {
 
   registerDefault() {
     this.container.registerConfiguration('builtin-default', {
-      builtins: ['Email', 'URL', 'IpAddress', 'PhoneNumber', 'Hashtag'],
+      builtins: [
+        'Email',
+        'URL',
+        'IpAddress',
+        'PhoneNumber',
+        'Hashtag',
+        'Number',
+      ],
     });
   }
 
