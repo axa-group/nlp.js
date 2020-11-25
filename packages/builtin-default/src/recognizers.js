@@ -30,6 +30,7 @@ const {
   regexTime,
   regexPhone,
   regexHashtag,
+  regexNumber,
 } = require('./common-regex');
 
 function recognize(text, regex, entityName, typeName) {
@@ -72,6 +73,16 @@ const recognizeIpAddress = (text) => {
   return result;
 };
 const recognizeHashtag = (text) => recognize(text, regexHashtag, 'hashtag');
+const recognizeNumber = (text) => {
+  const numbers = recognize(text, regexNumber, 'number');
+  for (let i = 0; i < numbers.length; i += 1) {
+    const number = numbers[i];
+    number.resolution.value = parseFloat(number.resolution.value);
+    number.resolution.type = Number.isInteger(number.resolution.value) ? 'integer' : 'float';
+    console.log(numbers[i]);
+  }
+  return numbers;
+}
 
 module.exports = {
   recognize,
@@ -84,4 +95,5 @@ module.exports = {
   recognizePhoneNumber,
   recognizeIpAddress,
   recognizeHashtag,
+  recognizeNumber,
 };
