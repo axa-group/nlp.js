@@ -92,13 +92,13 @@ function toDate(s) {
   let month;
   let year;
   if (s.indexOf('-') === -1) {
-    year = parseInt(s.slice(6, 10));
-    month = parseInt(s.slice(3, 5)) - 1;
-    day = parseInt(s.slice(0, 2));
+    year = parseInt(s.slice(6, 10), 10);
+    month = parseInt(s.slice(3, 5), 10) - 1;
+    day = parseInt(s.slice(0, 2), 10);
   } else {
-    year = parseInt(s.slice(0, 4));
-    month = parseInt(s.slice(5, 7)) - 1;
-    day = parseInt(s.slice(8, 10));
+    year = parseInt(s.slice(0, 4), 10);
+    month = parseInt(s.slice(5, 7), 10) - 1;
+    day = parseInt(s.slice(8, 10), 10);
   }
   const date = new Date(year, month, day, 0, 0, 0, 0);
   if (date.getDate() === day && date.getMonth() === month) {
@@ -124,15 +124,12 @@ const recognizeDate = (text) => {
         entity: 'date',
         resolution: { value: date },
       };
-      if (typeName) {
-        obj.resolution.type = typeName;
-      }
       result.push(obj);
     }
-    match = regex.exec(text);
+    match = regexDate.exec(text);
   }
   return result;
-}
+};
 
 module.exports = {
   recognize,
