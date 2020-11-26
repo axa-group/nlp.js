@@ -53,6 +53,7 @@ class BuiltinDefault extends Clonable {
         'PhoneNumber',
         'Hashtag',
         'Number',
+        'Date',
       ],
     });
   }
