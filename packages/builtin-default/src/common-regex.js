@@ -7,6 +7,8 @@ const regexTime = /\b((0?[0-9]|1[0-2])(:[0-5][0-9])?(am|pm)|([01]?[0-9]|2[0-3]):
 const regexPhone = /(\d?[^\s\w]*(?:\(?\d{3}\)?\W*)?\d{3}\W*\d{4})/gi;
 const regexHashtag = /(#[a-zA-Z0-9]+,? *)*#[a-zA-Z0-9_/-]+/gi;
 const regexNumber = /[+-]?([0-9]*[.])?[0-9]+/g;
+const regexDate = /(\d{4}\-\d{2}\-\d{2}|\d{2}\/\d{2}\/\d{4})/gi;
+
 
 module.exports = {
   regexEmail,
@@ -18,4 +20,5 @@ module.exports = {
   regexPhone,
   regexHashtag,
   regexNumber,
+  regexDate,
 };
