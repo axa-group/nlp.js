@@ -25,7 +25,10 @@ const { Recognizers } = require('@nlpjs/builtin-default');
 
 function findEntity(edges, entity, typeName) {
   for (let i = 0; i < edges.length; i += 1) {
-    if (edges[i].entity === entity && (!typeName || typeName && edges[i].resolution.type === typeName)) {
+    if (
+      edges[i].entity === entity &&
+      (!typeName || (typeName && edges[i].resolution.type === typeName))
+    ) {
       return edges[i];
     }
   }
@@ -99,6 +102,10 @@ function validatorIPv6(session, context, params) {
   return validatorBuiltin(session, context, params, 'IpAddress', 'ip', 'ipv6');
 }
 
+function validatorPhoneNumber(session, context, params) {
+  return validatorBuiltin(session, context, params, 'PhoneNumber', 'phonenumber');
+}
+
 module.exports = {
   validatorBuiltin,
   validatorEmail,
@@ -106,4 +113,5 @@ module.exports = {
   validatorIP,
   validatorIPv4,
   validatorIPv6,
+  validatorPhoneNumber,
 };
