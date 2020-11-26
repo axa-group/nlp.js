@@ -246,5 +246,59 @@ describe('Builtin Default', () => {
       expected.edges[1].resolution.value = -7;
       expect(actual).toEqual(expected);
     });
+    test('It should be able to extract floats', () => {
+      const input = 'A is 12.1 and B is -7.2';
+      const actual = builtin.extract(buildInput(input, 'Number'));
+      const expected = {
+        edges: [
+          buildExpected('12.1', 5, 'number', 'float'),
+          buildExpected('-7.2', 19, 'number', 'float'),
+        ],
+        locale: 'en',
+        text: input,
+        builtins: ['Number'],
+      };
+      expected.edges[0].resolution.value = 12.1;
+      expected.edges[1].resolution.value = -7.2;
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('Date', () => {
+    test('It should be able to extract a valid date', () => {
+      const input = 'date is 29/02/2020';
+      const actual = builtin.extract(buildInput(input, 'Date'));
+      const expected = {
+        edges: [buildExpected('29/02/2020', 8, 'date')],
+        locale: 'en',
+        text: input,
+        builtins: ['Date'],
+      };
+      expected.edges[0].resolution.value = new Date(2020, 1, 29);
+      expect(actual).toEqual(expected);
+    });
+    test('It should be able to extract a valid date with different format', () => {
+      const input = 'date is 2020-02-29';
+      const actual = builtin.extract(buildInput(input, 'Date'));
+      const expected = {
+        edges: [buildExpected('2020-02-29', 8, 'date')],
+        locale: 'en',
+        text: input,
+        builtins: ['Date'],
+      };
+      expected.edges[0].resolution.value = new Date(2020, 1, 29);
+      expect(actual).toEqual(expected);
+    });
+    test('It should not extract date if is invalid', () => {
+      const input = 'date is 2019-02-29';
+      const actual = builtin.extract(buildInput(input, 'Date'));
+      const expected = {
+        edges: [],
+        locale: 'en',
+        text: input,
+        builtins: ['Date'],
+      };
+      expect(actual).toEqual(expected);
+    });
   });
 });
