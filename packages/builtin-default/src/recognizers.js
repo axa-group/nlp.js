@@ -31,6 +31,7 @@ const {
   regexPhone,
   regexHashtag,
   regexNumber,
+  regexDate,
 } = require('./common-regex');
 
 function recognize(text, regex, entityName, typeName) {
@@ -86,6 +87,53 @@ const recognizeNumber = (text) => {
   return numbers;
 };
 
+function toDate(s) {
+  let day;
+  let month;
+  let year;
+  if (s.indexOf('-') === -1) {
+    year = parseInt(s.slice(6, 10));
+    month = parseInt(s.slice(3, 5)) - 1;
+    day = parseInt(s.slice(0, 2));
+  } else {
+    year = parseInt(s.slice(0, 4));
+    month = parseInt(s.slice(5, 7)) - 1;
+    day = parseInt(s.slice(8, 10));
+  }
+  const date = new Date(year, month, day, 0, 0, 0, 0);
+  if (date.getDate() === day && date.getMonth() === month) {
+    return date;
+  }
+  return undefined;
+}
+
+const recognizeDate = (text) => {
+  let match = regexDate.exec(text);
+  const result = [];
+  while (match !== null) {
+    const utteranceText = match[0];
+    const date = toDate(utteranceText);
+    if (date) {
+      const obj = {
+        start: match.index,
+        end: match.index + utteranceText.length - 1,
+        len: utteranceText.length,
+        accuracy: 0.95,
+        sourceText: utteranceText,
+        utteranceText,
+        entity: 'date',
+        resolution: { value: date },
+      };
+      if (typeName) {
+        obj.resolution.type = typeName;
+      }
+      result.push(obj);
+    }
+    match = regex.exec(text);
+  }
+  return result;
+}
+
 module.exports = {
   recognize,
   recognizeEmail,
@@ -98,4 +146,5 @@ module.exports = {
   recognizeIpAddress,
   recognizeHashtag,
   recognizeNumber,
+  recognizeDate,
 };
