@@ -4,6 +4,7 @@ const {
   validatorIP,
   validatorIPv4,
   validatorIPv6,
+  validatorPhoneNumber,
 } = require('../src/validators');
 
 function buildSession(text) {
@@ -157,6 +158,34 @@ describe('Validators', () => {
       const session = buildSession(input);
       const context = {};
       const actual = await validatorIPv6(session, context, ['userIP']);
+      const expected = {
+        isValid: false,
+      };
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('Validator PhoneNumber', () => {
+    test('It should be able to extract a Phone Number', async () => {
+      const input = 'My phone is 555-567-6894';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorPhoneNumber(session, context, [
+        'userPhone',
+      ]);
+      const expected = {
+        isValid: true,
+        changes: [{ name: 'userPhone', value: '555-567-6894' }],
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should return no valid if input does not contain a phone number', async () => {
+      const input = 'My ip is http:/something@';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorPhoneNumber(session, context, [
+        'userPhone',
+      ]);
       const expected = {
         isValid: false,
       };

@@ -103,7 +103,13 @@ function validatorIPv6(session, context, params) {
 }
 
 function validatorPhoneNumber(session, context, params) {
-  return validatorBuiltin(session, context, params, 'PhoneNumber', 'phonenumber');
+  return validatorBuiltin(
+    session,
+    context,
+    params,
+    'PhoneNumber',
+    'phonenumber'
+  );
 }
 
 module.exports = {
