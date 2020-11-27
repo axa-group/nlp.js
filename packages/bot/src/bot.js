@@ -26,6 +26,17 @@ const { ContextManager } = require('@nlpjs/nlp');
 const { JavascriptCompiler } = require('@nlpjs/evaluator');
 const DialogManager = require('./dialog-manager');
 const { loadScript, getDialogName } = require('./dialog-parse');
+const {
+  validatorEmail,
+  validatorURL,
+  validatorIP,
+  validatorIPv4,
+  validatorIPv6,
+  validatorPhoneNumber,
+  validatorNumber,
+  validatorInteger,
+  validatorDate,
+} = require('./validators');
 
 class Bot extends Clonable {
   constructor(settings = {}, container) {
@@ -49,13 +60,22 @@ class Bot extends Clonable {
       this.container.getConfiguration(this.settings.tag)
     );
     this.nlp = this.container.get('nlp');
-    this.actions = {};
-    this.validators = {};
-    this.cards = {};
   }
 
   registerDefault() {
+    this.actions = {};
+    this.validators = {};
+    this.cards = {};
     this.container.registerConfiguration('bot', {}, false);
+    this.registerValidator('email', validatorEmail);
+    this.registerValidator('url', validatorURL);
+    this.registerValidator('ip', validatorIP);
+    this.registerValidator('ipv4', validatorIPv4);
+    this.registerValidator('ipv6', validatorIPv6);
+    this.registerValidator('phone', validatorPhoneNumber);
+    this.registerValidator('number', validatorNumber);
+    this.registerValidator('integer', validatorInteger);
+    this.registerValidator('date', validatorDate);
   }
 
   async start() {
