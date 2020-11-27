@@ -112,6 +112,21 @@ function validatorPhoneNumber(session, context, params) {
   );
 }
 
+function validatorNumber(session, context, params) {
+  return validatorBuiltin(session, context, params, 'Number', 'number');
+}
+
+function validatorInteger(session, context, params) {
+  return validatorBuiltin(
+    session,
+    context,
+    params,
+    'Number',
+    'number',
+    'integer'
+  );
+}
+
 module.exports = {
   validatorBuiltin,
   validatorEmail,
@@ -120,4 +135,6 @@ module.exports = {
   validatorIPv4,
   validatorIPv6,
   validatorPhoneNumber,
+  validatorNumber,
+  validatorInteger,
 };

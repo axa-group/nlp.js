@@ -5,6 +5,8 @@ const {
   validatorIPv4,
   validatorIPv6,
   validatorPhoneNumber,
+  validatorNumber,
+  validatorInteger,
 } = require('../src/validators');
 
 function buildSession(text) {
@@ -186,6 +188,97 @@ describe('Validators', () => {
       const actual = await validatorPhoneNumber(session, context, [
         'userPhone',
       ]);
+      const expected = {
+        isValid: false,
+      };
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('Validator Number', () => {
+    test('It should be able to extract an integer', async () => {
+      const input = 'Number is 547';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorNumber(session, context, ['userNumber']);
+      const expected = {
+        isValid: true,
+        changes: [{ name: 'userNumber', value: 547 }],
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should be able to extract a negative integer', async () => {
+      const input = 'Number is -547';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorNumber(session, context, ['userNumber']);
+      const expected = {
+        isValid: true,
+        changes: [{ name: 'userNumber', value: -547 }],
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should be able to extract a float', async () => {
+      const input = 'Number is 547.7';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorNumber(session, context, ['userNumber']);
+      const expected = {
+        isValid: true,
+        changes: [{ name: 'userNumber', value: 547.7 }],
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should return no valid if input does not contain a number', async () => {
+      const input = 'My ip is http:/something@';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorNumber(session, context, ['userNumber']);
+      const expected = {
+        isValid: false,
+      };
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('Validator Integer', () => {
+    test('It should be able to extract an integer', async () => {
+      const input = 'Number is 547';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorInteger(session, context, ['userNumber']);
+      const expected = {
+        isValid: true,
+        changes: [{ name: 'userNumber', value: 547 }],
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should be able to extract a negative integer', async () => {
+      const input = 'Number is -547';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorInteger(session, context, ['userNumber']);
+      const expected = {
+        isValid: true,
+        changes: [{ name: 'userNumber', value: -547 }],
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should return no valid if number is float', async () => {
+      const input = 'Number is 547.7';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorInteger(session, context, ['userNumber']);
+      const expected = {
+        isValid: false,
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should return no valid if input does not contain a number', async () => {
+      const input = 'My ip is http:/something@';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorInteger(session, context, ['userNumber']);
       const expected = {
         isValid: false,
       };
