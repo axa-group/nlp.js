@@ -127,6 +127,10 @@ function validatorInteger(session, context, params) {
   );
 }
 
+function validatorDate(session, context, params) {
+  return validatorBuiltin(session, context, params, 'Date', 'date');
+}
+
 module.exports = {
   validatorBuiltin,
   validatorEmail,
@@ -137,4 +141,5 @@ module.exports = {
   validatorPhoneNumber,
   validatorNumber,
   validatorInteger,
+  validatorDate,
 };

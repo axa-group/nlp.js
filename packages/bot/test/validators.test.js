@@ -7,6 +7,7 @@ const {
   validatorPhoneNumber,
   validatorNumber,
   validatorInteger,
+  validatorDate,
 } = require('../src/validators');
 
 function buildSession(text) {
@@ -279,6 +280,30 @@ describe('Validators', () => {
       const session = buildSession(input);
       const context = {};
       const actual = await validatorInteger(session, context, ['userNumber']);
+      const expected = {
+        isValid: false,
+      };
+      expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('Validator Date', () => {
+    test('It should be able to extract a date', async () => {
+      const input = 'It will be 29/02/2020';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorDate(session, context, ['userDate']);
+      const expected = {
+        isValid: true,
+        changes: [{ name: 'userDate', value: new Date(2020, 1, 29) }],
+      };
+      expect(actual).toEqual(expected);
+    });
+    test('It should return no valid if input does not contain a date', async () => {
+      const input = 'My ip is http:/something@';
+      const session = buildSession(input);
+      const context = {};
+      const actual = await validatorDate(session, context, ['userDate']);
       const expected = {
         isValid: false,
       };
