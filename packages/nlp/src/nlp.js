@@ -337,10 +337,7 @@ class Nlp extends Clonable {
       const entityName = keys[i];
       let entity = entities[entityName];
       if (typeof entity === 'string') {
-        entity = { regex: entity };
-      }
-      if (!entity.type) {
-        entity.type = entity.regex ? 'regex' : 'text';
+        entity = { regex: [entity] };
       }
       let finalLocale = entity.locale;
       if (!finalLocale) {
@@ -349,19 +346,36 @@ class Nlp extends Clonable {
       if (typeof finalLocale === 'string') {
         finalLocale = finalLocale.slice(0, 2);
       }
-      if (entity.type === 'text') {
-        const options = entity.options || {};
-        const optionNames = Object.keys(options);
+      if (entity.options) {
+        const optionNames = Object.keys(entity.options);
         for (let j = 0; j < optionNames.length; j += 1) {
           this.addNerRuleOptionTexts(
             finalLocale,
             entityName,
             optionNames[j],
-            options[optionNames[j]]
+            entity.options[optionNames[j]]
           );
         }
-      } else if (entity.type === 'regex') {
-        this.addNerRegexRule(finalLocale, entityName, entity.regex);
+      }
+      if (entity.regex) {
+        if (Array.isArray(entity.regex)) {
+          for (let j = 0; j < entity.regex.length; j += 1) {
+            this.addNerRegexRule(finalLocale, entityName, entity.regex[j]);
+          }
+        } else if (typeof entity.regex === 'string' && entity.regex.trim()) {
+          this.addNerRegexRule(finalLocale, entityName, entity.regex);
+        }
+      }
+      if (entity.trim) {
+        for (let j = 0; j < entity.trim.length; j += 1) {
+          this.addNerPositionCondition(
+            finalLocale,
+            entityName,
+            entity.trim[j].position,
+            entity.trim[j].words,
+            entity.trim[j].opts
+          );
+        }
       }
     }
   }
