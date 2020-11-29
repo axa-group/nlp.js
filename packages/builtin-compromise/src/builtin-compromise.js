@@ -27,12 +27,21 @@ const { Clonable, defaultContainer } = require('@nlpjs/core');
 const compromise = require('compromise');
 const compromiseNumbers = require('compromise-numbers');
 const compromiseDates = require('compromise-dates');
-var nlp = compromise && typeof compromise.default === "function" ? compromise.default : compromise
-var nlpDates = compromiseDates && typeof compromiseDates.default === "function" ? compromiseDates.default : compromiseDates
-var nlpNumbers = compromiseNumbers && typeof compromiseNumbers.default === "function" ? compromiseNumbers.default : compromiseNumbers
+
+const nlp =
+  compromise && typeof compromise.default === 'function'
+    ? compromise.default
+    : compromise;
+const nlpDates =
+  compromiseDates && typeof compromiseDates.default === 'function'
+    ? compromiseDates.default
+    : compromiseDates;
+const nlpNumbers =
+  compromiseNumbers && typeof compromiseNumbers.default === 'function'
+    ? compromiseNumbers.default
+    : compromiseNumbers;
 nlp.extend(nlpDates);
 nlp.extend(nlpNumbers);
-
 
 const cultures = {
   bn: 'bn_BD',
@@ -88,7 +97,6 @@ class BuiltinCompromise extends Clonable {
       const matches = url.match(/^https?:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
       return matches && matches[1];
     }
-
 
     try {
       const edges = [];
@@ -151,10 +159,10 @@ class BuiltinCompromise extends Clonable {
         ],
       };
 
-      Object.keys(extractions).map(function (extractionKey) {
+      Object.keys(extractions).forEach(function (extractionKey) {
         const extracted = extractions[extractionKey][0].json({ offset: true });
-        
-        extracted.map(function (data, eKey) {
+
+        extracted.forEach(function (data, eKey) {
           if (data && data.text && data.offset) {
             const text = data.text.replace(',', '', 'g');
             let result = {
@@ -233,4 +241,4 @@ class BuiltinCompromise extends Clonable {
   }
 }
 
-module.exports = BuiltinCompromise
+module.exports = BuiltinCompromise;

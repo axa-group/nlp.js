@@ -47,7 +47,7 @@ describe('Compromise Integration', () => {
       const expected = 'en_US';
       expect(actual).toEqual(expected);
     });
-    
+
     test('From known culture', () => {
       const actual = BuiltinCompromise.getCulture('ja');
       const expected = 'ja_JP';
@@ -214,7 +214,6 @@ describe('Compromise Integration', () => {
       expect(actual.edges).toEqual(expected);
     });
 
-
     test('Compromise  English Time', async () => {
       const actual = await extract('en', '12/12/2019 at 9am');
 
@@ -260,7 +259,7 @@ describe('Compromise Integration', () => {
         'en',
         'Its amazing #checkitout  I am moving to California to work at Google with Joe Jimson'
       );
-      
+
       const expected = [
         {
           start: 12,

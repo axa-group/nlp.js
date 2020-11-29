@@ -1,7 +1,7 @@
 {
-  "name": "@nlpjs/bot",
+  "name": "@nlpjs/builtin-default",
   "version": "4.16.5",
-  "description": "Bot plugin for NLP.js",
+  "description": "Default golden entities for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
     "name": "Jesús Seijas"
@@ -29,11 +29,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/builtin-default": "^4.16.5",
-    "@nlpjs/connector": "^4.16.4",
-    "@nlpjs/core": "^4.14.0",
-    "@nlpjs/evaluator": "^4.16.0",
-    "@nlpjs/nlp": "^4.15.0"
+    "@nlpjs/core": "^4.14.0"
   },
   "publishConfig": {
     "access": "public"
