@@ -357,6 +357,226 @@ describe('NLP', () => {
         ],
       });
     });
+
+    test('addEntities using a single rule for each entity covering all rule types and regexp import as string', async () => {
+      const nlp = new Nlp({ forceNER: true });
+      nlp.addEntities({
+        regex_all_string: '/[0-9]/gi',
+        regex_string: { regex: '/[0-9]/gi' },
+        regex_array: { regex: ['/[0-9]/gi'] },
+        options_array: { options: { spiderman: ['spiderman', 'spider-man'] } },
+        trim_array: {
+          trim: [
+            {
+              position: 'after',
+              words: ['from'],
+              opts: { caseSensitive: true },
+            },
+          ],
+        },
+      });
+      expect(nlp.ner.rules.en).toEqual({
+        regex_all_string: {
+          name: 'regex_all_string',
+          type: 'regex',
+          rules: [/[0-9]/gi],
+        },
+        regex_string: {
+          name: 'regex_string',
+          type: 'regex',
+          rules: [/[0-9]/gi],
+        },
+        regex_array: {
+          name: 'regex_array',
+          type: 'regex',
+          rules: [/[0-9]/gi],
+        },
+        options_array: {
+          name: 'options_array',
+          type: 'enum',
+          rules: [{ option: 'spiderman', texts: ['spiderman', 'spider-man'] }],
+        },
+        trim_array: {
+          name: 'trim_array',
+          type: 'trim',
+          rules: [
+            {
+              type: 'after',
+              words: ['from'],
+              options: { caseSensitive: true },
+            },
+          ],
+        },
+      });
+    });
+
+    test('addEntities then process', async () => {
+      let p = null;
+      let nlp = null;
+
+      // TRIM
+      nlp = new Nlp({ forceNER: true });
+      nlp.addEntities({
+        trim_array: {
+          trim: [
+            {
+              position: 'after',
+              words: ['from'],
+              opts: { caseSensitive: true },
+            },
+          ],
+        },
+      });
+
+      p = await nlp.process(
+        'en',
+        '8 days ago i saw spider-man coming from heaven'
+      );
+      expect(p.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'after',
+          start: 40,
+          end: 45,
+          len: 6,
+          accuracy: 0.99,
+          sourceText: 'heaven',
+          utteranceText: 'heaven',
+          entity: 'trim_array',
+        },
+      ]);
+
+      // OPTIONS
+      nlp = new Nlp({ forceNER: true });
+      nlp.addEntities({
+        options_array: { options: { spiderman: ['spiderman', 'spider-man'] } },
+      });
+
+      p = await nlp.process(
+        'en',
+        '8 days ago i saw spider-man coming from heaven'
+      );
+      expect(p.entities).toEqual([
+        {
+          start: 17,
+          end: 26,
+          len: 10,
+          levenshtein: 0,
+          accuracy: 1,
+          entity: 'options_array',
+          type: 'enum',
+          option: 'spiderman',
+          sourceText: 'spider-man',
+          utteranceText: 'spider-man',
+        },
+      ]);
+
+      // TRIM AND OPTIONS
+      nlp = new Nlp({ forceNER: true });
+      nlp.addEntities({
+        mixed: {
+          options: { spiderman: ['spiderman', 'spider-man'] },
+          trim: [
+            {
+              position: 'after',
+              words: ['from'],
+              opts: { caseSensitive: true },
+            },
+          ],
+        },
+      });
+
+      p = await nlp.process(
+        'en',
+        '8 days ago i saw spider-man coming from heaven'
+      );
+      expect(p.entities).toEqual([
+        {
+          start: 17,
+          end: 26,
+          len: 10,
+          levenshtein: 0,
+          accuracy: 1,
+          entity: 'mixed',
+          alias: 'mixed_0',
+          type: 'enum',
+          option: 'spiderman',
+          sourceText: 'spider-man',
+          utteranceText: 'spider-man',
+        },
+        {
+          type: 'trim',
+          subtype: 'after',
+          start: 40,
+          end: 45,
+          len: 6,
+          accuracy: 0.99,
+          sourceText: 'heaven',
+          utteranceText: 'heaven',
+          entity: 'mixed',
+          alias: 'mixed_1',
+        },
+      ]);
+
+      // TRIM AND OPTIONS and regexp
+      nlp = new Nlp({ forceNER: true });
+      nlp.addEntities({
+        mixed: {
+          options: { spiderman: ['spiderman', 'spider-man'] },
+          trim: [
+            {
+              position: 'after',
+              words: ['from'],
+              opts: { caseSensitive: true },
+            },
+          ],
+          regex: ['/[0-9]/gi'],
+        },
+      });
+
+      p = await nlp.process(
+        'en',
+        '8 days ago i saw spider-man coming from heaven'
+      );
+      expect(p.entities).toEqual([
+        {
+          start: 0,
+          end: 0,
+          accuracy: 1,
+          sourceText: '8',
+          entity: 'mixed',
+          type: 'enum',
+          utteranceText: '8',
+          len: 1,
+          alias: 'mixed_0',
+        },
+        {
+          start: 17,
+          end: 26,
+          len: 10,
+          levenshtein: 0,
+          accuracy: 1,
+          entity: 'mixed',
+          type: 'enum',
+          option: 'spiderman',
+          sourceText: 'spider-man',
+          utteranceText: 'spider-man',
+          alias: 'mixed_1',
+        },
+        {
+          type: 'trim',
+          subtype: 'after',
+          start: 40,
+          end: 45,
+          len: 6,
+          accuracy: 0.99,
+          sourceText: 'heaven',
+          utteranceText: 'heaven',
+          entity: 'mixed',
+          alias: 'mixed_2',
+        },
+      ]);
+    });
   });
 
   describe('Remove NER rule option texts', () => {
