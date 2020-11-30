@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/similarity-wa",
-  "version": "4.13.1",
+  "version": "4.17.0",
   "description": "Similarity WebAssembly Implementation",
   "author": {
     "email": "raimon.rafols@axa.com",
