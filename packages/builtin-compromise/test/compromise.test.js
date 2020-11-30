@@ -236,22 +236,16 @@ describe('Compromise Integration', () => {
 
     test('Compromise  English Date 2', async () => {
       const actual = await extract('en', 'Next Friday');
-
-      const expected = [
-        {
-          entity: 'date',
-          start: 0,
-          end: 10,
-          len: 11,
-          accuracy: 0.95,
-          sourceText: 'Next Friday',
-          utteranceText: 'Next Friday',
-          resolution: {
-            value: '2020-12-04T00:00:00.000Z',
-          },
-        },
-      ];
-      expect(actual.edges).toEqual(expected);
+      expect(actual.edges).toHaveLength(1);
+      const edge = actual.edges[0];
+      expect(edge.entity).toEqual('date');
+      expect(edge.start).toEqual(0);
+      expect(edge.end).toEqual(10);
+      expect(edge.len).toEqual(11);
+      expect(edge.sourceText).toEqual('Next Friday');
+      expect(edge.resolution.value).toBeDefined();
+      const date = new Date(edge.resolution.value);
+      expect(date.getDay()).toEqual(5);
     });
 
     test('Compromise  Various', async () => {
