@@ -35,14 +35,14 @@ class ExtractorRegex {
     if (!allRules) {
       return [];
     }
-    return allRules.filter((x) => x.type === 'regex');
+    return allRules;
   }
 
   getMatchs(utterance, regex) {
     const result = [];
     let matchFound;
     do {
-      const match = regex.exec(utterance);
+      const match = regex instanceof RegExp ? regex.exec(utterance) : null;
       if (match) {
         result.push({
           start: match.index,
