@@ -182,7 +182,7 @@ class ExtractorEnum {
     if (!allRules) {
       return [];
     }
-    return allRules.filter((x) => x.type === 'enum');
+    return allRules;
   }
 
   normalize(str) {
@@ -260,25 +260,27 @@ class ExtractorEnum {
     } else {
       for (let i = 0; i < rule.rules.length; i += 1) {
         const current = rule.rules[i];
-        for (let j = 0; j < current.texts.length; j += 1) {
-          const newEdges = this.getBestSubstringList(
-            text,
-            current.texts[j],
-            words,
-            current.threshold || threshold
-          );
-          for (let k = 0; k < newEdges.length; k += 1) {
-            edges.push({
-              ...newEdges[k],
-              entity: rule.name,
-              type: rule.type,
-              option: rule.rules[i].option,
-              sourceText: current.texts[j],
-              utteranceText: text.substring(
-                newEdges[k].start,
-                newEdges[k].end + 1
-              ),
-            });
+        if (current && current.option && Array.isArray(current.texts)) {
+          for (let j = 0; j < current.texts.length; j += 1) {
+            const newEdges = this.getBestSubstringList(
+              text,
+              current.texts[j],
+              words,
+              current.threshold || threshold
+            );
+            for (let k = 0; k < newEdges.length; k += 1) {
+              edges.push({
+                ...newEdges[k],
+                entity: rule.name,
+                type: rule.type,
+                option: rule.rules[i].option,
+                sourceText: current.texts[j],
+                utteranceText: text.substring(
+                  newEdges[k].start,
+                  newEdges[k].end + 1
+                ),
+              });
+            }
           }
         }
       }

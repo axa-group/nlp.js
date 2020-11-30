@@ -234,26 +234,6 @@ describe('Compromise Integration', () => {
       expect(actual.edges).toEqual(expected);
     });
 
-    test('Compromise  English Date 2', async () => {
-      const actual = await extract('en', 'Next Friday');
-
-      const expected = [
-        {
-          entity: 'date',
-          start: 0,
-          end: 10,
-          len: 11,
-          accuracy: 0.95,
-          sourceText: 'Next Friday',
-          utteranceText: 'Next Friday',
-          resolution: {
-            value: '2020-12-04T00:00:00.000Z',
-          },
-        },
-      ];
-      expect(actual.edges).toEqual(expected);
-    });
-
     test('Compromise  Various', async () => {
       const actual = await extract(
         'en',
