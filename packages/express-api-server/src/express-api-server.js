@@ -66,7 +66,7 @@ class ExpressApiServer extends Clonable {
   }
 
   start(input = {}) {
-    let result = null;
+    this.server = null;
     const port = input.port || this.settings.port;
     const expressApp = new ExpressApiApp(
       this.settings,
@@ -76,12 +76,12 @@ class ExpressApiServer extends Clonable {
     this.app = expressApp.initialize();
 
     if (port && port > 0) {
-      result = this.app.listen(port, () => {
+      this.server = this.app.listen(port, () => {
         const logger = this.container.get('logger');
         logger.info(`${this.settings.tag} listening on port ${port}!`);
       });
     }
-    return result !== null;
+    return this.server !== null;
   }
 }
 

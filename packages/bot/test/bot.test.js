@@ -75,5 +75,14 @@ describe('Bot', () => {
       const result = await nlp.process('who are you');
       expect(result.answer).toEqual('Think of me as a virtual agent');
     });
+    test('It should be able to process a conversation with multilanguage', async () => {
+      const bot = new Bot({ container });
+      container.register('bot', bot, true);
+      await bot.start();
+      await bot.loadScript(['./packages/bot/test/script4.dlg']);
+      const connector = new TestConnector({ container });
+      await connector.runScript('./packages/bot/test/scenario02.dlt');
+      expect(connector.messages).toEqual(connector.expected);
+    });
   });
 });

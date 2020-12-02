@@ -23,6 +23,8 @@
 
 const { uuid } = require('@nlpjs/core');
 
+const localeDangle = '_localization';
+
 class Session {
   constructor(connector = {}, activity = {}) {
     this.activity = activity;
@@ -101,7 +103,14 @@ class Session {
     let message;
     if (typeof srcMessage === 'string') {
       message = this.createMessage();
-      message.text = srcMessage;
+      if (context && context[localeDangle]) {
+        message.text = context[localeDangle].getLocalized(
+          context.locale || 'en',
+          srcMessage
+        );
+      } else {
+        message.text = srcMessage;
+      }
     } else {
       message = srcMessage;
     }

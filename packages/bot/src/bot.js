@@ -37,6 +37,9 @@ const {
   validatorInteger,
   validatorDate,
 } = require('./validators');
+const BotLocalization = require('./bot-localization');
+
+const localeDangle = '_localization';
 
 class Bot extends Clonable {
   constructor(settings = {}, container) {
@@ -60,6 +63,7 @@ class Bot extends Clonable {
       this.container.getConfiguration(this.settings.tag)
     );
     this.nlp = this.container.get('nlp');
+    this.localization = new BotLocalization();
   }
 
   registerDefault() {
@@ -295,6 +299,7 @@ class Bot extends Clonable {
     if (!context.validation) {
       context.validation = {};
     }
+    context[localeDangle] = this.localization;
     if (session.activity.value) {
       const keys = Object.keys(session.activity.value);
       for (let i = 0; i < keys.length; i += 1) {
@@ -365,6 +370,8 @@ class Bot extends Clonable {
     let locale = 'en';
     let currentIntent = {};
     let currentEntity = {};
+    let currentTranslations = { masterLocale: 'en', rules: [] };
+    const translations = [];
     let state;
     const dialogs = [];
     let currentDialog = {};
@@ -383,6 +390,14 @@ class Bot extends Clonable {
           locale = current.line;
           break;
         case 'comment':
+          break;
+        case 'translations':
+          currentTranslations = {
+            masterLocale: current.line || 'en',
+            rules: [],
+          };
+          translations.push(currentTranslations);
+          state = 'translations';
           break;
         case 'intent':
           currentIntent = {
@@ -424,6 +439,9 @@ class Bot extends Clonable {
         case '-':
           if (state) {
             switch (state) {
+              case 'translations':
+                currentTranslations.rules.push(current.line);
+                break;
               case 'utterances':
                 currentIntent.utterances.push(current.line);
                 break;
@@ -520,6 +538,7 @@ class Bot extends Clonable {
           break;
       }
     }
+    this.localization.addRule(translations);
     const intentKeys = Object.keys(intents);
     for (let i = 0; i < imports.length; i += 1) {
       const currentImport = imports[i];

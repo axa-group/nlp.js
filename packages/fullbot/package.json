@@ -1,0 +1,45 @@
+{
+  "name": "@nlpjs/fullbot",
+  "version": "4.17.0",
+  "description": "Full bot for NLP.js",
+  "author": {
+    "email": "jesus.seijas@axa.com",
+    "name": "Jesús Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesús Seijas"
+    },
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/basic": "^4.17.0",
+    "@nlpjs/bot": "^4.17.0",
+    "@nlpjs/builtin-duckling": "4.17.0",
+    "@nlpjs/builtin-microsoft": "4.17.0",
+    "@nlpjs/database": "4.17.0",
+    "@nlpjs/directline-connector": "4.17.0",
+    "@nlpjs/express-api-server": "4.17.0",
+    "@nlpjs/mongodb-adapter": "4.17.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "926fe345330eca1a13eaaf04d0bba3631a5bba8b"
+}

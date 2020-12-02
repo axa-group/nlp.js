@@ -1,0 +1,13 @@
+translations en
+  - en What's your name?
+  - es Cuál es tu nombre?
+  - en Your name is {{ userName }}
+  - es Tu nombre es {{ userName }}
+dialog main
+  say What's your language
+  ask userLanguage
+  [userLanguage === 'English'] set locale en
+  [userLanguage === 'Spanish'] set locale es
+  say What's your name?
+  ask userName
+  say Your name is {{ userName }}
