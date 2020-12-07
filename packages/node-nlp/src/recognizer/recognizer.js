@@ -288,9 +288,7 @@ class Recognizer {
           .then(() => cb())
           .catch((err) => cb(err));
       })
-      .catch(async () => {
-        return cb();
-      });
+      .catch(async () => cb());
     return undefined;
   }
 

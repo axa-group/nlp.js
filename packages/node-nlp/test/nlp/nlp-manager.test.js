@@ -842,12 +842,10 @@ describe('NLP Manager', () => {
       const manager = new NlpManager({
         languages: ['en'],
         action: {
-          action1: (input, ...parameters) => {
-            return `(${input.answer}#${parameters.join(',')})`;
-          },
-          action2: (input, ...parameters) => {
-            return `[${input.answer}#${parameters.join(',')}]`;
-          },
+          action1: (input, ...parameters) =>
+            `(${input.answer}#${parameters.join(',')})`,
+          action2: (input, ...parameters) =>
+            `[${input.answer}#${parameters.join(',')}]`,
         },
       });
       manager.addDocument('en', 'goodbye for now', 'greetings.bye');

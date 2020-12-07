@@ -163,20 +163,18 @@ describe('Action Manager', () => {
     test('Should be able to get an answered after process async actions related with an intent', async () => {
       const manager = new ActionManager();
       manager.actionsMap = {
-        action1: (input, ...parameters) => {
-          return new Promise((resolve) => {
+        action1: (input, ...parameters) =>
+          new Promise((resolve) => {
             setTimeout(() => {
               resolve(`[${input}!${parameters.join(',')}]`);
             }, 0.3);
-          });
-        },
-        action2: (input, ...parameters) => {
-          return new Promise((resolve) => {
+          }),
+        action2: (input, ...parameters) =>
+          new Promise((resolve) => {
             setTimeout(() => {
               resolve(`#${input}!${parameters.join(',')}#`);
             }, 0.1);
-          });
-        },
+          }),
       };
       manager.addAction('intent1', 'action1', ['parameter1', 'parameter2']);
       manager.addAction('intent1', 'action2', ['parameter3', 'parameter4']);

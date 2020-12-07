@@ -87,12 +87,10 @@ class ActionManager extends Clonable {
   findActions(intent) {
     const dehydratedActions = this.actions[intent] || [];
 
-    return dehydratedActions.map((actionBundle) => {
-      return {
-        ...actionBundle,
-        fn: this.actionsMap[actionBundle.action],
-      };
-    });
+    return dehydratedActions.map((actionBundle) => ({
+      ...actionBundle,
+      fn: this.actionsMap[actionBundle.action],
+    }));
   }
 
   /**

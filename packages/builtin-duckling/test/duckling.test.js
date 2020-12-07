@@ -28,8 +28,8 @@ const container = containerBootstrap();
 
 function getManager() {
   const manager = new BuiltinDuckling({ container });
-  manager.request = (utterance, language) => {
-    return new Promise((resolve, reject) => {
+  manager.request = (utterance, language) =>
+    new Promise((resolve, reject) => {
       if (language.startsWith('en')) {
         switch (utterance) {
           case 'The email is user@user.com, check it out':
@@ -112,7 +112,6 @@ function getManager() {
       }
       return resolve({});
     });
-  };
   return manager;
 }
 

@@ -191,11 +191,11 @@ class StemmerJa extends BaseStemmer {
    */
   toHiragana(str) {
     return [...str]
-      .map((ch) => {
-        return ch > '\u30a0' && ch < '\u30f7'
+      .map((ch) =>
+        ch > '\u30a0' && ch < '\u30f7'
           ? String.fromCharCode(ch.charCodeAt(0) + this.shiftToHiragana)
-          : ch;
-      })
+          : ch
+      )
       .join('');
   }
 
@@ -205,11 +205,11 @@ class StemmerJa extends BaseStemmer {
    */
   toKatakana(str) {
     return [...str]
-      .map((ch) => {
-        return ch > '\u3040' && ch < '\u3097'
+      .map((ch) =>
+        ch > '\u3040' && ch < '\u3097'
           ? String.fromCharCode(ch.charCodeAt(0) - this.shiftToHiragana)
-          : ch;
-      })
+          : ch
+      )
       .join('');
   }
 

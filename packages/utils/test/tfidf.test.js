@@ -25,7 +25,7 @@ const { TfIdf } = require('../src');
 
 describe('TF-IDF', () => {
   describe('tf', () => {
-    it('should tf', function () {
+    it('should tf', () => {
       expect(TfIdf.tf('document', { document: 2, one: 1 })).toEqual(2);
       expect(TfIdf.tf('document', { greetings: 1, program: 1 })).toEqual(0);
       expect(TfIdf.tf('program', { greetings: 1, program: 1 })).toEqual(1);

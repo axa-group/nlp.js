@@ -159,10 +159,10 @@ class BuiltinCompromise extends Clonable {
         ],
       };
 
-      Object.keys(extractions).forEach(function (extractionKey) {
+      Object.keys(extractions).forEach((extractionKey) => {
         const extracted = extractions[extractionKey][0].json({ offset: true });
 
-        extracted.forEach(function (data, eKey) {
+        extracted.forEach((data, eKey) => {
           if (data && data.text && data.offset) {
             const text = data.text.replace(',', '', 'g');
             let result = {

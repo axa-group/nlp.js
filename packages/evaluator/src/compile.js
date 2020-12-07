@@ -71,9 +71,7 @@ function process(obj, context) {
 }
 
 function compile(str) {
-  return (context = {}) => {
-    return process(str, context);
-  };
+  return (context = {}) => process(str, context);
 }
 
 module.exports = compile;
