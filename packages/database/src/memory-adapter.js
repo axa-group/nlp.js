@@ -169,10 +169,12 @@ class MemorydbAdapter extends Clonable {
   }
 
   async insertOne(name, item) {
-    const id = uuid();
-    const cloned = { id, ...item };
+    const cloned = { ...item };
+    if (!cloned.id) {
+      cloned.id = uuid();      
+    } 
     const collection = await this.getCollection(name);
-    collection[id] = cloned;
+    collection[cloned.id] = cloned;
     await this.markToSave(name);
     return cloned;
   }
