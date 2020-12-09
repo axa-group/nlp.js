@@ -564,7 +564,7 @@ class Bot extends Clonable {
           corpus.contextData = contextData;
         }
         const currentEntities = entities[currentLocale];
-        if (currentEntities.length > 0) {
+        if (currentEntities && currentEntities.length > 0) {
           corpus.entities = {};
           for (let j = 0; j < currentEntities.length; j += 1) {
             const entity = currentEntities[j];
