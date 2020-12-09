@@ -109,7 +109,8 @@ class ContextManager extends Clonable {
           ? this.container.get('database')
           : undefined;
         if (database) {
-          await database.save(this.settings.tableName, clone);
+          const saved = await database.save(this.settings.tableName, clone);
+          context.id = saved.id;
         } else {
           this.contextDictionary[id] = clone;
         }
