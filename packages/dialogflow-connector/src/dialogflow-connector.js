@@ -53,13 +53,13 @@ class DialogflowConnector extends Connector {
             conversationId = conv.body.session;
           }
           const session = this.createSession({
-            conv,
             channelId: 'dialogflow',
             text: conv.body.queryResult.queryText,
             address: {
               conversation: { id: conversationId },
             },
           });
+          session.conv = conv;
           await bot.process(session);
         } else {
           const nlp = this.container.get('nlp');
@@ -81,7 +81,7 @@ class DialogflowConnector extends Connector {
   }
 
   say(message, session) {
-    session.connector.conv.ask(message.text);
+    session.conv.ask(message.text);
   }
 }
 
