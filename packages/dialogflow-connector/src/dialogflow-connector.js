@@ -57,7 +57,7 @@ class DialogflowConnector extends Connector {
             channelId: 'dialogflow',
             text: conv.body.queryResult.queryText,
             address: {
-              conversation: { id: conv.request.conversation.conversationId },
+              conversation: { id: conversationId },
             },
           });
           await bot.process(session);
