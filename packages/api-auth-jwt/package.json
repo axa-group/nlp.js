@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/api-auth-jwt",
-  "version": "4.17.0",
+  "version": "4.17.3",
   "description": "JWT API Authorization",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -33,7 +33,7 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@nlpjs/database": "^4.17.0"
+    "@nlpjs/database": "^4.17.3"
   },
   "publishConfig": {
     "access": "public"

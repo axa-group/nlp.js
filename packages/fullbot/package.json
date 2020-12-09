@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/fullbot",
-  "version": "4.17.2",
+  "version": "4.17.3",
   "description": "Full bot for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -30,10 +30,10 @@
   },
   "dependencies": {
     "@nlpjs/basic": "^4.17.2",
-    "@nlpjs/bot": "^4.17.2",
+    "@nlpjs/bot": "^4.17.3",
     "@nlpjs/builtin-duckling": "^4.17.1",
     "@nlpjs/builtin-microsoft": "4.17.0",
-    "@nlpjs/database": "4.17.0",
+    "@nlpjs/database": "^4.17.3",
     "@nlpjs/directline-connector": "^4.17.1",
     "@nlpjs/express-api-server": "^4.17.1",
     "@nlpjs/mongodb-adapter": "4.17.0"
