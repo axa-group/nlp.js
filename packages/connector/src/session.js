@@ -123,7 +123,7 @@ class Session {
         message = this.template.compile(message, context);
       }
     }
-    this.connector.say(message);
+    this.connector.say(message, this, context);
   }
 
   sendCard(card, context) {
@@ -138,7 +138,7 @@ class Session {
     if (context && this.template) {
       message = this.template.compile(message, context);
     }
-    this.connector.say(message);
+    this.connector.say(message, this, context);
   }
 }
 
