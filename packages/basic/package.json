@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/basic",
-  "version": "4.17.2",
+  "version": "4.17.5",
   "description": "Basic dependencies for node",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/console-connector": "^4.17.1",
+    "@nlpjs/console-connector": "^4.17.5",
     "@nlpjs/core-loader": "^4.17.0",
     "@nlpjs/evaluator": "^4.17.1",
     "@nlpjs/lang-en": "^4.17.0",
