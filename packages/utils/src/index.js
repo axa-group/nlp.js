@@ -38,6 +38,7 @@ const { getAbsolutePath } = require('./fs-extra');
 const Lookup = require('./lookup');
 const CorpusLookup = require('./corpus-lookup');
 const Bench = require('./bench');
+const { gibberishScore, isGibberish } = require('./is-gibberish');
 
 module.exports = {
   NGrams,
@@ -55,4 +56,6 @@ module.exports = {
   Lookup,
   CorpusLookup,
   Bench,
+  gibberishScore,
+  isGibberish,
 };
