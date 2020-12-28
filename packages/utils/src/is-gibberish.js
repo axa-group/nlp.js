@@ -36,7 +36,7 @@ function getMeasures(tokens) {
     consonants: 0,
     uniqueChars: 0,
   };
-  const vowels = { a: 1, e: 1, i: 1, o: 1, u: 1 };
+  const vowels = { a: 1, e: 1, i: 1, o: 1, u: 1, y: 1 };
   const chars = {};
   for (let i = 0; i < tokens.length; i += 1) {
     const token = tokens[i];
@@ -55,6 +55,8 @@ function getMeasures(tokens) {
   freqs.consonantFreq = freqs.consonants / freqs.length;
   freqs.uniqueFreq = freqs.uniqueChars / freqs.length;
   freqs.wordCharFreq = freqs.words / freqs.length;
+  freqs.vowelOverConsonant =
+    freqs.consonants > 0 ? freqs.vowels / freqs.consonants : 0;
   return freqs;
 }
 
@@ -69,23 +71,21 @@ function getDeviation(value, lower, upper) {
 }
 
 function gibberishScore(text) {
+  if (text.length < 6) {
+    return 0;
+  }
   const tokens = normalize(text)
     .split(/[\s,.!?;:([\]'"¡¿)/]+/)
     .filter((x) => x);
   const measures = getMeasures(tokens);
   const deviations = {
-    wordChar: getDeviation(measures.wordCharFreq, 0.15, 0.25),
-    vowel: getDeviation(measures.vowelFreq, 0.3, 0.45),
-    unique: getDeviation(measures.uniqueFreq, 0.4, 0.55),
-    consonant: getDeviation(measures.consonantFreq, 0.5, 0.7),
+    wordChar: getDeviation(measures.wordCharFreq, 0.15, 0.3),
+    unique: getDeviation(measures.uniqueFreq, 0.4, 1),
+    vowelOverConsonant: getDeviation(measures.vowelOverConsonant, 0.5, 1.5),
   };
   return Math.min(
     1,
-    (deviations.wordChar +
-      deviations.vowel +
-      deviations.unique +
-      deviations.consonant) /
-      2
+    deviations.unique * 2 + deviations.wordChar + deviations.vowelOverConsonant
   );
 }
 
