@@ -62,10 +62,18 @@ function getMeasures(tokens) {
 
 function getDeviation(value, lower, upper) {
   if (value < lower) {
-    return Math.log(lower) / Math.log(lower - value);
+    const logDelta = Math.log(lower - value);
+    if (logDelta === 0) {
+      return 1;
+    }
+    return Math.log(Math.abs(lower)) / logDelta;
   }
   if (value > upper) {
-    return Math.log(1 - upper) / Math.log(value - upper);
+    const logDelta = Math.log(value - upper);
+    if (logDelta === 0) {
+      return 1;
+    }
+    return Math.log(Math.min(0, 1.5 - upper)) / logDelta;
   }
   return 0;
 }
