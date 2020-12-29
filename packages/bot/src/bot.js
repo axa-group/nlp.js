@@ -155,7 +155,7 @@ class Bot extends Clonable {
       if (action.startsWith('/')) {
         session.beginDialog(context, action);
       } else {
-        session.say(action, context);
+        await session.say(action, context);
       }
     } else {
       let shouldContinue = true;
@@ -169,7 +169,7 @@ class Bot extends Clonable {
         let fn;
         switch (action.command) {
           case 'say':
-            session.say(action.text, context);
+            await session.say(action.text, context);
             break;
           case 'suggest':
             session.addSuggestedActions(action.text);
@@ -204,13 +204,13 @@ class Bot extends Clonable {
                 if (result.answer.startsWith('/')) {
                   session.beginDialog(context, result.answer);
                 } else {
-                  session.say(result.answer);
+                  await session.say(result.answer);
                 }
               } else {
-                session.say("Sorry, I don't understand");
+                await session.say("Sorry, I don't understand");
               }
             } else {
-              session.say("Sorry, I don't understand");
+              await session.say("Sorry, I don't understand");
             }
             break;
           case 'call':
@@ -229,7 +229,7 @@ class Bot extends Clonable {
             break;
           case 'card':
             if (this.cards[action.cardName]) {
-              session.sendCard(this.cards[action.cardName], context);
+              await session.sendCard(this.cards[action.cardName], context);
             } else {
               console.log(`Unknown card ${action.cardName}`);
             }
@@ -283,7 +283,7 @@ class Bot extends Clonable {
             session.restartDialog(context);
           }
         } else {
-          session.say(context.validation.message || 'Invalid value');
+          await session.say(context.validation.message || 'Invalid value');
           return false;
         }
       }

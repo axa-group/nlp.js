@@ -99,7 +99,7 @@ class Session {
     }
   }
 
-  say(srcMessage, context) {
+  async say(srcMessage, context) {
     let message;
     if (typeof srcMessage === 'string') {
       message = this.createMessage();
@@ -123,10 +123,10 @@ class Session {
         message = this.template.compile(message, context);
       }
     }
-    this.connector.say(message, this, context);
+    await this.connector.say(message, this, context);
   }
 
-  sendCard(card, context) {
+  async sendCard(card, context) {
     let message = this.createMessage();
     const keys = Object.keys(card);
     for (let i = 0; i < keys.length; i += 1) {
@@ -138,7 +138,7 @@ class Session {
     if (context && this.template) {
       message = this.template.compile(message, context);
     }
-    this.connector.say(message, this, context);
+    await this.connector.say(message, this, context);
   }
 }
 
