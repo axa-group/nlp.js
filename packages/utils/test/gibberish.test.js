@@ -22,6 +22,7 @@ describe('Gibberish', () => {
       expect(isGibberish('kwinsghocyevlzep')).toBeTruthy();
       expect(isGibberish('ertrjiloifdfyyoiu')).toBeTruthy();
       expect(isGibberish('asddsa adsdsa asdadsasd')).toBeTruthy();
+      expect(isGibberish('ioqwioeioqwe')).toBeTruthy();
     });
   });
 });
