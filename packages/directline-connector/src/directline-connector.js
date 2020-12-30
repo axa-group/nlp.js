@@ -97,6 +97,11 @@ class DirectlineConnector extends Connector {
       }
     );
 
+    server.post('/directline/tokens/refresh', (req, res) => {
+      this.log('trace', `POST /directline/tokens/refresh`);
+      res.status(200).end();
+    });
+
     server.get(`/v3/directline/conversations/:conversationId`, (req, res) => {
       this.log('debug', `GET /v3/directline/conversations/:conversationId`);
       res.status(200).end();

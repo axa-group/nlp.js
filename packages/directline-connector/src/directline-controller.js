@@ -175,6 +175,7 @@ class DirectlineController {
           const bot = this.settings.container.get('bot');
           if (bot) {
             bot.process(this.parent.createSession(activity));
+            resolve({ status: 200, body: {} });
           } else {
             const nlp = this.settings.container.get('nlp');
             const result = this.createAnswer(activity);
