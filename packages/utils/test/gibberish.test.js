@@ -9,6 +9,7 @@ describe('Gibberish', () => {
       expect(isGibberish('goodbye')).toBeFalsy();
       expect(isGibberish('sure')).toBeFalsy();
       expect(isGibberish('very much')).toBeFalsy();
+      expect(isGibberish('it feels so good')).toBeFalsy();
     });
     test('Should return true for gibberish sentences', () => {
       expect(isGibberish('zxcvwerjasc')).toBeTruthy();
