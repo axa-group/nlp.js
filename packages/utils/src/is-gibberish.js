@@ -73,7 +73,8 @@ function getDeviation(value, lower, upper) {
     if (logDelta === 0) {
       return 1;
     }
-    return Math.log(Math.min(0, 1.5 - upper)) / logDelta;
+    const max = (upper > 1 ? 1.5 : 1) - upper;
+    return Math.log(max) / logDelta;
   }
   return 0;
 }
