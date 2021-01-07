@@ -123,6 +123,10 @@ class DialogManager extends Clonable {
     }
     this.beginDialog(stack, '/#');
   }
+
+  existsDialog(dialog) {
+    return Object.keys(this.dialogs).includes(dialog);
+  }
 }
 
 module.exports = DialogManager;

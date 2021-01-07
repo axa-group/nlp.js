@@ -152,7 +152,7 @@ class Bot extends Clonable {
 
   async executeAction(session, context, action) {
     if (typeof action === 'string') {
-      if (action.startsWith('/')) {
+      if (action.startsWith('/') && this.dialogManager.existsDialog(action)) {
         session.beginDialog(context, action);
       } else {
         await session.say(action, context);
@@ -181,12 +181,12 @@ class Bot extends Clonable {
             session.restartDialog(context);
             break;
           case 'beginDialog':
-            session.beginDialog(
-              context,
-              action.dialog.startsWith('/')
-                ? action.dialog
-                : `/${action.dialog}`
-            );
+            const dialog = `${action.dialog.startsWith('/') ? '' : `/`}${action.dialog}`;
+            if (this.dialogManager.existsDialog(dialog)) {
+              session.beginDialog(context, dialog);
+            } else {
+              await session.say(dialog);
+            }
             break;
           case 'ask':
             context.isWaitingInput = true;
@@ -201,7 +201,7 @@ class Bot extends Clonable {
                 context
               );
               if (result.answer) {
-                if (result.answer.startsWith('/')) {
+                if (result.answer.startsWith('/') && this.dialogManager.existsDialog(result.answer)) {
                   session.beginDialog(context, result.answer);
                 } else {
                   await session.say(result.answer);
