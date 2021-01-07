@@ -166,7 +166,9 @@ class Bot extends Clonable {
         );
       }
       if (shouldContinue) {
+        const dialog = (action.dialog && action.dialog.startsWith('/') ? '' : '/') + action.dialog;
         let fn;
+
         switch (action.command) {
           case 'say':
             await session.say(action.text, context);
@@ -181,8 +183,6 @@ class Bot extends Clonable {
             session.restartDialog(context);
             break;
           case 'beginDialog':
-            const dialog = (action.dialog.startsWith('/') ? '' : '/') + action.dialog;
-
             if (this.dialogManager.existsDialog(dialog)) {
               session.beginDialog(context, dialog);
             } else {
