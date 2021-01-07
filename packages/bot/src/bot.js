@@ -181,7 +181,8 @@ class Bot extends Clonable {
             session.restartDialog(context);
             break;
           case 'beginDialog':
-            const dialog = `${action.dialog.startsWith('/') ? '' : `/`}${action.dialog}`;
+            const dialog = (action.dialog.startsWith('/') ? '' : '/') + action.dialog;
+
             if (this.dialogManager.existsDialog(dialog)) {
               session.beginDialog(context, dialog);
             } else {
