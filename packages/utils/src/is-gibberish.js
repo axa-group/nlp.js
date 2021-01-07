@@ -69,12 +69,12 @@ function getDeviation(value, lower, upper) {
     return Math.log(Math.abs(lower)) / logDelta;
   }
   if (value > upper) {
-    const logDelta = Math.log(value - upper);
+    const logDelta = Math.abs(Math.log(value - upper));
     if (logDelta === 0) {
       return 1;
     }
-    const max = (upper > 1 ? 1.5 : 1) - upper;
-    return Math.log(max) / logDelta;
+    const max = upper > 1 ? 1.5 : 1;
+    return Math.log(Math.abs(max)) / logDelta;
   }
   return 0;
 }
@@ -83,18 +83,19 @@ function gibberishScore(text) {
   if (text.length < 6) {
     return 0;
   }
-  const tokens = normalize(text)
+  const tokens = normalize(text.slice(0, 32))
     .split(/[\s,.!?;:([\]'"¡¿)/]+/)
     .filter((x) => x);
   const measures = getMeasures(tokens);
+  console.log(measures);
   const deviations = {
-    wordChar: getDeviation(measures.wordCharFreq, 0.15, 0.3),
-    unique: getDeviation(measures.uniqueFreq, 0.4, 1),
-    vowelOverConsonant: getDeviation(measures.vowelOverConsonant, 0.5, 1.5),
+    vowel: getDeviation(measures.vowelFreq, 0.35, 0.7),
+    unique: getDeviation(measures.uniqueFreq, 0.5, 0.9),
+    wordChar: getDeviation(measures.wordCharFreq, 0.15, 0.4),
   };
   return Math.min(
     1,
-    deviations.unique * 2 + deviations.wordChar + deviations.vowelOverConsonant
+    deviations.unique + deviations.vowel + deviations.wordChar
   );
 }
 
