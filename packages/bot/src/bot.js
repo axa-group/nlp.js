@@ -599,6 +599,34 @@ class Bot extends Clonable {
       this.nlp.addCorpus(corpus);
     }
   }
+
+  resetFlows() {
+    const logger = this.container.get('logger');
+    logger.info('reseting flows...');
+    Object.keys(this.dialogManager.dialogs).forEach(dialogKey => {
+      delete this.dialogManager.dialogs[dialogKey];
+    });
+    this.resetContexts();
+  }
+  
+  resetContexts() {
+    const logger = this.container.get('logger');
+    logger.info('reseting context in all conversations...');
+    Object.keys(this.contextManager.contextDictionary).forEach(cid => {
+      this.resetConversationContext(cid);
+    });
+  }
+
+  resetConversationContext(cid) {
+    const logger = this.container.get('logger');
+    logger.debug(`reseting context in conversation: ${cid}`);
+    const conversationCtx = this.contextManager.contextDictionary[cid];
+    Object.keys(conversationCtx).forEach(convCtxKey => {
+      delete conversationCtx[convCtxKey];
+    });
+    this.contextManager.contextDictionary[cid].dialogStack = [];
+    this.contextManager.contextDictionary[cid].variableName = undefined;
+  }
 }
 
 module.exports = Bot;
