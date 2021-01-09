@@ -600,32 +600,25 @@ class Bot extends Clonable {
     }
   }
 
-  resetFlows() {
+  async resetFlows() {
     const logger = this.container.get('logger');
     logger.info('reseting flows...');
     Object.keys(this.dialogManager.dialogs).forEach(dialogKey => {
       delete this.dialogManager.dialogs[dialogKey];
     });
-    this.resetContexts();
+    await this.resetContexts();
   }
   
-  resetContexts() {
+  async resetContexts() {
     const logger = this.container.get('logger');
     logger.info('reseting context in all conversations...');
-    Object.keys(this.contextManager.contextDictionary).forEach(cid => {
-      this.resetConversationContext(cid);
-    });
+    await this.contextManager.resetConversations();
   }
 
-  resetConversationContext(cid) {
+  async resetConversationContext(cid) {
     const logger = this.container.get('logger');
     logger.debug(`reseting context in conversation: ${cid}`);
-    const conversationCtx = this.contextManager.contextDictionary[cid];
-    Object.keys(conversationCtx).forEach(convCtxKey => {
-      delete conversationCtx[convCtxKey];
-    });
-    this.contextManager.contextDictionary[cid].dialogStack = [];
-    this.contextManager.contextDictionary[cid].variableName = undefined;
+    await this.contextManager.resetConversation(cid);
   }
 }
 
