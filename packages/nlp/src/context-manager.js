@@ -119,6 +119,23 @@ class ContextManager extends Clonable {
       }
     }
   }
+
+  async resetConversations() {
+    Object.keys(this.contextDictionary).forEach(async (cid) => {
+      await this.resetConversation(cid);
+    });
+  }
+
+  async resetConversation(cid) {
+    const logger = this.container.get('logger');
+    logger.debug(`reseting context in conversation: ${cid}`);
+    const conversationCtx = this.contextDictionary[cid];
+    Object.keys(conversationCtx).forEach(convCtxKey => {
+      delete conversationCtx[convCtxKey];
+    });
+    this.contextDictionary[cid].dialogStack = [];
+    this.contextDictionary[cid].variableName = undefined;
+  }
 }
 
 module.exports = ContextManager;
