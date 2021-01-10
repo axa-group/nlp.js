@@ -72,15 +72,9 @@ class ContextManager extends Clonable {
     let result;
     if (id) {
       if (this.settings.tableName) {
-        const database = this.container
-          ? this.container.get('database')
-          : undefined;
+        const database = this.container ? this.container.get('database') : undefined;
         if (database) {
-          result = (await database.findOne(this.settings.tableName, {
-            conversationId: id,
-          })) || {
-            id,
-          };
+          result = (await database.findOne(this.settings.tableName, { conversationId: id, })) || { conversationId: id, };
         }
       }
       if (!result) {
@@ -105,12 +99,14 @@ class ContextManager extends Clonable {
         }
       }
       if (this.settings.tableName) {
-        const database = this.container
-          ? this.container.get('database')
-          : undefined;
+        const database = this.container ? this.container.get('database') : undefined;
         if (database) {
-          const saved = await database.save(this.settings.tableName, clone);
-          context.id = saved.id;
+          clone.id = id;
+          await database.update(this.settings.tableName, clone, { upsert: true });
+          if (this.onCtxUpdate) {
+            logger.debug(`emmitting event onCtxUpdate...`);
+            await this.onCtxUpdate(clone);
+          }
         } else {
           this.contextDictionary[id] = clone;
         }
