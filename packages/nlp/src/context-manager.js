@@ -72,9 +72,13 @@ class ContextManager extends Clonable {
     let result;
     if (id) {
       if (this.settings.tableName) {
-        const database = this.container ? this.container.get('database') : undefined;
+        const database = this.container
+          ? this.container.get('database')
+          : undefined;
         if (database) {
-          result = (await database.findOne(this.settings.tableName, { conversationId: id, })) || { conversationId: id, };
+          result = (await database.findOne(this.settings.tableName, {
+            conversationId: id,
+          })) || { conversationId: id };
         }
       }
       if (!result) {
@@ -88,6 +92,7 @@ class ContextManager extends Clonable {
   }
 
   async setContext(input, context) {
+    const logger = this.container.get('logger');
     const id = await this.getInputContextId(input);
     if (id) {
       const keys = Object.keys(context);
@@ -99,10 +104,14 @@ class ContextManager extends Clonable {
         }
       }
       if (this.settings.tableName) {
-        const database = this.container ? this.container.get('database') : undefined;
+        const database = this.container
+          ? this.container.get('database')
+          : undefined;
         if (database) {
           clone.id = id;
-          await database.update(this.settings.tableName, clone, { upsert: true });
+          await database.update(this.settings.tableName, clone, {
+            upsert: true,
+          });
           if (this.onCtxUpdate) {
             logger.debug(`emmitting event onCtxUpdate...`);
             await this.onCtxUpdate(clone);
@@ -126,7 +135,7 @@ class ContextManager extends Clonable {
     const logger = this.container.get('logger');
     logger.debug(`reseting context in conversation: ${cid}`);
     const conversationCtx = this.contextDictionary[cid];
-    Object.keys(conversationCtx).forEach(convCtxKey => {
+    Object.keys(conversationCtx).forEach((convCtxKey) => {
       delete conversationCtx[convCtxKey];
     });
     this.contextDictionary[cid].dialogStack = [];
