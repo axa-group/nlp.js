@@ -112,15 +112,15 @@ class ContextManager extends Clonable {
           await database.update(this.settings.tableName, clone, {
             upsert: true,
           });
-          if (this.onCtxUpdate) {
-            logger.debug(`emmitting event onCtxUpdate...`);
-            await this.onCtxUpdate(clone);
-          }
         } else {
           this.contextDictionary[id] = clone;
         }
       } else {
         this.contextDictionary[id] = clone;
+      }
+      if (this.onCtxUpdate) {
+        logger.debug(`emmitting event onCtxUpdate...`);
+        await this.onCtxUpdate(clone);
       }
     }
   }
