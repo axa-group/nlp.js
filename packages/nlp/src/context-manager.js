@@ -130,7 +130,7 @@ class ContextManager extends Clonable {
     const logger = this.container.get('logger');
     logger.debug(`reseting context in conversation: ${cid}`);
     const conversationCtx = this.contextDictionary[cid];
-    Object.keys(conversationCtx).forEach(convCtxKey => {
+    Object.keys(conversationCtx).forEach((convCtxKey) => {
       delete conversationCtx[convCtxKey];
     });
     this.contextDictionary[cid].dialogStack = [];

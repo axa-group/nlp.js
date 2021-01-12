@@ -53,7 +53,10 @@ function bootstrap() {
 describe('NLU Neural', () => {
   describe('Train and process', () => {
     test('It can train and process a corpus', async () => {
-      const nlu = new NluNeural({ locale: 'en' }, bootstrap());
+      const nlu = new NluNeural(
+        { locale: 'en', useNoneFeature: true },
+        bootstrap()
+      );
       const status = await nlu.train(corpus);
       expect(status.status.iterations).toEqual(34);
       const json = nlu.neuralNetwork.toJSON();
@@ -81,7 +84,7 @@ describe('NLU Neural', () => {
 
     test('It can explain the results', async () => {
       const nlu = new NluNeural(
-        { locale: 'en', returnExplanation: true },
+        { locale: 'en', returnExplanation: true, useNoneFeature: true },
         bootstrap()
       );
       await nlu.train(corpus);
@@ -117,7 +120,10 @@ describe('NLU Neural', () => {
     });
 
     test('An allow list can be added', async () => {
-      const nlu = new NluNeural({ locale: 'en' }, bootstrap());
+      const nlu = new NluNeural(
+        { locale: 'en', useNoneFeature: true },
+        bootstrap()
+      );
       await nlu.train(corpus);
       const result = await nlu.process('who are you', {
         allowList: ['smalltalk.annoying', 'smalltalk.hungry'],
@@ -131,7 +137,10 @@ describe('NLU Neural', () => {
     });
 
     test('Allow list can be an object', async () => {
-      const nlu = new NluNeural({ locale: 'en' }, bootstrap());
+      const nlu = new NluNeural(
+        { locale: 'en', useNoneFeature: true },
+        bootstrap()
+      );
       await nlu.train(corpus);
       const result = await nlu.process('who are you', {
         allowList: { 'smalltalk.annoying': 1, 'smalltalk.hungry': 1 },

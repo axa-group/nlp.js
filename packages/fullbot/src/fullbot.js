@@ -41,6 +41,7 @@ const { BuiltinMicrosoft } = require('@nlpjs/builtin-microsoft');
 const { BuiltinDuckling } = require('@nlpjs/builtin-duckling');
 const { Database } = require('@nlpjs/database');
 const { MongodbAdapter } = require('@nlpjs/mongodb-adapter');
+const { mount, getUrlFileName } = require('./utils');
 
 const defaultConfiguration = {
   settings: {
@@ -50,7 +51,7 @@ const defaultConfiguration = {
       serveBot: true,
     },
     bot: {
-      scripts: ['./script.dlg'],
+      scripts: ['./bot/scripts/script.dlg'],
     },
   },
 };
@@ -176,6 +177,15 @@ class FullBot {
     if (apiServer && apiServer.server) {
       apiServer.server.close();
     }
+  }
+
+  mount(url) {
+    const fileName = getUrlFileName(url);
+    mount({
+      url,
+      fileName,
+      dir: this.settings.botPath || './bot',
+    });
   }
 }
 

@@ -166,7 +166,9 @@ class Bot extends Clonable {
         );
       }
       if (shouldContinue) {
-        const dialog = (action.dialog && action.dialog.startsWith('/') ? '' : '/') + action.dialog;
+        const dialog =
+          (action.dialog && action.dialog.startsWith('/') ? '' : '/') +
+          action.dialog;
         let fn;
 
         switch (action.command) {
@@ -202,7 +204,10 @@ class Bot extends Clonable {
                 context
               );
               if (result.answer) {
-                if (result.answer.startsWith('/') && this.dialogManager.existsDialog(result.answer)) {
+                if (
+                  result.answer.startsWith('/') &&
+                  this.dialogManager.existsDialog(result.answer)
+                ) {
                   session.beginDialog(context, result.answer);
                 } else {
                   await session.say(result.answer);
@@ -603,12 +608,12 @@ class Bot extends Clonable {
   async resetFlows() {
     const logger = this.container.get('logger');
     logger.info('reseting flows...');
-    Object.keys(this.dialogManager.dialogs).forEach(dialogKey => {
+    Object.keys(this.dialogManager.dialogs).forEach((dialogKey) => {
       delete this.dialogManager.dialogs[dialogKey];
     });
     await this.resetContexts();
   }
-  
+
   async resetContexts() {
     const logger = this.container.get('logger');
     logger.info('reseting context in all conversations...');

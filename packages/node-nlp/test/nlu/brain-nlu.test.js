@@ -75,7 +75,7 @@ describe('Brain NLU', () => {
 
   describe('get classifications', () => {
     test('Should give the classifications for an utterance', async () => {
-      const nlu = new BrainNLU({ language: 'fr' });
+      const nlu = new BrainNLU({ language: 'fr', useNoneFeature: true });
       nlu.add('Bonjour', 'greet');
       nlu.add('bonne nuit', 'greet');
       nlu.add('Bonsoir', 'greet');
