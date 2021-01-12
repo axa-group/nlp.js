@@ -23,7 +23,6 @@
 
 const { Clonable } = require('@nlpjs/core');
 const { SpellCheck } = require('@nlpjs/similarity');
-const useNoneFeature = require('./none-languages');
 
 class Nlu extends Clonable {
   constructor(settings = {}, container) {
@@ -235,12 +234,7 @@ class Nlu extends Clonable {
 
   addNoneFeature(input) {
     const { corpus } = input;
-    const locale = input.locale || this.settings.locale;
-    if (
-      (input.settings && input.settings.useNoneFeature) ||
-      ((!input.settings || input.settings.useNoneFeature === undefined) &&
-        useNoneFeature[locale])
-    ) {
+    if (input.settings && input.settings.useNoneFeature) {
       corpus.push({ input: { nonefeature: 1 }, output: { None: 1 } });
     }
     return input;
@@ -353,7 +347,6 @@ class Nlu extends Clonable {
   }
 
   textToFeatures(srcInput) {
-    const locale = srcInput.locale || this.settings.locale;
     const input = srcInput;
     const { tokens } = input;
     const keys = Object.keys(tokens);
@@ -378,13 +371,7 @@ class Nlu extends Clonable {
       nonevalue += nonedelta;
       nonedelta *= this.settings.nonedeltaMultiplier;
     }
-    if (
-      (input.settings ||
-        input.settings.useNoneFeature ||
-        ((input.settings || input.settings.useNoneFeature === undefined) &&
-          useNoneFeature[locale])) &&
-      nonevalue
-    ) {
+    if (input.settings && input.settings.useNoneFeature && nonevalue) {
       features.nonefeature = nonevalue;
     }
     input.tokens = features;

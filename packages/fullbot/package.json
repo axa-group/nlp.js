@@ -32,11 +32,15 @@
     "@nlpjs/basic": "^4.18.1",
     "@nlpjs/bot": "^4.18.0",
     "@nlpjs/builtin-duckling": "^4.17.1",
-    "@nlpjs/builtin-microsoft": "4.17.0",
+    "@nlpjs/builtin-microsoft": "^4.17.0",
     "@nlpjs/database": "^4.17.3",
     "@nlpjs/directline-connector": "^4.18.0",
     "@nlpjs/express-api-server": "^4.17.1",
-    "@nlpjs/mongodb-adapter": "4.17.0"
+    "@nlpjs/mongodb-adapter": "^4.17.0",
+    "@nlpjs/utils": "^4.18.1",
+    "archiver": "^5.2.0",
+    "decompress": "^4.2.1",
+    "rimraf": "^3.0.2"
   },
   "publishConfig": {
     "access": "public"

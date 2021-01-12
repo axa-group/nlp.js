@@ -244,7 +244,10 @@ describe('NLU', () => {
   describe('Add None Feature', () => {
     test('It should add a nonefeature input labeled as None', () => {
       const nlu = new Nlu({ locale: 'en', keepStopwords: false }, container);
-      const actual = nlu.addNoneFeature({ corpus: [] });
+      const actual = nlu.addNoneFeature({
+        corpus: [],
+        settings: { useNoneFeature: true },
+      });
       expect(actual.corpus).toHaveLength(1);
       expect(actual.corpus[0]).toEqual({
         input: { nonefeature: 1 },

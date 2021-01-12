@@ -281,7 +281,7 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.7);
     });
     test('Should classify an utterance', async () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { useNoneFeature: true } });
       addFrJp(manager);
       await manager.train();
       const result = await manager.classify('fr', 'où sont mes clés');
@@ -325,7 +325,9 @@ describe('NLP Manager', () => {
 
   describe('Train', () => {
     test('You can train only a language', async () => {
-      const manager = new NlpManager({ nlu: { trainByDomain: true } });
+      const manager = new NlpManager({
+        nlu: { trainByDomain: true, useNoneFeature: true },
+      });
       addFrJp(manager);
       await manager.train('fr');
       let result = await manager.classify('où sont mes clés');
@@ -338,7 +340,7 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.7);
     });
     test('You can train a set of languages', async () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { useNoneFeature: true } });
       addFrJp(manager);
       await manager.train(['fr', 'ja', 'es']);
       let result = await manager.classify('où sont mes clés');
@@ -427,7 +429,7 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.7);
     });
     test('Should classify an utterance', async () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { useNoneFeature: true } });
       manager.addLanguage(['en', 'ja']);
       addEn(manager);
       await manager.train();
@@ -442,7 +444,7 @@ describe('NLP Manager', () => {
       expect(result.score).toBeGreaterThan(0.7);
     });
     test('Language can be specified', async () => {
-      const manager = new NlpManager();
+      const manager = new NlpManager({ nlu: { useNoneFeature: true } });
       manager.addLanguage(['en', 'ja']);
       addEn(manager);
       await manager.train();
