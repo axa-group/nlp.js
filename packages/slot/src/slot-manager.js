@@ -134,7 +134,7 @@ class SlotManager {
    */
   load(src) {
     this.intents = src || {};
-    this.isEmpty = Object.keys(this.intents) === 0;
+    this.isEmpty = Object.keys(this.intents).length === 0;
   }
 
   /**
