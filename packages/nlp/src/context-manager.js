@@ -78,9 +78,7 @@ class ContextManager extends Clonable {
         if (database) {
           result = (await database.findOne(this.settings.tableName, {
             conversationId: id,
-          })) || {
-            id,
-          };
+          })) || { conversationId: id };
         }
       }
       if (!result) {
@@ -94,6 +92,7 @@ class ContextManager extends Clonable {
   }
 
   async setContext(input, context) {
+    const logger = this.container.get('logger');
     const id = await this.getInputContextId(input);
     if (id) {
       const keys = Object.keys(context);
@@ -109,13 +108,17 @@ class ContextManager extends Clonable {
           ? this.container.get('database')
           : undefined;
         if (database) {
-          const saved = await database.save(this.settings.tableName, clone);
-          context.id = saved.id;
+          clone.id = id;
+          await database.save(this.settings.tableName, clone);
         } else {
           this.contextDictionary[id] = clone;
         }
       } else {
         this.contextDictionary[id] = clone;
+      }
+      if (this.onCtxUpdate) {
+        logger.debug(`emmitting event onCtxUpdate...`);
+        await this.onCtxUpdate(clone);
       }
     }
   }
@@ -130,7 +133,7 @@ class ContextManager extends Clonable {
     const logger = this.container.get('logger');
     logger.debug(`reseting context in conversation: ${cid}`);
     const conversationCtx = this.contextDictionary[cid];
-    Object.keys(conversationCtx).forEach(convCtxKey => {
+    Object.keys(conversationCtx).forEach((convCtxKey) => {
       delete conversationCtx[convCtxKey];
     });
     this.contextDictionary[cid].dialogStack = [];
