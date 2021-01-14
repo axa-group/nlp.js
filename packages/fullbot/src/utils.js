@@ -36,8 +36,10 @@ function pad(n, l = 2) {
   return result;
 }
 
-const getDateStr = (date) => pad(date.getFullYear(), 4) + pad(date.getMonth() + 1) + pad(date.getDate());
-const getTimeStr = (date) => pad(date.getHours()) + pad(date.getMinutes()) + pad(date.getSeconds());
+const getDateStr = (date) =>
+  pad(date.getFullYear(), 4) + pad(date.getMonth() + 1) + pad(date.getDate());
+const getTimeStr = (date) =>
+  pad(date.getHours()) + pad(date.getMinutes()) + pad(date.getSeconds());
 const getDateTimeStr = (date) => getDateStr(date) + getTimeStr(date);
 
 function ensureDir(dirPath, recursive = true) {
@@ -129,4 +131,4 @@ module.exports = {
   restore,
   mount,
   getUrlFileName,
-}
+};

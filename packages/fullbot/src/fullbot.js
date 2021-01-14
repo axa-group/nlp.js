@@ -59,7 +59,8 @@ const defaultConfiguration = {
 class FullBot {
   constructor(settings) {
     this.settings = settings || {};
-    this.marketUrl = this.settings.marketUrl || 'https://nlpjsmarket.herokuapp.com/public';
+    this.marketUrl =
+      this.settings.marketUrl || 'https://nlpjsmarket.herokuapp.com/public';
   }
 
   setDefaultConfiguration() {
@@ -160,21 +161,26 @@ class FullBot {
     await dockStart(config);
     this.dock = dock;
     this.container = dock.getContainer();
-    if (config.settings && config.settings.bot && config.settings.bot.scripts && config.settings.bot.scripts.length === 1) {
-      if (!fs.existsSync(config.settings.bot.scripts[0])) {
-        return this.mount(`${this.marketUrl}/default.zip`);
+    if (
+      config.settings &&
+      config.settings.bot &&
+      config.settings.bot.scripts &&
+      config.settings.bot.scripts.length === 1 &&
+      !fs.existsSync(config.settings.bot.scripts[0])
+    ) {
+      this.mount(`${this.marketUrl}/default.zip`);
+    } else {
+      if (!confFileExits) {
+        await this.initializeContainer();
       }
-    }
-    if (!confFileExits) {
-      await this.initializeContainer();
-    }
-    this.bot = dock.get('bot');
-    this.nlp = dock.get('nlp');
-    await this.loadActions();
-    await this.loadCards();
-    await this.loadValidators();
-    if (this.onIntent) {
-      this.nlp.onIntent = this.onIntent;
+      this.bot = dock.get('bot');
+      this.nlp = dock.get('nlp');
+      await this.loadActions();
+      await this.loadCards();
+      await this.loadValidators();
+      if (this.onIntent) {
+        this.nlp.onIntent = this.onIntent;
+      }
     }
   }
 
@@ -188,8 +194,8 @@ class FullBot {
   async mount(url) {
     const fileName = getUrlFileName(url);
     await mount({
-      url: url,
-      fileName: fileName,
+      url,
+      fileName,
       dir: this.settings.botPath || './bot',
     });
     this.stop();
