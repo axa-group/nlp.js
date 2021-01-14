@@ -170,7 +170,6 @@ class Bot extends Clonable {
           (action.dialog && action.dialog.startsWith('/') ? '' : '/') +
           action.dialog;
         let fn;
-
         switch (action.command) {
           case 'say':
             await session.say(action.text, context);
@@ -309,6 +308,9 @@ class Bot extends Clonable {
       context.validation = {};
     }
     context[localeDangle] = this.localization;
+    if (session.forcedDialog) {
+      session.beginDialog(context, session.forcedDialog);
+    }
     if (session.activity.value) {
       const keys = Object.keys(session.activity.value);
       for (let i = 0; i < keys.length; i += 1) {

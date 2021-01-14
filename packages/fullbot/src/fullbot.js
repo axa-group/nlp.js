@@ -181,6 +181,29 @@ class FullBot {
       if (this.onIntent) {
         this.nlp.onIntent = this.onIntent;
       }
+      const directline = dock.get('directline');
+      if (directline && !directline.onCreateConversation) {
+        directline.onCreateConversation = this.onDirectlineCreateConversation.bind(
+          this
+        );
+      }
+    }
+  }
+
+  async onDirectlineCreateConversation(connector, conversation) {
+    if (
+      this.bot &&
+      this.bot.dialogManager &&
+      this.bot.dialogManager.dialogs['/directlineCreateConversation']
+    ) {
+      const activity = {
+        conversation: {
+          id: conversation.conversationId,
+        },
+      };
+      const session = connector.createSession(activity);
+      session.forcedDialog = '/directlineCreateConversation';
+      await this.bot.process(session);
     }
   }
 
