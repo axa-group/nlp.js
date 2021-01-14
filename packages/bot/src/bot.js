@@ -25,7 +25,7 @@ const { Clonable, containerBootstrap } = require('@nlpjs/core');
 const { ContextManager } = require('@nlpjs/nlp');
 const { JavascriptCompiler } = require('@nlpjs/evaluator');
 const DialogManager = require('./dialog-manager');
-const { loadScript, getDialogName } = require('./dialog-parse');
+const { loadScript, getDialogName, trimBetween } = require('./dialog-parse');
 const {
   validatorEmail,
   validatorURL,
@@ -299,6 +299,9 @@ class Bot extends Clonable {
 
   async process(session) {
     const context = await this.contextManager.getContext(session);
+    context.channel = session.channel;
+    context.app = session.app;
+    context.from = session.from || null;
     if (!context.dialogStack) {
       context.dialogStack = [];
     }
@@ -384,6 +387,7 @@ class Bot extends Clonable {
     let action;
     let tokens;
     let contextData;
+    let trimmed;
     const imports = [];
     for (let i = 0; i < script.length; i += 1) {
       const current = script[i];
@@ -452,7 +456,15 @@ class Bot extends Clonable {
                 currentIntent.utterances.push(current.line);
                 break;
               case 'answers':
-                currentIntent.answers.push(current.line);
+                if (current.line.startsWith('[')) {
+                  trimmed = trimBetween(current.line.trim(), '[', ']', true);
+                  currentIntent.answers.push({
+                    answer: trimmed.line.trim(),
+                    opts: trimmed.trimmed,
+                  });
+                } else {
+                  currentIntent.answers.push(current.line);
+                }
                 break;
               case 'tests':
                 currentIntent.tests.push(current.line);

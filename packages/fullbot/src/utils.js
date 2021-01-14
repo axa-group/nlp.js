@@ -36,10 +36,8 @@ function pad(n, l = 2) {
   return result;
 }
 
-const getDateStr = (date) =>
-  pad(date.getFullYear(), 4) + pad(date.getMonth() + 1) + pad(date.getDate());
-const getTimeStr = (date) =>
-  pad(date.getHours()) + pad(date.getMinutes()) + pad(date.getSeconds());
+const getDateStr = (date) => pad(date.getFullYear(), 4) + pad(date.getMonth() + 1) + pad(date.getDate());
+const getTimeStr = (date) => pad(date.getHours()) + pad(date.getMinutes()) + pad(date.getSeconds());
 const getDateTimeStr = (date) => getDateStr(date) + getTimeStr(date);
 
 function ensureDir(dirPath, recursive = true) {
@@ -100,12 +98,14 @@ async function mount(options) {
     removeDir(options.dir);
   }
   try {
-    await restore(options.fileName, options.dir);
+    await restore(path.join(tmpFolder, options.fileName), options.dir);
     if (options.removeTmp !== false) {
       removeDir(tmpFolder);
     }
     return true;
   } catch (err) {
+    console.log('ERROR');
+    console.log(err);
     if (backupName) {
       await restore(backupName, options.dir);
     }
@@ -129,4 +129,4 @@ module.exports = {
   restore,
   mount,
   getUrlFileName,
-};
+}

@@ -59,6 +59,7 @@ const defaultConfiguration = {
 class FullBot {
   constructor(settings) {
     this.settings = settings || {};
+    this.marketUrl = this.settings.marketUrl || 'https://nlpjsmarket.herokuapp.com/public';
   }
 
   setDefaultConfiguration() {
@@ -159,6 +160,11 @@ class FullBot {
     await dockStart(config);
     this.dock = dock;
     this.container = dock.getContainer();
+    if (config.settings && config.settings.bot && config.settings.bot.scripts && config.settings.bot.scripts.length === 1) {
+      if (!fs.existsSync(config.settings.bot.scripts[0])) {
+        return this.mount(`${this.marketUrl}/default.zip`);
+      }
+    }
     if (!confFileExits) {
       await this.initializeContainer();
     }
@@ -179,13 +185,16 @@ class FullBot {
     }
   }
 
-  mount(url) {
+  async mount(url) {
     const fileName = getUrlFileName(url);
-    mount({
-      url,
-      fileName,
+    await mount({
+      url: url,
+      fileName: fileName,
       dir: this.settings.botPath || './bot',
     });
+    this.stop();
+    this.dock.containers = {};
+    await this.start();
   }
 }
 
