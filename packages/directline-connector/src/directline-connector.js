@@ -32,6 +32,9 @@ class DirectlineConnector extends Connector {
     if (this.settings.autoRemoveFiles === undefined) {
       this.settings.autoRemoveFiles = true;
     }
+    if (this.settings.uploadDir === undefined) {
+      this.settings.uploadDir = './uploads/';
+    }
   }
 
   registerDefault() {
@@ -119,6 +122,7 @@ class DirectlineConnector extends Connector {
           `POST /directline/conversations/:conversationId/upload`
         );
         const form = formidable({ multiples: true });
+        form.uploadDir = this.settings.uploadDir;
         form.parse(req, async (err, fields, files) => {
           if (err) {
             res.status(500).send('There was an error processing the message');

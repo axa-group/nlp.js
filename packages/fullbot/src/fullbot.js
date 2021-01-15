@@ -41,7 +41,7 @@ const { BuiltinMicrosoft } = require('@nlpjs/builtin-microsoft');
 const { BuiltinDuckling } = require('@nlpjs/builtin-duckling');
 const { Database } = require('@nlpjs/database');
 const { MongodbAdapter } = require('@nlpjs/mongodb-adapter');
-const { mount, getUrlFileName } = require('./utils');
+const { mount, getUrlFileName, ensureDir } = require('./utils');
 
 const defaultConfiguration = {
   settings: {
@@ -182,10 +182,13 @@ class FullBot {
         this.nlp.onIntent = this.onIntent;
       }
       const directline = dock.get('directline');
-      if (directline && !directline.onCreateConversation) {
-        directline.onCreateConversation = this.onDirectlineCreateConversation.bind(
-          this
-        );
+      if (directline) {
+        ensureDir(directline.settings.uploadDir);
+        if (!directline.onCreateConversation) {
+          directline.onCreateConversation = this.onDirectlineCreateConversation.bind(
+            this
+          );
+        }
       }
     }
   }
