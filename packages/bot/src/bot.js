@@ -196,7 +196,7 @@ class Bot extends Clonable {
             context.validatorName = action.validatorName;
             break;
           case 'nlp':
-            if (this.nlp) {
+            if (this.nlp && session.text) {
               const result = await this.nlp.process(
                 session,
                 undefined,
@@ -211,6 +211,8 @@ class Bot extends Clonable {
                 } else {
                   await session.say(result.answer);
                 }
+              } else if (session.activity.file && this.onFile) {
+                await this.onFile(this, session);
               } else {
                 await session.say("Sorry, I don't understand");
               }

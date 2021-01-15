@@ -21,10 +21,19 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const fs = require('fs');
+const formidable = require('formidable');
 const { Connector } = require('@nlpjs/connector');
 const DirectlineController = require('./directline-controller');
 
 class DirectlineConnector extends Connector {
+  constructor(settings, container) {
+    super(settings, container);
+    if (this.settings.autoRemoveFiles === undefined) {
+      this.settings.autoRemoveFiles = true;
+    }
+  }
+
   registerDefault() {
     this.container.registerConfiguration(
       'directline',
@@ -101,6 +110,36 @@ class DirectlineConnector extends Connector {
       this.log('trace', `POST /directline/tokens/refresh`);
       res.status(200).end();
     });
+
+    server.post(
+      `/directline/conversations/:conversationId/upload`,
+      async (req, res) => {
+        this.log(
+          'debug',
+          `POST /directline/conversations/:conversationId/upload`
+        );
+        const form = formidable({ multiples: true });
+        form.parse(req, async (err, fields, files) => {
+          if (err) {
+            res.status(500).send('There was an error processing the message');
+          } else {
+            const activity = JSON.parse(
+              fs.readFileSync(files.activity.path, 'utf-8')
+            );
+            activity.file = files.file;
+            const result = await this.controller.addActivity(
+              req.params.conversationId,
+              activity
+            );
+            if (this.settings.autoRemoveFiles) {
+              fs.unlinkSync(files.activity.path);
+              fs.unlinkSync(files.file.path);
+            }
+            res.status(result.status).send(result.body);
+          }
+        });
+      }
+    );
 
     server.get(`/v3/directline/conversations/:conversationId`, (req, res) => {
       this.log('debug', `GET /v3/directline/conversations/:conversationId`);
