@@ -128,4 +128,5 @@ module.exports = {
   loadScript,
   getDialogName,
   getName,
+  trimBetween,
 };

@@ -174,7 +174,10 @@ class DirectlineController {
         } else {
           const bot = this.settings.container.get('bot');
           if (bot) {
-            bot.process(this.parent.createSession(activity));
+            const session = this.parent.createSession(activity);
+            session.channel = 'directline';
+            session.app = this.settings.container.name;
+            bot.process(session);
             resolve({ status: 200, body: {} });
           } else {
             const nlp = this.settings.container.get('nlp');

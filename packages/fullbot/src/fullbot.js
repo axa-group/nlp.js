@@ -41,7 +41,7 @@ const { BuiltinMicrosoft } = require('@nlpjs/builtin-microsoft');
 const { BuiltinDuckling } = require('@nlpjs/builtin-duckling');
 const { Database } = require('@nlpjs/database');
 const { MongodbAdapter } = require('@nlpjs/mongodb-adapter');
-const { mount, getUrlFileName } = require('./utils');
+const { mount, getUrlFileName, ensureDir } = require('./utils');
 
 const defaultConfiguration = {
   settings: {
@@ -59,6 +59,8 @@ const defaultConfiguration = {
 class FullBot {
   constructor(settings) {
     this.settings = settings || {};
+    this.marketUrl =
+      this.settings.marketUrl || 'https://nlpjsmarket.herokuapp.com/public';
   }
 
   setDefaultConfiguration() {
@@ -159,16 +161,52 @@ class FullBot {
     await dockStart(config);
     this.dock = dock;
     this.container = dock.getContainer();
-    if (!confFileExits) {
-      await this.initializeContainer();
+    if (
+      config.settings &&
+      config.settings.bot &&
+      config.settings.bot.scripts &&
+      config.settings.bot.scripts.length === 1 &&
+      !fs.existsSync(config.settings.bot.scripts[0])
+    ) {
+      this.mount(`${this.marketUrl}/default.zip`);
+    } else {
+      if (!confFileExits) {
+        await this.initializeContainer();
+      }
+      this.bot = dock.get('bot');
+      this.nlp = dock.get('nlp');
+      await this.loadActions();
+      await this.loadCards();
+      await this.loadValidators();
+      if (this.onIntent) {
+        this.nlp.onIntent = this.onIntent;
+      }
+      const directline = dock.get('directline');
+      if (directline) {
+        ensureDir(directline.settings.uploadDir);
+        if (!directline.onCreateConversation) {
+          directline.onCreateConversation = this.onDirectlineCreateConversation.bind(
+            this
+          );
+        }
+      }
     }
-    this.bot = dock.get('bot');
-    this.nlp = dock.get('nlp');
-    await this.loadActions();
-    await this.loadCards();
-    await this.loadValidators();
-    if (this.onIntent) {
-      this.nlp.onIntent = this.onIntent;
+  }
+
+  async onDirectlineCreateConversation(connector, conversation) {
+    if (
+      this.bot &&
+      this.bot.dialogManager &&
+      this.bot.dialogManager.dialogs['/directlineCreateConversation']
+    ) {
+      const activity = {
+        conversation: {
+          id: conversation.conversationId,
+        },
+      };
+      const session = connector.createSession(activity);
+      session.forcedDialog = '/directlineCreateConversation';
+      await this.bot.process(session);
     }
   }
 
@@ -179,13 +217,16 @@ class FullBot {
     }
   }
 
-  mount(url) {
+  async mount(url) {
     const fileName = getUrlFileName(url);
-    mount({
+    await mount({
       url,
       fileName,
       dir: this.settings.botPath || './bot',
     });
+    this.stop();
+    this.dock.containers = {};
+    await this.start();
   }
 }
 

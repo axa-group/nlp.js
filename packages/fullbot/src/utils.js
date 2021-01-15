@@ -100,12 +100,14 @@ async function mount(options) {
     removeDir(options.dir);
   }
   try {
-    await restore(options.fileName, options.dir);
+    await restore(path.join(tmpFolder, options.fileName), options.dir);
     if (options.removeTmp !== false) {
       removeDir(tmpFolder);
     }
     return true;
   } catch (err) {
+    console.log('ERROR');
+    console.log(err);
     if (backupName) {
       await restore(backupName, options.dir);
     }
