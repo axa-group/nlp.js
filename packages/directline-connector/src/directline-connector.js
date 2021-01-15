@@ -35,6 +35,9 @@ class DirectlineConnector extends Connector {
     if (this.settings.uploadDir === undefined) {
       this.settings.uploadDir = './uploads/';
     }
+    if (this.settings.maxFileSize === undefined) {
+      this.settings.maxFileSize = 8000000;
+    }
   }
 
   registerDefault() {
@@ -121,8 +124,12 @@ class DirectlineConnector extends Connector {
           'debug',
           `POST /directline/conversations/:conversationId/upload`
         );
-        const form = formidable({ multiples: true, uploadDir: this.settings.uploadDir, keepExtensions: false });
-        form.uploadDir = this.settings.uploadDir;
+        const form = formidable({
+          multiples: true,
+          uploadDir: this.settings.uploadDir,
+          keepExtensions: false,
+          maxFileSize: this.settings.maxFileSize,
+        });
         form.parse(req, async (err, fields, files) => {
           if (err) {
             res.status(500).send('There was an error processing the message');
