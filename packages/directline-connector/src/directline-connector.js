@@ -121,7 +121,7 @@ class DirectlineConnector extends Connector {
           'debug',
           `POST /directline/conversations/:conversationId/upload`
         );
-        const form = formidable({ multiples: true });
+        const form = formidable({ multiples: true, uploadDir: this.settings.uploadDir, keepExtensions: false });
         form.uploadDir = this.settings.uploadDir;
         form.parse(req, async (err, fields, files) => {
           if (err) {
