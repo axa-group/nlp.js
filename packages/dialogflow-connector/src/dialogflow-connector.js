@@ -26,7 +26,6 @@ const { dialogflow } = require('actions-on-google');
 
 class DialogflowConnector extends Connector {
   initialize() {
-    console.log(this.settings);
     this.app = dialogflow();
     this.app.intent('Default Fallback Intent', async (conv) => {
       await this.hear(conv);

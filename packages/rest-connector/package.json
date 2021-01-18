@@ -1,0 +1,39 @@
+{
+  "name": "@nlpjs/rest-connector",
+  "version": "4.19.0",
+  "description": "REST connector for NLP.js",
+  "author": {
+    "email": "jesus.seijas@axa.com",
+    "name": "Jesús Seijas"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesús Seijas"
+    },
+    {
+      "email": "jesus.seijas@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/connector": "^4.18.0",
+    "@nlpjs/core": "^4.17.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "926fe345330eca1a13eaaf04d0bba3631a5bba8b"
+}
