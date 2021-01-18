@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/fullbot",
-  "version": "4.19.0",
+  "version": "4.19.1",
   "description": "Full bot for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -29,14 +29,14 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/basic": "^4.19.0",
-    "@nlpjs/bot": "^4.19.0",
-    "@nlpjs/builtin-duckling": "^4.17.1",
-    "@nlpjs/builtin-microsoft": "^4.17.0",
-    "@nlpjs/database": "^4.17.3",
-    "@nlpjs/directline-connector": "^4.18.0",
-    "@nlpjs/express-api-server": "^4.17.1",
-    "@nlpjs/mongodb-adapter": "^4.17.0",
+    "@nlpjs/basic": "^4.19.1",
+    "@nlpjs/bot": "^4.19.1",
+    "@nlpjs/builtin-duckling": "^4.19.1",
+    "@nlpjs/builtin-microsoft": "^4.19.1",
+    "@nlpjs/database": "^4.19.1",
+    "@nlpjs/directline-connector": "^4.19.1",
+    "@nlpjs/express-api-server": "^4.19.1",
+    "@nlpjs/mongodb-adapter": "^4.19.1",
     "@nlpjs/utils": "^4.19.0",
     "archiver": "^5.2.0",
     "decompress": "^4.2.1",
