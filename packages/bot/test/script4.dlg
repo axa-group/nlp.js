@@ -6,8 +6,8 @@ translations en
 dialog main
   say What's your language
   ask userLanguage
-  [userLanguage === 'English'] set locale en
-  [userLanguage === 'Spanish'] set locale es
+  [userLanguage === 'English'] set locale "en"
+  [userLanguage === 'Spanish'] set locale "es"
   say What's your name?
   ask userName
   say Your name is {{ userName }}
