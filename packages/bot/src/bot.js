@@ -135,7 +135,7 @@ class Bot extends Clonable {
   async setVariable(context, variableName, variableValue) {
     if (this.evaluator) {
       await this.evaluator.evaluate(
-        `${variableName} = "${variableValue}"`,
+        `${variableName} = ${variableValue}`,
         context
       );
     } else {
@@ -327,7 +327,11 @@ class Bot extends Clonable {
       if (context.validatorName) {
         shouldContinue = await this.runValidation(session, context);
       } else if (context.variableName) {
-        await this.setVariable(context, context.variableName, session.text);
+        await this.setVariable(
+          context,
+          context.variableName,
+          `"${session.text}"`
+        );
       }
     }
     if (shouldContinue) {
