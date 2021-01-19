@@ -62,6 +62,7 @@ class RestConnector extends Connector {
           channelId: 'rest',
           text: req.query.text,
           conversation: { id: req.query.conversationId },
+          address: { conversation: { id: req.query.conversationId } },
         });
         session.res = res;
         await bot.process(session);
