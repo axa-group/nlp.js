@@ -23,13 +23,13 @@
 
 const { Clonable } = require('@nlpjs/core');
 
-async function defaultAction(session) {
+async function defaultAction(session, context) {
   const nlp = this.container.get('nlp');
   if (nlp) {
     const result = await nlp.process(session.text);
-    session.say(result.answer || "Sorry, I don't understand");
+    session.say(result.answer || "Sorry, I don't understand", context);
   } else {
-    session.say('Sorry, I have problems connecting to my brain');
+    session.say('Sorry, I have problems connecting to my brain', context);
   }
 }
 

@@ -187,7 +187,7 @@ class Bot extends Clonable {
             if (this.dialogManager.existsDialog(dialog)) {
               session.beginDialog(context, dialog);
             } else {
-              await session.say(dialog);
+              await session.say(dialog, context);
             }
             break;
           case 'ask':
@@ -209,15 +209,15 @@ class Bot extends Clonable {
                 ) {
                   session.beginDialog(context, result.answer);
                 } else {
-                  await session.say(result.answer);
+                  await session.say(result.answer, context);
                 }
               } else if (session.activity.file && this.onFile) {
                 await this.onFile(this, session);
               } else {
-                await session.say("Sorry, I don't understand");
+                await session.say("Sorry, I don't understand", context);
               }
             } else {
-              await session.say("Sorry, I don't understand");
+              await session.say("Sorry, I don't understand", context);
             }
             break;
           case 'call':
@@ -290,7 +290,10 @@ class Bot extends Clonable {
             session.restartDialog(context);
           }
         } else {
-          await session.say(context.validation.message || 'Invalid value');
+          await session.say(
+            context.validation.message || 'Invalid value',
+            context
+          );
           return false;
         }
       }
