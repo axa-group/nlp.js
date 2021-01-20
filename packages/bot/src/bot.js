@@ -278,7 +278,10 @@ class Bot extends Clonable {
         context.validation.currentRetry =
           (context.validation.currentRetry || 0) + 1;
         if (
-          context.validation.currentRetry > (context.validation.retries || 2)
+          context.validation.currentRetry > context.validation.retries ===
+          undefined
+            ? 2
+            : context.validation.retries
         ) {
           if (context.validation.failDialog) {
             let { failDialog } = context.validation;
@@ -321,6 +324,9 @@ class Bot extends Clonable {
       for (let i = 0; i < keys.length; i += 1) {
         context[keys[i]] = session.activity.value[keys[i]];
       }
+    }
+    if (this.onBeforeProcess) {
+      await this.onBeforeProcess(session, context);
     }
     let shouldContinue = true;
     if (context.isWaitingInput) {
