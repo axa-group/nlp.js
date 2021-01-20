@@ -84,5 +84,23 @@ describe('Bot', () => {
       await connector.runScript('./packages/bot/test/scenario02.dlt');
       expect(connector.messages).toEqual(connector.expected);
     });
+    test('It should be able to process a conversation with fallback locale', async () => {
+      const bot = new Bot({ container });
+      container.register('bot', bot, true);
+      await bot.start();
+      await bot.loadScript(['./packages/bot/test/script5.dlg']);
+      const connector = new TestConnector({ container });
+      await connector.runScript('./packages/bot/test/scenario05-01.dlt');
+      expect(connector.messages).toEqual(connector.expected);
+    });
+    test('It should be able to process a conversation with fallback locale falling', async () => {
+      const bot = new Bot({ container });
+      container.register('bot', bot, true);
+      await bot.start();
+      await bot.loadScript(['./packages/bot/test/script5.dlg']);
+      const connector = new TestConnector({ container });
+      await connector.runScript('./packages/bot/test/scenario05-02.dlt');
+      expect(connector.messages).toEqual(connector.expected);
+    });
   });
 });

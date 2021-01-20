@@ -396,7 +396,11 @@ class Bot extends Clonable {
     let locale = 'en';
     let currentIntent = {};
     let currentEntity = {};
-    let currentTranslations = { masterLocale: 'en', rules: [] };
+    let currentTranslations = {
+      masterLocale: 'en',
+      fallbackLocale: 'en',
+      rules: [],
+    };
     const translations = [];
     let state;
     const dialogs = [];
@@ -412,6 +416,7 @@ class Bot extends Clonable {
         current.line += ` ${current.type.slice(3)}`;
         current.type = 'ask';
       }
+      let splitted;
       switch (current.type) {
         case 'language':
           locale = current.line;
@@ -419,8 +424,10 @@ class Bot extends Clonable {
         case 'comment':
           break;
         case 'translations':
+          splitted = current.line ? current.line.split(' ') : ['en', 'en'];
           currentTranslations = {
-            masterLocale: current.line || 'en',
+            masterLocale: splitted[0] || 'en',
+            fallbackLocale: splitted[1] || splitted[0] || 'en',
             rules: [],
           };
           translations.push(currentTranslations);
