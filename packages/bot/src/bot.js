@@ -455,7 +455,7 @@ class Bot extends Clonable {
           state = 'tests';
           break;
         case 'regex':
-          currentEntity.regex = current.srcLine;
+          currentEntity.regex = current.line;
           break;
         case '-':
           if (state) {
