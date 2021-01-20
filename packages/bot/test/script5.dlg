@@ -1,0 +1,20 @@
+translations zz en
+  - zz MSG001
+  - en What's your name?
+  - es Cuál es tu nombre?
+  - zz MSG002
+  - en Your name is {{ userName }}
+  - es Tu nombre es {{ userName }}
+  - zz MSG003
+  - en This message does not exists in spanish
+  - zz MSG004
+dialog main
+  say What's your language
+  ask userLanguage
+  [userLanguage === 'English'] set locale "en"
+  [userLanguage === 'Spanish'] set locale "es"
+  say MSG001
+  ask userName
+  say MSG002
+  say MSG003
+  say MSG004
