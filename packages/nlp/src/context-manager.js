@@ -55,14 +55,12 @@ class ContextManager extends Clonable {
     if (this.onGetInputContextId) {
       result = await this.onGetInputContextId(input);
     }
-    if (
-      !result &&
-      input &&
-      input.activity &&
-      input.activity.address &&
-      input.activity.address.conversation
-    ) {
-      result = input.activity.address.conversation.id;
+    if (!result && input && input.activity) {
+      if (input.activity.address && input.activity.address.conversation) {
+        result = input.activity.address.conversation.id;
+      } else if (input.activity.conversation) {
+        result = input.activity.conversation.id;
+      }
     }
     return result;
   }
@@ -95,6 +93,12 @@ class ContextManager extends Clonable {
     const logger = this.container.get('logger');
     const id = await this.getInputContextId(input);
     if (id) {
+      if (!context.id) {
+        const savedContext = await this.getContext(input);
+        if (savedContext) {
+          context.id = savedContext.id;
+        }
+      }
       const keys = Object.keys(context);
       const clone = { conversationId: id };
       for (let i = 0; i < keys.length; i += 1) {
@@ -108,7 +112,6 @@ class ContextManager extends Clonable {
           ? this.container.get('database')
           : undefined;
         if (database) {
-          clone.id = id;
           await database.save(this.settings.tableName, clone);
         } else {
           this.contextDictionary[id] = clone;
