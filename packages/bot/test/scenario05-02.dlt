@@ -1,0 +1,8 @@
+user> hello
+bot> What's your language
+user> English
+bot> What's your name?
+user> John
+bot> Your name is John
+bot> This message does not exists in spanish
+bot> MSG004

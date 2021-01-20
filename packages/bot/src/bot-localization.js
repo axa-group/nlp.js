@@ -39,7 +39,11 @@ class BotLocalization {
     if (!this.localizations[key]) {
       return srckey;
     }
-    return this.localizations[key][locale] || srckey;
+    return (
+      this.localizations[key][locale] ||
+      this.localizations[key][this.fallbackLocale] ||
+      srckey
+    );
   }
 
   removeLocale(locale) {
@@ -59,14 +63,15 @@ class BotLocalization {
         this.addRule(rule[i]);
       }
     } else {
-      const master = rule.masterLocale || 'en';
+      this.masterLocale = rule.masterLocale || 'en';
+      this.fallbackLocale = rule.fallbackLocale || this.masterLocale;
       let key;
       for (let i = 0; i < rule.rules.length; i += 1) {
         const current = rule.rules[i].trim();
         const index = current.indexOf(' ');
         const locale = current.slice(0, index).trim();
         const sentence = current.slice(index).trim();
-        if (locale === master) {
+        if (locale === this.masterLocale) {
           key = sentence;
         }
         this.addLocalization(locale, key, sentence);
