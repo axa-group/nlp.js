@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/fullbot",
-  "version": "4.19.3",
+  "version": "4.19.5",
   "description": "Full bot for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -29,8 +29,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/basic": "^4.19.1",
-    "@nlpjs/bot": "^4.19.3",
+    "@nlpjs/basic": "^4.19.5",
+    "@nlpjs/bot": "^4.19.5",
     "@nlpjs/builtin-duckling": "^4.19.1",
     "@nlpjs/builtin-microsoft": "^4.19.1",
     "@nlpjs/database": "^4.19.1",
