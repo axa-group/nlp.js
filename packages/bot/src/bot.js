@@ -277,12 +277,8 @@ class Bot extends Clonable {
       } else {
         context.validation.currentRetry =
           (context.validation.currentRetry || 0) + 1;
-        if (
-          context.validation.currentRetry > context.validation.retries ===
-          undefined
-            ? 2
-            : context.validation.retries
-        ) {
+        context.validation.retries = context.validation.retries || 2;
+        if (context.validation.currentRetry > context.validation.retries) {
           if (context.validation.failDialog) {
             let { failDialog } = context.validation;
             if (!failDialog.startsWith('/')) {
