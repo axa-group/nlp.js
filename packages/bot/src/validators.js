@@ -39,7 +39,7 @@ async function validatorBuiltin(
   session,
   context,
   params,
-  builtinName,
+  builtinsName,
   entityName,
   typeName
 ) {
@@ -50,7 +50,7 @@ async function validatorBuiltin(
   const input = {
     locale,
     text,
-    builtins: [builtinName],
+    builtins: builtinsName,
   };
   if (container) {
     const builtin = container.get(`extract-builtin-${locale}`);
@@ -60,46 +60,74 @@ async function validatorBuiltin(
       if (entity) {
         return {
           isValid: true,
-          changes: [{ name: variableName, value: entity.resolution.value }],
+          changes: [
+            {
+              name: variableName,
+              value: entity.resolution.value || entity.resolution.strValue,
+            },
+          ],
         };
       }
       return { isValid: false };
     }
   }
-  const recognizer = Recognizers[`recognize${builtinName}`];
-  if (recognizer) {
-    const edges = recognizer(text);
-    if (edges && edges.length > 0) {
-      const entity = findEntity(edges, entityName, typeName);
-      if (entity) {
-        return {
-          isValid: true,
-          changes: [{ name: variableName, value: entity.resolution.value }],
-        };
+
+  for (let i = 0; i < builtinsName.length; i += 1) {
+    const recognizer = Recognizers[`recognize${builtinsName[i]}`];
+    if (recognizer) {
+      const edges = recognizer(text);
+      if (edges && edges.length > 0) {
+        const entity = findEntity(edges, entityName, typeName);
+        if (entity) {
+          return {
+            isValid: true,
+            changes: [
+              {
+                name: variableName,
+                value: entity.resolution.value || entity.resolution.strValue,
+              },
+            ],
+          };
+        }
       }
     }
   }
+
   return { isValid: false };
 }
 
 function validatorEmail(session, context, params) {
-  return validatorBuiltin(session, context, params, 'Email', 'email');
+  return validatorBuiltin(session, context, params, ['Email'], 'email');
 }
 
 function validatorURL(session, context, params) {
-  return validatorBuiltin(session, context, params, 'URL', 'url');
+  return validatorBuiltin(session, context, params, ['URL'], 'url');
 }
 
 function validatorIP(session, context, params) {
-  return validatorBuiltin(session, context, params, 'IpAddress', 'ip');
+  return validatorBuiltin(session, context, params, ['IpAddress'], 'ip');
 }
 
 function validatorIPv4(session, context, params) {
-  return validatorBuiltin(session, context, params, 'IpAddress', 'ip', 'ipv4');
+  return validatorBuiltin(
+    session,
+    context,
+    params,
+    ['IpAddress'],
+    'ip',
+    'ipv4'
+  );
 }
 
 function validatorIPv6(session, context, params) {
-  return validatorBuiltin(session, context, params, 'IpAddress', 'ip', 'ipv6');
+  return validatorBuiltin(
+    session,
+    context,
+    params,
+    ['IpAddress'],
+    'ip',
+    'ipv6'
+  );
 }
 
 function validatorPhoneNumber(session, context, params) {
@@ -107,13 +135,13 @@ function validatorPhoneNumber(session, context, params) {
     session,
     context,
     params,
-    'PhoneNumber',
+    ['PhoneNumber'],
     'phonenumber'
   );
 }
 
 function validatorNumber(session, context, params) {
-  return validatorBuiltin(session, context, params, 'Number', 'number');
+  return validatorBuiltin(session, context, params, ['Number'], 'number');
 }
 
 function validatorInteger(session, context, params) {
@@ -121,14 +149,20 @@ function validatorInteger(session, context, params) {
     session,
     context,
     params,
-    'Number',
+    ['Number'],
     'number',
     'integer'
   );
 }
 
 function validatorDate(session, context, params) {
-  return validatorBuiltin(session, context, params, 'Date', 'date');
+  return validatorBuiltin(
+    session,
+    context,
+    params,
+    ['Date', 'DateTime'],
+    'date'
+  );
 }
 
 module.exports = {
