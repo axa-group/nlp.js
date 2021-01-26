@@ -544,27 +544,42 @@ class Nlp extends Clonable {
         sourceInput = locale;
       }
     }
-    if (sourceInput) {
+    if (!sourceInput) {
+      if (!utterance) {
+        utterance = locale;
+        locale = undefined;
+      }
+      if (!locale) {
+        locale = this.guessLanguage(utterance);
+      }
+      sourceInput = {
+        locale,
+        utterance,
+        settings,
+      };
+      if (settings) {
+        if (settings.activity && !sourceInput.activity) {
+          sourceInput.activity = settings.activity;
+        }
+        if (settings.conversationId && !sourceInput.activity) {
+          sourceInput.activity = {
+            conversation: {
+              id: settings.conversationId,
+            },
+          };
+        }
+      }
+    } else {
       locale = sourceInput.locale;
       utterance =
         sourceInput.utterance || sourceInput.message || sourceInput.text;
-      if (!context) {
-        context = await this.contextManager.getContext(sourceInput);
-      }
-      context.channel = sourceInput.channel;
-      context.app = sourceInput.app;
-      context.from = sourceInput.from || null;
     }
     if (!context) {
-      context = {};
+      context = await this.contextManager.getContext(sourceInput);
     }
-    if (!utterance) {
-      utterance = locale;
-      locale = undefined;
-    }
-    if (!locale) {
-      locale = this.guessLanguage(utterance);
-    }
+    context.channel = sourceInput.channel;
+    context.app = sourceInput.app;
+    context.from = sourceInput.from || null;
     const input = {
       locale,
       utterance,
