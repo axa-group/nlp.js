@@ -80,6 +80,12 @@ class Evaluator {
     if (left === this.failResult) {
       return this.failResult;
     }
+    if (node.operator === '&&' && !left) {
+      return false;
+    }
+    if (node.operator === '||' && left) {
+      return true;
+    }
     const right = this.walk(node.right, context);
     if (right === this.failResult) {
       return this.failResult;
