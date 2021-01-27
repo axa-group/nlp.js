@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Clonable } = require('@nlpjs/core');
+const { Clonable, compareWildcars } = require('@nlpjs/core');
 const { SpellCheck } = require('@nlpjs/similarity');
 
 class Nlu extends Clonable {
@@ -277,13 +277,21 @@ class Nlu extends Clonable {
     return false;
   }
 
+  matchAllowList(intent, allowList) {
+    for (let i = 0; i < allowList.length; i += 1) {
+      if (compareWildcars(intent, allowList[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   intentIsActivated(intent, tokens, allowList) {
     if (allowList) {
       if (Array.isArray(allowList)) {
-        if (!allowList.includes(intent)) {
-          return false;
-        }
-      } else if (!allowList[intent]) {
+        return this.matchAllowList(intent, allowList);
+      }
+      if (!allowList[intent]) {
         return false;
       }
     }

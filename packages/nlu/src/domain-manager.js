@@ -21,7 +21,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Clonable } = require('@nlpjs/core');
+const { Clonable, compareWildcars } = require('@nlpjs/core');
 
 const defaultDomainName = 'master_domain';
 
@@ -257,10 +257,22 @@ class DomainManager extends Clonable {
     return this.runPipeline(input, this.pipelineTrain);
   }
 
-  async classifyByStemDict(utterance, domainName) {
+  matchAllowList(intent, allowList) {
+    for (let i = 0; i < allowList.length; i += 1) {
+      if (compareWildcars(intent, allowList[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async classifyByStemDict(utterance, domainName, allowList) {
     const key = await this.generateStemKey(utterance);
     const resolved = this.stemDict[key];
     if (resolved && (!domainName || resolved.domain === domainName)) {
+      if (allowList && !this.matchAllowList(resolved.intent, allowList)) {
+        return undefined;
+      }
       const classifications = [];
       classifications.push({
         intent: resolved.intent,
@@ -277,30 +289,16 @@ class DomainManager extends Clonable {
     return undefined;
   }
 
-  isAllowed(intent, allowList) {
-    if (!allowList) {
-      return true;
-    }
-    if (Array.isArray(allowList)) {
-      return allowList.includes(intent);
-    }
-    return !!allowList[intent];
-  }
-
   async innerClassify(srcInput, domainName) {
     const input = srcInput;
     const settings = this.applySettings({ ...input.settings }, this.settings);
     if (settings.useStemDict) {
-      const result = await this.classifyByStemDict(input.utterance, domainName);
-      if (
-        result &&
-        this.isAllowed(
-          result.classifications[0]
-            ? result.classifications[0].intent
-            : undefined,
-          settings.allowList
-        )
-      ) {
+      const result = await this.classifyByStemDict(
+        input.utterance,
+        domainName,
+        srcInput.settings ? srcInput.settings.allowList : undefined
+      );
+      if (result) {
         input.classification = result;
         input.explanation = [
           {

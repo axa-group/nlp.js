@@ -200,7 +200,8 @@ class Bot extends Clonable {
               const result = await this.nlp.process(
                 session,
                 undefined,
-                context
+                context,
+                { allowList: action.allowedIntents }
               );
               if (result.answer) {
                 if (
@@ -539,6 +540,9 @@ class Bot extends Clonable {
           break;
         case 'nlp':
           action = this.buildAction('nlp', current);
+          action.allowedIntents = current.line
+            ? current.line.split(' ')
+            : undefined;
           currentDialog.actions.push(action);
           break;
         case 'call':
