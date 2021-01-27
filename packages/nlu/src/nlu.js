@@ -263,6 +263,9 @@ class Nlu extends Clonable {
           result.push({ intent, score });
         }
       }
+      if (!result.length) {
+        result.push({ intent: 'None', score: 1 });
+      }
       input.classifications = result.sort((a, b) => b.score - a.score);
     }
     return input;
