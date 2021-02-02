@@ -36,71 +36,86 @@ class StemmerUk extends BaseStemmer {
     return word.str !== src;
   }
 
+  replace(token, regex, replacement = '') {
+    return token.replace(regex, replacement);
+  }
+
   step1(word) {
-    if (
-      !this.match(word, /(?:[иы]в(?:ши(?:сь)?)?|(?<=[ая])(?:в(?:ши(?:сь)?)?))$/)
-    ) {
-      this.match(word, /с[яьи]$/);
-      if (
-        this.match(
-          word,
-          /(?:[аеєуюя]|еє|ем|єє|ий|их|іх|ів|ій|ім|їй|ім|им|ими|іми|йми|ої|ою|ова|ове|ого|ому)$/
-        )
-      ) {
-        this.match(word, /(?:[аіу]|ій|ий|им|ім|их|йми|ого|ому|ою)$/);
-      } else if (
-        !this.match(
+    let srcWord = word;
+    word = this.replace(word, /(?:[иы]в(?:ши(?:сь)?)?)$/);
+    word = this.replace(word, /(?:а(?:в(?:ши(?:сь)?)?))$/, 'а');
+    word = this.replace(word, /(?:я(?:в(?:ши(?:сь)?)?))$/, 'я');
+    if (srcWord === word) {
+      word = this.replace(word, /с[яьи]$/);
+      srcWord = word;
+      word = this.replace(
+        word,
+        /(?:[аеєуюя]|еє|ем|єє|ий|их|іх|ів|ій|ім|їй|ім|им|ими|іми|йми|ої|ою|ова|ове|ого|ому)$/
+      );
+      if (srcWord !== word) {
+        word = this.replace(word, /(?:[аіу]|ій|ий|им|ім|их|йми|ого|ому|ою)$/);
+      } else {
+        srcWord = word;
+        word = this.replace(
           word,
           /(?:[еєую]|ав|али|ати|вши|ив|ити|ме|сь|ся|ши|учи|яти|ячи|ать|ять)$/g
-        )
-      ) {
-        this.match(
-          word,
-          /(?:[аеєіїийоуыьюя]|ам|ах|ами|ев|еві|еи|ей|ем|ею|єм|єю|ів|їв|ий|ием|ию|ия|иям|иях|ов|ові|ой|ом|ою|ью|ья|ям|ями|ях)$/g
         );
+        if (srcWord === word) {
+          word = this.replace(
+            word,
+            /(?:[аеєіїийоуыьюя]|ам|ах|ами|ев|еві|еи|ей|ем|ею|єм|єю|ів|їв|ий|ием|ию|ия|иям|иях|ов|ові|ой|ом|ою|ью|ья|ям|ями|ях)$/g
+          );
+        }
       }
     }
+    return word;
   }
 
   step2(word) {
-    this.match(word, /и$/);
+    return this.replace(word, /и$/);
   }
 
   step3(word) {
     if (
-      /[^аеиоуюяіїє][аеиоуюяіїє]+[^аеиоуюяіїє]+[аеиоуюяіїє].*(?<=о)сть?$/g.test(
-        word.str
-      )
+      /[^аеиоуюяіїє][аеиоуюяіїє]+[^аеиоуюяіїє]+[аеиоуюяіїє].*oсть/g.exec(word)
     ) {
-      this.match(word, /ость$/);
+      word = this.replace(word, /ость$/);
     }
+    return word;
   }
 
   step4(word) {
-    if (!this.match(word, /ь$/)) {
-      this.match(word, /ейше$/);
-      this.match(word, /нн$/, 'н');
+    const originalWord = word;
+    word = this.replace(originalWord, /ь$/);
+    if (originalWord === word) {
+      word = this.replace(word, /ейше$/);
+      word = this.replace(word, /нн$/, 'н');
     }
+    return word;
   }
 
   innerStem() {
-    const word = { str: this.getCurrent(), start: '' };
-    const matchVowel = word.str.match(/[аеиоуюяіїє]/);
+    let word = this.getCurrent();
+    const matchVowel = /[аеиоуюяіїє]/.exec(word);
     if (!matchVowel) {
-      this.setCurrent(word.str);
+      this.setCurrent(word);
       return;
     }
-    word.start = word.str.slice(0, matchVowel.index + 1);
-    const newStr = word.str.slice(matchVowel.index + 1);
-    if (newStr === '') {
-      this.setCurrent(word.str);
+    if (matchVowel.index !== undefined) {
+      const start = word.slice(0, matchVowel.index + 1);
+      word = word.slice(matchVowel.index + 1);
+      if (word === '') {
+        this.setCurrent(start);
+        return;
+      }
+      word = this.step1(word);
+      word = this.step2(word);
+      word = this.step3(word);
+      word = this.step4(word);
+      this.setCurrent(`${start}${word}`);
       return;
     }
-    word.str = newStr;
-    this.step1(word);
-    this.step2(word);
-    this.step3(word);
-    this.step4(word);
+    this.setCurrent(word);
     this.setCurrent(`${word.start}${word.str}`);
   }
 }
