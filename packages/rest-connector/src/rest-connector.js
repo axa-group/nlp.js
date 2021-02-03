@@ -50,7 +50,19 @@ class RestConnector extends Connector {
 
     server.get(`${this.settings.apiTag}/token`, async (req, res) => {
       this.log('debug', `GET ${this.settings.apiTag}/token`);
-      res.status(200).send({ id: uuid() });
+      const id = uuid();
+      if (req.query && req.query.locale) {
+        const contextManager = this.container.get('context-manager');
+        if (contextManager) {
+          const activity = { address: { conversation: { id } } };
+          const context = await contextManager.getContext({ activity });
+          if (context) {
+            context.locale = req.query.locale;
+          }
+          await contextManager.setContext({ activity }, context);
+        }
+      }
+      res.status(200).send({ id });
     });
 
     server.get(`${this.settings.apiTag}/talk`, async (req, res) => {
