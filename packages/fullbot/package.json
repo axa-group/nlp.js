@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/fullbot",
-  "version": "4.20.0",
+  "version": "4.20.1",
   "description": "Full bot for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -36,7 +36,7 @@
     "@nlpjs/database": "^4.19.1",
     "@nlpjs/directline-connector": "^4.19.1",
     "@nlpjs/express-api-server": "^4.19.8",
-    "@nlpjs/mongodb-adapter": "^4.19.1",
+    "@nlpjs/mongodb-adapter": "^4.20.1",
     "@nlpjs/utils": "^4.19.0",
     "archiver": "^5.2.0",
     "decompress": "^4.2.1",
