@@ -601,7 +601,7 @@ class Bot extends Clonable {
       for (let i = 0; i < intentKeys.length; i += 1) {
         const currentLocale = intentKeys[i];
         const corpus = {
-          locale,
+          locale: currentLocale,
           data: intents[currentLocale],
         };
         if (contextData) {
