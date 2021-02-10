@@ -24,6 +24,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const { logger } = require('@nlpjs/core');
 
 class ExpressApiApp {
   constructor(settings, plugins, routers) {
@@ -37,7 +38,6 @@ class ExpressApiApp {
   }
 
   initialize() {
-    const logger = this.settings.container.get('logger');
     this.app = express();
     this.app.use(cors());
     this.app.use(express.urlencoded({ extended: false }));
@@ -46,13 +46,14 @@ class ExpressApiApp {
       this.app.use(this.plugins[i]);
     }
     if (this.settings.serveBot) {
-      const clientPath = this.settings.clientPath || path.join(__dirname, './public');
+      const clientPath =
+        this.settings.clientPath || path.join(__dirname, './public');
       logger.debug(`Serving bot client (path: ${clientPath}`);
       this.app.use(express.static(clientPath));
     }
     for (let i = 0; i < this.routers.length; i += 1) {
       const router = this.routers[i];
-      const routes = router.stack.map((layer) => layer.route.path);
+      const routes = router.stack.map(layer => layer.route.path);
       logger.debug(`Loading custom router: ${JSON.stringify(routes, null, 2)}`);
       this.app.use(this.settings.apiRoot, router);
     }
