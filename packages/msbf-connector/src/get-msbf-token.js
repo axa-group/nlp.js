@@ -22,27 +22,25 @@
  */
 
 const { request } = require('@nlpjs/request');
-const { dock } = require('@nlpjs/basic');
 
 const generateMsbfToken = async (req, res) => {
-   const { userId } = req.params;
-   const logger = dock.get('logger');
-   logger.debug(`generateMsbfToken > userId: ${userId}`);
-	try {
-      const options = {
-         url: 'https://directline.botframework.com/v3/directline/tokens/generate',
-         method: 'POST',
-         headers: {
-            authorization: `Bearer ${process.env.MSBF_BOT_APP_SECRET}`,
-         }
-      };
-      const result = await request(options);
+  const { userId } = req.params;
+  console.debug(`generateMsbfToken > userId: ${userId}`);
+  try {
+    const options = {
+      url: 'https://directline.botframework.com/v3/directline/tokens/generate',
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${process.env.MSBF_BOT_APP_SECRET}`,
+      },
+    };
+    const result = await request(options);
 
-      return res.json(result);
-	} catch (error) {
-		logger.error(`generateMsbfToken: ${error.message}`);
-		return res.json({});
-	}
+    return res.json(result);
+  } catch (error) {
+    console.error(`generateMsbfToken: ${error.message}`);
+    return res.json({});
+  }
 };
 
 module.exports = generateMsbfToken;
