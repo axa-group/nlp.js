@@ -117,11 +117,10 @@ class MsbfConnector extends Connector {
     if (!context.sendActivity) {
       context = context.parent;
     }
-    const text = input.answer || input.text;
-    if (input.attachments) {
-      await context.sendActivity(input);
+    if (input.answer) {
+      await context.sendActivity(input.answer);
     } else {
-      await context.sendActivity(text);
+      await context.sendActivity(input);
     }
   }
 }
