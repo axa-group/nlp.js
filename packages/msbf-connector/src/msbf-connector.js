@@ -21,10 +21,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { Clonable, containerBootstrap } = require('@nlpjs/core');
+const { containerBootstrap } = require('@nlpjs/core');
+const { Connector } = require('@nlpjs/connector');
 const { BotFrameworkAdapter, ActivityTypes } = require('botbuilder');
 
-class MsbfConnector extends Clonable {
+class MsbfConnector extends Connector {
   constructor(settings = {}, container = undefined) {
     super(
       {
@@ -86,14 +87,22 @@ class MsbfConnector extends Clonable {
               if (pipeline) {
                 this.container.runPipeline(pipeline, input, this);
               } else {
-                const nlp = this.container.get('nlp');
-                if (nlp) {
-                  const result = await nlp.process(input);
-                  await this.say(result);
+                const bot = this.settings.container.get('bot');
+                if (bot) {
+                  const session = this.createSession(context.activity);
+                  session.parent = context;
+                  await bot.process(session);
+                } else {
+                  const nlp = this.container.get('nlp');
+                  if (nlp) {
+                    const result = await nlp.process(input);
+                    await this.say(result);
+                  }
                 }
               }
             }
-          } catch (ex) {
+          } catch (error) {
+            console.error(error);
             await context.sendActivity('Oops. Something went wrong!');
           }
         }
@@ -105,7 +114,15 @@ class MsbfConnector extends Clonable {
     if (!context) {
       context = input.msbfContext;
     }
-    await context.sendActivity(input.answer);
+    if (!context.sendActivity) {
+      context = context.parent;
+    }
+    const text = input.answer || input.text;
+    if (input.attachments) {
+      await context.sendActivity(input);
+    } else {
+      await context.sendActivity(text);
+    }
   }
 }
 
