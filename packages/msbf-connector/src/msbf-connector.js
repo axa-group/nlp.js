@@ -24,6 +24,7 @@
 const { containerBootstrap } = require('@nlpjs/core');
 const { Connector } = require('@nlpjs/connector');
 const { BotFrameworkAdapter, ActivityTypes } = require('botbuilder');
+const generateMsbfToken = require('./get-msbf-token');
 
 class MsbfConnector extends Connector {
   constructor(settings = {}, container = undefined) {
@@ -69,6 +70,7 @@ class MsbfConnector extends Connector {
       : this.settings.messagesPath || '/api/messages';
     const logger = this.container.get('logger');
     logger.info(`Microsoft Bot Framework initialized at route ${routePath}`);
+    server.get(`/token/:userId/channel/webchat`, generateMsbfToken);
     server.post(routePath, (req, res) => {
       this.adapter.processActivity(req, res, async (context) => {
         if (context.activity.type === ActivityTypes.Message) {

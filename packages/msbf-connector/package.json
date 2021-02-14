@@ -27,6 +27,7 @@
   "dependencies": {
     "@nlpjs/connector": "^4.19.1",
     "@nlpjs/core": "^4.19.1",
+    "@nlpjs/request": "^4.17.0",
     "botbuilder": "^4.7.0"
   },
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"

@@ -21,10 +21,26 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const MsbfConnector = require('./msbf-connector');
-const generateMsbfToken = require('./get-msbf-token');
+const { request } = require('@nlpjs/request');
 
-module.exports = {
-  MsbfConnector,
-  generateMsbfToken,
+const generateMsbfToken = async (req, res) => {
+  const { userId } = req.params;
+  console.debug(`generateMsbfToken > userId: ${userId}`);
+  try {
+    const options = {
+      url: 'https://directline.botframework.com/v3/directline/tokens/generate',
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${process.env.MSBF_BOT_APP_SECRET}`,
+      },
+    };
+    const result = await request(options);
+
+    return res.json(result);
+  } catch (error) {
+    console.error(`generateMsbfToken: ${error.message}`);
+    return res.json({});
+  }
 };
+
+module.exports = generateMsbfToken;
