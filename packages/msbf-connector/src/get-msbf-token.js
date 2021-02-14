@@ -38,7 +38,7 @@ const generateMsbfToken = async (req, res) => {
       };
       const result = await request(options);
 
-      res.json(result);
+      return res.json(result);
 	} catch (error) {
 		logger.error(`generateMsbfToken: ${error.message}`);
 		return res.json({});
