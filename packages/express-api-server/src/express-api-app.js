@@ -53,7 +53,7 @@ class ExpressApiApp {
     }
     for (let i = 0; i < this.routers.length; i += 1) {
       const router = this.routers[i];
-      const routes = router.stack.map(layer => layer.route.path);
+      const routes = router.stack.map((layer) => layer.route.path);
       logger.debug(`Loading custom router: ${JSON.stringify(routes, null, 2)}`);
       this.app.use(this.settings.apiRoot, router);
     }
