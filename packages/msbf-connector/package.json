@@ -25,6 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@nlpjs/connector": "^4.19.1",
     "@nlpjs/core": "^4.19.1",
     "@nlpjs/request": "^4.17.0",
     "botbuilder": "^4.7.0"
