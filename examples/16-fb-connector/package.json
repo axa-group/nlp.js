@@ -1,0 +1,20 @@
+{
+  "name": "nlpjs-fb-connector-example",
+  "version": "0.1.0",
+  "description": "Example made to facilitate understanding on how to integrate Facebook with @nlp.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Eric Lara <ericzon@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@nlpjs/basic": "^4.21.2",
+    "@nlpjs/bot": "^4.21.1",
+    "@nlpjs/express-api-server": "^4.21.1",
+    "@nlpjs/fb-connector": "^4.21.1",
+    "dotenv": "^8.2.0"
+  }
+}
