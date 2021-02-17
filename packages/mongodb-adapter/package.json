@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/mongodb-adapter",
-  "version": "4.20.1",
+  "version": "4.21.1",
   "description": "Database adapter for MongoDB",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.19.1",
+    "@nlpjs/core": "^4.21.1",
     "mongodb": "^3.5.9"
   },
   "publishConfig": {

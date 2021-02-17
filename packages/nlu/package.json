@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlu",
-  "version": "4.19.8",
+  "version": "4.21.1",
   "description": "Natural Language Understanding",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -25,10 +25,10 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.19.1",
-    "@nlpjs/language-min": "^4.17.0",
-    "@nlpjs/neural": "^4.17.0",
-    "@nlpjs/similarity": "^4.17.0"
+    "@nlpjs/core": "^4.21.1",
+    "@nlpjs/language-min": "^4.21.1",
+    "@nlpjs/neural": "^4.21.1",
+    "@nlpjs/similarity": "^4.21.1"
   },
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }

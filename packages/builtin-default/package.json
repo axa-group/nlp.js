@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/builtin-default",
-  "version": "4.19.1",
+  "version": "4.21.1",
   "description": "Default golden entities for NLP.js",
   "author": {
     "email": "jesus.seijas@axa.com",
@@ -29,7 +29,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.19.1"
+    "@nlpjs/core": "^4.21.1"
   },
   "publishConfig": {
     "access": "public"
