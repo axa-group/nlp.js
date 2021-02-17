@@ -17,6 +17,7 @@
   "ExpressApiServer": { "className": "ExpressApiServer", "path": "@nlpjs/express-api-server" },
   "ExpressApiServerless": { "className": "ExpressApiServerless", "path": "@nlpjs/express-api-serverless" },
   "Evaluator": { "className": "Evaluator", "path": "@nlpjs/evaluator" },
+  "FbConnector": { "className": "FbConnector", "path": "@nlpjs/fb-connector" },
   "JavascriptCompiler": { "className": "JavascriptCompiler", "path": "@nlpjs/evaluator"},
   "LangAll": { "className": "LangAll", "path": "@nlpjs/lang-all" },
   "LangAr": { "className": "LangAll", "path": "@nlpjs/lang-ar" },
