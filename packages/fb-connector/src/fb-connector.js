@@ -198,7 +198,7 @@ class FbConnector extends Connector {
         return res.send('ko');
       }
     }
-    res.send();
+    return res.send();
   }
 
   getRoutePath() {
