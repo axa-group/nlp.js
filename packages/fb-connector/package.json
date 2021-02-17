@@ -1,0 +1,33 @@
+{
+  "name": "@nlpjs/fb-connector",
+  "version": "0.1.0",
+  "description": "Facebook Messenger Connector",
+  "author": {
+    "email": "eric.lara@axa.com",
+    "name": "Eric Lara"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "eric.lara@axa.com",
+      "name": "Eric Lara"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/connector": "^4.19.1",
+    "@nlpjs/core": "^4.19.1",
+    "@nlpjs/request": "^4.17.0",
+    "botbuilder": "^4.7.0"
+  }
+}
