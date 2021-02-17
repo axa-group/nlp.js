@@ -29,15 +29,13 @@ const { FacebookAdapter } = require('botbuilder-adapter-facebook');
 const FB = require('./settings');
 
 const pageToken = {
-  [FB.PAGE_ID]: FB.ACCESS_TOKEN
+  [FB.PAGE_ID]: FB.ACCESS_TOKEN,
 };
 
 const fbAdapter = new FacebookAdapter({
   verify_token: FB.VERIFY_TOKEN,
   app_secret: FB.APP_SECRET,
-  getAccessTokenForPage: async (pageId) => {
-    return pageToken[pageId];
-  }
+  getAccessTokenForPage: async (pageId) => pageToken[pageId],
 });
 
 class FbConnector extends Connector {
@@ -81,7 +79,7 @@ class FbConnector extends Connector {
       this.adapter.processActivity(req, res, async (context) => {
         if (context.activity.type === ActivityTypes.Message) {
           try {
-            if (this.onReceiveInput) { 
+            if (this.onReceiveInput) {
               await this.onReceiveInput(context.activity, context);
             }
             const stickerText = this.extractStickerText(context.activity);
@@ -138,20 +136,20 @@ class FbConnector extends Connector {
     const logger = this.container.get('logger');
     const text = output.answer || output.text;
     logger.debug(`> Bot says: ${text}`);
-    const suggestedActions = output.suggestedActions;
+    const { suggestedActions } = output;
     const activity = {
       text,
       ...output,
     };
     if (suggestedActions) {
       activity.channelData = activity.channelData || {};
-      activity.channelData.quick_replies = suggestedActions.actions.map(action => {
-        return {
+      activity.channelData.quick_replies = suggestedActions.actions.map(
+        (action) => ({
           content_type: 'text',
           title: action.title,
           payload: action.value,
-        };
-      });
+        })
+      );
     }
     await context.sendActivity(activity);
     if (this.onSendOutput) {
@@ -162,23 +160,27 @@ class FbConnector extends Connector {
   async createAttachmentFromUrl(context, url) {
     const api = await this.adapter.getAPI(context.activity);
     const res = await api.callAPI('/me/message_attachments', 'POST', {
-      "message":{
-        "attachment":{
-          "type":"video", 
-          "payload":{
-            "is_reusable": true,
-            url
-          }
-        }
-      }
+      message: {
+        attachment: {
+          type: 'video',
+          payload: {
+            is_reusable: true,
+            url,
+          },
+        },
+      },
     });
     return res.attachment_id;
   }
 
   extractStickerText(activity) {
-    let stickerText = undefined;
-    if (activity.channelData && activity.channelData.message && activity.channelData.message.attachments && 
-      activity.channelData.message.attachments.length) {
+    let stickerText;
+    if (
+      activity.channelData &&
+      activity.channelData.message &&
+      activity.channelData.message.attachments &&
+      activity.channelData.message.attachments.length
+    ) {
       const attachment = activity.channelData.message.attachments[0];
       const stickerId = attachment.payload.sticker_id;
       stickerText = FB.STICKERS_MAP[stickerId];
@@ -193,10 +195,9 @@ class FbConnector extends Connector {
         const val = req.query['hub.challenge'];
         console.log('Fb token verified');
         return res.send(val);
-      } else {
-        console.log('failed to verify endpoint');
-        return res.send('ko');
       }
+      console.log('failed to verify endpoint');
+      return res.send('ko');
     }
     return res.send();
   }
