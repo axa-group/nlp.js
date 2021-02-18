@@ -21,41 +21,38 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const express = require('express');
-const cors = require('cors');
 const path = require('path');
-const { logger } = require('@nlpjs/core');
+const express = require('express');
 
-class ExpressApiApp {
-  constructor(settings, plugins, routers) {
-    this.settings = settings || {};
-    this.plugins = plugins || [];
-    this.routers = routers || [];
-  }
+// const nlpjs = require('@nlpjs/express-api-server')
+const nlpjs = require('../../../../packages/express-api-server');
 
-  static newRouter() {
-    return express.Router();
-  }
+class ExpressApiApp extends nlpjs.ExpressApiApp {
 
   initialize() {
     this.app = express();
-    this.app.use(cors());
     this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(express.json());
+    // INFO: required for Facebook-connector
+    this.app.use(express.json({
+      verify: (req, res, buf) => {
+        req.rawBody = buf;
+      }
+    }));
 
     this.loadComplements();
-    
+
     return this.app;
   }
-
+  
   loadComplements() {
+    const logger = this.settings.container.get('logger');
     for (let i = 0; i < this.plugins.length; i += 1) {
       const plugin = this.plugins[i];
       logger.debug(`Loading plugin: ${plugin.name}`);
       this.app.use(plugin);
     }
     if (this.settings.serveBot) {
-      const clientPath = this.settings.clientPath || path.join(__dirname, './public');
+      const clientPath = this.settings.clientPath || path.join(__dirname, '..', '..', '..', 'public');
       logger.debug(`Serving bot client (path: ${clientPath}`);
       this.app.use(express.static(clientPath));
     }

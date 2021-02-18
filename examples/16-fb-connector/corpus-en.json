@@ -1,0 +1,57 @@
+{
+  "name": "Corpus",
+  "locale": "en-US",
+  "data": [
+    {
+      "intent": "test",
+      "utterances": [
+        "test"
+      ],
+      "answers": [
+        "/flowTest"
+      ]
+    },
+    {
+      "intent": "greetings",
+      "utterances": [
+        "Hello",
+        "hi",
+        "howdy"
+      ],
+      "answers": [
+        "Hello!"
+      ]
+    },
+    {
+      "intent": "bye",
+      "utterances": [
+        "bye",
+        "see you"
+      ],
+      "answers": [
+        "Good bye!"
+      ]
+    },
+    {
+      "intent": "thanks",
+      "utterances": [
+        "thanks"
+      ],
+      "answers": [
+        "you're welcome"
+      ]
+    },
+    {
+      "intent": "None",
+      "utterances": [
+        "I need advice",
+        "I need some advice",
+        "can you give me some advice?",
+        "what should I do?"
+      ],
+      "answers": [
+        "Sorry, I don't understand"
+      ]
+    }
+  ]
+}

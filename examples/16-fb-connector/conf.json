@@ -1,0 +1,31 @@
+{
+   "settings": {
+     "nlp": {
+       "corpora": [
+         "./corpus-en.json"
+       ]
+     },
+     "console": {
+       "debug": true
+     },
+     "api-server": {
+       "port": 3000,
+       "serveBot": true
+     },
+     "bot": {
+      "scripts": "./flows/script.dlg"
+     }
+   },
+   "use": [
+      "Basic",
+      "ConsoleConnector",
+      "ExpressApiServer",
+      "Bot",
+      "FbConnector",
+      {
+        "className": "ExpressApiServer",
+        "path": "nlpjs-custom/express-api-server"
+      }
+   ]
+ }
+ 
