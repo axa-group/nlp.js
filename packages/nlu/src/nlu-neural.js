@@ -35,7 +35,7 @@ class NeuralNlu extends Nlu {
   innerProcess(srcInput) {
     const input = srcInput;
     input.classifications = this.neuralNetwork
-      ? this.neuralNetwork.run(input.tokens)
+      ? this.neuralNetwork.run(input.tokens) || { None: 1 }
       : { None: 1 };
     this.convertToArray(input);
     const { intent } = input.classifications[0];
