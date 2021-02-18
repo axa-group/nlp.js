@@ -1,1 +1,1 @@
-require('@nlpjs/basic').dockStart();
+require('../../packages/basic').dockStart();

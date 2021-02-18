@@ -21,7 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const nlpjs = require('@nlpjs/express-api-server');
+// const nlpjs = require('@nlpjs/express-api-server');
+const nlpjs = require('../../../../packages/express-api-server');
 
 const ExpressApiApp = require('./express-api-app');
 
