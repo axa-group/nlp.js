@@ -7,3 +7,4 @@ dist
 docs/v3/static/scripts
 packages/python-compiler/src/python-executer.js
 packages/express-api-server/src/public/**/*.*
+examples/16-fb-connector/**/*.*
