@@ -10,7 +10,7 @@ You can install @nlpjs/nlu:
 
 ## NluNeural
 
-Class _NluNeural_ is an abstraction built on top of _NeuralNetwork_ that help to use it with a corpus.
+Class _NluNeural_ is an abstraction built on top of _NeuralNetwork_ that help in using _NeuralNetwork_ with a corpus.
 A language can be used as a plugin in order to use the correct tokenizer and stemmer for this language.
 In this example both versions, with language and without language, are used in order to compare the results.
 
@@ -64,7 +64,7 @@ async function measure(useStemmer) {
 ```
 
 ## DomainManager
-_DomainManager_ is the class that is an abstraction on top of _NluNeural_.
+_DomainManager_ is a class abstraction on top of _NluNeural_.
 It adds the concept of _domain_, so each intent belongs to one domain; that way we can have domains for _smalltalk_, _human resources_, _claims_, or whatever logical split of intents that we want to have.
 Each _DomainManager_ instance has only one language.
 It can be trained by domain or all together:
@@ -167,7 +167,7 @@ function addPersonalityDomain(manager) {
 ## NluManager
 _NluManager_ is the abstraction over _DomainManager_: it contains one _DomainManager_ instance per each language that we want to use. It is also able to guess automatically the language of the sentence, so we can provide the locale of the sentence or omit it.
 
-This is an example with two languages (english and spanish) with two domains each (personality and food).
+This is an example with two languages (English and Spanish) with two domains each (personality and food).
 
 ```javascript
 const { containerBootstrap } = require('@nlpjs/core');

@@ -554,7 +554,7 @@ if (something && something.value && something.value.joke) {
 
 Explanation: the _onIntent(<intentname>)_ is called when an intent is recognized, so you can react to doing things and modifying the input as you want, from classifications, entities and of course the answer.
 We set the compilar to javascript. 
-We have a plugin _request_ that is for handling requests, then we call the API to retrieve an answer, and set it into the input.
+We have a plugin _request_ that is for handling requests, then we call the API to retrieve an answer, and set it in the input.
 
 <div align="center">
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/chucknorris.png" width="auto" height="auto"/>

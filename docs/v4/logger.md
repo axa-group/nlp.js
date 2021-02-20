@@ -1,7 +1,7 @@
 # logger
 
 ## Introduction
-A logger can be registered to log what happen during the execution.
+A logger can be registered to log what happens during the execution.
 
 ## Default logger in @nlpjs/core
 By default, a logger based on console is added to the NLP.js container
@@ -15,7 +15,7 @@ logger.info('This is an info message');
 ```
 
 ## Default logger in @nlpjs/basic
-When using the basic package of NLP.js, a logger based on pino is added.
+When using the basic NLP.js package, a logger based on pino is added.
 
 ```javascript
 const { dockStart } = require('@nlpjs/basic');
@@ -31,7 +31,7 @@ const { dockStart } = require('@nlpjs/basic');
 ```
 
 ## Adding your own logger to the container
-You can register your own logger to the container:
+You can register your own logger in the container:
 
 ```javascript
 const { dockStart } = require('@nlpjs/basic');

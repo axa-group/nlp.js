@@ -22,7 +22,7 @@ You can install @nlpjs/similarity:
 
 ## leven
 
-It's used to calculate the levenshtein distance between two texts:
+Leven is used to calculate the levenshtein distance between two texts:
 
 ```javascript
 const { leven } = require('@nlpjs/similarity');
@@ -34,7 +34,7 @@ console.log(leven('mikailovitch', 'Mikhaïlovitch')); // expected: 3
 
 ## similarity
 
-It's used to calculate the levenshtein distance between two texts, but with an option to normalize both texts between calculation.
+similarity is used to calculate the levenshtein distance between two texts, but with an option to normalize both texts between calculation.
 
 ```javascript
 const { similarity } = require('@nlpjs/similarity');
@@ -55,8 +55,8 @@ showDistances('mikailovitch', 'Mikhaïlovitch');
 
 ## SpellCheck
 
-It can do spell check based on a dictionary of words with frequency.
-It search for the most similar word based on levenshtein distance. When several words has the same levenshtein distance, the word with more frequency is chosen.
+SpellCheck can do a spell check based on a dictionary of words with frequency.
+It searches for the most similar word based on a levenshtein distance. When several words have the same levenshtein distance, the word with more frequency is chosen.
 
 ```javascript
 const { SpellCheck } = require('../../packages/similarity/src');
