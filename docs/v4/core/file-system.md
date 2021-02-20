@@ -13,7 +13,7 @@ By default, a mock file system plugin is mounted.
 
 ## Mock File System
 
-Is the default plugin mounted at the core.
+The default plugin is mounted at the core.
 - readFile: returns a Promise that resolve to undefined.
 - writeFile: returns a Promise that resolve to an Error.
 - existsSync: returns false
@@ -22,9 +22,11 @@ Is the default plugin mounted at the core.
 
 ## Request File System
 
-This is the plugin mounted by the core-loader, as it's the one that fits the use at backend. It allows to read files from the OS or if you provide an URL will load them using a request.
+This is the plugin mounted by the core-loader, as it's the one that fits the use at backend. It allows to read files from the OS or if you provide an URL it will load them using a request.
+
 This plugin is automatically mounted when you use @nlpjs/core-loader.
-If you want to use this plugin by your own, then install it with:
+
+If you want to use this plugin on your own, then install it with:
 ```bash
 npm i @nlpjs/request
 ```
@@ -46,7 +48,7 @@ async function main() {
 main();
 ```
 
-If the resolved data form the URL is a valid JSON object, then will be returned as an object, otherwise the string with the content will be returned.
+If the resolved data from the URL is a valid JSON object, then it will be returned as an object, otherwise a string containing the content will be returned.
 
 Also you can load files from the file system:
 
@@ -68,8 +70,8 @@ main();
 
 ## Request RN File System
 
-This is the file system for Web and React Native, where no OS file system can be accesed, but we still can load from URLs.
-If you want to use this plugin by your own, then install it with:
+This is the file system for Web and React Native, where no OS file system can be accessed, but we can still load from URLs.
+If you want to use this plugin on your own, then install it with:
 
 ```bash
 npm i @nlpjs/request-rn

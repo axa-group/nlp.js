@@ -1,6 +1,6 @@
 # Timer
 
-Timer is a simple timing class to measure time consumed by processes. As it should be compatible with web, is based on Date class.
+Timer is a simple timing class to measure the time consumed by processes. As it should be compatible with web, it is based on the Date class.
 
 Example of use:
 

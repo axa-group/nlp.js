@@ -5,8 +5,9 @@ This plugin is used internally by the NLU to convert the array of stems to a has
 
 ## Use without container
 
-You can use it directly without container system:
+You can use it directly without a container system.
 
+Example of use:
 ```javascript
 const { ArrToObj } = require('@nlpjs/core');
 
@@ -17,8 +18,9 @@ console.log(obj); // { the: 1, water: 1, pot: 1 }
 
 ## Use with container
 
-Used with container the plugin is defined as input.tokens: string[] -> input.tokens: object. Example of use:
+Used with a container the plugin is defined as input.tokens: string[] -> input.tokens: object. 
 
+Example of use:
 ```javascript
 const { ArrToObj, Container } = require('@nlpjs/core');
 
@@ -33,8 +35,9 @@ console.log(obj); // { tokens: { the: 1, water: 1, pot: 1 } }
 
 ## Use with bootstrapped container
 
-The container bootstrap already includes this plugin, so you don't need to require the plugin neither to register it into the container:
+The container bootstrap already includes this plugin, so you don't need to require the plugin nor register it into the container.
 
+Example of use:
 ```javascript
 const { containerBootstrap } = require('@nlpjs/core');
 

@@ -16,8 +16,9 @@ console.log(tokens); // ['the', 'water', 'pot']
 
 ## Use with container
 
-Used with container the plugin is defined as input.tokens: string[] -> input.tokens: object. Example of use:
+Used with a container, the plugin is defined as input.tokens: string[] -> input.tokens: object. 
 
+Example of use:
 ```javascript
 const { ObjToArr, Container } = require('@nlpjs/core');
 
@@ -32,7 +33,7 @@ console.log(obj); // { tokens: ['the', 'water', 'pot'] }
 
 ## Use with bootstrapped container
 
-The container bootstrap already includes this plugin, so you don't need to require the plugin neither to register it into the container:
+The container bootstrap already includes this plugin, so you don't need to require the plugin nor register it into the container:
 
 ```javascript
 const { containerBootstrap } = require('@nlpjs/core');
