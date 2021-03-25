@@ -65,7 +65,8 @@
     "@nlpjs/lang-tl": "^4.21.1",
     "@nlpjs/lang-tr": "^4.21.1",
     "@nlpjs/lang-uk": "^4.21.1",
-    "@nlpjs/lang-zh": "^4.21.1"
+    "@nlpjs/lang-zh": "^4.21.1",
+    "@nlpjs/language": "^4.21.1"
   },
   "gitHead": "926fe345330eca1a13eaaf04d0bba3631a5bba8b"
 }
