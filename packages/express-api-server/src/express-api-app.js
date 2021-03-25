@@ -44,7 +44,7 @@ class ExpressApiApp {
     this.app.use(express.json());
 
     this.loadComplements();
-    
+
     return this.app;
   }
 
@@ -55,7 +55,8 @@ class ExpressApiApp {
       this.app.use(plugin);
     }
     if (this.settings.serveBot) {
-      const clientPath = this.settings.clientPath || path.join(__dirname, './public');
+      const clientPath =
+        this.settings.clientPath || path.join(__dirname, './public');
       logger.debug(`Serving bot client (path: ${clientPath}`);
       this.app.use(express.static(clientPath));
     }

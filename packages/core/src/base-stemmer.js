@@ -329,6 +329,12 @@ class BaseStemmer {
   }
 
   stem(tokens) {
+    if (tokens === undefined || tokens === null) {
+      return tokens;
+    }
+    if (!Array.isArray(tokens)) {
+      return this.stemWords([tokens])[0];
+    }
     return this.stemWords(tokens);
   }
 
