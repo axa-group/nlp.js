@@ -172,6 +172,50 @@ function stem(text, locale = 'en') {
   return stemmer.stem(tokenizer.tokenize(normalizer.normalize(text)));
 }
 
+function removeStopwords(tokens, locale = 'en') {
+  const stopwords = getStopwords(locale);
+  return stopwords.removeStopwords(tokens);
+}
+
+function dict(sentences, locale = 'en', useStemmer = false) {
+  const freqs = {};
+  for (let i = 0; i < sentences.length; i += 1) {
+    const current = useStemmer
+      ? stem(sentences[i], locale)
+      : tokenize(sentences[i], locale).map((x) => x.toLowerCase());
+    for (let j = 0; j < current.length; j += 1) {
+      freqs[current[j]] = (freqs[current[j]] || 0) + 1;
+    }
+  }
+  const positions = {};
+  const words = Object.keys(freqs);
+  for (let i = 0; i < words.length; i += 1) {
+    positions[words[i]] = i;
+  }
+  return {
+    locale,
+    useStemmer,
+    freqs,
+    positions,
+    keys: words,
+    length: words.length,
+  };
+}
+
+function bow(sentence, voc) {
+  const current = voc.useStemmer
+    ? stem(sentence, voc.locale)
+    : tokenize(sentence, voc.locale).map((x) => x.toLowerCase());
+  const result = new Array(voc.length).fill(0);
+  for (let i = 0; i < current.length; i += 1) {
+    const index = voc.positions[current[i]];
+    if (index !== undefined) {
+      result[index] = 1;
+    }
+  }
+  return result;
+}
+
 module.exports = {
   langs,
   language,
@@ -184,4 +228,7 @@ module.exports = {
   normalize,
   tokenize,
   stem,
+  removeStopwords,
+  dict,
+  bow,
 };

@@ -353,6 +353,9 @@ const {
   normalize,
   tokenize,
   stem,
+  removeStopwords,
+  dict,
+  bow,
 } = require('./lang-functions');
 
 module.exports = {
@@ -647,4 +650,7 @@ module.exports = {
   normalize,
   tokenize,
   stem,
+  removeStopwords,
+  dict,
+  bow,
 };
