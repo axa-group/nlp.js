@@ -204,4 +204,13 @@ describe('Stemmer', () => {
       expect(actual).toEqual(expected);
     });
   });
+
+  describe('Tokenize and stem', () => {
+    test('It should use the correct tokenizer by default', () => {
+      const input = "I'll be developing this";
+      const expected = ['i', 'will', 'be', 'develop', 'this'];
+      const actual = stemmer.tokenizeAndStem(input);
+      expect(actual).toEqual(expected);
+    });
+  });
 });
