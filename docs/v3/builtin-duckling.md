@@ -89,7 +89,7 @@ Also you can set the environment variable DUCKLING_URL with the URL and set the 
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ ner: { useDuckling: true } });
+  let manager = new NlpManager({ forceNER: true, ner: { useDuckling: true } });
   manager.addLanguage(['en']);
   const result = await manager.process(
     'twenty five euros'
@@ -108,7 +108,7 @@ It can identify and extract valid emails accounts, this works for any language.
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'My email is something@somehost.com please write me'
   );
@@ -180,7 +180,7 @@ It can identify and extract phone numbers from the utterances, this works for an
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'So here is my number +1 541-754-3010 callme maybe'
   );
@@ -252,7 +252,7 @@ It can identify and extract URLs from the utterances, this works for any languag
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'The url is https://something.com'
   );
@@ -326,7 +326,7 @@ It can identify and extract numbers. This works for any language, and the number
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'This is 12'
   );
@@ -399,7 +399,7 @@ The numbers can be also be text written, but this only works for the supported l
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'This is twelve'
   );
@@ -474,7 +474,7 @@ It can identify and extract ordinal numbers. This works only for the supported l
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'He was 2nd'
   );
@@ -549,7 +549,7 @@ It can identify and extract different dimensions, like distance or temperature.
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     '120km'
   );
@@ -626,7 +626,7 @@ It can identify and extract quantities of producs, example "three cups of sugar"
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'three cups of sugar'
   );
@@ -704,7 +704,7 @@ It can extract amounts of money with the currenty.
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     'It was 42.5€'
   );
@@ -780,7 +780,7 @@ It can identify and extract dates and times.
 const { NlpManager } = require('node-nlp');
 
 (async () => {
-  let manager = new NlpManager({ languages: ['en'], ner: { useDuckling: true } });
+  let manager = new NlpManager({ languages: ['en'], forceNER: true, ner: { useDuckling: true } });
   const result = await manager.process(
     '12/12/2019 at 9am'
   );
