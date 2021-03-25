@@ -14,7 +14,7 @@ _NeuralNetwork_ is a class of the package _@nlpjs/neural_, that you can install 
 
 ## Corpus Format
 
-For training the classifier you need a corpus. The corpus format is an array of objects where each object contains an input and output, where the input is an object with the features and the output is an object with the intents:
+To train the classifier you need a corpus. The corpus format is an array of objects where each object contains an input and output, where the input is an object with the features and the output is an object for the intent:
 
 ```json
 [
@@ -47,7 +47,7 @@ For training the classifier you need a corpus. The corpus format is an array of 
     "output": { "birthday": 1 }
   },
   {
-    "input": { "when": 1, "were": 1, "you": 1, "borned": 1 },
+    "input": { "when": 1, "were": 1, "you": 1, "born": 1 },
     "output": { "birthday": 1 }
   },
   {
@@ -59,9 +59,9 @@ For training the classifier you need a corpus. The corpus format is an array of 
 
 ## Example of use
 
-The file _corpus.json_ should contain the corpus shown in the Corpus Format section for this example.
-This will train this corpus and run the input equivalent to the sentence "when birthday". 
-The result is each intent with the score for this intent.
+The file _corpus.json_ should contain the corpus shown in the Corpus Format section of this example.
+This will train the corpus and run the input equivalent to the sentence "when birthday". 
+The result is a list of all intents with the score for each intent.
 
 ```javascript
 const { NeuralNetwork } = require('@nlpjs/neural');
@@ -94,11 +94,11 @@ console.log(net.run({ when: 1, birthday: 1 }));
 There are several options that you can customize:
 - _iterations_: maximum number of iterations (epochs) that the neural network can run. By default this is 20000.
 - _errorThresh_: minimum error threshold, if the loss is lower than this number, then the training ends. By default this is 0.00005.
-- _deltaErrorThresh_: minimum delta error threshold, this is, the difference between the current and the last errors. If the delta error threshold is lower than this number, then the training ends. By default this is 0.000001.
+- _deltaErrorThresh_: minimum delta error threshold, this is the difference between the current error and the last error. If the delta error threshold is lower than this number, then the training ends. By default this is 0.000001.
 - _learningRate_: learning rate for the neural network. By default this is 0.6.
 - _momentum_: momentum for the gradient descent optimization. By default this is 0.5.
 - _alpha_: Multiplicator or alpha factor for the ReLu activation function. By default this is 0.07.
-- _log_: If is *false* then no log happens, if is *true* then there is log in console. Also a function can be provided, and will receive two parameters: the status and the elapsed time of the last epoch. By default this is false.
+- _log_: If is *false* then no log happens, if is *true* then details are logged in console. You can also provide a function, and it will receive two parameters: the status and the elapsed time of the last epoch. By default this is false.
 
 Example of how to provide parameters:
 ```javascript

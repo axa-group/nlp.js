@@ -1,6 +1,6 @@
 # UUID
 
-Unique Identifier generator that is compatible with browsers, so it does not use the crypto library, and use Math.random instead.
+A Unique Identifier generator that is compatible with browsers, so it does not use the crypto library, it uses Math.random instead.
 
 Example of use:
 

@@ -7,7 +7,7 @@ BERT Support means that the tokenizer and stemmer are supported through a BERT A
 
 Microsoft Builtins mean that the Builtin Entity extraction is supported directly in javascript, while the ones supported by Duckling requires the deployment of a Duckling instance.
 
-Languages not included in this list can be still supported, but without stemming, only tokenizing. That means less precission, but most of the times can be good enough, as an example you can use it for fantasy languages (at unit tests you'll find tests in klingon from Star Trek).
+Languages not included in this list can be still supported, but without stemming, only tokenizing. That means less precision, but most of the time this can be good enough. As an example you can use it for fantasy languages (during unit testing you'll find tests in klingon from Star Trek).
 
 | Locale | Language              | Native Support | BERT Support | Microsoft Builtins | Duckling Builtins | Sentiment |
 |--------|-----------------------|----------------|--------------|--------------------|-------------------|-----------|
@@ -38,7 +38,9 @@ Languages not included in this list can be still supported, but without stemming
 | cs     | Czech                 |        X       |       X      |                    |                   |     X     |
 | da     | Danish                |        X       |       X      |                    |         X         |     X     |
 | nl     | Dutch                 |        X       |       X      |                    |         X         |     X     |
-| en     | [English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)               |        X       |       X      |          X         |         X         |     X     |
+
+(https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)
+| en     | [English]             |        X       |       X      |          X         |         X         |     X     |
 | et     | Estonian              |                |       X      |                    |         X         |           |
 | fi     | Finnish               |        X       |       X      |                    |         X         |     X     |
 | fr     | French                |        X       |       X      |          X         |         X         |     X     |
@@ -53,9 +55,13 @@ Languages not included in this list can be still supported, but without stemming
 | hu     | Hungarian             |        X       |       X      |                    |         X         |     X     |
 | is     | Icelandic             |                |       X      |                    |         X         |           |
 | io     | Ido                   |                |       X      |                    |                   |           |
-| id     | [Indonesian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)            |        X       |       X      |                    |         X         |     X     |
+
+(https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)
+| id     | [Indonesian]          |        X       |       X      |                    |         X         |     X     |
 | ga     | Irish                 |        X       |       X      |                    |         X         |     X     |
-| it     | [Italian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-it/README.md)               |        X       |       X      |                    |         X         |     X     |
+
+(https://github.com/axa-group/nlp.js/blob/master/packages/lang-it/README.md)
+| it     | [Italian]             |        X       |       X      |                    |         X         |     X     |
 | ja     | Japanese              |        X       |       X      |          X         |         X         |           |
 | jv     | Javanese              |                |       X      |                    |                   |           |
 | kn     | Kannada               |                |       X      |                    |         X         |           |
@@ -94,7 +100,9 @@ Languages not included in this list can be still supported, but without stemming
 | sk     | Slovak                |                |       X      |                    |         X         |           |
 | sl     | Slovenian             |        X       |       X      |                    |                   |     X     |
 | az     | South Azerbaijani     |                |       X      |                    |                   |           |
-| es     | [Spanish](https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)               |        X       |       X      |          X         |         X         |     X     |
+
+(https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)
+| es     | [Spanish]             |        X       |       X      |          X         |         X         |     X     |
 | su     | Sundanese             |                |       X      |                    |                   |           |
 | sw     | Swahili               |                |       X      |                    |         X         |           |
 | sv     | Swedish               |        X       |       X      |                    |         X         |     X     |
@@ -270,7 +278,7 @@ Languages not included in this list can be still supported, but without stemming
 
 ## Example with several languages
 
-Example with three languages, where one of the language is klingon, to show that NLP will work even with    support of the language, because it will use tokenizer but not stemmers.
+This example uses three languages, where one of the languages is Klingon, to show that NLP will work even with language support, because it will use the tokenizer but not the stemmers.
 
 ```javascript
 const { NlpManager } = require('../packages/node-nlp/src');

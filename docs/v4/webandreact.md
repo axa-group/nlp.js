@@ -2,27 +2,30 @@
 
 ## Preparing to generate a bundle
 
-NLP.js is developed to be a Node.js project, but even with that can be compiled to run in both Web and React Native applications. In fact, the libraries of NLP.js take this into account and the core libraries don't use anything that cannot be executed on web, like the file system.
-But to generate the web bundle it's need to install two development libraries: browserify and terser. To do that run this in your project folder:
+NLP.js is developed to be a Node.js project, but even with that it can be compiled to run in both Web and React Native applications. In fact, the libraries of NLP.js take this into account and the core libraries don't use anything that cannot be executed on web, like the file system.
+But to generate the web bundle it needs to install two development libraries: browserify and terser. 
+
+To do that run this in your project folder:
 ```bash
 npm i -D browserify terser
 ```
 
-Now you will need an script to generated the bundle. Open your _package.json_ and add this into the scripts section:
+Now you will need a script to generate the bundle. 
+Open your _package.json_ and add this in the scripts section:
 ```json
     "browserdist": "browserify ./index.js | terser --compress --mangle > ./bundle.js"
 ```
 
-From this moment, you can generate a file _bundle.js_ containing the browser bundle executing this:
+From this moment, you can generate a file _bundle.js_ containing the browser bundle by executing this:
 ```bash
 npm run browserdist
 ```
 
 ## Your first web NLP
 
-You can download the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/02.web/01.bundle
+You can download the code for this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/02.web/01.bundle
 
-Now you will need an HTML to run the code in the browser, we will start with this simple one:
+Now you will need some HTML to run the code in the browser, we will start with this simple example:
 ```html
 <html>
 <head>
@@ -39,7 +42,9 @@ Install the libraries that will be needed to run the nlp:
 npm i @nlpjs/core @nlpjs/lang-en-min @nlpjs/nlp
 ```
 
-The @nlpjs/core is the one that install the container system and basic architecture, the @nlpjs/nlp install the nlp related things, and finally @nlpjs/lang-en-min install the english language but without the sentiment dictionaries. That's because the sentiment analysis dictionaries have a big size.
+The @nlpjs/core is the one that installs the container system and basic architecture.
+The @nlpjs/nlp installs the nlp related things,
+and finally @nlpjs/lang-en-min installs the English language but without the sentiment dictionaries. That's because the sentiment analysis dictionaries are big in size.
 
 Now create an _index.js_ with this content:
 ```javascript
@@ -75,8 +80,8 @@ const { LangEn } = require('@nlpjs/lang-en-min');
 })();
 ```
 
-This creates a model equal to the first example of the quickstart.
-This line is very important because by default the nlp plugin tries to save the model after training, but in we this will generate an exception.
+This creates a model equal to the first example you can find in the quickstart.
+This line is very important because by default the nlp plugin tries to save the model after training, but in case, this will generate an exception.
 ```javscript
 nlp.settings.autoSave = false
 ```
@@ -85,16 +90,17 @@ Now you can generate the bundle running
 ```bash
 npm run browserdist
 ```
-The bundle size will be 111KB, that compared to the 3MB of the version 3.x is much better for the browser.
-Open the index.html in a browser and take a look into the console.
+The bundle size will be 111KB, compared to 3MB for version 3.x which is much better for the browser.
+Open the index.html in a browser and take a look in the console.
 
 ## Creating a distributable version
 
-You can download the source code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/02.web/02.dist
-The problem with the previous example, is that every time that you have to modify your bot or build a new bot, you have to create the bundle again.
-But, what if we can compile and expose the classes and functions of the modules of NLP.js that we want? That way we can create a bundle that can be reusable between different bots, while separating what is NLP.js from our bot logic.
+You can download the source code for this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/02.web/02.dist
 
-First modify the _index.js_ to not include our bot logic and to simply import all from the NLP.js libraries and expose them using window object:
+The problem with the previous example, is that every time that you have to modify your bot or build a new bot, you have to create the bundle again.
+But, what if we can compile and expose the classes and functions of the NLP.js modules that we want? That way we can create a bundle that can be reusable between different bots, while separating what is NLP.js from our bot logic.
+
+First modify the _index.js_ to not include our bot logic and to simply import everything from the NLP.js libraries and expose them using the window object:
 
 ```javascript
 const core = require('@nlpjs/core');
@@ -109,7 +115,7 @@ Second, compile the bundle:
 npm run browserdist
 ```
 
-Third, move the logic of your bot to the index.hmtl:
+Third, move your bot logic to the index.hmtl:
 
 ```html
 <html>
@@ -155,8 +161,9 @@ Third, move the logic of your bot to the index.hmtl:
 ## Load corpus from URL
 
 You can download the source code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/02.web/03.filecorpus
-At previous examples, the corpus is manually loaded into the nlp, but what if we want a corpus in json like in backend ant to load it from an URL?
-First at all we need to register a valid file system into our container, in our case a request plugin that uses axios.
+
+Previously, the corpus was manually loaded into the nlp, but what if we want a corpus in a json file, like in the backend and to load it from an URL?
+First, we need to register a valid file system into our container, in our case a request plugin that uses axios.
 First install the package:
 ```bash
 npm i @nlpjs/request-rn
@@ -178,7 +185,7 @@ npm run browserdist
 ```
 The new bundle will be 126KB, that is 15KB more than without this plugin.
 
-And at our _index.html_ we change our script:
+And in our _index.html_ we change our script:
 
 ```javascript
   const { containerBootstrap, Nlp, LangEn, fs } = window.nlpjs;

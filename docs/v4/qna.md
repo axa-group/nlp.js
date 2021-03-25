@@ -8,7 +8,7 @@ The process is exactly the same as having a bot with a chatbot, so we strongly r
 
 ## Install the library and the qna plugin
 
-At the folder where is your node project, install the basic library and the qna importer, that will install the core and basic plugins for working in backend, and also the plugin for converting qna files to corpus.
+In your node project folder, install the basic library and the qna importer, that will install the core and basic plugins for working in the backend, and also the plugin for converting qna files to your corpus.
 
 ```sh
 npm i @nlpjs/basic @nlpjs/qna-importer
@@ -16,7 +16,7 @@ npm i @nlpjs/basic @nlpjs/qna-importer
 
 ## Train and test a QnA file
 
-You have the source code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/01.filecorpus
+The source code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/01.filecorpus
 
 Add the corpus file to your folder, and then create this index.js:
 ```javascript
@@ -32,15 +32,15 @@ const { dockStart } = require('@nlpjs/basic');
 })();
 ```
 
-Replace the filename './qna.tsv' with the path to your qna file, and the locale with the locale of your file (remember that if it's not english, you should install the language plugin for your langague).
+Replace the filename './qna.tsv' with the path to your qna file, and the locale with the locale of your file (remember that if it's not English, you should install the language plugin for your language).
 
 Now you can execute this, and you'll see that the qna is trained and it resolves the answer to the question.
 
 ## Extracting the configuration into a file
 
-You have the source code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/02.config
+The source code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/02.config
 
-Now we can remove code that are configuration related into a file. Add a conf.json file with this content:
+Now we can remove code that is configuration related into a separate file. Add a conf.json file with this content:
 
 ```javascript
 {
@@ -71,14 +71,14 @@ const { dockStart } = require('@nlpjs/basic');
 
 ## Exposing the bot with a Web and API
 
-You have the code of this example here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/03.webchat
+The code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/03.webchat
 
-You have to install now the plugins for the express server and the directline API:
+Now install the plugins for the express server and the directline API:
 ```javascript
 npm i @nlpjs/express-api-server @nlpjs/directline-connector
 ```
 
-Change the conf.json to have those plugins and expose the API:
+Change the conf.json to include those plugins and expose the API:
 
 ```javascript
 {
@@ -116,7 +116,7 @@ const { dockStart } = require('@nlpjs/basic');
 })();
 ```
 
-Now if you browse http://localhost:3000 you'll se an empty page with an small blue bubble, if you click in the bubble you'll be able to chat with your bot
+Now if you browse http://localhost:3000 you'll see an empty page with an small blue chat bubble, if you click in the bubble you'll be able to chat with your bot
 
 <div align="center">
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/webchat.png" width="auto" height="auto"/>
