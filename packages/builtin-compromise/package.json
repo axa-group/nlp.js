@@ -27,7 +27,7 @@
   "dependencies": {
     "@nlpjs/core": "^4.22.0",
     "compromise": "^13.7.0",
-    "compromise-dates": "^1.2.0",
+    "compromise-dates": "^2.0.1",
     "compromise-numbers": "^1.0.0"
   },
   "devDependencies": {
