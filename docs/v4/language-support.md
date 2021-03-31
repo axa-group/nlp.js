@@ -38,9 +38,7 @@ Languages not included in this list can be still supported, but without stemming
 | cs     | Czech                 |        X       |       X      |                    |                   |     X     |
 | da     | Danish                |        X       |       X      |                    |         X         |     X     |
 | nl     | Dutch                 |        X       |       X      |                    |         X         |     X     |
-
-(https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)
-| en     | [English]             |        X       |       X      |          X         |         X         |     X     |
+| en     | [English](https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md)             |        X       |       X      |          X         |         X         |     X     |
 | et     | Estonian              |                |       X      |                    |         X         |           |
 | fi     | Finnish               |        X       |       X      |                    |         X         |     X     |
 | fr     | French                |        X       |       X      |          X         |         X         |     X     |
@@ -55,13 +53,9 @@ Languages not included in this list can be still supported, but without stemming
 | hu     | Hungarian             |        X       |       X      |                    |         X         |     X     |
 | is     | Icelandic             |                |       X      |                    |         X         |           |
 | io     | Ido                   |                |       X      |                    |                   |           |
-
-(https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)
-| id     | [Indonesian]          |        X       |       X      |                    |         X         |     X     |
+| id     | [Indonesian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md)          |        X       |       X      |                    |         X         |     X     |
 | ga     | Irish                 |        X       |       X      |                    |         X         |     X     |
-
-(https://github.com/axa-group/nlp.js/blob/master/packages/lang-it/README.md)
-| it     | [Italian]             |        X       |       X      |                    |         X         |     X     |
+| it     | [Italian](https://github.com/axa-group/nlp.js/blob/master/packages/lang-it/README.md)             |        X       |       X      |                    |         X         |     X     |
 | ja     | Japanese              |        X       |       X      |          X         |         X         |           |
 | jv     | Javanese              |                |       X      |                    |                   |           |
 | kn     | Kannada               |                |       X      |                    |         X         |           |
@@ -100,9 +94,7 @@ Languages not included in this list can be still supported, but without stemming
 | sk     | Slovak                |                |       X      |                    |         X         |           |
 | sl     | Slovenian             |        X       |       X      |                    |                   |     X     |
 | az     | South Azerbaijani     |                |       X      |                    |                   |           |
-
-(https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)
-| es     | [Spanish]             |        X       |       X      |          X         |         X         |     X     |
+| es     | [Spanish](https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md)             |        X       |       X      |          X         |         X         |     X     |
 | su     | Sundanese             |                |       X      |                    |                   |           |
 | sw     | Swahili               |                |       X      |                    |         X         |           |
 | sv     | Swedish               |        X       |       X      |                    |         X         |     X     |
