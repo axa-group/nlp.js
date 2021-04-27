@@ -22,6 +22,7 @@
  */
 
 const { Container } = require('@nlpjs/core');
+const { SentimentManager } = require('../../node-nlp/src/index');
 const { LangEl } = require('../src');
 
 describe('Language Greek', () => {
@@ -37,6 +38,17 @@ describe('Language Greek', () => {
       expect(stopwords.constructor.name).toEqual('StopwordsEl');
       const normalizer = instance.get('normalizer-el');
       expect(normalizer.constructor.name).toEqual('NormalizerEl');
+    });
+  });
+
+  describe('Sentiment evaluation', () => {
+    test('Accentuation matching between sentiment input and afinn data', async () => {
+      const sentiment = new SentimentManager();
+      const result = await sentiment.process(
+        'el',
+        'Γεια σου, τι κάνεις? Εγώ είμαι πολυ περιωρισμένος'
+      );
+      expect(result.score).toEqual(-1);
     });
   });
 });
