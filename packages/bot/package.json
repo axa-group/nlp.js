@@ -3,7 +3,7 @@
   "version": "4.22.0",
   "description": "Bot plugin for NLP.js",
   "author": {
-    "email": "jesus.seijas@axa.com",
+    "email": "opensource@axa.com",
     "name": "Jesús Seijas"
   },
   "repository": {
@@ -15,11 +15,11 @@
   },
   "maintainers": [
     {
-      "email": "jesus.seijas@axa.com",
+      "email": "opensource@axa.com",
       "name": "Jesús Seijas"
     },
     {
-      "email": "jesus.seijas@axa.com",
+      "email": "opensource@axa.com",
       "name": "Jesus Seijas"
     }
   ],

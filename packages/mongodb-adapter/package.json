@@ -3,7 +3,7 @@
   "version": "4.22.0",
   "description": "Database adapter for MongoDB",
   "author": {
-    "email": "jesus.seijas@axa.com",
+    "email": "opensource@axa.com",
     "name": "Jesus Seijas"
   },
   "repository": {
@@ -15,7 +15,7 @@
   },
   "maintainers": [
     {
-      "email": "jesus.seijas@axa.com",
+      "email": "opensource@axa.com",
       "name": "Jesus Seijas"
     }
   ],
