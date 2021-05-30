@@ -115,7 +115,7 @@ Second, compile the bundle:
 npm run browserdist
 ```
 
-Third, move your bot logic to the index.hmtl:
+Third, move your bot logic to the index.html:
 
 ```html
 <html>
