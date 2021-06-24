@@ -69,9 +69,14 @@ class Tokenizer {
         nonNormalized: {},
       };
     } else {
-      if (normalize) {
+      if (
+        normalize &&
+        Object.prototype.hasOwnProperty.call(this.cache.normalized, text)
+      ) {
         result = this.cache.normalized[text];
-      } else {
+      } else if (
+        Object.prototype.hasOwnProperty.call(this.cache.nonNormalized, text)
+      ) {
         result = this.cache.nonNormalized[text];
       }
       if (result) {
