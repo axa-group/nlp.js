@@ -51,7 +51,7 @@ class TokenizerEn extends Tokenizer {
     const result = [];
     arr.forEach((item) => {
       const lowitem = item.toLowerCase();
-      if (contractionsBase[lowitem]) {
+      if (Object.keys(contractionsBase).includes(lowitem)) {
         result.push(...contractionsBase[lowitem]);
       } else {
         result.push(item);
