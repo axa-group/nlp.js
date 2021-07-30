@@ -264,7 +264,7 @@ describe('NLU', () => {
       const actual = nlu.someSimilar(dict, arr);
       expect(actual).toBeFalsy();
     });
-    test('It should return false if at least one item in array exists in dictionary', () => {
+    test('It should return true if at least one item in array exists in dictionary', () => {
       const dict = { this: 1, is: 1, a: 1, cat: 1 };
       const arr = ['not', 'a', 'cat'];
       const nlu = new Nlu({ locale: 'en', keepStopwords: false }, container);

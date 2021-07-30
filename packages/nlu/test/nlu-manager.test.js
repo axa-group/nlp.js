@@ -413,7 +413,7 @@ describe('NLU Manager', () => {
   });
 
   describe('Is equal classification', () => {
-    test('Should return true if the two frist classifications have the same score', () => {
+    test('Should return true if the two first classifications have the same score', () => {
       const manager = new NluManager({ container });
       const classifications = [];
       classifications.push({ intent: 'a', score: 0.6 });
