@@ -283,6 +283,14 @@ describe('Domain Manager', () => {
       expect(actual.classifications[0].intent).toEqual('order.check');
       expect(actual.classifications[0].score).toBeGreaterThan(0.5);
     });
+    test('Can process zero-byte strings', async () => {
+      const manager = new DomainManager({ container, trainByDomain: true });
+      addFoodDomain(manager);
+      addPersonalityDomain(manager);
+      await manager.train();
+      const actual = await manager.process('');
+      expect(actual.classifications[0].score).toEqual(0);
+    });
     test('Will have score 1 if stems are in stem dict', async () => {
       const manager = new DomainManager({ container, trainByDomain: true });
       addFoodDomain(manager);

@@ -83,6 +83,12 @@ describe('NLU', () => {
         'Error at nlu.prepare: expected a text but received [object Object]'
       );
     });
+    test('Prepare can tolerate zero-byte string texts', async () => {
+      const nlu = new Nlu({ locale: 'en', keepStopwords: false }, container);
+      const input = '';
+      const actual = await nlu.prepare(input);
+      expect(actual).toEqual({});
+    });
     test('Prepare can process an array of strings', async () => {
       const nlu = new Nlu({ locale: 'en', keepStopwords: false }, container);
       const input = ['Allí hay un ratón', 'y vino el señor doctor'];
