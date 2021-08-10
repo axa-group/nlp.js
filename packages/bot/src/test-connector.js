@@ -96,6 +96,7 @@ class TestConnector extends Connector {
     this.expected = fs
       .readFileSync(fileName, 'utf-8')
       .split(/\r?\n/)
+      .filter(x => !x.startsWith('#'))
       .filter((x) => x);
     this.messages = [];
     const userName = this.settings.userName || 'user';
