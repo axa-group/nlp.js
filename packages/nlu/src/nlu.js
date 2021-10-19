@@ -150,14 +150,14 @@ class Nlu extends Clonable {
       let item = settings.fieldNameSrc
         ? text[settings.fieldNameSrc]
         : text.texts || text.utterances;
-      if(!item && typeof item !== "string") {
-        if(typeof text.text === "string") {
+      if (!item && typeof item !== 'string') {
+        if (typeof text.text === 'string') {
           item = text.text;
-        } else if(typeof text.utterance === "string") {
+        } else if (typeof text.utterance === 'string') {
           item = text.utterance;
         }
       }
-      if (item || typeof item === "string") {
+      if (item || typeof item === 'string') {
         const result = await this.prepare(item, settings);
         const targetField = settings.fieldNameTgt || 'tokens';
         return { [targetField]: result, ...text };
