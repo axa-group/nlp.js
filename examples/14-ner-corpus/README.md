@@ -50,7 +50,7 @@ The entities receive the locale from the corpus. If you want to register the ent
 ```json
   "entities": {
     "hero": {
-      "locale": ["en", "es"]
+      "locale": ["en", "es"],
       "options": {
         "spiderman": ["spiderman", "spider-man"],
         "ironman": ["ironman", "iron-man"],
