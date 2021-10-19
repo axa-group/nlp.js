@@ -16,11 +16,16 @@ See compromise documentation for details.
 
 
 ## Usage
-
-const {BuiltinCompromise} = require('@nlpjs/builtin-compromise')
+```js
+const { BuiltinCompromise } = require('@nlpjs/builtin-compromise');
 const container = await containerBootstrap();
 const builtin = new BuiltinCompromise({})
-// if enable is set, only use the listed entity extractors
-//const builtin = new BuiltinCompromise({enable:['hashtags', 'person', 'place', 'organization' ,'email', 'phonenumber', 'date', 'url', 'number','dimension']});
+// Set enable to restrict list of entity extractors
+const builtin = new BuiltinCompromise({
+  enable: [
+    'hashtags', 'person', 'place', 'organization',
+    'email', 'phonenumber', 'date', 'url', 'number', 'dimension'
+  ]
+ });
 container.register('extract-builtin-??', builtin, true);
- 
+```
