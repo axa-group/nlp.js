@@ -10,11 +10,6 @@ const importObject = {
   js: {
     mem: memory,
   },
-  console: {
-    log(arg) {
-      console.log(arg);
-    },
-  },
 };
 
 /* eslint-disable */
