@@ -13,7 +13,7 @@ const importObject = {
 };
 
 /* eslint-disable */
-const source = fs.readFileSync(path.resolve(__dirname, './leven.wasm'));
+const source = fs.readFileSync(path.resolve(__dirname, '../wa/leven.wasm'));
 const mod = new WebAssembly.Module(new Uint8Array(source));
 const webAssemblyObj = new WebAssembly.Instance(mod, importObject);
 /* eslint-enable */
