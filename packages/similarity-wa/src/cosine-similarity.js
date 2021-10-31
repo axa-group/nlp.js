@@ -23,10 +23,12 @@
 
 const fs = require('fs');
 const path = require('path');
+const CosineSimilarity = require('../../similarity/src/cosine-similarity');
 
-class CosineSimilarity {
+class CosineSimilarityWA {
   constructor(container) {
     this.container = container;
+    this.cosineSimilarityTools = new CosineSimilarity(container);
 
     /* eslint-disable */
     this.wa_memory = new WebAssembly.Memory({ initial: 2 });
@@ -47,46 +49,30 @@ class CosineSimilarity {
   }
 
   getTokens(text, locale = 'en') {
-    if (typeof text === 'string') {
-      const tokenizer =
-        this.container && this.container.get(`tokenizer-${locale}`);
-      return tokenizer ? tokenizer.tokenize(text, true) : text.split(' ');
-    }
-    return text;
+    return this.cosineSimilarityTools.getTokens(text, locale);
   }
 
   termFreqMap(str, locale) {
-    const words = this.getTokens(str, locale);
-    const termFreq = {};
-    words.forEach((w) => {
-      termFreq[w] = (termFreq[w] || 0) + 1;
-    });
-    return termFreq;
+    return this.cosineSimilarityTools.termFreqMap(str, locale);
   }
 
   addKeysToDict(map, dict) {
-    Object.keys(map).forEach((key) => {
-      dict[key] = true;
-    });
+    this.cosineSimilarityTools.addKeysToDict(map, dict);
   }
 
   termFreqMapToVector(map, dict) {
-    const termFreqVector = [];
-    Object.keys(dict).forEach((term) => {
-      termFreqVector.push(map[term] || 0);
-    });
-    return termFreqVector;
+    return this.cosineSimilarityTools.termFreqMapToVector(map, dict);
   }
 
   vecDotProduct(vecA, vecB) {
     let idx = 0;
-    for (let i = 0; i < vecA.length; i += 1) {
-      this.wa_buffer[idx] = vecA[i];
+    for (const value of vecA) {
+      this.wa_buffer[idx] = value;
       idx += 1;
     }
 
-    for (let i = 0; i < vecB.length; i += 1) {
-      this.wa_buffer[idx] = vecB[i];
+    for (const value of vecB) {
+      this.wa_buffer[idx] = value;
       idx += 1;
     }
 
@@ -95,8 +81,8 @@ class CosineSimilarity {
 
   vecMagnitude(vec) {
     let idx = 0;
-    for (let i = 0; i < vec.length; i += 1) {
-      this.wa_buffer[idx] = vec[i];
+    for (const value of vec) {
+      this.wa_buffer[idx] = value;
       idx += 1;
     }
 
@@ -112,13 +98,13 @@ class CosineSimilarity {
    */
   cosineSimilarity(vecA, vecB) {
     let idx = 0;
-    for (let i = 0; i < vecA.length; i += 1) {
-      this.wa_buffer[idx] = vecA[i];
+    for (const value of vecA) {
+      this.wa_buffer[idx] = value;
       idx += 1;
     }
 
-    for (let i = 0; i < vecB.length; i += 1) {
-      this.wa_buffer[idx] = vecB[i];
+    for (const value of vecB) {
+      this.wa_buffer[idx] = value;
       idx += 1;
     }
 
@@ -152,4 +138,4 @@ class CosineSimilarity {
   }
 }
 
-module.exports = CosineSimilarity;
+module.exports = CosineSimilarityWA;

@@ -21,10 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const CosineSimilarity = require('../src/cosine-similarity');
+const CosineSimilarityWA = require('../src/cosine-similarity');
 
 describe('Cosine similarity', () => {
-  const cosineSimilarityTools = new CosineSimilarity();
+  const cosineSimilarityTools = new CosineSimilarityWA();
 
   test('Should return 0 similarity if one of the inputs is empty', () => {
     expect(cosineSimilarityTools.similarity('a', '')).toEqual(0);
