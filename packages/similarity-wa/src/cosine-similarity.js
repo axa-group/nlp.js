@@ -32,7 +32,7 @@ class CosineSimilarity {
     this.wa_memory = new WebAssembly.Memory({ initial: 2 });
     /* eslint-enable */
 
-    this.wa_buffer = new Uint8Array(this.wa_memory.buffer);
+    this.wa_buffer = new Uint32Array(this.wa_memory.buffer);
     this.wa_importObject = {
       js: {
         mem: this.wa_memory,
@@ -100,7 +100,7 @@ class CosineSimilarity {
       idx += 1;
     }
 
-    return this.wa_object.exports.vecMagnitude(vec.length);
+    return this.wa_object.exports.vecMagnitude(0, vec.length);
   }
 
   /**
