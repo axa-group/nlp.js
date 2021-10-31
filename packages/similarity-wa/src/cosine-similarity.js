@@ -121,19 +121,11 @@ class CosineSimilarityWA {
     if (strA === strB) {
       return 1;
     }
-    const termFreqA = this.termFreqMap(strA, locale);
-    const termFreqB = this.termFreqMap(strB, locale);
 
-    if (!Object.keys(termFreqA).length || !Object.keys(termFreqB).length) {
-      return 0;
-    }
-    const dict = {};
-    this.addKeysToDict(termFreqA, dict);
-    this.addKeysToDict(termFreqB, dict);
-
-    const termFreqVecA = this.termFreqMapToVector(termFreqA, dict);
-    const termFreqVecB = this.termFreqMapToVector(termFreqB, dict);
-
+    const [
+      termFreqVecA,
+      termFreqVecB,
+    ] = this.cosineSimilarityTools.getTermFreqVectors(strA, strB, locale);
     return this.cosineSimilarity(termFreqVecA, termFreqVecB);
   }
 }

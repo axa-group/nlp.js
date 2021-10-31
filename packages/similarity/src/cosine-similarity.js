@@ -88,16 +88,7 @@ class CosineSimilarity {
     );
   }
 
-  /**
-   * Calculates cosine-similarity from two sentences
-   * @param {string} left Left string
-   * @param {string} right Right string
-   * @returns {number} cosine between two sentences representend in VSM
-   */
-  similarity(strA, strB, locale) {
-    if (strA === strB) {
-      return 1;
-    }
+  getTermFreqVectors(strA, strB, locale) {
     const termFreqA = this.termFreqMap(strA, locale);
     const termFreqB = this.termFreqMap(strB, locale);
 
@@ -108,9 +99,28 @@ class CosineSimilarity {
     this.addKeysToDict(termFreqA, dict);
     this.addKeysToDict(termFreqB, dict);
 
-    const termFreqVecA = this.termFreqMapToVector(termFreqA, dict);
-    const termFreqVecB = this.termFreqMapToVector(termFreqB, dict);
+    return [
+      this.termFreqMapToVector(termFreqA, dict),
+      this.termFreqMapToVector(termFreqB, dict),
+    ];
+  }
 
+  /**
+   * Calculates cosine-similarity from two sentences
+   * @param {string} left Left string
+   * @param {string} right Right string
+   * @returns {number} cosine between two sentences representend in VSM
+   */
+  similarity(strA, strB, locale) {
+    if (strA === strB) {
+      return 1;
+    }
+
+    const [termFreqVecA, termFreqVecB] = this.getTermFreqVectors(
+      strA,
+      strB,
+      locale
+    );
     return this.cosineSimilarity(termFreqVecA, termFreqVecB);
   }
 }
