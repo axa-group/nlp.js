@@ -26,8 +26,9 @@ const levenjs = require('../../packages/similarity/src/leven.js');
 
 const levenAlgs = [levenjs, levenwa];
 const execTimeWord = [];
+const execTimeMedium = [];
 const execTimeLong = [];
-const execTimeVeryLong = [];
+
 
 function getTime(hrTime) {
   return hrTime[0] * 1000000000 + hrTime[1];
@@ -59,7 +60,7 @@ function runWordTests(leven) {
   return getTime(tEllapsed);
 }
 
-function runLongTests(leven) {
+function runMediumTests(leven) {
   const t0 = process.hrtime();
 
   const text1 =
@@ -72,11 +73,12 @@ function runLongTests(leven) {
   return getTime(tEllapsed);
 }
 
-function runVeryLongTests(leven) {
+function runLongTests(leven) {
   const t0 = process.hrtime();
 
   let text1 = '';
   let text2 = '';
+  // copy each text 50 times to make a longer sentence
   for (let i = 0; i < 50; i += 1) {
     text1 +=
       'Morbi interdum ultricies neque varius condimentum. Donec volutpat turpis interdum metus ultricies vulputate. Duis ultricies rhoncus sapien, sit amet fermentum risus imperdiet vitae. Ut et lectus';
@@ -94,8 +96,8 @@ for (let i = 0; i < levenAlgs.length; i += 1) {
   const leven = levenAlgs[i];
 
   execTimeWord[i] = runWordTests(leven);
+  execTimeMedium[i] = runMediumTests(leven);
   execTimeLong[i] = runLongTests(leven);
-  execTimeVeryLong[i] = runVeryLongTests(leven);
 }
 
 console.log(
@@ -105,14 +107,14 @@ console.log(
   execTimeWord[0]
 );
 console.log(
+  'Web Assembly vs JavaScript benchmark on medium texts:',
+  execTimeMedium[1],
+  ' vs ',
+  execTimeMedium[0]
+);
+console.log(
   'Web Assembly vs JavaScript benchmark on long texts:',
   execTimeLong[1],
   ' vs ',
   execTimeLong[0]
-);
-console.log(
-  'Web Assembly vs JavaScript benchmark on very long texts:',
-  execTimeVeryLong[1],
-  ' vs ',
-  execTimeVeryLong[0]
 );
