@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "pino": "^6.3.2",
-    "pino-pretty": "^4.0.0"
+    "pino-pretty": "^7.2.0"
   },
   "gitHead": "2b77e4ff0126eaac349c2cad852036e282323519"
 }
