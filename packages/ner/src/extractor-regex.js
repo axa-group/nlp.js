@@ -44,12 +44,22 @@ class ExtractorRegex {
     do {
       const match = regex instanceof RegExp ? regex.exec(utterance) : null;
       if (match) {
-        result.push({
-          start: match.index,
-          end: regex.lastIndex - 1,
-          accuracy: 1,
-          sourceText: match[0],
-        });
+        if (match.length == 1) {
+          result.push({
+            start: match.index,
+            end: regex.lastIndex - 1,
+            accuracy: 1,
+            sourceText: match[0],
+          });
+        } else {
+          const index = utterance.indexOf(match[1]);
+          result.push({
+            start: index,
+            end: index + match[1].length - 1,
+            accuracy: 1,
+            sourceText: match[1],
+          });
+        }
         matchFound = true;
       } else {
         matchFound = false;

@@ -92,5 +92,31 @@ describe('Extractor Regex', () => {
         },
       ]);
     });
+
+    test('It can extract first catching group', async () => {
+      const ner = new Ner();
+      ner.addRegexRule(
+        'en',
+        'somenumbers',
+        /test (\d{3}) catch/gi
+      );
+      const input = {
+        text: 'Testing if 123 won\'t catch and if test 456 catch will... catch.',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([
+        {
+          start: 39,
+          end: 41,
+          accuracy: 1,
+          sourceText: '456',
+          entity: 'somenumbers',
+          type: 'regex',
+          utteranceText: '456',
+          len: 3,
+        },
+      ]);
+    });
   });
 });
