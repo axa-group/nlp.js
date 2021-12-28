@@ -44,7 +44,7 @@ class ExtractorRegex {
     do {
       const match = regex instanceof RegExp ? regex.exec(utterance) : null;
       if (match) {
-        if (match.length == 1) {
+        if (match.length === 1) {
           result.push({
             start: match.index,
             end: regex.lastIndex - 1,
