@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/dialogflow-connector",
-  "version": "4.22.2",
+  "version": "4.22.3",
   "description": "Dialogflow connector for NLP.js",
   "author": {
     "email": "opensource@axa.com",
@@ -29,7 +29,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/connector": "^4.22.2",
+    "@nlpjs/connector": "^4.22.3",
     "actions-on-google": "^2.13.0"
   },
   "publishConfig": {
