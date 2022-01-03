@@ -16,7 +16,7 @@ The corpus can be found at json files at https://github.com/sebischair/NLU-Evalu
 
 For `Ask Ubuntu` and `Web Application` corpus, there is a specific `None` intent for sentences that should not be matched with the other intents.
 
-The code using for the benchmark of NLP.js can be found at [`/examples/nlu-benchmark`](https://github.com/axa-group/nlp.js/tree/master/examples/nlu-benchmark)
+The code using for the benchmark of NLP.js can be found at [`/examples/91-nlu-benchmark`](https://github.com/axa-group/nlp.js/tree/master/examples/91-nlu-benchmark)
 
 ## Intent classification results
 
@@ -24,7 +24,7 @@ We compute the `f1` score for each corpus and the overall `f1`:
 
 | Platform\Corpus  | Chatbot | Ask Ubuntu | Web Applications | Overall |
 | ---------------- | ------- | ---------- | ---------------- | ------- |
-| NLP.js           | 0.99    | 0.94       | 0.80             | 0.93    |
+| NLP.js           | 0.99    | 0.93       | 0.83             | 0.93    |
 | Watson           | 0.97    | 0.92       | 0.83             | 0.92    |
 | Botfuel          | 0.98    | 0.90       | 0.80             | 0.91    |
 | Luis             | 0.98    | 0.90       | 0.81             | 0.91    |
@@ -34,7 +34,7 @@ We compute the `f1` score for each corpus and the overall `f1`:
 | RASA             | 0.98    | 0.86       | 0.74             | 0.88    |
 | API (DialogFlow) | 0.93    | 0.85       | 0.80             | 0.87    |
 
-You can se two entries for NLP.js, the best one is using stemmer the other one is only by using the tokenizer and the artificial intelligence. This is added because there are 27 languages supported with stemmers, but any other language is supported using only the tokenizer, but the result is good enough, in fact in english is at the middle of the table, being better than other systems that use more advanced methods than tokenization.
+You can see two entries for NLP.js, the best one is using stemmer the other one is only by using the tokenizer and the artificial intelligence. This is added because there are 27 languages supported with stemmers, but any other language is supported using only the tokenizer, but the result is good enough, in fact in english is at the middle of the table, being better than other systems that use more advanced methods than tokenization.
 
 <div align="center">
 <img src="https://github.com/axa-group/nlp.js/raw/master/screenshots/benchmark.png" width="auto" height="auto"/>
