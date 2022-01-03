@@ -31,7 +31,7 @@
     "compromise-numbers": "^1.0.0"
   },
   "devDependencies": {
-    "jest": "^26.6.3"
+    "jest": "^27.4.5"
   },
   "publishConfig": {
     "access": "public"
