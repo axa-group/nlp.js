@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/msbf-connector",
-  "version": "4.22.4",
+  "version": "4.22.5",
   "description": "Microsoft Bot Framework Connector",
   "author": {
     "email": "opensource@axa.com",
@@ -25,9 +25,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/connector": "^4.22.4",
-    "@nlpjs/core": "^4.22.4",
-    "@nlpjs/request": "^4.22.4",
+    "@nlpjs/connector": "^4.22.5",
+    "@nlpjs/core": "^4.22.5",
+    "@nlpjs/request": "^4.22.5",
     "botbuilder": "^4.7.0"
   },
   "gitHead": "a5a0eeffdfd50710d4feb3f96d26df9e72a5563a"

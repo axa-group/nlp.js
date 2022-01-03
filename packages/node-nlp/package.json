@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "4.22.4",
+  "version": "4.22.5",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "author": {
     "email": "opensource@axa.com",
@@ -42,21 +42,21 @@
     "bot"
   ],
   "dependencies": {
-    "@nlpjs/builtin-duckling": "^4.22.4",
-    "@nlpjs/builtin-microsoft": "^4.22.4",
-    "@nlpjs/core-loader": "^4.22.4",
-    "@nlpjs/emoji": "^4.22.4",
+    "@nlpjs/builtin-duckling": "^4.22.5",
+    "@nlpjs/builtin-microsoft": "^4.22.5",
+    "@nlpjs/core-loader": "^4.22.5",
+    "@nlpjs/emoji": "^4.22.5",
     "@nlpjs/evaluator": "^4.22.2",
-    "@nlpjs/lang-all": "^4.22.4",
+    "@nlpjs/lang-all": "^4.22.5",
     "@nlpjs/language": "^4.22.2",
     "@nlpjs/neural": "^4.22.2",
-    "@nlpjs/nlg": "^4.22.4",
-    "@nlpjs/nlp": "^4.22.4",
-    "@nlpjs/nlu": "^4.22.4",
-    "@nlpjs/request": "^4.22.4",
-    "@nlpjs/sentiment": "^4.22.4",
-    "@nlpjs/similarity": "^4.22.4",
-    "@nlpjs/xtables": "^4.22.4"
+    "@nlpjs/nlg": "^4.22.5",
+    "@nlpjs/nlp": "^4.22.5",
+    "@nlpjs/nlu": "^4.22.5",
+    "@nlpjs/request": "^4.22.5",
+    "@nlpjs/sentiment": "^4.22.5",
+    "@nlpjs/similarity": "^4.22.5",
+    "@nlpjs/xtables": "^4.22.5"
   },
   "gitHead": "a5a0eeffdfd50710d4feb3f96d26df9e72a5563a"
 }

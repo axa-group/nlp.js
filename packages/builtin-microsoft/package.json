@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/builtin-microsoft",
-  "version": "4.22.4",
+  "version": "4.22.5",
   "description": "Builtin Named Entity Recognition with Microsoft Recognizers",
   "author": {
     "email": "opensource@axa.com",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@microsoft/recognizers-text-suite": "1.3.0",
-    "@nlpjs/core": "^4.22.4"
+    "@nlpjs/core": "^4.22.5"
   },
   "gitHead": "a5a0eeffdfd50710d4feb3f96d26df9e72a5563a"
 }
