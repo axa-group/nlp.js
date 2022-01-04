@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlp",
-  "version": "4.22.5",
+  "version": "4.22.6",
   "description": "Natural Language Processing",
   "author": {
     "email": "opensource@axa.com",
@@ -25,12 +25,12 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.22.5",
-    "@nlpjs/ner": "^4.22.5",
-    "@nlpjs/nlg": "^4.22.5",
-    "@nlpjs/nlu": "^4.22.5",
-    "@nlpjs/sentiment": "^4.22.5",
-    "@nlpjs/slot": "^4.22.2"
+    "@nlpjs/core": "^4.22.6",
+    "@nlpjs/ner": "^4.22.6",
+    "@nlpjs/nlg": "^4.22.6",
+    "@nlpjs/nlu": "^4.22.6",
+    "@nlpjs/sentiment": "^4.22.6",
+    "@nlpjs/slot": "^4.22.6"
   },
   "gitHead": "208e93aa485fef706a18eb66fe51f66a7a407779"
 }

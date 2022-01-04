@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/express-api-serverless",
-  "version": "4.22.5",
+  "version": "4.22.6",
   "description": "Express API Server",
   "author": {
     "email": "opensource@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.22.5",
+    "@nlpjs/core": "^4.22.6",
     "serverless-express": "^2.0.11"
   },
   "gitHead": "208e93aa485fef706a18eb66fe51f66a7a407779"

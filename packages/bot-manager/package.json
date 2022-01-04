@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/bot-manager",
-  "version": "4.22.5",
+  "version": "4.22.6",
   "description": "Bot manager",
   "author": {
     "email": "opensource@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.22.5",
+    "@nlpjs/core": "^4.22.6",
     "botbuilder": "^4.9.2",
     "jsonwebtoken": "^8.5.1"
   },
