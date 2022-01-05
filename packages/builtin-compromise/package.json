@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/builtin-compromise",
-  "version": "4.22.7",
+  "version": "4.22.8",
   "description": "Builtin Named Entity Recognition with Compromise",
   "author": {
     "email": "syntithenai@gmail.com",
