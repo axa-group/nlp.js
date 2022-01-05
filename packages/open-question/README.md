@@ -1,4 +1,4 @@
-# `@nlpjs/bot-manager`
+# `@nlpjs/open-question`
 
 ## Introduction
 

@@ -1,4 +1,4 @@
-# `@nlpjs/bot-manager`
+# `@nlpjs/bert-tokenizer`
 
 ## Introduction
 
