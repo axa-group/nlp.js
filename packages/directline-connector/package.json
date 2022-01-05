@@ -27,7 +27,7 @@
   "dependencies": {
     "@nlpjs/connector": "^4.22.7",
     "@nlpjs/core": "^4.22.7",
-    "formidable": "^1.2.2",
+    "formidable": "^2.0.1",
     "node-fetch": "^2.6.1"
   },
   "publishConfig": {
