@@ -11,11 +11,11 @@
   "author": "Eric Lara <ericzon@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@nlpjs/basic": "^4.21.2",
-    "@nlpjs/bot": "^4.21.1",
-    "@nlpjs/express-api-server": "^4.21.1",
-    "@nlpjs/fb-connector": "^4.21.1",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "@nlpjs/basic": "^4.22.7",
+    "@nlpjs/bot": "^4.22.7",
+    "@nlpjs/express-api-server": "^4.22.7",
+    "@nlpjs/fb-connector": "^4.22.7",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2"
   }
 }
