@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlp",
-  "version": "4.22.7",
+  "version": "4.22.9",
   "description": "Natural Language Processing",
   "author": {
     "email": "opensource@axa.com",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.22.7",
-    "@nlpjs/ner": "^4.22.7",
+    "@nlpjs/ner": "^4.22.9",
     "@nlpjs/nlg": "^4.22.7",
     "@nlpjs/nlu": "^4.22.7",
     "@nlpjs/sentiment": "^4.22.7",

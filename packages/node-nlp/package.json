@@ -1,6 +1,6 @@
 {
   "name": "node-nlp",
-  "version": "4.22.8",
+  "version": "4.22.9",
   "description": "Library for NLU (Natural Language Understanding) done in Node.js",
   "author": {
     "email": "opensource@axa.com",
@@ -51,7 +51,7 @@
     "@nlpjs/language": "^4.22.7",
     "@nlpjs/neural": "^4.22.7",
     "@nlpjs/nlg": "^4.22.7",
-    "@nlpjs/nlp": "^4.22.7",
+    "@nlpjs/nlp": "^4.22.9",
     "@nlpjs/nlu": "^4.22.7",
     "@nlpjs/request": "^4.22.7",
     "@nlpjs/sentiment": "^4.22.7",
