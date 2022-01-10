@@ -30,7 +30,7 @@ const ExtractorBuiltin = require('./extractor-builtin');
 const { TrimType } = require('./trim-types');
 
 function isObject(obj) {
-  return obj !== undefined && obj !== null && obj.constructor == Object;
+  return obj !== undefined && obj !== null && obj.constructor === Object;
 }
 
 class Ner extends Clonable {
@@ -101,11 +101,13 @@ class Ner extends Clonable {
   }
 
   asString(item) {
-    if (isObject(item)) {
-      return JSON.stringify(item);
-    }
-    if (item && item.toString) {
-      return item.toString();
+    if (item) {
+      if (isObject(item)) {
+        return JSON.stringify(item);
+      }
+      if (item.toString) {
+        return item.toString();
+      }
     }
     return '';
   }
@@ -490,9 +492,9 @@ class Ner extends Clonable {
 
       entityKeys.forEach((eKey) => {
         if (json.rules[rKey][eKey].type === 'regex') {
-          json.rules[rKey][eKey].rules = json.rules[rKey][
-            eKey
-          ].rules.map((rule) => Ner.str2regex(rule));
+          json.rules[rKey][eKey].rules = json.rules[rKey][eKey].rules.map(
+            (rule) => Ner.str2regex(rule)
+          );
         }
       });
     });
