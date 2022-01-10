@@ -273,6 +273,44 @@ describe('NLP', () => {
       nlp.removeNerRule('en', 'A1');
       expect(nlp.ner.rules.en.A1).toBeUndefined();
     });
+    test('Rules removal selects properly the rule to remove', () => {
+      const nlp = new Nlp();
+      nlp.addNerRuleOptionTexts('en', 'A1', 'opt1', 'text1');
+      nlp.addNerRuleOptionTexts('en', 'A1', 'opt2', 'text2');
+      nlp.addNerRuleOptionTexts('en', 'A2', 'opt1', 'text1');
+      nlp.addNerRuleOptionTexts('en', 'A2', 'opt2', 'text2');
+      nlp.addNerRuleOptionTexts('en', 'A2', 'opt3', 'text3');
+      nlp.addNerRuleOptionTexts('en', 'A3', 'opt2', 'text2');
+      nlp.removeNerRule('en', 'A1');
+      nlp.removeNerRule('en', 'A2', { option: 'opt2', texts: ['text2'] });
+      expect(nlp.ner.rules.en.A1).toBeUndefined();
+      expect(nlp.ner.rules.en.A2).toBeDefined();
+      expect(nlp.ner.rules.en.A3).toBeDefined();
+      expect(nlp.ner.rules.en.A2).toEqual({
+        name: 'A2',
+        type: 'enum',
+        rules: [
+          {
+            option: 'opt1',
+            texts: ['text1'],
+          },
+          {
+            option: 'opt3',
+            texts: ['text3'],
+          },
+        ],
+      });
+      expect(nlp.ner.rules.en.A3).toEqual({
+        name: 'A3',
+        type: 'enum',
+        rules: [
+          {
+            option: 'opt2',
+            texts: ['text2'],
+          },
+        ],
+      });
+    });
   });
 
   describe('Add NER rule option texts', () => {
