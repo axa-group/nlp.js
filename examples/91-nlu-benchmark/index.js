@@ -12,7 +12,7 @@ function showTopN(classifications, n) {
    if (classifications.length > 0) {
       topN = classifications.slice(0, n);
    }
-   return topN.length > 0 ? 'Top ' + topN.length + ': ' + topN.map(item => `${item.intent} (${item.score.toFixed(2)})`).join(', ') : '';
+   return topN.length > 0 ? 'Top ' + topN.length + ' candidates: ' + topN.map(item => `${item.intent} (${item.score.toFixed(2)})`).join(', ') : '';
 }
 
 async function scoreCorpus(corpus) {
@@ -35,7 +35,7 @@ async function scoreCorpus(corpus) {
       if (result.intent === sentence.intent) {
         correct += 1;
       } else {
-         console.log(`Failing text: "${sentence.text}". Calculated intent "${result.intent}" that should be "${sentence.intent}"`);
+         console.log(`\nFailing text: "${sentence.text}". Calculated intent "${result.intent}" that should be "${sentence.intent}"`);
          console.log(showTopN(result.classifications, TOP_LIMIT));
       }
     }
