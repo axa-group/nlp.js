@@ -346,6 +346,9 @@ class Bot extends Clonable {
       let lastPosition;
       while (!context.isWaitingInput) {
         const current = this.dialogManager.getNextAction(context.dialogStack);
+        if (this.onNextAction) {
+          await this.onNextAction(current, session, context);
+        }
         if (
           current.dialog === lastDialog &&
           current.lastExecuted === lastPosition

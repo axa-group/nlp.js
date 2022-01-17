@@ -23,6 +23,9 @@
 
 const fs = require('fs');
 const { Connector } = require('@nlpjs/connector');
+const { isJsonObject } = require('./helper');
+
+const testId = new Date().getTime();
 
 class TestConnector extends Connector {
   initialize() {
@@ -31,21 +34,28 @@ class TestConnector extends Connector {
 
   say(message, reference) {
     let text;
-    if (typeof reference === 'object' && reference.value) {
-      text = reference.value;
-    } else if (typeof message === 'string') {
+
+    if (typeof message === 'string') {
       text = message;
     } else {
-      text = message.answer || message.message || message.text || reference;
+      if (message.attachments && message.attachments.length) {
+        const attachment = message.attachments[0];
+        if (attachment.contentType.includes('card.adaptive')) {
+          text = attachment.content.speak || id;
+        }
+      }
+      if (!text) {
+        text = message.answer || message.message || message.text || reference;
+      }
     }
     const botName = this.settings.botName || 'bot';
+    let botText = `${botName}> ${typeof text === 'object' ? JSON.stringify(text) : text}`;
     if (this.settings.debug && typeof message === 'object' && !reference) {
       const intent = message.intent || '';
       const score = message.score || '';
-      this.messages.push(`${botName}> ${text} (${intent} - ${score})`);
-    } else {
-      this.messages.push(`${botName}> ${text}`);
+      botText += ` (${intent} - ${score})`;
     }
+    this.messages.push(botText);
   }
 
   async hear(line) {
@@ -67,8 +77,9 @@ class TestConnector extends Connector {
         if (bot) {
           const session = this.createSession({
             channelId: 'console',
-            text: line,
-            address: { conversation: { id: 'console000' } },
+            ...(isJsonObject(line) ? { value: JSON.parse(line) } : { text: line }),
+            type: 'message',
+            address: { conversation: { id: 'console000-' + testId } },
           });
           await bot.process(session);
         } else {
