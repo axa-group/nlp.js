@@ -41,7 +41,7 @@ class TestConnector extends Connector {
       if (message.attachments && message.attachments.length) {
         const attachment = message.attachments[0];
         if (attachment.contentType.includes('card.adaptive')) {
-          text = attachment.content.speak || id;
+          text = attachment.content.speak || attachment.content.id;
         }
       }
       if (!text) {

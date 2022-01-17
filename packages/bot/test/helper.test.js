@@ -30,7 +30,6 @@ describe('isJsonObject', () => {
     expect(isJsonObject("text")).toEqual(false);
     expect(isJsonObject(123)).toEqual(false);
     expect(isJsonObject({})).toEqual(true);
-    expect(isJsonObject(new Object())).toEqual(true);
     expect(isJsonObject({"text": "sample"})).toEqual(true);
     expect(isJsonObject('{"text": 123}')).toEqual(true);
     expect(isJsonObject('{"text: 123}')).toEqual(false);
