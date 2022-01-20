@@ -21,10 +21,13 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+const { BotFrameworkAdapter, ActivityTypes } = require('botbuilder');
 const MsbfConnector = require('./msbf-connector');
 const generateMsbfToken = require('./get-msbf-token');
 
 module.exports = {
   MsbfConnector,
   generateMsbfToken,
+  BotFrameworkAdapter,
+  ActivityTypes,
 };
