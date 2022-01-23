@@ -27,7 +27,7 @@ const { BaseStemmer } = require('@nlpjs/core');
 
 const kuromoji = require('kuromoji');
 const hepburn = require('./hepburn.json');
-const keigo = require('./keigo');
+const keigo = require('./keigo.json');
 
 /**
  * Class for a Japanese Stemmer
