@@ -23,12 +23,14 @@
 
 const fs = require('fs');
 const { Connector } = require('@nlpjs/connector');
-const { isJsonObject } = require('./helper');
+
+const { isJsonObject, trimInput } = require('./helper');
 
 const testId = new Date().getTime();
 
 class TestConnector extends Connector {
   initialize() {
+    this.settings.settings = this.settings.settings || {};
     this.messages = [];
   }
 
@@ -49,13 +51,16 @@ class TestConnector extends Connector {
       }
     }
     const botName = this.settings.botName || 'bot';
-    let botText = `${botName}> ${typeof text === 'object' ? JSON.stringify(text) : text}`;
+    let botText = typeof text === 'object' ? JSON.stringify(text) : text;
     if (this.settings.debug && typeof message === 'object' && !reference) {
       const intent = message.intent || '';
       const score = message.score || '';
       botText += ` (${intent} - ${score})`;
     }
-    this.messages.push(botText);
+    if (this.settings.settings.trimInput) {
+      botText = trimInput(botText);
+    }
+    this.messages.push(`${botName}> ` + botText);
   }
 
   async hear(line) {
@@ -108,7 +113,8 @@ class TestConnector extends Connector {
       .readFileSync(fileName, 'utf-8')
       .split(/\r?\n/)
       .filter((x) => !x.startsWith('#'))
-      .filter((x) => x);
+      .filter((x) => x)
+      .map(x => this.settings.settings.trimInput ? trimInput(x) : x);
     this.messages = [];
     const userName = this.settings.userName || 'user';
     for (let i = 0; i < this.expected.length; i += 1) {

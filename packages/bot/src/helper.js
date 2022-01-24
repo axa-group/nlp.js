@@ -32,7 +32,12 @@ const isJsonObject = (content) => {
     return false;
   }
 };
-
+ 
+const trimInput = (input = '') => {
+  return input.replace(/\t/g, ' ').replace(/^( )*/, '').replace(/( )*$/, '').replace(/ +/g, ' ');
+};
+ 
 module.exports = {
   isJsonObject,
+  trimInput,
 };
