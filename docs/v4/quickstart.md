@@ -526,7 +526,7 @@ __Important!__ The plugins are loaded in order. Because both DirectlineConnector
 ## Adding logic to an intent
 The code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/12.onintent
 
-Supose that you want to have an intent for telling jokes about Chuck Norris, and you know that a service that returns random Chuck Norris jokes exists: http://api.icndb.com/jokes/random
+Suppose that you want to have an intent for telling jokes about Chuck Norris, and you know that a service that returns random Chuck Norris jokes exists: http://api.icndb.com/jokes/random
 
 First you need to add the intent to the corpus:
 ```json
