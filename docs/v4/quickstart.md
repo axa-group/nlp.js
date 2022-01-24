@@ -526,7 +526,7 @@ __Important!__ The plugins are loaded in order. Because both DirectlineConnector
 ## Adding logic to an intent
 The code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/01.quickstart/12.onintent
 
-Supose that you want to have an intent for telling jokes about Chuck Norris, and you know that a service that returns random Chuck Norris jokes exists: http://api.icndb.com/jokes/random
+Suppose that you want to have an intent for telling jokes about Chuck Norris, and you know that a service that returns random Chuck Norris jokes exists: http://api.icndb.com/jokes/random
 
 First you need to add the intent to the corpus:
 ```json
@@ -553,7 +553,7 @@ if (something && something.value && something.value.joke) {
 ```
 
 Explanation: the _onIntent(<intentname>)_ is called when an intent is recognized, so you can react to doing things and modifying the input as you want, from classifications, entities and of course the answer.
-We set the compilar to javascript. 
+We set the compiler to JavaScript. 
 We have a plugin _request_ that is for handling requests, then we call the API to retrieve an answer, and set it in the input.
 
 <div align="center">
