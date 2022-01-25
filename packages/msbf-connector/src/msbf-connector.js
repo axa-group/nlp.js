@@ -81,6 +81,9 @@ class MsbfConnector extends Connector {
               app: this.container.name,
               msbfContext: context,
             };
+            if (this.onReceiveInput) {
+              await this.onReceiveInput(input);
+            }
             if (this.onHear) {
               await this.onHear(this, input);
             } else {
@@ -124,6 +127,9 @@ class MsbfConnector extends Connector {
     } else {
       await context.sendActivity(input);
     }
+		if (this.onSendOutput) {
+			await this.onSendOutput(input, context, nlpjsCtx);
+		}
   }
 }
 

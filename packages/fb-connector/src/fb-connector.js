@@ -79,9 +79,6 @@ class FbConnector extends Connector {
       this.adapter.processActivity(req, res, async (context) => {
         if (context.activity.type === ActivityTypes.Message) {
           try {
-            if (this.onReceiveInput) {
-              await this.onReceiveInput(context.activity, context);
-            }
             const stickerText = this.extractStickerText(context.activity);
             const input = {
               message: stickerText || context.activity.text,
@@ -89,6 +86,9 @@ class FbConnector extends Connector {
               app: this.container.name,
               fbContext: context,
             };
+            if (this.onReceiveInput) {
+              await this.onReceiveInput(input);
+            }
             if (this.onHear) {
               logger.debug('fb > processActivity > on hear');
               await this.onHear(this, input);
