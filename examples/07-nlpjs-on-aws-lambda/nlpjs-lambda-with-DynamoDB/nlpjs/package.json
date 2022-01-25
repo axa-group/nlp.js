@@ -6,7 +6,7 @@
     "node-nlp": "^4.3.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.656.0"
+    "aws-sdk": "^2.814.0"
   },
   "eslintConfig": {
     "root": true,
