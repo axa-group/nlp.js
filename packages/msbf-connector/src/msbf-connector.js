@@ -116,10 +116,12 @@ class MsbfConnector extends Connector {
   }
 
   async say(input, context) {
+    let nlpjsCtx = context;
     if (!context) {
       context = input.msbfContext;
     }
     if (!context.sendActivity) {
+      nlpjsCtx = context;
       context = context.parent;
     }
     if (input.answer) {
