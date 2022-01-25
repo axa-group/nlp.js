@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/msbf-connector",
-  "version": "4.22.15",
+  "version": "4.22.16",
   "description": "Microsoft Bot Framework Connector",
   "author": {
     "email": "opensource@axa.com",
@@ -30,5 +30,5 @@
     "@nlpjs/request": "^4.22.7",
     "botbuilder": "^4.7.0"
   },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  "gitHead": "42edd15d4cfc5a3d73ab8c700570f46f265e5ea6"
 }
