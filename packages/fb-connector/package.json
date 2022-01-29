@@ -28,9 +28,8 @@
     "@nlpjs/bot": "^4.22.14",
     "@nlpjs/connector": "^4.22.7",
     "@nlpjs/core": "^4.22.7",
-    "botbuilder": "^4.11.1",
-    "botbuilder-adapter-facebook": "^1.0.11",
-    "dotenv": "^14.1.0"
+    "botbuilder": "^4.15.0",
+    "botbuilder-adapter-facebook": "^1.0.11"
   },
   "publishConfig": {
     "access": "public"
