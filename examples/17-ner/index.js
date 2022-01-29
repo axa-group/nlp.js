@@ -1,4 +1,4 @@
-const { dockStart } = require('@nlpjs/basic');
+const { dockStart } = require('../../packages/basic');
 
 (async () => {
   const locale = 'en';
