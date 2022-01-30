@@ -29,7 +29,6 @@ const execTimeWord = [];
 const execTimeMedium = [];
 const execTimeLong = [];
 
-
 function getTime(hrTime) {
   return hrTime[0] * 1000000000 + hrTime[1];
 }

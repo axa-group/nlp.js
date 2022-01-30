@@ -55,7 +55,7 @@ function trimBetween(line, left, right, shouldBeFirst = false) {
   };
 }
 
-const CARD_LINK_REGEX =  /!?\[.{0,100}\]\(https?:\/\/.{0,2048}\)/ig;
+const CARD_LINK_REGEX = /!?\[.{0,100}\]\(https?:\/\/.{0,2048}\)/gi;
 
 function trimLine(line) {
   const trimmedCondition = trimBetween(line.trim(), '[', ']', true);
@@ -63,7 +63,7 @@ function trimLine(line) {
   if (CARD_LINK_REGEX.test(line)) {
     trimmedSettings = {
       line,
-      trimmed: ''
+      trimmed: '',
     };
   } else {
     trimmedSettings = trimBetween(trimmedCondition.line, '(', ')');
