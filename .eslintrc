@@ -15,6 +15,14 @@
     "no-restricted-syntax": 0,
     "no-await-in-loop": "off"
   },
+  "overrides": [
+    {
+      "files": ["examples/**/*.js"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ],
   "env": {
     "node": true,
     "jest/globals": true

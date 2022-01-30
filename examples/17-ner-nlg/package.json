@@ -1,5 +1,5 @@
 {
-  "name": "17-ner",
+  "name": "17-ner-nlg",
   "version": "1.0.0",
   "description": "Example of using NER",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Eric Lara <ericzon@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@nlpjs/basic": "^4.22.14"
