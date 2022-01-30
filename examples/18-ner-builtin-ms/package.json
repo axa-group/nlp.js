@@ -1,0 +1,16 @@
+{
+  "name": "18-ner-builtin-ms",
+  "version": "1.0.0",
+  "description": "Example of using NER",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Eric Lara <ericzon@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@nlpjs/builtin-microsoft": "^4.22.7",
+    "@nlpjs/ner": "^4.22.9"
+  }
+}
