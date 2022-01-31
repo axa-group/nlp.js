@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/basic",
-  "version": "4.22.14",
+  "version": "4.22.17",
   "description": "Basic dependencies for node",
   "author": {
     "email": "opensource@axa.com",
@@ -29,8 +29,8 @@
     "@nlpjs/core-loader": "^4.22.7",
     "@nlpjs/evaluator": "^4.22.7",
     "@nlpjs/lang-en": "^4.22.7",
-    "@nlpjs/logger": "^4.22.14",
-    "@nlpjs/nlp": "^4.22.9"
+    "@nlpjs/logger": "^4.22.17",
+    "@nlpjs/nlp": "^4.22.17"
   },
   "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
 }
