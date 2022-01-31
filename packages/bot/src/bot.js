@@ -335,7 +335,7 @@ class Bot extends Clonable {
         await this.setVariable(
           context,
           context.variableName,
-          `"${session.text}"`
+          `"${session.text || context[context.variableName]}"`
         );
       }
     }
