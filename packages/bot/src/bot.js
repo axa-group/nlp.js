@@ -150,10 +150,17 @@ class Bot extends Clonable {
     return context[variableName];
   }
 
+  beginDialog(session, context, dialog) {
+    if (this.onBeginDialog) {
+      this.onBeginDialog(dialog, context);
+    }
+    session.beginDialog(context, dialog);
+  }
+
   async executeAction(session, context, action) {
     if (typeof action === 'string') {
       if (action.startsWith('/') && this.dialogManager.existsDialog(action)) {
-        session.beginDialog(context, action);
+        this.beginDialog(session, context, action);
       } else {
         await session.say(action, context);
       }
@@ -185,7 +192,7 @@ class Bot extends Clonable {
             break;
           case 'beginDialog':
             if (this.dialogManager.existsDialog(dialog)) {
-              session.beginDialog(context, dialog);
+              this.beginDialog(session, context, dialog);
             } else {
               await session.say(dialog, context);
             }
@@ -203,12 +210,15 @@ class Bot extends Clonable {
                 context,
                 { allowList: action.allowedIntents }
               );
+              if (this.onNlpActionResult) {
+                await this.onNlpActionResult(result, session, context);
+              }
               if (result.answer) {
                 if (
                   result.answer.startsWith('/') &&
                   this.dialogManager.existsDialog(result.answer)
                 ) {
-                  session.beginDialog(context, result.answer);
+                  this.beginDialog(session, context, result.answer);
                 } else {
                   await session.say(result.answer, context);
                 }
