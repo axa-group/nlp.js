@@ -60,7 +60,7 @@ class TestConnector extends Connector {
     if (this.settings.settings.trimInput) {
       botText = trimInput(botText);
     }
-    this.messages.push(`${botName}> ` + botText);
+    this.messages.push(`${botName}> ${botText}`);
   }
 
   async hear(line) {
@@ -82,9 +82,11 @@ class TestConnector extends Connector {
         if (bot) {
           const session = this.createSession({
             channelId: 'console',
-            ...(isJsonObject(line) ? { value: JSON.parse(line) } : { text: line }),
+            ...(isJsonObject(line)
+              ? { value: JSON.parse(line) }
+              : { text: line }),
             type: 'message',
-            address: { conversation: { id: 'console000-' + testId } },
+            address: { conversation: { id: `console000-${testId}` } },
           });
           await bot.process(session);
         } else {
@@ -114,7 +116,7 @@ class TestConnector extends Connector {
       .split(/\r?\n/)
       .filter((x) => !x.startsWith('#'))
       .filter((x) => x)
-      .map(x => this.settings.settings.trimInput ? trimInput(x) : x);
+      .map((x) => (this.settings.settings.trimInput ? trimInput(x) : x));
     this.messages = [];
     const userName = this.settings.userName || 'user';
     for (let i = 0; i < this.expected.length; i += 1) {

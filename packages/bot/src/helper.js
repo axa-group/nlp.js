@@ -24,7 +24,10 @@
 // a number or an string are not json objects
 const isJsonObject = (content) => {
   try {
-    if (typeof content !== 'object' && (typeof JSON.parse(content) !== 'object')) {
+    if (
+      typeof content !== 'object' &&
+      typeof JSON.parse(content) !== 'object'
+    ) {
       return false;
     }
     return true;
@@ -32,12 +35,26 @@ const isJsonObject = (content) => {
     return false;
   }
 };
- 
-const trimInput = (input = '') => {
-  return input.replace(/\t/g, ' ').replace(/^( )*/, '').replace(/( )*$/, '').replace(/ +/g, ' ');
+
+const trimInput = (input = '') =>
+  input
+    .replace(/\t/g, ' ')
+    .replace(/^( )*/, '')
+    .replace(/( )*$/, '')
+    .replace(/ +/g, ' ');
+
+const getValidationMessage = (validation) => {
+  let message = validation.message || 'Invalid value';
+  if (Array.isArray(message)) {
+    const minIndex = Math.min(validation.currentRetry, message.length) - 1;
+
+    message = message[minIndex];
+  }
+  return message;
 };
- 
+
 module.exports = {
   isJsonObject,
   trimInput,
+  getValidationMessage,
 };

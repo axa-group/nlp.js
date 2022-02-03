@@ -38,6 +38,7 @@ const {
   validatorDate,
 } = require('./validators');
 const BotLocalization = require('./bot-localization');
+const { getValidationMessage } = require('./helper');
 
 const localeDangle = '_localization';
 
@@ -302,10 +303,8 @@ class Bot extends Clonable {
             session.restartDialog(context);
           }
         } else {
-          await session.say(
-            context.validation.message || 'Invalid value',
-            context
-          );
+          const message = getValidationMessage(context.validation);
+          await session.say(message, context);
           return false;
         }
       }
