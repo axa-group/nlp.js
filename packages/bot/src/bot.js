@@ -153,7 +153,7 @@ class Bot extends Clonable {
 
   beginDialog(session, context, dialog) {
     if (this.onBeginDialog) {
-      this.onBeginDialog(dialog, context);
+      this.onBeginDialog(session, context, dialog);
     }
     session.beginDialog(context, dialog);
   }
@@ -298,7 +298,7 @@ class Bot extends Clonable {
             if (!failDialog.startsWith('/')) {
               failDialog = `/${failDialog}`;
             }
-            session.beginDialog(context, failDialog);
+            this.beginDialog(session, context, failDialog);
           } else {
             session.restartDialog(context);
           }
@@ -325,7 +325,7 @@ class Bot extends Clonable {
     }
     context[localeDangle] = this.localization;
     if (session.forcedDialog) {
-      session.beginDialog(context, session.forcedDialog);
+      this.beginDialog(session, context, session.forcedDialog);
     }
     if (session.activity.value) {
       const keys = Object.keys(session.activity.value);
