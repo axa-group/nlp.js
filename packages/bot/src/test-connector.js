@@ -21,7 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const fs = require('fs');
+const path = require('path');
+const fsp = require('fs').promises;
 const { Connector } = require('@nlpjs/connector');
 
 const { isJsonObject, trimInput } = require('./helper');
@@ -80,13 +81,16 @@ class TestConnector extends Connector {
       } else {
         const bot = this.container.get('bot');
         if (bot) {
+          const conversation = { id: `console000-${testId}` };
           const session = this.createSession({
             channelId: 'console',
             ...(isJsonObject(line)
               ? { value: JSON.parse(line) }
               : { text: line }),
             type: 'message',
-            address: { conversation: { id: `console000-${testId}` } },
+            address: { conversation },
+            // To keep compatibility with msbf
+            conversation,
           });
           await bot.process(session);
         } else {
@@ -110,13 +114,36 @@ class TestConnector extends Connector {
     }
   }
 
-  async runScript(fileName) {
-    this.expected = fs
-      .readFileSync(fileName, 'utf-8')
+  async parseTestScript(fileName) {
+    const testPath = path.dirname(fileName);
+    const lines = (await fsp.readFile(fileName, 'utf-8'))
       .split(/\r?\n/)
       .filter((x) => !x.startsWith('#'))
       .filter((x) => x)
       .map((x) => (this.settings.settings.trimInput ? trimInput(x) : x));
+
+    const finalTest = [];
+    for (let i = 0; i < lines.length; i += 1) {
+      const line = lines[i];
+      const inputMatch = line.match(/^import */);
+      if (inputMatch) {
+        const remoteFilePath = inputMatch.input.split(' ')[1];
+        const remoteTestScript = await this.parseTestScript(
+          path.join(testPath, remoteFilePath)
+        );
+
+        if (remoteTestScript && remoteTestScript.length) {
+          finalTest.push(...remoteTestScript);
+        }
+      } else {
+        finalTest.push(line);
+      }
+    }
+    return finalTest;
+  }
+
+  async runScript(fileName) {
+    this.expected = await this.parseTestScript(fileName);
     this.messages = [];
     const userName = this.settings.userName || 'user';
     for (let i = 0; i < this.expected.length; i += 1) {
