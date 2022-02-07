@@ -27,8 +27,6 @@ const { Connector } = require('@nlpjs/connector');
 
 const { isJsonObject, trimInput } = require('./helper');
 
-const testId = new Date().getTime();
-
 class TestConnector extends Connector {
   initialize() {
     this.settings.settings = this.settings.settings || {};
@@ -81,7 +79,8 @@ class TestConnector extends Connector {
       } else {
         const bot = this.container.get('bot');
         if (bot) {
-          const conversation = { id: `console000-${testId}` };
+          const { conversationId } = this.settings.settings;
+          const conversation = { id: `console000-${conversationId}` };
           const session = this.createSession({
             channelId: 'console',
             ...(isJsonObject(line)
