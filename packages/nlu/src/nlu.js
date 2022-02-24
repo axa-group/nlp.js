@@ -48,7 +48,7 @@ class Nlu extends Clonable {
       pipelineTrain: this.getPipeline(`${this.settings.tag}-train`),
       pipelineProcess: this.getPipeline(`${this.settings.tag}-process`),
     });
-    this.spellCheck = new SpellCheck();
+    this.spellCheck = new SpellCheck(this.settings);
   }
 
   registerDefault() {
