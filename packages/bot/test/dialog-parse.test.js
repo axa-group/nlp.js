@@ -80,20 +80,6 @@ describe('Dialog Parse', () => {
         },
       ]);
     });
-
-    test('parse dialog with settings', async () => {
-      const dialog = `say Hello! this is a simple dialog (opt1, opt2)`;
-      const parsed = dialogParse(dialog);
-      expect(parsed).toMatchObject([
-        {
-          condition: '',
-          line: 'Hello! this is a simple dialog',
-          settings: 'opt1, opt2',
-          srcLine: 'say Hello! this is a simple dialog (opt1, opt2)',
-          type: 'say',
-        },
-      ]);
-    });
   });
 
   describe('trimBetween', () => {
