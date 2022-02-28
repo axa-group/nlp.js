@@ -57,15 +57,28 @@ class ExtractorTrim {
     do {
       const match = condition.regex.exec(` ${utterance} `);
       if (match) {
+        let matchIndex;
+        let startIndex;
+        let endIndex;
+        if (condition?.options?.closest) {
+          matchIndex = 1;
+          const leftWordIndex = match[0].indexOf(match[matchIndex]);
+          startIndex = match.index - 1 + leftWordIndex;
+          endIndex = startIndex +  match[matchIndex].length - 1;
+        } else {
+          matchIndex = 0;
+          startIndex = match.index - 1;
+          endIndex = condition.regex.lastIndex - 2;
+        }
         result.push({
           type: 'trim',
           subtype: TrimType.Between,
-          start: match.index - 1,
-          end: condition.regex.lastIndex - 2,
-          len: match[0].length,
+          start: startIndex,
+          end: endIndex,
+          len: match[matchIndex].length,
           accuracy: 1,
-          sourceText: match[0],
-          utteranceText: match[0],
+          sourceText: match[matchIndex],
+          utteranceText: match[matchIndex],
           entity: name,
         });
         matchFound = true;

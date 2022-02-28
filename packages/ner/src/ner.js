@@ -246,6 +246,14 @@ class Ner extends Clonable {
     this.addRule(locale, name, 'regex', fixedRegex);
   }
 
+  addBetweenLastCondition(locale, name, srcLeftWords, srcRightWords, srcOptions = {}) {
+    const options = {
+      ...srcOptions,
+      closest: true,
+    };
+    this.addBetweenCondition(locale, name, srcLeftWords, srcRightWords, options);
+  }
+
   addBetweenCondition(locale, name, srcLeftWords, srcRightWords, srcOptions) {
     const options = srcOptions || {};
     const leftWords = Array.isArray(srcLeftWords)
@@ -261,7 +269,13 @@ class Ner extends Clonable {
           options.noSpaces === true ? leftWords[i] : ` ${leftWords[i]} `;
         const rightWord =
           options.noSpaces === true ? rightWords[j] : ` ${rightWords[j]} `;
-        conditions.push(`(?<=${leftWord})(.*)(?=${rightWord})`);
+        let regex;
+        if (options.closest === true) {
+          regex = `${leftWord}(?!.*${leftWord}.*)(.*)${rightWord}`;
+        } else {
+          regex = `(?<=${leftWord})(.*)(?=${rightWord})`;
+        }
+        conditions.push(regex);
       }
     }
     let regex = `/${conditions.join('|')}/g`;

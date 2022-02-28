@@ -54,6 +54,53 @@ describe('Extractor Trim', () => {
         },
       ]);
     });
+
+    test('It should extract a between rule finding simplest solution', async () => {
+      const ner = new Ner();
+      ner.addBetweenCondition('en', 'destination', ['to'], ['from']);
+      const input = {
+        text: 'I want to travel to Madrid from Barcelona',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'between',
+          start: 10,
+          end: 25,
+          len: 16,
+          accuracy: 1,
+          sourceText: 'travel to Madrid',
+          utteranceText: 'travel to Madrid',
+          entity: 'destination'
+        },
+      ]);
+    });
+
+    test('It should extract a between rule finding closest solution', async () => {
+      const ner = new Ner();
+      ner.addBetweenLastCondition('en', 'destination', ['to'], ['from']);
+      const input = {
+        text: 'I want to travel to Madrid from Barcelona',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([
+        {
+          type: 'trim',
+          subtype: 'between',
+          start: 20,
+          end: 25,
+          len: 6,
+          accuracy: 1,
+          sourceText: 'Madrid',
+          utteranceText: 'Madrid',
+          entity: 'destination'
+        },
+      ]);
+    });
+
     test('It should extract a get before rule', async () => {
       const ner = new Ner();
       ner.addBeforeCondition('en', 'entity', 'from');
