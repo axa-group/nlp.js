@@ -7,7 +7,7 @@ dialog qna
 dialog greet
   inc count 2
   run ask_name
-  call uppers user_name
+  call uppers { "name": "user_name" }
   [user_name !== 'ADMIN'] say Hello {{ user_name }} {{ count }}
   [user_name === 'ADMIN'] say Admin rights granted
 dialog help

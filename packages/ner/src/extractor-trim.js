@@ -64,7 +64,7 @@ class ExtractorTrim {
           matchIndex = 1;
           const leftWordIndex = match[0].indexOf(match[matchIndex]);
           startIndex = match.index - 1 + leftWordIndex;
-          endIndex = startIndex +  match[matchIndex].length - 1;
+          endIndex = startIndex + match[matchIndex].length - 1;
         } else {
           matchIndex = 0;
           startIndex = match.index - 1;

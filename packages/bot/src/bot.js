@@ -278,7 +278,7 @@ class Bot extends Clonable {
     } else {
       const validation = await validator(session, context, [
         context.variableName,
-        tryParseJson(context.validatorParameters)
+        tryParseJson(context.validatorParameters),
       ]);
       if (validation.isValid) {
         context.validation.currentRetry = 0;
@@ -429,7 +429,9 @@ class Bot extends Clonable {
       if (current.type.length > 3 && current.type.startsWith('ask')) {
         const lineComponents = current.line.split(' ');
         const [varName, ...validatorParams] = lineComponents;
-        current.line = `${varName} ${current.type.slice(3)} ${validatorParams !== '' ? validatorParams.join(' ') : []}`;
+        current.line = `${varName} ${current.type.slice(3)} ${
+          validatorParams !== '' ? validatorParams.join(' ') : []
+        }`;
         current.type = 'ask';
         current.validatorParams = validatorParams.join(' ');
       }
@@ -555,7 +557,11 @@ class Bot extends Clonable {
           tokens = current.line.split(' ');
           // custom validator
           if (current.srcLine[3] !== ' ') {
-            [action.variableName, action.validatorName, ...action.rawValidatorParams] = tokens;
+            [
+              action.variableName,
+              action.validatorName,
+              ...action.rawValidatorParams
+            ] = tokens;
           } else {
             [action.variableName, ...action.rawValidatorParams] = tokens;
             action.validatorName = undefined;

@@ -38,7 +38,7 @@ const isJsonObject = (content) => {
 
 const tryParseJson = (candidate, fallback = {}) => {
   try {
-    return JSON.parse(candidate)
+    return JSON.parse(candidate);
   } catch (error) {
     return fallback;
   }
