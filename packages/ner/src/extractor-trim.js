@@ -60,7 +60,7 @@ class ExtractorTrim {
         let matchIndex;
         let startIndex;
         let endIndex;
-        if (condition?.options?.closest) {
+        if (condition && condition.options && condition.options.closest) {
           matchIndex = 1;
           const leftWordIndex = match[0].indexOf(match[matchIndex]);
           startIndex = match.index - 1 + leftWordIndex;
