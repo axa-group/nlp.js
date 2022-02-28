@@ -1,0 +1,15 @@
+{
+  "name": "19-ner-trim-entities",
+  "version": "1.0.0",
+  "description": "Example of using NER with trim entities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Eric Lara <ericzon@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@nlpjs/ner": "*"
+  }
+}
