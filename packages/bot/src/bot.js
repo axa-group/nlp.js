@@ -38,7 +38,7 @@ const {
   validatorDate,
 } = require('./validators');
 const BotLocalization = require('./bot-localization');
-const { getValidationMessage } = require('./helper');
+const { getValidationMessage, tryParseJson } = require('./helper');
 
 const localeDangle = '_localization';
 
@@ -202,6 +202,7 @@ class Bot extends Clonable {
             context.isWaitingInput = true;
             context.variableName = action.variableName;
             context.validatorName = action.validatorName;
+            context.validatorParameters = action.parameters;
             break;
           case 'nlp':
             if (this.nlp && session.text) {
@@ -235,7 +236,7 @@ class Bot extends Clonable {
           case 'call':
             fn = this.actions[action.functionName];
             if (fn) {
-              await fn(session, context, action.parameters);
+              await fn(session, context, tryParseJson(action.parameters));
             } else {
               console.log(`Unknown function "${action.functionName}"`);
             }
@@ -277,6 +278,7 @@ class Bot extends Clonable {
     } else {
       const validation = await validator(session, context, [
         context.variableName,
+        tryParseJson(context.validatorParameters)
       ]);
       if (validation.isValid) {
         context.validation.currentRetry = 0;
@@ -351,6 +353,7 @@ class Bot extends Clonable {
     if (shouldContinue) {
       context.isWaitingInput = false;
       context.variableName = undefined;
+      context.validatorParameters = undefined;
       let lastDialog;
       let lastPosition;
       while (!context.isWaitingInput) {
@@ -424,8 +427,11 @@ class Bot extends Clonable {
     for (let i = 0; i < script.length; i += 1) {
       const current = script[i];
       if (current.type.length > 3 && current.type.startsWith('ask')) {
-        current.line += ` ${current.type.slice(3)}`;
+        const lineComponents = current.line.split(' ');
+        const [varName, ...validatorParams] = lineComponents;
+        current.line = `${varName} ${current.type.slice(3)} ${validatorParams !== '' ? validatorParams.join(' ') : []}`;
         current.type = 'ask';
+        current.validatorParams = validatorParams.join(' ');
       }
       let splitted;
       switch (current.type) {
@@ -547,7 +553,17 @@ class Bot extends Clonable {
         case 'ask':
           action = this.buildAction('ask', current);
           tokens = current.line.split(' ');
-          [action.variableName, action.validatorName] = tokens;
+          // custom validator
+          if (current.srcLine[3] !== ' ') {
+            [action.variableName, action.validatorName, ...action.rawValidatorParams] = tokens;
+          } else {
+            [action.variableName, ...action.rawValidatorParams] = tokens;
+            action.validatorName = undefined;
+          }
+          const validatorParams = action.rawValidatorParams.join(' ');
+          delete action.rawValidatorParams;
+
+          action.parameters = validatorParams;
           currentDialog.actions.push(action);
           break;
         case 'nlp':
@@ -560,8 +576,9 @@ class Bot extends Clonable {
         case 'call':
           action = this.buildAction('call', current);
           tokens = current.line.split(' ');
-          [action.functionName] = tokens;
-          action.parameters = tokens.slice(1);
+          [action.functionName, ...action.rawParameters] = tokens;
+          action.parameters = action.rawParameters.join(' ');
+          delete action.rawParameters;
           currentDialog.actions.push(action);
           break;
         case 'inc':

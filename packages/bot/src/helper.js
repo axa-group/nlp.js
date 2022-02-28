@@ -36,6 +36,14 @@ const isJsonObject = (content) => {
   }
 };
 
+const tryParseJson = (candidate, fallback = {}) => {
+  try {
+    return JSON.parse(candidate)
+  } catch (error) {
+    return fallback;
+  }
+};
+
 const trimInput = (input = '') =>
   input
     .replace(/\t/g, ' ')
@@ -55,6 +63,7 @@ const getValidationMessage = (validation) => {
 
 module.exports = {
   isJsonObject,
+  tryParseJson,
   trimInput,
   getValidationMessage,
 };
