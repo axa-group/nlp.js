@@ -560,10 +560,8 @@ class Bot extends Clonable {
             [action.variableName, ...action.rawValidatorParams] = tokens;
             action.validatorName = undefined;
           }
-          const validatorParams = action.rawValidatorParams.join(' ');
+          action.parameters = action.rawValidatorParams.join(' ');
           delete action.rawValidatorParams;
-
-          action.parameters = validatorParams;
           currentDialog.actions.push(action);
           break;
         case 'nlp':
