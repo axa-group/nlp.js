@@ -55,6 +55,16 @@ describe('NLU', () => {
       expect(nlu.settings.nonedeltaMultiplier).toEqual(1.2);
       expect(nlu.settings.spellCheckDistance).toEqual(1);
     });
+    test('The settings are forwarded to spell checker constructor', () => {
+      const nlu = new Nlu({
+        spellCheckDistance: 3,
+        spellCheck: true,
+        minLength: 2,
+      });
+      expect(nlu.spellCheck.settings.spellCheckDistance).toEqual(3);
+      expect(nlu.spellCheck.settings.spellCheck).toBeTruthy();
+      expect(nlu.spellCheck.settings.minLength).toEqual(2);
+    });
   });
 
   describe('Prepare', () => {
