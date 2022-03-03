@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/bot",
-  "version": "4.23.0",
+  "version": "4.23.1",
   "description": "Bot plugin for NLP.js",
   "author": {
     "email": "opensource@axa.com",
@@ -33,7 +33,7 @@
     "@nlpjs/connector": "^4.22.7",
     "@nlpjs/core": "^4.22.7",
     "@nlpjs/evaluator": "^4.22.7",
-    "@nlpjs/nlp": "^4.23.0"
+    "@nlpjs/nlp": "^4.23.1"
   },
   "publishConfig": {
     "access": "public"
