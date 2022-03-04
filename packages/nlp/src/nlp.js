@@ -586,8 +586,9 @@ class Nlp extends Clonable {
       context,
       settings: this.applySettings(settings, this.settings.nlu),
     };
+    const forceNER = input.settings && ('forceNER' in input.settings) ? input.settings.forceNER : this.forceNER;
     let output = await this.nluManager.process(input);
-    if (this.forceNER || !this.slotManager.isEmpty) {
+    if (forceNER || !this.slotManager.isEmpty) {
       const optionalUtterance = await this.ner.generateEntityUtterance(
         locale,
         utterance
@@ -615,7 +616,7 @@ class Nlp extends Clonable {
       output.intent = 'None';
     }
     output.context = context;
-    if (this.forceNER || !this.slotManager.isEmpty) {
+    if (forceNER || !this.slotManager.isEmpty) {
       output = await this.ner.process({ ...output });
     } else {
       output.entities = [];
@@ -649,7 +650,7 @@ class Nlp extends Clonable {
       const sentiment = await this.getSentiment(locale, utterance);
       output.sentiment = sentiment ? sentiment.sentiment : undefined;
     }
-    if (this.forceNER || !this.slotManager.isEmpty) {
+    if (forceNER || !this.slotManager.isEmpty) {
       if (this.slotManager.process(output, context)) {
         output.entities.forEach((entity) => {
           context[entity.entity] = entity.option || entity.utteranceText;
