@@ -203,6 +203,13 @@ describe('Stemmer', () => {
       const actual = stemmer.stem(tokens);
       expect(actual).toEqual(expected);
     });
+    test('Should stem "is the app called constructor?"', () => {
+      const input = 'is the app called constructor?';
+      const expected = ['is', 'the', 'app', 'call', 'constructor'];
+      const tokens = tokenizer.tokenize(normalizer.normalize(input));
+      const actual = stemmer.stem(tokens);
+      expect(actual).toEqual(expected);
+    });
   });
 
   describe('Tokenize and stem', () => {
