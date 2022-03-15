@@ -31,6 +31,7 @@ class ExpressApiApp {
     this.settings = settings || {};
     this.plugins = plugins || [];
     this.routers = routers || [];
+    this.express = express;
   }
 
   static newRouter() {
