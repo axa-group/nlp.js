@@ -209,7 +209,7 @@ class Nlu extends Clonable {
         output: { [intent]: 1 },
       };
       const keys = Object.keys(item.input);
-      if (!this.intentFeatures[intent]) {
+      if (!Object.prototype.hasOwnProperty.call(this.intentFeatures, intent)) {
         this.intentFeatures[intent] = {};
       }
       for (let j = 0; j < keys.length; j += 1) {
@@ -226,7 +226,9 @@ class Nlu extends Clonable {
       const features = Object.keys(this.intentFeatures[intent]);
       for (let j = 0; j < features.length; j += 1) {
         const feature = features[j];
-        if (!this.featuresToIntent[feature]) {
+        if (
+          !Object.prototype.hasOwnProperty.call(this.featuresToIntent, feature)
+        ) {
           this.featuresToIntent[feature] = [];
         }
         this.featuresToIntent[feature].push(intent);

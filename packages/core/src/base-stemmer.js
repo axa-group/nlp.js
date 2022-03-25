@@ -302,13 +302,13 @@ class BaseStemmer {
   stemWord(word) {
     let result = this.cache[`.${word}`];
     if (result == null) {
-      if (this.dictionary.before[word]) {
+      if (this.dictionary.before.hasOwnProperty(word)) {
         result = this.dictionary.before[word];
       } else {
         this.setCurrent(word);
         this.innerStem();
         result = this.getCurrent();
-        if (this.dictionary.after[result]) {
+        if (this.dictionary.after.hasOwnProperty(result)) {
           result = this.dictionary.after[result];
         }
       }
