@@ -151,9 +151,9 @@ class Bot extends Clonable {
     return context[variableName];
   }
 
-  beginDialog(session, context, dialog) {
+  async beginDialog(session, context, dialog) {
     if (this.onBeginDialog) {
-      this.onBeginDialog(session, context, dialog);
+      await this.onBeginDialog(session, context, dialog);
     }
     session.beginDialog(context, dialog);
   }
@@ -161,7 +161,7 @@ class Bot extends Clonable {
   async executeAction(session, context, action) {
     if (typeof action === 'string') {
       if (action.startsWith('/') && this.dialogManager.existsDialog(action)) {
-        this.beginDialog(session, context, action);
+        await this.beginDialog(session, context, action);
       } else {
         await session.say(action, context);
       }
@@ -193,7 +193,7 @@ class Bot extends Clonable {
             break;
           case 'beginDialog':
             if (this.dialogManager.existsDialog(dialog)) {
-              this.beginDialog(session, context, dialog);
+              await this.beginDialog(session, context, dialog);
             } else {
               await session.say(dialog, context);
             }
@@ -220,7 +220,7 @@ class Bot extends Clonable {
                   result.answer.startsWith('/') &&
                   this.dialogManager.existsDialog(result.answer)
                 ) {
-                  this.beginDialog(session, context, result.answer);
+                  await this.beginDialog(session, context, result.answer);
                 } else {
                   await session.say(result.answer, context);
                 }
@@ -300,7 +300,7 @@ class Bot extends Clonable {
             if (!failDialog.startsWith('/')) {
               failDialog = `/${failDialog}`;
             }
-            this.beginDialog(session, context, failDialog);
+            await this.beginDialog(session, context, failDialog);
           } else {
             session.restartDialog(context);
           }
@@ -327,7 +327,7 @@ class Bot extends Clonable {
     }
     context[localeDangle] = this.localization;
     if (session.forcedDialog) {
-      this.beginDialog(session, context, session.forcedDialog);
+      await this.beginDialog(session, context, session.forcedDialog);
     }
     if (session.activity.value) {
       const keys = Object.keys(session.activity.value);
