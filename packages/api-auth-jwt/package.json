@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/api-auth-jwt",
-  "version": "4.22.7",
+  "version": "4.23.4",
   "description": "JWT API Authorization",
   "author": {
     "email": "opensource@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.22.7",
+    "@nlpjs/core": "^4.23.4",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.5.2",
@@ -33,7 +33,7 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@nlpjs/database": "^4.22.7"
+    "@nlpjs/database": "^4.23.4"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/open-question",
-  "version": "4.23.3",
+  "version": "4.23.4",
   "description": "BERT open question",
   "author": {
     "email": "opensource@axa.com",
@@ -25,8 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/bert-tokenizer": "^4.22.8",
-    "@nlpjs/core": "^4.22.7",
+    "@nlpjs/bert-tokenizer": "^4.23.4",
+    "@nlpjs/core": "^4.23.4",
     "@nlpjs/utils": "^4.23.2",
     "@tensorflow/tfjs-node": "^3.0.0"
   },

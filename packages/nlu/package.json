@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlu",
-  "version": "4.23.1",
+  "version": "4.23.4",
   "description": "Natural Language Understanding",
   "author": {
     "email": "opensource@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.22.7",
+    "@nlpjs/core": "^4.23.4",
     "@nlpjs/language-min": "^4.22.7",
     "@nlpjs/neural": "^4.22.7",
     "@nlpjs/similarity": "^4.22.7"

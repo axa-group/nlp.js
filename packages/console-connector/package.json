@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/console-connector",
-  "version": "4.22.7",
+  "version": "4.23.4",
   "description": "Console Connector",
   "author": {
     "email": "opensource@axa.com",
@@ -25,8 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/connector": "^4.22.7",
-    "@nlpjs/core": "^4.22.7"
+    "@nlpjs/connector": "^4.23.4",
+    "@nlpjs/core": "^4.23.4"
   },
   "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
 }
