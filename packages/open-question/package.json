@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/open-question",
-  "version": "4.23.4",
+  "version": "4.23.5",
   "description": "BERT open question",
   "author": {
     "email": "opensource@axa.com",
@@ -27,7 +27,7 @@
   "dependencies": {
     "@nlpjs/bert-tokenizer": "^4.23.4",
     "@nlpjs/core": "^4.23.4",
-    "@nlpjs/utils": "^4.23.2",
+    "@nlpjs/utils": "^4.23.5",
     "@tensorflow/tfjs-node": "^3.0.0"
   },
   "publishConfig": {
