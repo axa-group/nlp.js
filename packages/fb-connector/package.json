@@ -28,7 +28,7 @@
     "@nlpjs/bot": "^4.23.4",
     "@nlpjs/connector": "^4.23.4",
     "@nlpjs/core": "^4.23.4",
-    "botbuilder": "^4.15.0",
+    "botbuilder": "^4.16.0",
     "botbuilder-adapter-facebook": "^1.0.11"
   },
   "publishConfig": {
