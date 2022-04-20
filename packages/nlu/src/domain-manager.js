@@ -222,10 +222,16 @@ class DomainManager extends Clonable {
   async fillStemDict(srcInput) {
     this.stemDict = {};
     for (let i = 0; i < this.sentences.length; i += 1) {
-      const key = await this.generateStemKey(this.sentences[i].utterance);
+      const { utterance, intent, domain } = this.sentences[i];
+      const key = await this.generateStemKey(utterance);
+      if (!key || key === '') {
+        this.container
+          .get('logger')
+          .warn(`This utterance: "${utterance}" contains only stop words`);
+      }
       this.stemDict[key] = {
-        intent: this.sentences[i].intent,
-        domain: this.sentences[i].domain,
+        intent,
+        domain,
       };
     }
     return srcInput;
