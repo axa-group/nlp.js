@@ -28,7 +28,7 @@
     "@nlpjs/connector": "^4.23.4",
     "@nlpjs/core": "^4.23.4",
     "formidable": "^2.0.1",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^3.2.3"
   },
   "publishConfig": {
     "access": "public"
