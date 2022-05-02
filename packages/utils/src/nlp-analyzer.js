@@ -50,6 +50,7 @@ class NlpAnalyzer {
           score: undefined,
         };
         const current = {
+          test,
           sourceOutput: output,
           expectedIntent: intent,
           topIntent: topClassification.intent,
@@ -102,6 +103,7 @@ class NlpAnalyzer {
     }
     let correct = 0;
     let correctGoodScore = 0;
+    const errors = [];
     for (let i = 0; i < outputs.length; i += 1) {
       const output = outputs[i];
       if (output.isCorrect) {
@@ -147,8 +149,22 @@ class NlpAnalyzer {
           const current = analysis.confusionMatrix.intents[j];
           if (j === expectedIntentPos) {
             current.fn += 1;
+            // errors.push({
+            //   type: 'fn',
+            //   expected: output.expectedIntent,
+            //   received: output.topIntent,
+            //   score: output.topScore,
+            //   test: output.test,
+            // });
           } else if (j === actualIntentPos) {
             current.fp += 1;
+            errors.push({
+              type: 'fp',
+              expected: output.expectedIntent,
+              received: output.topIntent,
+              score: output.topScore,
+              test: output.test,
+            });
           } else {
             current.tn += 1;
           }
@@ -183,6 +199,7 @@ class NlpAnalyzer {
     totals.f1Score =
       (2 * totals.precision * totals.recall) /
       (totals.precision + totals.recall);
+    analysis.errors = errors;
     return analysis;
   }
 
@@ -264,7 +281,7 @@ class NlpAnalyzer {
 
   generateData(workbook, analysis) {
     const sheet = workbook.addWorksheet('Analysis');
-    sheet.getColumn(2).width = 20;
+    sheet.getColumn(2).width = 30;
     sheet.getColumn(5).width = 20;
     this.writeAt(sheet, 1, 2, 'Name');
     this.writeAt(sheet, 2, 2, analysis.corpus.name);
@@ -314,6 +331,28 @@ class NlpAnalyzer {
     for (let i = 0; i < 10; i += 1) {
       this.writeAt(sheet, 5 + i, 21, analysis.confidenceHistogram[i]);
       this.writeAt(sheet, 5 + i, 22, analysis.clarityHistogram[i]);
+    }
+
+    if (analysis.errors) {
+      const sheetWithWErrors = workbook.addWorksheet('Errors');
+      sheetWithWErrors.getColumn(2).width = 30;
+      sheetWithWErrors.getColumn(3).width = 30;
+      sheetWithWErrors.getColumn(5).width = 60;
+
+      this.writeAt(sheetWithWErrors, 0, 0, 'Error type');
+      this.writeAt(sheetWithWErrors, 1, 0, 'Expected');
+      this.writeAt(sheetWithWErrors, 2, 0, 'Received');
+      this.writeAt(sheetWithWErrors, 3, 0, 'Score');
+      this.writeAt(sheetWithWErrors, 4, 0, 'Test');
+
+      for (let i = 1; i <= analysis.errors.length; i += 1) {
+        const error = analysis.errors[i - 1];
+        this.writeAt(sheetWithWErrors, 0, i, error.type);
+        this.writeAt(sheetWithWErrors, 1, i, error.expected);
+        this.writeAt(sheetWithWErrors, 2, i, error.received);
+        this.writeAt(sheetWithWErrors, 3, i, error.score);
+        this.writeAt(sheetWithWErrors, 4, i, error.test);
+      }
     }
   }
 
