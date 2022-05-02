@@ -362,15 +362,28 @@ class NlpAnalyzer {
     }
   }
 
-  async generateExcel(fileName, analysis) {
+  async generateExcel(fileName, analysis, options = {}) {
     const workbook = new Excel.Workbook();
-    workbook.creator = 'Jesús Seijas';
-    workbook.lastModifiedBy = 'Jesús Seijas';
-    workbook.created = new Date();
-    workbook.modified = workbook.created;
+    workbook.creator = options.creator || 'Jesús Seijas';
+    workbook.lastModifiedBy = options.lastModifiedBy || 'Jesús Seijas';
+    workbook.created = options.created || new Date();
+    workbook.modified = options.modified || workbook.created;
     this.generateConfusionMatrix(workbook, analysis);
     this.generateData(workbook, analysis);
     await workbook.xlsx.writeFile(fileName);
+  }
+
+  streamExcel(outStream, analysis, options = {}) {
+    const workbook = new Excel.Workbook();
+    workbook.creator = options.creator || 'Jesús Seijas';
+    workbook.lastModifiedBy = options.lastModifiedBy || 'Jesús Seijas';
+    workbook.created = options.created || new Date();
+    workbook.modified = options.modified || workbook.created;
+    this.generateConfusionMatrix(workbook, analysis);
+    this.generateData(workbook, analysis);
+    return workbook.xlsx.write(outStream, {
+      options:  options.separator || ';',
+    });
   }
 }
 
