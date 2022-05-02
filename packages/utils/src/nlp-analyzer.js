@@ -185,6 +185,7 @@ class NlpAnalyzer {
       current.accuracy =
         (current.tp + current.tn) /
         (current.tp + current.tn + current.fp + current.fn);
+      current.specificity = current.tn / (current.tn + current.fp);
       current.precision = current.tp / (current.tp + current.fp);
       current.recall = current.tp / (current.tp + current.fn);
       current.f1Score =
@@ -194,6 +195,7 @@ class NlpAnalyzer {
     const { totals } = analysis.confusionMatrix;
     totals.accuracy =
       (totals.tp + totals.tn) / (totals.tp + totals.tn + totals.fp + totals.fn);
+    totals.specificity = totals.tn / (totals.tn + totals.fp);
     totals.precision = totals.tp / (totals.tp + totals.fp);
     totals.recall = totals.tp / (totals.tp + totals.fn);
     totals.f1Score =
@@ -214,8 +216,9 @@ class NlpAnalyzer {
       'True Negatives',
       'False Negatives',
       'Accuracy',
+      'Specificity / TN rate',
       'Precision',
-      'Recall',
+      'Recall / Sensitivity / TP rate',
       'F1-Score',
     ];
     const sheet = workbook.addWorksheet('Confusion Matrix');
@@ -223,7 +226,7 @@ class NlpAnalyzer {
     const { intents, matrix } = confusionMatrix;
     let maxLength = 0;
 
-    for (let i = 0; i < 8; i += 1) {
+    for (let i = 0; i < titles.length; i += 1) {
       const pos = XTableUtils.coord2excel({
         column: intents.length + i + 2,
         row: 0,
@@ -250,9 +253,10 @@ class NlpAnalyzer {
       this.writeAt(sheet, intents.length + 4, i + 1, intents[i].tn);
       this.writeAt(sheet, intents.length + 5, i + 1, intents[i].fn);
       this.writeAt(sheet, intents.length + 6, i + 1, intents[i].accuracy);
-      this.writeAt(sheet, intents.length + 7, i + 1, intents[i].precision);
-      this.writeAt(sheet, intents.length + 8, i + 1, intents[i].recall);
-      this.writeAt(sheet, intents.length + 9, i + 1, intents[i].f1Score);
+      this.writeAt(sheet, intents.length + 7, i + 1, intents[i].specificity);
+      this.writeAt(sheet, intents.length + 8, i + 1, intents[i].precision);
+      this.writeAt(sheet, intents.length + 9, i + 1, intents[i].recall);
+      this.writeAt(sheet, intents.length + 10, i + 1, intents[i].f1Score);
       const row = matrix[i];
       for (let j = 0; j < intents.length; j += 1) {
         const dataPosition = XTableUtils.coord2excel({
@@ -309,12 +313,14 @@ class NlpAnalyzer {
     this.writeAt(sheet, 2, 13, analysis.confusionMatrix.totals.fn);
     this.writeAt(sheet, 1, 14, 'Accuracy');
     this.writeAt(sheet, 2, 14, analysis.confusionMatrix.totals.accuracy);
-    this.writeAt(sheet, 1, 15, 'Precision');
-    this.writeAt(sheet, 2, 15, analysis.confusionMatrix.totals.precision);
-    this.writeAt(sheet, 1, 16, 'Recall');
-    this.writeAt(sheet, 2, 16, analysis.confusionMatrix.totals.recall);
-    this.writeAt(sheet, 1, 17, 'F1-Score');
-    this.writeAt(sheet, 2, 17, analysis.confusionMatrix.totals.f1Score);
+    this.writeAt(sheet, 1, 15, 'Specificity');
+    this.writeAt(sheet, 2, 15, analysis.confusionMatrix.totals.specificity);
+    this.writeAt(sheet, 1, 16, 'Precision');
+    this.writeAt(sheet, 2, 16, analysis.confusionMatrix.totals.precision);
+    this.writeAt(sheet, 1, 17, 'Recall');
+    this.writeAt(sheet, 2, 17, analysis.confusionMatrix.totals.recall);
+    this.writeAt(sheet, 1, 18, 'F1-Score');
+    this.writeAt(sheet, 2, 18, analysis.confusionMatrix.totals.f1Score);
 
     this.writeAt(sheet, 5, 20, '0..10');
     this.writeAt(sheet, 6, 20, '10..20');
