@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/lang-all",
-  "version": "4.23.4",
+  "version": "4.24.0",
   "description": "Core",
   "author": {
     "email": "opensource@axa.com",
@@ -46,7 +46,7 @@
     "@nlpjs/lang-hy": "^4.23.4",
     "@nlpjs/lang-id": "^4.23.4",
     "@nlpjs/lang-it": "^4.23.4",
-    "@nlpjs/lang-ja": "^4.23.4",
+    "@nlpjs/lang-ja": "^4.24.0",
     "@nlpjs/lang-ko": "^4.23.4",
     "@nlpjs/lang-lt": "^4.23.4",
     "@nlpjs/lang-ms": "^4.23.4",

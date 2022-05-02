@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/dialogflow-connector",
-  "version": "4.23.5",
+  "version": "4.24.0",
   "description": "Dialogflow connector for NLP.js",
   "author": {
     "email": "opensource@axa.com",
