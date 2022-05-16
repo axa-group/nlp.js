@@ -382,15 +382,25 @@ class Bot extends Clonable {
           }
         } catch (error) {
           logger.error(error);
+          if (!context.errorLoops) {
+            context.errorLoops = 0;
+          }
           const { globalFallbackDialog } = this.settings;
-          if (this.dialogManager.existsDialog(globalFallbackDialog)) {
+          const fallbackDialogExists =
+            this.dialogManager.existsDialog(globalFallbackDialog);
+          if (fallbackDialogExists && context.errorLoops < 1) {
+            context.errorLoops += 1;
             context.validation = {};
             delete context.validatorName;
             delete context.variableName;
             session.restartDialog(context);
             await this.beginDialog(session, context, globalFallbackDialog);
           } else {
-            logger.warn('Define a global fallback handler');
+            if (fallbackDialogExists) {
+              logger.error('Max iterations reached in global error loop');
+            } else {
+              logger.warn('Define a global fallback handler');
+            }
             throw error;
           }
         }
