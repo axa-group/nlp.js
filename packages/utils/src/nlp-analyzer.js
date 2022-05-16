@@ -382,7 +382,7 @@ class NlpAnalyzer {
     this.generateConfusionMatrix(workbook, analysis);
     this.generateData(workbook, analysis);
     return workbook.xlsx.write(outStream, {
-      options:  options.separator || ';',
+      options: options.separator || ';',
     });
   }
 }

@@ -6,7 +6,7 @@
     "postinstall": "lerna bootstrap",
     "lint": "eslint .",
     "lintfix": "eslint --fix .",
-    "test": "eslint --fix . && jest --silent --coverage --maxWorkers=4 ."
+    "test": "eslint --fix . && TZ='Europe/London' jest --silent --coverage --maxWorkers=4 ."
   },
   "author": {
     "email": "opensource@axa.com",

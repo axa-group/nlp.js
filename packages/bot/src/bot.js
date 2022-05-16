@@ -63,6 +63,13 @@ class Bot extends Clonable {
       this.settings,
       this.container.getConfiguration(this.settings.tag)
     );
+    if (!this.settings.globalFallbackDialog) {
+      this.settings.globalFallbackDialog = '/globalFallbackDialog';
+    }
+    const { globalFallbackDialog } = this.settings;
+    this.settings.globalFallbackDialog = globalFallbackDialog.startsWith('/')
+      ? globalFallbackDialog
+      : `/${globalFallbackDialog}`;
     this.nlp = this.container.get('nlp');
     this.localization = new BotLocalization();
   }
@@ -351,25 +358,41 @@ class Bot extends Clonable {
       }
     }
     if (shouldContinue) {
+      const logger = this.container.get('logger');
       context.isWaitingInput = false;
       context.variableName = undefined;
       context.validatorParameters = undefined;
       let lastDialog;
       let lastPosition;
       while (!context.isWaitingInput) {
-        const current = this.dialogManager.getNextAction(context.dialogStack);
-        if (this.onNextAction) {
-          await this.onNextAction(current, session, context);
-        }
-        if (
-          current.dialog === lastDialog &&
-          current.lastExecuted === lastPosition
-        ) {
-          await this.executeAction(session, context, { command: 'ask' });
-        } else {
-          lastDialog = current.dialog;
-          lastPosition = current.lastExecuted;
-          await this.executeAction(session, context, current.action);
+        try {
+          const current = this.dialogManager.getNextAction(context.dialogStack);
+          if (this.onNextAction) {
+            await this.onNextAction(current, session, context);
+          }
+          if (
+            current.dialog === lastDialog &&
+            current.lastExecuted === lastPosition
+          ) {
+            await this.executeAction(session, context, { command: 'ask' });
+          } else {
+            lastDialog = current.dialog;
+            lastPosition = current.lastExecuted;
+            await this.executeAction(session, context, current.action);
+          }
+        } catch (error) {
+          logger.error(error);
+          const { globalFallbackDialog } = this.settings;
+          if (this.dialogManager.existsDialog(globalFallbackDialog)) {
+            context.validation = {};
+            delete context.validatorName;
+            delete context.variableName;
+            session.restartDialog(context);
+            await this.beginDialog(session, context, globalFallbackDialog);
+          } else {
+            logger.warn('Define a global fallback handler');
+            throw error;
+          }
         }
       }
     }
