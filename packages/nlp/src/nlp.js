@@ -657,6 +657,12 @@ class Nlp extends Clonable {
         });
       }
       context.slotFill = output.slotFill;
+      if (output.srcAnswer) {
+        output.srcAnswer = this.nlgManager.renderText(
+          output.srcAnswer,
+          context
+        );
+      }
     }
     await this.contextManager.setContext(sourceInput, context);
     delete output.context;
