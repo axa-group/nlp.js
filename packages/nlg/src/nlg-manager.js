@@ -124,15 +124,16 @@ class NlgManager extends Clonable {
         matchFound = false;
       }
     } while (matchFound);
+    if (srcText.answer) {
+      srcText.answer = text;
+    } else {
+      srcText = text;
+    }
     const template = this.container.get('Template');
     if (template && context) {
       return template.compile(srcText, context);
     }
-    if (srcText.answer) {
-      srcText.answer = text;
-      return srcText;
-    }
-    return text;
+    return srcText;
   }
 
   renderRandom(srcInput) {
