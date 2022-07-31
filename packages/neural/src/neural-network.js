@@ -204,9 +204,8 @@ class NeuralNetwork {
     }
     for (let i = 0; i < transformedInput.keys.length; i += 1) {
       const key = transformedInput.keys[i];
-      result[this.lookup.inputLookup.items[key]] = this.perceptrons[
-        intentIndex
-      ].weights[key];
+      result[this.lookup.inputLookup.items[key]] =
+        this.perceptrons[intentIndex].weights[key];
     }
     return {
       weights: result,

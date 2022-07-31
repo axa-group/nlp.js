@@ -73,7 +73,7 @@ describe('Extractor Trim', () => {
           accuracy: 1,
           sourceText: 'travel to Madrid',
           utteranceText: 'travel to Madrid',
-          entity: 'destination'
+          entity: 'destination',
         },
       ]);
     });
@@ -96,7 +96,7 @@ describe('Extractor Trim', () => {
           accuracy: 1,
           sourceText: 'Madrid',
           utteranceText: 'Madrid',
-          entity: 'destination'
+          entity: 'destination',
         },
       ]);
     });

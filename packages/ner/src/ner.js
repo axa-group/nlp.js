@@ -246,12 +246,24 @@ class Ner extends Clonable {
     this.addRule(locale, name, 'regex', fixedRegex);
   }
 
-  addBetweenLastCondition(locale, name, srcLeftWords, srcRightWords, srcOptions = {}) {
+  addBetweenLastCondition(
+    locale,
+    name,
+    srcLeftWords,
+    srcRightWords,
+    srcOptions = {}
+  ) {
     const options = {
       ...srcOptions,
       closest: true,
     };
-    this.addBetweenCondition(locale, name, srcLeftWords, srcRightWords, options);
+    this.addBetweenCondition(
+      locale,
+      name,
+      srcLeftWords,
+      srcRightWords,
+      options
+    );
   }
 
   addBetweenCondition(locale, name, srcLeftWords, srcRightWords, srcOptions) {

@@ -42,11 +42,20 @@ class TestConnector extends Connector {
       if (message.attachments && message.attachments.length) {
         const attachment = message.attachments[0];
         if (attachment.contentType.includes('card.adaptive')) {
-          text = attachment.content.speak || message.name || message.id || attachment.content.id;
+          text =
+            attachment.content.speak ||
+            message.name ||
+            message.id ||
+            attachment.content.id;
         }
       }
       if (!text) {
-        text = message.answer || message.name || message.message || message.text || reference;
+        text =
+          message.answer ||
+          message.name ||
+          message.message ||
+          message.text ||
+          reference;
       }
     }
     const botName = this.settings.botName || 'bot';
