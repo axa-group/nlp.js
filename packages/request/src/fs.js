@@ -53,13 +53,17 @@ function writeFile(fileName, data, format = 'utf8') {
     if (isWeb(fileName)) {
       reject(new Error('File cannot be written in web'));
     } else {
-      fs.writeFile(fileName, data, format, (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(true);
-        }
-      });
+      try {
+        fs.writeFile(fileName, data, format, (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(true);
+          }
+        });
+      } catch (err) {
+        reject(err);
+      }
     }
   });
 }
