@@ -225,6 +225,8 @@ class SlotManager {
     }
     keys = Object.keys(mandatorySlots);
     if (!keys || keys.length === 0) {
+      // All mandatory slots are filled, so we are done. No further questions needed
+      delete result.srcAnswer;
       return true;
     }
     if (context.slotFill && context.slotFill.intent === result.intent) {

@@ -346,7 +346,6 @@ describe('Slot Manager', () => {
         intent: 'intent',
         utterance: 'hello',
         answer: 'answer',
-        srcAnswer: 'srcAnswer',
         score: 1,
         entities: [
           {
