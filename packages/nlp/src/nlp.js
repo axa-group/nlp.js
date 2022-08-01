@@ -642,6 +642,22 @@ class Nlp extends Clonable {
         ? entity.items[0].sourceText
         : entity.sourceText;
     }
+    if (forceNER || !this.slotManager.isEmpty) {
+      if (this.slotManager.process(output, context)) {
+        output.entities.forEach((entity) => {
+          context.entities[entity.entity] = entity;
+          context[entity.entity] = entity.option || entity.utteranceText;
+        });
+      }
+      context.slotFill = output.slotFill;
+      if (output.srcAnswer) {
+        // Re-Render Answer to also replace newly added entities in srcAnswer
+        output.srcAnswer = this.nlgManager.renderText(
+          output.srcAnswer,
+          context
+        );
+      }
+    }
     const answers = await this.nlgManager.run({ ...output });
     output.answers = answers.answers;
     output.answer = answers.answer;
@@ -649,20 +665,6 @@ class Nlp extends Clonable {
     if (this.settings.calculateSentiment) {
       const sentiment = await this.getSentiment(locale, utterance);
       output.sentiment = sentiment ? sentiment.sentiment : undefined;
-    }
-    if (forceNER || !this.slotManager.isEmpty) {
-      if (this.slotManager.process(output, context)) {
-        output.entities.forEach((entity) => {
-          context[entity.entity] = entity.option || entity.utteranceText;
-        });
-      }
-      context.slotFill = output.slotFill;
-      if (output.srcAnswer) {
-        output.srcAnswer = this.nlgManager.renderText(
-          output.srcAnswer,
-          context
-        );
-      }
     }
     await this.contextManager.setContext(sourceInput, context);
     delete output.context;
