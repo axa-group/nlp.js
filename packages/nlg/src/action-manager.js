@@ -61,7 +61,7 @@ class ActionManager extends Clonable {
    * Find the index of an action
    * @param {String} intent Name of the intent.
    * @param {String} action Name of the action.
-   * @param {String[]} list of parameters Parameters of the action.
+   * @param {String[]} parameters list of parameters of the action.
    */
   posAction(intent, action, parameters) {
     if (!this.actions[intent]) {
@@ -96,7 +96,7 @@ class ActionManager extends Clonable {
   /**
    * Returns a processed answer after execute a list of given actions.
    * @param {String} intent Name of the intent.
-   * @param {String} original answer
+   * @param {String} input original answer data structure
    */
   async processActions(intent, input) {
     const actionList = this.findActions(intent);
@@ -136,6 +136,7 @@ class ActionManager extends Clonable {
    * @param {String} intent Name of the intent.
    * @param {String} action Action to be executed
    * @param {String} parameters Parameters of the action
+   * @param {function} fn Function of the action
    */
   addAction(intent, action, parameters, fn) {
     if (this.posAction(intent, action, parameters) === -1) {
