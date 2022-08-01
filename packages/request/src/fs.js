@@ -25,7 +25,10 @@ const fs = require('fs');
 const request = require('./request');
 
 function isWeb(str) {
-  return str.startsWith('https:') || str.startsWith('http:');
+  return (
+    typeof str === 'string' &&
+    (str.startsWith('https:') || str.startsWith('http:'))
+  );
 }
 
 function readFile(fileName) {
