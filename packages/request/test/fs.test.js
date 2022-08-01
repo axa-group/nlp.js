@@ -60,10 +60,7 @@ describe('fs', () => {
 
   describe('writeFile', () => {
     test('Should return a Promise', () => {
-      const actual = fs.writeFile(
-        './packages/request/test/file2.txt',
-        'foobar'
-      );
+      const actual = fs.writeFile().catch(() => {}); // ignore rejection
       expect(actual.then).toBeDefined();
       expect(typeof actual.then).toEqual('function');
     });
