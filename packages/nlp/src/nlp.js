@@ -590,12 +590,12 @@ class Nlp extends Clonable {
     let output = await this.nluManager.process(input);
     if (forceNER || !this.slotManager.isEmpty) {
       const optionalUtterance = await this.ner.generateEntityUtterance(
-        locale,
+        output.locale || locale,
         utterance
       );
       if (optionalUtterance && optionalUtterance !== utterance) {
         const optionalInput = {
-          locale,
+          locale: output.locale || locale,
           utterance: optionalUtterance,
           context,
           settings: this.applySettings(settings, this.settings.nlu),
