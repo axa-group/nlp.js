@@ -657,9 +657,14 @@ class Nlp extends Clonable {
     if (this.settings.executeActionsBeforeAnswers) {
       output = await this.actionManager.run({ ...output });
     }
-    const answers = await this.nlgManager.run({ ...output });
-    output.answers = answers.answers;
-    output.answer = answers.answer;
+    if (this.settings.executeActionsBeforeAnswers && output.answer) {
+      // Render answer from actions and use as final answer
+      output.answer = this.nlgManager.renderText(output.answer, context);
+    } else {
+      const answers = await this.nlgManager.run({ ...output });
+      output.answers = answers.answers;
+      output.answer = answers.answer;
+    }
     if (output.srcAnswer) {
       // Re-Render Answer to also replace newly added entities in srcAnswer
       output.srcAnswer = this.nlgManager.renderText(output.srcAnswer, context);
