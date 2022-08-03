@@ -650,17 +650,15 @@ class Nlp extends Clonable {
         });
       }
       context.slotFill = output.slotFill;
-      if (output.srcAnswer) {
-        // Re-Render Answer to also replace newly added entities in srcAnswer
-        output.srcAnswer = this.nlgManager.renderText(
-          output.srcAnswer,
-          context
-        );
-      }
     }
     const answers = await this.nlgManager.run({ ...output });
     output.answers = answers.answers;
     output.answer = answers.answer;
+    if (output.srcAnswer) {
+      // Re-Render Answer to also replace newly added entities in srcAnswer
+      output.srcAnswer = this.nlgManager.renderText(output.srcAnswer, context);
+      output.answer = output.srcAnswer;
+    }
     output = await this.actionManager.run({ ...output });
     if (this.settings.calculateSentiment) {
       const sentiment = await this.getSentiment(locale, utterance);
