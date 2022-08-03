@@ -125,6 +125,9 @@ class Nlp extends Clonable {
     if (this.settings.calculateSentiment === undefined) {
       this.settings.calculateSentiment = true;
     }
+    if (this.settings.executeActionsBeforeAnswers === undefined) {
+      this.settings.executeActionsBeforeAnswers = false;
+    }
   }
 
   async start() {
@@ -651,6 +654,9 @@ class Nlp extends Clonable {
       }
       context.slotFill = output.slotFill;
     }
+    if (this.settings.executeActionsBeforeAnswers) {
+      output = await this.actionManager.run({ ...output });
+    }
     const answers = await this.nlgManager.run({ ...output });
     output.answers = answers.answers;
     output.answer = answers.answer;
@@ -659,7 +665,9 @@ class Nlp extends Clonable {
       output.srcAnswer = this.nlgManager.renderText(output.srcAnswer, context);
       output.answer = output.srcAnswer;
     }
-    output = await this.actionManager.run({ ...output });
+    if (!this.settings.executeActionsBeforeAnswers) {
+      output = await this.actionManager.run({ ...output });
+    }
     if (this.settings.calculateSentiment) {
       const sentiment = await this.getSentiment(locale, utterance);
       output.sentiment = sentiment ? sentiment.sentiment : undefined;
