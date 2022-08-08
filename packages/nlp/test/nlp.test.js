@@ -878,6 +878,23 @@ describe('NLP', () => {
             locale: ['en', 'es'],
             regex: '/\\b(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3})\\b/gi',
           },
+          fromCity: {
+            locale: ['en', 'es'],
+            trim: [
+              {
+                position: 'betweenLast',
+                leftWords: ['from'],
+                rightWords: ['to'],
+                opts: {
+                  caseSensitive: true,
+                },
+              },
+              {
+                position: 'afterLast',
+                words: ['from'],
+              },
+            ],
+          },
         },
       };
       const nlp = new Nlp();
