@@ -6,6 +6,7 @@ When the NLP has detected an intent there are some options to execute own logic 
   * [Execute action function before answer generation](#actions-before-answer-generation)
   * [Execute action function after answer generation](#actions-after-answer-generation)
 * [Execute a Pipeline after answer generation](#pipeline-after-answer-generation)
+* [onIntent method after answer generation](#onintent-method-after-answer-generation)
 
 ## Actions vs. Pipelines
 The main difference between these two types of logic is that actions are really defined methods that are assigned "in code" in your JavaScript.Pipelines are defined in the Pipeline FIle and can also contain javaScript snippets, but are more the "configuration approach".
@@ -89,3 +90,29 @@ Beside using actions you can also configure a pipeline which is then executed.
 Details and an example of a pipeline with onIntent logic can be found in [Quickstart](./quickstart.md#adding-logic-to-an-intent).
 
 The PipeLine is always executed as last step before returning the respone. This means you can easily overwrite the full answer and manipulate the data returned and manipulate the context for the next call. But in this case you need to generate the answer yourself completely.
+
+## onIntent method after answer generation
+
+instead of the Pipeline you can also create a method onIntent on the Nlp instance which is executed. If this method is set t pipeline is not executed anymore!
+
+```javascript
+const { dockStart } = require('@nlpjs/basic');
+
+function onIntent(nlp, input) {
+  if (input.intent === 'joke.chucknorris') {
+    const output = input;
+    output.answer = 'this has been modified';
+  }
+  return input;
+}
+
+(async () => {
+  const dock = await dockStart();
+  const nlp = dock.get('nlp');
+  nlp.onIntent = onIntent;
+  let result = await nlp.process('Who are you?');
+  console.log(result.answer);
+  result = await nlp.process('Tell me a chuck norris joke');
+  console.log(result.answer);
+})();
+```
