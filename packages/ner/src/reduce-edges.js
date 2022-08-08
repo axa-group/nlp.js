@@ -80,6 +80,9 @@ function reduceEdges(edges, useMaxLength = true) {
   const edgeslen = edges.length;
   for (let i = 0; i < edgeslen; i += 1) {
     const edge = edges[i];
+    if (edge.len === 0) {
+      edge.discarded = true;
+    }
     if (!edge.discarded) {
       for (let j = i + 1; j < edgeslen; j += 1) {
         const other = edges[j];
