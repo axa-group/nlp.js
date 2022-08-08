@@ -272,6 +272,10 @@ class Nlp extends Clonable {
     return this.actionManager.addAction(intent, action, parameters, fn);
   }
 
+  registerActionFunction(action, fn) {
+    return this.actionManager.registerActionInMap(action, fn);
+  }
+
   getActions(intent) {
     return this.actionManager.findActions(intent);
   }
@@ -282,6 +286,10 @@ class Nlp extends Clonable {
 
   removeActions(intent) {
     return this.actionManager.removeActions(intent);
+  }
+
+  removeActionFunction(action) {
+    return this.actionManager.removeActionFromMap(action);
   }
 
   addAnswer(locale, intent, answer, opts) {
