@@ -537,6 +537,32 @@ class Nlp extends Clonable {
     return result;
   }
 
+  structureEntities(output) {
+    const organizedEntities = this.organizeEntities(output.entities);
+    if (!output.context.entities) {
+      output.context.entities = {};
+    }
+    for (let i = 0; i < organizedEntities.length; i += 1) {
+      const entity = organizedEntities[i];
+      output.context.entities[entity.entity] = entity;
+      if (entity.alias) {
+        output.context[entity.alias] = entity.sourceText;
+      }
+      if (entity.isList) {
+        for (let j = 0; j < entity.items.length; j += 1) {
+          output.context[entity.items[j].alias] = entity.items[j].sourceText;
+        }
+      } else {
+        // assume that there could be more than one entity with the same name
+        output.context[`${entity.entity}_0`] = entity.sourceText;
+      }
+      output.context[entity.entity] = entity.isList
+        ? entity.items[0].sourceText
+        : entity.sourceText;
+    }
+    return output;
+  }
+
   async process(locale, utterance, srcContext, settings) {
     let sourceInput;
     let context = srcContext;
@@ -630,28 +656,11 @@ class Nlp extends Clonable {
     if (stemmer && stemmer.lastFill) {
       stemmer.lastFill(output);
     }
-    const organizedEntities = this.organizeEntities(output.entities);
-    if (!output.context.entities) {
-      output.context.entities = {};
-    }
-    for (let i = 0; i < organizedEntities.length; i += 1) {
-      const entity = organizedEntities[i];
-      output.context.entities[entity.entity] = entity;
-      if (entity.isList) {
-        for (let j = 0; j < entity.items.length; j += 1) {
-          output.context[entity.items[j].alias] = entity.items[j].sourceText;
-        }
-      }
-      output.context[entity.entity] = entity.isList
-        ? entity.items[0].sourceText
-        : entity.sourceText;
-    }
+    output = this.structureEntities(output);
     if (forceNER || !this.slotManager.isEmpty) {
       if (this.slotManager.process(output, context)) {
-        output.entities.forEach((entity) => {
-          context.entities[entity.entity] = entity;
-          context[entity.entity] = entity.option || entity.utteranceText;
-        });
+        // structure entities again because slots may have added
+        output = this.structureEntities(output);
       }
       context.slotFill = output.slotFill;
     }

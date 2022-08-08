@@ -180,6 +180,20 @@ class SlotManager {
     });
   }
 
+  generateEntityAliases(entities) {
+    const aliases = [];
+    const dict = {};
+    for (let i = 0; i < entities.length; i += 1) {
+      const entity = entities[i];
+      if (!dict[entity.entity]) {
+        dict[entity.entity] = [];
+      }
+      aliases[i] = `${entity.entity}_${dict[entity.entity].length}`;
+      dict[entity.entity].push(true);
+    }
+    return aliases;
+  }
+
   process(srcResult, srcContext) {
     const result = srcResult;
     const context = srcContext;
@@ -203,9 +217,13 @@ class SlotManager {
       // No mandatory entities defined, we repeat the answer from last time
       return false;
     }
+    const aliases = this.generateEntityAliases(result.entities);
     for (let i = 0, l = result.entities.length; i < l; i += 1) {
+      const entity = result.entities[i];
+      console.log('handle entity', entity.option, entity.entity, aliases[i]);
       // Remove existing mandatory entities to see what's left
-      delete mandatorySlots[result.entities[i].entity];
+      delete mandatorySlots[entity.entity];
+      delete mandatorySlots[aliases[i]];
     }
     if (context.slotFill && mandatorySlots[context.slotFill.currentSlot]) {
       // Last time requested slot was not filled by current answer automatically,
