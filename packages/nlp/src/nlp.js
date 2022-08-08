@@ -380,13 +380,42 @@ class Nlp extends Clonable {
       }
       if (entity.trim) {
         for (let j = 0; j < entity.trim.length; j += 1) {
-          this.addNerPositionCondition(
-            finalLocale,
-            entityName,
-            entity.trim[j].position,
-            entity.trim[j].words,
-            entity.trim[j].opts
-          );
+          switch (entity.trim[j].position) {
+            case 'after':
+            case 'afterLast':
+            case 'afterFirst':
+            case 'before':
+            case 'beforeFirst':
+            case 'beforeLast':
+              this.addNerPositionCondition(
+                finalLocale,
+                entityName,
+                entity.trim[j].position,
+                entity.trim[j].words,
+                entity.trim[j].opts
+              );
+              break;
+            case 'between':
+              this.addNerBetweenCondition(
+                finalLocale,
+                entityName,
+                entity.trim[j].leftWords,
+                entity.trim[j].rightWords,
+                entity.trim[j].opts
+              );
+              break;
+            case 'betweenLast':
+              this.addNerBetweenLastCondition(
+                finalLocale,
+                entityName,
+                entity.trim[j].leftWords,
+                entity.trim[j].rightWords,
+                entity.trim[j].opts
+              );
+              break;
+            default:
+              break;
+          }
         }
       }
     }
