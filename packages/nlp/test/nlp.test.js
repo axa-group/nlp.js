@@ -903,8 +903,140 @@ describe('NLP', () => {
       expect(nlp.ner.rules.es).toBeDefined();
       expect(nlp.ner.rules.en.hero).toBeDefined();
       expect(nlp.ner.rules.en.email).toBeDefined();
+      expect(nlp.ner.rules.en.fromCity).toBeDefined();
       expect(nlp.ner.rules.es.hero).toBeDefined();
       expect(nlp.ner.rules.es.email).toBeDefined();
+      expect(nlp.ner.rules.es.fromCity).toBeDefined();
+      expect(nlp.ner.rules.es.fromCity.type).toEqual('trim');
+      expect(nlp.ner.rules.es.fromCity.rules).toBeDefined();
+      expect(nlp.ner.rules.es.fromCity.rules[0]).toBeDefined();
+      // Verify betweenlast was converted to a between Rule on example of this es rule
+      expect(nlp.ner.rules.es.fromCity.rules[0].type).toEqual('between');
+    });
+
+    test('The corpus can contain entities with slotFilling details', async () => {
+      const corpus = {
+        name: 'Slot Filling Corpus',
+        locale: 'en-US',
+        entities: {
+          fromCity: {
+            trim: [
+              {
+                position: 'betweenLast',
+                leftWords: ['from'],
+                rightWords: ['to'],
+              },
+              {
+                position: 'afterLast',
+                words: ['from'],
+              },
+            ],
+          },
+          toCity: {
+            trim: [
+              {
+                position: 'betweenLast',
+                leftWords: ['to'],
+                rightWords: ['from'],
+              },
+              {
+                position: 'afterLast',
+                words: ['to'],
+              },
+            ],
+          },
+        },
+        data: [
+          {
+            intent: 'travel',
+            utterances: ['I want to travel from @fromCity to @toCity @date'],
+            slotFilling: {
+              fromCity: {
+                mandatory: true,
+                question: 'From where you are traveling?',
+              },
+              toCity: {
+                mandatory: false,
+                question: 'Where do you want to go?',
+              },
+              date: 'When do you want to travel from {{fromCity}} to {{toCity}}?',
+            },
+          },
+        ],
+      };
+      const nlp = new Nlp();
+      await nlp.addCorpus(corpus);
+      expect(nlp.ner.rules.en).toBeDefined();
+      expect(nlp.ner.rules.en.fromCity).toBeDefined();
+      expect(nlp.ner.rules.en.toCity).toBeDefined();
+      expect(nlp.ner.rules.en.date).toBeUndefined();
+      expect(nlp.slotManager.intents.travel).toBeDefined();
+      expect(nlp.slotManager.intents.travel.fromCity).toBeDefined();
+      expect(nlp.slotManager.intents.travel.fromCity.mandatory).toEqual(true);
+      expect(nlp.slotManager.intents.travel.fromCity.locales).toBeDefined();
+      expect(nlp.slotManager.intents.travel.fromCity.locales.en).toEqual(
+        'From where you are traveling?'
+      );
+      expect(nlp.slotManager.intents.travel.toCity).toBeDefined();
+      expect(nlp.slotManager.intents.travel.toCity.mandatory).toEqual(false);
+      expect(nlp.slotManager.intents.travel.date).toBeDefined();
+      expect(nlp.slotManager.intents.travel.date.mandatory).toEqual(true);
+      expect(nlp.slotManager.intents.travel.date.locales).toBeDefined();
+      expect(nlp.slotManager.intents.travel.date.locales.en).toEqual(
+        'When do you want to travel from {{fromCity}} to {{toCity}}?'
+      );
+    });
+    test('The corpus can contain entities with action details', async () => {
+      const corpus = {
+        name: 'Slot Filling Corpus',
+        locale: 'en-US',
+        data: [
+          {
+            intent: 'whatTimeIsIt',
+            utterances: ['What time is it?'],
+            answers: ["It is {{ time }} o'clock."],
+            actions: [
+              {
+                name: 'handleWhatsTimeIntent',
+                parameters: ['en-US', 'parameter 2'],
+              },
+            ],
+          },
+          {
+            intent: 'whatDayIsIt',
+            utterances: ['What day is it?'],
+            answers: ['It is {{ day }}.'],
+            actions: ['handleWhatsDayIntent', 'fallbackAction'],
+          },
+        ],
+      };
+      const nlp = new Nlp();
+      await nlp.addCorpus(corpus);
+      expect(nlp.actionManager.actions.whatTimeIsIt).toBeDefined();
+      expect(nlp.actionManager.actions.whatTimeIsIt[0]).toBeDefined();
+      expect(nlp.actionManager.actions.whatTimeIsIt[0].action).toEqual(
+        'handleWhatsTimeIntent'
+      );
+      expect(nlp.actionManager.actions.whatTimeIsIt[0].parameters).toEqual([
+        'en-US',
+        'parameter 2',
+      ]);
+      expect(nlp.actionManager.actions.whatDayIsIt).toBeDefined();
+      expect(nlp.actionManager.actions.whatDayIsIt[0]).toBeDefined();
+      expect(nlp.actionManager.actions.whatDayIsIt[0].action).toEqual(
+        'handleWhatsDayIntent'
+      );
+      expect(nlp.actionManager.actions.whatDayIsIt[0].parameters).toEqual([]);
+      expect(nlp.actionManager.actions.whatDayIsIt[1]).toBeDefined();
+      expect(nlp.actionManager.actions.whatDayIsIt[1].action).toEqual(
+        'fallbackAction'
+      );
+      expect(nlp.actionManager.actions.whatDayIsIt[1].parameters).toEqual([]);
+      expect(
+        nlp.actionManager.actionsMap.handleWhatsTimeIntent
+      ).toBeUndefined();
+      expect(nlp.actionManager.actionsMap.handleWhatsDayIntent).toBeUndefined();
+      expect(nlp.actionManager.actionsMap.fallbackAction).toBeUndefined();
     });
   });
 

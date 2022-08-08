@@ -424,7 +424,7 @@ class Nlp extends Clonable {
   addData(data, locale, domain) {
     for (let i = 0; i < data.length; i += 1) {
       const current = data[i];
-      const { intent, utterances, answers } = current;
+      const { intent, utterances, answers, slotFilling, actions } = current;
       for (let j = 0; j < utterances.length; j += 1) {
         if (domain) {
           this.assignDomain(locale, intent, domain.name);
@@ -440,6 +440,38 @@ class Nlp extends Clonable {
             this.addAnswer(locale, intent, answer.answer, answer.opts);
           }
         }
+      }
+      if (slotFilling) {
+        const entities = Object.keys(slotFilling);
+        for (let j = 0; j < entities.length; j += 1) {
+          const slot = slotFilling[entities[j]];
+          let mandatory;
+          const slotQuestions = {};
+          if (typeof slot === 'string') {
+            slotQuestions[locale] = slot;
+            mandatory = true;
+          } else {
+            slotQuestions[locale] = slot.question;
+            mandatory = slot.mandatory || false;
+          }
+          this.slotManager.updateSlot(
+            intent,
+            entities[j],
+            mandatory,
+            slotQuestions
+          );
+        }
+      }
+      if (actions) {
+        actions.forEach((action) => {
+          if (!action) return;
+          if (typeof action === 'object') {
+            if (!action.name) return;
+            this.addAction(intent, action.name, action.parameters || []);
+          } else {
+            this.addAction(intent, action, []);
+          }
+        });
       }
     }
   }
