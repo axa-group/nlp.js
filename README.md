@@ -63,6 +63,7 @@ Version 4 is very different from previous versions. Before this version, NLP.js 
   - [One bot per connector](docs/v4/quickstart.md#one-bot-per-connector)
   - [Different port for Microsoft Bot Framework and Webchat](docs/v4/quickstart.md#different-port-for-microsoft-bot-framework-and-webchat)
   - [Adding logic to an intent](docs/v4/quickstart.md#adding-logic-to-an-intent)
+  - [Mini FAQ](docs/v4/mini-faq.md)
 - [Web and React Native](docs/v4/webandreact.md)
   - [Preparing to generate a bundle](docs/v4/webandreact.md#preparing-to-generate-a-bundle)
   - [Your first web NLP](docs/v4/webandreact.md#your-first-web-nlp)
