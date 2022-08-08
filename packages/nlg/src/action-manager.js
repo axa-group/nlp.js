@@ -61,7 +61,7 @@ class ActionManager extends Clonable {
    * Find the index of an action
    * @param {String} intent Name of the intent.
    * @param {String} action Name of the action.
-   * @param {String[]} list of parameters Parameters of the action.
+   * @param {Object[]} list of parameters of the action.
    */
   posAction(intent, action, parameters) {
     if (!this.actions[intent]) {
@@ -135,7 +135,8 @@ class ActionManager extends Clonable {
    * Add an action to a given intent.
    * @param {String} intent Name of the intent.
    * @param {String} action Action to be executed
-   * @param {String} parameters Parameters of the action
+   * @param {Object[]} parameters Parameters of the action
+   * @param {function} [fn] Function of the action
    */
   addAction(intent, action, parameters, fn) {
     if (this.posAction(intent, action, parameters) === -1) {
@@ -153,7 +154,7 @@ class ActionManager extends Clonable {
    * Remove an action.
    * @param {String} intent Name of the intent
    * @param {String} action Name of the action
-   * @param {String} parameters Parameters of the action.
+   * @param {Object[]} parameters Parameters of the action.
    */
   removeAction(intent, action, parameters) {
     const index = this.posAction(intent, action, parameters);
