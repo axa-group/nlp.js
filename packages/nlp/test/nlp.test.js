@@ -932,6 +932,53 @@ describe('NLP', () => {
         },
       ]);
     });
+    test('It should extract a between rule and return longest string', async () => {
+      const nlp = new Nlp({ forceNER: true });
+      nlp.addNerBetweenCondition('en', 'entity', 'from', 'to');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid to Barcelona and then back from Barcelona to Madrid',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          start: 18,
+          end: 65,
+          accuracy: 1,
+          sourceText: 'Madrid to Barcelona and then back from Barcelona',
+          entity: 'entity',
+          type: 'trim',
+          subtype: 'between',
+          utteranceText: 'Madrid to Barcelona and then back from Barcelona',
+          len: 48,
+        },
+      ]);
+    });
+  });
+
+  describe('addNerBetweenLastCondition', () => {
+    test('It should extract a between last rule', async () => {
+      const nlp = new Nlp({ forceNER: true });
+      nlp.addNerBetweenLastCondition('en', 'entity', 'from', 'to');
+      const input = {
+        locale: 'en',
+        text: 'I have to go from Madrid to Barcelona and then back from Barcelona to Madrid',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.entities).toEqual([
+        {
+          start: 57,
+          end: 65,
+          accuracy: 1,
+          sourceText: 'Barcelona',
+          entity: 'entity',
+          type: 'trim',
+          subtype: 'between',
+          utteranceText: 'Barcelona',
+          len: 9,
+        },
+      ]);
+    });
   });
 
   describe('addNerBeforeCondition', () => {
