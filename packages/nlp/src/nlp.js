@@ -224,6 +224,10 @@ class Nlp extends Clonable {
     return this.ner.addBetweenCondition(locale, name, left, right, opts);
   }
 
+  addNerBetweenLastCondition(locale, name, left, right, opts) {
+    return this.ner.addBetweenLastCondition(locale, name, left, right, opts);
+  }
+
   addNerPositionCondition(locale, name, position, words, opts) {
     return this.ner.addPositionCondition(locale, name, position, words, opts);
   }
