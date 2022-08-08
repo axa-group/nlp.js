@@ -71,7 +71,7 @@ class ActionManager extends Clonable {
     for (let i = 0; i < actions.length; i += 1) {
       if (
         actions[i].action === action &&
-        actions[i].parameters.toString() === parameters.toString()
+        JSON.stringify(actions[i].parameters) === JSON.stringify(parameters)
       ) {
         return i;
       }
