@@ -342,3 +342,9 @@ const { dockStart } = require('@nlpjs/basic');
 ## Execute Logic during processing
 
 Processing is possible with Actions and Pipelines. Detailed information can be found in [Intent Logics](./nlp-intent-logics.md).
+
+## The "optional utterance"
+
+When using entities to extract information from the user utterance the process function als generates an additional utterance by replacing all matched entity words with the relevant  entity-names and checks if this has an higher accuracy for a match then the found one. If yes then this match is used as response.
+
+If this optional utterance was using as the better match, the key "optionalUtterance" is set in the result object returned from process method.
