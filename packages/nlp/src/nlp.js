@@ -84,6 +84,7 @@ class Nlp extends Clonable {
         autoLoad: true,
         autoSave: true,
         modelFileName: 'model.nlp',
+        executeActionsBeforeAnswers: false,
       },
       false
     );

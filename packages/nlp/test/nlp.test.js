@@ -788,6 +788,97 @@ describe('NLP', () => {
     });
   });
 
+  describe('Process an utterance with actions', () => {
+    test('The action is executed when intent matches', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'Who am i?', 'who_am_i');
+      let actionCalled = false;
+      nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        expect(param1).toEqual('param1');
+        actionCalled = true;
+      });
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Who am i?',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('who_am_i');
+      expect(output.answer).toBeUndefined();
+      expect(actionCalled).toEqual(true);
+    });
+    test('The action is executed after answer generation (default) and answer returned in object', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'Who am i?', 'who_am_i');
+      nlp.addAnswer('en', 'who_am_i', 'You are HAL');
+      nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        expect(param1).toEqual('param1');
+        data.answer = 'answer';
+        return data;
+      });
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Who am i?',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('who_am_i');
+      expect(output.answer).toEqual('answer');
+    });
+    test('The action is executed after answer generation (default) and answer returned as string', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'Who am i?', 'who_am_i');
+      nlp.addAnswer('en', 'who_am_i', 'You are HAL');
+      nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        expect(param1).toEqual('param1');
+        return 'answer';
+      });
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Who am i?',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('who_am_i');
+      expect(output.answer).toEqual('answer');
+    });
+    test('The action is executed before answer generation (when configured that way) and answer is not overridden', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        executeActionsBeforeAnswers: true,
+      });
+      nlp.addDocument('en', 'Who am i?', 'who_am_i');
+      nlp.addAnswer('en', 'who_am_i', 'You are HAL');
+      nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        expect(param1).toEqual('param1');
+        data.answer = 'answer';
+        return data;
+      });
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Who am i?',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('who_am_i');
+      expect(output.answer).toEqual('answer');
+    });
+  });
+
   describe('addCorpus', () => {
     test('A corpus can be added as a json', async () => {
       const nlp = new Nlp();
