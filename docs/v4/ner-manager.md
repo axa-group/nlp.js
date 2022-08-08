@@ -236,3 +236,20 @@ Utterances with more than one entity with the same name are supported, providing
 The "numbered entity" format must be in the form `${entityName}_${integer}`. E.g. "hero\_1", "food\_2", etc.
 
 For more details also see the [Slot Filling documentation](./slot-filling.md#entities-with-the-same-name).
+
+## Matching accuracy Threshold
+
+NER accepts a threshold, by default is 0.8, to allow users to make mistakes when writing, so "Bracelona" will be understood as "Barcelona". But this implementation uses levenshtein distance, and this makes the time exponential based on the amount of entities and length of the sentence.
+
+If the threshold is 1, then it uses a dictionary and not levenshtein, and even 1 million of entity values is resolved in milliseconds.
+
+To set the threshold you simply set it in the NLP Manager configuration
+
+```json
+{
+    ...,
+    ner: { 
+        threshold: 1
+    },
+}
+```
