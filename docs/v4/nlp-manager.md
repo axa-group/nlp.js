@@ -345,6 +345,22 @@ Processing is possible with Actions and Pipelines. Detailed information can be f
 
 ## The "optional utterance"
 
-When using entities to extract information from the user utterance the process function als generates an additional utterance by replacing all matched entity words with the relevant  entity-names and checks if this has an higher accuracy for a match then the found one. If yes then this match is used as response.
+When using entities to extract information from the user utterance the process function als generates an additional utterance by replacing all matched entity words with the relevant  entity-names and checks if this has a higher accuracy for a match then the found one. If yes then this match is used as response.
 
 If this optional utterance was using as the better match, the key "optionalUtterance" is set in the result object returned from process method.
+
+## Forcing NER Processing
+
+By default entities are only processed when there is at least one intent has at least one entity reference. YOu can set the setting forceNER to true to force the NER processing.
+
+```javascript
+    const dock = await dockStart({
+        settings: {
+            nlp: {
+                forceNER: true,
+                languages: ['en'],
+            }
+        },
+        use: ['Basic', 'LangEn'],
+    });
+```
