@@ -102,6 +102,61 @@ describe('Action Manager', () => {
         'parameter8',
       ]);
     });
+    test('Should be able to add an action method to an intent', () => {
+      const manager = new ActionManager();
+      const action = () => {};
+      manager.addAction(
+        'intent1',
+        'action1',
+        ['parameter1', 'parameter2'],
+        action
+      );
+      expect(manager.actions.intent1).toHaveLength(1);
+      expect(manager.actions.intent1[0].action).toEqual('action1');
+      expect(manager.actions.intent1[0].parameters).toEqual([
+        'parameter1',
+        'parameter2',
+      ]);
+      expect(manager.actionsMap.action1).toEqual(action);
+    });
+    test('Should be able to register an action method also without an intent', () => {
+      const manager = new ActionManager();
+      const action = () => {};
+      manager.registerActionInMap('action1', action);
+      expect(manager.actionsMap.action1).toEqual(action);
+    });
+    test('Should be able to register an action method and not overriden when add action details later', () => {
+      const manager = new ActionManager();
+      const action = () => {};
+      manager.registerActionInMap('action1', action);
+      manager.addAction('intent1', 'action1', ['parameter1', 'parameter2']);
+      expect(manager.actions.intent1).toHaveLength(1);
+      expect(manager.actions.intent1[0].action).toEqual('action1');
+      expect(manager.actions.intent1[0].parameters).toEqual([
+        'parameter1',
+        'parameter2',
+      ]);
+      expect(manager.actionsMap.action1).toEqual(action);
+    });
+    test('Should be able to register an action method and override when add action with method later', () => {
+      const manager = new ActionManager();
+      const action = () => {};
+      manager.registerActionInMap('action1', action);
+      const action2 = () => {};
+      manager.addAction(
+        'intent1',
+        'action1',
+        ['parameter1', 'parameter2'],
+        action2
+      );
+      expect(manager.actions.intent1).toHaveLength(1);
+      expect(manager.actions.intent1[0].action).toEqual('action1');
+      expect(manager.actions.intent1[0].parameters).toEqual([
+        'parameter1',
+        'parameter2',
+      ]);
+      expect(manager.actionsMap.action1).toEqual(action2);
+    });
   });
 
   describe('find actions', () => {

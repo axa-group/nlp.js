@@ -171,7 +171,16 @@ class ActionManager extends Clonable {
   }
 
   /**
-   * Remove an action from the actions map.
+   * Registers/Sets a function for a given action
+   * @param {String} action Name of the action.
+   * @param {function} [fn] Function of the action
+   */
+  registerActionInMap(action, fn) {
+    this.actionsMap[action] = fn;
+  }
+
+  /**
+   * Remove an action function from the actions map.
    * @param {String} action Name of the action.
    */
   removeActionFromMap(action) {
