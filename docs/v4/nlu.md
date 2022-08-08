@@ -297,3 +297,18 @@ function addPersonalityDomainEs(manager) {
   // }
 })();
 ```
+
+## "None" Intent matching
+
+You can configure if the NLU process supports returning a "None" intent as result or not.
+If you have a small number of utterances to train then it can happen that you get more likely "None" intent as response.
+You can disable this feature for such cases.
+
+```javascript
+let manager = new NlpManager({ 
+    languages: ["en"], 
+    nlu: { 
+        useNoneFeature: false 
+    } 
+});
+```
