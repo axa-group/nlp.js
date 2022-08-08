@@ -438,3 +438,49 @@ const { dockStart } = require('@nlpjs/basic');
   // Who did you see?
 ```
 
+When a repeated entity is found the entities property will have an other structure. The object then contains an "isList" property with the value true and the found entities are n an array with the key name "items". You can use this also in answer options to answer more specific:
+
+![structure](https://user-images.githubusercontent.com/15154218/105776091-3d9f0000-5f68-11eb-85d3-0cf9c879b131.png)
+
+```json
+{
+  "name": "Corpus with entities",
+  "locale": "en-US",
+  "contextData": "./heros.json",
+  "data": [
+    {
+      "intent": "hero.realname",
+      "utterances": [
+        "what is the real name of @hero"
+      ],
+      "answers": [
+        { "answer": "The real name of {{ hero }} is {{ _data[entities.hero.option].realName }}", "opts": "entities.hero !== undefined && !entities.hero.isList" },
+        { "answer": "Well, perhaps you can tell me only one hero at a time", "opts": "entities.hero !== undefined && entities.hero.isList" },
+        { "answer": "You have to specify a hero", "opts": "entities.hero === undefined" }
+      ]
+    },
+    {
+      "intent": "hero.city",
+      "utterances": [
+        "where @hero lives?",
+        "what's the city of @hero?"
+      ],
+      "answers": [
+        { "answer": "{{ hero }} lives at {{ _data[entities.hero.option].city }}", "opts": "entities.hero !== undefined && !entities.hero.isList" },
+        { "answer": "Well, perhaps you can tell me only one hero at a time", "opts": "entities.hero !== undefined && entities.hero.isList" },
+        { "answer": "You have to specify a hero", "opts": "entities.hero === undefined" }
+      ]
+    }
+  ],
+  "entities": {
+    "hero": {
+      "options": {
+        "spiderman": ["spiderman", "spider-man"],
+        "ironman": ["ironman", "iron-man"],
+        "thor": ["thor"]
+      }
+    },
+    "email": "/\\b(\\w[-._\\w]*\\w@\\w[-._\\w]*\\w\\.\\w{2,3})\\b/gi"
+  }
+}
+```
