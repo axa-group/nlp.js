@@ -196,7 +196,9 @@ manager.addNerAfterLastCondition('en', 'fromCity', ['from']);
 
 Additionally to the entities you can define manually the framework can also parse out some built-in entities automatically uwing plugins. What is supported and to which level in which language depends on the chosen Builtin plugin.
 
-* [BuiltIn-Microsoft](../v3/builtin-entity-extraction.md) - This builtin is exdecuted as JavaScriot code, but does not support all languages
+* [Builtin Compromise](../../packages/builtin-compromise/README.md) - A golden entity extractor that runs in the browser.
+* [Builtin Default](../../packages/builtin-default/README.md) - A default entity extractor for some basic entity extractions
+* [BuiltIn-Microsoft](../v3/builtin-entity-extraction.md) - This builtin is executed on server side in Node.js, but does not support all languages
 * [Facebook Duckling](../v3/builtin-duckling.md) - This builtin forwards the call to a running instance of a Duckling server process.
 
 The Builtin needs to added manually depending on what's wanted. As example for Facebook Duckling this can look like:
@@ -223,6 +225,7 @@ const { dockStart } = require('@nlpjs/basic');
     ...
 })();
 ```
+The code looks comparable for the other Builtin extractors. You can also specify which extractor is used for which language by registering specific extractors with the language instead the "??". 
 
 In the returned result JSON the "sourceEntities" as returned by the plugins are included as well as mapped "entities". For an example see [Slot Filling examples](./slot-filling.md) 
 
