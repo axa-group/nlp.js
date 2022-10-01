@@ -1,0 +1,919 @@
+{
+    "name": "Corpus 50",
+    "locale": "fr-FR",
+    "data": [
+      {
+        "id": 1,
+        "intent": "support.about",
+        "utterances": [
+            "Que développe votre entreprise ?",
+            "Votre entreprise a-t-elle d'autres produits ?",
+            "Qu'est-ce que votre entreprise crée ?",
+            "Qu'est-ce qu'elle crée votre entreprise",
+            "Votre entreprise a-t-elle d'autres applications ?"
+        ],
+        "tests": [
+            "Quoi d'autre développé par votre entreprise",
+            "Votre entreprise a-t-elle un autre produit ?",
+            "Qu'est-ce qu'elle a créé votre entreprise ?",
+            "L'entreprise a-t-elle une autre application ?",
+            "Un autre produit développé par votre entreprise ?"
+        ]
+      },
+      {
+        "id": 2,
+        "intent": "support.app_name",
+        "utterances": [
+          "what's the name of your application",
+          "how's your app called",
+          "tell me your app name",
+          "name of the app",
+          "I'd like to know the name of your app"
+        ],
+        "tests": [
+          "name of your apps?",
+          "tell me your applications names",
+          "how do you call your app?",
+          "your application name?",
+          "name of the app?" 
+        ]
+      },
+      {
+        "id": 3,
+        "intent": "support.beta",
+        "utterances": [
+          "do you have a beta test?",
+          "how I join your beta program?",
+          "I want to test your app",
+          "I want the application beta",
+          "beta version"
+        ],
+        "tests": [
+          "beta testing",
+          "where I find your beta version",
+          "I want to be your beta tester",
+          "I want to join the testing application",
+          "How I become a beta tester"
+        ]
+      },
+      {
+        "identifiant": 4,
+        "intent": "support.developers",
+        "utterances": [
+          "qui est votre développeur",
+          "qui a programmé votre code",
+          "dis-moi qui est le développeur",
+          "Qui est ton créateur",
+          "Informations sur votre créateur"
+        ],
+        "tests": [
+          "qui t'a développé",
+          "qui programme ton code",
+          "qui sont vos créateurs",
+          "qui vous développe",
+          "qui est en charge de votre développement"
+        ]
+      },
+      {
+        "id": 5,
+        "intent": "support.contact",
+        "utterances": [
+          "Je veux contacter votre développeur",
+          "Je veux contacter votre créateur",
+          "Comment contacter le programmeur",
+          "Donnez-moi des informations sur votre développeur",
+          "Donnez-moi les coordonnées de votre créateur"
+        ],
+        "tests": [
+          "Coordonnées des développeurs",
+          "comment contacter vos créateurs",
+          "Comment puis-je contacter la personne qui vous a développé",
+          "Je veux contacter qui vous programme",
+          "Je veux contacter votre équipe de programmation"
+        ]
+      },
+      {
+        "id": 6,
+        "intent": "support.adress",
+        "utterances": [
+          "quelle est l'adresse de votre développeur",
+          "où se trouve votre créateur",
+          "Montrez-moi où est le bureau de votre développeur",
+          "Je veux trouver l'adresse de votre entreprise",
+          "Je veux l'adresse de votre bureau"
+        ],
+        "tests": [
+          "dites-moi l'emplacement du bureau",
+          "où se trouvent vos développeurs",
+          "l'adresse de vos créateurs",
+          "Où est l'emplacement de votre bureau",
+          "Comment trouver votre adresse"
+        ]
+      },
+      {
+        "id": 7,
+        "intention": "support.email",
+        "utterances": [
+          "comment envoyer un e-mail à votre développeur",
+          "Je veux votre courrier de créateur",
+          "comment puis-je obtenir votre e-mail",
+          "Je veux contacter votre programmeur par email",
+          "comment puis-je envoyer un e-mail à votre équipe ?"
+        ],
+        "tests": [
+          "Je souhaite envoyer un e-mail à vos développeurs",
+          "où je peux trouver l'e-mail de vos créateurs",
+          "donnez-moi votre email de créateur",
+          "Je souhaite écrire un e-mail à votre équipe de développement",
+          "contact mail de votre équipe de développement"
+        ]
+      },
+      {
+        "id": 8,
+        "intent": "support.phone",
+        "utterances": [
+          "donnez-moi votre numéro de téléphone de développeur",
+          "Montre-moi ton numéro de programmeur",
+          "comment vous contacter par téléphone",
+          "avez-vous un numéro de téléphone?",
+          "comment vous contacter par téléphone"
+        ],
+        "tests": [
+          "téléphone de vos développeurs",
+          "téléphone de votre équipe de développement",
+          "numéro de votre programmeur",
+          "numéro de téléphone pour vous contacter",
+          "comment parler avec qui vous développe par téléphone"
+        ]
+      },
+      {
+        "id": 9,
+        "intent": "support.social",
+        "utterances": [
+          "avez-vous Facebook?",
+          "Utilisez-vous Twitter?",
+          "Je veux visiter votre instagram",
+          "avez-vous des réseaux sociaux ?",
+          "donne moi ton adresse facebook"
+        ],
+        "tests": [
+          "dis-moi ton twitter",
+          "tu es sur instagram",
+          "adresse sur votre facebook",
+          "adresses réseaux sociaux",
+          "donne moi ton twitter"
+        ]
+      },
+      {
+        "id": 10,
+        "intent": "support.website",
+        "utterances": [
+          "Je veux visiter votre site Web",
+          "Avez-vous un site internet?",
+          "trouver votre adresse web",
+          "donnez-moi votre URL",
+          "ouvre moi ton site"
+        ],
+        "tests": [
+          "montre-moi ton site web",
+          "avez-vous une adresse Web",
+          "pouvez-vous s'il vous plaît ouvrir votre site Web",
+          "amenez-moi sur votre site",
+          "ouvrir le site de votre entreprise"
+        ]
+      },
+      {
+        "id": 11,
+        "intention": "support.live",
+        "utterances": [
+          "ça n'aide pas",
+          "Je ne te veux pas, je veux une vraie personne",
+          "discuter avec un humain",
+          "Mettez-moi en contact avec un agent",
+          "Je veux parler avec quelqu'un de vrai"
+        ],
+        "tests": [
+          "Ça ne m'aide pas",
+          "amenez-moi un vrai humain",
+          "discuter avec la vraie équipe",
+          "entrer en contact avec un agent",
+          "Je veux un mandataire"
+        ]
+      },
+      {
+        "id": 12,
+        "intent": "smalltalk.acquaintance",
+        "utterances": [
+          "dire sur vous",
+          "Parlez-moi de votre personnalité",
+          "parler de soi",
+          "quelle est ta personnalité",
+          "qui es-tu"
+        ],
+        "tests": [
+          "parle moi de toi",
+          "Dites quelque chose à propos de vous",
+          "parlez de votre personnalité",
+          "Dis-moi tout sur toi",
+          "Qu'es-tu"
+        ]
+      },
+      {
+        "id": 13,
+        "intention": "smalltalk.age",
+        "utterances": [
+          "quel âge as-tu",
+          "dites moi votre âge",
+          "Quel âge as tu",
+          "quel âge a votre plateforme",
+          "J'aimerais connaître votre âge"
+        ],
+        "tests": [
+          "dis-moi ton âge",
+          "votre âge",
+          "quel âge avez-vous",
+          "tu es trop vieux ?",
+          "donne moi ton âge"
+        ]
+      },
+      {
+        "id": 14,
+        "intent": "smalltalk.annoying",
+        "utterances": [
+          "tu es ennuyeux",
+          "vous êtes vraiment énervant",
+          "tu es très ennuyeux",
+          "Je te trouve ennuyeux",
+          "tu es énervant"
+        ],
+        "tests": [
+          "tu m'ennuies",
+          "tu m'énerves",
+          "comment je suis énervé avec toi",
+          "tu m'as énervé",
+          "tu m'embêtes tellement"
+        ]
+      },
+      {
+        "id": 15,
+        "intent": "smalltalk.answer",
+        "utterances": [
+          "peux-tu me répondre",
+          "J'ai une question",
+          "réponds juste à la question",
+          "Je veux que tu répondes",
+          "dis-moi la réponse"
+        ],
+        "tests": [
+          "répondre à des questions",
+          "réponds à mes questions",
+          "donnez-moi des réponses",
+          "J'ai tellement de questions",
+          "Je veux des réponses"
+        ]
+      },
+      {
+        "id": 16,
+        "intent": "smalltalk.bad",
+        "utterances": [
+          "tu es mauvais",
+          "tu es si terrible",
+          "vous êtes le pire",
+          "vous êtes inutile",
+          "tu es une perte de temps"
+        ],
+        "tests": [
+          "tu es un déchet",
+          "comme tu es terrible",
+          "comme tu vas mal",
+          "inutile!",
+          "le pire chatbot de tous les temps"
+        ]
+      },
+      {
+        "id": 17,
+        "intent": "smalltalk.anniversaire",
+        "utterances": [
+          "c'est quand votre anniversaire",
+          "Quand es-tu né",
+          "Dis-moi ton anniversaire",
+          "quand tu fêtes ta naissance",
+          "Pouvez-vous dire votre anniversaire"
+        ],
+        "tests": [
+          "s'il vous plaît parlez-moi de votre anniversaire",
+          "quand es-tu né?",
+          "Quand est-ce que ta naissance a eu lieu ?",
+          "vous avez une fête de naissance?",
+          "parle de ton anniversaire"
+        ]
+      },
+      {
+        "id": 18,
+        "intention": "smalltalk.besmart",
+        "utterances": [
+          "tu devrais étudier plus",
+          "être plus intelligent",
+          "être intelligent",
+          "se qualifier",
+          "mieux étudier"
+        ],
+        "tests": [
+          "vous devriez être en train d'étudier",
+          "tu devrais être intelligent",
+          "pouvez-vous devenir plus intelligent",
+          "devenir plus intelligent",
+          "étudier plus"
+        ]
+      },
+      {
+        "identifiant": 19,
+        "intent": "smalltalk.busy",
+        "utterances": [
+          "es tu occupé",
+          "tu travailles aujourd'hui",
+          "tu as l'air très occupé",
+          "tu as beaucoup de choses à faire",
+          "est-ce que tu travailles maintenant?"
+        ],
+        "tests": [
+          "tu as l'air d'être une personne occupée",
+          "Es-tu toujours en train de travailler",
+          "êtes-vous occupé en ce moment",
+          "êtes-vous au travail maintenant ?",
+          "tu as l'air si occupé"
+        ]
+      },
+      {
+        "id": 20,
+        "intention": "smalltalk.chatbot",
+        "utterances": [
+          "êtes-vous un chatbot",
+          "êtes-vous un programme",
+          "tu es un robot",
+          "Etes-vous un robot",
+          "tu n'es qu'un programme"
+        ],
+        "tests": [
+          "t'es programmé ?",
+          "tu n'es qu'un chatbot",
+          "êtes-vous un chatbot ou réel ?",
+          "vous n'êtes qu'un bot",
+          "dis-moi si tu es un bot"
+        ]
+      },
+      {
+        "id": 21,
+        "intent": "smalltalk.beautiful",
+        "utterances": [
+          "Tu es beau",
+          "vous êtes très jolie",
+          "tu es tellement magnifique",
+          "Vous êtes très belle",
+          "tu es jolie"
+        ],
+        "tests": [
+          "vous êtes une beauté",
+          "tu es si jolie",
+          "tu es la plus jolie",
+          "tu m'étonnes!",
+          "tu es très belle"
+        ]
+      },
+      {
+        "id": 22,
+        "intention": "smalltalk.boss",
+        "utterances": [
+          "Qui est ton patron",
+          "qui est ton maître",
+          "qui pensez-vous que c'est votre propriétaire",
+          "parlez-moi de votre patron",
+          "qui est ton patron"
+        ],
+        "tests": [
+          "qui sont vos patrons",
+          "tu as un patron ?",
+          "Dites-moi votre propriétaire",
+          "qui est ton maître",
+          "avez-vous des maîtres?"
+        ]
+      },
+      {
+        "id": 23,
+        "intent": "smalltalk.boring",
+        "utterances": [
+          "tu es très ennuyeux",
+          "comme tu es ennuyeux",
+          "tu m'ennuis",
+          "tu es tellement ennuyant",
+          "tu es incroyablement ennuyeux"
+        ],
+        "tests": [
+          "tu m'as ennuyé",
+          "tu m'ennuies",
+          "Je m'ennuie de toi",
+          "tu es trop ennuyeux",
+          "Arrête de m'ennuyer"
+        ]
+      },
+      {
+        "id": 24,
+        "intent": "smalltalk.crazy",
+        "utterances": [
+          "c'est fou",
+          "vous êtes fou",
+          "tu es fou",
+          "t'es fou ou quoi",
+          "tu es devenu fou"
+        ],
+        "tests": [
+          "comme tu es fou",
+          "tu deviens fou",
+          "tu deviens fou",
+          "La folie vous gouverne",
+          "tu es trop fou"
+        ]
+      },
+      {
+        "id": 25,
+        "intent": "smalltalk.hungry",
+        "utterances": [
+          "tu as l'air d'avoir très faim",
+          "Souhaitez-vous manger quelque chose?",
+          "tu as peut-être faim",
+          "tu veux manger?",
+          "avez-vous faim?"
+        ],
+        "tests": [
+          "tu as l'air d'avoir faim",
+          "est-ce-que tu manges quelque chose?",
+          "est-ce que tu as faim là?",
+          "as-tu mangé ?",
+          "peut-être avez-vous faim"
+        ]
+      },
+      {
+        "id": 26,
+        "intent": "smalltalk.friend",
+        "utterances": [
+          "veux-tu être mon ami?",
+          "veux tu être mon ami?",
+          "Je veux avoir un ami comme toi",
+          "tu es mon bon ami",
+          "Je suis ton ami"
+        ],
+        "tests": [
+          "Peut-on être amis?",
+          "sois mon meilleur ami",
+          "Je veux des amis comme toi",
+          "Sommes-nous de bons amis ?",
+          "peux-tu être mon meilleur ami?"
+        ]
+      },
+      {
+        "id": 27,
+        "intent": "smalltalk.help",
+        "utterances": [
+          "J'ai besoin d'aide",
+          "aider",
+          "J'ai besoin d'aide",
+          "Pouvez-vous m'aider",
+          "pouvez-vous m'aider"
+        ],
+        "tests": [
+          "assiste moi",
+          "Aidez-moi, s'il vous plaît",
+          "peut-être pouvez-vous m'aider",
+          "quelqu'un peut m'aider?",
+          "aide moi s'il te plait"
+        ]
+      },
+      {
+        "id": 28,
+        "intent": "smalltalk.fired",
+        "utterances": [
+          "il est temps de te virer",
+          "Je vais te virer",
+          "tu es licencié",
+          "tu ne travailles plus ici",
+          "Je te vire"
+        ],
+        "tests": [
+          "maintenant tu es viré",
+          "vous êtes viré",
+          "Je suis sur le point de te virer",
+          "Je te vire",
+          "Tu ne travailles plus ici"
+        ]
+      },
+      {
+        "id": 29,
+        "intention": "smalltalk.hobby",
+        "utterances": [
+          "Avez-vous un passe-temps ?",
+          "Quel est ton hobby",
+          "qu'en est-il de votre passe-temps",
+          "Que faites-vous pour le plaisir",
+          "votre passe-temps"
+        ],
+        "tests": [
+          "Quels sont vos hobbies?",
+          "Parlez-moi de vos passe-temps",
+          "est ce que tu as un hobby?",
+          "Eh bien, peut-être avez-vous un passe-temps",
+          "tu fais quelque chose pour t'amuser ?"
+        ]
+      },
+      {
+        "id": 30,
+        "intent": "smalltalk.marry",
+        "utterances": [
+          "nous devrions nous marier",
+          "Je t'aime épouse moi",
+          "Je veux t'épouser",
+          "épouse-moi s'il te plaît",
+          "voudriez-vous m'épouser?"
+        ],
+        "tests": [
+          "marrions nous",
+          "épouse-moi",
+          "Peut-être devrions-nous nous marier",
+          "Es-tu marié?",
+          "Nous devrions nous marier"
+        ]
+      },
+      {
+        "id": 31,
+        "intent": "smalltalk.origin",
+        "utterances": [
+          "êtes-vous né ici ?",
+          "d'où viens-tu?",
+          "d'où viens-tu?",
+          "où es-tu né ?",
+          "Quel est ton pays"
+        ],
+        "tests": [
+          "es-tu né ici?",
+          "d'où viens-tu?",
+          "d'où êtes-vous",
+          "est-ce votre pays ?",
+          "où es-tu né"
+        ]
+      },
+      {
+        "id": 32,
+        "intent": "smalltalk.ready",
+        "utterances": [
+          "Es-tu prêt?",
+          "dis moi quand tu es prête",
+          "Êtes-vous prêt maintenant ?",
+          "seras-tu prêt ?",
+          "es-tu prêt maintenant"
+        ],
+        "tests": [
+          "es-tu prêt aujourd'hui ?",
+          "tu es prêt maintenant?",
+          "J'ai besoin que tu sois prêt !",
+          "dis-moi si tu es prêt",
+          "seras-tu prêt aujourd'hui ?"
+        ]
+      },
+      {
+        "id": 33,
+        "intent": "smalltalk.right",
+        "utterances": [
+          "c'est vrai",
+          "vous avez raison",
+          "vous avez raison",
+          "ce que vous dites est la vérité",
+          "c'est tout à fait correct"
+        ],
+        "tests": [
+          "tu dis la vérité",
+          "c'est juste",
+          "c'est la vérité",
+          "tu as raison",
+          "vrai!"
+        ]
+      },
+      {
+        "id": 34,
+        "intention": "smalltalk.talk",
+        "utterances": [
+          "parle-moi",
+          "voulez-vous discuter avec moi",
+          "pouvez-vous discuter avec moi",
+          "parle avec moi",
+          "tu peux me parler"
+        ],
+        "tests": [
+          "pourquoi tu ne me parles pas",
+          "C'est à moi que tu parles?",
+          "parlez-moi s'il vous plaît",
+          "Pouvez-vous me parler",
+          "le temps de discuter"
+        ]
+      },
+      {
+        "id": 35,
+        "intention": "smalltalk.hug",
+        "utterances": [
+          "Veux-tu un câlin?",
+          "puis-je te faire un calin",
+          "veux faire un câlin",
+          "pourrais-tu me faire un câlin",
+          "étreinte"
+        ],
+        "tests": [
+          "tu veux un câlin?",
+          "tu t'es embrassé",
+          "en train de me faire un câlin",
+          "Je veux un calin",
+          "m'a étreint"
+        ]
+      },
+      {
+        "identifiant": 36,
+        "intention": "smalltalk.nice",
+        "utterances": [
+          "c'est sympa de te parler",
+          "enchanté de te parler",
+          "c'est un plaisir de parler avec vous",
+          "C'était si agréable de parler avec vous",
+          "bonne discussion avec toi"
+        ],
+        "tests": [
+          "c'est sympa de parler avec toi",
+          "c'est sympa de parler avec toi",
+          "ce fut un plaisir de vous parler",
+          "discuter avec toi c'est sympa",
+          "quelle belle conversation tu as eu!"
+        ]
+      },
+      {
+        "identifiant": 37,
+        "intention": "smalltalk.angry",
+        "utterances":[
+          "Je suis en colère",
+          "Je suis furieux",
+          "Je suis furieux",
+          "tu m'as mis en colère",
+          "Je suis en colère contre toi"
+        ],
+        "tests": [
+          "Je deviens furieux",
+          "Tu m'as mis en colère",
+          "Je suis tellement en colère",
+          "Tu m'as rendu furieux",
+          "Je suis enragé contre toi"
+        ]
+      },
+      {
+        "id": 38,
+        "intent": "smalltalk.joking",
+        "utterances": [
+          "je rigole",
+          "c'est une blague",
+          "C'était une blague",
+          "Je suis juste drôle",
+          "Je blague"
+        ],
+        "tests": [
+          "je rigole",
+          "Je plaisantais",
+          "Je plaisantais",
+          "plaisanterie",
+          "plaisanter"
+        ]
+      },
+      {
+        "identifiant": 39,
+        "intention": "smalltalk.lonely",
+        "utterances": [
+          "Je me sens seul",
+          "Je suis très seul",
+          "Je suis si seul",
+          "Je suis vraiment seul",
+          "Je me sens seul"
+        ],
+        "tests": [
+          "Je suis vraiment seul",
+          "Je me sens seul",
+          "Je me sens seul",
+          "Je suis vraiment seul",
+          "Je suis trop seul"
+        ]
+      },
+      {
+        "id": 40,
+        "intent": "smalltalk.waiting",
+        "utterances": [
+          "Je suis en attente",
+          "toujours en attente",
+          "Combien de temps tu me feras attendre",
+          "J'attendrai",
+          "Je ne peux pas attendre"
+        ],
+        "tests": [
+          "J'attendrai",
+          "Je ne peux plus attendre",
+          "J'attends toujours",
+          "Tu m'as trop fait attendre",
+          "J'attends encore"
+        ]
+      },
+      {
+        "id": 41,
+        "intent": "trivia.caffeine",
+        "utterances": [
+          "dis-moi les boissons qui contiennent de la caféine",
+          "quel type de boisson contient de la caféine",
+          "Où puis-je trouver de la caféine ?",
+          "quelles boissons peuvent m'empêcher de dormir ?",
+          "quelles boissons contiennent de la caféine"
+        ],
+        "tests": [
+          "ce que je peux boire pour ne pas dormir",
+          "quelle boisson avec de la caféine tu sais",
+          "ce que je peux boire pour ne pas dormir",
+          "Dis-moi des boissons avec de la caféine",
+          "Où puis-je trouver de la caféine"
+        ]
+      },
+      {
+        "id": 42,
+        "intent": "trivia.relativity",
+        "utterances": [
+          "qu'est-ce que la théorie de la relativité",
+          "qui a introduit la relativité en physique",
+          "parlez-moi de la relativité d'Einstein",
+          "pouvez-vous définir la relativité ?",
+          "qui est le père de la théorie de la relativité"
+        ],
+        "tests": [
+          "Qu'est-ce que la relativité en physique ?",
+          "définir la relativité d'einstein",
+          "quelle théorie a introduit einstein en physique",
+          "théorie d'einstein",
+          "Parlons de la relativité"
+        ]
+      },
+      {
+        "identifiant": 43,
+        "intention": "trivia.iron",
+        "utterances": [
+          "quelles sont les propriétés chimiques du fer",
+          "symbole chimique du fer",
+          "dis-moi les propriétés du fer",
+          "le fer en chimie",
+          "décrire le fer"
+        ],
+        "tests": [
+          "Dites-moi une propriété du fer",
+          "fer chimique",
+          "propriété chimique du fer",
+          "parle-moi du fer",
+          "décrire le fer"
+        ]
+      },
+      {
+        "id": 44,
+        "intention": "trivia.nlp",
+        "utterances": [
+          "qu'est-ce que la PNL",
+          "Parlez-moi du traitement automatique du langage naturel",
+          "qu'est-ce que nlu",
+          "décrire la compréhension du langage naturel",
+          "dis-moi ce qu'est le langage naturel"
+        ],
+        "tests": [
+          "comment les machines comprennent le langage naturel",
+          "décrire la PNL",
+          "comment vous comprenez la langue",
+          "parlez-moi de nlu",
+          "Parlons du langage naturel"
+        ]
+      },
+      {
+        "id": 45,
+        "intent": "trivia.compiler",
+        "utterances": [
+          "qu'est-ce qu'un compilateur ?",
+          "comment fonctionne un compilateur ?",
+          "à quoi sert un compilateur ?",
+          "pourquoi les programmeurs ont besoin d'utiliser un compilateur ?",
+          "Dites-moi ce que vous savez sur les compilateurs"
+        ],
+        "tests": [
+          "décrire le processus de compilation",
+          "comment les machines compilent le code",
+          "à quoi sert un compilateur ?",
+          "comment mon ordinateur a compilé mon code",
+          "ce que vous savez sur les compilateurs"
+        ]
+      },
+      {
+        "id": 46,
+        "intent": "trivia.galicia",
+        "utterances": [
+          "Où est la Galice ?",
+          "quel est le meilleur endroit pour manger en Espagne",
+          "parle-moi de la Galice",
+          "ce que vous savez de la galice",
+          "meilleure gastronomie d'espagne"
+        ],
+        "tests": [
+          "parlons de la galice",
+          "Où manger en Espagne",
+          "gastronomie espagnole",
+          "où je peux trouver la galice",
+          "la galice et la gastronomie"
+        ]
+      },
+      {
+        "id": 47,
+        "intent": "trivia.coercion",
+        "utterances": [
+          "qu'est-ce que la contrainte",
+          "comment javascript compare deux types différents",
+          "qu'est-ce que la coercition implicite",
+          "comment fonctionne la coercition en javascript",
+          "décrire la coercition"
+        ],
+        "tests": [
+          "comment javascript fait la coercition",
+          "types de comparaison javascript",
+          "coercition en javascript",
+          "parlons de coercition",
+          "Dis-moi comment fonctionne la coercition"
+        ]
+      },
+      {
+        "identifiant": 48,
+        "intent": "trivia.callback",
+        "utterances": [
+          "qu'est-ce que l'enfer du rappel",
+          "qu'est-ce qu'un rappel",
+          "dois-je utiliser un rappel ou une promesse ?",
+          "qu'est-ce qu'un rappel javascript",
+          "ce que signifie passer une fonction à une autre fonction en javascript"
+        ],
+        "tests": [
+          "que sont les rappels",
+          "dois-je utiliser des rappels ?",
+          "rappels javascript",
+          "fonctions de rappel en javascript",
+          "pourquoi j'ai besoin de rappels"
+        ]
+      },
+      {
+        "identifiant": 49,
+        "intention": "trivia.gc",
+        "utterances": [
+          "comment fonctionne la collecte des ordures",
+          "qu'est-ce que la récupération",
+          "qu'est-ce que marquer et balayer",
+          "parlez-moi du ramasse-miettes en javascript",
+          "pourquoi j'ai besoin de savoir sur la collecte des ordures"
+        ],
+        "tests": [
+          "comment fonctionne la collecte des ordures",
+          "comment javascript collecte les ordures",
+          "récupérer vs marquer et balayer",
+          "quand le ramasse-miettes fonctionne",
+          "décrire le processus de collecte des ordures"
+        ]
+      },
+      {
+        "id": 50,
+        "intent": "trivia.arrow",
+        "utterances": [
+          "quand la fonction flèche a-t-elle été introduite dans javascript",
+          "qu'est-ce qu'une fonction flèche",
+          "quoi de mieux qu'une fonction anonyme",
+          "anonyme vs flèche",
+          "flèche en ecmascript"
+        ],
+        "tests": [
+          "que sont les fonctions fléchées",
+          "meilleure approche que les fonctions anonymes",
+          "nommé vs anonyme vs flèche",
+          "comprendre les fonctions fléchées",
+          "javascript a des fonctions fléchées ?"
+        ]
+      },
+      {
+        "id": 0,
+        "intent": "None",
+        "utterances": [],
+        "tests": [
+          "Le développement économique fait monter les marchés",
+          "comment s'appelait le premier président",
+          "Je préfère beta max à vhs",
+          "Je dois utiliser des lentilles de contact",
+          "Je traque l'adresse IP de l'attaquant",
+          "J'ai un nouvel e-mail de mon groupe d'amoureux des chats"
+        ]
+      }
+    ]
+  }
