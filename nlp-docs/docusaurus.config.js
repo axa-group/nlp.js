@@ -4,20 +4,31 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+const pkg = require('../package.json');
+const DOCS_BASE_URL = process.env.DOCS_BASE_URL || '/';
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
+  title: 'NLP.js Docs',
+  tagline: 'NLP.js documentation site',
+  url: process.env.DOCS_GITHUB_URL || 'https://pages.github.com',
+  // baseUrl: '/axa-group/nlp.js/',
+  baseUrl: DOCS_BASE_URL,
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
+  trailingSlash: false,
 
   // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: process.env.DOCS_GITHUB_ORG || 'axa-group',
+  projectName: process.env.DOCS_GITHUB_PROJECT || 'nlp.js',
+
+  deploymentBranch: 'gh-pages',
+  githubHost: 'github.com',
+  customFields: {
+    githubURL: pkg.repository.url,
+    githubBranch: process.env.DOCS_BRANCH || 'master',
+  },
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -27,6 +38,8 @@ const config = {
     locales: ['en'],
   },
 
+  plugins: [[require.resolve('@cmfcmf/docusaurus-search-local'), { indexBlog: false }]],
+
   presets: [
     [
       'classic',
@@ -34,18 +47,10 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          routeBasePath: '/',
+          lastVersion: 'current',
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-        },
+        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -57,74 +62,34 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: 'NLP.js Docs',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'AXA Docs Logo',
+          src: 'img/axa.svg',
         },
         items: [
           {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Tutorial',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
+            href: 'https://github.com/axa-group/nlp.js',
+            label: 'AXA GitHub',
             position: 'right',
           },
         ],
       },
       footer: {
         style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        links: [],
+        copyright: `Copyright © ${new Date().getFullYear()} AXA Group Operations`,
+      },
+      docs: {
+        sidebar: {
+          hideable: true,
+          // autoCollapseCategories: true,
+        },
       },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ['yaml', 'mongodb'],
       },
     }),
 };
