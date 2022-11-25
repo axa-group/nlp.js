@@ -49,6 +49,16 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           routeBasePath: '/',
           lastVersion: 'current',
+          versions: {
+            current: {
+              label: 'v4 (current)',
+              path: '/',
+            },
+            v3: { 
+              label: 'v3',
+              path: '/v3',
+            },
+          },
         },
         blog: false,
         theme: {
@@ -73,6 +83,10 @@ const config = {
             label: 'AXA GitHub',
             position: 'right',
           },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+          },
         ],
       },
       footer: {
@@ -83,7 +97,6 @@ const config = {
       docs: {
         sidebar: {
           hideable: true,
-          // autoCollapseCategories: true,
         },
       },
       prism: {
