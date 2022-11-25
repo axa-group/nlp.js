@@ -130,13 +130,11 @@ class QAClient {
       const contextLastIndex = this.tokenizer.getContextEndIndex(
         feature.encoding
       );
-      const [filteredStartLogits, filteredEndLogits] = [
-        starts,
-        ends,
-      ].map((logits) =>
-        logits
-          .slice(feature.contextStartIndex, contextLastIndex + 1)
-          .map((val, j) => [j + feature.contextStartIndex, val])
+      const [filteredStartLogits, filteredEndLogits] = [starts, ends].map(
+        (logits) =>
+          logits
+            .slice(feature.contextStartIndex, contextLastIndex + 1)
+            .map((val, j) => [j + feature.contextStartIndex, val])
       );
       filteredEndLogits.sort((a, b) => b[1] - a[1]);
       for (const startLogit of filteredStartLogits) {

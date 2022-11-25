@@ -69,9 +69,8 @@ class BertWordPieceTokenizer extends Clonable {
     this.numWords = Object.keys(this.words).length;
     this.numExtra = 0;
     Object.keys(this.configuration).forEach((tokenName) => {
-      this.tokenPositions[tokenName] = this.words[
-        this.configuration[tokenName]
-      ];
+      this.tokenPositions[tokenName] =
+        this.words[this.configuration[tokenName]];
     });
   }
 

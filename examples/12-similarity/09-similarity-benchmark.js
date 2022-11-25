@@ -21,8 +21,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const levenwa = require('../../packages/similarity-wa/src/leven.js');
-const levenjs = require('../../packages/similarity/src/leven.js');
+const levenwa = require('../../packages/similarity-wa/src/leven');
+const levenjs = require('../../packages/similarity/src/leven');
 
 const levenAlgs = [levenjs, levenwa];
 const execTimeWord = [];

@@ -93,9 +93,10 @@ class Nlu extends Clonable {
         arrToObj: this.container.get('arrToObj'),
       };
     } else if (this.cache.results[input.settings.locale]) {
-      result = this.cache.results[input.settings.locale][
-        input.text || input.utterance
-      ];
+      result =
+        this.cache.results[input.settings.locale][
+          input.text || input.utterance
+        ];
       if (result) {
         return result;
       }
@@ -110,9 +111,8 @@ class Nlu extends Clonable {
     if (!this.cache.results[input.settings.locale]) {
       this.cache.results[input.settings.locale] = {};
     }
-    this.cache.results[input.settings.locale][
-      input.text || input.utterance
-    ] = result;
+    this.cache.results[input.settings.locale][input.text || input.utterance] =
+      result;
     return result;
   }
 

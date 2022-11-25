@@ -38,6 +38,7 @@ describe('Runtime', () => {
       };
       const runtime = new Runtime(settings);
       expect(runtime).toBeDefined();
+      runtime.stop();
     });
   });
 });

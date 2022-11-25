@@ -586,7 +586,10 @@ class Nlp extends Clonable {
       context,
       settings: this.applySettings(settings, this.settings.nlu),
     };
-    const forceNER = input.settings && ('forceNER' in input.settings) ? input.settings.forceNER : this.forceNER;
+    const forceNER =
+      input.settings && 'forceNER' in input.settings
+        ? input.settings.forceNER
+        : this.forceNER;
     let output = await this.nluManager.process(input);
     if (forceNER || !this.slotManager.isEmpty) {
       const optionalUtterance = await this.ner.generateEntityUtterance(

@@ -185,9 +185,8 @@ class FullBot {
       if (directline) {
         ensureDir(directline.settings.uploadDir);
         if (!directline.onCreateConversation) {
-          directline.onCreateConversation = this.onDirectlineCreateConversation.bind(
-            this
-          );
+          directline.onCreateConversation =
+            this.onDirectlineCreateConversation.bind(this);
         }
       }
     }
