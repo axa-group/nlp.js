@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/similarity'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/similarity

@@ -1,6 +1,10 @@
+---
+title: '@nlpjs/dialogflow-connector'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
-# @nlpjs/bot
+# @nlpjs/dialogflow-connector
 
 [![Build Status](https://travis-ci.com/axa-group/nlp.js.svg?branch=master)](https://travis-ci.com/axa-group/nlp.js)
 [![Coverage Status](https://coveralls.io/repos/github/axa-group/nlp.js/badge.svg?branch=master)](https://coveralls.io/github/axa-group/nlp.js?branch=master)

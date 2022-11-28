@@ -1,4 +1,4 @@
-# `NLG`
+# @nlpjs/nlg
 
 > TODO: description
 

@@ -1,3 +1,7 @@
+---
+title: 'node-nlp'
+---
+
 ![NLPjs logo](https://github.com/axa-group/nlp.js/raw/master/screenshots/nlplogo.gif)
 
 # NLP.js

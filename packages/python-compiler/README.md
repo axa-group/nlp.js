@@ -1,4 +1,4 @@
-# `neural`
+# @nlpjs/python-compiler
 
 > TODO: description
 

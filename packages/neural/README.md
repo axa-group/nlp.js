@@ -1,6 +1,10 @@
+---
+title: '@nlpjs/neural'
+---
+
 ![NLPjs logo](screenshots/nlplogo.gif)
 
-# NeuralNetwork
+# @nlpjs/neural
 
 ## Introduction
 

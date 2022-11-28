@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/rest-connector'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/bot

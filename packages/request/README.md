@@ -1,4 +1,4 @@
-# `neural`
+# @nlpjs/request
 
 > TODO: description
 

@@ -1,4 +1,4 @@
-# `neural`
+# @nlpjs/sentiment
 
 > TODO: description
 

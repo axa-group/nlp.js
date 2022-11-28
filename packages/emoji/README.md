@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/emoji'
+---
+
 ![NLPjs logo](screenshots/nlplogo.gif)
 
 # @nlpjs/emoji

@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/similarity-wa'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/similarity-wa

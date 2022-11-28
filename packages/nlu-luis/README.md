@@ -1,4 +1,4 @@
-# `neural`
+# @nlpjs/nlu-luis
 
 > TODO: description
 

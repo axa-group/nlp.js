@@ -1,4 +1,4 @@
-# `neural`
+# @nlpjs/neural-worker
 
 > TODO: description
 

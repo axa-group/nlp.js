@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/utils'
+---
+
 # `@nlpjs/utils`
 
 ## Introduction

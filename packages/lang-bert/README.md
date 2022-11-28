@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/lang-bert'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/lang-bert

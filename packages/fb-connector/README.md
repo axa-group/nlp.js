@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/fb-connector'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/fb-connector
