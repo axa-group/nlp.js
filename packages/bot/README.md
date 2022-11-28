@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/bot'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/bot

@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/console-connector'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/console-connector

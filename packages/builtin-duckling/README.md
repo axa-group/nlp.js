@@ -1,4 +1,4 @@
-# `NER`
+# @nlpjs/builtin-duckling
 
 > TODO: description
 
