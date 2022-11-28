@@ -818,8 +818,10 @@ describe('NLP', () => {
       });
       nlp.addDocument('en', 'Who am i?', 'who_am_i');
       nlp.addAnswer('en', 'who_am_i', 'You are HAL');
+      let actionCalled = false;
       nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
         expect(param1).toEqual('param1');
+        actionCalled = true;
         data.answer = 'answer';
         return data;
       });
@@ -832,6 +834,7 @@ describe('NLP', () => {
       expect(output.utterance).toEqual(input.utterance);
       expect(output.intent).toEqual('who_am_i');
       expect(output.answer).toEqual('answer');
+      expect(actionCalled).toEqual(true);
     });
     test('The action is executed after answer generation (default) and answer returned as string', async () => {
       const nlp = new Nlp({
@@ -840,8 +843,10 @@ describe('NLP', () => {
       });
       nlp.addDocument('en', 'Who am i?', 'who_am_i');
       nlp.addAnswer('en', 'who_am_i', 'You are HAL');
+      let actionCalled = false;
       nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
         expect(param1).toEqual('param1');
+        actionCalled = true;
         return 'answer';
       });
       await nlp.train();
@@ -853,8 +858,9 @@ describe('NLP', () => {
       expect(output.utterance).toEqual(input.utterance);
       expect(output.intent).toEqual('who_am_i');
       expect(output.answer).toEqual('answer');
+      expect(actionCalled).toEqual(true);
     });
-    test('The action is executed before answer generation (when configured that way) and answer is not overridden', async () => {
+    test('The action is executed before answer generation (when configured that way) and answer determined normally when no answer set', async () => {
       const nlp = new Nlp({
         languages: ['en'],
         autoSave: false,
@@ -862,7 +868,34 @@ describe('NLP', () => {
       });
       nlp.addDocument('en', 'Who am i?', 'who_am_i');
       nlp.addAnswer('en', 'who_am_i', 'You are HAL');
+      let actionCalled = false;
       nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        expect(param1).toEqual('param1');
+        actionCalled = true;
+        return data;
+      });
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Who am i?',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('who_am_i');
+      expect(output.answer).toEqual('You are HAL');
+      expect(actionCalled).toEqual(true);
+    });
+    test('The action is executed before answer generation (when configured that way) and answer set in action is used', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        executeActionsBeforeAnswers: true,
+      });
+      nlp.addDocument('en', 'Who am i?', 'who_am_i');
+      nlp.addAnswer('en', 'who_am_i', 'You are HAL');
+      let actionCalled = false;
+      nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        actionCalled = true;
         expect(param1).toEqual('param1');
         data.answer = 'answer';
         return data;
@@ -876,6 +909,7 @@ describe('NLP', () => {
       expect(output.utterance).toEqual(input.utterance);
       expect(output.intent).toEqual('who_am_i');
       expect(output.answer).toEqual('answer');
+      expect(actionCalled).toEqual(true);
     });
   });
 
