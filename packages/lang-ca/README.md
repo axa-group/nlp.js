@@ -1,3 +1,7 @@
+---
+title: '@nlpjs/lang-ca'
+---
+
 ![NLPjs logo](../../screenshots/nlplogo.gif)
 
 # @nlpjs/lang-ca
