@@ -2,9 +2,9 @@
 
 This will guide you through the process of creating a bot using a QnA tsv file instead of a corpus with intents.
 The format of the file is a text file where each line is a question and an answer, separated by a tabulator.
-You have an example of file here: https://github.com/jesus-seijas-sp/nlpjs-examples/blob/master/03.qna/01.filecorpus/qna.tsv
+You have an example of file [here](https://github.com/jesus-seijas-sp/nlpjs-examples/blob/master/03.qna/01.filecorpus/qna.tsv)
 
-The process is exactly the same as having a bot with a chatbot, so we strongly recommend to do the quickstart: https://github.com/axa-group/nlp.js/blob/master/docs/v4/quickstart.md
+The process is exactly the same as having a bot with a chatbot, so we strongly recommend to do the [quickstart](/Quickstart/quickstart)
 
 ## Install the library and the qna plugin
 
@@ -16,18 +16,19 @@ npm i @nlpjs/basic @nlpjs/qna-importer
 
 ## Train and test a QnA file
 
-The source code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/01.filecorpus
+The source code for this example is [here](https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/01.filecorpus)
 
 Add the corpus file to your folder, and then create this index.js:
+
 ```javascript
-const { dockStart } = require('@nlpjs/basic');
+const { dockStart } = require("@nlpjs/basic");
 
 (async () => {
-  const dock = await dockStart({ use: ['Basic', 'Qna'] });
-  const nlp = dock.get('nlp');
-  await nlp.addCorpus({ filename: './qna.tsv', importer: 'qna', locale: 'en' });
+  const dock = await dockStart({ use: ["Basic", "Qna"] });
+  const nlp = dock.get("nlp");
+  await nlp.addCorpus({ filename: "./qna.tsv", importer: "qna", locale: "en" });
   await nlp.train();
-  const response = await nlp.process('en', 'Who are you');
+  const response = await nlp.process("en", "Who are you");
   console.log(response);
 })();
 ```
@@ -38,7 +39,7 @@ Now you can execute this, and you'll see that the qna is trained and it resolves
 
 ## Extracting the configuration into a file
 
-The source code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/02.config
+The source code for this example is [here][https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/02.config]
 
 Now we can remove code that is configuration related into a separate file. Add a conf.json file with this content:
 
@@ -58,22 +59,23 @@ Now we can remove code that is configuration related into a separate file. Add a
 And the new code will be:
 
 ```javascript
-const { dockStart } = require('@nlpjs/basic');
+const { dockStart } = require("@nlpjs/basic");
 
 (async () => {
   const dock = await dockStart();
-  const nlp = dock.get('nlp');
+  const nlp = dock.get("nlp");
   await nlp.train();
-  const response = await nlp.process('en', 'Who are you');
+  const response = await nlp.process("en", "Who are you");
   console.log(response);
 })();
 ```
 
 ## Exposing the bot with a Web and API
 
-The code for this example is here: https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/03.webchat
+The code for this example is [here](https://github.com/jesus-seijas-sp/nlpjs-examples/tree/master/03.qna/03.webchat)
 
 Now install the plugins for the express server and the directline API:
+
 ```javascript
 npm i @nlpjs/express-api-server @nlpjs/directline-connector
 ```
@@ -103,13 +105,14 @@ You'll need a pipeline file to train the nlp, so create a pipelines.md file with
 # default
 
 ## main
+
 nlp.train
 ```
 
 Finally the index.js code should be:
 
 ```javascript
-const { dockStart } = require('@nlpjs/basic');
+const { dockStart } = require("@nlpjs/basic");
 
 (async () => {
   await dockStart();

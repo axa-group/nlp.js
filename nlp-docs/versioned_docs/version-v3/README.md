@@ -27,6 +27,7 @@
 ## New in version 3!
 
 The version 3 comes with some important changes, mainly focused on improving performance:
+
 - NlpClassifier no longer exists, in favor of NluManager as the manager of several NLU classes, and is able to manage several languages and several domains inside each language.
 - Now by default, each domain of a language has it's own neural network classifier. When a language has more than 1 domain, a master neural network is trained that instead of classifying into the intent, classify into de domain. That way the models are faster to train and have a better score.
 - The language guesser is now trained with the trigrams from the utterances used to train. That means that has the best guessing, and also that non-existing languages are guessed (example, klingon).
@@ -100,11 +101,6 @@ The version 3 comes with some important changes, mainly focused on improving per
   - [Introduction](microsoft-bot-framework.md#introduction)
   - [Example of use](microsoft-bot-framework.md#example-of-use)
   - [Recognizer and Slot filling](microsoft-bot-framework.md#recognizer-and-slot-filling)
-- [Contributing](#contributing)
-- [Contributors](#contributors)
-- [Code of Conduct](#code-of-conduct)
-- [Who is behind it](#who-is-behind-it)
-- [License](#license.md)
   <!--te-->
 
 ## Installation
@@ -124,6 +120,7 @@ There is a version of NLP.js that works in React Native, so you can build chatbo
 ```
 
 Some Limitations:
+
 - No Chinese
 - Japanese stemmer is not the complete one
 - No excel import
@@ -136,31 +133,31 @@ You can see a great example of use at the folder [`/examples/console-bot`](https
 You can start to build your NLP from scratch with few lines:
 
 ```javascript
-const { NlpManager } = require('node-nlp');
+const { NlpManager } = require("node-nlp");
 
-const manager = new NlpManager({ languages: ['en'] });
+const manager = new NlpManager({ languages: ["en"] });
 // Adds the utterances and intents for the NLP
-manager.addDocument('en', 'goodbye for now', 'greetings.bye');
-manager.addDocument('en', 'bye bye take care', 'greetings.bye');
-manager.addDocument('en', 'okay see you later', 'greetings.bye');
-manager.addDocument('en', 'bye for now', 'greetings.bye');
-manager.addDocument('en', 'i must go', 'greetings.bye');
-manager.addDocument('en', 'hello', 'greetings.hello');
-manager.addDocument('en', 'hi', 'greetings.hello');
-manager.addDocument('en', 'howdy', 'greetings.hello');
+manager.addDocument("en", "goodbye for now", "greetings.bye");
+manager.addDocument("en", "bye bye take care", "greetings.bye");
+manager.addDocument("en", "okay see you later", "greetings.bye");
+manager.addDocument("en", "bye for now", "greetings.bye");
+manager.addDocument("en", "i must go", "greetings.bye");
+manager.addDocument("en", "hello", "greetings.hello");
+manager.addDocument("en", "hi", "greetings.hello");
+manager.addDocument("en", "howdy", "greetings.hello");
 
 // Train also the NLG
-manager.addAnswer('en', 'greetings.bye', 'Till next time');
-manager.addAnswer('en', 'greetings.bye', 'see you soon!');
-manager.addAnswer('en', 'greetings.hello', 'Hey there!');
-manager.addAnswer('en', 'greetings.hello', 'Greetings!');
+manager.addAnswer("en", "greetings.bye", "Till next time");
+manager.addAnswer("en", "greetings.bye", "see you soon!");
+manager.addAnswer("en", "greetings.hello", "Hey there!");
+manager.addAnswer("en", "greetings.hello", "Greetings!");
 
 // Train and save the model.
-(async() => {
-    await manager.train();
-    manager.save();
-    const response = await manager.process('en', 'I should go now');
-    console.log(response);
+(async () => {
+  await manager.train();
+  manager.save();
+  const response = await manager.process("en", "I should go now");
+  console.log(response);
 })();
 ```
 
@@ -207,7 +204,10 @@ By default, the neural network tries to avoid false positives. To achieve that, 
 If you don't want to avoid those false positives, and you feel more comfortable with classifications into the intents that you declare, then you can disable this behavior with the useNoneFeature setting to false:
 
 ```javascript
-const manager = new NlpManager({ languages: ['en'], nlu: { useNoneFeature: false } });
+const manager = new NlpManager({
+  languages: ["en"],
+  nlu: { useNoneFeature: false },
+});
 ```
 
 ## Log Training Progress
@@ -216,55 +216,12 @@ You can also add a log progress, so you can trace what is happening during the t
 You can log the progress into console:
 
 ```javascript
-const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: true } });
+const nlpManager = new NlpManager({ languages: ["en"], nlu: { log: true } });
 ```
+
 Or you can provide your own log function:
+
 ```javascript
 const logfn = (status, time) => console.log(status, time);
-const nlpManager = new NlpManager({ languages: ['en'], nlu: { log: logfn } });
+const nlpManager = new NlpManager({ languages: ["en"], nlu: { log: logfn } });
 ```
-
-## Contributing
-
-You can read the guide of how to contribute at [Contributing](../../CONTRIBUTING.md).
-
-## Contributors
-
-<a href="https://github.com/axa-group/nlp.js/graphs/contributors">
-  <img src="https://contributors-img.firebaseapp.com/image?repo=axa-group/nlp.js" />
-</a>
-
-Made with [contributors-img](https://contributors-img.firebaseapp.com).
-
-## Code of Conduct
-
-You can read the Code of Conduct at [Code of Conduct](../../CODE_OF_CONDUCT.md).
-
-## Who is behind it`?`
-
-This project is developed by AXA Group Operations Spain S.A.
-
-If you need to contact us, you can do it at the email opensource@axa.com
-
-## License
-
-Copyright (c) AXA Group Operations Spain S.A.
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
