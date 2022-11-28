@@ -911,6 +911,79 @@ describe('NLP', () => {
       expect(output.answer).toEqual('answer');
       expect(actionCalled).toEqual(true);
     });
+
+    test('The action is executed before answer generation so a set entity can be used when answer is rendered', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        executeActionsBeforeAnswers: true,
+      });
+
+      // needed for text rendering
+      class TemplateMock {
+        compile(str, context) {
+          if (str && str.answer && context.name) {
+            str.answer = str.answer.replace(/{{[ ]?name[ ]?}}/g, context.name);
+          }
+          return str;
+        }
+      }
+
+      nlp.container.register('Template', TemplateMock, true);
+      nlp.addDocument('en', 'Who am i?', 'who_am_i');
+      nlp.addAnswer('en', 'who_am_i', 'You are {{ name }}');
+      let actionCalled = false;
+      nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        expect(param1).toEqual('param1');
+        data.context.name = 'HAL';
+        actionCalled = true;
+        return data;
+      });
+      await nlp.train();
+      const context = {};
+      const output = await nlp.process('en', 'Who am i?', context);
+      expect(output.utterance).toEqual('Who am i?');
+      expect(output.intent).toEqual('who_am_i');
+      expect(output.answer).toEqual('You are HAL');
+      expect(actionCalled).toEqual(true);
+      expect(context.name).toEqual('HAL');
+    });
+    test('The action is executed after answer generation so a set entity can not be used when answer is rendered', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        executeActionsBeforeAnswers: false,
+      });
+
+      // needed for text rendering
+      class TemplateMock {
+        compile(str, context) {
+          if (str && str.answer && context.name) {
+            str.answer = str.answer.replace(/{{[ ]?name[ ]?}}/g, context.name);
+          }
+          return str;
+        }
+      }
+
+      nlp.container.register('Template', TemplateMock, true);
+      nlp.addDocument('en', 'Who am i?', 'who_am_i');
+      nlp.addAnswer('en', 'who_am_i', 'You are {{ name }}');
+      let actionCalled = false;
+      nlp.addAction('who_am_i', 'testaction', ['param1'], (data, param1) => {
+        expect(param1).toEqual('param1');
+        data.context.name = 'HAL';
+        actionCalled = true;
+        return data;
+      });
+      await nlp.train();
+      const context = {};
+      const output = await nlp.process('en', 'Who am i?', context);
+      expect(output.utterance).toEqual('Who am i?');
+      expect(output.intent).toEqual('who_am_i');
+      expect(output.answer).toEqual('You are {{ name }}');
+      expect(actionCalled).toEqual(true);
+      expect(context.name).toEqual('HAL');
+    });
   });
 
   describe('addCorpus', () => {
