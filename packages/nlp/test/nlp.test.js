@@ -22,6 +22,7 @@
  */
 
 const { Nlp } = require('../src');
+const TemplateMock = require('./template-mock');
 
 const defaultCorpus = {
   name: 'corpus',
@@ -919,16 +920,6 @@ describe('NLP', () => {
         executeActionsBeforeAnswers: true,
       });
 
-      // needed for text rendering
-      class TemplateMock {
-        compile(str, context) {
-          if (str && str.answer && context.name) {
-            str.answer = str.answer.replace(/{{[ ]?name[ ]?}}/g, context.name);
-          }
-          return str;
-        }
-      }
-
       nlp.container.register('Template', TemplateMock, true);
       nlp.addDocument('en', 'Who am i?', 'who_am_i');
       nlp.addAnswer('en', 'who_am_i', 'You are {{ name }}');
@@ -954,16 +945,6 @@ describe('NLP', () => {
         autoSave: false,
         executeActionsBeforeAnswers: false,
       });
-
-      // needed for text rendering
-      class TemplateMock {
-        compile(str, context) {
-          if (str && str.answer && context.name) {
-            str.answer = str.answer.replace(/{{[ ]?name[ ]?}}/g, context.name);
-          }
-          return str;
-        }
-      }
 
       nlp.container.register('Template', TemplateMock, true);
       nlp.addDocument('en', 'Who am i?', 'who_am_i');
