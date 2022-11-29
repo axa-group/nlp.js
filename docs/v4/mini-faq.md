@@ -28,7 +28,7 @@ I will put here a FAQ with the links to different interesting parts to documenta
 
 **- Where I can see the languages and their locales to find the correct package to install?** Here, the one with Native Support https://github.com/axa-group/nlp.js/blob/master/docs/v4/language-support.md
 
-**- But I want to have a web for my chatbot!** Here you have how to easiely expose your chatbot with directline API, and how to expose a WebxChat: https://github.com/axa-group/nlp.js/blob/master/docs/v4/quickstart.md#adding-api-and-webchat
+**- But I want to have a web for my chatbot!** Here you have how to easiely expose your chatbot with directline API, and how to expose a WebChat: https://github.com/axa-group/nlp.js/blob/master/docs/v4/quickstart.md#adding-api-and-webchat
 
 **- But this does not help on how to orchestrate a chatbot** Well, NLP.js is the set of NLP tools, not the chatbot ones. For orchestrating a chatbot I recommend you to use Microsoft Bot Framework
 
