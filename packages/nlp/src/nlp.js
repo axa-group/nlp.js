@@ -650,7 +650,10 @@ class Nlp extends Clonable {
     }
     output.context = context;
     if (forceNER || !this.slotManager.isEmpty) {
-      output = await this.ner.process({ ...output });
+      const intentEntities = this.slotManager.getIntentEntityNames(
+        output.intent
+      );
+      output = await this.ner.process({ ...output }, intentEntities);
     } else {
       output.entities = [];
       output.sourceEntities = [];
