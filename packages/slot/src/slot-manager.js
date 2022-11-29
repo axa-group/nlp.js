@@ -230,7 +230,6 @@ class SlotManager {
     const aliases = this.generateEntityAliases(result.entities);
     for (let i = 0, l = result.entities.length; i < l; i += 1) {
       const entity = result.entities[i];
-      console.log('handle entity', entity.option, entity.entity, aliases[i]);
       // Remove existing mandatory entities to see what's left
       delete mandatorySlots[entity.entity];
       delete mandatorySlots[aliases[i]];
@@ -252,6 +251,9 @@ class SlotManager {
       delete mandatorySlots[context.slotFill.currentSlot];
     }
     keys = Object.keys(mandatorySlots);
+    if (context.slotFill && context.slotFill.currentSlot) {
+      context.slotFill.latestSlot = context.slotFill.currentSlot;
+    }
     if (!keys || keys.length === 0) {
       // All mandatory slots are filled, so we are done. No further questions needed
       delete result.srcAnswer;
@@ -266,6 +268,7 @@ class SlotManager {
       entities: result.entities,
       answer: result.answer,
       srcAnswer: result.srcAnswer,
+      latestSlot: context.slotFill.latestSlot,
     };
     const currentSlot = mandatorySlots[keys[0]];
     result.slotFill.currentSlot = currentSlot.entity;
