@@ -127,14 +127,14 @@ class ContextManager extends Clonable {
   }
 
   async resetConversations() {
-    Object.keys(this.contextDictionary).forEach(async (cid) => {
+    for (const cid of Object.keys(this.contextDictionary)) {
       await this.resetConversation(cid);
-    });
+    }
   }
 
   async resetConversation(cid) {
     const logger = this.container.get('logger');
-    logger.debug(`reseting context in conversation: ${cid}`);
+    logger.debug(`resetting context in conversation: ${cid}`);
     const conversationCtx = this.contextDictionary[cid];
     Object.keys(conversationCtx).forEach((convCtxKey) => {
       delete conversationCtx[convCtxKey];
