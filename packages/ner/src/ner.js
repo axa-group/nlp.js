@@ -246,27 +246,13 @@ class Ner extends Clonable {
     this.addRule(locale, name, 'regex', fixedRegex);
   }
 
-  addBetweenLastCondition(
+  buildBetweenConditionRule(
     locale,
     name,
     srcLeftWords,
     srcRightWords,
-    srcOptions = {}
+    srcOptions
   ) {
-    const options = {
-      ...srcOptions,
-      closest: true,
-    };
-    this.addBetweenCondition(
-      locale,
-      name,
-      srcLeftWords,
-      srcRightWords,
-      options
-    );
-  }
-
-  addBetweenCondition(locale, name, srcLeftWords, srcRightWords, srcOptions) {
     const options = srcOptions || {};
     const leftWords = Array.isArray(srcLeftWords)
       ? srcLeftWords
@@ -294,25 +280,73 @@ class Ner extends Clonable {
     if (options.caseSensitive !== true) {
       regex += 'i';
     }
-    const rule = {
+    return {
       type: 'between',
       leftWords,
       rightWords,
       regex: Ner.str2regex(regex),
       options,
     };
-    this.addRule(locale, name, 'trim', rule);
   }
 
-  addPositionCondition(locale, name, position, srcWords, srcOptions) {
+  addBetweenLastCondition(
+    locale,
+    name,
+    srcLeftWords,
+    srcRightWords,
+    srcOptions = {}
+  ) {
+    const options = {
+      ...srcOptions,
+      closest: true,
+    };
+    this.addBetweenCondition(
+      locale,
+      name,
+      srcLeftWords,
+      srcRightWords,
+      options
+    );
+  }
+
+  addBetweenCondition(locale, name, srcLeftWords, srcRightWords, srcOptions) {
+    this.addRule(
+      locale,
+      name,
+      'trim',
+      this.buildBetweenConditionRule(
+        locale,
+        name,
+        srcLeftWords,
+        srcRightWords,
+        srcOptions
+      )
+    );
+  }
+
+  buildPositionConditionRule(locale, name, position, srcWords, srcOptions) {
     const options = srcOptions || {};
     const words = Array.isArray(srcWords) ? srcWords : [srcWords];
-    const rule = {
+    return {
       type: position,
       words,
       options,
     };
-    this.addRule(locale, name, 'trim', rule);
+  }
+
+  addPositionCondition(locale, name, position, srcWords, srcOptions) {
+    this.addRule(
+      locale,
+      name,
+      'trim',
+      this.buildPositionConditionRule(
+        locale,
+        name,
+        position,
+        srcWords,
+        srcOptions
+      )
+    );
   }
 
   addAfterCondition(locale, name, words, opts) {
