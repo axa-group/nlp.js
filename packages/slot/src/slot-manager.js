@@ -122,6 +122,16 @@ class SlotManager {
   }
 
   /**
+   * Given an intent return the information if the intent had entities defined
+   *
+   * @param {String} intent Name of the intent.
+   * @returns {boolean} true if intent has defined entities, else false
+   */
+  intentHasEntities(intent) {
+    return this.getIntentEntityNames(intent).length > 0;
+  }
+
+  /**
    * Clear the slot manager.
    */
   clear() {
