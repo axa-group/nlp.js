@@ -373,6 +373,181 @@ class Ner extends Clonable {
     this.addPositionCondition(locale, name, TrimType.BeforeLast, words, opts);
   }
 
+  async findTrimCondition(locale, utterances, entityName) {
+    this.initializeExtractors();
+    if (!this.cache.extractTrim) {
+      return [];
+    }
+    const foundRules = {};
+    const entityNameInText = this.nameToEntity(entityName);
+    utterances.forEach((utterance) => {
+      const tokens = utterance.split(/[\s,.!?;:([\]'"¡¿)/]+/).filter((x) => x);
+      if (tokens.length === 1) {
+        return; // Utterance has only the entity as content, can not trim that
+      }
+      const entityPositions = [];
+      let idx = tokens.indexOf(entityNameInText);
+      while (idx !== -1) {
+        entityPositions.push(idx);
+        idx = tokens.indexOf(entityNameInText, idx + 1);
+      }
+      entityPositions.forEach((entityPosition) => {
+        if (entityPosition === 0 && tokens.length > 1) {
+          // Entity is at the beginning of the utterance -> BeforeFirst
+          foundRules[TrimType.BeforeFirst] =
+            foundRules[TrimType.BeforeFirst] || {};
+          foundRules[TrimType.BeforeFirst].words =
+            foundRules[TrimType.BeforeFirst].words || [];
+          if (!foundRules[TrimType.BeforeFirst].words.includes(tokens[1])) {
+            foundRules[TrimType.BeforeFirst].words.push(
+              tokens[entityPosition + 1]
+            );
+          }
+        } else if (entityPosition === tokens.length - 1 && tokens.length > 1) {
+          // Entity is right at the end of the utterance -> AfterLast
+          foundRules[TrimType.AfterLast] = foundRules[TrimType.AfterLast] || {};
+          foundRules[TrimType.AfterLast].words =
+            foundRules[TrimType.AfterLast].words || [];
+          if (
+            !foundRules[TrimType.AfterLast].words.includes(
+              tokens[entityPosition - 1]
+            )
+          ) {
+            foundRules[TrimType.AfterLast].words.push(
+              tokens[entityPosition - 1]
+            );
+          }
+        } else {
+          const tokenBefore = tokens[entityPosition - 1];
+          const tokenAfter = tokens[entityPosition + 1];
+          if (!this.isEntity(tokenBefore) && !this.isEntity(tokenAfter)) {
+            const type = 'betweenLast';
+            foundRules[type] = foundRules[type] || {};
+            foundRules[type].leftWords = foundRules[type].leftWords || [];
+            if (
+              !foundRules[type].leftWords.includes(tokens[entityPosition - 1])
+            ) {
+              foundRules[type].leftWords.push(tokens[entityPosition - 1]);
+            }
+            foundRules[type].rightWords = foundRules[type].rightWords || [];
+            if (
+              !foundRules[type].rightWords.includes(tokens[entityPosition + 1])
+            ) {
+              foundRules[type].rightWords.push(tokens[entityPosition + 1]);
+            }
+          }
+        }
+      });
+    });
+    for (const type of Object.keys(foundRules)) {
+      let rule = null;
+      switch (type) {
+        case TrimType.BeforeFirst:
+        case TrimType.AfterLast:
+          rule = this.buildPositionConditionRule(
+            locale,
+            entityName,
+            type,
+            foundRules[type].words
+          );
+          break;
+        case 'betweenLast':
+          rule = this.buildBetweenConditionRule(
+            locale,
+            entityName,
+            foundRules[type].leftWords,
+            foundRules[type].rightWords,
+            { closest: true }
+          );
+          break;
+        default:
+          break;
+      }
+      if (rule) {
+        for (const utterance of utterances) {
+          while (rule) {
+            const output = await this.testTrimRule(
+              locale,
+              utterance,
+              entityName,
+              rule
+            );
+            let ruleIsOk = true;
+            if (output && output.edges && output.edges.length > 0) {
+              for (const edge of output.edges) {
+                if (edge.sourceText !== entityNameInText) {
+                  // Ok we matched something else then expected, check what we found
+                  const entityIndex =
+                    edge.utteranceText.indexOf(entityNameInText);
+                  if (entityIndex === -1) {
+                    // We found something else without the entity included, ignore
+                    rule.options = rule.options || {};
+                    rule.options.skip = [edge.utteranceText];
+                    ruleIsOk = false;
+                    break;
+                  } else if (entityIndex === 0) {
+                    /*
+                    if (rule.type === TrimType.AfterLast) {
+                      // It was a AfterLast, but we found something after it, so convert to BetweenLast
+                      rule = this.buildBetweenConditionRule(locale, entityName, foundRules[type].words, [edge.utteranceText.substring(entityNameInText.length)], { closest: true});
+                      console.log('Converting to BetweenLast');
+                      ruleIsOk = false;
+                      break;
+                    }
+                    */
+                  } else if (edge.utteranceText.endsWith(entityNameInText)) {
+                    /*
+                    if (rule.type === TrimType.BeforeFirst) {
+                      // It was a BeforeFirst, but we found something before it, so convert to BetweenLast
+                      rule = this.buildBetweenConditionRule(locale, entityName, [edge.utteranceText.substring(0, entityNameInText.length)], foundRules[type].words, { closest: true});
+                      console.log('Converting to BetweenLast');
+                      ruleIsOk = false;
+                      break;
+                    }
+                    */
+                  } else {
+                    // Found something else, but not at the beginning or at the end, ignoring
+                    rule = null;
+                    break;
+                  }
+                } else {
+                  // Rule OK ...
+                  ruleIsOk = ruleIsOk && true;
+                }
+              }
+            } else {
+              // Not matched ...
+              ruleIsOk = ruleIsOk && true;
+            }
+            if (ruleIsOk || !rule) {
+              break;
+            }
+          }
+          if (!rule) {
+            break;
+          }
+        }
+        // Rule ok
+        // rule .....
+      }
+    }
+  }
+
+  async testTrimRule(locale, utterance, entityName, rule) {
+    const input = {
+      locale,
+      utterance,
+      nerRules: [
+        {
+          name: entityName,
+          type: 'trim',
+          rules: [rule],
+        },
+      ],
+    };
+    return this.cache.extractTrim.run(input);
+  }
+
   reduceEdges(input) {
     input.entities = input.edges;
     delete input.edges;

@@ -190,6 +190,84 @@ class Nlp extends Clonable {
     return this.nluManager.removeLanguage(locales);
   }
 
+  addAdditionalEnumEntityUtterances() {
+    if (!this.settings.languages) {
+      return;
+    }
+    this.settings.languages.forEach((locale) => {
+      const replaceTexts = {};
+      const rules = this.ner.getRules(locale);
+      rules.forEach((rule) => {
+        if (rule.type === 'enum') {
+          const entityName = this.ner.nameToEntity(rule.name);
+          replaceTexts[entityName] = replaceTexts[entityName] || [];
+          rule.rules.forEach((value) => {
+            replaceTexts[entityName] = replaceTexts[entityName].concat(
+              value.texts
+            );
+          });
+        }
+      });
+      const manager = this.nluManager.consolidateManager(locale);
+      const sentences = manager.getSentences();
+      sentences.forEach((sentence) => {
+        const entities = this.ner
+          .getEntitiesFromUtterance(locale, sentence.utterance)
+          .map((entityName) => this.ner.nameToEntity(entityName));
+        this.replaceEnumEntitiesInSentence(
+          manager,
+          locale,
+          sentence.domain,
+          sentence.utterance,
+          sentence.intent,
+          entities,
+          replaceTexts
+        );
+      });
+    });
+  }
+
+  replaceEnumEntitiesInSentence(
+    manager,
+    locale,
+    domain,
+    utterance,
+    intent,
+    entityList,
+    replaceTexts
+  ) {
+    if (!entityList.length) {
+      this.nluManager.guesser.addExtraSentence(locale, utterance);
+      manager.add(domain, utterance, intent);
+      return;
+    }
+    const entityName = entityList[0];
+    if (replaceTexts[entityName] && replaceTexts[entityName].length) {
+      replaceTexts[entityName].forEach((replaceText) => {
+        const entityUtterance = utterance.replace(entityName, replaceText);
+        this.replaceEnumEntitiesInSentence(
+          manager,
+          locale,
+          domain,
+          entityUtterance,
+          intent,
+          entityList.slice(1),
+          replaceTexts
+        );
+      });
+    } else {
+      this.replaceEnumEntitiesInSentence(
+        manager,
+        locale,
+        domain,
+        utterance,
+        intent,
+        entityList.slice(1),
+        replaceTexts
+      );
+    }
+  }
+
   addDocument(locale, utterance, intent) {
     const entities = this.ner.getEntitiesFromUtterance(utterance);
     this.slotManager.addBatch(intent, entities);
@@ -198,6 +276,62 @@ class Nlp extends Clonable {
 
   removeDocument(locale, utterance, intent) {
     return this.nluManager.remove(locale, utterance, intent);
+  }
+
+  async findNerTrimConditionsForMissingEntities() {
+    if (!this.settings.languages) {
+      return;
+    }
+    for (const locale of this.settings.languages) {
+      const definedEntities = this.ner.getBuiltinEntityNames(locale);
+      const rules = this.ner.getRules(locale);
+      rules.forEach((rule) => {
+        definedEntities.push(rule.name);
+      });
+      const manager = this.nluManager.consolidateManager(locale);
+      const sentences = manager.getSentences();
+      const sentencesToProcess = {};
+      sentences.forEach((sentence) => {
+        sentencesToProcess[sentence.domain] =
+          sentencesToProcess[sentence.domain] || {};
+        sentencesToProcess[sentence.domain][sentence.intent] =
+          sentencesToProcess[sentence.domain][sentence.intent] || {};
+        if (
+          sentencesToProcess[sentence.domain][sentence.intent]
+            .intentEntities === undefined
+        ) {
+          sentencesToProcess[sentence.domain][sentence.intent].intentEntities =
+            this.slotManager.getIntentEntityNames(sentence.intent);
+          sentencesToProcess[sentence.domain][
+            sentence.intent
+          ].undefinedEntities = sentencesToProcess[sentence.domain][
+            sentence.intent
+          ].intentEntities.filter(
+            (entityName) => !definedEntities.includes(entityName)
+          );
+          sentencesToProcess[sentence.domain][sentence.intent].utterances = [];
+        }
+        sentencesToProcess[sentence.domain][sentence.intent].utterances.push(
+          sentence.utterance
+        );
+      });
+
+      for (const domain of Object.keys(sentencesToProcess)) {
+        for (const intent of Object.keys(sentencesToProcess[domain])) {
+          if (!sentencesToProcess[domain][intent].undefinedEntities.length) {
+            return;
+          }
+          for (const entityName of sentencesToProcess[domain][intent]
+            .undefinedEntities) {
+            const rules = await this.ner.findTrimCondition(
+              locale,
+              sentencesToProcess[domain][intent].utterances,
+              entityName
+            );
+          }
+        }
+      }
+    }
   }
 
   getRulesByName(locale, name) {

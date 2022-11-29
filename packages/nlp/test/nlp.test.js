@@ -789,6 +789,54 @@ describe('NLP', () => {
     });
   });
 
+  describe('Find trim definitions for entities', () => {
+    test('huhu', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'Hi, my name is @name!', 'hi_intent');
+      nlp.addDocument('en', 'You can call me @name!', 'hi_intent');
+      nlp.addDocument('en', 'You can call me @name my friend', 'hi_intent');
+      nlp.addDocument(
+        'en',
+        'I want to travel from @fromCity to @toCity',
+        'travelIntent'
+      );
+      nlp.addDocument('en', 'I want to travel to @toCity', 'travelIntent');
+      nlp.addDocument(
+        'en',
+        'I want to travel to @toCity to get some food',
+        'travelIntent'
+      );
+      nlp.addDocument(
+        'en',
+        'Give me details about @attribute of that car',
+        'carAttributeIntent'
+      );
+      nlp.addDocument(
+        'en',
+        'What can you tell me about @attribute of that car',
+        'carAttributeIntent'
+      );
+      nlp.addDocument('en', 'What is @attribute about', 'carAttributeIntent');
+      expect(nlp.slotManager.intents.hi_intent).toBeDefined();
+      expect(nlp.slotManager.intents.hi_intent.name).toBeDefined();
+      expect(nlp.ner.rules).toEqual({});
+
+      await nlp.findNerTrimConditionsForMissingEntities();
+
+      nlp.addNerAfterLastCondition('en', 'hi_intent', 'is');
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Hi, my name is Ingo!',
+      };
+      const output = await nlp.process(input);
+      console.log(JSON.stringify(output, null, 2));
+    });
+  });
+
   describe('Process an utterance with actions', () => {
     test('The action is executed when intent matches', async () => {
       const nlp = new Nlp({
