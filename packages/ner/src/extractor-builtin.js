@@ -30,6 +30,14 @@ class ExtractorBuiltin {
     this.name = 'extract-builtin';
   }
 
+  getBuiltinEntityNames(locale) {
+    const extractor = this.container.get(`extract-builtin-${locale || 'en'}`);
+    if (!extractor) {
+      return [];
+    }
+    return extractor.getBuiltinEntityNames();
+  }
+
   extract(srcInput) {
     return srcInput;
   }

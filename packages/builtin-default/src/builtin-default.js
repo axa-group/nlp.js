@@ -58,6 +58,20 @@ class BuiltinDefault extends Clonable {
     });
   }
 
+  getBuiltinEntityNames() {
+    return [
+      'email',
+      'url',
+      'ipv4',
+      'ipv6',
+      'color',
+      'phonenumber',
+      'hashtag',
+      'number',
+      'date',
+    ];
+  }
+
   prereduceEdges(edges) {
     for (let i = 0; i < edges.length; i += 1) {
       const edge = edges[i];

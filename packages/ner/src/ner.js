@@ -346,7 +346,7 @@ class Ner extends Clonable {
     return input;
   }
 
-  async defaultPipelineProcess(input) {
+  initializeExtractors() {
     if (!this.cache) {
       this.cache = {
         extractEnum: this.container.get('extract-enum'),
@@ -371,6 +371,10 @@ class Ner extends Clonable {
         this.cache.extractBuiltin = this.container.get('extract-builtin');
       }
     }
+  }
+
+  async defaultPipelineProcess(input) {
+    this.initializeExtractors();
     let output = await this.decideRules(input);
     if (this.cache.extractEnum) {
       output = await this.cache.extractEnum.run(output);
@@ -406,6 +410,14 @@ class Ner extends Clonable {
     }
     delete result.threshold;
     return result;
+  }
+
+  getBuiltinEntityNames(locale) {
+    this.initializeExtractors();
+    if (this.cache.extractBuiltin) {
+      return this.cache.extractBuiltin.getBuiltinEntityNames(locale);
+    }
+    return [];
   }
 
   nameToEntity(name) {

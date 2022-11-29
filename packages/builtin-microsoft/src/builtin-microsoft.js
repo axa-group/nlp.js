@@ -133,6 +133,10 @@ class BuiltinMicrosoft extends Clonable {
     );
   }
 
+  getBuiltinEntityNames() {
+    return this.settings.allowList;
+  }
+
   translate(str, locale) {
     if (BuiltinDictionary[locale]) {
       const translation = BuiltinDictionary[locale][str];

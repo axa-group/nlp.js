@@ -126,6 +126,22 @@ class BuiltinDuckling extends Clonable {
     });
   }
 
+  getBuiltinEntityNames() {
+    return [
+      'email',
+      'phonenumber',
+      'url',
+      'number',
+      'ordinal',
+      'dimension',
+      'quantity',
+      'temperature',
+      'currency',
+      'duration',
+      'date',
+    ];
+  }
+
   transformEntity(entity) {
     const result = {
       start: entity.start,

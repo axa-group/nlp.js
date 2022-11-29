@@ -91,6 +91,20 @@ class BuiltinCompromise extends Clonable {
     this.container.registerConfiguration(this.settings.tag, {}, false);
   }
 
+  getBuiltinEntityNames() {
+    return [
+      'hashtag',
+      'person',
+      'place',
+      'organization',
+      'email',
+      'phonenumber',
+      'date',
+      'url',
+      'number',
+    ];
+  }
+
   async findBuiltinEntities(utterance) {
     function getDomainFromUrl(url) {
       // eslint-disable-next-line
