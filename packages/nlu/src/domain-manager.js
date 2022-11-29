@@ -138,6 +138,10 @@ class DomainManager extends Clonable {
     }
   }
 
+  getSentences() {
+    return this.sentences;
+  }
+
   remove(srcDomain, srcUtterance, srcIntent) {
     const domain = srcIntent ? srcDomain : defaultDomainName;
     const utterance = srcIntent ? srcUtterance : srcDomain;
