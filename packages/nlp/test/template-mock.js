@@ -4,7 +4,7 @@
 class TemplateMock {
   compile(str, context) {
     if (str && str.answer && context.name) {
-      str.answer = str.answer.replace(/{{[ ]?name[ ]?}}/g, context.name);
+      str.answer = str.answer.replace(/{{ ?name ?}}/g, context.name);
     }
     return str;
   }

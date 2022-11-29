@@ -100,7 +100,7 @@ class ActionManager extends Clonable {
    */
   async processActions(intent, input) {
     const actionList = this.findActions(intent);
-    if (typeof input === 'object') {
+    if (input && typeof input === 'object') {
       input.actions = actionList.map((x) => ({
         action: x.action,
         parameters: x.parameters,
