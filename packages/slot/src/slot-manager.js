@@ -60,7 +60,7 @@ class SlotManager {
    * Adds a new slot for a given intent and entity.
    * @param {String} intent Name of the intent.
    * @param {String} entity Name of the entity.
-   * @param {boolean} [mandatory] Flag indicating if is mandatory or optional.
+   * @param {boolean} [mandatory=false] Flag indicating if is mandatory or optional.
    * @param {Object} [questions] Question to ask when is mandatory, by locale.
    * @returns {Object} New slot instance.
    */

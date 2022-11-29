@@ -28,13 +28,13 @@ I will put here a FAQ with the links to different interesting parts to documenta
 
 **- Where I can see the languages and their locales to find the correct package to install?** Here, the one with Native Support https://github.com/axa-group/nlp.js/blob/master/docs/v4/language-support.md
 
-**- But I want to have a web for my chatbot!** Here you have how to easely expose your chatbot with directline API, and how to expose a WebChat: https://github.com/axa-group/nlp.js/blob/master/docs/v4/quickstart.md#adding-api-and-webchat
+**- But I want to have a web for my chatbot!** Here you have how to easiely expose your chatbot with directline API, and how to expose a WebxChat: https://github.com/axa-group/nlp.js/blob/master/docs/v4/quickstart.md#adding-api-and-webchat
 
 **- But this does not help on how to orchestrate a chatbot** Well, NLP.js is the set of NLP tools, not the chatbot ones. For orchestrating a chatbot I recommend you to use Microsoft Bot Framework
 
 **- When an intent is triggered I want to get the answer from an API call and I'm not using any chatbot orchestrating SDK** You can with pipelines that react to your intent, you've an example here: https://github.com/axa-group/nlp.js/blob/master/docs/v4/quickstart.md#adding-logic-to-an-intent
 
-**- How I guess the language from an utterance when I have a multi-language bot?** The language is guessed automatically using the most common 3-grams from the language, but also with the 3-grams from the corpus training it, so that way you can use even languages that does not exists, or get a better guessing based on your corpus.
+**- How nlp guesses the language from an utterance in a multi-language bot?** The language is guessed automatically using the most common 3-grams from the language, but also with the 3-grams from the corpus training it, so that way you can use even languages that does not exists, or get a better guessing based on your corpus.
 
 **- And how I guess a language from a sentence, not integrated with the NLP?** You have the example here: https://github.com/axa-group/nlp.js/blob/master/docs/v3/language-guesser.md But if you want to get an smaller impact on your node_moules use the library _@nlpjs/language_ instead of _node-nlp_ one.
 
