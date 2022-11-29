@@ -250,7 +250,7 @@ class BuiltinMicrosoft extends Clonable {
           const other = edges[j];
           if (!other.discarded) {
             if (other.start === edge.start && other.end === edge.end) {
-              if (other.entity === 'number' && edge.entiy === 'ordinal') {
+              if (other.entity === 'number' && edge.entity === 'ordinal') {
                 other.discarded = true;
               } else if (
                 other.entity === edge.entity &&
@@ -319,12 +319,13 @@ class BuiltinMicrosoft extends Clonable {
         }
         for (let i = 0; i < entities.length; i += 1) {
           const entity = entities[i];
-          source.push(entity);
           let entityName = entity.typeName;
           const index = entityName.lastIndexOf('.');
           if (index !== -1) {
             entityName = entityName.slice(index + 1);
           }
+          entity.entity = entityName;
+          source.push(entity);
           if (this.settings.builtinAllowList[entityName]) {
             const text = utterance.slice(entity.start, entity.end + 1);
             const accuracy = 0.95;
@@ -335,7 +336,7 @@ class BuiltinMicrosoft extends Clonable {
               accuracy,
               sourceText: text,
               utteranceText: text,
-              entity: entityName,
+              entity: entity.entity,
             };
             const resolution = this.calculateResolution(entity, locale);
             if (resolution) {
