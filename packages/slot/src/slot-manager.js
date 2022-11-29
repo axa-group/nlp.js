@@ -247,6 +247,7 @@ class SlotManager {
         start: 0,
         end: result.utterance.length - 1,
         len: result.utterance.length,
+        isSlotFillingFallback: true,
       });
       delete mandatorySlots[context.slotFill.currentSlot];
     }
