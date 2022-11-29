@@ -96,7 +96,7 @@ class ActionManager extends Clonable {
   /**
    * Returns a processed answer after execute a list of given actions.
    * @param {String} intent Name of the intent.
-   * @param {String} input original answer data structure
+   * @param {String|Object} input original answer data structure
    */
   async processActions(intent, input) {
     const actionList = this.findActions(intent);
