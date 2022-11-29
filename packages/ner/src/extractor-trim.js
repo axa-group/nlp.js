@@ -62,6 +62,10 @@ class ExtractorTrim {
         let endIndex;
         if (condition && condition.options && condition.options.closest) {
           matchIndex = 1;
+          if (!match[matchIndex]) {
+            matchFound = false;
+            break;
+          }
           const leftWordIndex = match[0].indexOf(match[matchIndex]);
           startIndex = match.index - 1 + leftWordIndex;
           endIndex = startIndex + match[matchIndex].length - 1;
@@ -279,6 +283,11 @@ class ExtractorTrim {
     }
     const filteredResult = [];
     for (let i = 0; i < result.length; i += 1) {
+      // Remove common whitespace characters
+      result[i].sourceText = result[i].sourceText.replace(
+        /^[\s,.!?;:([\]'"¡¿)/]+|[\s,.!?;:([\]'"¡¿)/]+$/,
+        ''
+      );
       if (!this.mustSkip(result[i].utteranceText, condition)) {
         filteredResult.push(result[i]);
       }

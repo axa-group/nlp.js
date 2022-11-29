@@ -291,20 +291,54 @@ class ExtractorEnum {
     return [];
   }
 
-  extract(srcInput) {
+  async extract(srcInput) {
     const input = srcInput;
-    const wordPositions = this.getWordPositions(input.text || input.utterance);
+    const originalInputText = input.text || input.utterance;
+    let tokenizedText = originalInputText;
+    const originalPositionMap = [];
+    const tokenizer = this.container.get('tokenize');
+    if (tokenizer) {
+      const tokenizeResult = await tokenizer.run({
+        locale: input.locale,
+        text: tokenizedText,
+      });
+      tokenizedText = tokenizeResult.tokens.join(' ');
+      if (tokenizedText !== originalInputText) {
+        let originalTextIndex = 0;
+        let tokenizedTextIndex = 0;
+        for (let i = 0; i < tokenizeResult.tokens.length; i += 1) {
+          const originaltextPos = originalInputText.indexOf(
+            tokenizeResult.tokens[i],
+            originalTextIndex
+          );
+          for (let idx = 0; idx < tokenizeResult.tokens[i].length; idx += 1) {
+            originalPositionMap[tokenizedTextIndex + idx] =
+              originaltextPos + idx;
+          }
+          originalTextIndex += tokenizeResult.tokens[i].length;
+          tokenizedTextIndex += tokenizeResult.tokens[i].length + 1;
+        }
+      }
+    }
+    const wordPositions = this.getWordPositions(tokenizedText);
     const rules = this.getRules(input);
     const edges = input.edges || [];
     for (let i = 0; i < rules.length; i += 1) {
       const newEdges = this.extractFromRule(
-        input.text || input.utterance,
+        tokenizedText,
         rules[i],
         wordPositions,
         input.threshold || 0.8
       );
       for (let j = 0; j < newEdges.length; j += 1) {
         edges.push(newEdges[j]);
+      }
+    }
+    if (originalPositionMap.length > 0) {
+      for (let i = 0; i < edges.length; i += 1) {
+        const edge = edges[i];
+        edge.start = originalPositionMap[edge.start];
+        edge.end = originalPositionMap[edge.end];
       }
     }
     edges.sort((a, b) => a.start - b.start);
