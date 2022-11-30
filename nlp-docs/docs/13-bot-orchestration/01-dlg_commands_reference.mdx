@@ -9,7 +9,7 @@ find a summary of the available commands.
 
 ### say
 
-Command used to send output to the user. Any [context](./key_concepts#context) variable in the text to say will be replace by its value (see examples below).
+Command used to send output to the user. Any context variable in the text to say will be replace by its value (see examples below).
 
 <CommandDetails
   parameters={[
@@ -108,7 +108,7 @@ Sends an [adaptive card](https://learn.microsoft.com/en-us/adaptive-cards/) to t
   ]}
 />
 
-See how to use cards in the [tutorials](/tutorials/using_cards)
+<!-- See how to use cards in **TODO** -->
 
 ### suggest
 
@@ -131,7 +131,7 @@ will receive as many buttons as suggestions placed.
 />
 
 :::info
-[Directline connector](/packages/connector-directline/api#directlineconnector) and [Microsoft Bot Framework](/packages/connector-msbf/api#msbfconnector)
+[Directline connector](/connectors/directline-connector) and [Microsoft Bot Framework](/connectors/msbf-connector)
 connectors both support suggestions.
 You can check [Microsoft Bot Framework documentation](https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-add-suggested-actions?view=azure-bot-service-4.0)
 to get more info about suggested actions
@@ -185,7 +185,7 @@ _run_ command will start executing another _dialog_, **once that _dialog_ is fin
 
 ### restart
 
-Restarts the conversation and clean up the [dialog stack](/technical-reference/key_concepts#dialog-stack)
+Restarts the conversation and clean up the dialog stack
 
 ### conditional execution
 
@@ -196,7 +196,7 @@ do that we can use the following syntax
 [<condition>] <command>
 ```
 
-The condition to be evaluated will take into account any variable available in the [_context_](/technical-reference/key_concepts#context).
+The condition to be evaluated will take into account any variable available in the context.
 For instance, if we've requested the user to tell the bot his age, we could do something like this:
 
 ```yaml
@@ -216,7 +216,7 @@ piece of the conversation to be conditionally executed, you may create a dialog 
 
 ### call
 
-Use the _call_ command to execute a [_custom action_](/tutorials/custom_actions) at any point of a conversation
+Use the _call_ command to execute a [_custom action_](/bot-orchestration/custom_actions) at any point of a conversation
 
 <CommandDetails
   parameters={[{desc: 'name of the <i>custom action</i> to execute', opt: false}]}
@@ -231,10 +231,10 @@ Use the _call_ command to execute a [_custom action_](/tutorials/custom_actions)
 
 ### set
 
-The _set_ command allows you to define a variable within the [_context_](/technical-reference/key_concepts#context).
+The _set_ command allows you to define a variable within the context.
 Remember that _context_ variables are available all over the flow, and can be referenced in many places
-[conditions](#conditional-execution), [_say_](#say) commands, [custom actions](/tutorials/custom_actions),
-[custom validators](/tutorials/gather_user_input#using-custom-validators), etc.
+[conditions](#conditional-execution), [_say_](#say) commands, [custom actions](/bot-orchestration/custom_actions),
+[custom validators](/bot-orchestration/custom_validators), etc.
 
 <CommandDetails
   parameters={[{desc: 'name of the variable to set', opt: false}, {desc: 'value to set', opt: false}]}
@@ -254,7 +254,7 @@ Remember that _context_ variables are available all over the flow, and can be re
 
 ### inc
 
-Given a [_context_](/technical-reference/key_concepts#context) variable, it will be increased by the specified amount.
+Given a context  <!-- /key_concepts#context) --> variable, it will be increased by the specified amount.
 If no amount is specified, it will be increased by 1.
 If _var_ does not exist, it will be created and set to 1.
 
@@ -301,7 +301,7 @@ If _var_ does not exist, it will be created and set to 1.
 
 
 
-Given a [_context_](/technical-reference/key_concepts#context) variable, it will be decreased by the specified amount.
+Given a context variable, it will be decreased by the specified amount.
 If no amount is specified, it will be decreased by 1.
 If _var_ does not exist, it will be created and set to -1.
 
