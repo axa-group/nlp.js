@@ -11,7 +11,7 @@ In case the out of the box connectors do not fit your use case, you can implemen
 ## Implementing your custom connector
 
 If your connector is REST-based, an easy point to start is by extending
-the <GithubLink to="packages/rest-connector/src/rest-connector.js">RestConnector </GithubLink>).
+the <GithubLink to="packages/rest-connector/src/rest-connector.js">RestConnector </GithubLink>.
 Then you might want to implement the following methods:
 
 - registerDefault
@@ -63,6 +63,14 @@ start() {
   ...
 }
 ```
+
+:::tip
+when creating a REST-based custom connector try not to hardcode the base path of your endpoints. Using
+a setting, such as the `apiPath` used by the REST connector, would avoid collisions when using multiple
+connectors in the same bot.<br/>
+Also, using the container name as the root path, as the <GithubLink to="packages/msbf-connector/src/msbf-connector.js">MSBF connector</GithubLink>
+does, would be a good idea.
+:::
 
 #### _say_ method
 

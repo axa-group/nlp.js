@@ -1,6 +1,6 @@
 # Directline connector
 
-THe directline connector is a Microsfot Bot framework styled connector allowing you to interact with a Bot without the need to
+The directline connector is a Microsfot Bot framework styled connector allowing you to interact with a Bot without the need to
 use an Azure Bot instance.
 
 ## Installation

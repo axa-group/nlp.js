@@ -1,0 +1,535 @@
+import GithubLink from "@site/src/components/GithubLink";
+
+# Configuration
+
+## General conventions
+
+### Changing defaults
+
+Usually, components we register, either through configuration using the "use" array or using the `container.use` method, will inherit
+from <GithubLink to="packages/core/src/clonable.js">Clonable</GithubLink>. When those components are instantiated, as a general rule
+of thumb, four steps will be done:
+
+1. call applySettings in parent class (\_Clonable)
+2. define a tag
+3. define default settings
+4. call apply settings on parent class using the configuration associated to the corresponding tag.
+
+```js title="example from packages/nlp/src/nlp.js"
+  constructor(settings = {}, container) {
+    ...
+    this.applySettings(this.settings, settings); (1)
+    if (!this.settings.tag) {
+      this.settings.tag = `nlp`; (2)
+    }
+    this.registerDefault(); (3)
+    this.applySettings(
+      this.settings,
+      this.container.getConfiguration(this.settings.tag)
+    ); (4)
+    ...
+  }
+```
+
+This way of proceeding guarantees that the default settings are always applied, while providing the opportunity to override
+any of them using a specific tag in the configuration.
+For instance, in the above example, we could override any default setting using the tag `nlp`:
+
+```json
+{
+  "settings": {
+    //using the 'nlp' tag to override default settings for Nlp component
+    "nlp": {
+      "forceNER": true
+    }
+  }
+}
+```
+
+### Using placeholders
+
+Some components accept multiple configurations at the same time, for instance, the _nlu_ can have a configuration for each locale.
+For instance, we could set some values for 'nlu-en' and some others for 'nlu-es'. In these cases, in case we need to set a
+configuration for all possibilities, we can use '?' as placeholders:
+
+```json
+// set neural network maximum training iterations to 10000
+// for locale 'en' and to 50000 for any other locale
+{
+  "settings": {
+    "nlu-en": {
+      "iterations": 10000
+    },
+    "nlu-??": {
+      "iterations": 50000
+    }
+  }
+}
+```
+
+<!-- **TODO** How to register custom plugins -->
+
+## Available configurations
+
+## BERT Open Question
+
+packages/bert-open-question/src/bert-open-question.js
+
+### Bot
+
+**Tag** &rarr; bot
+
+| Setting              |       Type        | Description                                                                                                            |
+| :------------------- | :---------------: | :--------------------------------------------------------------------------------------------------------------------- |
+| globalFallbackDialog |      String       | Name of the dialog to be executed in case of errors while processing the bot flow. Defaults to '/globalFallbackDialog' |
+| scripts              | String / String[] | Path to the script/s to load by the bot. Can be a single path or an array of paths                                     |
+
+:::info
+
+By default, the Bot will register the following validators: email, url, ip, ipv4, ipv6, phone, number, integer and date. See
+[custom validators](/bot-orchestration/custom_validators) for more information about the _validators_ topic.
+:::
+
+### DialogManager
+
+NOTHING HERE
+
+## Test connector
+
+**Tag** &rarr; N/A
+
+Inherits settings from connector, plus:
+
+| Setting                 | Type | Description |
+| :---------------------- | :--: | :---------- |
+| settings.trimInput      |      |             |
+| userName                |      |             |
+| settings.conversationId |      |             |
+
+**TODO**
+
+### builtin-compromise
+
+NOTHING HERE
+
+### builtin-default
+
+**Tag** &rarr; builtin-default
+
+| Setting  |   Type   |                               Default value                               | Description                                                       |
+| :------- | :------: | :-----------------------------------------------------------------------: | :---------------------------------------------------------------- |
+| builtins | String[] | ['Email', 'URL', 'IpAddress', 'PhoneNumber', 'Hashtag', 'Number', 'Date'] | List of entity recognizers available in BuiltinDefault component. |
+
+### builtin-duckling
+
+**Tag** &rarr; builtin-duckling
+
+| Setting     |  Type  | Description                                                                                                                                                                                                                                |
+| :---------- | :----: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ducklingUrl | String | Duckling service url to use by the BuiltinDuckling component.<br/>Defaults to value in environment variable DUCKLING_URL. In case neither the setting nor the environment variable are provided, defaults to `http://localhost:8000/parse` |
+
+### builtin-microsoft
+
+**Tag** &rarr; builtin-microsoft
+
+| Setting          |   Type   |                                                                                                                                        Default value                                                                                                                                         | Description                                                     |
+| :--------------- | :------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------- |
+| builtins         | String[] |                                                               ['Number', 'Ordinal', 'Percentage', 'Age', 'Currency', 'Dimension', 'Temperature', 'DateTime', 'PhoneNumber', 'IpAddress', 'Boolean', 'Email', 'Hashtag', 'URL']                                                               | List of default builtins to load.                               |
+| builtinAllowList | String[] | ['age', 'currency', 'dimension', 'temperature', 'number', 'numberrange', 'ordinal', 'percentage', 'email', 'hashtag', 'ip', 'mention', 'phonenumber', 'url', 'date', 'daterange', 'datetime', 'datetimealt', 'time', 'set', 'timerange', 'timezone', 'boolean', 'duration', 'datetimerange'] | List of allowed entities that can be recognized in an utterance |
+
+<!-- **TODO**: review builtinAllowList documentation -->
+
+### connector
+
+NOTHING HERE
+
+### console-connector
+
+**Tag** &rarr; console
+
+| Setting |  Type   | Description                                                                                                                                                                |
+| :------ | :-----: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| botName | string  | The name of the bot. Will be shown when a message is sent from the bot. For instance, if _botName_ is Peter, you could get messages from the bot like 'Peter> Hello user!' |
+| debug   | boolean | Will add some intent information to the output of the bot in some specific cases                                                                                           |
+
+### context
+
+**Tag** &rarr; context
+
+| Setting     |  Type  | Description                                                                                                                                                       |
+| :---------- | :----: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| storageName | string | Name of the component that shall be used to store/retrieve the context when needed.<br/>Defaults to '_storage_' which, by default, corresponds to a MemoryStorage |
+
+### memory-storage
+
+NOTHING HERE
+
+### database
+
+**Tag** &rarr; database
+
+| Setting          | Description                                       |
+| :--------------- | :------------------------------------------------ |
+| memory.autosave  | Configuration applied to default memorydb-adapter |
+| autosaveInterval | Configuration applied to default memorydb-adapter |
+| autosaveFolder   | Configuration applied to default memorydb-adapter |
+
+See [memory-adapter](#memory-adapter) below and [Persistence](/persistence/database) for more details.
+
+### memory-adapter
+
+**Tag** &rarr; memorydb-adapter
+
+| Setting          |  Type   | Default value | Description                                                                                                                                               |
+| :--------------- | :-----: | :-----------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| autosave         | boolean |     false     | Whether to periodically persist the contents of the database to the filesystem                                                                            |
+| autosaveInterval | integer |       0       | In case _autosave_ is true, the periodicity, in seconds, to save the contents.<br/>Setting it to 0 will automatically store any change to the filesystem. |
+| autosaveFolder   | string  |     './'      | Path to the folder where the contents should be stored                                                                                                    |
+
+:::info
+
+Note that, even though memory-adapter uses the tag _memory_adapter_, corresponding configuration options are not loaded; only the
+settings provided to the class constructor are used. This means that, if you want to provide a custom configuration for the default
+MemorydbAdapter loaded by the _database_, you'll need to provide a configuration like this:
+
+```json
+{
+  "settings": {
+    "database": {
+      "memory": {
+        "autosave": true,
+        "autosaveInterval": 10,
+        "autosaveFolder": "./"
+      }
+    }
+  }
+}
+```
+
+:::
+
+## dialogflow-connector
+
+**Tag** &rarr; dialogflow
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| apiTag  |      |             |
+
+**TODO**
+
+### directline-connector
+
+**Tag** &rarr; 'directline'
+
+| Setting         |  Type   | Default value | Description                                                                                                                   |
+| :-------------- | :-----: | :-----------: | :---------------------------------------------------------------------------------------------------------------------------- |
+| autoRemoveFiles |         |     true      | Whether the uploaded documents shall be deleted as soon as they are processed                                                 |
+| uploadDir       | string  | './uploads/'  | Path to the directory where uploaded files shall be stored                                                                    |
+| maxFileSize     | integer |    8000000    | Maximum allowed size, in bytes, of uploaded files                                                                             |
+| log             | boolean |     true      | Whether to enable logging for this connector. Setting it to false, will prevent logs to appear no matter of the log level set |
+| channelId       | string  |   emulator    | The channelId that will appear in the activities used in the communication between the bot and the user                       |
+
+<!-- **TODO**: modifying channelId might break directline-controller.js#198?? -->
+
+:::info
+Configurations _autoRemoveFiles, \_uploadDir_, _maxFileSize_ are related to the possibility of uploading activities as files.
+Check <GithubLink to="packages/directline-connector/src/directline-connector.js">directline-connector.js</GithubLink> for more details.
+:::
+
+:::warning
+When configuring the directline connector, you should also configure the [directline-controller](#directline-controller), which is implicitly loaded.
+:::
+
+### directline-controller
+
+**Tag** &rarr; 'directline' (inherited from [directline-connector](#directline-connector))
+
+| Setting    |  Type   | Default value                                                                          | Description                                            |
+| :--------- | :-----: | :------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| serviceUrl | string  | env.DIRECTLINE_SERVICE_URL or 'http://localhost:3000' if environment variable is empty | Service URL where the connector should send activities |
+| botUrl     | string  | env.DIRECTLINE_BOT_URL                                                                 | <!-- **TODO** -->                                      |
+| expiresIn  | integer | 1800                                                                                   | Expiry time, in seconds, of a conversation             |
+
+Additionally, you can do additional settings using environment variables:
+
+| Environment variable | Description                                                                               |
+| :------------------- | :---------------------------------------------------------------------------------------- |
+| BACKEND_ID           | Value used to fill the property _from.id_ in the activities send by the bot (responses)   |
+| BACKEND_NAME         | Value used to fill the property _from.name_ in the activities send by the bot (responses) |
+
+### express-api-app
+
+**Tag** &rarr; 'api-server' (inherited from [express-api-server](#express-api-server))
+
+| Setting    |  Type   |                     Default value                     | Description                                                                                                                |
+| :--------- | :-----: | :---------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------- |
+| serveBot   | boolean |                         false                         | Whether the static chatbot should be served. If true, a chatbot for testing will be delivered when browsing to the server. |
+| clientPath | string  | './node_modules/@nlpjs/express-api-server/src/public' | Path to the folder where the chatbot code is.                                                                              |
+| apiRoot    | string  |                        '/api'                         | Path under which all routers will be published, if any.                                                                    |
+
+### express-api-server
+
+**Tag** &rarr; api-server
+
+| Setting |  Type   | Default value | Description                                                       |
+| :------ | :-----: | :------------ | ----------------------------------------------------------------- |
+| port    | integer | 3000          | Port where the server should be listening                         |
+| key     | string  |               | Path to the file where the key for TLS setup can be found         |
+| cert    | string  |               | Path to the file where the certificate for TLS setup can be found |
+
+:::info
+HTTPS will only be enabled if both 'key' and 'cert' settings are provided.
+:::
+
+## express-api-serverless
+
+**Tag** &rarr; api-server
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| apiRoot   |      |             |
+| port      |      |             |
+| serveBot? |      |             |
+
+### fb-connector
+
+**Tag** &rarr; fb
+
+| Setting      |  Type  | Description                                                                                                                                          |
+| :----------- | :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| apiPath      | string | Route where the connector will be exposing its endpoints. <br/>Defaults to `container.name` <!-- **TODO** link to where containers are explained --> |
+| messagesPath | string | Path where the connector will be exposing its endpoints. <br/>Defaults to _'/api/messages'_                                                          |
+
+:::note Example with default values
+As an example, not configuring any of the settings above, would make the _fb-connector_ to expose
+its endpoints at '/default/api/messages', as _default_ is the default container name.
+:::
+
+## fullbot
+
+**Tag** &rarr; N/A
+
+| Setting         | Type | Description |
+| :-------------- | :--: | :---------- |
+| marketUrl       |      |             |
+| port            |      |             |
+| scripts         |      |             |
+| mongoUrl        |      |             |
+| ner.ducklingUrl |      |             |
+| cardsPath       |      |             |
+| actionsPath     |      |             |
+| validatorsPath  |      |             |
+| botPath         |      |             |
+
+### mongodb-adapter
+
+**Tag** &rarr; mongodb-adapter
+
+| Setting |  Type  | Description                                                                                                                                         |
+| :------ | :----: | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| url     | string | The connection string URI to use to connect to the database.<br/>If not specified,the value of the **MONGO_URL** environment variable will be used. |
+
+### msbf-connector
+
+**Tag** &rarr; msbf
+
+| Setting      |  Type  | Default value | Description                                                        |
+| :----------- | :----: | :-----------: | :----------------------------------------------------------------- |
+| appId        | string |               | env.MSBF_BOT_APP_ID                                                |
+| botPassword  | string |               | env.MSBF_BOT_APP_PASSWORD                                          |
+| apiPath      | string |               | Root path under which this connector's endpoints will be published |
+| messagesPath | string |               | Path under which the _messages_ endpoint will be published         |
+
+:::info
+When registering the path for the _messages_ endpoint (the path where the connector wll listen for incoming activities),
+the following rules are followed:
+
+1. if `apiPath`is not set, `messagesPath`will be used
+2. if 'apiPath`is set, `{apiPath}{messagesPath} will be used
+3. in case none of them is set, '/api/messages' will be used
+
+:::
+
+### ner
+
+**Tag** &rarr; ner
+
+| Setting       |  Type  | Default value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| :------------ | :----: | :-----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --- |
+| threshold     | number |      0.8      | Minimum value used by Extractors to determine if a string is an entity or not.<br/>Note that each extractor will use this _threshold_ in a different way. For instance, the <GithubLink to="packages/ner/src/extractor-enum.js">ExtractorEnum</GithubLink>, will calculate the levenshtein distance between a given enum entity value and a word, to calculate accuracy, and then compare that accuracy with the _threshold_; on the other hand, the <GithubLink to="packages/ner/src/extractor-regex.js">ExtractorRegex</GithubLink> will not use the _threshold_ at all, as a given string will either match or not an enum entity value. |
+| entityPreffix | string |      '@'      | Prefix to be used in placeholders for entities when defining an utterances for an intent containing entities.<br/>For instance, using the default value, we could define an utterance of an intent like "what is the real name of @hero"; by changing this prefix to '#' you should use "what is the real name of #hero" instead.                                                                                                                                                                                                                                                                                                           |
+| entitySuffix  | string |      ''       | Suffix to be used in placeholders for entities when defining an utterances for an intent containing entities.<br/>For instance, using the default value, we could define an utterance of an intent like "what is the real name of @hero" (no suffix); by changing this suffix to '@' you should use "what is the real name of @hero@" instead.                                                                                                                                                                                                                                                                                              |     |
+
+### neural-network
+
+**Tag** &rarr; nlu-{locale} (eg. _nlu-en_ for settings on NeuralNetwork for locale 'en') (use nlu-?? as a placeholder for "any locale" **TODO**: link)
+
+| Setting          |  Type   | Default value | Description                                                                                                                                                                                                                                                                                                    |
+| :--------------- | :-----: | :-----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| errorThresh      | number  |    0.00005    | Maximum error accepted while training the neural network.<br/>If, at any moment, the error goes below _errorThresh_, training iterations will stop and training will be considered complete.                                                                                                                   |
+| deltaErrorThresh | number  |   0.000001    | Maximum error variation accepted while training the neural network.<br/>If, at any moment, the distance between the error obtained in an iteration and the error obtained in the previous one, is below _deltaErrorThresh_, no more training iterations will be done and training will be considered complete. |
+| iterations       | integer |     20000     | Maximum number of iterations that can be done while training the neural network.<br/>If the training iterations reach _iterations_, no more training iterations will be done and training will be considered complete.                                                                                         |
+| alpha            | number  |     0.07      | Setting used in _perceptrons_ to calculate new weights in each training iteration.                                                                                                                                                                                                                             |
+| momentum         | number  |      0.5      | Setting used in _perceptrons_ to calculate new weights in each training iteration.                                                                                                                                                                                                                             |
+| learningRate     | number  |      0.6      | Setting used in _perceptrons_ to calculate new weights in each training iteration.                                                                                                                                                                                                                             |
+
+### action-manager
+
+NOTHING HERE
+
+### nlg-manager
+
+NOTHING HERE
+
+### context-manager.js
+
+**Tag** &rarr; context-manager
+
+| Setting   |  Type  | Default value | Description                                                                                                                                                    |
+| :-------- | :----: | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| tableName | string | 'context'     | Name of the collection used by the <GithubLink to ="packages/nlp/src/context-manager.js">ContextManager</GithubLink> to store conversation related information |
+
+### nlp
+
+**Tag** &rarr; nlp
+
+| Setting            |             Type              | Default value | Description                                                                                                                                                                                              |
+| :----------------- | :---------------------------: | :-----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| forceNER           |            boolean            |     false     | Enable Named Entity Recognition when processing an utterance                                                                                                                                             |
+| languages?         | string (comma-separated list) |               | List of languages available for training in the NLU                                                                                                                                                      |
+| locales?           | string (comma-separated list) |               | List of languages available for training in the NLU                                                                                                                                                      |
+| calculateSentiment |            boolean            |     false     | When enabled, adds the sentiment analysis results in the output of the Nlp                                                                                                                               |
+| corpora            |           string[]            |      N/A      | List of corpus files to load                                                                                                                                                                             |
+| autoLoad           |            boolean            |     true      | When set to true, the Nlp model will be loaded from the filesystem if possible (see _load_ and _save_ methods in <GithubLink to ="packages/nlp/src/nlp.js">nlp.js</GithubLink>)                          |
+| autoSave           |            boolean            |     true      | When set to true, the Nlp model will be stored to the filesystem (see _load_ and _save_ methods in <GithubLink to ="packages/nlp/src/nlp.js">nlp.js</GithubLink>)                                        |
+| modelFileName      |            string             |  'model.nlp'  | The name of the file where to load/save the model from/to in case autoLoad/autoSave is enabled                                                                                                           |
+| threshold          |                               |               | Minimum scoring an intent should have after an utterance is being processed byt the Nlp. If the resulting intent's scoring is below _threshold_, the returned intent will be 'None' with a scoring of 1. |
+
+## domain-manager
+
+**Tag** &rarr; domain-manager-${this.settings.locale}
+
+| Setting                 | Type | Description |
+| :---------------------- | :--: | :---------- |
+| locale                  |      |             |
+| useStemDict             |      |             |
+| domain-manager-??-train |      |             |
+| trainByDomain           |      |             |
+| useNoneFeature          |      |             |
+
+## nlu-manager
+
+**Tag** &rarr; domain-manager-${this.settings.locale}
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| locales |      |             |
+| domain  |      |             |
+
+## nlu
+
+**Tag** &rarr; nlu-${this.settings.locale}
+
+| Setting             | Type | Description |
+| :------------------ | :--: | :---------- |
+| locale              |      |             |
+| nonedeltaValue      |      |             |
+| nonedeltaMultiplier |      |             |
+
+## nlu-luis.js
+
+**Tag** &rarr; N/A
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| luisUrl |      |             |
+
+## nlp-manager
+
+**Tag** &rarr; N/A
+
+| Setting            | Type | Description                                                             |
+| :----------------- | :--: | :---------------------------------------------------------------------- |
+| action             |      | seems to be added in the setting by the one calling the constructor (?) |
+| processTransformer |      | seems to be added in the setting by the one calling the constructor (?) |
+
+## brain-nlu
+
+**Tag** &rarr; N/A
+
+| Setting  | Type | Description |
+| :------- | :--: | :---------- |
+| locale   |      |             |
+| language |      |             |
+
+### conversation-context
+
+NOTHING HERE
+
+## recognizer
+
+**Tag** &rarr; N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| threshold |      |             |
+
+### sentiment-manager
+
+NOTHING HERE
+
+## qa-client
+
+**Tag** &rarr; N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| modelName |      |             |
+| modelDir  |      |             |
+| proxy     |      |             |
+| tokenizer |      |             |
+| cased     |      |             |
+
+## runtime
+
+**TODO**
+
+### rest-connector
+
+**Tag** &rarr; rest
+
+| Setting |  Type   | Description                                                                                                                                                       |
+| :------ | :-----: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| log     | boolean | Enable logging in the RestConector class. If this is set to false, the RestConnectror will not output any log, **no matter which is the log level configuration** |
+| apiTag  | string  | Main path where the REST connector endpoints will be exposed; for instance, `{apiTag}/talk` or `{apiTag}/token`. <br/> Defaults to '/rest'.                       |
+
+## sentiment-analyzer
+
+**Tag** &rarr; sentiment-analyzer
+
+## spell-check (similarity)
+
+**Tag** &rarr; N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| minLength |      |             |
+| features  |      |             |
+
+## spell-check (similarity-wa)
+
+**Tag** &rarr; N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| minLength |      |             |
+| features  |      |             |
+
+## nlp-analyzer
+
+**Tag** &rarr; N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| threshold |      |             |

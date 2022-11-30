@@ -1,5 +1,7 @@
 # Console connector
 
+The console connector allows you to manage scenarios where the main interface is the console.
+
 ## Installation
 
 You can install the console connector @nlpjs/console-connector using:
@@ -7,11 +9,6 @@ You can install the console connector @nlpjs/console-connector using:
 ```bash
     npm install @nlpjs/console-connector
 ```
-
-## Example of use inside NLP.js
-
-This is a little bit special component.
-It allows you to manage scenarios where the main interface is the console. You can find an example of use on **`examples/02-qna-classic`**.
 
 ## Example of use of the package
 
@@ -27,7 +24,7 @@ connector.say("Say something!");
 
 ## Example of use with @nlpjs/basic
 
-You must have a file _corpus.json_ in the source code folder:
+Having a file _corpus.json_ in the source code folder, you could have a bot like this:
 
 ```javascript
 const { dockStart } = require("@nlpjs/basic");
@@ -46,3 +43,7 @@ const { dockStart } = require("@nlpjs/basic");
   connector.say("Say something!");
 })();
 ```
+
+## Configuration
+
+For configuration details refer to [the proper configuration section](/configuration#console-connector)

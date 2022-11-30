@@ -1,5 +1,0 @@
-@startuml
-End user <-> Fb page
-Fb page <-> Fb backend
-Fb backend <-> Your backend
-@enduml

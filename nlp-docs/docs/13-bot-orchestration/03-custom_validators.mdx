@@ -4,7 +4,7 @@
 
 We have, mainly, two main ways of gathering data from the user:
 
-- using the [_ask_](/technical-reference/dlg_commands_reference#ask) command
+- using the [_ask_](/bot-orchestration/dlg_commands_reference#ask) command
 - using custom validators
 - using NER
 
@@ -20,8 +20,7 @@ within the defined number of attempts.
 
 ### Creating the validator function
 
-A _validator function_ will receive the following parameters: [session](/technical-reference/key_concepts#session),
-[context](/technical-reference/key_concepts#context), and params.
+A _validator function_ will receive the following parameters: session, context, and params.
 The params object will contain all the params used when calling the validator from the DLG command; usually, the first
 position will be the name of the variable where we want to store the value.
 
@@ -57,7 +56,7 @@ function as _pizzaType_ will allow you to call it using the _askPizzaType_ comma
 _askPizzaTypeValidator_.
 :::
 
-### Registering our validator
+### Registering the validator
 
 To register our new custom validator in the bot, we can make use of the method _registerValidator(name, fn)_ of
 the <GithubLink to="packages/bot/src/bot.js">bot</GithubLink>
@@ -158,11 +157,11 @@ bot > Fine, adding a {{pizza}} pizza to your basket.
 This is because **the execution of the flow is always linear**. So, after the fallback dialog is executed, the flow will
 continue with the following command, which is `say Fine, adding a {{pizza}} pizza to your basket.`. We can fix this in two ways:
 
-- we can restart the conversation using the [restart](/technical-reference/dlg_commands_reference#restart) command, which will
+- we can restart the conversation using the [restart](/bot-orchestration/dlg_commands_reference#restart) command, which will
   reset the conversation as if you just opened the bot
-- we can set a [condition](/technical-reference/dlg_commands_reference#conditional-execution) before the _"say Fine, adding a
+- we can set a [condition](/bot-orchestration/dlg_commands_reference#conditional-execution) before the _"say Fine, adding a
   {{pizza}} pizza to your basket."_ command.
-  Following the [condition](/technical-reference/dlg_commands_reference#conditional-execution) approach, we'd end up with the
+  Following the [condition](/bot-orchestration/dlg_commands_reference#conditional-execution) approach, we'd end up with the
   following flow definition:
 
 ```yaml title=bot-data/flows/basic-script.dlg {14}

@@ -50,6 +50,9 @@ FACEBOOK_ACCESS_TOKEN=<***>
 FACEBOOK_PAGE_ID=<***>
 ```
 
+Additionally, refer to the [Facebook Messenger Connector configuration](/configuration#fb-connector) section
+for more configuration options.
+
 ### Server
 
 As we need to expose a backend to receive information from Facebook API, we can use express-api-server module for this.
@@ -59,7 +62,7 @@ As express.json body parser by default takes incoming rawBody field and replaces
 
 This implies to override initialize step in ExpressApiApp:
 
-```
+```js
 class ExpressApiApp extends nlpjs.ExpressApiApp {
 
   initialize() {

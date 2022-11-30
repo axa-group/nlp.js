@@ -12,8 +12,7 @@ You can install @nlpjs/msbf-connector:
 
 ## Usage
 
-The directline connector is an HTTP based connector, because of that it requires the usage of the express-api-server (**TODO**: add link) component
-to be registered in your bot.
+The directline connector is an HTTP based connector, because of that it requires the usage of the express-api-server <!--(**TODO**: add link) component -->to be registered in your bot.
 This is the main basic configuration recommended in order to use this connector:
 
 ```json
