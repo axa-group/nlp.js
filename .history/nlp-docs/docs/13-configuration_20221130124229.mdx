@@ -1,0 +1,443 @@
+# Configuration
+
+**TODO:**
+
+Explain common configuration process:
+
+- applySettings
+- registerDefaults
+- apply settings using tag
+
+## BERT Open Question
+
+packages/bert-open-question/src/bert-open-question.js
+
+## Bot
+
+tag: bot
+
+| Setting              |       Type        | Description                                                                                                            |
+| :------------------- | :---------------: | :--------------------------------------------------------------------------------------------------------------------- |
+| globalFallbackDialog |      String       | Name of the dialog to be executed in case of errors while processing the bot flow. Defaults to '/globalFallbackDialog' |
+| scripts              | String / String[] | Path to the script/s to load by the bot. Can be a single path or an array of paths                                     |
+
+#### Default values
+
+Bot registers the following validators: email,url,ip,ipv4,ipv6,phone,number,integer and date.
+
+**TODO**: link to where validators are explained
+
+## DialogManager
+
+NOTHING HERE
+
+## Test connector
+
+tag: N/A
+
+Inherits settings from connector, plus:
+
+| Setting                 | Type | Description |
+| :---------------------- | :--: | :---------- |
+| settings.trimInput      |      |             |
+| userName                |      |             |
+| settings.conversationId |      |             |
+
+**TODO**
+
+## builtin-compromise
+
+NOTHING HERE
+
+## builtin-default
+
+tag: builtin-default
+
+| Setting  |   Type   | Description                                                                                                             |
+| :------- | :------: | :---------------------------------------------------------------------------------------------------------------------- |
+| builtins | String[] | List of default builtins to load. Defaults to ['Email', 'URL', 'IpAddress', 'PhoneNumber', 'Hashtag', 'Number', 'Date'] |
+
+**TODO**
+
+## builtin-duckling
+
+tag: builtin-duckling
+
+| Setting     |  Type  | Description                                                                                                                                                                                    |
+| :---------- | :----: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ducklingUrl | String | Duckling service url. Defaults to value in environment variable DUCKLING_URL. In case neither the setting nor the environment variable are provided, defaults to `http://localhost:8000/parse` |
+
+**TODO**
+
+## builtin-microsoft
+
+tag: builtin-microsoft
+
+| Setting          |   Type   | Description                                                                                                                                                                                                                                                                                               |
+| :--------------- | :------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| builtins         | String[] | List of default builtins to load. Defaults to ['Number', 'Ordinal', 'Percentage', 'Age', 'Currency', 'Dimension', 'Temperature', 'DateTime', 'PhoneNumber', 'IpAddress', 'Boolean', 'Email', 'Hashtag', 'URL']                                                                                            |
+| builtinAllowList | String[] | Defaults to [ 'age', 'currency', 'dimension', 'temperature', 'number', 'numberrange', 'ordinal', 'percentage', 'email', 'hashtag', 'ip', 'mention', 'phonenumber', 'url', 'date', 'daterange', 'datetime', 'datetimealt', 'time', 'set', 'timerange', 'timezone', 'boolean', 'duration', 'datetimerange'] |
+
+**TODO** improve documentation about _builtinAllowList_
+
+## connector
+
+NOTHING HERE
+
+## console-connector
+
+tag: N/A
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| botName |      |             |
+| debug   |      |             |
+| tag     |      |             |
+
+**TODO**
+
+## context
+
+tag: context
+
+| Setting     | Type | Description |
+| :---------- | :--: | :---------- |
+| storageName |      |             |
+
+**TODO**
+
+## memory-storage
+
+NOTHING HERE
+
+## database
+
+**Tag** &rarr; database
+
+Database class will register a default _MemorydbAdapter_ (**TODO**: add link) with default configuration:
+
+```json
+{
+  "memory": {
+    "autosave": false,
+    "autosaveInterval": 0,
+    "autosaveFolder": "./"
+  }
+}
+```
+
+Sample:
+
+```json
+{
+  "settings": {
+    "database": {
+      "defaultAdapter": "pajarico"
+    }
+  },
+  "use": ["Database"]
+}
+```
+
+**TODO**: explain and split how to configure other adapters (?)
+**TODO**: link to /persistence/database
+
+## memory-adapter
+
+tag: memorydb-adapter
+
+| Setting          | Type | Description |
+| :--------------- | :--: | :---------- |
+| autosave         |      |             |
+| autosaveInterval |      |             |
+| autosaveFolder   |      |             |
+
+## dialogflow-connector
+
+tag: N/A
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| apiTag  |      |             |
+
+## directline-connector
+
+tag: N/A
+
+| Setting         | Type | Description |
+| :-------------- | :--: | :---------- |
+| autoRemoveFiles |      |             |
+| uploadDir       |      |             |
+| maxFileSize     |      |             |
+| log             |      |             |
+
+When started, loads a directline-controller
+
+## directline-controller
+
+tag: N/A
+
+| Setting    | Type | Description                            |
+| :--------- | :--: | :------------------------------------- |
+| serviceUrl |      | defaults to env.DIRECTLINE_SERVICE_URL |
+| botUrl     |      | defaults to env.DIRECTLINE_BOT_URL     |
+| expiresIn  |      | defaults to 1800                       |
+
+## express-api-app
+
+tag: N/A
+
+| Setting    | Type | Description          |
+| :--------- | :--: | :------------------- |
+| serveBot   |      |                      |
+| clientPath |      | defaults to 'public' |
+| apiRoot    |      |                      |
+
+## express-api-server
+
+tag: api-server
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| apiRoot |      |             |
+| port    |      |             |
+
+## express-api-serverless
+
+tag: api-server
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| apiRoot   |      |             |
+| port      |      |             |
+| serveBot? |      |             |
+
+## fb-connector
+
+tag: fb
+
+| Setting      | Type | Description |
+| :----------- | :--: | :---------- |
+| apiPath      |      |             |
+| messagesPath |      |             |
+
+## fullbot
+
+tag: N/A
+
+| Setting         | Type | Description |
+| :-------------- | :--: | :---------- |
+| marketUrl       |      |             |
+| port            |      |             |
+| scripts         |      |             |
+| mongoUrl        |      |             |
+| ner.ducklingUrl |      |             |
+| cardsPath       |      |             |
+| actionsPath     |      |             |
+| validatorsPath  |      |             |
+| botPath         |      |             |
+
+## mongodb-adapter
+
+tag: mongodb-adapter
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| url     |      |             |
+
+## msbf-connector
+
+tag: msbf
+
+| Setting      | Type | Description               |
+| :----------- | :--: | :------------------------ |
+| appId        |      | env.MSBF_BOT_APP_ID       |
+| botPassword  |      | env.MSBF_BOT_APP_PASSWORD |
+| apiPath      |      |                           |
+| messagesPath |      | /api/messages             |
+
+## ner
+
+tag: ner
+
+| Setting       | Type | Description |
+| :------------ | :--: | :---------- |
+| threshold     |      |             |
+| entityPreffix |      |             |
+| entitySuffix  |      |             |
+
+## neural-network
+
+tag: N/A
+
+| Setting          | Type | Description |
+| :--------------- | :--: | :---------- |
+| log              |      |             |
+| alpha            |      |             |
+| momentum         |      |             |
+| errorThresh      |      |             |
+| deltaErrorThresh |      |             |
+| iterations       |      |             |
+| learningRate     |      |             |
+
+**TODO** make sure non of them are initialized inside the class
+
+## action-manager
+
+NOTHING HERE
+
+## nlg-manager
+
+NOTHING HERE
+
+## context-manager.js
+
+tag: context-manager
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| tableName |      |             |
+
+## nlp
+
+tag: nlp
+
+| Setting            | Type | Description |
+| :----------------- | :--: | :---------- |
+| forceNER           |      |             |
+| languages?         |      |             |
+| locales?           |      |             |
+| calculateSentiment |      |             |
+| corpora?           |      |             |
+| autoLoad           |      |             |
+| modelFileName      |      |             |
+| threshold          |      |             |
+
+## domain-manager
+
+tag: domain-manager-${this.settings.locale}
+
+| Setting                 | Type | Description |
+| :---------------------- | :--: | :---------- |
+| locale                  |      |             |
+| useStemDict             |      |             |
+| domain-manager-??-train |      |             |
+| trainByDomain           |      |             |
+| useNoneFeature          |      |             |
+
+## nlu-manager
+
+tag: domain-manager-${this.settings.locale}
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| locales |      |             |
+| domain  |      |             |
+
+## nlu
+
+tag: nlu-${this.settings.locale}
+
+| Setting             | Type | Description |
+| :------------------ | :--: | :---------- |
+| locale              |      |             |
+| nonedeltaValue      |      |             |
+| nonedeltaMultiplier |      |             |
+
+## nlu-luis.js
+
+tag: N/A
+
+| Setting | Type | Description |
+| :------ | :--: | :---------- |
+| luisUrl |      |             |
+
+## nlp-manager
+
+tag: N/A
+
+| Setting            | Type | Description                                                             |
+| :----------------- | :--: | :---------------------------------------------------------------------- |
+| action             |      | seems to be added in the setting by the one calling the constructor (?) |
+| processTransformer |      | seems to be added in the setting by the one calling the constructor (?) |
+
+## brain-nlu
+
+tag: N/A
+
+| Setting  | Type | Description |
+| :------- | :--: | :---------- |
+| locale   |      |             |
+| language |      |             |
+
+## conversation-context
+
+NOTHING HERE
+
+## recognizer
+
+tag: N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| threshold |      |             |
+
+## sentiment-manager
+
+NOTHING HERE
+
+## qa-client
+
+tag: N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| modelName |      |             |
+| modelDir  |      |             |
+| proxy     |      |             |
+| tokenizer |      |             |
+| cased     |      |             |
+
+## runtime
+
+**TODO**
+
+## rest-connector
+
+tag: rest
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| log       |      |             |
+| apiTag    |      |             |
+| channelId |      |             |
+
+## sentiment-analyzer
+
+tag: sentiment-analyzer
+
+## spell-check (similarity)
+
+tag: N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| minLength |      |             |
+| features  |      |             |
+
+## spell-check (similarity-wa)
+
+tag: N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| minLength |      |             |
+| features  |      |             |
+
+## nlp-analyzer
+
+tag: N/A
+
+| Setting   | Type | Description |
+| :-------- | :--: | :---------- |
+| threshold |      |             |

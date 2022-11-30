@@ -1,0 +1,346 @@
+import CommandDetails from "@site/src/components/CommandDetails";
+
+# DLG commands reference
+
+DLG is a declarative language used to define conversation flows. Following you'll
+find a summary of the available commands.
+
+## User interaction
+
+### say
+
+Command used to send output to the user. Any [context](./key_concepts#context) variable in the text to say will be replace by its value (see examples below).
+
+<CommandDetails
+  parameters={[
+    {
+      desc: "Text or translation key matching the text to send to the user",
+      opt: false,
+    },
+  ]}
+  syntax="say &lt;text or key>"
+  examples={[
+    {
+      example: "say Hello world!",
+      text: "to just send the 'Hello world!' text to the user",
+    },
+    {
+      example: "say greeting",
+      text: 'where greeting is a key defined in the <a href="../tutorials/translations_files">languages definitions</a>',
+    },
+    {
+      example: "say Hi {{user_name}}",
+      text: "will replace <i>{{user_name}}</i> by the value of the evaluation the expression <i>user_name</i> using the variables available in the context, if any, and send the resulting text to the user",
+    },
+  ]}
+/>
+
+### ask
+
+Used to gather input from the user. When used, conversation flow will stop processing until some input is received from the user.
+
+<CommandDetails
+  parameters={[
+    { desc: "Name of the variable where user input will be stored", opt: true },
+  ]}
+  syntax="ask &lt;variable name>"
+  examples={[
+    {
+      example: "ask",
+      text: "just get the input and let following commands in the flow use it",
+    },
+    {
+      example: "ask type_of_food",
+      text: "get the input from the user and store it in the variable <i>type_of_food</i>",
+    },
+  ]}
+/>
+
+### nlp
+
+Sends de current user input to the NLP for evaluation. If an intent is matched, it's _answer_ will be evaluated following these rules:
+
+- if the _answer_ starts with '/', the bot will look for an existing _dialog_ with the same name and execute it
+- otherwise, the _answer_ will be send to the user the same way as it we had a _say &lt;answer>_
+
+By default, any intent in the corpus can be matched, however, the _nlp_ command allows you to narrow the list of intents available in a
+user interaction. This way, if the user input matches a _not allowed_ intent, it will be handled as if there is no matched intent.
+
+:::info multilanguage bots
+
+When the user input is evaluated by the NLP, in case there is more than one language available, the NLU manager will try to guess
+the language of the input before the NLP evaluates it. See [Multilanguage support](/tutorials-extras/multilanguage_bots)
+
+:::
+
+<CommandDetails
+  parameters={[
+    {
+      desc: "Space-separated list of allowed intents. Leave blank to allow any intent of the corpus to be matched",
+      opt: true,
+    },
+  ]}
+  syntax="nlp <allowed intents list>"
+  examples={[
+    {
+      example: "nlp",
+      text: "evaluate the user input using the NLP and behave according to the <i>answer</i> in the matching intent",
+    },
+    {
+      example: "nlp intent1 intent2",
+      text: "as the previous example, but only intents <i>intent1</i> and <i>intent2</i> can be matched",
+    },
+  ]}
+/>
+
+### card
+
+Sends an [adaptive card](https://learn.microsoft.com/en-us/adaptive-cards/) to the user.
+
+<CommandDetails
+  parameters={[{ desc: "Name of the card to send", opt: false }]}
+  syntax="card <card name>"
+  examples={[
+    {
+      example: "card initialChoose",
+      text: "sends the card with name <i>initialChoose</i> to the user",
+    },
+  ]}
+/>
+
+See how to use cards in the [tutorials](/tutorials/using_cards)
+
+### suggest
+
+Suggestions, also known as _suggested actions_, can be thought as "not so good looking cards", they are
+easier to build, though. As expected, _suggestions_ are meant to suggest one or more possible responses
+or choices to the user, and are defined using a pipe-separate list.
+When placing a suggestion, it will be attached to the next message send to the user, and he
+will receive as many buttons as suggestions placed.
+
+<CommandDetails
+  parameters={[{ desc: "pipe-separated list of suggestions", opt: false }]}
+  syntax="suggest <suggestion 1>|<suggestion 2>..."
+  examples={[
+    {
+      example: "suggest Option 1|Option 2",
+      text: `Next message send to the user will include two buttons "Option 1" and "Option 2". When one of them
+      is clicked, the buttons text will be sent to the bot as the user input`,
+    },
+  ]}
+/>
+
+:::info
+[Directline connector](/packages/connector-directline/api#directlineconnector) and [Microsoft Bot Framework](/packages/connector-msbf/api#msbfconnector)
+connectors both support suggestions.
+You can check [Microsoft Bot Framework documentation](https://learn.microsoft.com/en-us/azure/bot-service/rest-api/bot-framework-rest-connector-add-suggested-actions?view=azure-bot-service-4.0)
+to get more info about suggested actions
+:::
+
+## Flow management
+
+### dialog
+
+A _dialog_ is a group of commands defined in a the flow of the conversation. The goal of having dialogs is to be
+able to execute sets of commands without the need of copy/pasting the command sequence everywhere where is needed.
+We can think of them as if tey where _functions_
+
+<CommandDetails
+  parameters={[{ desc: "name of the dialog to execute", opt: false }]}
+  syntax="run <dialog_name>"
+  examples={[
+    {
+      example: "dialog place_order",
+      text: `defines the start of the <i>place_order</i> dialog definition. All commands below will be part of the <i>place_order</i> dialog 
+      until another <i>dialog</i> command is found, or the end the file is reached`,
+    },
+  ]}
+/>
+
+:::tip
+In general, _dialogs_ are used to track conversation paths. So, if you are integrating your bot with the AXA Bots application, or plan
+to get some analytics like which paths of your conversation are more used, or where the users tend to stop using the bot, try also to organize
+them in a smart way by making them meaningful from a business point of view.
+:::
+
+### run
+
+_run_ command will start executing another _dialog_, **once that _dialog_ is finished, the bot will continue where it left**
+
+<CommandDetails
+  parameters={[{ desc: "name of the dialog to execute", opt: false }]}
+  syntax="run <dialog_name>"
+  examples={[
+    {
+      example: "run placeOrder",
+      text: "would run the <i>placeOrder</i> dialog",
+    },
+    {
+      example: "run placeOrder<br/>say Do you want to place another order?",
+      text: `would run the <i>placeOrder</i> dialog, and, <b>once that dialog has finished its execution</b>, would 
+            ask the user if he wants to place another order`,
+    },
+  ]}
+/>
+
+### restart
+
+Restarts the conversation and clean up the [dialog stack](/technical-reference/key_concepts#dialog-stack)
+
+### conditional execution
+
+It is possible to define commands, in the conversation flow, to be executed only under certain conditions. In order to
+do that we can use the following syntax
+
+```yaml
+[<condition>] <command>
+```
+
+The condition to be evaluated will take into account any variable available in the [_context_](/technical-reference/key_concepts#context).
+For instance, if we've requested the user to tell the bot his age, we could do something like this:
+
+```yaml
+[age >= 18] say You can drive
+[age <18] say You still have to wait {{ 18 - age }} years to drive!
+```
+
+:::tip
+Unfortunately, in the current version of **@bot-core** multiline conditions are not supported, so, if you need a
+piece of the conversation to be conditionally executed, you may create a dialog and do something like
+
+```
+[<condition>] run <dialog_name>
+:::
+
+## Flow customization
+
+### call
+
+Use the _call_ command to execute a [_custom action_](/tutorials/custom_actions) at any point of a conversation
+
+<CommandDetails
+  parameters={[{desc: 'name of the <i>custom action</i> to execute', opt: false}]}
+  syntax='call <custom action name>'
+  examples={[
+    {
+      example: 'call createCase',
+      text: 'executes the <i>createCase</i> custom action'
+    }
+  ]}
+ />
+
+### set
+
+The _set_ command allows you to define a variable within the [_context_](/technical-reference/key_concepts#context).
+Remember that _context_ variables are available all over the flow, and can be referenced in many places
+[conditions](#conditional-execution), [_say_](#say) commands, [custom actions](/tutorials/custom_actions),
+[custom validators](/tutorials/gather_user_input#using-custom-validators), etc.
+
+<CommandDetails
+  parameters={[{desc: 'name of the variable to set', opt: false}, {desc: 'value to set', opt: false}]}
+  syntax='set <var name> <value>'
+  examples={[
+    {
+      example: 'set count 5',
+      text: 'set _count_ variable to 5'
+    },
+    {
+      example: "set user {name: 'John', surname: 'Doe'}<br>say {{user.name}}",
+      text: "set _user_ variable to have the JSON value {name: 'John', surname: 'Doe'} and says 'John'"
+    }
+  ]}
+ />
+
+
+### inc
+
+Given a [_context_](/technical-reference/key_concepts#context) variable, it will be increased by the specified amount.
+If no amount is specified, it will be increased by 1.
+If _var_ does not exist, it will be created and set to 1.
+
+<CommandDetails
+  parameters={[{desc: 'name of the variable to increment', opt: false}, {desc: 'amount to increment (defaults to 1)', opt: true}]}
+  syntax='inc <var name>'
+  examples={[
+    {
+      example: 'inc myVar',
+      text: `
+      <table>
+        <thead>
+          <th><i>myVar</i> value before the command</th>
+          <th><i>myVar</i> value after the command</th>
+        </thead>
+        <tbody>
+          <tr><td>12</td><td>13</td></tr>
+          <tr><td>'hello'</td><td>'hello1'</td></tr>
+          <tr><td>undefined</td><td>1</td></tr>
+        </tbody>
+      </table>
+      `
+    },
+    {
+      example: 'inc myVar 5',
+      text: `
+      <table>
+        <thead>
+          <th><i>myVar</i> value before the command</th>
+          <th><i>myVar</i> value after the command</th>
+        </thead>
+        <tbody>
+          <tr><td>12</td><td>17</td></tr>
+          <tr><td>'hello'</td><td>'hello5'</td></tr>
+          <tr><td>undefined</td><td>5</td></tr>
+        </tbody>
+      </table>
+      `
+    }
+  ]}
+ />
+
+### dec
+
+
+
+Given a [_context_](/technical-reference/key_concepts#context) variable, it will be decreased by the specified amount.
+If no amount is specified, it will be decreased by 1.
+If _var_ does not exist, it will be created and set to -1.
+
+<CommandDetails
+  parameters={[{desc: 'name of the variable to decrease', opt: false}, {desc: 'amount to decrease (defaults to -1)', opt: true}]}
+  syntax='dec <var name>'
+  examples={[
+    {
+      example: 'dec myVar',
+      text: `
+      <table>
+        <thead>
+          <th><i>myVar</i> value before the command</th>
+          <th><i>myVar</i> value after the command</th>
+        </thead>
+        <tbody>
+          <tr><td>12</td><td>11</td></tr>
+          <tr><td>'hello'</td><td>NaN</td></tr>
+          <tr><td>undefined</td><td>-1</td></tr>
+        </tbody>
+      </table>
+      `
+    },
+    {
+      example: 'dec myVar 5',
+      text: `
+      <table>
+        <thead>
+          <th><i>myVar</i> value before the command</th>
+          <th><i>myVar</i> value after the command</th>
+        </thead>
+        <tbody>
+          <tr><td>12</td><td>7</td></tr>
+          <tr><td>'hello'</td><td>NaN</td></tr>
+          <tr><td>undefined</td><td>-5</td></tr>
+        </tbody>
+      </table>
+      `
+    }
+  ]}
+ />
+```

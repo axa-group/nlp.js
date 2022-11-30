@@ -1,0 +1,103 @@
+---
+toc_max_heading_level: 4
+---
+
+import GithubLink from "@site/src/components/GithubLink";
+
+# Custom connectors
+
+Sometimes you might need to integrate the bot using other middlewares than Azure Bot or different entry points. In those
+case you might be interested in implementing your own connector.
+
+## Implementing your custom connector
+
+If your connector is REST-based, an easy point to start is by extending
+the <GithubLink to="https://github.com/axa-group/nlp.js/blob/master/packages/rest-connector/src/rest-connector.js">RestConnector </GithubLink>).
+Then you might want to implement the following methods:
+
+- registerDefault
+- initialize
+- start
+- say
+- close
+
+### Methods
+
+#### _registerDefault_ method
+
+**TODO**
+
+#### _initialize_ method
+
+**TODO**
+
+#### _start_ method
+
+The _start_ method would include all your initialization code. At least, you might want
+to register the connector endpoints, and, at least one of them, will be in charge of
+processing the messages sent by the user.
+Below you can find an excerpt of how you would send the received message to the bot
+for processing.
+
+```js
+start() {
+  logger.debug('starting rest connector!');
+  const server = this.container.get('api-server').app;
+  if (!server) {
+    throw new Error('No api-server found');
+
+  server.post('/api/process_user_message/', async (req, res) => {
+    // do some setup
+    ...
+
+    //extract the activity from the request
+    const activity = getActivity(req);
+
+    //let the bot process the request
+    const bot = this.container.get('bot');
+    if (bot) {
+      const session = this.createSession(activity);
+      await bot.process(session);
+    }
+    ...
+  }
+  ...
+}
+```
+
+:::info
+For more information on what is an activity, check [this](/technical-reference/key_concepts#activity). To get a
+glimpse of how an activity received from the user might look like check this [example of activity received
+by the bot](/database#activities)
+:::
+
+#### _say_ method
+
+Finally, the _say_ method will be used to send output to the user, here, you would have your
+implementation of how to send messages to the user, how to send cards, etc. The different
+types of output of you connector will very depend on the specifications of your connector.
+
+#### _close_ method
+
+Use this method to do any cleanup your connector needs to do when the bot is teared down.
+
+## Registering your connector
+
+As usual, we'll need to register our custom connector:
+
+```js
+// remove directline connector
+configHelper.removeComponent(conf, 'DirectlineConnector');
+
+// add your new custom connector
+conf.use.push({
+  className: <name used to export your connector class>,
+  path: <path to your custom connector>,
+});
+```
+
+:::tip
+Instead of removing the _DirectlineConnector_ and adding your new custom connector, you can just
+replace one by the other using the _replaceComponent_ method like we did in [Extending the Bot
+implementation](/tutorials-extras/extending_the_bot_implementation#register-you-bot-implementation)
+:::

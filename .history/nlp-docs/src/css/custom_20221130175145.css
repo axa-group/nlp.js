@@ -28,7 +28,6 @@
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
-
 .main-wrapper a[target="_blank"]::after {
   content: url("/img/icons/external_link_icon.svg");
   margin: 0 3px 0 5px;

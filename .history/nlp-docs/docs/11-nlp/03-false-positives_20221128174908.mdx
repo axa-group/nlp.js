@@ -1,0 +1,34 @@
+---
+title: The None intent
+---
+
+# The _None_ intent
+
+There is the posibility to configure the neural network to avoid false positives. To achieve that, one of the internal mechanisms
+is that words never seen by the network are represented as a feature that gives some weight to the `None` intent. So, if you try
+to classify a phrase that matches no intent, it will return the `None`intent.
+
+If you feel more comfortable with classifications into the intents that you declare, then you can disable this behavior by setting
+the `useNoneFeature` to false:
+
+```javascript
+const manager = new NlpManager({
+  languages: ["en"],
+  nlu: { useNoneFeature: <b>false</b> },
+});
+```
+
+On the other hand, if you prefer to avoid those false positives, don't forget to enable the _useNoneFeature_:
+
+```javascript
+const manager = new NlpManager({
+  languages: ["en"],
+  nlu: { useNoneFeature: true },
+});
+```
+
+::: info
+
+Note that the _None_ intent feature is disabled by default
+
+:::

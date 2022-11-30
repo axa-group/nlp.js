@@ -1,0 +1,11 @@
+import React from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Link from '@docusaurus/Link';
+
+export default function GithubLink({ to, children }) {
+  return (
+    <Link to={`${useDocusaurusContext().siteConfig.customFields.githubURL}/blob/cookie/split_modules/${to}`}>
+      {children}
+    </Link>
+  );
+}

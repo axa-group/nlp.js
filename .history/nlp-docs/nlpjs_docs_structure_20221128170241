@@ -1,0 +1,130 @@
+- NLP.js -> README hasta "New in version 4!" + Contributors (nlp.js#contributors)
+
+- https://github.com/axa-group/nlp.js/blob/master/docs/v4/quickstart.md
+|- https://github.com/axa-group/nlp.js#installation (already in quickstart)
+|- https://github.com/axa-group/nlp.js#example-of-use (already in quickstart)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/benchmarking.md
+|- https://github.com/axa-group/nlp.js/blob/master/CONTRIBUTING.md
+|- https://github.com/axa-group/nlp.js#code-of-conduct
+|- https://github.com/axa-group/nlp.js/blob/master/LICENSE.md
+|- https://github.com/axa-group/nlp.js#license (here for reference, better use LICENSE.md)
+
+- https://github.com/axa-group/nlp.js/blob/master/docs/v4/language-support.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/lang-en/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/lang-en-min/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/lang-es/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/lang-fr/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/lang-id/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/lang-it/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/lang-ar/README.md (WRONG DOC)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/language-guesser.md
+
+- Connectors
+|- https://github.com/axa-group/nlp.js/blob/master/packages/console-connector/README.md (same content as the one in the docs)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v4/console-connector.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/msbf-connector/README.md (WRONG DOC)
+|- https://github.com/axa-group/nlp.js/blob/master/packages/fb-connector/README.md
+
+- Using nlp.js in the browser
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v4/webandreact.md
+|- https://github.com/axa-group/nlp.js#react-native
+|- https://github.com/axa-group/nlp.js/blob/master/packages/builtin-compromise/README.md
+
+
+- https://github.com/axa-group/nlp.js/blob/master/docs/v4/neural.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/neural/README.md (same as the one in /docs)
+
+- https://github.com/axa-group/nlp.js/blob/master/docs/v4/nlu.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/nlu/README.md (same as /docs/v4/nlu.md above, better use that one)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/nlu-manager.md ? (finally ignored, as add nothing new...)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/brain-nlu.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/bayes-nlu.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/binary-relevance-nlu.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/logistic-regression-nlu.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/nlu-luis/README.md (README TODO)
+
+- https://github.com/axa-group/nlp.js/blob/master/docs/v3/ner-manager.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v4/ner-quickstart.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/ner/README.md <-revisar coses q ja estan a docs/neural.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/ner-manager.md#enum-named-entities (already included)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/ner-manager.md#regular-expression-named-entities (already included)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/ner-manager.md#trim-named-entities (already included)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/ner-manager.md#utterances-with-duplicated-entities (already included)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/builtin-entity-extraction.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/builtin-duckling.md
+
+- Persistence
+|- https://github.com/axa-group/nlp.js/blob/master/packages/database/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/mongodb-adapter/README.md
+
+- https://github.com/axa-group/nlp.js/blob/master/packages/core/README.md
+|- Main Utilities
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/arr-to-obj.md
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/file-system.md
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/logger.md
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/normalizer.md
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/obj-to-arr.md
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/stopwords.md
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/timer.md
+ |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/core/uuid.md
+
+
+- https://github.com/axa-group/nlp.js/blob/master/packages/nlp/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/nlp-manager.md
+|- https://github.com/axa-group/nlp.js#log-training-progress
+|- https://github.com/axa-group/nlp.js#false-positives (revisar si està al revés)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/sentiment-analysis.md
+ |- https://github.com/axa-group/nlp.js/blob/master/packages/sentiment/README.md (README TODO)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/similar-search.md (Deprecated use link below)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v4/similarity.md 
+|- https://github.com/axa-group/nlp.js/blob/master/packages/similarity/README.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/similarity-wa/README.md (README TODO)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/slot-filling.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/loading-from-excel.md (PERO QUE COÑO?!?!?!?!!!!) (fix link al excel) (IGNORAR)
+
+
+- https://github.com/axa-group/nlp.js/blob/master/packages/lexer/README.md (IGNORAR)
+
+- Extras
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v3/microsoft-bot-framework.md
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v4/emoji.md
+|- https://github.com/axa-group/nlp.js/blob/master/packages/emoji/README.md (same as the one in /docs)
+|- https://github.com/axa-group/nlp.js/blob/master/docs/v4/qna.md
+ |- https://github.com/axa-group/nlp.js/blob/master/packages/qna-importer/README.md (README TODO)
+|- Logging
+  |- https://github.com/axa-group/nlp.js/blob/master/docs/v4/logger.md (skip to use only the content of the logger module readme)
+  |- https://github.com/axa-group/nlp.js/blob/master/packages/logger/README.md
+
+
+Pending to assign
+
+- https://github.com/axa-group/nlp.js/blob/master/packages/core-loader/README.md
+- https://github.com/axa-group/nlp.js/blob/master/packages/evaluator/README.md
+- https://github.com/axa-group/nlp.js/blob/master/packages/builtin-default/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/nlg/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/python-compiler/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/express-api-serverless/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/rest-connector/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/dialogflow-connector/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/express-api-server/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/builtin-duckling/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/api-auth-jwt/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/request-rn/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/fullbot/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/basic/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/utils/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/neural-worker/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/node-nlp/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/connector/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/bert-open-question/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/lang-bert/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/bot/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/request/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/directline-connector/README.md (wrong README)
+- https://github.com/axa-group/nlp.js/blob/master/packages/bert-tokenizer/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/open-question/README.md (README TODO)
+- https://github.com/axa-group/nlp.js/blob/master/packages/builtin-microsoft/README.md (README TODO)
+
+
+
+All readmes pointing to proper docs + contributors + contributing + code of conduct + who's behind it + license

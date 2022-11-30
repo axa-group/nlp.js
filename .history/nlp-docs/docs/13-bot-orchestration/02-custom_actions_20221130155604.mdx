@@ -1,0 +1,109 @@
+---
+sidebar_position: 5
+---
+
+import GithubLink from "@site/src/components/GithubLink";
+
+# Custom actions
+
+We can define and register custom functions to be executed along the conversation flow like if it were custom
+commands. We call them _custom actions_.
+
+The process is pretty much the same:
+
+- create the function to be executed
+- register it in the bot
+- use the [_call_](/bot-orchestration/dlg_commands_reference#call) command to run it
+
+## Implementing the action
+
+As with custom validators, the function to be executed will receive the following parameters:
+
+- session **TODO**<!-- [session](/technical-reference/key_concepts#session) -->
+- context **TODO**<!-- [context](/technical-reference/key_concepts#context) -->
+- params, which will be an object defined by ourselves
+
+Let's create a custom action to place the order:
+
+```js title="actions/placeOrder.js"
+const { Logger } = require("@bot-core/commons");
+
+const logger = Logger.getLogger();
+
+const placeOrder = async (session, context, params) => {
+  logger.info(`placing order for pizza ${context.pizza}`);
+};
+
+module.exports = { placeOrder };
+```
+
+:::note
+Note that we're using the _Logger_ class from **@bot-core/commons**, so you should install that dependency.
+:::
+For the sake of simplicity, we're just logging in the console a message with the pizza requested by the user.
+
+## Registering the custom action
+
+To register our new action in the bot, we can make use of the method _registerAction(name, fn)_ of
+the <GithubLink to="packages/bot/src/bot.js">bot</GithubLink>
+
+```js title="index.js" {5,15}
+const { placeOrder } = require("actions/placeOrder.js")(async () => {
+  const dock = await dockStart();
+  const bot = dock.get("bot");
+  bot.registerAction("placeOrder", placeOrder);
+
+  await server.start();
+  await bootStrapBot();
+})();
+```
+
+As happened with _custom validators_, this will register all functions exported in the folder _actions_.
+
+### Using the custom action
+
+Now that we have our custom action defined and registered, we can make us of it. Let's place the order after the user
+successfully selected the right pizza.
+
+```yaml title=bot-data/flows/basic-script.dlg {15}
+import ./bot-data/flows/corpus.dlg
+
+dialog main
+say Welcome to Fabio's, the best italian restaurant on your town. How can we help you?
+ask
+nlp
+
+dialog order_pizza
+say Which pizza would you like?
+set validation.retries 1
+set validation.message "I'm sorry, we don't have such pizza, choose another one, please"
+set validation.failDialog "order_pizza_fallback"
+askPizzaType pizza
+[pizza !== undefined] say Fine, adding a {{pizza}} pizza to your basket.
+[pizza !== undefined] call placeOrder
+
+dialog order_pizza_fallback
+say We're sorry you couldn't find any pizza. Maybe next time!
+```
+
+Run the bot and check your logs!
+
+### Receiving custom parameters
+
+The same ways as we did for [Custom validators](./gather_user_input#receiving-custom-parameters) can receive a JSON object
+as a parameter from the conversation flow.
+To send a JSON object to your custom action, just add it as the second parameter of the _call_ command:
+
+```
+  call placeOrder {"discount": 10}
+```
+
+This would allow you to get the param from the custom action:
+
+```js
+const placeOrder = async (session, context, params) => {
+  ...
+  const { discount } = params;
+  ...
+}
+```

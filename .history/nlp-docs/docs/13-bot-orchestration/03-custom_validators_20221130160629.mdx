@@ -1,0 +1,239 @@
+# Custom validators
+
+## Ways of gathering data
+
+We have, mainly, two main ways of gathering data from the user:
+
+- using the [_ask_](/technical-reference/dlg_commands_reference#ask) command
+- using custom validators
+- using NER
+
+## Using custom validators
+
+Probably, one of the most complete and customizable way of gathering data is by creating _custom validators_.
+A _custom validator_ is a javascript function that is able to evaluate the user input, do whatever is needed to be done
+(for instance, validating a contract number against an API), and decide whether the user input is fine or not. If it's
+not, we can define maximum number of attempts and a fallback dialog to execute in case the user cannot provide valid data
+within the defined number of attempts.
+
+### Creating the validator function
+
+A _validator function_ will receive the following parameters: [session](/technical-reference/key_concepts#session),
+[context](/technical-reference/key_concepts#context), and params.
+The params object will contain all the params used when calling the validator from the DLG command; usually, the first
+position will be the name of the variable where we want to store the value.
+
+Let's create a file _pizzaTypeValidator.js_ folder:
+
+```js title="pizzaTypeValidator.js"
+const pizzaTypeValidator = async (session, context, params) => {
+  const pizzas = [{ name: "carbonara" }, { name: "ricotta" }];
+
+  const input = session.text.toLowerCase();
+  const pizza = pizzas.find((p) => input.indexOf(p.name) > -1);
+
+  const isValid = pizza != undefined;
+  return isValid
+    ? { isValid, changes: [{ name: params[0], value: pizza.name }] }
+    : { isValid };
+};
+
+module.exports = { pizzaType: pizzaTypeValidator };
+```
+
+By now, our validator will just check if the pizza the user asks for is in our list of pizzas. If it is, we return an object
+`{ isValid, changes: [{ name: params[0], value: pizza.name }] }`. The `isValid` property will tell the bot that the
+validation was successful, the `changes` property is an array of name/value objects which will be added to the conversation
+context. In our case, we're adding a variable with name `params[0]`, which will correspond to the name of the variable where
+we want to store the pizza name, and the pizza name itself as value.
+Finally, if the pizza is not in our menu, we return `{ isValid: false}`, to indicate that the validation was not successful.
+
+:::tip
+Note that we are exporting the _pizzaTypeValidator_ function with the name _pizzaType_. When referring to this validator from
+the DLG files, you'll be using a construct like askXXX, where XXX is the name of the registered validator, so exporting the
+function as _pizzaType_ will allow you to call it using the _askPizzaType_ command, which will be more readable than
+_askPizzaTypeValidator_.
+:::
+
+### Registering our validator
+
+Now that we have our validator function, we need to register it into th [bot](/technical-reference/key_concepts#bot) instance.
+Let's modify our index.js file like this:
+
+```js title=index.js {5,7,11-13}
+const {
+  defaultConf,
+  axabotsDockStart,
+  server,
+  validatorsLoader,
+} = require("@bot-core/bootstrap");
+const { bootStrapBot } = require("@bot-core/commons");
+const path = require("path");
+
+(async () => {
+  const dock = await axabotsDockStart(defaultConf);
+  const bot = dock.get("bot");
+  validatorsLoader(bot, path.join(__dirname, "validators"));
+
+  await server.start();
+  await bootStrapBot();
+})();
+```
+
+Note that the highlighted lines are those that have been added or modified.
+
+Now, instead of just calling `await axabotsDockStart(defaultConf)`, we store it in a variable named _dock_, then we get the
+bot instance from the _dock_, and, finally, we call the function _validatorsLoader_ that will register the validators found in
+the folder "validators" for us.
+
+### Using the validator
+
+Now that we have our validator, exposed as _pizzaType_, registered, we can start using it. Let's edit our _basic-script.dlg_ file:
+
+```yaml title=bot-data/flows/basic-script.dlg {10}
+import ./bot-data/flows/corpus.dlg
+
+dialog main
+say Welcome to Fabio's, the best italian restaurant on your town. How can we help you?
+ask
+nlp
+
+dialog order_pizza
+say Which pizza would you like?
+askPizzaType pizza
+say Fine, adding a {{ pizza }} pizza to your basket.
+```
+
+Now we are ready to test our validator. Start your bot and test the conversation.
+You'll notice that if you enter one of the valid pizza names, for instance, 'carbonara', you'll receive a message like
+'Fine, adding a carbonara pizza to your basket.'; however, if you use an invalid pizza name, you just get a message saying
+'Invalid value'. Let's fix this.
+
+### Configuring retries
+
+Custom validators by default use and object of the context called _validation_. Among other things, We can use it to
+configure the number of retries and the _retry message_ to use for our validator. Let's see it by example.
+Edit your flow like this:
+
+```yaml title=bot-data/flows/basic-script.dlg {10-11}
+import ./bot-data/flows/corpus.dlg
+
+dialog main
+say Welcome to Fabio's, the best italian restaurant on your town. How can we help you?
+ask
+nlp
+
+dialog order_pizza
+say Which pizza would you like?
+set validation.retries 1
+set validation.message "I'm sorry, we don't have such pizza, choose another one, please"
+askPizzaType pizza
+say Fine, adding a {{pizza}} pizza to your basket.
+```
+
+Using the [set](/technical-reference/dlg_commands_reference#set) command, we've configured the bot to let validators
+have 1 retry with the retry message _"I'm sorry, we don't have such pizza choose another one, please"_.
+
+:::caution
+The validation object will be stored in the context, meaning the current configuration will only affect the corresponding
+conversation, however, **the configuration stored in the validation object will be used by any validator**. So, if your
+flow has more than one validator, make sure to override those values accordingly before declaring each validator.
+:::
+
+### Configuring a fallback _dialog_
+
+It can happen that the user is not able to send a valid value in any retry. In that case, we don't want him to get stuck
+in this part of the conversation. To overcome this problem, we can define a fallback dialog:
+
+```yaml title=bot-data/flows/basic-script.dlg {10-11}
+import ./bot-data/flows/corpus.dlg
+
+dialog main
+say Welcome to Fabio's, the best italian restaurant on your town. How can we help you?
+ask
+nlp
+
+dialog order_pizza
+say Which pizza would you like?
+set validation.retries 1
+set validation.message "I'm sorry, we don't have such pizza, choose another one, please"
+set validation.failDialog "order_pizza_fallback"
+askPizzaType pizza
+say Fine, adding a {{pizza}} pizza to your basket.
+
+dialog order_pizza_fallback
+say We're sorry you couldn't find any pizza. Maybe next time!
+```
+
+:::caution
+Note the use of double quotes in the _validation.message_ and the _validation.failDialog_ values
+:::
+With this setup, if the user fails twice to ask for a valid pizza, the _order_pizza_fallback_ dialog will be triggered.
+However, if you test it, you'll notice we are getting something like this:
+
+```any {1,3,5,7}
+user> hello
+bot > Welcome to Fabio’s, the best italian restaurant on your town. How can we help you?
+user> I would like a pizza
+bot > Which pizza would you like?
+user> a salami one
+bot > I’m sorry, we don’t have such pizza, choose another one, please
+user> then...a burrata pizza
+bot > We’re sorry you couldn’t find any pizza. Maybe next time!
+bot > Fine, adding a {{pizza}} pizza to your basket.
+```
+
+This is because **the execution of the flow is always linear**. So, after the fallback dialog is executed, the flow will
+continue with the following command, which is `say Fine, adding a {{pizza}} pizza to your basket.`. We can fix this in two ways:
+
+- we can restart the conversation using the [restart](/technical-reference/dlg_commands_reference#restart) command, which will
+  reset the conversation as if you just opened the bot
+- we can set a [condition](/technical-reference/dlg_commands_reference#conditional-execution) before the _"say Fine, adding a
+  {{pizza}} pizza to your basket."_ command.
+  Following the [condition](/technical-reference/dlg_commands_reference#conditional-execution) approach, we'd end up with the
+  following flow definition:
+
+```yaml title=bot-data/flows/basic-script.dlg {14}
+import ./bot-data/flows/corpus.dlg
+
+dialog main
+say Welcome to Fabio's, the best italian restaurant on your town. How can we help you?
+ask
+nlp
+
+dialog order_pizza
+say Which pizza would you like?
+set validation.retries 1
+set validation.message "I'm sorry, we don't have such pizza, choose another one, please"
+set validation.failDialog "order_pizza_fallback"
+askPizzaType pizza
+[pizza !== undefined] say Fine, adding a {{pizza}} pizza to your basket.
+
+dialog order_pizza_fallback
+say We're sorry you couldn't find any pizza. Maybe next time!
+```
+
+### Receiving custom parameters
+
+Custom validators can receive a JSON object as a parameter from the conversation flow. This is useful when your
+validator is designed to be used in different places with some parameterization.
+To send a JSON object to your validator, just add it as the second parameter of the _askXXX_ command:
+
+```
+  askPizzaType pizza {"vegan":true}
+```
+
+This would allow you to get the param from the validator:
+
+```js
+const pizzaTypealidator = async (session, context, params) => {
+  ...
+  const {vegan} = params[1];
+  ...
+}
+```
+
+:::caution
+Keep in mind that the first parameter in _params_ is the name of the variable where the data will be stored, hence,
+we use _params[**1**]_ to retrieve the parameter value.
+:::
