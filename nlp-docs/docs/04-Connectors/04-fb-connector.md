@@ -1,4 +1,4 @@
-# @nlpjs/fb-connector
+# Facebook Messenger connector
 
 ## Description
 
@@ -12,10 +12,9 @@ Communication follows this process:
 @startuml
 skinparam componentStyle rectangle
 
-
-[End user] <-> [Fb page]
-[Fb page] <-> [Fb backend]
-[Fb backend] <-> [Your backend]
+[End user] <-> [FB Messenger page]
+[FB Messenger page] <-> [FB Messenger backend]
+[FB Messenger backend] <-> [Your backend]
 
 @enduml
 
@@ -53,7 +52,7 @@ FACEBOOK_PAGE_ID=<***>
 
 ### Server
 
-As we need to expose a backend to receive information from Fb API, we can use express-api-server module for this.
+As we need to expose a backend to receive information from Facebook API, we can use express-api-server module for this.
 Every Facebook communication adds an step where signature of message is verified. This implies generating a SHA1 signature from raw body received.
 
 As express.json body parser by default takes incoming rawBody field and replaces by a parsed body field, this forces us to add a little logic to intercept incoming buffer to be able to forward rawBody to that verify step. Have in mind that this doubles memory used per message.
