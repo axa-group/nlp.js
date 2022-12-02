@@ -22,6 +22,8 @@
  */
 
 const { defaultContainer, Clonable } = require('@nlpjs/core');
+const http = require('http');
+const https = require('https');
 const ExpressApiApp = require('./express-api-app');
 
 class ExpressApiServer extends Clonable {
@@ -75,12 +77,40 @@ class ExpressApiServer extends Clonable {
     );
     this.app = expressApp.initialize();
 
-    if (port && port > 0) {
-      this.server = this.app.listen(port, () => {
-        const logger = this.container.get('logger');
-        logger.info(`${this.settings.tag} listening on port ${port}!`);
-      });
+    if (!port || port < 1) {
+      return false;
     }
+
+    let expressServer;
+    const fs = this.container.get('fs');
+    let protocol = '';
+    if (this.settings.key || this.settings.cert) {
+      try {
+        expressServer = https.createServer(
+          {
+            key: fs.readFileSync(this.settings.key),
+            cert: fs.readFileSync(this.settings.cert),
+          },
+          this.app
+        );
+        protocol = 'https';
+      } catch (error) {
+        this.container.get('log').error('Error inititlising HTTPS server');
+        throw error;
+      }
+    } else {
+      expressServer = http.createServer(this.app);
+      protocol = 'http';
+    }
+    this.server = expressServer.listen.apply(expressServer, [
+      port,
+      () => {
+        const logger = this.container.get('logger');
+        logger.info(
+          `${this.settings.tag} listening on port ${port} using ${protocol}!`
+        );
+      },
+    ]);
     return this.server !== null;
   }
 }
