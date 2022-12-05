@@ -95,13 +95,9 @@ describe('Extractor Regex', () => {
 
     test('It can extract first catching group', async () => {
       const ner = new Ner();
-      ner.addRegexRule(
-        'en',
-        'somenumbers',
-        /test (\d{3}) catch/gi
-      );
+      ner.addRegexRule('en', 'somenumbers', /test (\d{3}) catch/gi);
       const input = {
-        text: 'Testing if 123 won\'t catch and if test 456 catch will... catch.',
+        text: "Testing if 123 won't catch and if test 456 catch will... catch.",
         locale: 'en',
       };
       const actual = await ner.process(input);

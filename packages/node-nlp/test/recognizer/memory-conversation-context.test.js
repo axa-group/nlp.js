@@ -62,7 +62,9 @@ describe('MemoryConversation Context', () => {
       const context = new MemoryConversationContext();
       expect.assertions(1);
 
-      await expect(context.getConversationContext(session)).rejects.toThrow('No conversation id found');
+      await expect(context.getConversationContext(session)).rejects.toThrow(
+        'No conversation id found'
+      );
     });
     test('It should return the same object if called second time with same conversation id', async () => {
       const session = {
@@ -141,7 +143,9 @@ describe('MemoryConversation Context', () => {
       expect.assertions(1);
       const conversationContext = { a: 1 };
 
-      await expect(context.getConversationContext(session, conversationContext)).rejects.toThrow('No conversation id found');
+      await expect(
+        context.getConversationContext(session, conversationContext)
+      ).rejects.toThrow('No conversation id found');
     });
   });
 });

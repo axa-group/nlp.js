@@ -28,7 +28,7 @@ const {
   request,
   resetNumCalls,
   getNumCalls,
-} = require('./request-mock.js');
+} = require('./request-mock');
 
 describe('Tokenizer Bert', () => {
   describe('Constructor', () => {

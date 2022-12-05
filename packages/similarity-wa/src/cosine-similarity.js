@@ -122,10 +122,8 @@ class CosineSimilarityWA {
       return 1;
     }
 
-    const [
-      termFreqVecA,
-      termFreqVecB,
-    ] = this.cosineSimilarityTools.getTermFreqVectors(strA, strB, locale);
+    const [termFreqVecA, termFreqVecB] =
+      this.cosineSimilarityTools.getTermFreqVectors(strA, strB, locale);
     return this.cosineSimilarity(termFreqVecA, termFreqVecB);
   }
 }

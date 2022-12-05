@@ -35,7 +35,7 @@ class Stemmer {
   getStemmer(srcInput) {
     const input = srcInput;
     const locale =
-      input.locale || input.settings ? input.settings.locale || 'en' : 'en';
+      input.locale || (input.settings ? input.settings.locale || 'en' : 'en');
     let stemmer = this.container.get(`stemmer-${locale}`);
     if (!stemmer) {
       const stemmerBert = this.container.get(`stemmer-bert`);

@@ -203,16 +203,32 @@ class SlotManager {
     });
   }
 
+  generateEntityAliases(entities) {
+    const aliases = [];
+    const dict = {};
+    for (let i = 0; i < entities.length; i += 1) {
+      const entity = entities[i];
+      if (!dict[entity.entity]) {
+        dict[entity.entity] = [];
+      }
+      aliases[i] = `${entity.entity}_${dict[entity.entity].length}`;
+      dict[entity.entity].push(true);
+    }
+    return aliases;
+  }
+
   process(srcResult, srcContext) {
     const result = srcResult;
     const context = srcContext;
     this.cleanContextEntities(result.intent, context);
     if (context.slotFill) {
+      // if we have slotFill values we set the context to be the same as before
       result.intent = context.slotFill.intent;
       result.answer = context.slotFill.answer;
       result.srcAnswer = context.slotFill.srcAnswer;
     }
     if (!result.intent || result.intent === 'None') {
+      // No intent found, we repeat the answer from last time
       return false;
     }
     if (context.slotFill && context.slotFill.intent === result.intent) {
@@ -221,9 +237,22 @@ class SlotManager {
     const mandatorySlots = this.getMandatorySlots(result.intent);
     let keys = Object.keys(mandatorySlots);
     if (keys.length === 0) {
+      // No mandatory entities defined, we repeat the answer from last time
       return false;
     }
-    if (context.slotFill) {
+    const aliases = this.generateEntityAliases(result.entities);
+    for (let i = 0, l = result.entities.length; i < l; i += 1) {
+      const entity = result.entities[i];
+      console.log('handle entity', entity.option, entity.entity, aliases[i]);
+      // Remove existing mandatory entities to see what's left
+      delete mandatorySlots[entity.entity];
+      delete mandatorySlots[aliases[i]];
+    }
+    if (context.slotFill && mandatorySlots[context.slotFill.currentSlot]) {
+      // Last time requested slot was not filled by current answer automatically,
+      // so add whole utterance as answer for the requested slow
+      // Do this because automatically parsed entities by builtins like "duration" are
+      // added automatically, and we don't want to have duplicated entries in the list
       result.entities.push({
         entity: context.slotFill.currentSlot,
         utteranceText: result.utterance,
@@ -233,12 +262,12 @@ class SlotManager {
         end: result.utterance.length - 1,
         len: result.utterance.length,
       });
-    }
-    for (let i = 0, l = result.entities.length; i < l; i += 1) {
-      delete mandatorySlots[result.entities[i].entity];
+      delete mandatorySlots[context.slotFill.currentSlot];
     }
     keys = Object.keys(mandatorySlots);
     if (!keys || keys.length === 0) {
+      // All mandatory slots are filled, so we are done. No further questions needed
+      delete result.srcAnswer;
       return true;
     }
     if (context.slotFill && context.slotFill.intent === result.intent) {

@@ -129,9 +129,9 @@ class MsbfConnector extends Connector {
     } else {
       await context.sendActivity(input);
     }
-		if (this.onSendOutput) {
-			await this.onSendOutput(input, context, nlpjsCtx);
-		}
+    if (this.onSendOutput) {
+      await this.onSendOutput(input, context, nlpjsCtx);
+    }
   }
 }
 

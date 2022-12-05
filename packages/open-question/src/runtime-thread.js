@@ -52,9 +52,8 @@ async function predict(modelPath, ids, attentionMask, tokenTypeIds) {
     };
     if (tokenTypeIds && params.inputsNames[ModelInput.TokenTypeIds]) {
       const tokenTypesTensor = tf.tensor(tokenTypeIds, undefined, 'int32');
-      modelInputs[
-        params.inputsNames[ModelInput.TokenTypeIds]
-      ] = tokenTypesTensor;
+      modelInputs[params.inputsNames[ModelInput.TokenTypeIds]] =
+        tokenTypesTensor;
     }
     return model ? model.predict(modelInputs) : undefined;
   });

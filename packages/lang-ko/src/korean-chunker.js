@@ -27,7 +27,8 @@ const ChunkMatch = require('./chunk-match');
 
 const POS_PATTERNS = {
   [KoreanPos.Email]: /([A-Za-z0-9.\-_]+@[A-Za-z0-9.]+)/,
-  [KoreanPos.Number]: /(\$?[0-9]+(,[0-9]{3})*([/~:.-][0-9]+)?(천|만|억|조)*(%|원|달러|위안|옌|엔|유로|등|년|월|일|회|시간|시|분|초)?)/,
+  [KoreanPos.Number]:
+    /(\$?[0-9]+(,[0-9]{3})*([/~:.-][0-9]+)?(천|만|억|조)*(%|원|달러|위안|옌|엔|유로|등|년|월|일|회|시간|시|분|초)?)/,
   [KoreanPos.Korean]: /([가-힣]+)/,
   [KoreanPos.KoreanParticle]: /([ㄱ-ㅣ]+)/,
   [KoreanPos.Alpha]: /([A-Za-z]+)/,
