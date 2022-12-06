@@ -22,8 +22,8 @@
  */
 
 const measureCorpus = require('../measure-corpus');
+// const { LangFr } = require('@nlpjs/lang-fr');
 const { LangFr } = require('../../../packages/lang-fr/src');
-// const { LangEn } = require('@nlpjs/lang-en');
 const corpus = require('../corpora/corpus-fr.json');
 
 (async () => {

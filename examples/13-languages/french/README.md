@@ -1,4 +1,4 @@
-# @nlpjs/lang-en examples
+# @nlpjs/lang-fr examples
 
 Those are examples to show how to use _@nlpjs/lang-fr_ package.
 
