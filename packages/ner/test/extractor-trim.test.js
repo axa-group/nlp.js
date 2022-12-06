@@ -55,6 +55,76 @@ describe('Extractor Trim', () => {
       ]);
     });
 
+    test('It should not extract an empty entity', async () => {
+      const ner = new Ner();
+      ner.addBeforeFirstCondition('en', 'entity', 'profile');
+      ner.addAfterLastCondition('en', 'entity', 'of');
+      const input = {
+        text: 'profile of',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([]);
+    });
+
+    test('It should extract an entity when one trim rule matches', async () => {
+      const ner = new Ner();
+      ner.addBeforeFirstCondition('en', 'entity', 'profile');
+      ner.addAfterLastCondition('en', 'entity', 'of');
+      const input = {
+        text: 'profile of User',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([
+        {
+          accuracy: 0.99,
+          end: 14,
+          entity: 'entity',
+          len: 4,
+          sourceText: 'User',
+          start: 11,
+          subtype: 'afterLast',
+          type: 'trim',
+          utteranceText: 'User',
+        },
+      ]);
+    });
+    test('It should extract two entities when two trim rule matches', async () => {
+      const ner = new Ner();
+      ner.addBeforeFirstCondition('en', 'entity', 'profile');
+      ner.addAfterLastCondition('en', 'entity', 'of');
+      const input = {
+        text: 'First profile of User',
+        locale: 'en',
+      };
+      const actual = await ner.process(input);
+      expect(actual.entities).toEqual([
+        {
+          accuracy: 0.99,
+          end: 4,
+          entity: 'entity',
+          len: 5,
+          sourceText: 'First',
+          start: 0,
+          subtype: 'beforeFirst',
+          type: 'trim',
+          utteranceText: 'First',
+        },
+        {
+          accuracy: 0.99,
+          end: 20,
+          entity: 'entity',
+          len: 4,
+          sourceText: 'User',
+          start: 17,
+          subtype: 'afterLast',
+          type: 'trim',
+          utteranceText: 'User',
+        },
+      ]);
+    });
+
     test('It should extract a between rule finding simplest solution', async () => {
       const ner = new Ner();
       ner.addBetweenCondition('en', 'destination', ['to'], ['from']);
