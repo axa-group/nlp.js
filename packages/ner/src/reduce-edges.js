@@ -20,6 +20,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+const { TrimTypesList } = require('./trim-types');
 
 function runDiscard(srcEdge, srcOther, useMaxLength) {
   let edge;
@@ -76,7 +77,52 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
   }
 }
 
+/**
+ * Given an array of edges, detect the trim edges and find overlaps with
+ * non-trim edges. When an overlap is detected, reduce the trim edged to
+ * fit with the other edge. Only cases where it overlaps on beginning or
+ * end are handled
+ * @param {Object[]} edges Edges to be splitted
+ * @returns {Object[]} Splitted edges.
+ */
+function splitEdges(edges) {
+  for (let i = 0, l = edges.length; i < l; i += 1) {
+    const edge = edges[i];
+    if (edge.type === 'trim' && TrimTypesList.includes(edge.subtype)) {
+      for (let j = 0; j < edges.length; j += 1) {
+        const other = edges[j];
+        if (
+          i !== j &&
+          other.start >= edge.start &&
+          other.end <= edge.end &&
+          other.type !== 'trim'
+        ) {
+          const edgeLen = edge.end - edge.start;
+          const otherLen = other.end - other.start;
+          if (edge.end === other.end) {
+            // is at the end
+            const text = edge.sourceText.substring(0, edgeLen - otherLen - 1);
+            edge.sourceText = text;
+            edge.utteranceText = text;
+            edge.end = other.start - 1;
+            edge.len = text.length;
+          } else if (edge.start === other.start) {
+            // is at the start
+            const text = edge.sourceText.substring(otherLen + 1);
+            edge.sourceText = text;
+            edge.utteranceText = text;
+            edge.start = other.end + 1;
+            edge.len = text.length;
+          }
+        }
+      }
+    }
+  }
+  return edges;
+}
+
 function reduceEdges(edges, useMaxLength = true) {
+  edges = splitEdges(edges);
   const edgeslen = edges.length;
   for (let i = 0; i < edgeslen; i += 1) {
     const edge = edges[i];

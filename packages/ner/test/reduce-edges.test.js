@@ -219,4 +219,100 @@ describe('Reduce Edges', () => {
       expect(actual).toEqual([edgeA]);
     });
   });
+  describe('splitEdges', () => {
+    test('If a trim entity overlaps on end with a non-trim entity the trim entity is cutted', () => {
+      const edgeA = {
+        type: 'trim',
+        subtype: 'afterLast',
+        start: 20,
+        end: 34,
+        len: 15,
+        accuracy: 0.99,
+        sourceText: 'Madrid tomorrow',
+        utteranceText: 'Madrid tomorrow',
+        entity: 'entityA',
+      };
+      const edgeB = {
+        start: 27,
+        end: 34,
+        len: 8,
+        accuracy: 0.95,
+        sourceText: 'tomorrow',
+        utteranceText: 'tomorrow',
+        entity: 'entityB',
+      };
+      const actual = reduceEdges([edgeA, edgeB], false);
+      expect(actual[0]).toEqual({
+        type: 'trim',
+        subtype: 'afterLast',
+        start: 20,
+        end: 26,
+        len: 6,
+        accuracy: 0.99,
+        sourceText: 'Madrid',
+        utteranceText: 'Madrid',
+        entity: 'entityA',
+      });
+      expect(actual[1]).toEqual(edgeB);
+    });
+    test('If a trim entity overlaps on start with a non-trim entity the trim entity is cutted', () => {
+      const edgeA = {
+        type: 'trim',
+        subtype: 'afterLast',
+        start: 20,
+        end: 34,
+        len: 15,
+        accuracy: 0.99,
+        sourceText: 'Madrid tomorrow',
+        utteranceText: 'Madrid tomorrow',
+        entity: 'entityA',
+      };
+      const edgeB = {
+        start: 20,
+        end: 26,
+        len: 6,
+        accuracy: 0.95,
+        sourceText: 'Madrid',
+        utteranceText: 'Madrid',
+        entity: 'entityB',
+      };
+      const actual = reduceEdges([edgeA, edgeB], false);
+      expect(actual[0]).toEqual({
+        type: 'trim',
+        subtype: 'afterLast',
+        start: 27,
+        end: 34,
+        len: 8,
+        accuracy: 0.99,
+        sourceText: 'tomorrow',
+        utteranceText: 'tomorrow',
+        entity: 'entityA',
+      });
+      expect(actual[1]).toEqual(edgeB);
+    });
+    test('If a trim entity overlaps in middle with a non-trim entity the trim entity is not changed and other entity is removed', () => {
+      const edgeA = {
+        type: 'trim',
+        subtype: 'afterLast',
+        start: 20,
+        end: 40,
+        len: 21,
+        accuracy: 0.99,
+        sourceText: 'Madrid tomorrow hello',
+        utteranceText: 'Madrid tomorrow hello',
+        entity: 'entityA',
+      };
+      const edgeB = {
+        start: 27,
+        end: 34,
+        len: 8,
+        accuracy: 0.95,
+        sourceText: 'tomorrow',
+        utteranceText: 'tomorrow',
+        entity: 'entityB',
+      };
+      const actual = reduceEdges([edgeA, edgeB], false);
+      expect(actual).toEqual([edgeA]);
+    });
+  });
 });

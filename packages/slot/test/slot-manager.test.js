@@ -74,6 +74,94 @@ describe('Slot Manager', () => {
       });
     });
   });
+  describe('Update slot', () => {
+    test('A not existing slot is created with default mandatory flag', () => {
+      const manager = new SlotManager();
+      const questions = {
+        en: 'Enter the entity',
+      };
+      const slot = manager.updateSlot('intent', 'entity', undefined, questions);
+      expect(slot).toEqual({
+        intent: 'intent',
+        entity: 'entity',
+        mandatory: false,
+        locales: {
+          en: 'Enter the entity',
+        },
+      });
+    });
+    test('I can add questions by language to the slot', () => {
+      const manager = new SlotManager();
+      const questions = {
+        en: 'Enter the entity',
+        es: 'Dime la entidad',
+      };
+      const addedQuestions = {
+        de: 'Bitte wählen Sie eine Entität',
+      };
+      manager.addSlot('intent', 'entity', true, questions);
+      const slot = manager.updateSlot(
+        'intent',
+        'entity',
+        undefined,
+        addedQuestions
+      );
+      expect(slot).toEqual({
+        intent: 'intent',
+        entity: 'entity',
+        mandatory: true,
+        locales: {
+          en: 'Enter the entity',
+          es: 'Dime la entidad',
+          de: 'Bitte wählen Sie eine Entität',
+        },
+      });
+    });
+    test('I can update questions by language to the slot', () => {
+      const manager = new SlotManager();
+      const questions = {
+        en: 'Enter the entity',
+        es: 'Dime la entidad',
+      };
+      const addedQuestions = {
+        en: 'Enter the entity really',
+      };
+      manager.addSlot('intent', 'entity', true, questions);
+      const slot = manager.updateSlot(
+        'intent',
+        'entity',
+        undefined,
+        addedQuestions
+      );
+      expect(slot).toEqual({
+        intent: 'intent',
+        entity: 'entity',
+        mandatory: true,
+        locales: {
+          en: 'Enter the entity really',
+          es: 'Dime la entidad',
+        },
+      });
+    });
+    test('I can update mandatory flag by language to the slot', () => {
+      const manager = new SlotManager();
+      const questions = {
+        en: 'Enter the entity',
+        es: 'Dime la entidad',
+      };
+      manager.addSlot('intent', 'entity', true, questions);
+      const slot = manager.updateSlot('intent', 'entity', false);
+      expect(slot).toEqual({
+        intent: 'intent',
+        entity: 'entity',
+        mandatory: false,
+        locales: {
+          en: 'Enter the entity',
+          es: 'Dime la entidad',
+        },
+      });
+    });
+  });
   describe('Get Slot', () => {
     test('I can get an slot', () => {
       const manager = new SlotManager();

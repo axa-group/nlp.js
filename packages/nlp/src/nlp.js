@@ -228,6 +228,10 @@ class Nlp extends Clonable {
     return this.ner.addBetweenCondition(locale, name, left, right, opts);
   }
 
+  addNerBetweenLastCondition(locale, name, left, right, opts) {
+    return this.ner.addBetweenLastCondition(locale, name, left, right, opts);
+  }
+
   addNerPositionCondition(locale, name, position, words, opts) {
     return this.ner.addPositionCondition(locale, name, position, words, opts);
   }
@@ -272,6 +276,10 @@ class Nlp extends Clonable {
     return this.actionManager.addAction(intent, action, parameters, fn);
   }
 
+  registerActionFunction(action, fn) {
+    return this.actionManager.registerActionInMap(action, fn);
+  }
+
   getActions(intent) {
     return this.actionManager.findActions(intent);
   }
@@ -282,6 +290,10 @@ class Nlp extends Clonable {
 
   removeActions(intent) {
     return this.actionManager.removeActions(intent);
+  }
+
+  removeActionFunction(action) {
+    return this.actionManager.removeActionFromMap(action);
   }
 
   addAnswer(locale, intent, answer, opts) {
@@ -372,13 +384,42 @@ class Nlp extends Clonable {
       }
       if (entity.trim) {
         for (let j = 0; j < entity.trim.length; j += 1) {
-          this.addNerPositionCondition(
-            finalLocale,
-            entityName,
-            entity.trim[j].position,
-            entity.trim[j].words,
-            entity.trim[j].opts
-          );
+          switch (entity.trim[j].position) {
+            case 'after':
+            case 'afterLast':
+            case 'afterFirst':
+            case 'before':
+            case 'beforeFirst':
+            case 'beforeLast':
+              this.addNerPositionCondition(
+                finalLocale,
+                entityName,
+                entity.trim[j].position,
+                entity.trim[j].words,
+                entity.trim[j].opts
+              );
+              break;
+            case 'between':
+              this.addNerBetweenCondition(
+                finalLocale,
+                entityName,
+                entity.trim[j].leftWords,
+                entity.trim[j].rightWords,
+                entity.trim[j].opts
+              );
+              break;
+            case 'betweenLast':
+              this.addNerBetweenLastCondition(
+                finalLocale,
+                entityName,
+                entity.trim[j].leftWords,
+                entity.trim[j].rightWords,
+                entity.trim[j].opts
+              );
+              break;
+            default:
+              break;
+          }
         }
       }
     }
@@ -387,7 +428,7 @@ class Nlp extends Clonable {
   addData(data, locale, domain) {
     for (let i = 0; i < data.length; i += 1) {
       const current = data[i];
-      const { intent, utterances, answers } = current;
+      const { intent, utterances, answers, slotFilling, actions } = current;
       for (let j = 0; j < utterances.length; j += 1) {
         if (domain) {
           this.assignDomain(locale, intent, domain.name);
@@ -403,6 +444,38 @@ class Nlp extends Clonable {
             this.addAnswer(locale, intent, answer.answer, answer.opts);
           }
         }
+      }
+      if (slotFilling) {
+        const entities = Object.keys(slotFilling);
+        for (let j = 0; j < entities.length; j += 1) {
+          const slot = slotFilling[entities[j]];
+          let mandatory;
+          const slotQuestions = {};
+          if (typeof slot === 'string') {
+            slotQuestions[locale] = slot;
+            mandatory = true;
+          } else {
+            slotQuestions[locale] = slot.question;
+            mandatory = slot.mandatory || false;
+          }
+          this.slotManager.updateSlot(
+            intent,
+            entities[j],
+            mandatory,
+            slotQuestions
+          );
+        }
+      }
+      if (actions) {
+        actions.forEach((action) => {
+          if (!action) return;
+          if (typeof action === 'object') {
+            if (!action.name) return;
+            this.addAction(intent, action.name, action.parameters || []);
+          } else {
+            this.addAction(intent, action, []);
+          }
+        });
       }
     }
   }
