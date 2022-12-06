@@ -337,6 +337,7 @@ class BuiltinMicrosoft extends Clonable {
               sourceText: text,
               utteranceText: text,
               entity: entity.entity,
+              rawEntity: entity.typeName,
             };
             const resolution = this.calculateResolution(entity, locale);
             if (resolution) {

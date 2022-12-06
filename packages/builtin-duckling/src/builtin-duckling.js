@@ -134,6 +134,7 @@ class BuiltinDuckling extends Clonable {
       accuracy: 0.95,
       sourceText: entity.body,
       utteranceText: entity.body,
+      rawEntity: entity.dim,
     };
     if (entity.dim === 'email') {
       result.entity = 'email';
