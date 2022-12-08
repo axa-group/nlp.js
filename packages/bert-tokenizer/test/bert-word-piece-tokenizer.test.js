@@ -59,7 +59,7 @@ describe('BertWordPieceTokenizer', () => {
   describe('Get Best Affix', () => {
     test('Should calculate the best affix for a word', () => {
       const input = 'Supervised';
-      const expected = 'ised';
+      const expected = 'S';
       const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
       const actual = tokenizer.getBestAffix(input);
       expect(actual).toEqual(expected);
@@ -70,8 +70,8 @@ describe('BertWordPieceTokenizer', () => {
     test('Should return several tokens if word does not match and has affixes', () => {
       const input = 'Supervised';
       const expected = {
-        tokens: ['Super', '##v', '##ised'],
-        ids: [3198, 1964, 3673],
+        tokens: ['Super', '##vise', '##d'],
+        ids: [3198, 16641, 1181],
       };
       const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
       const actual = tokenizer.tokenizeWord(input);

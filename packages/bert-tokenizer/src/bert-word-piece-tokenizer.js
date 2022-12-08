@@ -118,10 +118,25 @@ class BertWordPieceTokenizer extends Clonable {
     return result;
   }
 
-  getBestAffix(word) {
+  getBestPrefix(word) {
     const maxLength = Math.min(word.length - 1, this.affixMaxLength);
+
+    // we try searching from shortest to longest.
     for (let i = maxLength; i > 0; i -= 1) {
-      const current = word.slice(-i);
+      const current = word.substring(0, i);
+      if (this.words[current]) {
+        return current;
+      }
+    }
+    return undefined;
+  }
+
+  getBestAffix(word) {
+    const maxLength = Math.min(word.length, this.affixMaxLength);
+
+    // we try searching from shortest to longest.
+    for (let i = maxLength; i > 0; i -= 1) {
+      const current = word.substring(0, i);
       if (this.affixes[current]) {
         return current;
       }
@@ -129,20 +144,30 @@ class BertWordPieceTokenizer extends Clonable {
     return undefined;
   }
 
-  tokenizeWord(srcWord, useExtra = false) {
+  tokenizeWord(srcWord, useExtra = false, isInside = false) {
     const word = this.lowercase ? srcWord.toLowerCase() : srcWord;
     const result = {
       tokens: [],
       ids: [],
     };
-    const wordIndex = this.words[word];
+
+    if (srcWord.length === 0) {
+      return result;
+    }
+
+    const wordIndex = isInside ? this.affixes[word] : this.words[word];
     if (wordIndex !== undefined) {
-      result.tokens.push(word);
+      result.tokens.push((isInside ? '##' : '') + word);
       result.ids.push(wordIndex);
       return result;
     }
-    const bestAffix = this.getBestAffix(word);
-    if (!bestAffix) {
+
+    // this might be in the prefixes part
+    const bestPart = isInside
+      ? this.getBestAffix(word)
+      : this.getBestPrefix(word);
+
+    if (!bestPart) {
       if (useExtra) {
         const index = this.numWords + this.numExtra;
         this.extra[word] = index;
@@ -155,15 +180,17 @@ class BertWordPieceTokenizer extends Clonable {
       }
       return result;
     }
-    const newWord = word.slice(0, -bestAffix.length);
-    const newWordTokens = this.tokenizeWord(newWord, useExtra);
+    const newWord = word.substring(bestPart.length);
+    const newWordTokens = this.tokenizeWord(newWord, useExtra, true);
+
+    const text = bestPart;
+    result.tokens.push((isInside ? '##' : '') + text);
+    result.ids.push(isInside ? this.affixes[text] : this.words[text]);
+
     for (let i = 0; i < newWordTokens.tokens.length; i += 1) {
       result.tokens.push(newWordTokens.tokens[i]);
       result.ids.push(newWordTokens.ids[i]);
     }
-    const text = `##${bestAffix}`;
-    result.tokens.push(text);
-    result.ids.push(this.words[text]);
     return result;
   }
 
