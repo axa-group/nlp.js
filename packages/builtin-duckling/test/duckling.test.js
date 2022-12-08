@@ -193,6 +193,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: 'user@user.com',
           utteranceText: 'user@user.com',
+          rawEntity: 'email',
           resolution: {
             value: 'user@user.com',
           },
@@ -214,6 +215,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: 'user@user.com',
           utteranceText: 'user@user.com',
+          rawEntity: 'email',
           resolution: {
             value: 'user@user.com',
           },
@@ -236,6 +238,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: '+1 (650) 123-4567',
           utteranceText: '+1 (650) 123-4567',
+          rawEntity: 'phone-number',
           resolution: {
             value: '(+1) 6501234567',
           },
@@ -258,6 +261,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: 'https://subdomain.domain.com/something',
           utteranceText: 'https://subdomain.domain.com/something',
+          rawEntity: 'url',
           resolution: {
             value: 'https://subdomain.domain.com/something',
             domain: 'subdomain.domain.com',
@@ -281,6 +285,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: 'one hundred and twelve',
           utteranceText: 'one hundred and twelve',
+          rawEntity: 'number',
           resolution: {
             strValue: '112',
             value: 112,
@@ -305,6 +310,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: 'one hundred and twelve dot 5',
           utteranceText: 'one hundred and twelve dot 5',
+          rawEntity: 'number',
           resolution: {
             strValue: '112.5',
             value: 112.5,
@@ -326,6 +332,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: '347kms',
           utteranceText: '347kms',
+          rawEntity: 'distance',
           resolution: {
             strValue: '347',
             value: 347,
@@ -348,6 +355,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: 'Three cups of sugar',
           utteranceText: 'Three cups of sugar',
+          rawEntity: 'quantity',
           resolution: {
             strValue: '3',
             value: 3,
@@ -370,6 +378,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: '80F',
           utteranceText: '80F',
+          rawEntity: 'temperature',
           resolution: {
             strValue: '80',
             value: 80,
@@ -391,6 +400,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: '4 gallons',
           utteranceText: '4 gallons',
+          rawEntity: 'volume',
           resolution: {
             strValue: '4',
             value: 4,
@@ -413,6 +423,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: '42€',
           utteranceText: '42€',
+          rawEntity: 'amount-of-money',
           resolution: {
             strValue: '42',
             value: 42,
@@ -434,6 +445,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: '3 mins',
           utteranceText: '3 mins',
+          rawEntity: 'duration',
           resolution: {
             strValue: '180',
             value: 180,
@@ -455,6 +467,7 @@ describe('Duckling Integration', () => {
           accuracy: 0.95,
           sourceText: '12/12/2019 at 9am',
           utteranceText: '12/12/2019 at 9am',
+          rawEntity: 'time',
           resolution: {
             value: '2019-12-12T09:00:00.000+00:00',
             grain: 'hour',
