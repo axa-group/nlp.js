@@ -56,6 +56,16 @@ describe('BertWordPieceTokenizer', () => {
     });
   });
 
+  describe('Get Best Prefix', () => {
+    test('Should calculate the best prefix for a word', () => {
+      const input = 'Supervised';
+      const expected = 'Super';
+      const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
+      const actual = tokenizer.getBestPrefix(input);
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe('Get Best Affix', () => {
     test('Should calculate the best affix for a word', () => {
       const input = 'Supervised';
@@ -67,6 +77,16 @@ describe('BertWordPieceTokenizer', () => {
   });
 
   describe('Tokenize Word', () => {
+    test('Should return several tokens if word does not match - with isInside', () => {
+      const input = 'Supervised';
+      const expected = {
+        tokens: ['##S', '##upe', '##r', '##vise', '##d'],
+        ids: [1708, 26939, 1197, 16641, 1181],
+      };
+      const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
+      const actual = tokenizer.tokenizeWord(input, false, true);
+      expect(actual).toEqual(expected);
+    });
     test('Should return several tokens if word does not match and has affixes', () => {
       const input = 'Supervised';
       const expected = {
