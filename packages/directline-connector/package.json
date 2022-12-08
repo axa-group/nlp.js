@@ -25,13 +25,16 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
+    "@esm2cjs/node-fetch": "^3.2.10",
     "@nlpjs/connector": "^4.23.4",
     "@nlpjs/core": "^4.23.4",
-    "formidable": "^2.0.1",
-    "node-fetch": "^2.6.7"
+    "formidable": "^2.0.1"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd",
+  "engines" : { 
+    "node" : ">=14.18"
+  }
 }
