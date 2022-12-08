@@ -77,6 +77,16 @@ describe('BertWordPieceTokenizer', () => {
       const actual = tokenizer.tokenizeWord(input);
       expect(actual).toEqual(expected);
     });
+    test('Should return several tokens if word does not match and has affixes #2', () => {
+      const input = 'vegan';
+      const expected = {
+        tokens: ['ve', '##gan'],
+        ids: [1396, 3820],
+      };
+      const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
+      const actual = tokenizer.tokenizeWord(input);
+      expect(actual).toEqual(expected);
+    });
     test('Should return matched word if found', () => {
       const input = 'supervised';
       const expected = {
