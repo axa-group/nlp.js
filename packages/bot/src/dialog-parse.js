@@ -60,7 +60,7 @@ const CARD_LINK_REGEX = /!?\[.{0,100}\]\(https?:\/\/.{0,2048}\)/gi;
 function trimLine(line) {
   const trimmedCondition = trimBetween(line.trim(), '[', ']', true);
   let trimmedSettings;
-  if (CARD_LINK_REGEX.test(line) || line.toLowerCase().startsWith('say ')) {
+  if (line.match(CARD_LINK_REGEX) || line.toLowerCase().startsWith('say ')) {
     trimmedSettings = {
       line,
       trimmed: '',
