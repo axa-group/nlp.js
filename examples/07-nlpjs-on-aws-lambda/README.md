@@ -82,16 +82,16 @@ Executing the wizard:
 
 - $ \> `sam init`
   - [SELECT OPTION] \> `AWS Quick Start Templates`
-  - [SELECT OPTION] \> `nodejs12.x`
+  - [SELECT OPTION] \> `nodejs14.x`
   - [WRITE A VALUE] \> `the_project_name`
 
 Or as a direct command:
 
-- $ \> `sam init -r nodejs12.x -d npm -n the_project_name --app-template hello-world`
+- $ \> `sam init -r nodejs14.x -d npm -n the_project_name --app-template hello-world`
 
 and then:
 
-- $ \> `docker pull lambci/lambda:nodejs12.x`
+- $ \> `docker pull lambci/lambda:nodejs14.x`
 - $ \> `cd the_project_name`
 
 So now we have "a base".

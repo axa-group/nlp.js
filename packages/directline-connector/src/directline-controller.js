@@ -22,7 +22,7 @@
  */
 
 const { uuid } = require('@nlpjs/core');
-const fetch = require('node-fetch');
+const fetch = require('@esm2cjs/node-fetch').default;
 
 class DirectlineController {
   constructor(settings, parent) {

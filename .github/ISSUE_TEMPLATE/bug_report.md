@@ -24,7 +24,7 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. macOS, ubuntu, windows]
  - Browser [e.g. chrome, safari]
  - Package version [e.g. 22]
- - Node version [e.g. 12]
+ - Node version [e.g. 14]
 
 **Additional context**
 Add any other context about the problem here.
