@@ -147,6 +147,7 @@ function splitEdges(edges) {
 }
 
 function reduceEdges(edges, useMaxLength = true, intentEntities = []) {
+  edges = splitEdges(edges);
   const edgeslen = edges.length;
   for (let i = 0; i < edgeslen; i += 1) {
     const edge = edges[i];
