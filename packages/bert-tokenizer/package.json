@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/bert-tokenizer",
-  "version": "4.23.4",
+  "version": "4.25.0",
   "description": "BERT tokenizer",
   "author": {
     "email": "opensource@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/core": "^4.23.4"
+    "@nlpjs/core": "^4.25.0"
   },
   "publishConfig": {
     "access": "public"

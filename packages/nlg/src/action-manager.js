@@ -61,7 +61,7 @@ class ActionManager extends Clonable {
    * Find the index of an action
    * @param {String} intent Name of the intent.
    * @param {String} action Name of the action.
-   * @param {String[]} parameters list of parameters of the action.
+   * @param {any[]} parameters list of parameters of the action.
    */
   posAction(intent, action, parameters) {
     if (!this.actions[intent]) {
@@ -71,7 +71,7 @@ class ActionManager extends Clonable {
     for (let i = 0; i < actions.length; i += 1) {
       if (
         actions[i].action === action &&
-        actions[i].parameters.toString() === parameters.toString()
+        JSON.stringify(actions[i].parameters) === JSON.stringify(parameters)
       ) {
         return i;
       }
@@ -135,8 +135,8 @@ class ActionManager extends Clonable {
    * Add an action to a given intent.
    * @param {String} intent Name of the intent.
    * @param {String} action Action to be executed
-   * @param {String} parameters Parameters of the action
-   * @param {function} fn Function of the action
+   * @param {any[]} parameters Parameters of the action
+   * @param {function} [fn] Function of the action
    */
   addAction(intent, action, parameters, fn) {
     if (this.posAction(intent, action, parameters) === -1) {
@@ -154,7 +154,7 @@ class ActionManager extends Clonable {
    * Remove an action.
    * @param {String} intent Name of the intent
    * @param {String} action Name of the action
-   * @param {String} parameters Parameters of the action.
+   * @param {Object[]} parameters Parameters of the action.
    */
   removeAction(intent, action, parameters) {
     const index = this.posAction(intent, action, parameters);
@@ -172,7 +172,16 @@ class ActionManager extends Clonable {
   }
 
   /**
-   * Remove an action from the actions map.
+   * Registers/Sets a function for a given action
+   * @param {String} action Name of the action.
+   * @param {function} [fn] Function of the action
+   */
+  registerActionInMap(action, fn) {
+    this.actionsMap[action] = fn;
+  }
+
+  /**
+   * Remove an action function from the actions map.
    * @param {String} action Name of the action.
    */
   removeActionFromMap(action) {

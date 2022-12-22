@@ -66,7 +66,7 @@ describe('Dialog Parse', () => {
       ]);
     });
 
-    test('parse dialog with link', async () => {
+    test('parse dialog with link', () => {
       const dialog = `say Hello! this is a dialog with [link](http://www.test.com)`;
       const parsed = dialogParse(dialog);
       expect(parsed).toMatchObject([
@@ -79,6 +79,26 @@ describe('Dialog Parse', () => {
           type: 'say',
         },
       ]);
+    });
+
+    test('parse consecutive translastions with links, same regex object', () => {
+      const dialog = `-en This is my link [link](http://www.test.com) \n
+        -es Este es mi enlace [enlace](http://www.test.com)`;
+      const [parsed, secondParsed] = dialogParse(dialog);
+      expect(parsed).toMatchObject({
+        condition: '',
+        line: 'This is my link [link](http://www.test.com)',
+        settings: '',
+        srcLine: '-en This is my link [link](http://www.test.com)',
+        type: '-en',
+      });
+      expect(secondParsed).toMatchObject({
+        condition: '',
+        line: 'Este es mi enlace [enlace](http://www.test.com)',
+        settings: '',
+        srcLine: '-es Este es mi enlace [enlace](http://www.test.com)',
+        type: '-es',
+      });
     });
   });
 

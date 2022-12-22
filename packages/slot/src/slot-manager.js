@@ -60,8 +60,8 @@ class SlotManager {
    * Adds a new slot for a given intent and entity.
    * @param {String} intent Name of the intent.
    * @param {String} entity Name of the entity.
-   * @param {boolean} mandatory Flag indicating if is mandatory or optional.
-   * @param {Object} questions Question to ask when is mandatory, by locale.
+   * @param {boolean} [mandatory=false] Flag indicating if is mandatory or optional.
+   * @param {Object} [questions] Question to ask when is mandatory, by locale.
    * @returns {Object} New slot instance.
    */
   addSlot(intent, entity, mandatory = false, questions) {
@@ -75,6 +75,29 @@ class SlotManager {
       mandatory,
       locales: questions || {},
     };
+    return this.intents[intent][entity];
+  }
+
+  /**
+   * Adds/modifies the parameter of a slot for a given intent and entity.
+   * Slot questions for same locales as already existing will be overwritten.
+   * If the slot for the intent and entity does not exist it fill be created.
+   * @param {String} intent Name of the intent.
+   * @param {String} entity Name of the entity.
+   * @param {boolean} mandatory Flag indicating if is mandatory or optional.
+   * @param {Object} [questions] Question to ask when is mandatory, by locale.
+   * @returns {Object} New/Modified slot instance or undefined if not existing
+   */
+  updateSlot(intent, entity, mandatory, questions) {
+    if (!this.intents[intent] || !this.intents[intent][entity]) {
+      return this.addSlot(intent, entity, mandatory, questions);
+    }
+    const slot = this.intents[intent][entity];
+    if (mandatory !== undefined) {
+      // Update mandatory flag only if provided
+      slot.mandatory = mandatory;
+    }
+    slot.locales = Object.assign(slot.locales, questions);
     return this.intents[intent][entity];
   }
 

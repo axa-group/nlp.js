@@ -75,7 +75,7 @@ expect.extend({
   },
 });
 
-function addTests(base, locale) {
+function addTests(base, locale, entityTypeName) {
   const instance = new BuiltinMicrosoft({ container });
   for (let i = 0; i < base.length; i += 1) {
     const testCase = base[i];
@@ -94,6 +94,7 @@ function addTests(base, locale) {
             testCase[key][currentKey] = new Date(testCase[key][currentKey]);
           }
         }
+        testCase.rawEntitiy = entityTypeName;
       }
     }
     if (!testCase.avoid || !testCase.avoid.includes(locale)) {
@@ -129,28 +130,28 @@ const languages = [
 describe('NER Manager builtins', () => {
   languages.forEach((language) => {
     describe(`Numbers ${language.name}`, () => {
-      addTests(numberTests, language.locale);
+      addTests(numberTests, language.locale, 'number');
     });
     describe(`Ordinal ${language.name}`, () => {
-      addTests(numberOrdinalTests, language.locale);
+      addTests(numberOrdinalTests, language.locale, 'ordinal');
     });
     describe(`Percentage ${language.name}`, () => {
-      addTests(numberPercentTests, language.locale);
+      addTests(numberPercentTests, language.locale, 'percentage');
     });
     describe(`Age ${language.name}`, () => {
-      addTests(numberAgeTests, language.locale);
+      addTests(numberAgeTests, language.locale, 'age');
     });
     describe(`Currency ${language.name}`, () => {
-      addTests(numberCurrency, language.locale);
+      addTests(numberCurrency, language.locale, 'currency');
     });
     describe(`Dimension ${language.name}`, () => {
-      addTests(numberDimension, language.locale);
+      addTests(numberDimension, language.locale, 'dimension');
     });
     describe(`Sequence ${language.name}`, () => {
-      addTests(sequence, language.locale);
+      addTests(sequence, language.locale, 'sequence');
     });
     describe(`Date ${language.name}`, () => {
-      addTests(date, language.locale);
+      addTests(date, language.locale, 'datetimeV2.date');
     });
   });
   describe(`Date english`, () => {
@@ -168,6 +169,7 @@ describe('NER Manager builtins', () => {
       expect(result.len).toEqual(16);
       expect(result.sourceText).toEqual('tomorrow morning');
       expect(result.resolution).toBeDefined();
+      expect(result.rawEntity).toEqual('datetimeV2.datetimerange');
     });
   });
 });
