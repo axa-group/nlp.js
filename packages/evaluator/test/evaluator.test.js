@@ -181,6 +181,17 @@ describe('Evaluator', () => {
       const answer = evaluator.evaluateAll(question, context);
       expect(answer).toEqual([1, 2, 49, 800, 555]);
     });
+    test('Should evaluate complex expressions walking when the object type is ObjectExpression', async () => {
+      const context = { obj: { x: { y: 555 } }, n: 'a' };
+      const evaluator = new Evaluator();
+      const question = `
+        obj[""+"x"].y;
+        ({ a: 5, b: 7 })['a'];
+        ({ a: 5, b: 7 })[n]
+        `;
+      const answer = await evaluator.evaluateAll(question, context);
+      expect(answer).toEqual([555, 5, 5]);
+    });
   });
   describe('Evaluate', () => {
     test('Should resolve parameters', () => {
