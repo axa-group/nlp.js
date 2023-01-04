@@ -145,6 +145,16 @@ class SlotManager {
   }
 
   /**
+   * Given an intent return the information if the intent has entities defined
+   *
+   * @param {String} intent Name of the intent.
+   * @returns {boolean} true if intent has defined entities, else false
+   */
+  hasIntentEntities(intent) {
+    return this.getIntentEntityNames(intent).length > 0;
+  }
+
+  /**
    * Clear the slot manager.
    */
   clear() {
@@ -243,7 +253,6 @@ class SlotManager {
     const aliases = this.generateEntityAliases(result.entities);
     for (let i = 0, l = result.entities.length; i < l; i += 1) {
       const entity = result.entities[i];
-      console.log('handle entity', entity.option, entity.entity, aliases[i]);
       // Remove existing mandatory entities to see what's left
       delete mandatorySlots[entity.entity];
       delete mandatorySlots[aliases[i]];
@@ -261,10 +270,14 @@ class SlotManager {
         start: 0,
         end: result.utterance.length - 1,
         len: result.utterance.length,
+        isSlotFillingFallback: true,
       });
       delete mandatorySlots[context.slotFill.currentSlot];
     }
     keys = Object.keys(mandatorySlots);
+    if (context.slotFill && context.slotFill.currentSlot) {
+      context.slotFill.latestSlot = context.slotFill.currentSlot;
+    }
     if (!keys || keys.length === 0) {
       // All mandatory slots are filled, so we are done. No further questions needed
       delete result.srcAnswer;
@@ -279,6 +292,7 @@ class SlotManager {
       entities: result.entities,
       answer: result.answer,
       srcAnswer: result.srcAnswer,
+      latestSlot: context.slotFill.latestSlot,
     };
     const currentSlot = mandatorySlots[keys[0]];
     result.slotFill.currentSlot = currentSlot.entity;
