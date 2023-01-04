@@ -76,6 +76,7 @@ class ExpressApiServer extends Clonable {
       this.routers
     );
     this.app = expressApp.initialize();
+    this.serverLib = expressApp.express;
 
     if (!port || port < 1) {
       return false;
