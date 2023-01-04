@@ -119,6 +119,10 @@ class Database extends Clonable {
     return this.collections[name];
   }
 
+  createId(key) {
+    return this.getAdapter().createId(key);
+  }
+
   find(name, condition, limit) {
     return this.getAdapter(name).find(name, condition, limit);
   }

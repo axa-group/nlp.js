@@ -21,9 +21,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const { MongoClient, ObjectId } = require('mongodb');
+const mongodb = require('mongodb');
 const { Clonable } = require('@nlpjs/core');
 
+const { MongoClient, ObjectId } = mongodb;
 const idField = '_id';
 
 class MongodbAdapter extends Clonable {
@@ -52,6 +53,7 @@ class MongodbAdapter extends Clonable {
       useUnifiedTopology: true,
     });
     this.registerDefault();
+    this.driver = mongodb;
   }
 
   registerDefault() {
@@ -132,6 +134,10 @@ class MongodbAdapter extends Clonable {
         return resolve(result);
       });
     });
+  }
+
+  createId(key) {
+    return new ObjectId(key);
   }
 
   async find(name, condition, limit, offset, sort) {
