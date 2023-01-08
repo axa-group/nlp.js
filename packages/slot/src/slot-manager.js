@@ -292,8 +292,10 @@ class SlotManager {
       entities: result.entities,
       answer: result.answer,
       srcAnswer: result.srcAnswer,
-      latestSlot: context.slotFill.latestSlot,
     };
+    if (context.slotFill && context.slotFill.latestSlot) {
+      result.slotFill.latestSlot = context.slotFill.latestSlot;
+    }
     const currentSlot = mandatorySlots[keys[0]];
     result.slotFill.currentSlot = currentSlot.entity;
     result.srcAnswer = currentSlot.locales[result.localeIso2];

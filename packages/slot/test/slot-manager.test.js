@@ -410,6 +410,84 @@ describe('Slot Manager', () => {
         entities: [],
       });
     });
+    test('On initial slotfill, fill in but leave latestFilled empty', () => {
+      const manager = new SlotManager();
+      manager.addSlot('intent', 'entity1', true);
+      const result = {
+        intent: 'intent',
+        utterance: 'hello John',
+        score: 1,
+        entities: [
+          {
+            sourceText: 'John',
+            utteranceText: 'John',
+            entity: 'entity1',
+          },
+        ],
+      };
+      const context = {};
+      const actual = manager.process(result, context);
+      expect(actual).toBeTruthy();
+      expect(result).toEqual({
+        intent: 'intent',
+        utterance: 'hello John',
+        score: 1,
+        entities: [
+          {
+            entity: 'entity1',
+            utteranceText: 'John',
+            sourceText: 'John',
+          },
+        ],
+      });
+    });
+    test('On initial slotfill, fill in but leave latestFilled empty, and ask for another entity', () => {
+      const manager = new SlotManager();
+      manager.addSlot('intent', 'entity1', true);
+      manager.addSlot('intent', 'entity2', true, { en: 'answer' });
+      const result = {
+        intent: 'intent',
+        utterance: 'hello John',
+        score: 1,
+        localeIso2: 'en',
+        entities: [
+          {
+            sourceText: 'John',
+            utteranceText: 'John',
+            entity: 'entity1',
+          },
+        ],
+      };
+      const context = {};
+      const actual = manager.process(result, context);
+      expect(actual).toBeTruthy();
+      expect(result).toEqual({
+        intent: 'intent',
+        utterance: 'hello John',
+        score: 1,
+        localeIso2: 'en',
+        entities: [
+          {
+            entity: 'entity1',
+            utteranceText: 'John',
+            sourceText: 'John',
+          },
+        ],
+        slotFill: {
+          currentSlot: 'entity2',
+          entities: [
+            {
+              entity: 'entity1',
+              utteranceText: 'John',
+              sourceText: 'John',
+            },
+          ],
+          intent: 'intent',
+          localeIso2: 'en',
+        },
+        srcAnswer: 'answer',
+      });
+    });
     test('If slot fill is waiting for an entity, fill the entity', () => {
       const manager = new SlotManager();
       manager.addSlot('intent', 'entity1', true);
