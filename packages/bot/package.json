@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/bot",
-  "version": "4.26.0",
+  "version": "4.26.1",
   "description": "Bot plugin for NLP.js",
   "author": {
     "email": "opensource@axa.com",
@@ -29,11 +29,11 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/builtin-default": "^4.25.0",
-    "@nlpjs/connector": "^4.25.0",
-    "@nlpjs/core": "^4.25.0",
-    "@nlpjs/evaluator": "^4.26.0",
-    "@nlpjs/nlp": "^4.26.0"
+    "@nlpjs/builtin-default": "^4.26.1",
+    "@nlpjs/connector": "^4.26.1",
+    "@nlpjs/core": "^4.26.1",
+    "@nlpjs/evaluator": "^4.26.1",
+    "@nlpjs/nlp": "^4.26.1"
   },
   "publishConfig": {
     "access": "public"
