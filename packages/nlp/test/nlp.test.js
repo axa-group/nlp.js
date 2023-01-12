@@ -1165,6 +1165,77 @@ describe('NLP', () => {
         'When do you want to travel from {{fromCity}} to {{toCity}}?'
       );
     });
+    test('On initial processing slotFill.latestSlot is not set in response (because no asked slot filled now)', async () => {
+      const corpus = {
+        name: 'basic conversations',
+        locale: 'en-us',
+        entities: {
+          clientName: {
+            trim: [
+              {
+                position: 'betweenLast',
+                leftWords: ['is', 'am'],
+                rightWords: ['.'],
+              },
+              {
+                position: 'afterLast',
+                words: ['is', 'am'],
+              },
+            ],
+          },
+          location: {
+            trim: [
+              {
+                position: 'betweenLast',
+                leftWords: ['in', 'around'],
+                rightWords: ['today', 'currently', 'at'],
+              },
+              {
+                position: 'afterLast',
+                words: ['in', 'around', 'to', 'at', 'from'],
+              },
+            ],
+          },
+        },
+        data: [
+          {
+            intent: 'user.introduce',
+            utterances: ['i am @clientName', 'my name is @clientName'],
+            answer: [
+              'Nice to meet you @clientName.',
+              "It's a pleasure to meet you @clientName.",
+            ],
+            slotFilling: {
+              clientName: "I'm sorry but i didn't get your name",
+              location: 'Where are you from @clientName?',
+            },
+          },
+        ],
+      };
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      await nlp.addCorpus(corpus);
+      expect(nlp.ner.rules.en).toBeDefined();
+      expect(nlp.ner.rules.en.clientName).toBeDefined();
+      expect(nlp.ner.rules.en.location).toBeDefined();
+      expect(nlp.slotManager.intents['user.introduce']).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        text: 'my name is John',
+      };
+      const actual = await nlp.process(input);
+      expect(actual.intent).toEqual('user.introduce');
+      expect(actual.entities).toBeDefined();
+      expect(actual.entities[0].entity).toEqual('clientName');
+      expect(actual.entities[0].sourceText).toEqual('John');
+      expect(actual.slotFill).toBeDefined();
+      expect(actual.slotFill.currentSlot).toEqual('location');
+      expect(actual.slotFill.latestSlot).toBeUndefined();
+    });
     test('The corpus can contain entities with action details', async () => {
       const corpus = {
         name: 'Slot Filling Corpus',
