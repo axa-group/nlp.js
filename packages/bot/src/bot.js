@@ -692,7 +692,9 @@ class Bot extends Clonable {
         }
         nlp.addCorpus(corpus);
       }
-      await nlp.train();
+      if (intentKeys.length) {
+        await nlp.train();
+      }
     }
     this.addDialog('/#', [
       { command: 'ask' },
