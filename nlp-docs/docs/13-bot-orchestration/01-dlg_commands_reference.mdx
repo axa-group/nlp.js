@@ -29,8 +29,12 @@ Command used to send output to the user. Any context variable in the text to say
       text: "where greeting is a key defined in the your language file",
     },
     {
-      example: "say Hi {{user_name}}",
-      text: "will replace <i>{{user_name}}</i> by the value of the evaluation the expression <i>user_name</i> using the variables available in the context, if any, and send the resulting text to the user",
+      example: "say Hi {{userName}}",
+      text: "will replace <i>{{userName}}</i> by the value of evaluating the expression <i>userName</i> using the variables available in the context, if any, and send the resulting text to the user",
+    },
+    {
+      example: "say Hi {{user.name}}",
+      text: "will replace <i>{{user.name}}</i> by the value of evaluating the expression <i>user.name</i> using the variables available in the context.",
     },
   ]}
 />
@@ -242,11 +246,19 @@ Remember that _context_ variables are available all over the flow, and can be re
   examples={[
     {
       example: 'set count 5',
-      text: 'set _count_ variable to 5'
+      text: 'set <i>count</i> variable to 5'
     },
     {
       example: "set user {name: 'John', surname: 'Doe'}<br>say {{user.name}}",
-      text: "set _user_ variable to have the JSON value {name: 'John', surname: 'Doe'} and says 'John'"
+      text: "set <i>user</i> variable to have the JSON value {name: 'John', surname: 'Doe'} and says 'John'"
+    },
+    {
+      example: "set numbers []<br>say numbers: {{ numbers.length }}",
+      text: "set <i>numbers</i> variable with an empty array and says 'numbers length: 0'"
+    },
+    {
+      example: "set numbers [1,2,3]<br>say numbers: {{ numbers.length }}",
+      text: "set <i>numbers</i> variable to have an array with values and says 'numbers length: 3'"
     }
   ]}
  />
