@@ -282,15 +282,11 @@ Additionally, you can do additional settings using environment variables:
 HTTPS will only be enabled if both 'key' and 'cert' settings are provided.
 :::
 
-## express-api-serverless
+### express-api-serverless
 
 **Tag** &rarr; api-server
 
-| Setting   | Type | Description |
-| :-------- | :--: | :---------- |
-| apiRoot   |      |             |
-| port      |      |             |
-| serveBot? |      |             |
+NOTHING HERE
 
 ### fb-connector
 
@@ -410,13 +406,41 @@ NOTHING HERE
 
 **Tag** &rarr; domain-manager-${this.settings.locale}
 
-| Setting                 | Type | Description |
-| :---------------------- | :--: | :---------- |
-| locale                  |      |             |
-| useStemDict             |      |             |
-| domain-manager-??-train |      |             |
-| trainByDomain           |      |             |
-| useNoneFeature          |      |             |
+| Setting        |  Type   | Default value | Description                                                       |
+| :------------- | :-----: | :------------ | ----------------------------------------------------------------- |
+| useStemDict    | boolean | true          | Whether to classify intents using the stem dictionary or not      |
+| trainByDomain  | boolean | false         | Whether the NLU should be trained by domain or not                |
+| useNoneFeature | boolean | false         | Whether the NLU should be trained using the useNoneFeature or not |
+
+:::tip
+DomainManagers are instantiated by the <GithubLink to="packages/nlu/src/nlu-manager.js">NluManagers</GithubLink>. When doing so, some settings
+are delegated from the NluManager's settings. This mean you can tweak DomainManager settings in different places of you JSON configuration:
+(example using `locale en`):
+
+```json
+  "nlu-manager": {
+    "domain": {
+      "useStemDict": "...",
+    },
+    "trainByDomain": "...",
+    "useNoneFeature": "..."
+  },
+  "domain-manager-en": {
+      "useStemDict": "...",
+      "trainByDomain": "...",
+      "useNoneFeature": "...
+  }
+```
+
+In case a setting appears in more than one section, following precedence will apply:
+
+| Setting        | 1st                | 2nd               |
+| :------------- | :----------------- | :---------------- |
+| useStemDict    | nlu-manager/domain | domain-manager-en |
+| trainByDomain  | nlu-manager        | domain-manager-en |
+| useNoneFeature | nlu-manager        | domain-manager-en |
+
+:::
 
 ## nlu-manager
 
