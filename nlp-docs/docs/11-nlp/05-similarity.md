@@ -77,3 +77,5 @@ const spellCheck = new SpellCheck({ features: freqs });
 const actual = spellCheck.check(["knowldge", "thas", "prejudize"]);
 console.log(actual);
 ```
+
+You can find more examples looking directly at [tests](https://github.com/axa-group/nlp.js/tree/master/packages/similarity/test).

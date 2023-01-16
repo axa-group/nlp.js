@@ -1,0 +1,24 @@
+# Introduction
+
+To give to end user a richer experience, your bot needs to be more than a simple Q&A. It usually needs to serve simple answers for simple questions but also needs to include the way to handle more complex topics that require guided flows. 
+
+To help on this, nlp.js offers the possibility to define a conversation flow as a group of dialogs connected among them. These dialogs can contain sentences to the user, questions to the user, and actions to execute. All the information gathered can be stored in the context of the conversation to be used in the next dialog.
+
+## Basic structure
+
+- corpus, containing intents that:
+  - give a direct answer to more simple / static questions
+
+    or
+
+  - call to a dialogs defined in your flow files
+
+- flow files (.dlg), containing one or several dialogs. Inside a dialog you can do this:
+   - call other dialogs (in the same or other flow files)
+   - call [actions](/bot-orchestration/custom_actions)
+   - set context values
+   - display sentences
+   - ask questions and use [validators](bot-orchestration/custom_validators) (code to validate user input, having access to user input and the context of the conversation)
+   - display [cards](bot-orchestration/cards_usage) (rich content to show to the user)
+
+Keep reading the next section to understand the whole idea.
