@@ -1,0 +1,12 @@
+{
+   "settings": {
+     "api-server": {
+       "port": 3000,
+       "serveBot": true
+     },
+     "bot": {
+       "scripts": ["./script.dlg"]
+     }
+   },
+   "use": ["Basic", "ExpressApiServer", "DirectlineConnector", "Bot"]
+ }

@@ -1,0 +1,19 @@
+language en
+
+intent greetings.hello
+  utterances
+  - hello
+  - hi
+  - howdy
+  answers
+  - /hellodialog
+intent greetings.bye
+  utterances
+  - goodbye for now
+  - bye bye take care
+  - okay see you later
+  - bye for now
+  - I must go
+  answers
+  - Till next time
+  - see you soon
