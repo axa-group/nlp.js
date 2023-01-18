@@ -1,0 +1,38 @@
+# @nlpjs/bot
+
+This package includes: 
+
+- logic to parse corpus, texts, translations, dialogs, actions and validators
+- logic to control flow execution
+- some builtin validators (email, url, ip, ipv6, phone number, number, integer & date)
+- testing tools
+
+There are 2 key phases to use bot flows:
+- Bootstrap phase: how the data & rules are loaded by the bot during the initialization.
+  - Loading .dlg files: This is done by the loadScript method in the [Bot class](https://github.com/axa-group/nlp.js/blob/master/packages/bot/src/bot.js)
+  - registerAction: method to include [actions](custom_actions#registering-the-custom-action) that will be accessible from the dialogs
+  - registerValidator: method to include [validators](custom_validators#registering-the-validator) that will be accessible from the dialogs
+- Execution phase: application of the rules loaded. If bot is included in the init configuration, the flows execution will be done in any of all the available connectors (console, directline, dialogflow, fb & msbf).
+
+## Example of usage inside a connector
+
+[msbf-connector](https://github.com/axa-group/nlp.js/blob/master/packages/msbf-connector/src/msbf-connector.js)
+
+```javascript
+...
+} else {
+    const bot = this.settings.container.get('bot');
+    if (bot) {
+      const session = this.createSession(context.activity);
+      session.parent = context;
+      await bot.process(session);
+    } else {
+      const nlp = this.container.get('nlp');
+      if (nlp) {
+        const result = await nlp.process(input);
+        await this.say(result);
+      }
+    }
+  }
+...
+```
