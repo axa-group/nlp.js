@@ -54,6 +54,13 @@ class ExtractorTrim {
   matchBetween(utterance, condition, name) {
     const result = [];
     let matchFound;
+    if(typeof condition.regex === 'string') {
+      if(condition.regex.startsWith('/'))
+        condition.regex = condition.regex.slice(1);
+      var regexArr = condition.regex.split('/');
+      var flag = regexArr.splice(-1);
+      condition.regex = new RegExp(regexArr.join('/'), flag);
+    }
     do {
       const match = condition.regex.exec(` ${utterance} `);
       if (match) {
