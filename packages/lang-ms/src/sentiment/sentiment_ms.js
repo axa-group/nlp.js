@@ -21,6 +21,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const SentimentId = require('@nlpjs/lang-id');
+const SentimentId = require('@nlpjs/lang-id/src/sentiment/sentiment_id');
 
 module.exports = SentimentId;
