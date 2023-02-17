@@ -24,7 +24,7 @@
 const { Container } = require('@nlpjs/core');
 const { LangBr } = require('../src');
 
-describe('Language Portuguese Brazil', () => {
+describe('Language Brazilian Portuguese', () => {
   describe('Use plugin', () => {
     test('Should register the classes', () => {
       const instance = new Container();
