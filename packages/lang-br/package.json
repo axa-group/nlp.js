@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MaximilianoVeiga/nlp.js.git"
+    "url": "git+https://github.com/axa-group/nlp.js.git"
   },
   "bugs": {
-    "url": "https://github.com/MaximilianoVeiga/nlp.js/issues"
+    "url": "https://github.com/axa-group/nlp.js/issues"
   },
   "maintainers": [
     {
-      "email": "maximiliano.neto@thehorizon.dev",
-      "name": "Maximiliano Veiga"
+      "email": "opensource@axa.com",
+      "name": "Jesus Seijas"
     }
   ],
   "license": "MIT",
