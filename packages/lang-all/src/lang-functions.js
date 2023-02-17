@@ -1,6 +1,7 @@
 const { Language } = require('@nlpjs/language');
 const langAr = require('@nlpjs/lang-ar');
-const langBr = require('@nlpjs/lang-bn');
+const langBn = require('@nlpjs/lang-bn');
+const langBr = require('@nlpjs/lang-br');
 const langCa = require('@nlpjs/lang-ca');
 const langCs = require('@nlpjs/lang-cs');
 const langDa = require('@nlpjs/lang-da');
@@ -42,6 +43,7 @@ const langZh = require('@nlpjs/lang-zh');
 
 const langs = {
   ar: langAr,
+  bn: langBn,
   br: langBr,
   ca: langCa,
   cs: langCs,
