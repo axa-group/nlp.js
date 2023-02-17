@@ -28,7 +28,7 @@ const { Among, BaseStemmer } = require('@nlpjs/core');
 class StemmerBr extends BaseStemmer {
   constructor(container) {
     super(container);
-    this.name = 'stemmer-pt';
+    this.name = 'stemmer-br';
     this.I_p2 = 0;
     this.I_p1 = 0;
     this.I_pV = 0;
