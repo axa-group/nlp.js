@@ -55,7 +55,7 @@ class ExtractorTrim {
     const result = [];
     let matchFound;
     do {
-      const match = condition.regex.exec(` ${utterance} `);
+      const match = eval(condition.regex || '').exec(` ${utterance} `);
       if (match) {
         let matchIndex;
         let startIndex;
