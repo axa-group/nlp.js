@@ -485,4 +485,29 @@ describe('NER', () => {
       ]);
     });
   });
+  describe('To & from JSON', () => {
+    test('It deserializes regular expressions', () => {
+      const instance = new Ner({ container });
+      instance.addBetweenCondition('en', 'test', 'from', 'to');
+      const json = JSON.stringify(instance.toJSON());
+      const instance2 = new Ner({ container });
+      instance2.fromJSON(JSON.parse(json));
+      const actual = instance2.getRules('en');
+      expect(actual).toEqual([
+        {
+          name: 'test',
+          rules: [
+            {
+              type: 'between',
+              leftWords: ['from'],
+              rightWords: ['to'],
+              regex: /(?<= from )(.*)(?= to )/gi,
+              options: {},
+            },
+          ],
+          type: 'trim',
+        },
+      ]);
+    });
+  });
 });
