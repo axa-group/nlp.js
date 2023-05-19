@@ -517,11 +517,13 @@ class Ner extends Clonable {
       const entityKeys = Object.keys(json.rules[rKey]);
 
       entityKeys.forEach((eKey) => {
-        if (json.rules[rKey][eKey].type === 'regex') {
-          json.rules[rKey][eKey].rules = json.rules[rKey][eKey].rules.map(
-            (rule) => Ner.str2regex(rule)
-          );
-        }
+        json.rules[rKey][eKey].rules =
+          json.rules[rKey][eKey].type === 'regex'
+            ? json.rules[rKey][eKey].rules.map((rule) => Ner.str2regex(rule))
+            : json.rules[rKey][eKey].rules.map((rule) => ({
+                ...rule,
+                regex: Ner.str2regex(rule.regex),
+              }));
       });
     });
 
