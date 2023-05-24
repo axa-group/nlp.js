@@ -967,6 +967,88 @@ describe('NLP', () => {
     });
   });
 
+  describe('Dynamically add entity utterances and process', () => {
+    test('add additional utterances based on the defined enum entities with one utterance', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'convert from @ccyFrom to @ccyTo', 'GetForexRates');
+      nlp.addAnswer(
+        'en',
+        'GetForexRates',
+        '{{ ccyFrom }} is equal to 76 {{ ccyTo }}'
+      );
+
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'aud', ['AUD']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'gbp', ['GBP', 'Pound']);
+
+      const manager = nlp.nluManager.consolidateManager('en');
+      expect(manager.sentences.length).toEqual(1);
+      nlp.addAdditionalEnumEntityUtterances();
+      expect(manager.sentences.length).toEqual(29);
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'convert from USD to INR',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('GetForexRates');
+      expect(output.entities[0].entity).toBe('ccyFrom');
+      expect(output.entities[0].option).toBe('usd');
+      expect(output.entities[1].entity).toBe('ccyFrom'); // TODO needs to change to ccyTo when #entityfeat2 is merged
+      expect(output.entities[1].option).toBe('inr');
+      expect(output.answer).toBeDefined();
+    });
+    test('add additional utterances based on the defined enum entities with multiple utterances', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'convert from @ccyFrom to @ccyTo', 'GetForexRates');
+      nlp.addDocument(
+        'en',
+        'convert from @ccyFrom and @ccyFrom to @ccyTo',
+        'GetForexRates'
+      );
+      nlp.addAnswer(
+        'en',
+        'GetForexRates',
+        '{{ ccyFrom }} is equal to 76 {{ ccyTo }}'
+      );
+
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'aud', ['AUD']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'gbp', ['GBP', 'Pound']);
+
+      const manager = nlp.nluManager.consolidateManager('en');
+      expect(manager.sentences.length).toEqual(2);
+      nlp.addAdditionalEnumEntityUtterances();
+      expect(manager.sentences.length).toEqual(142);
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'convert from USD to INR',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('GetForexRates');
+      expect(output.entities[0].entity).toBe('ccyFrom');
+      expect(output.entities[0].option).toBe('usd');
+      expect(output.entities[1].entity).toBe('ccyFrom'); // TODO needs to change to ccyTo when #entityfeat2 is merged
+      expect(output.entities[1].option).toBe('inr');
+      expect(output.answer).toBeDefined();
+    });
+  });
+
   describe('addCorpus', () => {
     test('A corpus can be added as a json', async () => {
       const nlp = new Nlp();
