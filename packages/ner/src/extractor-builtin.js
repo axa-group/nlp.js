@@ -45,7 +45,12 @@ class ExtractorBuiltin {
     input.edges = input.edges || [];
     if (newInput.edges) {
       for (let i = 0; i < newInput.edges.length; i += 1) {
-        input.edges.push(newInput.edges[i]);
+        if (
+          !input.nerLimitToEntities ||
+          input.intentEntities.includes(newInput.edges[i].entity)
+        ) {
+          input.edges.push(newInput.edges[i]);
+        }
       }
     }
     input.edges = reduceEdges(input.edges, false);

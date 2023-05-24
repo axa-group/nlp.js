@@ -22,7 +22,7 @@
  */
 const { TrimTypesList } = require('./trim-types');
 
-function runDiscard(srcEdge, srcOther, useMaxLength) {
+function runDiscard(srcEdge, srcOther, useMaxLength, intentEntities = []) {
   let edge;
   let other;
   if (
@@ -44,7 +44,7 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
         other.entity === 'number') &&
       other.len <= edge.len
     ) {
-      // Do nothing! entities have same priority
+      // Entities have same priority
       if (
         other.start === edge.start &&
         other.end === edge.end &&
@@ -52,7 +52,21 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
         other.entity === edge.entity &&
         other.option === edge.option
       ) {
+        // same type and none of them is an enum or both are an enum
         other.discarded = true;
+      } else if (
+        other.start === edge.start &&
+        other.end === edge.end &&
+        other.entity === edge.entity &&
+        other.type !== edge.type
+      ) {
+        if (edge.type === 'trim' && other.type !== 'trim') {
+          edge.discarded = true;
+        } else if (edge.type !== 'trim' && other.type === 'trim') {
+          other.discarded = true;
+        } else {
+          other.discarded = true;
+        }
       }
     } else if (
       (useMaxLength ||
@@ -62,7 +76,18 @@ function runDiscard(srcEdge, srcOther, useMaxLength) {
     ) {
       edge.discarded = true;
     } else if (edge.type === 'enum' && other.type === 'enum') {
-      if (
+      const edgeIncludedInIntentEntities = intentEntities.includes(edge.entity);
+      const otherIncludedInIntentEntities = intentEntities.includes(
+        other.entity
+      );
+      if (edgeIncludedInIntentEntities && !otherIncludedInIntentEntities) {
+        other.discarded = true;
+      } else if (
+        !edgeIncludedInIntentEntities &&
+        otherIncludedInIntentEntities
+      ) {
+        edge.discarded = true;
+      } else if (
         edge.len <= other.len &&
         other.utteranceText.includes(edge.utteranceText)
       ) {
@@ -121,7 +146,7 @@ function splitEdges(edges) {
   return edges;
 }
 
-function reduceEdges(edges, useMaxLength = true) {
+function reduceEdges(edges, useMaxLength = true, intentEntities = []) {
   edges = splitEdges(edges);
   const edgeslen = edges.length;
   for (let i = 0; i < edgeslen; i += 1) {
@@ -133,8 +158,17 @@ function reduceEdges(edges, useMaxLength = true) {
       for (let j = i + 1; j < edgeslen; j += 1) {
         const other = edges[j];
         if (!other.discarded) {
-          runDiscard(edge, other, useMaxLength);
+          runDiscard(edge, other, useMaxLength, intentEntities);
         }
+        if (edge.discarded) {
+          break;
+        }
+      }
+    }
+    if (!edge.discarded) {
+      const knownEntityPos = intentEntities.indexOf(edge.entity);
+      if (knownEntityPos !== -1) {
+        intentEntities.splice(knownEntityPos, 1);
       }
     }
   }

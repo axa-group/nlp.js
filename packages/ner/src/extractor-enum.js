@@ -342,7 +342,7 @@ class ExtractorEnum {
       }
     }
     edges.sort((a, b) => a.start - b.start);
-    input.edges = reduceEdges(edges, false);
+    input.edges = reduceEdges(edges, false, input.intentEntities);
     return input;
   }
 
