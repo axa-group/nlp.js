@@ -1001,7 +1001,7 @@ describe('NLP', () => {
       expect(output.intent).toEqual('GetForexRates');
       expect(output.entities[0].entity).toBe('ccyFrom');
       expect(output.entities[0].option).toBe('usd');
-      expect(output.entities[1].entity).toBe('ccyFrom'); // TODO needs to change to ccyTo when #entityfeat2 is merged
+      expect(output.entities[1].entity).toBe('ccyTo');
       expect(output.entities[1].option).toBe('inr');
       expect(output.answer).toBeDefined();
     });
@@ -1043,7 +1043,7 @@ describe('NLP', () => {
       expect(output.intent).toEqual('GetForexRates');
       expect(output.entities[0].entity).toBe('ccyFrom');
       expect(output.entities[0].option).toBe('usd');
-      expect(output.entities[1].entity).toBe('ccyFrom'); // TODO needs to change to ccyTo when #entityfeat2 is merged
+      expect(output.entities[1].entity).toBe('ccyTo');
       expect(output.entities[1].option).toBe('inr');
       expect(output.answer).toBeDefined();
     });
