@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/lang-bert",
-  "version": "4.26.1",
+  "version": "4.27.0",
   "description": "BERT language base",
   "author": {
     "email": "opensource@axa.com",
@@ -25,7 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/bert-tokenizer": "^4.26.1",
+    "@nlpjs/bert-tokenizer": "^4.27.0",
     "@nlpjs/core": "^4.26.1"
   },
   "publishConfig": {

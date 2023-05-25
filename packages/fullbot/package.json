@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/fullbot",
-  "version": "4.26.1",
+  "version": "4.27.0",
   "description": "Full bot for NLP.js",
   "author": {
     "email": "opensource@axa.com",
@@ -29,13 +29,13 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/basic": "^4.26.1",
-    "@nlpjs/bot": "^4.26.1",
+    "@nlpjs/basic": "^4.27.0",
+    "@nlpjs/bot": "^4.27.0",
     "@nlpjs/builtin-duckling": "^4.26.1",
     "@nlpjs/builtin-microsoft": "^4.26.1",
     "@nlpjs/database": "^4.26.1",
     "@nlpjs/directline-connector": "^4.26.1",
-    "@nlpjs/express-api-server": "^4.26.1",
+    "@nlpjs/express-api-server": "^4.27.0",
     "@nlpjs/mongodb-adapter": "^4.26.1",
     "@nlpjs/utils": "^4.25.0",
     "archiver": "^5.2.0",
