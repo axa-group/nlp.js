@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      labels:
+        - nlp/command-line
+      args:
+        WRKDIR: /app
+    container_name: engine
+    volumes:
+      - ${PWD}/src:/app/src
+      - ${PWD}/models:/app/models
