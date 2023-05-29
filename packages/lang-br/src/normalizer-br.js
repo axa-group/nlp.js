@@ -23,7 +23,7 @@
 
 const { Normalizer } = require('@nlpjs/core');
 
-class NormalizerPt extends Normalizer {
+class NormalizerBr extends Normalizer {
   constructor(container) {
     super(container);
     this.name = 'normalizer-br';
@@ -43,4 +43,4 @@ class NormalizerPt extends Normalizer {
   }
 }
 
-module.exports = NormalizerPt;
+module.exports = NormalizerBr;
