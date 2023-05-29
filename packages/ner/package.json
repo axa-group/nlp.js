@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/ner",
-  "version": "4.26.1",
+  "version": "4.27.0",
   "description": "Named Entity Recognition",
   "author": {
     "email": "opensource@axa.com",

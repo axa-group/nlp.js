@@ -1,7 +1,7 @@
 falcon==2.0.0
 transformers==2.11.0
 numpy==1.22.0
-requests==2.22.0
+requests==2.31.0
 tqdm==4.41.1
 sacremoses==0.0.35
 waitress==2.1.2

@@ -190,6 +190,84 @@ class Nlp extends Clonable {
     return this.nluManager.removeLanguage(locales);
   }
 
+  addAdditionalEnumEntityUtterances() {
+    if (!this.settings.languages) {
+      return;
+    }
+    this.settings.languages.forEach((locale) => {
+      const replaceTexts = {};
+      const rules = this.ner.getRules(locale);
+      rules.forEach((rule) => {
+        if (rule.type === 'enum') {
+          const entityName = this.ner.nameToEntity(rule.name);
+          replaceTexts[entityName] = replaceTexts[entityName] || [];
+          rule.rules.forEach((value) => {
+            replaceTexts[entityName] = replaceTexts[entityName].concat(
+              value.texts
+            );
+          });
+        }
+      });
+      const manager = this.nluManager.consolidateManager(locale);
+      const sentences = manager.getSentences();
+      sentences.forEach((sentence) => {
+        const entities = this.ner
+          .getEntitiesFromUtterance(locale, sentence.utterance)
+          .map((entityName) => this.ner.nameToEntity(entityName));
+        this.replaceEnumEntitiesInSentence(
+          manager,
+          locale,
+          sentence.domain,
+          sentence.utterance,
+          sentence.intent,
+          entities,
+          replaceTexts
+        );
+      });
+    });
+  }
+
+  replaceEnumEntitiesInSentence(
+    manager,
+    locale,
+    domain,
+    utterance,
+    intent,
+    entityList,
+    replaceTexts
+  ) {
+    if (!entityList.length) {
+      this.nluManager.guesser.addExtraSentence(locale, utterance);
+      manager.add(domain, utterance, intent);
+      return;
+    }
+    const entityName = entityList[0];
+    if (replaceTexts[entityName] && replaceTexts[entityName].length) {
+      replaceTexts[entityName].forEach((replaceText) => {
+        const entityUtterance = utterance.replace(entityName, replaceText);
+        this.replaceEnumEntitiesInSentence(
+          manager,
+          locale,
+          domain,
+          entityUtterance,
+          intent,
+          entityList.slice(1),
+          replaceTexts
+        );
+      });
+    } else {
+      this.replaceEnumEntitiesInSentence(
+        manager,
+        locale,
+        domain,
+        utterance,
+        intent,
+        entityList.slice(1),
+        replaceTexts
+      );
+    }
+  }
+
   addDocument(locale, utterance, intent) {
     const entities = this.ner.getEntitiesFromUtterance(utterance);
     this.slotManager.addBatch(intent, entities);
@@ -723,7 +801,10 @@ class Nlp extends Clonable {
     }
     output.context = context;
     if (forceNER || !this.slotManager.isEmpty) {
-      output = await this.ner.process({ ...output });
+      const intentEntities = this.slotManager.getIntentEntityNames(
+        output.intent
+      );
+      output = await this.ner.process({ ...output }, intentEntities);
     } else {
       output.entities = [];
       output.sourceEntities = [];

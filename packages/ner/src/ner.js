@@ -154,9 +154,28 @@ class Ner extends Clonable {
     return result;
   }
 
-  decideRules(srcInput) {
+  decideRules(srcInput, intentEntities) {
     const input = srcInput;
-    input.nerRules = this.getRules(input.locale || 'en');
+    let nerRules = this.getRules(input.locale || 'en');
+    if (intentEntities && this.settings.considerOnlyIntentEntities) {
+      nerRules = nerRules.filter((rule) => intentEntities.includes(rule.name));
+    } else if (intentEntities) {
+      // entities in the current intent get a higher priority when
+      // sorting out overlapping matches
+      const intentRelevantRule = [];
+      const nonIntentRelevantRule = [];
+      nerRules.forEach((rule) => {
+        if (intentEntities.includes(rule.name)) {
+          intentRelevantRule.push(rule);
+        } else {
+          nonIntentRelevantRule.push(rule);
+        }
+      });
+      nerRules = intentRelevantRule.concat(nonIntentRelevantRule);
+    }
+    input.nerRules = nerRules;
+    input.nerLimitToEntities = this.settings.considerOnlyIntentEntities;
+    input.intentEntities = intentEntities;
     return input;
   }
 
@@ -343,10 +362,12 @@ class Ner extends Clonable {
     input.entities = input.edges;
     delete input.edges;
     delete input.nerRules;
+    delete input.nerLimitToEntities;
+    delete input.intentEntities;
     return input;
   }
 
-  async defaultPipelineProcess(input) {
+  async defaultPipelineProcess(input, intentEntities) {
     if (!this.cache) {
       this.cache = {
         extractEnum: this.container.get('extract-enum'),
@@ -371,7 +392,7 @@ class Ner extends Clonable {
         this.cache.extractBuiltin = this.container.get('extract-builtin');
       }
     }
-    let output = await this.decideRules(input);
+    let output = await this.decideRules(input, intentEntities);
     if (this.cache.extractEnum) {
       output = await this.cache.extractEnum.run(output);
     }
@@ -388,8 +409,11 @@ class Ner extends Clonable {
     return output;
   }
 
-  async process(srcInput) {
-    const input = { threshold: this.settings.threshold || 0.8, ...srcInput };
+  async process(srcInput, consideredEntities) {
+    const input = {
+      threshold: this.settings.threshold || 0.8,
+      ...srcInput,
+    };
     let result;
     if (input.locale) {
       const pipeline = this.container.getPipeline(
@@ -402,7 +426,12 @@ class Ner extends Clonable {
       result = await this.runPipeline(input, this.pipelineProcess);
     }
     if (!result) {
-      result = await this.defaultPipelineProcess(input);
+      result = await this.defaultPipelineProcess(input, consideredEntities);
+    } else if (consideredEntities) {
+      // when custom pipeline is used then we can not be sure it is handled correctly
+      result.entities = result.entities.filter((entity) =>
+        consideredEntities.includes(entity.entity)
+      );
     }
     delete result.threshold;
     return result;
@@ -517,11 +546,17 @@ class Ner extends Clonable {
       const entityKeys = Object.keys(json.rules[rKey]);
 
       entityKeys.forEach((eKey) => {
-        if (json.rules[rKey][eKey].type === 'regex') {
-          json.rules[rKey][eKey].rules = json.rules[rKey][eKey].rules.map(
-            (rule) => Ner.str2regex(rule)
-          );
-        }
+        json.rules[rKey][eKey].rules =
+          json.rules[rKey][eKey].type === 'regex'
+            ? json.rules[rKey][eKey].rules.map((rule) => Ner.str2regex(rule))
+            : json.rules[rKey][eKey].rules.map((rule) =>
+                typeof rule.regex === 'string'
+                  ? {
+                      ...rule,
+                      regex: Ner.str2regex(rule.regex),
+                    }
+                  : rule
+              );
       });
     });
 

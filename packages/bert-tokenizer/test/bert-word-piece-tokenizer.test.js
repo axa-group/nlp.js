@@ -56,10 +56,20 @@ describe('BertWordPieceTokenizer', () => {
     });
   });
 
+  describe('Get Best Prefix', () => {
+    test('Should calculate the best prefix for a word', () => {
+      const input = 'Supervised';
+      const expected = 'Super';
+      const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
+      const actual = tokenizer.getBestPrefix(input);
+      expect(actual).toEqual(expected);
+    });
+  });
+
   describe('Get Best Affix', () => {
     test('Should calculate the best affix for a word', () => {
       const input = 'Supervised';
-      const expected = 'ised';
+      const expected = 'S';
       const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
       const actual = tokenizer.getBestAffix(input);
       expect(actual).toEqual(expected);
@@ -67,11 +77,31 @@ describe('BertWordPieceTokenizer', () => {
   });
 
   describe('Tokenize Word', () => {
+    test('Should return several tokens if word does not match - with isInside', () => {
+      const input = 'Supervised';
+      const expected = {
+        tokens: ['##S', '##upe', '##r', '##vise', '##d'],
+        ids: [1708, 26939, 1197, 16641, 1181],
+      };
+      const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
+      const actual = tokenizer.tokenizeWord(input, false, true);
+      expect(actual).toEqual(expected);
+    });
     test('Should return several tokens if word does not match and has affixes', () => {
       const input = 'Supervised';
       const expected = {
-        tokens: ['Super', '##v', '##ised'],
-        ids: [3198, 1964, 3673],
+        tokens: ['Super', '##vise', '##d'],
+        ids: [3198, 16641, 1181],
+      };
+      const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
+      const actual = tokenizer.tokenizeWord(input);
+      expect(actual).toEqual(expected);
+    });
+    test('Should return several tokens if word does not match and has affixes #2', () => {
+      const input = 'vegan';
+      const expected = {
+        tokens: ['ve', '##gan'],
+        ids: [1396, 3820],
       };
       const tokenizer = new BertWordPieceTokenizer({ vocabContent: vocabEn });
       const actual = tokenizer.tokenizeWord(input);

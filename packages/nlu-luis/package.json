@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/nlu-luis",
-  "version": "4.26.1",
+  "version": "4.27.0",
   "description": "Natural Language Understanding",
   "author": {
     "email": "opensource@axa.com",
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.26.1",
-    "@nlpjs/nlu": "^4.26.1",
+    "@nlpjs/nlu": "^4.27.0",
     "@nlpjs/request": "^4.25.0"
   },
   "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"

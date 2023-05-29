@@ -967,6 +967,88 @@ describe('NLP', () => {
     });
   });
 
+  describe('Dynamically add entity utterances and process', () => {
+    test('add additional utterances based on the defined enum entities with one utterance', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'convert from @ccyFrom to @ccyTo', 'GetForexRates');
+      nlp.addAnswer(
+        'en',
+        'GetForexRates',
+        '{{ ccyFrom }} is equal to 76 {{ ccyTo }}'
+      );
+
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'aud', ['AUD']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'gbp', ['GBP', 'Pound']);
+
+      const manager = nlp.nluManager.consolidateManager('en');
+      expect(manager.sentences.length).toEqual(1);
+      nlp.addAdditionalEnumEntityUtterances();
+      expect(manager.sentences.length).toEqual(29);
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'convert from USD to INR',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('GetForexRates');
+      expect(output.entities[0].entity).toBe('ccyFrom');
+      expect(output.entities[0].option).toBe('usd');
+      expect(output.entities[1].entity).toBe('ccyTo');
+      expect(output.entities[1].option).toBe('inr');
+      expect(output.answer).toBeDefined();
+    });
+    test('add additional utterances based on the defined enum entities with multiple utterances', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'convert from @ccyFrom to @ccyTo', 'GetForexRates');
+      nlp.addDocument(
+        'en',
+        'convert from @ccyFrom and @ccyFrom to @ccyTo',
+        'GetForexRates'
+      );
+      nlp.addAnswer(
+        'en',
+        'GetForexRates',
+        '{{ ccyFrom }} is equal to 76 {{ ccyTo }}'
+      );
+
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'aud', ['AUD']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'gbp', ['GBP', 'Pound']);
+
+      const manager = nlp.nluManager.consolidateManager('en');
+      expect(manager.sentences.length).toEqual(2);
+      nlp.addAdditionalEnumEntityUtterances();
+      expect(manager.sentences.length).toEqual(142);
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'convert from USD to INR',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('GetForexRates');
+      expect(output.entities[0].entity).toBe('ccyFrom');
+      expect(output.entities[0].option).toBe('usd');
+      expect(output.entities[1].entity).toBe('ccyTo');
+      expect(output.entities[1].option).toBe('inr');
+      expect(output.answer).toBeDefined();
+    });
+  });
+
   describe('addCorpus', () => {
     test('A corpus can be added as a json', async () => {
       const nlp = new Nlp();
@@ -1305,6 +1387,407 @@ describe('NLP', () => {
       const nlp = new Nlp();
       await nlp.addCorpora();
       expect(nlp.nluManager).toBeDefined();
+    });
+  });
+
+  describe('Process an utterance with entities', () => {
+    test('The entity is registered in slotManager with addDocument', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'Hi, my name is @forename!', 'hi_intent');
+      expect(nlp.slotManager.intents.hi_intent).toBeDefined();
+      expect(nlp.slotManager.intents.hi_intent.forename).toBeDefined();
+      expect(nlp.ner.rules).toEqual({});
+    });
+    test('An enum entity is selected when matching and a trim definition is also existing for the entity', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument(
+        'en',
+        'Tell me about the @attribute of the device',
+        'attribute_intent'
+      );
+
+      nlp.addNerRuleOptionTexts('en', 'attribute', 'display', [
+        'display',
+        'screen',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'attribute', 'cpu', ['cpu', 'processor']);
+      nlp.addNerBetweenCondition('en', 'attribute', ['the'], 'of');
+
+      expect(nlp.slotManager.intents.attribute_intent).toBeDefined();
+      expect(nlp.slotManager.intents.attribute_intent.attribute).toBeDefined();
+      expect(nlp.ner.rules.en.attribute).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Tell me about the screen of the device',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('attribute_intent');
+      expect(output.entities[0].type).toBe('enum');
+      expect(output.entities[0].entity).toBe('attribute');
+      expect(output.entities[0].option).toBe('display');
+      expect(output.entities[1]).toBeUndefined();
+      expect(output.answer).toBeUndefined();
+    });
+    test('A trim entity is selected when matching and a parallel enum do not match', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument(
+        'en',
+        'Tell me about the @attribute of the device',
+        'attribute_intent'
+      );
+
+      nlp.addNerRuleOptionTexts('en', 'attribute', 'display', [
+        'display',
+        'screen',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'attribute', 'cpu', ['cpu', 'processor']);
+      nlp.addNerBetweenCondition('en', 'attribute', ['the'], 'of');
+
+      expect(nlp.slotManager.intents.attribute_intent).toBeDefined();
+      expect(nlp.slotManager.intents.attribute_intent.attribute).toBeDefined();
+      expect(nlp.ner.rules.en.attribute).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'Tell me about the mainboard of the device',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('attribute_intent');
+      expect(output.entities[0].type).toBe('trim');
+      expect(output.entities[0].entity).toBe('attribute');
+      expect(output.entities[0].sourceText).toBe('mainboard');
+      expect(output.entities[0].option).toBeUndefined();
+      expect(output.entities[1]).toBeUndefined();
+      expect(output.answer).toBeUndefined();
+    });
+    test('The intent entities get priority over non-intent entities when matching (standard)', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'Hi, my name is @forename!', 'forename_intent');
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'myforename2', [
+        'myforename2',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'mylastname', ['mylastname']);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename1', [
+        'myforename1',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename2', [
+        'myforename2',
+      ]);
+
+      expect(nlp.slotManager.intents.forename_intent).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.forename).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.lastname).toBeUndefined();
+      expect(nlp.ner.rules.en.forename).toBeDefined();
+      expect(nlp.ner.rules.en.lastname).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'my name is myforename2!',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('forename_intent');
+      expect(output.entities[0].entity).toBe('forename');
+      expect(output.entities[0].option).toBe('myforename2');
+      expect(output.answer).toBeUndefined();
+    });
+    test('We discover two entities, also an additional one which is not in any intent-utterance (standard)', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'Hi, my name is @forename!', 'forename_intent');
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'myforename2', [
+        'myforename2',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'mylastname', ['mylastname']);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename1', [
+        'myforename1',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename2', [
+        'myforename2',
+      ]);
+
+      expect(nlp.slotManager.intents.forename_intent).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.forename).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.lastname).toBeUndefined();
+      expect(nlp.ner.rules.en.forename).toBeDefined();
+      expect(nlp.ner.rules.en.lastname).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'my name is myforename2 mylastname!',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('forename_intent');
+      expect(output.entities[0].entity).toBe('forename');
+      expect(output.entities[0].option).toBe('myforename2');
+      expect(output.entities[1].entity).toBe('lastname');
+      expect(output.entities[1].option).toBe('mylastname');
+      expect(output.answer).toBeUndefined();
+    });
+    test('We discover two entities, also when overlapping (standard)', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument(
+        'en',
+        'Hi, my name is @forename @lastname!',
+        'forename_intent'
+      );
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'myforename2', [
+        'myforename2',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'mylastname', ['mylastname']);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename1', [
+        'myforename1',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename2', [
+        'myforename2',
+      ]);
+
+      expect(nlp.slotManager.intents.forename_intent).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.forename).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.lastname).toBeDefined();
+      expect(nlp.ner.rules.en.forename).toBeDefined();
+      expect(nlp.ner.rules.en.lastname).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'my name is myforename2 myforename2!',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('forename_intent');
+      expect(output.entities[0].entity).toBe('lastname');
+      expect(output.entities[0].option).toBe('myforename2');
+      expect(output.entities[1].entity).toBe('forename');
+      expect(output.entities[1].option).toBe('myforename2');
+      expect(output.answer).toBeUndefined();
+    });
+    test('We discover two entities, also when overlapping #2 (standard)', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+      });
+      nlp.addDocument('en', 'convert from @ccyFrom to @ccyTo', 'GetForexRates');
+      nlp.addAnswer(
+        'en',
+        'GetForexRates',
+        '{{ ccyFrom }} is equal to 76 {{ ccyTo }}'
+      );
+
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyFrom', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'usd', ['USD', 'Dollar']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'inr', ['INR', 'rupee']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'aud', ['AUD']);
+      nlp.addNerRuleOptionTexts('en', 'ccyTo', 'gbp', ['GBP', 'Pound']);
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'convert from USD to INR',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('GetForexRates');
+      expect(output.entities[0].entity).toBe('ccyFrom');
+      expect(output.entities[0].option).toBe('usd');
+      expect(output.entities[1].entity).toBe('ccyTo');
+      expect(output.entities[1].option).toBe('inr');
+      expect(output.answer).toBeDefined();
+    });
+    test('Non intent entities are ignored in matching when considerOnlyIntentEntities is used', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        ner: {
+          considerOnlyIntentEntities: true,
+        },
+      });
+      nlp.addDocument('en', 'Hi, my name is @forename!', 'forename_intent');
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'myforename2', [
+        'myforename2',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'mylastname', ['mylastname']);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename1', [
+        'myforename1',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename2', [
+        'myforename2',
+      ]);
+
+      expect(nlp.slotManager.intents.forename_intent).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.forename).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.lastname).toBeUndefined();
+      expect(nlp.ner.rules.en.forename).toBeDefined();
+      expect(nlp.ner.rules.en.lastname).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'my name is myforename2 mylastname!',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('forename_intent');
+      expect(output.entities[0].entity).toBe('forename');
+      expect(output.entities[0].option).toBe('myforename2');
+      expect(output.entities[1]).toBeUndefined();
+      expect(output.answer).toBeUndefined();
+    });
+    test('We discover two entities, also when overlapping (also with considerOnlyIntentEntities)', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        ner: {
+          considerOnlyIntentEntities: true,
+        },
+      });
+      nlp.addDocument(
+        'en',
+        'Hi, my name is @forename @lastname!',
+        'forename_intent'
+      );
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'myforename2', [
+        'myforename2',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'mylastname', ['mylastname']);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename1', [
+        'myforename1',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename2', [
+        'myforename2',
+      ]);
+
+      expect(nlp.slotManager.intents.forename_intent).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.forename).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.lastname).toBeDefined();
+      expect(nlp.ner.rules.en.forename).toBeDefined();
+      expect(nlp.ner.rules.en.lastname).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'my name is myforename2 myforename2!',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('forename_intent');
+      expect(output.entities[0].entity).toBe('lastname');
+      expect(output.entities[0].option).toBe('myforename2');
+      expect(output.entities[1].entity).toBe('forename');
+      expect(output.entities[1].option).toBe('myforename2');
+      expect(output.answer).toBeUndefined();
+    });
+    test('We discover two entities, also when overlapping and multiple utterances (also with considerOnlyIntentEntities)', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        ner: {
+          considerOnlyIntentEntities: true,
+        },
+      });
+      nlp.addDocument(
+        'en',
+        'Hi, my name is @forename @lastname!',
+        'name_intent'
+      );
+      nlp.addDocument('en', 'Hi, my name is @lastname!', 'name_intent');
+      nlp.addDocument('en', 'Hi, my name is @forename!', 'name_intent');
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'myforename2', [
+        'myforename2',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'mylastname', ['mylastname']);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename1', [
+        'myforename1',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename2', [
+        'myforename2',
+      ]);
+
+      expect(nlp.slotManager.intents.name_intent).toBeDefined();
+      expect(nlp.slotManager.intents.name_intent.forename).toBeDefined();
+      expect(nlp.slotManager.intents.name_intent.lastname).toBeDefined();
+      expect(nlp.ner.rules.en.forename).toBeDefined();
+      expect(nlp.ner.rules.en.lastname).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'my name is myforename2 myforename2!',
+      };
+      const output = await nlp.process(input);
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('name_intent');
+      expect(output.entities[0].entity).toBe('lastname');
+      expect(output.entities[0].option).toBe('myforename2');
+      expect(output.entities[1].entity).toBe('forename');
+      expect(output.entities[1].option).toBe('myforename2');
+      expect(output.answer).toBeUndefined();
+    });
+    test('Non intent entities are ignored in matching when considerOnlyIntentEntities is used, multi same entity still possible', async () => {
+      const nlp = new Nlp({
+        languages: ['en'],
+        autoSave: false,
+        ner: {
+          considerOnlyIntentEntities: true,
+        },
+      });
+      nlp.addDocument('en', 'Hi, my name is @forename!', 'forename_intent');
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'myforename2', [
+        'myforename2',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'lastname', 'mylastname', ['mylastname']);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename1', [
+        'myforename1',
+      ]);
+      nlp.addNerRuleOptionTexts('en', 'forename', 'myforename2', [
+        'myforename2',
+      ]);
+
+      expect(nlp.slotManager.intents.forename_intent).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.forename).toBeDefined();
+      expect(nlp.slotManager.intents.forename_intent.lastname).toBeUndefined();
+      expect(nlp.ner.rules.en.forename).toBeDefined();
+      expect(nlp.ner.rules.en.lastname).toBeDefined();
+
+      await nlp.train();
+      const input = {
+        locale: 'en',
+        utterance: 'my name is myforename2 myforename1!',
+      };
+      const output = await nlp.process(input, {});
+      expect(output.utterance).toEqual(input.utterance);
+      expect(output.intent).toEqual('forename_intent');
+      expect(output.entities[0].entity).toBe('forename');
+      expect(output.entities[0].option).toBe('myforename2');
+      expect(output.entities[1].entity).toBe('forename');
+      expect(output.entities[1].option).toBe('myforename1');
+      expect(output.answer).toBeUndefined();
     });
   });
 
