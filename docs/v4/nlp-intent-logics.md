@@ -9,7 +9,8 @@ When the NLP has detected an intent there are some options to execute own logic 
 * [onIntent method after answer generation](#onintent-method-after-answer-generation)
 
 ## Actions vs. Pipelines
-The main difference between these two types of logic is that actions are really defined methods that are assigned "in code" in your JavaScript.Pipelines are defined in the Pipeline FIle and can also contain javaScript snippets, but are more the "configuration approach".
+The main difference between these two types of logic is that actions are really defined methods that are assigned "in code" in your JavaScript.
+Pipelines are defined in the Pipeline File, and can also contain javaScript snippets, but are more the "configuration approach".
 
 Actions can manipulate the context and all other data of the NLP process and can, when executed before answer generation, allow to inject new context data to be used in the answer generation.
 Alternatively (when executed after answer generation) the action can overwrite the final answer and manipulate the context for the next call.
@@ -89,11 +90,11 @@ Beside using actions you can also configure a pipeline which is then executed.
 
 Details and an example of a pipeline with onIntent logic can be found in [Quickstart](./quickstart.md#adding-logic-to-an-intent).
 
-The PipeLine is always executed as last step before returning the respone. This means you can easily overwrite the full answer and manipulate the data returned and manipulate the context for the next call. But in this case you need to generate the answer yourself completely.
+The Pipeline is always executed as last step before returning the response. This means you can easily overwrite the full answer and manipulate the data returned and manipulate the context for the next call. But in this case you need to generate the answer yourself completely.
 
 ## onIntent method after answer generation
 
-instead of the Pipeline you can also create a method onIntent on the Nlp instance which is executed. If this method is set t pipeline is not executed anymore!
+instead of the pipeline method, you can also create a onIntent method on the Nlp instance which is executed. If this method is set then pipeline is not executed anymore!
 
 ```javascript
 const { dockStart } = require('@nlpjs/basic');
