@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.26.1",
-    "mongodb": "^3.5.9"
+    "mongodb": "^5.8.0"
   },
   "publishConfig": {
     "access": "public"
