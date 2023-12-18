@@ -194,7 +194,7 @@ manager.addNerAfterLastCondition('en', 'fromCity', ['from']);
 
 ## Built-in entities
 
-Additionally to the entities you can define manually the framework can also parse out some built-in entities automatically uwing plugins. What is supported and to which level in which language depends on the chosen Builtin plugin.
+Additionally to the entities you can define manually the framework can also parse out some built-in entities automatically using plugins. What is supported and to which level in which language depends on the chosen Builtin plugin.
 
 * [Builtin Compromise](../../packages/builtin-compromise/README.md) - A golden entity extractor that runs in the browser.
 * [Builtin Default](../../packages/builtin-default/README.md) - A default entity extractor for some basic entity extractions
