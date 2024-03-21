@@ -61,7 +61,7 @@ class Nlu extends Clonable {
         spellCheck: false,
         spellCheckDistance: 1,
         filterZeros: true,
-        log: true,
+        log: false,
       },
       false
     );
