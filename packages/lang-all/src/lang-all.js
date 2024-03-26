@@ -22,6 +22,7 @@
  */
 const { LangAr } = require('@nlpjs/lang-ar');
 const { LangBn } = require('@nlpjs/lang-bn');
+const { LangBr } = require('@nlpjs/lang-br');
 const { LangCa } = require('@nlpjs/lang-ca');
 const { LangCs } = require('@nlpjs/lang-cs');
 const { LangDa } = require('@nlpjs/lang-da');
@@ -65,6 +66,7 @@ class LangAll {
   register(container) {
     container.use(LangAr);
     container.use(LangBn);
+    container.use(LangBr);
     container.use(LangCa);
     container.use(LangCs);
     container.use(LangDa);

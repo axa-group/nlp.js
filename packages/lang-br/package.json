@@ -1,0 +1,30 @@
+{
+  "name": "@nlpjs/lang-br",
+  "version": "4.26.1",
+  "description": "Core",
+  "author": {
+    "email": "maximiliano.neto@thehorizon.dev",
+    "name": "Maximiliano Veiga"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axa-group/nlp.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/axa-group/nlp.js/issues"
+  },
+  "maintainers": [
+    {
+      "email": "opensource@axa.com",
+      "name": "Jesus Seijas"
+    }
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "dependencies": {
+    "@nlpjs/core": "^4.26.1"
+  }
+}
