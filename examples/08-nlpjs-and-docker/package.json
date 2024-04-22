@@ -1,0 +1,15 @@
+{
+  "name": "08-nlpjs-and-docker",
+  "version": "1.0.0",
+  "description": "an example of NLPjs using Docker",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@nlpjs/console-connector": "^4.3.0",
+    "@nlpjs/lang-en": "^4.3.0",
+    "@nlpjs/nlp": "^4.3.0",
+    "@nlpjs/request": "^4.3.0"
+  }
+}
