@@ -21,6 +21,7 @@
   ],
   "license": "MIT",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
