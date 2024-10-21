@@ -28,7 +28,6 @@
     "@nlpjs/connector": "^4.26.1",
     "@nlpjs/core": "^4.26.1",
     "@nlpjs/request": "^4.25.0",
-    "botbuilder": "^4.16.0"
-  },
-  "gitHead": "42edd15d4cfc5a3d73ab8c700570f46f265e5ea6"
+    "botbuilder": "^4.23.1"
+  }
 }

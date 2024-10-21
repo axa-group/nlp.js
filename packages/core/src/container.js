@@ -33,6 +33,7 @@ class Container {
    * Constructor of the class.
    */
   constructor(hasPreffix = false) {
+    this.parent = undefined;
     this.classes = {};
     this.factory = {};
     this.pipelines = {};

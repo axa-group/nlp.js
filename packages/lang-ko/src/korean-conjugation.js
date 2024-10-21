@@ -227,12 +227,12 @@ function conjugate(words, isAdjective) {
           lastChar,
         ]
       );
+    } else if (word.length === 1 && isAdjective) {
+      expandedLast = [].concat(build(lastChar, [0, 2, 3, 6, 8, 9]), [lastChar]);
     } else if (word.length === 1 || (isAdjective && lastCoda === 'ㅆ')) {
       expandedLast = [].concat(build(lastChar, [0, 2, 3, 6, 8, 9, 10]), [
         lastChar,
       ]);
-    } else if (word.length === 1 && isAdjective) {
-      expandedLast = [].concat(build(lastChar, [0, 2, 3, 6, 8, 9]), [lastChar]);
     } else {
       expandedLast = [lastChar];
     }

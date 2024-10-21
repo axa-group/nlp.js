@@ -23,8 +23,8 @@
 
 const http = require('http');
 const https = require('https');
-const HttpsProxyAgent = require('https-proxy-agent');
-const HttpProxyAgent = require('http-proxy-agent');
+const { HttpsProxyAgent } = require('https-proxy-agent');
+const { HttpProxyAgent } = require('http-proxy-agent');
 const querystring = require('querystring');
 const url = require('url');
 

@@ -21,9 +21,12 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-const XLSX = require('xlsx');
+const fs = require('fs');
+const XLSX = require('@lokalise/xlsx');
 const XTable = require('./xtable');
 const XTableUtils = require('./xtable-utils');
+
+XLSX.set_fs(fs);
 
 class XDoc {
   constructor() {

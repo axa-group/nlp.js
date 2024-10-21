@@ -31,6 +31,5 @@
     "@nlpjs/nlu": "^4.27.0",
     "@nlpjs/sentiment": "^4.26.1",
     "@nlpjs/slot": "^4.26.1"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  }
 }

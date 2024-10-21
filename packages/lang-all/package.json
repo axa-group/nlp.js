@@ -67,6 +67,5 @@
     "@nlpjs/lang-uk": "^4.26.1",
     "@nlpjs/lang-zh": "^4.26.1",
     "@nlpjs/language": "^4.25.0"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  }
 }

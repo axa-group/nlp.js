@@ -40,10 +40,9 @@
     "@nlpjs/utils": "^4.25.0",
     "archiver": "^5.2.0",
     "decompress": "^4.2.1",
-    "rimraf": "^3.0.2"
+    "rimraf": "^4.4.1"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  }
 }

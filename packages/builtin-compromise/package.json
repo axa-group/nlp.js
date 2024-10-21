@@ -26,15 +26,11 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.26.1",
-    "compromise": "^13.7.0",
-    "compromise-dates": "^1.2.0",
-    "compromise-numbers": "^1.0.0"
-  },
-  "devDependencies": {
-    "jest": "^29.3.1"
+    "compromise": "^13.11.4",
+    "compromise-dates": "^1.5.6",
+    "compromise-numbers": "^1.4.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  }
 }

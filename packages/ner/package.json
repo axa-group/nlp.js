@@ -28,6 +28,5 @@
     "@nlpjs/core": "^4.26.1",
     "@nlpjs/language-min": "^4.25.0",
     "@nlpjs/similarity": "^4.26.1"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  }
 }

@@ -13,7 +13,8 @@
       }
     ],
     "no-restricted-syntax": 0,
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "default-param-last": "off"
   },
   "overrides": [
     {

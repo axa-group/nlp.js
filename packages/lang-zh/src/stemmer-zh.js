@@ -69,6 +69,7 @@ class StemmerZh {
     text = text.replace('？', ' ');
     text = text.replace('！', ' ');
     return text.replace(
+      // eslint-disable-next-line prefer-regex-literals
       new RegExp('.:+-=()"\'!?،,؛;。，？！￥：；《》【】（）', 'g'),
       ' '
     );

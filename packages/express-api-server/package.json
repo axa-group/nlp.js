@@ -27,10 +27,9 @@
   "dependencies": {
     "@nlpjs/core": "^4.26.1",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.21.1"
   },
   "devDependencies": {
-    "supertest": "^6.0.1"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+    "supertest": "^7.0.0"
+  }
 }

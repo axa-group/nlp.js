@@ -25,8 +25,7 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "http-proxy-agent": "^5.0.0",
-    "https-proxy-agent": "^5.0.0"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.5"
+  }
 }

@@ -26,10 +26,9 @@
   },
   "dependencies": {
     "@nlpjs/core": "^4.26.1",
-    "mongodb": "^3.5.9"
+    "mongodb": "^3.7.4"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  }
 }

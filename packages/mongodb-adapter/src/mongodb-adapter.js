@@ -120,18 +120,20 @@ class MongodbAdapter extends Clonable {
   executeInCollection(name, fn) {
     return new Promise((resolve, reject) => {
       if (!this.db) {
-        return reject(
+        reject(
           new Error(
             'It seems that mongodb is not initialized, try invoking connect()'
           )
         );
+        return;
       }
       const collection = this.db.collection(name);
-      return fn(collection, (err, result) => {
+      fn(collection, (err, result) => {
         if (err) {
-          return reject(err);
+          reject(err);
+        } else {
+          resolve(result);
         }
-        return resolve(result);
       });
     });
   }

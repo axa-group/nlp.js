@@ -25,7 +25,6 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "xlsx": "^0.18.0"
-  },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+    "@lokalise/xlsx": "^0.20.3"
+  }
 }

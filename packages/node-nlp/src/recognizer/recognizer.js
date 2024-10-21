@@ -265,10 +265,11 @@ class Recognizer {
         if (action.then) {
           action.then(() => resolve());
         } else {
-          return resolve();
+          resolve();
         }
+        return;
       }
-      return resolve();
+      resolve();
     });
   }
 

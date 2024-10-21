@@ -97,12 +97,12 @@ async function mount(options) {
     backupName = await backup(options.dir, options.backupFolder || tmpFolder);
   }
   if (options.shouldClear !== false) {
-    removeDir(options.dir);
+    await removeDir(options.dir);
   }
   try {
     await restore(path.join(tmpFolder, options.fileName), options.dir);
     if (options.removeTmp !== false) {
-      removeDir(tmpFolder);
+      await removeDir(tmpFolder);
     }
     return true;
   } catch (err) {
