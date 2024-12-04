@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/directline-connector",
-  "version": "4.26.1",
+  "version": "5.0.0-alpha.0",
   "description": "Directline Connector",
   "author": {
     "email": "opensource@axa.com",

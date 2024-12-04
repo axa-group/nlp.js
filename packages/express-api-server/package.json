@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/express-api-server",
-  "version": "4.27.0",
+  "version": "5.0.0-alpha.0",
   "description": "Express API Server",
   "author": {
     "email": "opensource@axa.com",
