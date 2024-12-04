@@ -36,7 +36,8 @@
     "@nlpjs/database": "^4.26.1"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
 }
