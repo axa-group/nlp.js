@@ -3,6 +3,12 @@ All notable changes to release of this project will be documented in this file.
 
 For detailed change-info on the commit level please [see our GitHub commit history](https://github.com/axa-group/nlp.js/commits/master).
 
+## [5.0.0]
+
+### Changed
+- Updated lerna. Remove bootstrap in favour of npm workspaces.
+
+
 ## [3.10.0] - 2019-10-07
 ### Added
 - Traverse for handlebars, so answers now can be arrays or objects
