@@ -219,9 +219,8 @@ class StemmerJa extends BaseStemmer {
    * @param {String} srcStr Input string
    */
   toRomaji(srcStr) {
-    const reghatu = new RegExp(
-      /(ん|ン)(?=あ|い|う|え|お|ア|イ|ウ|エ|オ|ぁ|ぃ|ぅ|ぇ|ぉ|ァ|ィ|ゥ|ェ|ォ|や|ゆ|よ|ヤ|ユ|ヨ|ゃ|ゅ|ょ|ャ|ュ|ョ)/g
-    );
+    const reghatu =
+      /(ん|ン)(?=あ|い|う|え|お|ア|イ|ウ|エ|オ|ぁ|ぃ|ぅ|ぇ|ぉ|ァ|ィ|ゥ|ェ|ォ|や|ゆ|よ|ヤ|ユ|ヨ|ゃ|ゅ|ょ|ャ|ュ|ョ)/g;
     const indices = [];
     let str = srcStr;
     let match = reghatu.exec(str);

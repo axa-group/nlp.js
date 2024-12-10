@@ -705,14 +705,10 @@ describe('NLP Manager', () => {
       );
       await manager.train();
       let result = await manager.process('goodbye');
-      expect(result.answer).toMatch(
-        new RegExp(/(Till next time)|(See you soon!)/g)
-      );
+      expect(result.answer).toMatch(/(Till next time)|(See you soon!)/g);
       result = await manager.process('It was nice to meet you');
       expect(result.answer).toMatch(
-        new RegExp(
-          /(It's nice meeting you, too)|(Likewise. I'm looking forward to helping you out)|(Nice meeting you, as well)|(The pleasure is mine)/g
-        )
+        /(It's nice meeting you, too)|(Likewise. I'm looking forward to helping you out)|(Nice meeting you, as well)|(The pleasure is mine)/g
       );
     });
     test('If the intent has actions, then return also the actions', async () => {
@@ -835,9 +831,7 @@ describe('NLP Manager', () => {
       expect(result.actions[1].parameters).toEqual(['"/"']);
       result = await manager.process('It was nice to meet you');
       expect(result.answer).toMatch(
-        new RegExp(
-          /(It's nice meeting you, too)|(Likewise. I'm looking forward to helping you out)|(Nice meeting you, as well)|(The pleasure is mine)/g
-        )
+        /(It's nice meeting you, too)|(Likewise. I'm looking forward to helping you out)|(Nice meeting you, as well)|(The pleasure is mine)/g
       );
     });
     test('If the intent has actions, then apply the actions to the answer', async () => {
@@ -971,9 +965,7 @@ describe('NLP Manager', () => {
         name: 'John',
       });
       expect(result.answer).toMatch(
-        new RegExp(
-          /(It's nice meeting you, too John)|(Likewise. I'm looking forward to helping you out John)|(Nice meeting you, as well John)|(The pleasure is mine John)/g
-        )
+        /(It's nice meeting you, too John)|(Likewise. I'm looking forward to helping you out John)|(Nice meeting you, as well John)|(The pleasure is mine John)/g
       );
     });
 

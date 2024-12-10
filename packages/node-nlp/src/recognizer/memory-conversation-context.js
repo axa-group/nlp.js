@@ -45,12 +45,12 @@ class MemoryConversationContext extends ConversationContext {
     return new Promise((resolve, reject) => {
       const conversationId = this.getConversationId(session);
       if (!conversationId) {
-        return reject(new Error('No conversation id found'));
+        reject(new Error('No conversation id found'));
       }
       if (!this.conversationContexts[conversationId]) {
         this.conversationContexts[conversationId] = {};
       }
-      return resolve(this.conversationContexts[conversationId]);
+      resolve(this.conversationContexts[conversationId]);
     });
   }
 
@@ -58,10 +58,10 @@ class MemoryConversationContext extends ConversationContext {
     return new Promise((resolve, reject) => {
       const conversationId = this.getConversationId(session);
       if (!conversationId) {
-        return reject(new Error('No conversation id found'));
+        reject(new Error('No conversation id found'));
       }
       this.conversationContexts[conversationId] = context;
-      return resolve();
+      resolve();
     });
   }
 }

@@ -97,9 +97,8 @@ describe('Brain NLU', () => {
       nlu.add('私は私の鍵がどこにあるのか覚えていない', 'keys');
       nlu.add('私は私の鍵が見つからない', 'keys');
       await nlu.train();
-      const classifications = await nlu.getClassifications(
-        '私の鍵はどこにありますか'
-      );
+      const classifications =
+        await nlu.getClassifications('私の鍵はどこにありますか');
       expect(classifications).toHaveLength(2);
       expect(classifications[0].intent).toEqual('keys');
       expect(classifications[0].score).toBeGreaterThan(0.7);
@@ -116,9 +115,8 @@ describe('Brain NLU', () => {
       nlu.add('Je ne trouve pas mes clés', 'keys');
       nlu.add('Je ne me souviens pas où sont mes clés', 'keys');
       await nlu.train();
-      const classification = await nlu.getBestClassification(
-        'où sont mes clés'
-      );
+      const classification =
+        await nlu.getBestClassification('où sont mes clés');
       expect(classification.intent).toEqual('keys');
       expect(classification.score).toBeGreaterThan(0.7);
     });
@@ -131,9 +129,8 @@ describe('Brain NLU', () => {
       nlu.add('私は私の鍵がどこにあるのか覚えていない', 'keys');
       nlu.add('私は私の鍵が見つからない', 'keys');
       await nlu.train();
-      const classification = await nlu.getBestClassification(
-        '私の鍵はどこにありますか'
-      );
+      const classification =
+        await nlu.getBestClassification('私の鍵はどこにありますか');
       expect(classification.intent).toEqual('keys');
       expect(classification.score).toBeGreaterThan(0.7);
     });

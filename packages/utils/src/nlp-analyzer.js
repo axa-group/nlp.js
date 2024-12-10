@@ -142,9 +142,8 @@ class NlpAnalyzer {
       } else {
         const expectedIntentPos = intentDict[output.expectedIntent];
         const actualIntentPos = intentDict[output.topIntent];
-        analysis.confusionMatrix.matrix[actualIntentPos][
-          expectedIntentPos
-        ] += 1;
+        analysis.confusionMatrix.matrix[actualIntentPos][expectedIntentPos] +=
+          1;
         for (let j = 0; j < analysis.confusionMatrix.intents.length; j += 1) {
           const current = analysis.confusionMatrix.intents[j];
           if (j === expectedIntentPos) {

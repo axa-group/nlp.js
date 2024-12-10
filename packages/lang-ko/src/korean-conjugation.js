@@ -231,6 +231,7 @@ function conjugate(words, isAdjective) {
       expandedLast = [].concat(build(lastChar, [0, 2, 3, 6, 8, 9, 10]), [
         lastChar,
       ]);
+      // eslint-disable-next-line no-dupe-else-if
     } else if (word.length === 1 && isAdjective) {
       expandedLast = [].concat(build(lastChar, [0, 2, 3, 6, 8, 9]), [lastChar]);
     } else {

@@ -68,10 +68,7 @@ class StemmerZh {
   clearText(text) {
     text = text.replace('？', ' ');
     text = text.replace('！', ' ');
-    return text.replace(
-      new RegExp('.:+-=()"\'!?،,؛;。，？！￥：；《》【】（）', 'g'),
-      ' '
-    );
+    return text.replace(/.:+-=()"'!?،,؛;。，？！￥：；《》【】（）/g, ' ');
   }
 
   getSegments(text) {

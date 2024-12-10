@@ -74,6 +74,7 @@ class Downloader {
       }
       const absolutePath = getAbsolutePath(relativePath, this.dir);
       if (fs.existsSync(absolutePath) && !this.replaceIfExists) {
+        // eslint-disable-next-line no-promise-executor-return
         return resolve('Already exists');
       }
       const isTar =
@@ -130,6 +131,7 @@ class Downloader {
       request.on('error', (err) => {
         fs.unlink(absolutePath, () => reject(err));
       });
+      // eslint-disable-next-line no-promise-executor-return
       return request.end();
     });
   }
