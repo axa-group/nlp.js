@@ -5,10 +5,11 @@
     "packages/*"
   ],
   "scripts": {
-    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",   
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
     "lint": "eslint .",
     "lintfix": "eslint --fix .",
-    "test": "TZ='Europe/London' jest --coverage --maxWorkers=4 ."
+    "test": "TZ='Europe/London' jest --coverage --maxWorkers=4 .",
+    "release": "lerna changed && lerna publish --no-changelog --yes --no-commit-hooks --no-git-tag-version"
   },
   "author": {
     "email": "opensource@axa.com",
