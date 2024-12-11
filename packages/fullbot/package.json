@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/fullbot",
-  "version": "5.0.0-alpha.0",
+  "version": "5.0.0-alpha.3",
   "description": "Full bot for NLP.js",
   "author": {
     "email": "opensource@axa.com",
@@ -29,15 +29,15 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/basic": "^5.0.0-alpha.0",
-    "@nlpjs/bot": "^5.0.0-alpha.0",
-    "@nlpjs/builtin-duckling": "^4.26.1",
+    "@nlpjs/basic": "^5.0.0-alpha.3",
+    "@nlpjs/bot": "^5.0.0-alpha.3",
+    "@nlpjs/builtin-duckling": "^5.0.0-alpha.3",
     "@nlpjs/builtin-microsoft": "^5.0.0-alpha.0",
     "@nlpjs/database": "^4.26.1",
     "@nlpjs/directline-connector": "^5.0.0-alpha.0",
     "@nlpjs/express-api-server": "^5.0.0-alpha.0",
-    "@nlpjs/mongodb-adapter": "^5.0.0-alpha.0",
-    "@nlpjs/utils": "^5.0.0-alpha.0",
+    "@nlpjs/mongodb-adapter": "^5.0.0-alpha.3",
+    "@nlpjs/utils": "^5.0.0-alpha.3",
     "archiver": "^5.2.0",
     "decompress": "^4.2.1",
     "rimraf": "^3.0.2"
@@ -45,5 +45,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  "gitHead": "0a70182b8bc237b8b0c3ada2272fc7dbc7e89741"
 }

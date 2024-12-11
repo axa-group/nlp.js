@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/mongodb-adapter",
-  "version": "5.0.0-alpha.0",
+  "version": "5.0.0-alpha.3",
   "description": "Database adapter for MongoDB",
   "author": {
     "email": "opensource@axa.com",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  "gitHead": "0a70182b8bc237b8b0c3ada2272fc7dbc7e89741"
 }

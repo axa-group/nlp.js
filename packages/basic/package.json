@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/basic",
-  "version": "5.0.0-alpha.0",
+  "version": "5.0.0-alpha.3",
   "description": "Basic dependencies for node",
   "author": {
     "email": "opensource@axa.com",
@@ -26,11 +26,11 @@
   },
   "dependencies": {
     "@nlpjs/console-connector": "^4.26.1",
-    "@nlpjs/core-loader": "^5.0.0-alpha.0",
-    "@nlpjs/evaluator": "^5.0.0-alpha.0",
+    "@nlpjs/core-loader": "^5.0.0-alpha.3",
+    "@nlpjs/evaluator": "^5.0.0-alpha.3",
     "@nlpjs/lang-en": "^4.26.1",
-    "@nlpjs/logger": "^5.0.0-alpha.0",
+    "@nlpjs/logger": "^5.0.0-alpha.3",
     "@nlpjs/nlp": "^4.27.0"
   },
-  "gitHead": "cc4249fa994c58d220e6f10a6c94fdad05df32fd"
+  "gitHead": "0a70182b8bc237b8b0c3ada2272fc7dbc7e89741"
 }
