@@ -28,8 +28,8 @@
     "@nlpjs/bot": "^5.0.0-alpha.3",
     "@nlpjs/connector": "^4.26.1",
     "@nlpjs/core": "^4.26.1",
-    "botbuilder": "^4.16.0",
-    "botbuilder-adapter-facebook": "^1.0.11"
+    "botbuilder": "^4.23.1",
+    "botbuilder-adapter-facebook": "^1.0.12"
   },
   "publishConfig": {
     "access": "public"
