@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/rest-connector",
-  "version": "4.26.1",
+  "version": "5.0.0-alpha.5",
   "description": "REST connector for NLP.js",
   "author": {
     "email": "opensource@axa.com",
@@ -29,8 +29,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/connector": "^4.26.1",
-    "@nlpjs/core": "^4.26.1"
+    "@nlpjs/connector": "^5.0.0-alpha.5",
+    "@nlpjs/core": "^5.0.0-alpha.5"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/utils",
-  "version": "5.0.0-alpha.3",
+  "version": "5.0.0-alpha.5",
   "description": "NLP utils",
   "author": {
     "email": "opensource@axa.com",
@@ -29,7 +29,7 @@
   },
   "gitHead": "0a70182b8bc237b8b0c3ada2272fc7dbc7e89741",
   "dependencies": {
-    "@nlpjs/xtables": "^5.0.0-alpha.0",
+    "@nlpjs/xtables": "^5.0.0-alpha.5",
     "exceljs": "^4.1.1",
     "https-proxy-agent": "^5.0.0",
     "tar": "^6.0.2"

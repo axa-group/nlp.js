@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/fb-connector",
-  "version": "5.0.0-alpha.3",
+  "version": "5.0.0-alpha.5",
   "description": "Facebook Messenger Connector",
   "author": {
     "email": "eric.lara@axa.com",
@@ -25,9 +25,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/bot": "^5.0.0-alpha.3",
-    "@nlpjs/connector": "^4.26.1",
-    "@nlpjs/core": "^4.26.1",
+    "@nlpjs/bot": "^5.0.0-alpha.5",
+    "@nlpjs/connector": "^5.0.0-alpha.5",
+    "@nlpjs/core": "^5.0.0-alpha.5",
     "botbuilder": "^4.23.1",
     "botbuilder-adapter-facebook": "^1.0.12"
   },

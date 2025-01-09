@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/directline-connector",
-  "version": "5.0.0-alpha.0",
+  "version": "5.0.0-alpha.5",
   "description": "Directline Connector",
   "author": {
     "email": "opensource@axa.com",
@@ -25,8 +25,8 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {
-    "@nlpjs/connector": "^4.26.1",
-    "@nlpjs/core": "^4.26.1",
+    "@nlpjs/connector": "^5.0.0-alpha.5",
+    "@nlpjs/core": "^5.0.0-alpha.5",
     "formidable": "^2.0.1",
     "node-fetch": "^2.6.7"
   },
