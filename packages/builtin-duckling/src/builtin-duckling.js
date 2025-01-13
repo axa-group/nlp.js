@@ -29,6 +29,7 @@ const url = require('url');
 
 const cultures = {
   bn: 'bn_BD',
+  br: 'pt_BR',
   el: 'el_GR',
   en: 'en_US',
   hi: 'hi_IN',

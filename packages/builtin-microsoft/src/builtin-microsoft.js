@@ -28,6 +28,7 @@ const BuiltinInverse = require('./builtin-inverse.json');
 
 const cultures = {
   bn: 'bn-bd',
+  br: 'pt-br',
   el: 'el-gr',
   en: 'en-us',
   hi: 'hi-in',
