@@ -1,6 +1,14 @@
 {
-  "extends": ["airbnb-base", "plugin:jest/recommended", "prettier"],
-  "plugins": ["import", "jest", "prettier"],
+  "extends": [
+    "airbnb-base",
+    "plugin:jest/recommended",
+    "prettier"
+  ],
+  "plugins": [
+    "import",
+    "jest",
+    "prettier"
+  ],
   "rules": {
     "no-param-reassign": 0,
     "class-methods-use-this": 0,
@@ -8,16 +16,21 @@
     "prettier/prettier": [
       "error",
       {
+        "printWidth": 80,
         "singleQuote": true,
+        "arrowParens": "always",
         "trailingComma": "es5"
       }
     ],
     "no-restricted-syntax": 0,
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "default-param-last": "off"
   },
   "overrides": [
     {
-      "files": ["examples/**/*.js"],
+      "files": [
+        "examples/**/*.js"
+      ],
       "rules": {
         "no-console": "off"
       }

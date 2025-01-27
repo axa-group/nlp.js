@@ -78,9 +78,8 @@ describe('MemoryConversation Context', () => {
       };
       const context = new MemoryConversationContext();
       const conversationContext = await context.getConversationContext(session);
-      const conversationContext2 = await context.getConversationContext(
-        session
-      );
+      const conversationContext2 =
+        await context.getConversationContext(session);
       expect(conversationContext2).toBe(conversationContext);
     });
     test('It should return a different object if called with different conversation id', async () => {
@@ -103,12 +102,10 @@ describe('MemoryConversation Context', () => {
         },
       };
       const context = new MemoryConversationContext();
-      const conversationContext1 = await context.getConversationContext(
-        session1
-      );
-      const conversationContext2 = await context.getConversationContext(
-        session2
-      );
+      const conversationContext1 =
+        await context.getConversationContext(session1);
+      const conversationContext2 =
+        await context.getConversationContext(session2);
       expect(conversationContext2).not.toBe(conversationContext1);
     });
   });
@@ -126,9 +123,8 @@ describe('MemoryConversation Context', () => {
       };
       const conversationContext = { a: 1 };
       await context.setConversationContext(session, conversationContext);
-      const conversationContext1 = await context.getConversationContext(
-        session
-      );
+      const conversationContext1 =
+        await context.getConversationContext(session);
       expect(conversationContext1).toBe(conversationContext);
     });
     test('It should reject if the conversation id does not exists', async () => {

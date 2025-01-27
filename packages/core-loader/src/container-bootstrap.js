@@ -222,10 +222,10 @@ function containerBootstrap(
             lib = require(info.path);
           } catch (err) {
             try {
-              /* eslint-disable-next-line */
-              lib = require(getAbsolutePath(
-                path.join('./node_modules', info.path)
-              ));
+              // eslint-disable-next-line import/no-dynamic-require, global-require
+              lib = require(
+                getAbsolutePath(path.join('./node_modules', info.path))
+              );
             } catch (err2) {
               throw new Error(
                 `You have to install library "${info.path}" to use plugin "${current}"`
@@ -238,10 +238,10 @@ function containerBootstrap(
         let lib;
         try {
           /* eslint-disable-next-line */
-            lib = require(current.path);
+          lib = require(current.path);
         } catch (err) {
           /* eslint-disable-next-line */
-            lib = require(getAbsolutePath(current.path));
+          lib = require(getAbsolutePath(current.path));
         }
         instance.use(lib[current.className], current.name, current.isSingleton);
       }

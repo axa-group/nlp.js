@@ -33,84 +33,97 @@ function getManager() {
       if (language.startsWith('en')) {
         switch (utterance) {
           case 'The email is user@user.com, check it out':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"user@user.com","start":13,"value":{"value":"user@user.com"},"end":26,"dim":"email","latent":false}]'
               )
             );
+            break;
           case 'The phone number is +1 (650) 123-4567':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"+1 (650) 123-4567","start":20,"value":{"value":"(+1) 6501234567"},"end":37,"dim":"phone-number","latent":false}]'
               )
             );
+            break;
           case 'The url is https://subdomain.domain.com/something':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"https://subdomain.domain.com/something","start":11,"value":{"domain":"subdomain.domain.com","value":"https://subdomain.domain.com/something"},"end":49,"dim":"url","latent":false}]'
               )
             );
+            break;
           case 'The number is one hundred and twelve':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"one hundred and twelve","start":14,"value":{"value":112,"type":"value"},"end":36,"dim":"number","latent":false}]'
               )
             );
+            break;
           case 'The number is one hundred and twelve dot 5':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"one hundred and twelve dot 5","start":14,"value":{"value":112.5,"type":"value"},"end":42,"dim":"number","latent":false}]'
               )
             );
+            break;
           case 'There are 347kms':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"347kms","start":10,"value":{"value":347,"type":"value","unit":"kilometre"},"end":16,"dim":"distance","latent":false}]'
               )
             );
+            break;
           case 'Three cups of sugar':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"Three cups of sugar","start":0,"value":{"value":3,"type":"value","product":"sugar","unit":"cup"},"end":19,"dim":"quantity","latent":false}]'
               )
             );
+            break;
           case '80F':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"80F","start":0,"value":{"value":80,"type":"value","unit":"fahrenheit"},"end":3,"dim":"temperature","latent":false}]'
               )
             );
+            break;
           case '4 gallons':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"4 gallons","start":0,"value":{"value":4,"type":"value","unit":"gallon"},"end":9,"dim":"volume","latent":false}]'
               )
             );
+            break;
           case '42€':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"42€","start":0,"value":{"value":42,"type":"value","unit":"EUR"},"end":3,"dim":"amount-of-money","latent":false}]'
               )
             );
+            break;
           case '3 mins':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"3 mins","start":0,"value":{"value":3,"type":"value","minute":3,"unit":"minute","normalized":{"value":180,"unit":"second"}},"end":6,"dim":"duration","latent":false}]'
               )
             );
+            break;
           case '12/12/2019 at 9am':
-            return resolve(
+            resolve(
               JSON.parse(
                 '[{"body":"12/12/2019 at 9am","start":0,"value":{"values":[{"value":"2019-12-12T09:00:00.000+00:00","grain":"hour","type":"value"}],"value":"2019-12-12T09:00:00.000+00:00","grain":"hour","type":"value"},"end":17,"dim":"time","latent":false}]'
               )
             );
+            break;
           case 'raise exception':
-            return reject(new Error('Exception!'));
+            reject(new Error('Exception!'));
+            break;
           default:
-            return resolve({});
+            resolve({});
         }
       }
-      return resolve({});
+      resolve({});
     });
   return manager;
 }

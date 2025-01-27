@@ -1,6 +1,6 @@
 {
   "name": "@nlpjs/qna-importer",
-  "version": "4.22.7",
+  "version": "5.0.0-alpha.5",
   "description": "Natural Language Processing",
   "author": {
     "email": "opensource@axa.com",
