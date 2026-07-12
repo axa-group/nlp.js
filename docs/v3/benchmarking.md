@@ -58,10 +58,10 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 | webApp    | Delete Account   | 9 | 4 | 1 | 0,9 | 0,692 | 0,783 |
 | webApp    | Export Data	     | 2 | 3 | 1 | 0,667 | 0,4 | 0,5 |
 | webApp|Sync Accounts|4|0|2|0,667|1|0,8|
-|webApp|None|0|0|4|0|		
+|webApp|None|0|0|4|0|
 |webApp|Change Password|3|0|3|0,5|1|0,667|
 |webApp|Filter Spam|13|1|1|0,929|0,929|0,929|
-|webApp|Download Video||0|1|0|0|	
+|webApp|Download Video||0|1|0|0|
 |**Total Chatbot**||105|1|1|0,991|0,991|0,991|
 |**Total askUbuntu**||102|6|6|0,944|0,944|0,944|
 |**Total webApp**||47|12|12|0,797|0,797|0,797|
@@ -82,10 +82,10 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 |webApp|Delete Account|9|1|3|0,75|0,9|0,818|
 |webApp|Export Data|2|1|2|0,5|0,667|0,571|
 |webApp|Sync Accounts|5|1|0|1|0,833|0,909|
-|webApp|None|0|4|1|0|0|	
+|webApp|None|0|4|1|0|0|
 |webApp|Change Password|5|1|0|1|0,833|0,909|
 |webApp|Filter Spam|13|1|2|0,867|0,929|0,897|
-|webApp|Download Video|0|0|1|0|		
+|webApp|Download Video|0|0|1|0|
 |Total Chatbot||103|3|3|0,972|0,972|0,972|
 |Total askUbuntu||100|9|9|0,917|0,917|0,917|
 |Total webApp||49|10|10|0,831|0,831|0,831|
@@ -98,7 +98,7 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 |chatbot|FindConnection|70|1|1|0,986|0,986|0,986|
 |chatbot|DepartureTime|34|1|1|0,971|0,971|0,971|
 |askUbuntu|Software Recommendation|36|4|5|0,878|0,9|0,889|
-|askUbuntu|None|0|5|0||0|	
+|askUbuntu|None|0|5|0||0|
 |askUbuntu|Shutdown Computer|14|0|0|1|1|1|
 |askUbuntu|Make Update|36|1|4|0,9|0,973|0,935|
 |askUbuntu|Setup Printer|12|1|2|0,857|0,923|0,889|
@@ -109,7 +109,7 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 |webApp|None|3|1|8|0,272|0,75|0,4|
 |webApp|Change Password|3|3|0|1|0,5|0,667|
 |webApp|Filter Spam|12|2|0|1|0,857|0,923|
-|webApp|Download Video|0|0|0|			
+|webApp|Download Video|0|0|0|
 |Total Chatbot||104|2|2|0,981|0,981|0,981|
 |Total askUbuntu||98|11|11|0,900|0,900|0,900|
 |Total webApp||48|11|11|0,814|0,814|0,814|
@@ -130,10 +130,10 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 |webApp|Delete Account|9|1|3|0,75|0,9|0,818|
 |webApp|Export Data|2|1|2|0,5|0,667|0,571|
 |webApp|Sync Accounts|4|2|0|1|0,667|0,8|
-|webApp|None|0|4|0||0|	
+|webApp|None|0|4|0||0|
 |webApp|Change Password|4|2|1|0,8|0,667|0,727|
 |webApp|Filter Spam|12|2|1|0,923|0,857|0,889|
-|webApp|Download Video|0|0|1|0|		
+|webApp|Download Video|0|0|1|0|
 |Total Chatbot||104|2|2|0,981|0,981|0,981|
 |Total askUbuntu||97|12|11|0,898|0,890|0,894|
 |Total webApp||47|12|12|0,797|0,797|0,797|
@@ -154,10 +154,10 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 |webApp|Delete Account|9|1|5|0,643|0,9|0,75|
 |webApp|Export Data|2|1|4|0,333|0,667|0,444|
 |webApp|Sync Accounts|3|3|0|1|0,5|0,667|
-|webApp|None|1|3|1||0,25|	
+|webApp|None|1|3|1||0,25|
 |webApp|Change Password|4|2|1|0,8|0,667|0,727|
 |webApp|Filter Spam|10|4|1|0,909|0,714|0,8|
-|webApp|Download Video|0|0|0|			
+|webApp|Download Video|0|0|0|
 |Total Chatbot||105|1|1|0,991|0,991|0,991|
 |Total askUbuntu||94|15|15|0,862|0,862|0,862|
 |Total webApp||44|15|15|0,746|0,746|0,746|
@@ -170,18 +170,18 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 |chatbot|FindConnection|70|1|1|0,986|0,986|0,986|
 |chatbot|DepartureTime|34|1|1|0,971|0,971|0,971|
 |askUbuntu|Software Recommendation|33|7|4|0,892|0,825|0,857|
-|askUbuntu|None|0|5|1|0|0|	
+|askUbuntu|None|0|5|1|0|0|
 |askUbuntu|Shutdown Computer|14|0|6|0,7|1|0,824|
 |askUbuntu|Make Update|34|3|2|0,944|0,919|0,932|
 |askUbuntu|Setup Printer|13|0|2|0,867|1|0,929|
 |webApp|Find Alternative|15|1|8|0,652|0,9375|0,769|
 |webApp|Delete Account|9|1|5|0,643|0,9|0,75|
-|webApp|Export Data|0|3|0||0|	
+|webApp|Export Data|0|3|0||0|
 |webApp|Sync Accounts|3|3|0|1|0,5|0,667|
-|webApp|None|0|4|1|0|0|	
+|webApp|None|0|4|1|0|0|
 |webApp|Change Password|4|2|0|1|0,667|0,8|
 |webApp|Filter Spam|13|1|0|1|0,929|0,963|
-|webApp|Download Video|0|0|1|0|		
+|webApp|Download Video|0|0|1|0|
 |Total Chatbot||104|2|2|0,981|0,981|0,981|
 |Total askUbuntu||94|15|15|0,862|0,862|0,862|
 |Total webApp||44|15|15|0,746|0,746|0,746|
@@ -205,7 +205,7 @@ You can se two entries for NLP.js, the best one is using stemmer the other one i
 |webApp|None|2|2|1|0,667|0,5|0,571|
 |webApp|Change Password|4|2|1|0,8|0,667|0,727|
 |webApp|Filter Spam|10|4|3|0,769|0,714|0,741|
-|webApp|Download Video|0|0|0|			
+|webApp|Download Video|0|0|0|
 |Total Chatbot||95|11|4|0,960|0,896|0,927|
 |Total askUbuntu||93|16|16|0,853|0,853|0,853|
 |Total webApp||47|12|11|0,810|0,797|0,803|

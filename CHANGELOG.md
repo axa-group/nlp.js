@@ -7,7 +7,7 @@ For detailed change-info on the commit level please [see our GitHub commit histo
 ### Added
 - Traverse for handlebars, so answers now can be arrays or objects
 - Automatic stemmer: is able to learn rules from languages without stemmer when the languages are inflected.
-- Tests of the automatic stemmer in polish 
+- Tests of the automatic stemmer in polish
 - Spell checking: now users can write with small typos
 - Changelog
 - Portuguese sentiment analysis
@@ -83,7 +83,7 @@ For detailed change-info on the commit level please [see our GitHub commit histo
 ## [3.4.0] - 2019-07-24
 ### Added
 - Added a default intent and score when score is less than threshold
-- Now uses decay learning rate 
+- Now uses decay learning rate
 
 ### Changed
 - Updated license in documentation

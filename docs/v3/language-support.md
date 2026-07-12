@@ -6,7 +6,7 @@ Inside Stemmers there are three type of stemmers: Natural, Snowball and Custom. 
 
 Inside Sentiment Analysis, there are three possible algoritms: AFINN, Senticon and Pattern.
 
-## Classification 
+## Classification
 
 | Language        | Natural | Snowball | Custom |
 | :-------------- | :-----: | :------: | :----: |
